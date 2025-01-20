@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "composite": true,
+        "noUnusedLocals": true,
+        "paths": {
+            "@/*":["src/*"],
+            "@components/*":["src/components/*"],
+            "@pages/*":["src/pages/*"],
+            "@context/*":["src/context/*"],
+        }
+    }
+}
