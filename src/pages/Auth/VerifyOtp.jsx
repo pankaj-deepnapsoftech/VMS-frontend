@@ -6,7 +6,7 @@ import { FaEnvelope, FaChartLine, FaArrowLeft } from 'react-icons/fa';
 
 function VerifyOtp() {
 
-    const { VerifyOtp, loading } = useAuthContext()
+    const { verifyOtp, loading } = useAuthContext()
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -15,7 +15,7 @@ function VerifyOtp() {
         initialValues: { otp: "" },
         validationSchema: VerifyOtpValidation,
         onSubmit: (value) => {
-            Verifyotp(value)
+            verifyOtp(value)
         }
     })
 
