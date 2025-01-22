@@ -6,17 +6,21 @@ import { AiOutlineException } from "react-icons/ai";
 import { SiWikimediafoundation } from "react-icons/si";
 import { Link, NavLink } from 'react-router-dom';
 import { list } from '@/constants/constants.data';
+import { useAuthContext } from '@/context';
 
 
 
 function Header({setShowMenu}) {
+    
+      const {Logout,loading} = useAuthContext()
+
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleDropdown = () => setIsOpen(!isOpen);
     return (
-        <div className="flex flex-1 mt-10">
-            <div className="w-1/2 md:flex md:w-64 md:flex-col bg-[#015289]">
-                <div className="flex flex-col flex-grow  overflow-y-auto ">
+        <div className="flex flex-1 mt-10  fixed w-full">
+            <div className="w-1/2 md:flex md:w-64 md:flex-col ">
+                <div className="flex flex-col flex-grow   ">
                     <Link onClick={setShowMenu}  to="" className="flex items-center justify-start pl-5 space-x-2">
                         <BiBarChartAlt2 className="h-6 w-6 text-white" />
                         <h1 className="text-xl font-semibold  text-white">Eventus</h1>
@@ -37,7 +41,10 @@ function Header({setShowMenu}) {
                                 })}
                             </nav>
                         </div>
-                        <div className="relative inline-flex">
+                        <div className="px-4 mt-6">
+                        <hr className="border-gray-200" />
+                    </div>
+                        <div className="relative flex justify-start pl-4  mt-14">
                             {/* Dropdown Trigger */}
                             <button
                                 id="dropdown-trigger"
@@ -82,26 +89,14 @@ function Header({setShowMenu}) {
                                 aria-labelledby="dropdown-trigger"
                             >
                                 <div className="p-1 space-y-0.5">
-                                    <a
-                                        className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-                                        href="#"
+                                   
+                                <button
+                                        className="flex w-full items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
                                     >
-                                        Newsletter
-                                    </a>
-                                    <a
-                                        className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-                                        href="#"
-                                    >
-                                        Purchases
-                                    </a>
-                                    <a
-                                        className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-                                        href="#"
-                                    >
-                                        Downloads
-                                    </a>
-                                    <button
-                                        className="flex w-fll items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                                       Profile
+                                    </button>
+                                    <button onClick={Logout}
+                                        className="flex w-full items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
                                       
                                     >
                                        Log Out

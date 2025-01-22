@@ -25,7 +25,7 @@ const AuthContextProvider = ({ children }) => {
       AxiosHandler.defaults.headers.authorization = `Bearer ${res.data.token}`;
       Cookies.set('token', res.data.token, { expires: 7 })
       console.log(res)
-      navigate("/");
+      navigate("/verify-otp");
       toast.dismiss(toastId);
       toast.success(res.data.message)
      
@@ -48,6 +48,27 @@ const AuthContextProvider = ({ children }) => {
       Cookies.set('token', res.data.token, { expires: 7 })
       toast.dismiss(toastId);
       toast.success(res.data.message)
+      navigate("/verify-otp");
+     
+    } catch (error) {
+      toast.dismiss(toastId);
+      toast.error(error?.response?.data?.message)
+     
+    } finally {
+      setLoading(false)
+
+    }
+  }
+  const Verifyotp = async (data) => {
+    const toastId = toast.loading('Loading...');
+
+    setLoading(true)
+    try {
+      const res = await AxiosHandler.post("/auth/verify-otp", data)
+      // AxiosHandler.defaults.headers.authorization = `Bearer ${res.data.token}`;
+      // Cookies.set('token', res.data.token, { expires: 7 })
+      toast.dismiss(toastId);
+      toast.success(res.data.message)
       navigate("/");
      
     } catch (error) {
@@ -59,8 +80,29 @@ const AuthContextProvider = ({ children }) => {
 
     }
   }
+
+  const Logout = async () => {
+    const toastId = toast.loading('Loading...');
+
+    setLoading(true)
+    try {
+      const res = await AxiosHandler.get("/auth/logout", )
+      Cookies.remove('token', res.data.token)
+      toast.dismiss(toastId);
+      toast.success(res.data.message)
+      navigate("/sign-in");
+     
+    } catch (error) {
+      toast.dismiss(toastId);
+      toast.error(error?.response?.data?.message)
+     
+    } finally {
+      setLoading(false)
+
+    }
+  }
   return (
-    <authContext.Provider value={{ loading, Signin, Signup }}>{children}</authContext.Provider>
+    <authContext.Provider value={{ loading, Signin, Signup,Logout }}>{children}</authContext.Provider>
   )
 }
 
