@@ -1,9 +1,220 @@
-import React from 'react'
+
+import React, { useState } from 'react';
+import { 
+  FiTrendingUp, 
+  FiTrendingDown, 
+  FiAlertCircle, 
+  FiAlertTriangle, 
+  FiFilter, 
+  FiChevronDown, 
+  FiSearch, 
+  FiDownload 
+} from 'react-icons/fi';
+
+import { AiOutlineMenu } from 'react-icons/ai';
+
 
 function Services() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedTab, setSelectedTab] = useState('vulnerable');
+  const [showFilters, setShowFilters] = useState(false);
+
+  const criticalItems = [
+    {
+      name: "SAP Enterprise Services",
+      wk2: 2,
+      wk3: 3,
+      change: 1,
+      changePercent: "4.5%",
+      trend: 'up',
+      distribution: 80
+    },
+    {
+      name: "IT Services",
+      wk2: 8,
+      wk3: 8,
+      change: 0,
+      changePercent: "0.0%",
+      trend: 'stable',
+      distribution: 70
+    },
+    {
+      name: "Electronic Messaging",
+      wk2: 5,
+      wk3: 5,
+      change: 0,
+      changePercent: "0.0%",
+      trend: 'stable',
+      distribution: 60
+    },
+    {
+      name: "Outlook Web Access (OWA)",
+      wk2: 5,
+      wk3: 5,
+      change: 0,
+      changePercent: "0.0%",
+      trend: 'stable',
+      distribution: 50
+    }
+  ];
+
+  const highItems = [
+    {
+      name: "SAP Enterprise Services",
+      wk2: 20,
+      wk3: 20,
+      change: 0,
+      changePercent: "0.0%",
+      trend: 'stable',
+      distribution: 90
+    },
+    {
+      name: "PeopleSoft Enterprise Services",
+      wk2: 16,
+      wk3: 16,
+      change: 0,
+      changePercent: "0.0%",
+      trend: 'stable',
+      distribution: 75
+    },
+    {
+      name: "IT Services",
+      wk2: 10,
+      wk3: 10,
+      change: 0,
+      changePercent: "0.0%",
+      trend: 'stable',
+      distribution: 60
+    }
+  ];
+
+
+  const VulnerabilityTable = ({ title, items, severity }) => {
+    const filteredItems = items.filter(item => 
+      item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    return (
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-6 overflow-hidden">
+        <div className="p-4 border-b border-gray-200 bg-gray-50 flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            {severity === 'critical' ? (
+              <FiAlertCircle className="text-red-500" size={20} />
+            ) : (
+              <FiAlertTriangle className="text-orange-500" size={20} />
+            )}
+            <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
+            <span className="px-2.5 py-0.5 rounded-full text-sm font-medium bg-gray-200 text-gray-800">
+              {items.length}
+            </span>
+          </div>
+          <button 
+            className="flex items-center space-x-2 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-200 rounded-lg transition-colors"
+            onClick={() => {/* Add export functionality */}}
+          >
+            <FiDownload size={16} />
+            <span>Export</span>
+          </button>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="text-left text-sm text-gray-600 bg-gray-50 border-b border-gray-200">
+                <th className="px-4 py-3 font-semibold">Name</th>
+                <th className="px-4 py-3 font-semibold">WK2 2018</th>
+                <th className="px-4 py-3 font-semibold">WK3 2018</th>
+                <th className="px-4 py-3 font-semibold">Change</th>
+                <th className="px-4 py-3 font-semibold">Change %</th>
+                <th className="px-4 py-3 font-semibold">Trend</th>
+                <th className="px-4 py-3 font-semibold">Distribution</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredItems.map((item, index) => (
+                <tr 
+                  key={index} 
+                  className="border-b last:border-b-0 hover:bg-gray-50 transition-colors"
+                >
+                  <td className="px-4 py-3">
+                    <a href="#" className="text-blue-600 hover:text-blue-800 font-medium">
+                      {item.name}
+                    </a>
+                  </td>
+                  <td className="px-4 py-3">{item.wk2}</td>
+                  <td className="px-4 py-3">{item.wk3}</td>
+                  <td className="px-4 py-3">
+                    <span className={`${
+                      item.change > 0 ? 'text-red-600' : item.change < 0 ? 'text-green-600' : 'text-gray-600'
+                    }`}>
+                      {item.change > 0 ? `+${item.change}` : item.change}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3">{item.changePercent}</td>
+                  <td className="px-4 py-3">
+                    <div className="w-20 h-8 bg-gray-100 rounded-lg relative">
+                      {item.trend === 'up' && (
+                        <FiTrendingUp className="text-red-500 absolute inset-0 m-auto" size={16} />
+                      )}
+                      {item.trend === 'down' && (
+                        <FiTrendingDown className="text-green-500 absolute inset-0 m-auto" size={16} />
+                      )}
+                      {item.trend === 'stable' && (
+                        <div className="h-0.5 w-12 bg-gray-400 absolute inset-0 m-auto" />
+                      )}
+                    </div>
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div 
+                          className={`h-full rounded-full ${
+                            severity === 'critical' ? 'bg-red-500' : 'bg-orange-500'
+                          }`}
+                          style={{ width: `${item.distribution}%` }}
+                        />
+                      </div>
+                      <span className="text-sm text-gray-600">{item.distribution}%</span>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="flex items-center justify-between p-4 border-t border-gray-200 bg-gray-50">
+          <div className="flex items-center space-x-2">
+            <button className="px-2 py-1 border rounded-lg hover:bg-white transition-colors disabled:opacity-50">&lt;&lt;</button>
+            <button className="px-2 py-1 border rounded-lg hover:bg-white transition-colors disabled:opacity-50">&lt;</button>
+            <span className="text-sm text-gray-600">1 to 5 of {items.length}</span>
+            <button className="px-2 py-1 border rounded-lg hover:bg-white transition-colors disabled:opacity-50">&gt;</button>
+            <button className="px-2 py-1 border rounded-lg hover:bg-white transition-colors disabled:opacity-50">&gt;&gt;</button>
+          </div>
+          <div className="flex items-center space-x-2">
+            <span className="text-sm text-gray-600">Visualization:</span>
+            <select className="border rounded-lg px-3 py-1.5 text-sm bg-white">
+              <option>Scorecard</option>
+              <option>Chart</option>
+              <option>Grid</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
-    <div>Services</div>
-  )
+    <div className="min-h-screen bg-gray-100">
+    
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <VulnerabilityTable title="Critical Vulnerable Items" items={criticalItems} severity="critical" />
+        <VulnerabilityTable title="OverDue Critical Vulnerable Items" items={criticalItems} severity="critical" />
+        <VulnerabilityTable title="High Vulnerable Items" items={highItems} severity="high" />
+        <VulnerabilityTable title=" OverDue High Vulnerable Items" items={highItems} severity="high" />
+      </div>
+    </div>
+  );
 }
 
-export default Services
+export default Services;

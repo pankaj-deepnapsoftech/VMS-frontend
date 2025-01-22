@@ -9,11 +9,15 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import App from "./App";
+import { AuthContextProvider } from "./context";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-      <App />
+      <AuthContextProvider>
+        <App />
+      </AuthContextProvider>
     </BrowserRouter>
+
   </StrictMode>
 );

@@ -8,7 +8,7 @@ function ForgotPassword() {
   const handleSubmit = () => {
     e.preventDefault();
     setIsSubmitted(true);
-    // Handle password reset logic here
+    // Handle password reset logic here       
     console.log('Reset password for:', email);
   };
 
@@ -55,8 +55,8 @@ function ForgotPassword() {
 
         {/* Right Side - Reset Form */}
         <div className="w-full md:w-1/2 p-8 md:p-12">
-          <a 
-            href="/SignIn" 
+          <a
+            href="/sign-in"
             className="inline-flex items-center text-gray-600 hover:text-blue-600 transition-colors mb-8"
           >
             <FaArrowLeft className="mr-2" />
@@ -120,7 +120,7 @@ function ForgotPassword() {
                 </button>
                 <p className="text-sm text-gray-600">
                   Didn't receive the email?{' '}
-                  <button 
+                  <button
                     onClick={handleSubmit}
                     className="text-blue-600 hover:text-blue-700 font-medium"
                   >

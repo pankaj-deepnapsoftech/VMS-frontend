@@ -11,13 +11,13 @@ const AppRoutes = () => {
     <Routes>
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/sign-up" element={<SignUp />} />
-      <Route path="/ForgotPassword" element={<ForgotPassword />} />
-      <Route element={<MainLayout/>} >
-      {PrivateRoutes.map((item,index)=>(
-        <Route key={index} path={item.path} element={item.element} />
-      ))}
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route element={<MainLayout />} >
+        {PrivateRoutes.map((item, index) => (
+          <Route key={index} path={item.path} element={item.element} />
+        ))}
       </Route>
-      
+
     </Routes>
   );
 };

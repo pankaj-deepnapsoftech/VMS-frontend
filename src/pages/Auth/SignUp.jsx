@@ -1,42 +1,31 @@
 import React, { useState } from 'react';
 import { FaEye, FaEyeSlash, FaFacebook, FaChartLine, FaUser, FaEnvelope, FaLock, FaPhone } from 'react-icons/fa';
+import { useFormik } from 'formik';
+import InputField from '@/components/InputField';
+import { useAuthContext } from '@/context';
+import { SignUpValidation } from '@/Validation/AuthValidation';
 
 function SignUp() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    phone: '',
-    password: '',
-    confirmPassword: '',
-  });
+  const { Signup, loading } = useAuthContext()
 
-  const handleChange = () => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
 
-  const handleSubmit = () => {
-    e.preventDefault();
-    // Handle sign up logic here
-    console.log('Form submitted:', formData);
-  };
-
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
+    initialValues: { full_name: "", phone: "", email: "", password: "", role: "" },
+    validationSchema: SignUpValidation,
+    onSubmit: (value) => {
+      Signup(value);
+    }
+  })
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="w-full max-w-6xl bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row">
         {/* Left Side - Welcome Section */}
         <div className="w-full md:w-1/2 bg-[#015289] p-12 text-white flex flex-col">
           <div className="flex-1">
-            <h2 className="text-4xl font-bold mb-6">Join our community!</h2>
+            <h2 className="text-4xl font-bold mb-6">Join us !</h2>
             <h3 className="text-2xl font-semibold mb-4">Create your account today</h3>
             <p className="text-blue-100 mb-8">
-              Get started with our platform and unlock a world of possibilities. Track your finances,
-              manage payments, and grow your business with our powerful tools.
+              Get started with our platform and unlock a world of possibilities. Identify vulnerabilities, prioritize risks, and strengthen your security with our powerful Vulnerability Dashboard.
             </p>
 
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6">
@@ -71,119 +60,74 @@ function SignUp() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Full Name
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FaUser className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  type="text"
-                  name="fullName"
-                  value={formData.fullName}
-                  onChange={handleChange}
-                  className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
-                  placeholder="John Doe"
-                  required
-                />
-              </div>
-            </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Email Address
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FaEnvelope className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
-                  placeholder="john@example.com"
-                  required
-                />
-              </div>
-            </div>
+            <InputField
+              label={"Full Name"}
+              type={"text"}
+              showPassword={false}
+              icon={FaUser}
+              value={values.full_name}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              placeholder="Enter your Full Name"
+              name="full_name"
+            />
+            {touched.full_name && errors.full_name && <p> {errors.full_name}</p>}
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Phone Number
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FaPhone className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
-                  placeholder="+1 (555) 000-0000"
-                  required
-                />
-              </div>
-            </div>
+            <InputField
+              label={"Email Address"}
+              type={"email"}
+              showPassword={false}
+              icon={FaEnvelope}
+              value={values.email}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              placeholder="Enter your Email Address"
+              name="email"
+            />
+            {touched.email && errors.email && <p> {errors.email}</p>}
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Password
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FaLock className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="w-full pl-10 pr-12 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
-                  placeholder="Create a strong password"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                >
-                  {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
-                </button>
-              </div>
-            </div>
+            <InputField
+              label={"Phone Number"}
+              type={"text"}
+              showPassword={false}
+              icon={FaPhone}
+              value={values.phone}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              placeholder="Enter your Phone Number"
+              name="phone"
+            />
+            {touched.phone && errors.phone && <p> {errors.phone}</p>}
+            <InputField
+              label={"Password"}
+              type={"password"}
+              showPassword={true}
+              icon={FaLock}
+              value={values.password}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              placeholder="Enter your Password"
+              name="password"
+            />
+            {touched.password && errors.password && <p> {errors.password}</p>}
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Confirm Password
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FaLock className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  type={showConfirmPassword ? 'text' : 'password'}
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  className="w-full pl-10 pr-12 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
-                  placeholder="Confirm your password"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                >
-                  {showConfirmPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
-                </button>
-              </div>
-            </div>
+            <label
+              htmlFor="role"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Select Your Role
+            </label>
+            <select
+              value={values.role}
+              onChange={handleChange}
+              className='w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition'
+              id="role">
+              <option value="" disabled> -- Select a role -- </option>
+              <option value="Customer">Customer</option>
+              <option value="Employee">Employee</option>
+            </select>
+            {touched.role && errors.role && <p> {errors.role}</p>}
 
             <div className="flex items-center">
               <input
@@ -207,7 +151,7 @@ function SignUp() {
               Create Account
             </button>
 
-            <div className="relative my-6">
+            <div className="relative my-2">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-300"></div>
               </div>
@@ -215,7 +159,7 @@ function SignUp() {
                 <span className="px-2 bg-white text-gray-500">OR</span>
               </div>
             </div>
-
+            {/* 
             <div className="space-y-4">
               <button
                 type="button"
@@ -231,11 +175,11 @@ function SignUp() {
                 <FaFacebook size={20} />
                 Sign up with Facebook
               </button>
-            </div>
+            </div> */}
 
             <p className="text-center text-gray-600 text-sm">
               Already have an account?{' '}
-              <a href="/SignIn" className="text-blue-600 hover:text-blue-700 font-medium">
+              <a href="/sign-in" className="text-blue-600 hover:text-blue-700 font-medium">
                 Sign in
               </a>
             </p>

@@ -1,20 +1,29 @@
+import { useAuthContext } from '@/context';
+import { SignInValidation } from '@/Validation/AuthValidation';
+import { useFormik } from 'formik';
 import React, { useState } from 'react';
 import { FaEye, FaEyeSlash, FaFacebook, FaChartLine } from 'react-icons/fa';
 
 function SignIn() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const {Signin,loading} = useAuthContext()
 
-  const handleSubmit = (t) => {
-    e.preventDefault();
-    // Handle sign in logic here
-  };
+  const [showPassword, setShowPassword] = useState(false);
+  
+
+ const {values,errors,touched,handleBlur,handleChange,handleSubmit}=useFormik({
+  initialValues:{email:"", password:"" },
+  validationSchema:SignInValidation,
+  onSubmit:(value)=>{
+    Signin(value)
+  }
+ })
+
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="w-full max-w-6xl bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row">
         {/* Left Side - Sign In Form */}
+        
         <div className="w-full md:w-1/2 p-8 md:p-12">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-800 mb-2">Sign In</h1>
@@ -28,12 +37,15 @@ function SignIn() {
               </label>
               <input
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                name='email'
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
                 placeholder="Enter your email"
-                required
+             
               />
+               {touched.email && errors.email && <p> {errors.email}</p>}
             </div>
 
             <div>
@@ -43,12 +55,15 @@ function SignIn() {
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                name='password'
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
                   placeholder="Enter your password"
-                  required
+                
                 />
+                {touched.password && errors.password && <p> {errors.password}</p>}
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
@@ -67,10 +82,10 @@ function SignIn() {
                   className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                 />
                 <label htmlFor="remember" className="ml-2 text-sm text-gray-600">
-                  Remember for 30 days
+                  Remember me
                 </label>
               </div>
-              <a href="/ForgotPassword" className="text-sm text-blue-600 hover:text-blue-700">
+              <a href="/forgot-password" className="text-sm text-blue-600 hover:text-blue-700">
                 Forgot password?
               </a>
             </div>
@@ -78,6 +93,7 @@ function SignIn() {
             <button
               type="submit"
               className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-200"
+              disabled={loading}
             >
               Sign in
             </button>
@@ -90,7 +106,7 @@ function SignIn() {
                 <span className="px-2 bg-white text-gray-500">OR</span>
               </div>
             </div>
-
+{/* 
             <div className="space-y-4">
               <button className="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-700 px-4 py-3 rounded-lg hover:bg-gray-50 transition duration-200">
                 <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5" />
@@ -100,11 +116,11 @@ function SignIn() {
                 <FaFacebook size={20} />
                 Sign up with Facebook
               </button>
-            </div>
+            </div> */}
 
             <p className="text-center text-gray-600 text-sm">
               Don't have an account?{' '}
-              <a href="SignUp" className="text-blue-600 hover:text-blue-700 font-medium">
+              <a href="sign-up" className="text-blue-600 hover:text-blue-700 font-medium">
                 Sign up
               </a>
             </p>
@@ -117,7 +133,7 @@ function SignIn() {
             <h2 className="text-4xl font-bold mb-6">Welcome back!</h2>
             <h3 className="text-2xl font-semibold mb-4">Please sign in to your account</h3>
             <p className="text-blue-100 mb-8">
-              Track your financial growth and manage your payments with our intuitive dashboard.
+            Monitor vulnerabilities, prioritize risks, and streamline remediation efforts with our intuitive Vulnerability Dashboard.
             </p>
 
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6">

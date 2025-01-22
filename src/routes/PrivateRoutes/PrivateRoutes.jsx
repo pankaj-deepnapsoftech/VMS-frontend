@@ -6,23 +6,23 @@ import Home from '@/pages/Home';
 
 export const PrivateRoutes = [
     {
-        path:"",
-        element:<Home />
+        path: "",
+        element: <Home />
     },
     {
-        path:"/services",
-        element:<Services />
+        path: "/services",
+        element: <Services />
     },
     {
-        path:"/vulnerableCls",
-        element:<VulnerableCls />
+        path: "/vulnerableCls",
+        element: <VulnerableCls />
     },
     {
-        path:"/exceptions",
-        element:<Exceptions />
+        path: "/exceptions",
+        element: <Exceptions />
     },
     {
-        path:"/remedition",
-        element:<Remedition />
+        path: "/remedition",
+        element: <Remedition />
     },
 ]
