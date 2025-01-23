@@ -49,7 +49,8 @@ const AuthContextProvider = ({ children }) => {
     try {
       const res = await AxiosHandler.post("/auth/create", data);
       AxiosHandler.defaults.headers.authorization = `Bearer ${res.data.token}`;
-      Cookies.set("token", res.data.token, { expires: 7 });
+      Cookies.set("token", res.data.token, { expires: 1 });
+      setToken(res.data.token);
       toast.dismiss(toastId);
       toast.success(res.data.message);
       navigate("/verify-otp");
