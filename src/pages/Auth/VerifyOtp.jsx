@@ -11,7 +11,7 @@ function VerifyOtp() {
     const [showPassword, setShowPassword] = useState(false);
 
 
-    const { values, errors, touched, handleBlur, handleChange,onSubmit } = useFormik({
+    const { values, errors, touched, handleBlur, handleChange,onSubmit,handleSubmit } = useFormik({
         initialValues: { otp: "" },
         validationSchema: VerifyOtpValidation,
         onSubmit: (value) => {
@@ -33,13 +33,7 @@ function VerifyOtp() {
 
 
 
-    const handleSubmit = () => {
-        e.preventDefault();
-        setIsSubmitted(true);
-        // Handle password reset logic here       
-        console.log('Reset password for:', email);
-    };
-
+ 
     return (
         <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
             <div className="w-full max-w-6xl bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row">
@@ -110,7 +104,7 @@ function VerifyOtp() {
                                             <FaEnvelope className="h-5 w-5 text-gray-400" />
                                         </div>
                                         <input
-                                            type="text"
+                                            type="number"
                                             value={values.otp}
                                             onChange={handleChange}
                                             onBlur={handleBlur}

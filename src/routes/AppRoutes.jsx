@@ -9,10 +9,15 @@ import { VerifyOtp } from "@/constants/Components lazy loading/components.Lazy";
 import { useAuthContext } from "@/context";
 
 const AppRoutes = () => {
-  const { loginVerify, emailVerify, role, token } = useAuthContext();
+  const { authenticate, token } = useAuthContext();
+  
+  // Check if user is authenticated and verify their login and email
+  const isAuthenticated = token && authenticate?.Login_verification && authenticate?.email_verification;
+
   return (
     <Routes>
-      {!token || !loginVerify || !emailVerify ? (
+      {/* Public routes */}
+      {!isAuthenticated ? (
         <>
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
@@ -20,15 +25,19 @@ const AppRoutes = () => {
           <Route path="/verify-otp" element={<VerifyOtp />} />
         </>
       ) : (
-        // Redirect to "/verify-otp" if the token is present
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="/*" element={<Navigate to="/" replace />} />
       )}
-   
-      { token && loginVerify && emailVerify ? <Route element={<MainLayout />}>
-        {PrivateRoutes.map((item, index) => (
-          <Route key={index} path={item.path} element={item.element} />
-        ))}
-      </Route> :  <Route path="*" element={<Navigate to="/sign-in" replace />} />}
+
+      {/* Protected routes */}
+      {isAuthenticated ? (
+        <Route element={<MainLayout />}>
+          {PrivateRoutes.map((item, index) => (
+            <Route key={index} path={item.path} element={item.element} />
+          ))}
+        </Route>
+      ) : (
+        <Route path="/*" element={<Navigate to="/sign-in" replace />} />
+      )}
     </Routes>
   );
 };
