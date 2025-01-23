@@ -1,26 +1,39 @@
 import InputField from '@/components/InputField';
 import { useAuthContext } from '@/context';
-import { SignInValidation } from '@/Validation/AuthValidation';
+import { ResetPasswordValidation } from '@/Validation/AuthValidation';
 import { useFormik } from 'formik';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash, FaFacebook, FaChartLine, FaEnvelope, FaLock } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-function SignIn() {
-  const {Signin,loading} = useAuthContext()
+function ResetPassword() {
+  const {Resetpassword,loading} = useAuthContext()
+  const navigate = useNavigate();
+
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
 
   const [showPassword, setShowPassword] = useState(false);
   
 
  const {values,errors,touched,handleBlur,handleChange,handleSubmit}=useFormik({
-  initialValues:{email:"", password:"" },
-  validationSchema:SignInValidation,
+  initialValues:{password:"" },
+  validationSchema:ResetPasswordValidation,
   onSubmit:(value)=>{
-    Signin(value)
+    Resetpassword(value)
   }
  })
 
+ 
 
+ useEffect(()=>{
+    if(!queryParams.get("token") && !queryParams.get("testing") ){
+        navigate("/sign-in")
+     }
+ },[queryParams.get("token"),queryParams.get("testing")])
+
+
+ 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="w-full max-w-6xl bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row">
@@ -28,12 +41,12 @@ function SignIn() {
         
         <div className="w-full md:w-1/2 p-8 md:p-12">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">Sign In</h1>
-            <p className="text-gray-600">Welcome back! Please enter your details</p>
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">Reset Password</h1>
+            <p className="text-gray-600"> Please enter your New Password</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-          <InputField
+          {/* <InputField
               label={"Email Address"}
               type={"email"}
               showPassword={false}
@@ -44,44 +57,29 @@ function SignIn() {
               placeholder="Enter your Email Address"
               name="email"
             />
-            {touched.email && errors.email && <p> {errors.email}</p>}
+            {touched.email && errors.email && <p> {errors.email}</p>} */}
 
             <InputField
-              label={"Password"}
+              label={" New Password"}
               type={"password"}
               showPassword={true}
               icon={FaLock}
               value={values.password}
               onBlur={handleBlur}
               onChange={handleChange}
-              placeholder="Enter your Password"
+              placeholder="Enter your New Password"
               name="password"
             />
             {touched.password && errors.password && <p> {errors.password}</p>}
            
 
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  id="remember"
-                  className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                />
-                <label htmlFor="remember" className="ml-2 text-sm text-gray-600">
-                  Remember me
-                </label>
-              </div>
-              <a href="/forgot-password" className="text-sm text-blue-600 hover:text-blue-700">
-                Forgot password?
-              </a>
-            </div>
-
+           
             <button
               type="submit"
               className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-200"
               disabled={loading}
             >
-              Sign in
+            Reset Password
             </button>
 
             <div className="relative my-6">
@@ -150,4 +148,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default ResetPassword;

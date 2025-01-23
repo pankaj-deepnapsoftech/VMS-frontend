@@ -1,39 +1,43 @@
+import InputField from '@/components/InputField';
 import { useAuthContext } from '@/context';
 import { VerifyOtpValidation } from '@/Validation/AuthValidation';
 import { useFormik } from 'formik';
-import React, { useState } from 'react';
-import { FaEnvelope, FaChartLine, FaArrowLeft } from 'react-icons/fa';
+import React, { useEffect, useState } from 'react';
+import { FaEnvelope, FaChartLine, FaArrowLeft, FaLock } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 function VerifyOtp() {
 
-    const { verifyOtp, loading } = useAuthContext()
+    const { verifyotp,ResendOtp, loading } = useAuthContext()
 
-    const [showPassword, setShowPassword] = useState(false);
+    const [timer, setTimer] = useState(10); // Initial timer (in seconds)
+    const [isResendDisabled, setIsResendDisabled] = useState(true);
+
+    useEffect(() => {
+        let interval = null;
+        if (timer > 0) {
+            setIsResendDisabled(true);
+            interval = setInterval(() => {
+                setTimer((prev) => prev - 1);
+            }, 1000);
+        } else {
+            setIsResendDisabled(false);
+            clearInterval(interval);
+        }
+        return () => clearInterval(interval);
+    }, [timer]);
 
 
-    const { values, errors, touched, handleBlur, handleChange,onSubmit,handleSubmit } = useFormik({
+    const { values, errors, touched, handleBlur, handleChange, onSubmit, handleSubmit } = useFormik({
         initialValues: { otp: "" },
         validationSchema: VerifyOtpValidation,
         onSubmit: (value) => {
-            verifyOtp(value)
+            verifyotp(value)
         }
     })
 
 
 
-
-
-
-
-
-
-
-    const [email, setEmail] = useState('');
-    const [isSubmitted, setIsSubmitted] = useState(false);
-
-
-
- 
     return (
         <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
             <div className="w-full max-w-6xl bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row">
@@ -85,53 +89,60 @@ function VerifyOtp() {
                         Back to Sign In
                     </a>
 
-               
-                        <>
-                            <div className="mb-8">
-                                <h1 className="text-3xl font-bold text-gray-800 mb-2">Verify Otp</h1>
-                                <p className="text-gray-600">
-                                    Enter your email address and we'll send you instructions to reset your password.
-                                </p>
-                            </div>
 
-                            <form onSubmit={handleSubmit} className="space-y-6">
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        Enter OTP
-                                    </label>
-                                    <div className="relative">
-                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                            <FaEnvelope className="h-5 w-5 text-gray-400" />
-                                        </div>
-                                        <input
-                                            type="number"
-                                            value={values.otp}
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                            name='otp'
-                                            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
-                                            placeholder="Enter your Otp"
+                    <>
+                        <div className="mb-8">
+                            <h1 className="text-3xl font-bold text-gray-800 mb-2">Verify OTP</h1>
+                            <p className="text-gray-600">
+                                Enter your Otp.
+                            </p>
+                        </div>
 
-                                        />
-                                    </div>
-                                </div>
+                        <form onSubmit={handleSubmit} className="space-y-6">
+
+                            <InputField
+                                label={"Enter OTP"}
+                                type={"number"}
+                                showPassword={false}
+                                icon={FaLock}
+                                value={values.otp}
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                placeholder="Enter your OTP"
+                                name="otp"
+                            />
+                            {touched.email && errors.email && <p> {errors.email}</p>}
+                            <div className='flex justify-end'>
+
 
                                 <button
-                                    type="submit"
-                                    className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-200"
+                                    className="w-full bg-blue-600 text-white py-2 rounded-lg transition duration-200 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
+                                    disabled={isResendDisabled}
+                                    onClick={ResendOtp}
                                 >
-                                    Send Reset Instructions
+                                    {isResendDisabled ? `Resend OTP i   n ${timer}s` : "Resend OTP"}
                                 </button>
-                            </form>
-                        </>
-                   
+
+                            </div>
+
+
+                            <button
+                                type="submit"
+                                className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-200"
+                            >
+                                Submit
+                            </button>
+                        </form>
+                    </>
+
 
                     <div className="mt-8 pt-8 border-t border-gray-200">
+
                         <p className="text-center text-gray-600 text-sm">
                             Remember your password?{' '}
-                            <a href="#" className="text-blue-600 hover:text-blue-700 font-medium">
+                            <Link to="/sign-in" className="text-blue-600 hover:text-blue-700 font-medium">
                                 Sign in
-                            </a>
+                            </Link>
                         </p>
                     </div>
                 </div>

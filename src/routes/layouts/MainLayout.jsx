@@ -1,5 +1,5 @@
 import Footer from '@/components/Footer/Footer'
-import { Header } from '@/constants/Components lazy loading/components.Lazy'
+import { Header } from '@/constants/Components-lazy-loading/components.Lazy'
 import React, { useState } from 'react'
 import { AiOutlineMenu } from 'react-icons/ai';
 import { BiBarChartAlt2 } from 'react-icons/bi';

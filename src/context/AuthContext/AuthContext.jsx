@@ -35,6 +35,7 @@ const AuthContextProvider = ({ children }) => {
       toast.dismiss(toastId);
       toast.success(res.data.message);
     } catch (error) {
+      console.log(error)
       toast.dismiss(toastId);
       toast.error(error?.response?.data?.message || "something went wrong please try again...");
     } finally {
@@ -62,7 +63,26 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const verifyOtp = async (data) => {
+  const Forgotpassword = async (data) => {
+    const toastId = toast.loading("Loading...");
+
+    setLoading(true);
+    try {
+      const res = await AxiosHandler.post("/auth/verify-email", data);
+      setToken(res.data.token);
+      toast.dismiss(toastId);
+      toast.success(res.data.message);
+      alert("Please Check Your Email Inbox ")
+      navigate("/sign-in");
+    } catch (error) {
+      toast.dismiss(toastId);
+      toast.error(error?.response?.data?.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const verifyotp = async (data) => {
     const toastId = toast.loading("Loading...");
     console.log(data)
     setLoading(true);
@@ -72,6 +92,46 @@ const AuthContextProvider = ({ children }) => {
       toast.success(res.data.message);
       getLogedInUser()
       navigate("/");
+    } catch (error) {
+      toast.dismiss(toastId);
+      toast.error(error?.response?.data?.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const Resetpassword = async (data) => {
+    const toastId = toast.loading("Loading...");
+    
+    setLoading(true);
+    try {
+      const res = await AxiosHandler.post(`/auth/reset-password/${token}`,data);
+      console.log(res)
+      toast.dismiss(toastId);
+      toast.success(res.data.message);
+     
+      navigate("/sign-in")
+     
+    } catch (error) {
+      console.log(error)
+      toast.dismiss(toastId);
+      toast.error(error?.response?.data?.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+  const ResendOtp = async () => {
+    const toastId = toast.loading("Loading...");
+    
+    setLoading(true);
+    try {
+      const res = await AxiosHandler.post("/auth/resend-otp");
+      toast.dismiss(toastId);
+      toast.success(res.data.message);
+     
+     
     } catch (error) {
       toast.dismiss(toastId);
       toast.error(error?.response?.data?.message);
@@ -108,7 +168,7 @@ const AuthContextProvider = ({ children }) => {
   },[token])
 
   return (
-    <authContext.Provider value={{ loading,verifyOtp, Signin, Signup, Logout,token,authenticate }}>
+    <authContext.Provider value={{ loading,verifyotp,ResendOtp,Forgotpassword,Resetpassword, Signin, Signup, Logout,token,authenticate }}>
       {children}
     </authContext.Provider>
   );

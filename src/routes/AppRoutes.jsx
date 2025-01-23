@@ -5,7 +5,7 @@ import SignUp from "@/pages/Auth/SignUp";
 import ForgotPassword from "@/pages/Auth/ForgotPassword";
 import MainLayout from "@/routes/layouts/MainLayout";
 import { PrivateRoutes } from "@/routes/PrivateRoutes/PrivateRoutes";
-import { VerifyOtp } from "@/constants/Components lazy loading/components.Lazy";
+import { PageNotFound, ResetPassword, VerifyOtp } from "@/constants/Components-lazy-loading/components.Lazy";
 import { useAuthContext } from "@/context";
 
 const AppRoutes = () => {
@@ -22,6 +22,7 @@ const AppRoutes = () => {
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/verify-otp" element={<VerifyOtp />} />
         </>
       ) : (
@@ -38,6 +39,7 @@ const AppRoutes = () => {
       ) : (
         <Route path="/*" element={<Navigate to="/sign-in" replace />} />
       )}
+       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 };

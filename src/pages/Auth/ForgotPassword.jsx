@@ -1,16 +1,22 @@
+import InputField from '@/components/InputField';
+import { useAuthContext } from '@/context';
+import { ForgotPasswordValidation } from '@/Validation/AuthValidation';
+import { useFormik } from 'formik';
 import React, { useState } from 'react';
 import { FaEnvelope, FaChartLine, FaArrowLeft } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 function ForgotPassword() {
-  const [email, setEmail] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { Forgotpassword, loading } = useAuthContext()
 
-  const handleSubmit = () => {
-    e.preventDefault();
-    setIsSubmitted(true);
-    // Handle password reset logic here       
-    console.log('Reset password for:', email);
-  };
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
+    initialValues: { email: "" },
+    validationSchema: ForgotPasswordValidation,
+    onSubmit: (value) => {
+      Forgotpassword(value)
+    }
+  })
+
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
@@ -62,8 +68,38 @@ function ForgotPassword() {
             <FaArrowLeft className="mr-2" />
             Back to Sign In
           </a>
+          <>
+            <div className="mb-8">
+              <h1 className="text-3xl font-bold text-gray-800 mb-2">Forgot Password?</h1>
+              <p className="text-gray-600">
+                Enter your email address and we'll send you instructions to reset your password.
+              </p>
+            </div>
 
-          {!isSubmitted ? (
+            <form onSubmit={handleSubmit} className="space-y-6">
+
+              <InputField
+                label={"Email Address"}
+                type={"email"}
+                showPassword={false}
+                icon={FaEnvelope}
+                value={values.email}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                placeholder="Enter your Email Address"
+                name="email"
+              />
+              {touched.email && errors.email && <p> {errors.email}</p>}
+
+              <button
+                type="submit"
+                className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-200"
+              >
+                Send Reset Instructions
+              </button>
+            </form>
+          </>
+          {/* {!isSubmitted ? (
             <>
               <div className="mb-8">
                 <h1 className="text-3xl font-bold text-gray-800 mb-2">Forgot Password?</h1>
@@ -73,24 +109,19 @@ function ForgotPassword() {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email Address
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <FaEnvelope className="h-5 w-5 text-gray-400" />
-                    </div>
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
-                      placeholder="Enter your email address"
-                      required
-                    />
-                  </div>
-                </div>
+               
+                <InputField
+                  label={"Email Address"}
+                  type={"email"}
+                  showPassword={false}
+                  icon={FaEnvelope}
+                  value={values.email}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  placeholder="Enter your Email Address"
+                  name="email"
+                />
+                {touched.email && errors.email && <p> {errors.email}</p>}
 
                 <button
                   type="submit"
@@ -100,7 +131,8 @@ function ForgotPassword() {
                 </button>
               </form>
             </>
-          ) : (
+          ) :
+           (
             <div className="text-center">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <FaEnvelope className="h-8 w-8 text-green-500" />
@@ -129,14 +161,14 @@ function ForgotPassword() {
                 </p>
               </div>
             </div>
-          )}
+          )} */}
 
           <div className="mt-8 pt-8 border-t border-gray-200">
             <p className="text-center text-gray-600 text-sm">
               Remember your password?{' '}
-              <a href="#" className="text-blue-600 hover:text-blue-700 font-medium">
+              <Link to="/sign-in" className="text-blue-600 hover:text-blue-700 font-medium">
                 Sign in
-              </a>
+              </Link>
             </p>
           </div>
         </div>

@@ -17,7 +17,7 @@ function InputField({
   const inputType = showPassword && toggle ? "text" : type;
 
   return (
-    <div className="mb-4">
+    <div className="mb-2">
       {/* Label */}
       {label && (
         <label

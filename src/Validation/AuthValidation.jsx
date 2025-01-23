@@ -14,6 +14,14 @@ export const SignInValidation  = object({
     email:string().email().required("E-mail is Required"),
     password:string().min(4).max(12).required("Password is Required")
 })  
+export const ResetPasswordValidation  = object({
+    password:string().min(4).max(12).required("Password is Required")
+})  
+
+export const ForgotPasswordValidation  = object({
+    email:string().email().required("E-mail is Required"),
+   
+})  
 
 export const VerifyOtpValidation  = object({
     otp:string().min(6).max(6).required("Otp is Required")
