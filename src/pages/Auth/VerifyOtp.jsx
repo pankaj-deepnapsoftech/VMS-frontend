@@ -10,7 +10,7 @@ function VerifyOtp() {
 
     const { verifyotp,ResendOtp, loading } = useAuthContext()
 
-    const [timer, setTimer] = useState(10); // Initial timer (in seconds)
+    const [timer, setTimer] = useState(5); // Initial timer (in seconds)
     const [isResendDisabled, setIsResendDisabled] = useState(true);
 
     useEffect(() => {

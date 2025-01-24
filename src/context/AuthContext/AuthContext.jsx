@@ -127,7 +127,7 @@ const AuthContextProvider = ({ children }) => {
     
     setLoading(true);
     try {
-      const res = await AxiosHandler.post("/auth/resend-otp");
+      const res = await AxiosHandler.put("/auth/resend-otp");
       toast.dismiss(toastId);
       toast.success(res.data.message);
      

@@ -120,8 +120,7 @@ function Home() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const {cardData,vulnerableItemsByRiskRatingData} = useDataContext();
-  console.log(  vulnerableItemsByRiskRatingData)
-  const newData = vulnerableItemsByRiskRatingData.map((item)=>{date:item.month})
+  const newData = vulnerableItemsByRiskRatingData.map((item)=> ({ date: item.month, Critical: item.critical, High: item.high, Medium: item.medium, Low: item.low, info: item.informational }))
 
   const metrics = [
     {
@@ -231,7 +230,7 @@ function Home() {
                   <Area type="monotone" dataKey="High" stackId="1" stroke="#F97316" fill="#F97316" />
                   <Area type="monotone" dataKey="Medium" stackId="1" stroke="#EAB308" fill="#EAB308" />
                   <Area type="monotone" dataKey="Low" stackId="1" stroke="#22C55E" fill="#22C55E" />
-                  <Area type="monotone" dataKey="None" stackId="1" stroke="#3B82F6" fill="#3B82F6" />
+                  <Area type="monotone" dataKey="info" stackId="1" stroke="#3B82F6" fill="#3B82F6" />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
