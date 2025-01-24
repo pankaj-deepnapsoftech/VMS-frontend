@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BiBarChartAlt2 } from 'react-icons/bi';
 import { IoShieldOutline, IoShieldCheckmarkOutline } from 'react-icons/io5';
 import { IoMdSettings } from 'react-icons/io';
@@ -6,54 +6,13 @@ import { MdKeyboardArrowDown } from 'react-icons/md';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { AiOutlineMenu } from 'react-icons/ai';
 import Card from '@/components/Card';
+import { useDataContext } from '@/context';
+import { Modal } from '@/components/modal/FileUploadModal';
 
 
 
 // Mock data for the metrics
-const metrics = [
-  {
-    title: ' Total Vulnerability',
-    value: '739',
-    change: '0 (0.0%) Oct 21: 739',
-    icon: IoShieldOutline
-  },
-  {
-    title: 'In Progress',
-    value: '945',
-    change: '0 (0.0%) Oct 21: 945',
-    icon: IoShieldCheckmarkOutline
-  },
-  {
-    title: 'Out Of Scope',
-    value: '579',
-    change: '0 (0.0%) Oct 21: 579',
-    icon: IoMdSettings
-  },
-  {
-    title: 'Open',
-    value: '741',
-    change: '0 (0.0%) Oct 21: 741',
-    icon: IoShieldCheckmarkOutline
-  },
-  {
-    title: 'Re-open',
-    value: '741',
-    change: '0 (0.0%) Oct 21: 741',
-    icon: IoShieldCheckmarkOutline
-  },
-  {
-    title: 'Closed',
-    value: '741',
-    change: '0 (0.0%) Oct 21: 741',
-    icon: IoShieldCheckmarkOutline
-  },
-  {
-    title: 'On Hold',
-    value: '741',
-    change: '0 (0.0%) Oct 21: 741',
-    icon: IoShieldCheckmarkOutline
-  }
-];
+
 
 // Mock data for the risk rating chart
 const riskRatingData = [
@@ -159,18 +118,70 @@ const TableCard = ({ title }) => (
 
 function Home() {
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const {cardData,vulnerableItemsByRiskRatingData} = useDataContext();
+  console.log(  vulnerableItemsByRiskRatingData)
+  const newData = vulnerableItemsByRiskRatingData.map((item)=>{date:item.month})
+
+  const metrics = [
+    {
+      title: ' Total Vulnerability',
+      value: cardData?.totalData,
+      change: '0 (0.0%) Oct 21: 739',
+      icon: IoShieldOutline
+    },
+    {
+      title: 'In Progress',
+      value: cardData?.inProgress,
+      change: '0 (0.0%) Oct 21: 945',
+      icon: IoShieldCheckmarkOutline
+    },
+    {
+      title: 'Out Of Scope',
+      value: 'NA',
+      change: '0 (0.0%) Oct 21: 579',
+      icon: IoMdSettings
+    },
+    {
+      title: 'Open',
+      value: cardData?.open,
+      change: '0 (0.0%) Oct 21: 741',
+      icon: IoShieldCheckmarkOutline
+    },
+    {
+      title: 'Re-open',
+      value:cardData?.reopen,
+      change: '0 (0.0%) Oct 21: 741',
+      icon: IoShieldCheckmarkOutline
+    },
+    {
+      title: 'Closed',
+      value:cardData?.closed,
+      change: '0 (0.0%) Oct 21: 741',
+      icon: IoShieldCheckmarkOutline
+    },
+    {
+      title: 'On Hold',
+      value: cardData?.onHold,
+      change: '0 (0.0%) Oct 21: 741',
+      icon: IoShieldCheckmarkOutline
+    }
+  ];
+
+  
+
   return (
     <>
-      {/* Header */}
-     
-
-
       <div className="min-h-screen bg-gray-100 px-6">
 
         {/* Navigation */}
         <div className=" rounded-t-lg  py-4 flex flex-row   justify-end">
 
           <div className="relative flex justify-center gap-1">
+         
+
+
+            
             <select className="border rounded-md p-1" aria-label=''>
               <option className='text-black bg-white '>Severity </option>
             </select>
@@ -182,6 +193,19 @@ function Home() {
 
           </div>
         </div>
+        <button
+        onClick={() => setIsModalOpen(true)}
+        className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+      >
+       Bulk Upload
+      </button>
+
+        <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Upload an introduction"
+        subtitle=" please upload an Excel file in XLSX or XLS format. Ensure the file is properly formatted and contains all necessary data for processing."
+      />
 
         {/* Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
@@ -197,7 +221,7 @@ function Home() {
             <h3 className="text-lg font-semibold mb-4">Vulnerable Items by Risk Rating</h3>
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={riskRatingData}>
+                <AreaChart data={newData}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="date" />
                   <YAxis />
