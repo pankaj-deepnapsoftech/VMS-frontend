@@ -20,7 +20,7 @@ function Header({setShowMenu}) {
     const toggleDropdown = () => setIsOpen(!isOpen);
     return (
         <div className="flex fixed  md:w-[2%] lg:w-[25%] xl:w-[25%] 2xl:w-[20%]  ">
-        <div className=" flex flex-col text-white pt-8 pl-2">
+        <div className=" flex flex-col text-white pt-8 ">
           <Link
             onClick={setShowMenu}
             to=""
@@ -29,7 +29,7 @@ function Header({setShowMenu}) {
             <BiBarChartAlt2 className="h-6 w-6" />
             <h1 className="text-xl font-semibold">Eventus</h1>
           </Link>
-          <hr className="border-gray-100 mx-4" />
+          <hr className="border-gray-100 mx-8" />
   
           <nav className="flex-1 p-5 space-y-2">
             {list.map((data) => (
@@ -45,7 +45,7 @@ function Header({setShowMenu}) {
               </NavLink>
             ))}
           </nav>
-          <hr className="border-gray-100 mx-4" />
+          <hr className="border-gray-100 mx-8" />
   
           <div className="relative p-5">
             <button
@@ -57,13 +57,13 @@ function Header({setShowMenu}) {
               aria-expanded={isOpen}
             >
                <FaUser className="text-black w-8 h-8 rounded-2xl bg-white p-2" />
-              <span className="truncate max-w-[7.5rem] text-sm font-medium">
+              <span className="truncate max-w-[7.5rem] text-sm font-medium text-white">
                 User
               </span>
               <svg
                 className={`transition-transform ${
                   isOpen ? "rotate-180" : ""
-                } w-4 h-4`}
+                } w-4 h-4 text-white`}
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="none"
@@ -78,19 +78,19 @@ function Header({setShowMenu}) {
   
             {isOpen && (
               <div
-                className="absolute top-full left-0 mt-2 w-full bg-white shadow-lg rounded-lg"
+                className="absolute top-100 left-6 mt-1 w-5/6 bg-white shadow-lg rounded-lg"
                 role="menu"
                 aria-orientation="vertical"
                 aria-labelledby="dropdown-trigger"
               >
                 <button
-                  className="flex w-full items-center px-4 py-2 text-gray-800 hover:bg-gray-100"
+                  className="flex w-full items-center px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-lg"
                 >
                   Profile
                 </button>
                 <button
                   onClick={Logout}
-                  className="flex w-full items-center px-4 py-2 text-gray-800 hover:bg-gray-100"
+                  className="flex w-full items-center px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-lg"
                 >
                   Log Out
                 </button>

@@ -3,11 +3,16 @@ import Remedition from "@/pages/Remedition";
 import Services from "@/pages/Services";
 import VulnerableCls from "@/pages/VulnerableCls";
 import Home from '@/pages/Home';
+import { AllVulnerability } from "@/pages/AllVulnerablity";
 
 export const PrivateRoutes = [
     {
         path: "",
         element: <Home />
+    },
+    {
+        path: "/all-vulnerability",
+        element: <AllVulnerability />
     },
     {
         path: "/services",

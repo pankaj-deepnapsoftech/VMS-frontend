@@ -16,6 +16,7 @@ export const Services = lazy(()=>import("@pages/Services"));
 export const VulnerableCls = lazy(()=>import("@pages/VulnerableCls"));
 export const Exceptions = lazy(()=>import("@pages/Exceptions"));
 export const Remedition = lazy(()=>import("@pages/Remedition"));
+export const AllVulnerability = lazy(()=>import("@pages/AllVulnerablity"));
 
 
 

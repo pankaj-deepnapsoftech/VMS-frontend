@@ -13,9 +13,11 @@ function SignUp() {
     initialValues: { full_name: "", phone: "", email: "", password: "", role: "" },
     validationSchema: SignUpValidation,
     onSubmit: (value) => {
+      console.log(value, "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
       Signup(value);
     }
   })
+  
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="w-full max-w-6xl bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row">

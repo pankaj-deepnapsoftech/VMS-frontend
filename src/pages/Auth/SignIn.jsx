@@ -7,25 +7,26 @@ import { FaEye, FaEyeSlash, FaFacebook, FaChartLine, FaEnvelope, FaLock } from '
 import { Link } from 'react-router-dom';
 
 function SignIn() {
-  const {Signin,loading} = useAuthContext()
+  const { Signin, loading } = useAuthContext()
 
   const [showPassword, setShowPassword] = useState(false);
-  
 
- const {values,errors,touched,handleBlur,handleChange,handleSubmit}=useFormik({
-  initialValues:{email:"", password:"" },
-  validationSchema:SignInValidation,
-  onSubmit:(value)=>{
-    Signin(value)
-  }
- })
+
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
+    initialValues: { email: "", password: "" },
+    validationSchema: SignInValidation,
+    onSubmit: (value) => {
+      
+      Signin(value)
+    }
+  })
 
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="w-full max-w-6xl bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row">
         {/* Left Side - Sign In Form */}
-        
+
         <div className="w-full md:w-1/2 p-8 md:p-12">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-800 mb-2">Sign In</h1>
@@ -33,7 +34,7 @@ function SignIn() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-          <InputField
+            <InputField
               label={"Email Address"}
               type={"email"}
               showPassword={false}
@@ -58,7 +59,7 @@ function SignIn() {
               name="password"
             />
             {touched.password && errors.password && <p> {errors.password}</p>}
-           
+
 
             <div className="flex items-center justify-between">
               <div className="flex items-center">
@@ -92,7 +93,7 @@ function SignIn() {
                 <span className="px-2 bg-white text-gray-500">OR</span>
               </div>
             </div>
-{/* 
+            {/* 
             <div className="space-y-4">
               <button className="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-700 px-4 py-3 rounded-lg hover:bg-gray-50 transition duration-200">
                 <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5" />
@@ -119,7 +120,7 @@ function SignIn() {
             <h2 className="text-4xl font-bold mb-6">Welcome back!</h2>
             <h3 className="text-2xl font-semibold mb-4">Please sign in to your account</h3>
             <p className="text-blue-100 mb-8">
-            Monitor vulnerabilities, prioritize risks, and streamline remediation efforts with our intuitive Vulnerability Dashboard.
+              Monitor vulnerabilities, prioritize risks, and streamline remediation efforts with our intuitive Vulnerability Dashboard.
             </p>
 
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6">

@@ -1,8 +1,8 @@
 import React from 'react'
 
-function Card({data}) {
+function Card({data ,index}) {
   return (
-    <div key={data.title} className="bg-white rounded-lg shadow p-6">
+    <div key={index} className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-sm text-gray-600">{data.title}</h3>
               <data.icon className="h-5 w-5 text-blue-600" />
