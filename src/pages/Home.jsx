@@ -93,13 +93,13 @@ function Home() {
       icon: IoShieldOutline
     },
     {
-      title: 'In Progress',
+      title: 'Remedition in Progress',
       value: cardData?.inProgress,
 
       icon: IoShieldCheckmarkOutline
     },
     {
-      title: 'Out Of Scope',
+      title: 'Exceptions',
       value: 'NA',
 
       icon: IoMdSettings
@@ -175,7 +175,7 @@ function Home() {
         {/* Charts Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 ">
           {/* Risk Rating Chart */}
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="bg-white rounded-lg shadow p-6 hover:scale-95  transition">
             <h3 className="text-lg font-semibold mb-4">Vulnerable Items by Risk Rating</h3>
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
@@ -196,9 +196,9 @@ function Home() {
           </div>
 
           {/* Age and Risk Rating Chart */}
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="bg-white rounded-lg shadow p-6  hover:scale-95  transition">
             <h3 className="text-lg font-semibold mb-4">Vulnerable Items by Age and Risk Rating</h3>
-            <div className="h-64">
+            <div className="h-64 ">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={dataList}>
                   <CartesianGrid strokeDasharray="3 3" />
@@ -216,15 +216,15 @@ function Home() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-6">
+        {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-6">
           {metrics.map((metric) => (
             <Card data={metric} />
           ))}
-        </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-5">
+        </div> */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 my-5 ">
 
-          <div className="bg-white shadow rounded-lg flex justify-center flex-col items-center ">
-            <h3 className="text-gray-700 text-lg font-semibold mb-2">New and Closed Vulnerable Items</h3>
+          <div className="bg-white shadow rounded-lg flex justify-center flex-col items-center hover:scale-95  transition ">
+            <h3 className="text-gray-700 text-lg font-semibold mb-2">Open and Closed Vulnerable Items</h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={newAndCloseVulnerableData}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -232,13 +232,13 @@ function Home() {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="New" fill="#8884d8" />
+                <Bar dataKey="Open" fill="#8884d8" />
                 <Bar dataKey="Closed" fill="#82ca9d" />
               </BarChart>
             </ResponsiveContainer>
           </div>
 
-          <div className="bg-white shadow rounded-lg p-6">
+          <div className="bg-white shadow rounded-lg p-6 hover:scale-95  transition">
             <h3 className="text-gray-700 text-lg font-semibold mb-4">Closed Vulnerable Items by Remediation Target Status</h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={closevulnerableItems}>
@@ -257,11 +257,9 @@ function Home() {
           </div>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <TableCard title="Critical Vulnerable Items by Assignment Group" />
-          <TableCard title="Overdue Critical Vulnerable Items by Assignment Group" />
+          <TableCard title="Critical / High Vulnerable Items by Assignment Group" />
+          <TableCard title="Overdue Critical / High Vulnerable Items by Assignment Group" />
         </div>
-
-
       </div>
     </>
 
