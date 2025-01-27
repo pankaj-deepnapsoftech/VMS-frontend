@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { authContext } from "./AuthContext/AuthContext";
 import { DataContext } from "./DataContext/DataContext";
-import { AllVulnerabililtyContext } from "./AllVulnerabilityContext/AllVulnerabilityContext";
+import { VulnerabililtyDataContext } from "./VulnerabilityDataContext/VulnerabilityDataContext";
 
 
 
@@ -13,7 +13,7 @@ import { AllVulnerabililtyContext } from "./AllVulnerabilityContext/AllVulnerabi
 
 export { default as AuthContextProvider } from "./AuthContext/AuthContext";
 export { default as DataContextProvider } from "./DataContext/DataContext";
-export { default as AllVulnerabililtyContextProvider } from "./AllVulnerabilityContext/AllVulnerabilityContext";
+export { default as VulnerabililtyDataContextProvider } from "./VulnerabilityDataContext/VulnerabilityDataContext";
 
 
 
@@ -29,4 +29,4 @@ export { default as AllVulnerabililtyContextProvider } from "./AllVulnerabilityC
 
 export const useAuthContext = () => useContext(authContext)
 export const useDataContext = () => useContext(DataContext);
-export const useAllVulnerabililtyContext = () => useContext(AllVulnerabililtyContext);
+export const useVulnerabililtyDataContext = () => useContext(VulnerabililtyDataContext);

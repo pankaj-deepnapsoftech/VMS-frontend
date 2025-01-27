@@ -39,7 +39,7 @@ import { Modal } from '@/components/modal/FileUploadModal';
 //       </ResponsiveContainer>
 //     </div>
 //   );
-//};
+// };
 
 
 const TableCard = ({ title }) => (
@@ -75,6 +75,8 @@ function Home() {
 
 
   const { cardData, vulnerableItemsByRiskRatingData, vulnerableItemsByAgeData, newAndCloseVulnerableData, closevulnerableItems } = useDataContext();
+
+  const closevulnerableItemsData = [closevulnerableItems];
 
   const dataList = [vulnerableItemsByAgeData.Critical,
   vulnerableItemsByAgeData.High,
@@ -185,11 +187,11 @@ function Home() {
                   <YAxis />
                   <Tooltip />
                   <Legend />
-                  <Area type="monotone" dataKey="Critical" stackId="1" stroke="#EF4444" fill="#EF4444" />
-                  <Area type="monotone" dataKey="High" stackId="1" stroke="#F97316" fill="#F97316" />
-                  <Area type="monotone" dataKey="Medium" stackId="1" stroke="#EAB308" fill="#EAB308" />
-                  <Area type="monotone" dataKey="Low" stackId="1" stroke="#22C55E" fill="#22C55E" />
-                  <Area type="monotone" dataKey="info" stackId="1" stroke="#3B82F6" fill="#3B82F6" />
+                  <Area type="monotone" dataKey="Critical" stackId="1" stroke="#ff6b6b" fill="#ff6b6b" />
+                  <Area type="monotone" dataKey="High" stackId="1" stroke="#4caf50" fill="#4caf50" />
+                  <Area type="monotone" dataKey="Medium" stackId="1" stroke="#2196f3" fill="#2196f3" />
+                  <Area type="monotone" dataKey="Low" stackId="1" stroke="#ffc107" fill="#ffc107" />
+                  <Area type="monotone" dataKey="info" stackId="1" stroke="#9c27b0" fill="#9c27b0" />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
@@ -206,10 +208,10 @@ function Home() {
                   <YAxis />
                   <Tooltip />
                   <Legend />
-                  <Bar dataKey="0-30 Days" fill="#93C5FD" />
-                  <Bar dataKey="31-60 Days" fill="#60A5FA" />
-                  <Bar dataKey="61-90 Days" fill="#3B82F6" />
-                  <Bar dataKey="90+ Days" fill="#2563EB" />
+                  <Bar dataKey="0-30 Days" fill="#ff6b6b" />
+                  <Bar dataKey="31-60 Days" fill="#4caf50" />
+                  <Bar dataKey="61-90 Days" fill="#2196f3" />
+                  <Bar dataKey="90+ Days" fill="#9c27b0" />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -221,6 +223,7 @@ function Home() {
             <Card data={metric} />
           ))}
         </div> */}
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 my-5 ">
 
           <div className="bg-white shadow rounded-lg flex justify-center flex-col items-center hover:scale-95  transition ">
@@ -232,19 +235,21 @@ function Home() {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="Open" fill="#8884d8" />
-                <Bar dataKey="Closed" fill="#82ca9d" />
+                <Bar dataKey="Open" fill="#ff6b6b" />
+                <Bar dataKey="Closed" fill="#4caf50" />
               </BarChart>
             </ResponsiveContainer>
           </div>
 
-          <div className="bg-white shadow rounded-lg p-6 hover:scale-95  transition">
-            <h3 className="text-gray-700 text-lg font-semibold mb-4">Closed Vulnerable Items by Remediation Target Status</h3>
+          <div className="bg-white shadow rounded-lg p-6 hover:scale-95 transition transform duration-300">
+            <h3 className="text-gray-700 text-lg font-semibold mb-4">
+              Closed Vulnerable Items by Remediation Target Status
+            </h3>
             <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={closevulnerableItems}>
+              <BarChart data={closevulnerableItemsData} layout="vertical">
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis />
+                <XAxis type="number" />
+                <YAxis type="category" dataKey="name" hide={true} />
                 <Tooltip />
                 <Legend />
                 <Bar dataKey="TargetMissed" fill="#ff6b6b" name="Target Missed" />
@@ -255,6 +260,7 @@ function Home() {
               </BarChart>
             </ResponsiveContainer>
           </div>
+
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <TableCard title="Critical / High Vulnerable Items by Assignment Group" />

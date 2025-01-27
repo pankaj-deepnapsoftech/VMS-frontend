@@ -9,16 +9,16 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import App from "./App";
-import { AllVulnerabililtyContextProvider, AuthContextProvider, DataContextProvider } from "./context";
+import { AuthContextProvider, DataContextProvider, VulnerabililtyDataContextProvider } from "./context";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <AuthContextProvider>
         <DataContextProvider>
-          <AllVulnerabililtyContextProvider>
+          <VulnerabililtyDataContextProvider>
             <App />
-          </AllVulnerabililtyContextProvider>
+          </VulnerabililtyDataContextProvider>
         </DataContextProvider>
       </AuthContextProvider>
     </BrowserRouter>

@@ -1,9 +1,13 @@
 import Exceptions from "@/pages/Exceptions";
 import Remedition from "@/pages/Remedition";
-import Services from "@/pages/Services";
-import VulnerableCls from "@/pages/VulnerableCls";
+import Services from "@/pages/ApplicationVulnerability";
+import VulnerableCls from "@/pages/InfrastructureVulnerability";
 import Home from '@/pages/Home';
-import { AllVulnerability } from "@/pages/AllVulnerablity";
+import AllCustomer from "@/pages/AllCustomer";
+import { VulnerabilityData } from "@/pages/VulnerablityData";
+import ApplicationVulnerability from "@/pages/ApplicationVulnerability";
+import InfraStructureVulnerability from "@/pages/InfrastructureVulnerability";
+
 
 export const PrivateRoutes = [
     {
@@ -11,16 +15,20 @@ export const PrivateRoutes = [
         element: <Home />
     },
     {
-        path: "/all-vulnerability",
-        element: <AllVulnerability />
+        path: "/vulnerability-data",
+        element: <VulnerabilityData />
     },
     {
-        path: "/services",
-        element: <Services />
+        path: "/all-customer",
+        element: <AllCustomer />
     },
     {
-        path: "/vulnerableCls",
-        element: <VulnerableCls />
+        path: "/application-vulnerability",
+        element: <ApplicationVulnerability />
+    },
+    {
+        path: "/infrastructure-vulnerability",
+        element: <InfraStructureVulnerability />
     },
     {
         path: "/exceptions",
