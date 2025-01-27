@@ -9,7 +9,13 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import App from "./App";
-import { AuthContextProvider, DataContextProvider, VulnerabililtyDataContextProvider } from "./context";
+import {
+  AllCustomerContextProvider,
+  AllEmployeeContextProvider,
+  AuthContextProvider,
+  DataContextProvider,
+  VulnerabililtyDataContextProvider
+} from "./context";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -17,7 +23,11 @@ createRoot(document.getElementById("root")).render(
       <AuthContextProvider>
         <DataContextProvider>
           <VulnerabililtyDataContextProvider>
-            <App />
+            <AllCustomerContextProvider>
+              <AllEmployeeContextProvider>
+                <App />
+              </AllEmployeeContextProvider>
+            </AllCustomerContextProvider>
           </VulnerabililtyDataContextProvider>
         </DataContextProvider>
       </AuthContextProvider>

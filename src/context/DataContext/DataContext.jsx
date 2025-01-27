@@ -106,9 +106,6 @@ const DataContextProvider = ({ children }) => {
     }
 
 
-
-
-
     const AllVulnerablilty = async () => {
 
         try {

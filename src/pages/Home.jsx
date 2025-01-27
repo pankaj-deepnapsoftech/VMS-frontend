@@ -159,7 +159,7 @@ function Home() {
           </button>
         </div>
 
-
+  
         <Modal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}

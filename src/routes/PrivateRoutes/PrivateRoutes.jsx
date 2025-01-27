@@ -7,6 +7,7 @@ import AllCustomer from "@/pages/AllCustomer";
 import { VulnerabilityData } from "@/pages/VulnerablityData";
 import ApplicationVulnerability from "@/pages/ApplicationVulnerability";
 import InfraStructureVulnerability from "@/pages/InfrastructureVulnerability";
+import AllEmployee from "@/pages/AllEmployee";
 
 
 export const PrivateRoutes = [
@@ -21,6 +22,10 @@ export const PrivateRoutes = [
     {
         path: "/all-customer",
         element: <AllCustomer />
+    },
+    {
+        path: "/all-employee",
+        element: <AllEmployee />
     },
     {
         path: "/application-vulnerability",

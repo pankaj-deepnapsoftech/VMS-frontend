@@ -9,6 +9,7 @@ export const list = [
     { title: "Dashboard", route: "", icon: BiSolidDashboard },
     { title: "Vulnerability Data", route: "/vulnerability-data", icon: IoShield },
     { title: "All Customer", route: "/all-customer", icon: IoPerson },
+    { title: "All Employee", route: "/all-employee", icon: IoPerson },
     { title: "Application Vulnerability", route: "/application-vulnerability", icon: MdOutlineMiscellaneousServices },
     { title: "Infrastructure Vulnerability ", route: "/infrastructure-vulnerability", icon: GrVulnerability },
     { title: "Exceptions", route: "/exceptions", icon: AiOutlineException },

@@ -1,13 +1,14 @@
-import { useAllCustomerContext } from "@/context";
+import { useAllEmployeeContext } from "@/context";
 import React, { useState } from "react";
 
-export default function AllCustomer() {
+export default function AllEmployee() {
 
-	const { AllCustomersData } = useAllCustomerContext();
+	const { allEmployeesData, VerifyEmployee } = useAllEmployeeContext();
+	console.log(allEmployeesData)
 
 
 	return (
-		<div className="p-6 bg-white shadow-lg rounded-lg">
+		<div className="m-8 bg-white shadow-lg rounded-lg">
 			{/* Table Header */}
 			<div className="flex justify-between items-center mb-4">
 
@@ -23,12 +24,12 @@ export default function AllCustomer() {
 							<th className="px-4 py-3 border text-left">Email</th>
 							<th className="px-4 py-3 border text-left">Phone</th>
 							<th className="px-4 py-3 border text-left">Role</th>
-
-
+							<th className="px-4 py-3 border text-left">Approval Status</th>
+							{/* <th className="px-4 py-3 border text-left">Action</th> */}
 						</tr>
 					</thead>
 					<tbody>
-						{AllCustomersData?.map((user, index) => (
+						{allEmployeesData?.map((user, index) => (
 							<tr
 								key={user._id}
 								className="odd:bg-gray-50 even:bg-gray-100 hover:bg-gray-200 transition duration-200"
@@ -38,8 +39,23 @@ export default function AllCustomer() {
 								<td className="px-4 py-3 border">{user.email}</td>
 								<td className="px-4 py-3 border">{user.phone}</td>
 								<td className="px-4 py-3 border">{user.role}</td>
-
-
+								<td className="px-4 py-3 border">
+									{user.employee_approve ? (
+										<span className="px-3 py-1 text-sm font-semibold text-green-800 bg-green-100 rounded-full">
+											Approved
+										</span>
+									) : <button
+										onClick={() => VerifyEmployee(user._id)}
+										className="px-3 py-1 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+									>
+										Verify
+									</button>
+									}
+								</td>
+								{/* <td className="px-4 py-3 border">
+									
+									)}
+								</td> */}
 							</tr>
 						))}
 					</tbody>
