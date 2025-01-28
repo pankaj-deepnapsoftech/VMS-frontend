@@ -16,10 +16,10 @@ const DataContextProvider = ({ children }) => {
     const [cardData, setCardData] = useState(null);
     const [vulnerableItemsByRiskRatingData, setVulnerableItemsByRiskRatingData] = useState([]);
     const [vulnerableItemsByAgeData, setVulnerableItemsByAgeData] = useState([]);
-
-    const [allVulnerabilityData, setAllVulnerabilityData] = useState([]);
     const [newAndCloseVulnerableData, setNewAndCloseVulnerableData] = useState([]);
     const [closevulnerableItems, setClosevulnerableItems] = useState([]);
+    const [criticalHighVulnerable, setCriticalHighVulnerable] = useState([]);
+    const [criticalHighVulnerableOverdue, setCriticalHighVulnerableOverdue] = useState([]);
 
 
 
@@ -106,11 +106,12 @@ const DataContextProvider = ({ children }) => {
     }
 
 
-    const AllVulnerablilty = async () => {
-
+    const CriticalHighVulnerable = async () => {
+        setLoading(true);
         try {
-            const res = await AxiosHandler.get("/data/get");
-            setAllVulnerabilityData(res.data.data);
+
+            const res = await AxiosHandler.get("/data/CriticalHighVulnerable");
+            setCriticalHighVulnerable(res.data);
         } catch (error) {
             console.log(error)
 
@@ -118,16 +119,30 @@ const DataContextProvider = ({ children }) => {
     }
 
 
+    const CriticalHighVulnerableOverdue = async () => {
+        setLoading(true);
+        try {
+
+            const res = await AxiosHandler.get("/data/CriticalHighVulnerableOverdue");
+            setCriticalHighVulnerableOverdue(res.data);
+        } catch (error) {
+            console.log(error)
+
+        }
+    }
 
 
     useEffect(() => {
         if (token) {
+
             getHomeCardData();
             VulnerableItemsByRiskRating();
             VulnerableItemsByAge();
             NewAndCloseVulnerable();
             ClosevulnerableItems();
-            AllVulnerablilty();
+            CriticalHighVulnerable();
+            CriticalHighVulnerableOverdue();
+
         }
     }, [token])
     return (
@@ -138,8 +153,8 @@ const DataContextProvider = ({ children }) => {
             vulnerableItemsByAgeData,
             newAndCloseVulnerableData,
             closevulnerableItems,
-            allVulnerabilityData
-
+            criticalHighVulnerable,
+            criticalHighVulnerableOverdue
         }}>
             {children}
         </DataContext.Provider>

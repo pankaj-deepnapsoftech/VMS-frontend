@@ -1,5 +1,5 @@
 import React, { Suspense, useState } from 'react';
-import { BiSearch, BiEditAlt } from 'react-icons/bi';
+import { BiSearch, BiEditAlt, BiPlus, BiSave } from 'react-icons/bi';
 import { RiDeleteBinFill } from "react-icons/ri";
 import { MdClose, MdSave } from 'react-icons/md';
 import { useVulnerabililtyDataContext } from '@/context';
@@ -9,7 +9,7 @@ import { Loader } from '@/constants/Components-lazy-loading/components.Lazy';
 
 export function VulnerabilityData() {
 
-  const { UpdateData, allVulnerabilityData } = useVulnerabililtyDataContext();
+  const { UpdateData, allVulnerabilityData, DeleteData } = useVulnerabililtyDataContext();
 
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: '', direction: 'asc' });
@@ -89,18 +89,11 @@ export function VulnerabilityData() {
   // })
 
 
-
-
-
-
-
-
-
   return (
 
     <Suspense fallback={<Loader />}>
       <div className="p-4 md:p-6 max-w-[95%] mx-auto bg-white rounded-xl shadow-lg">
-        <div className="mb-4 flex flex-col md:flex-row items-start md:items-center justify-between">
+        <div className="mb-1 flex flex-col md:flex-row items-start md:items-center  justify-between">
 
           <div className="relative mt-4 md:mt-0">
             <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
@@ -112,6 +105,37 @@ export function VulnerabilityData() {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
+          <div className='flex  w-full lg:justify-end items-center py-2 gap-2'>
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="px-4  py-2 bg-[#015289] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
+            >
+              <BiPlus className="h-6 w-6" />
+              Add Data
+            </button>
+            <button
+              onClick={() => alert("This Feature is under Development")}
+              className="px-4 py-2 bg-[#015289] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
+            >
+              <BiSave className="h-6 w-6" />
+              Export  Data
+            </button>
+          </div>
+        </div>
+        <div className=" rounded-t-lg  py-2 flex flex-row   justify-end">
+
+          <div className="relative flex justify-center gap-1">
+
+            <select className="border rounded-md p-1" aria-label=''>
+              <option className='text-black bg-white '>Severity </option>
+            </select>
+            <select className="border rounded-md p-1">
+              <option className='text-black bg-white '>Assessment type </option>
+            </select> <select className="border rounded-md p-1">
+              <option className='text-black bg-white '>Status </option>
+            </select>
+
+          </div>
         </div>
 
         <div className="overflow-x-auto">
@@ -121,10 +145,11 @@ export function VulnerabilityData() {
                 {dynamicHeaders.map((header, index) => (
                   <th
                     key={index}
-                    className="px-4 py-3 text-left text-xs font-medium text-white uppercase tracking-wider cursor-pointer "
+                    className="px-2 py-1 text-left text-xs font-medium text-white uppercase tracking-wider cursor-pointer "
                     onClick={() => handleSort(header)}
                   >
                     {header.replace(/_/g, ' ')}
+
                   </th>
                 ))}
                 <th className="px-4 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
@@ -140,19 +165,26 @@ export function VulnerabilityData() {
                       <span className="text-sm text-gray-900">{item[field]}</span>
                     </td>
                   ))}
-                  <td className="px-4 py-4 whitespace-nowrap">
+                  <td className="px-4 py-4 whitespace-nowrap flex justify-around ">
                     <button
                       onClick={() => handleEdit(item)}
-                      className="text-blue-600 hover:text-blue-800"
+                      className="text-white "
                     >
-                      <BiEditAlt className="h-5 w-5 inline" /> Edit
+                      <BiEditAlt className="h-5 w-5 inline text-blue-800" />
+                      {/* <p className='text-gray-100 font-medium text-sm px-3'>Edit
+                      </p> */}
                     </button>
 
                     <button
-                      onClick={() => handleEdit(item)}
-                      className="text-blue-600 hover:text-blue-800"
+                      onClick={() => {
+
+                        let conf = confirm("Are you want to Delete this row"); conf === true ? DeleteData(item._id) : ""
+                      }}
+                      className="text-white"
                     >
-                      <RiDeleteBinFill className="h-5 w-5 inline" /> delete
+                      <RiDeleteBinFill className="h-5 w-5 inline text-red-800" />
+                      {/* <p className='text-gray-100 font-medium text-sm px-1'>delete
+                      </p> */}
                     </button>
                   </td>
                 </tr>
