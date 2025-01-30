@@ -1,0 +1,154 @@
+import React, { Suspense, useState, useCallback, useMemo } from "react";
+import { BiSearch, BiEditAlt, BiPlus, BiSave } from "react-icons/bi";
+import { RiDeleteBinFill } from "react-icons/ri";
+import { useJiraContext } from "@/context";
+import * as XLSX from "xlsx";
+
+export const JiraDataTable = () => {
+	const { jiraData } = useJiraContext();
+	console.log(jiraData, "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+
+	const [searchTerm, setSearchTerm] = useState("");
+	const [currentPage, setCurrentPage] = useState(1);
+	const rowsPerPage = 10;
+
+	// Extract and format necessary fields
+	const processedData = useMemo(() => {
+		return jiraData?.map((item, index) => ({
+			id: index + 1,
+			issueId: item.issueType?.id || "N/A",
+			issueType: item.issueType?.name || "N/A",
+			issueDescription: item.issueType?.description || "N/A",
+			projectName: item.project?.name || "N/A",
+			projectType: item.project?.projectTypeKey || "N/A",
+			priority: item.priority || "N/A",
+			assignee: item.assignee || "Unassigned",
+			status: item.status || "N/A",
+			remediatedDate: item.Remediated_Date
+				? new Date(item.Remediated_Date).toLocaleDateString("en-IN", {
+					day: "2-digit",
+					month: "short",
+					year: "numeric",
+				})
+				: "N/A",
+			creatorName: item.creator?.displayName || "N/A",
+			creatorEmail: item.creator?.emailAddress || "N/A",
+			creatorAccountId: item.creator?.accountId || "N/A",
+		}));
+	}, [jiraData]);
+
+	// Filter data based on search input
+	const filteredData = useMemo(() => {
+		return processedData?.filter((item) =>
+			Object.values(item).some(
+				(value) =>
+					value && value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+			)
+		);
+	}, [processedData, searchTerm]);
+
+	const totalPages = Math.ceil(filteredData?.length / rowsPerPage);
+	const paginatedData = useMemo(() => {
+		return filteredData?.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
+	}, [filteredData, currentPage]);
+
+	// Handle downloading data as an Excel file
+	const handleDownload = useCallback(() => {
+		const worksheet = XLSX.utils.json_to_sheet(filteredData);
+		const workbook = XLSX.utils.book_new();
+		XLSX.utils.book_append_sheet(workbook, worksheet, "Vulnerabilities");
+		XLSX.writeFile(workbook, "Vulnerabilities.xlsx");
+	}, [filteredData]);
+
+	return (
+		<Suspense fallback={<div>Loading...</div>}>
+			<div className="p-4 md:p-6 max-w-[95%] mx-auto bg-white rounded-xl shadow-lg">
+				{/* Search Bar & Buttons */}
+				<div className="mb-4 flex flex-col md:flex-row items-start md:items-center justify-between">
+					<div className="relative mt-4 md:mt-0">
+						<BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+						<input
+							type="text"
+							placeholder="Search vulnerabilities..."
+							className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg w-full md:w-80"
+							value={searchTerm}
+							onChange={(e) => setSearchTerm(e.target.value)}
+						/>
+					</div>
+					<div className="flex w-full lg:justify-end items-center py-2 gap-2">
+						<button
+							onClick={handleDownload}
+							className="px-4 py-2 bg-[#015289] text-white text-sm font-medium rounded-md flex items-center hover:bg-[#014173]"
+						>
+							<BiSave className="h-4 w-4 mr-2" />
+							Export Data
+						</button>
+					</div>
+				</div>
+
+				{/* Data Table */}
+				<div className="overflow-x-auto">
+					<table className="min-w-full divide-y divide-gray-200">
+						<thead className="bg-[#015289] text-white">
+							<tr>
+								{["ID", "Issue Type", "Issue ID", "issue Description", "Project Name", "Project Type", "Priority", "Assignee", "Status", "Remediated Date", "Creator Name", "Creator Email Address", "Creator Account ID", "Actions"].map((header, idx) => (
+									<th key={idx} className="px-4 py-3 text-left text-xs font-medium uppercase">
+										{header}
+									</th>
+								))}
+							</tr>
+						</thead>
+						<tbody className="divide-y divide-gray-200">
+							{paginatedData?.map((item) => (
+								<tr key={item.id} className="hover:bg-gray-50">
+									<td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">{item.id}</td>
+									<td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">{item.issueType}</td>
+									<td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">{item.issueId}</td>
+									<td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">{item.issueDescription}</td>
+									<td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">{item.projectName}</td>
+									<td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">{item.projectType}</td>
+									<td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">{item.priority}</td>
+									<td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">{item.assignee}</td>
+									<td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">{item.status}</td>
+									<td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">{item.remediatedDate}</td>
+									<td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">{item.creatorName}</td>
+									<td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">{item.creatorEmail}</td>
+									<td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">{item.creatorAccountId}</td>
+									<td className="px-4 py-4 whitespace-nowrap flex justify-around">
+										<button onClick={() => { console.log(item) }}
+											className="text-blue-600 hover:text-blue-800" title="Edit">
+											<BiEditAlt className="h-5 w-5" />
+										</button>
+										<button className="text-red-600 hover:text-red-800" title="Delete">
+											<RiDeleteBinFill className="h-5 w-5" />
+										</button>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
+
+				{/* Pagination */}
+
+				<div className="mt-4 flex justify-center items-center space-x-2">
+					<button
+						onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+						className="px-3 py-1 border rounded-l-md bg-gray-200 hover:bg-gray-300"
+						disabled={currentPage === 1}
+					>
+						Prev
+					</button>
+					<span className="px-3 py-1 border">{`${currentPage} / ${totalPages}`}</span>
+					<button
+						onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+						className="px-3 py-1 border rounded-r-md bg-gray-200 hover:bg-gray-300"
+						disabled={currentPage === totalPages}
+					>
+						Next
+					</button>
+				</div>
+			</div>
+		</Suspense>
+	);
+}

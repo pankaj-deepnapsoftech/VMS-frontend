@@ -22,7 +22,6 @@ const AllEmployeeContextProvider = ({ children }) => {
 		try {
 			const res = await AxiosHandler.get(`/auth/all-employee`);
 			SetAllEmployeesData(res.data.users);
-			console.log(res.data.users)
 
 		} catch (error) {
 			console.log(error)

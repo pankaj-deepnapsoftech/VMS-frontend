@@ -12,8 +12,10 @@ import App from "./App";
 import {
   AllCustomerContextProvider,
   AllEmployeeContextProvider,
+  ApplicationVulnerabilityContextProvider,
   AuthContextProvider,
   DataContextProvider,
+  JiraContextProvider,
   VulnerabililtyDataContextProvider
 } from "./context";
 
@@ -25,7 +27,13 @@ createRoot(document.getElementById("root")).render(
           <VulnerabililtyDataContextProvider>
             <AllCustomerContextProvider>
               <AllEmployeeContextProvider>
-                <App />
+                <JiraContextProvider>
+                  <ApplicationVulnerabilityContextProvider>
+
+                    <App />
+
+                  </ApplicationVulnerabilityContextProvider>
+                </JiraContextProvider>
               </AllEmployeeContextProvider>
             </AllCustomerContextProvider>
           </VulnerabililtyDataContextProvider>

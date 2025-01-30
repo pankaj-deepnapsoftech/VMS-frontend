@@ -8,6 +8,7 @@ import { VulnerabilityData } from "@/pages/VulnerablityData";
 import ApplicationVulnerability from "@/pages/ApplicationVulnerability";
 import InfraStructureVulnerability from "@/pages/InfrastructureVulnerability";
 import AllEmployee from "@/pages/AllEmployee";
+import { JiraDataTable } from "@/pages/JiraDataTable";
 
 
 export const PrivateRoutes = [
@@ -18,6 +19,10 @@ export const PrivateRoutes = [
     {
         path: "/vulnerability-data",
         element: <VulnerabilityData />
+    },
+    {
+        path: "/jira-data",
+        element: <JiraDataTable />
     },
     {
         path: "/all-customer",
