@@ -163,7 +163,7 @@ export function VulnerabilityData() {
                 </h2>
                 <button
                   onClick={() => setIsModalOpen(false)}
-                  className="text-gray-100 hover:text-gray- 00 transition"
+                  className="text-gray-100 hover:text-gray-200 transition"
                 >
                   <MdClose className="h-6 w-6" />
                 </button>
