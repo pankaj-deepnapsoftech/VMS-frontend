@@ -10,9 +10,9 @@ import { useAuthContext } from "@/context";
 
 const AppRoutes = () => {
   const { authenticate, token } = useAuthContext();
-  
+
   // Check if user is authenticated and verify their login and email
-  const isAuthenticated = token && authenticate?.Login_verification && authenticate?.email_verification;
+  const isAuthenticated = token && authenticate?.email_verification;
 
   return (
     <Routes>
@@ -39,7 +39,7 @@ const AppRoutes = () => {
       ) : (
         <Route path="/*" element={<Navigate to="/sign-in" replace />} />
       )}
-       <Route path="*" element={<PageNotFound />} />
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 };

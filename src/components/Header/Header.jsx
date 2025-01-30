@@ -19,6 +19,12 @@ function Header({ setShowMenu }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
+
+  const handleLogout = (id) => {
+    if (window.confirm("Are you sure you want to log out?")) {
+      Logout()
+    }
+  };
   return (
     <div className="flex fixed  md:w-[2%] lg:w-[25%] xl:w-[25%] 2xl:w-[20%]  ">
       <div className=" flex flex-col text-white pt-8 ">
@@ -50,10 +56,7 @@ function Header({ setShowMenu }) {
         <div className=" h-full p-2 flex  justify-start items-end ">
           <div className="relative p-5 flex ">
             <button
-              onClick={() => {
-                let conf = confirm("Are you sure you want to log out?");
-                conf === true ? Logout : ""
-              }}
+              onClick={handleLogout}
               className="flex 
               w-full
               px-10

@@ -11,11 +11,11 @@ const AuthContextProvider = ({ children }) => {
 
   const [token, setToken] = useState(Cookies.get("token"));
   const [loading, setLoading] = useState(false);
-  const [authenticate,setAuthenticate] = useState(null);
+  const [authenticate, setAuthenticate] = useState(null);
 
   const getLogedInUser = async () => {
     try {
-      const res =  await AxiosHandler.get("/auth/logedin-user");
+      const res = await AxiosHandler.get("/auth/logedin-user");
       setAuthenticate(res.data.data)
     } catch (error) {
       console.log(error)
@@ -31,7 +31,7 @@ const AuthContextProvider = ({ children }) => {
       AxiosHandler.defaults.headers.authorization = `Bearer ${res.data.token}`;
       Cookies.set("token", res.data.token, { expires: 1 });
       setToken(res.data.token);
-      navigate("/verify-otp");
+      navigate("/");
       toast.dismiss(toastId);
       toast.success(res.data.message);
     } catch (error) {
@@ -102,16 +102,16 @@ const AuthContextProvider = ({ children }) => {
 
   const Resetpassword = async (data) => {
     const toastId = toast.loading("Loading...");
-    
+
     setLoading(true);
     try {
-      const res = await AxiosHandler.post(`/auth/reset-password/${token}`,data);
+      const res = await AxiosHandler.post(`/auth/reset-password/${token}`, data);
       console.log(res)
       toast.dismiss(toastId);
       toast.success(res.data.message);
-     
+
       navigate("/sign-in")
-     
+
     } catch (error) {
       console.log(error)
       toast.dismiss(toastId);
@@ -124,14 +124,14 @@ const AuthContextProvider = ({ children }) => {
 
   const ResendOtp = async () => {
     const toastId = toast.loading("Loading...");
-    
+
     setLoading(true);
     try {
       const res = await AxiosHandler.put("/auth/resend-otp");
       toast.dismiss(toastId);
       toast.success(res.data.message);
-     
-     
+
+
     } catch (error) {
       toast.dismiss(toastId);
       toast.error(error?.response?.data?.message);
@@ -159,16 +159,16 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
- 
 
-  useEffect(()=>{
-    if(token){
+
+  useEffect(() => {
+    if (token) {
       getLogedInUser()
     }
-  },[token])
+  }, [token])
 
   return (
-    <authContext.Provider value={{ loading,verifyotp,ResendOtp,Forgotpassword,Resetpassword, Signin, Signup, Logout,token,authenticate }}>
+    <authContext.Provider value={{ loading, verifyotp, ResendOtp, Forgotpassword, Resetpassword, Signin, Signup, Logout, token, authenticate }}>
       {children}
     </authContext.Provider>
   );
