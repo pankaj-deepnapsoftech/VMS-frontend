@@ -12,7 +12,7 @@ export const list = [
     { title: "All Employee", route: "/all-employee", icon: FaPerson },
     { title: "All Customer", route: "/all-customer", icon: IoPerson },
     { title: "Vulnerability Data", route: "/vulnerability-data", icon: IoShield },
-    { title: "Jira Data", route: "/jira-data", icon: IoShieldHalf },
+    { title: "Third Party Data", route: "/jira-data", icon: IoShieldHalf },
     { title: "Application Vulnerability", route: "/application-vulnerability", icon: MdOutlineMiscellaneousServices },
     { title: "Infrastructure Vulnerability ", route: "/infrastructure-vulnerability", icon: GrVulnerability },
     { title: "Exceptions", route: "/exceptions", icon: AiOutlineException },

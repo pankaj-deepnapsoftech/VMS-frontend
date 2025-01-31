@@ -2,18 +2,24 @@ import React, { Suspense, useState } from "react";
 import { BiSearch, BiEditAlt, BiPlus, BiSave } from "react-icons/bi";
 import { RiDeleteBinFill } from "react-icons/ri";
 import { MdClose } from "react-icons/md";
-import { useVulnerabililtyDataContext } from "@/context";
+import { useAllEmployeeContext, useVulnerabililtyDataContext } from "@/context";
 import { Formik, Form, Field } from "formik";
 import * as XLSX from "xlsx";
 import { WorkItemValidation } from "@/Validation/VulnerabililtyDataValidation";
+import { BsPersonCheckFill } from "react-icons/bs";
 
 export function VulnerabilityData() {
-  const { UpdateData, AddData, allVulnerabilityData, DeleteData } =
+  const { UpdateData, AddData, allVulnerabilityData, DeleteData, AssignTask } =
     useVulnerabililtyDataContext();
+
+  const { allEmployeesData } = useAllEmployeeContext();
+  console.log(allEmployeesData)
+
 
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [editData, setEditData] = useState(null);
   const rowsPerPage = 10;
@@ -69,6 +75,16 @@ export function VulnerabilityData() {
     if (window.confirm("Are you sure you want to delete this vulnerability?")) {
       DeleteData(id);
     }
+  };
+
+  const [empName, setEmpName] = useState("")
+  const [id, setID] = useState("")
+  console.log(empName)
+
+  const handleAssignTask = (id) => {
+    setIsOpen(true)
+    setID(id)
+
   };
 
   const handleDownload = (data) => {
@@ -137,12 +153,15 @@ export function VulnerabilityData() {
                       {item[field]}
                     </td>
                   ))}
-                  <td className="px-4 py-4 whitespace-nowrap flex justify-around">
+                  <td className="px-4 py-4 whitespace-nowrap flex justify-around gap-4">
                     <button onClick={() => openModal(item)} className="text-blue-600">
                       <BiEditAlt className="h-5 w-5" />
                     </button>
                     <button onClick={() => handleDelete(item._id)} className="text-red-600">
                       <RiDeleteBinFill className="h-5 w-5" />
+                    </button>
+                    <button onClick={() => handleAssignTask(item._id)} className="text-red-600">
+                      <BsPersonCheckFill className="h-5 w-5" />
                     </button>
                   </td>
                 </tr>
@@ -150,6 +169,56 @@ export function VulnerabilityData() {
             </tbody>
           </table>
         </div>
+        {isOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
+
+              {/* Header */}
+              <div className="flex justify-between items-center border-b p-4 bg-[#015289]">
+                <h2 className="text-lg font-semibold text-gray-200">
+                  {"Assign Task to Employee"}
+                </h2>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="text-gray-100 hover:text-gray-200 transition"
+                >
+                  <MdClose className="h-6 w-6" />
+                </button>
+              </div>
+              <div className="p-10">
+                <label htmlFor="employees" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an Employee</label>
+                <select
+                  onChange={(e) => setEmpName(e.target.value)}
+                  id="employees"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                >
+                  <option selected disabled>Select a Employee</option>
+                  {allEmployeesData?.map((item) => (<option value={item.full_name}>{item.full_name}</option>))}
+
+                </select>
+
+                <div className="col-span-1 md:col-span-2 flex justify-end gap-2 mt-4 border-t pt-4">
+                  <button
+                    onClick={() => setIsModalOpen(false)}
+                    className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => {
+                      AssignTask(empName, id)
+                      setIsOpen(false)
+                    }}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        )}
 
         {/* 📝 Modal Form */}
         {isModalOpen && (
