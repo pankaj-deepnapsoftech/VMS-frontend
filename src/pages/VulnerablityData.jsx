@@ -131,6 +131,7 @@ export function VulnerabilityData() {
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-[#015289]">
+
               <tr>
                 {tableHeaders.map((header, index) => (
                   <th
@@ -280,7 +281,25 @@ export function VulnerabilityData() {
           </div>
         )}
 
-
+        <div className="flex justify-between items-center mt-4">
+          <button
+            className={`px-4 py-2 border rounded-md ${currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
+            disabled={currentPage === 1}
+            onClick={() => handlePageChange(currentPage - 1)}
+          >
+            Previous
+          </button>
+          <span>
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            className={`px-4 py-2 border rounded-md ${currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""}`}
+            disabled={currentPage === totalPages}
+            onClick={() => handlePageChange(currentPage + 1)}
+          >
+            Next
+          </button>
+        </div>
       </div>
     </Suspense>
   );

@@ -19,6 +19,7 @@ const JiraContextProvider = ({ children }) => {
 
 			const res = await AxiosHandler.get("/jira/issues");
 			setJiraData(res.data.newData);
+			console.log(res, "%%%%%%%%%%%%")
 		} catch (error) {
 			console.log(error)
 
