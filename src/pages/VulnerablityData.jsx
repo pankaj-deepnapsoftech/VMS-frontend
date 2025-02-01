@@ -9,7 +9,7 @@ import { WorkItemValidation } from "@/Validation/VulnerabililtyDataValidation";
 import { BsPersonCheckFill } from "react-icons/bs";
 
 export function VulnerabilityData() {
-  const { UpdateData, AddData, allVulnerabilityData, DeleteData, AssignTask } =
+  const { UpdateData, AddData, allVulnerabilityData, DeleteData, AssignTask,page,setPage } =
     useVulnerabililtyDataContext();
 
   const { allEmployeesData } = useAllEmployeeContext();
@@ -283,20 +283,21 @@ export function VulnerabilityData() {
 
         <div className="flex justify-between items-center mt-4">
           <button
-            className={`px-4 py-2 border rounded-md ${currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
-            disabled={currentPage === 1}
-            onClick={() => handlePageChange(currentPage - 1)}
+            className={`px-4 py-2 border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
+            disabled={page === 1}
+            onClick={() => setPage(page- 1)}
           >
             Previous
           </button>
           <span>
-            Page {currentPage} of {totalPages}
+            Page {page} of {totalPages}
           </span>
           <button
-            className={`px-4 py-2 border rounded-md ${currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""}`}
-            disabled={currentPage === totalPages}
-            onClick={() => handlePageChange(currentPage + 1)}
+            className={`px-4 py-2 border rounded-md `}
+            disabled={allVulnerabilityData.length < 10}
+            onClick={() => setPage(page + 1)}
           >
+            {console.log(allVulnerabilityData.length)}
             Next
           </button>
         </div>
