@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { BiSearch, BiEditAlt, BiPlus, BiSave } from "react-icons/bi";
 import { RiDeleteBinFill } from "react-icons/ri";
 import { MdClose } from "react-icons/md";
@@ -9,7 +9,7 @@ import { WorkItemValidation } from "@/Validation/VulnerabililtyDataValidation";
 import { BsPersonCheckFill } from "react-icons/bs";
 
 export function VulnerabilityData() {
-  const { UpdateData, AddData, allVulnerabilityData, DeleteData, AssignTask,page,setPage } =
+  const { UpdateData, AddData, allVulnerabilityData, DeleteData, AssignTask, page, setPage, BulkAssignTask } =
     useVulnerabililtyDataContext();
 
   const { allEmployeesData } = useAllEmployeeContext();
@@ -21,9 +21,12 @@ export function VulnerabilityData() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [selectAll, setSelectAll] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [editData, setEditData] = useState(null);
   const rowsPerPage = 10;
+  const [index, setIndex] = useState([1]);
+  const [newData, setNewData] = useState([])
 
   // Extract headers dynamically for table display
   const tableHeaders =
@@ -77,8 +80,15 @@ export function VulnerabilityData() {
       DeleteData(id);
     }
   };
-  const handleChecked = () => {
-    setIsChecked(!isChecked)
+  const handleChecked = (id) => {
+
+    let data = index.filter((item) => item === id)
+    if (data.length > 0) {
+      data = index.filter((item) => item !== id)
+      setIndex(data)
+    } else {
+      setIndex((pre) => ([...pre, id]))
+    }
   };
 
   const [empName, setEmpName] = useState("")
@@ -91,12 +101,42 @@ export function VulnerabilityData() {
 
   };
 
+  const handleBulkAssignTask = () => {
+    setIsOpen(true)
+    setID(id)
+
+  };
+
   const handleDownload = (data) => {
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Vulnerabilities");
     XLSX.writeFile(workbook, "Vulnerabilities.xlsx");
   };
+
+  const handleSelectAll = (e) => {
+
+    const isChecked = e.target.checked
+    const dataId = [];
+    if (isChecked) {
+      paginatedData.map((data) => {
+        dataId.push(data?._id)
+      })
+      setIndex(dataId)
+    } else {
+
+      setIndex([]);
+    }
+
+
+
+  }
+
+  useEffect(() => {
+    const data = allVulnerabilityData.map((item) => ({
+
+    }))
+  }, [])
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -122,6 +162,13 @@ export function VulnerabilityData() {
               Add Vulnerability
             </button>
             <button
+              onClick={() => handleAssignTask()}
+              className="px-4 py-2 bg-[#015289] text-white text-sm font-medium rounded-md flex items-center"
+            >
+              <BsPersonCheckFill className="h-5 w-5 mr-2" />
+              Bulk Task Assign
+            </button>
+            <button
               onClick={() => handleDownload(filteredData)}
               className="px-4 py-2 bg-[#015289] text-white text-sm font-medium rounded-md flex items-center"
             >
@@ -136,9 +183,16 @@ export function VulnerabilityData() {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-[#015289]">
 
-              <tr> <th className="px-4 py-3 text-left text-xs font-medium text-white uppercase">
-                Select All
-              </th>
+              <tr>
+                <th className="px-4 py-3 text-left text-xs font-medium text-white uppercase">
+                  <input
+                    type="checkbox"
+                    checked={selectAll}
+                    onChange={(e) => {
+                      setSelectAll(!selectAll);
+                      handleSelectAll(e)
+                    }} />
+                </th>
                 {tableHeaders.map((header, index) => (
                   <th
                     key={index}
@@ -159,14 +213,16 @@ export function VulnerabilityData() {
                     <input
                       type="checkbox"
                       value="bubbles"
-                      checked={isChecked}
-                      onChange={handleChecked} />
+                      checked={index.filter((i) => i === item._id).length > 0}
+                      onChange={() => handleChecked(item._id)} />
 
                   </td>
                   {tableHeaders.map((field, i) => (
 
                     <td key={i} className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item[field]}
+                      {field === "Assigned_To" ? item[field]?.full_name : item[field]
+                      }
+
                     </td>
                   ))}
                   <td className="px-4 py-4 whitespace-nowrap flex justify-around gap-4">
@@ -209,7 +265,7 @@ export function VulnerabilityData() {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                 >
                   <option selected disabled>Select a Employee</option>
-                  {allEmployeesData?.map((item) => (<option value={item.full_name}>{item.full_name}</option>))}
+                  {allEmployeesData?.map((item) => (<option value={item._id}>{item.full_name}</option>))}
 
                 </select>
 
@@ -222,8 +278,14 @@ export function VulnerabilityData() {
                   </button>
                   <button
                     onClick={() => {
-                      AssignTask(empName, id)
-                      setIsOpen(false)
+                      if (!id) {
+                        BulkAssignTask(empName, index)
+                        setIsOpen(false)
+                      }
+                      else {
+                        AssignTask(empName, id)
+                        setIsOpen(false)
+                      }
                     }}
                     className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
                   >
@@ -300,7 +362,7 @@ export function VulnerabilityData() {
           <button
             className={`px-4 py-2 border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
             disabled={page === 1}
-            onClick={() => setPage(page- 1)}
+            onClick={() => setPage(page - 1)}
           >
             Previous
           </button>
