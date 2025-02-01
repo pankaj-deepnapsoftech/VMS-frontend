@@ -20,6 +20,7 @@ export function VulnerabilityData() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [editData, setEditData] = useState(null);
   const rowsPerPage = 10;
@@ -75,6 +76,9 @@ export function VulnerabilityData() {
     if (window.confirm("Are you sure you want to delete this vulnerability?")) {
       DeleteData(id);
     }
+  };
+  const handleChecked = () => {
+    setIsChecked(!isChecked)
   };
 
   const [empName, setEmpName] = useState("")
@@ -132,7 +136,9 @@ export function VulnerabilityData() {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-[#015289]">
 
-              <tr>
+              <tr> <th className="px-4 py-3 text-left text-xs font-medium text-white uppercase">
+                Select All
+              </th>
                 {tableHeaders.map((header, index) => (
                   <th
                     key={index}
@@ -149,7 +155,16 @@ export function VulnerabilityData() {
             <tbody className="divide-y divide-gray-200">
               {paginatedData.map((item) => (
                 <tr key={item._id} className="hover:bg-gray-50">
+                  <td className="px-4 py-4 whitespace-nowrap flex justify-around gap-4">
+                    <input
+                      type="checkbox"
+                      value="bubbles"
+                      checked={isChecked}
+                      onChange={handleChecked} />
+
+                  </td>
                   {tableHeaders.map((field, i) => (
+
                     <td key={i} className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
                       {item[field]}
                     </td>
