@@ -1,6 +1,8 @@
 import { createContext, useEffect, useState } from "react";
 import { useAuthContext } from "..";
 import { AxiosHandler } from "@/config/AxiosConfig";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -9,9 +11,12 @@ import { AxiosHandler } from "@/config/AxiosConfig";
 export const JiraContext = createContext();
 
 const JiraContextProvider = ({ children }) => {
+	let navigate = useNavigate();
+
 	const { token } = useAuthContext()
 
 	const [jiraData, setJiraData] = useState([])
+	const [jiraConfigData, setJiraConfigData] = useState([])
 
 	const JiraData = async () => {
 
@@ -19,22 +24,53 @@ const JiraContextProvider = ({ children }) => {
 
 			const res = await AxiosHandler.get("/jira/issues");
 			setJiraData(res.data.newData);
-			console.log(res, "%%%%%%%%%%%%")
 		} catch (error) {
 			console.log(error)
 
 		}
 	}
 
+	const JiraConfigData = async () => {
+
+		try {
+			const res = await AxiosHandler.get("/jira/get-jira-config");
+			setJiraConfigData(res.data.data);
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+
+	const JiraConfiguration = async (data) => {
+		const toastId = toast.loading("Loading...");
+		console.log(data)
+
+		try {
+			const res = await AxiosHandler.post("/jira/create-jira-config", data);
+			navigate("/jira-data");
+			toast.dismiss(toastId);
+			toast.success(res.data.message);
+		} catch (error) {
+			console.log(error)
+			toast.dismiss(toastId);
+			toast.error(error?.response?.data?.message || "something went wrong please try again...");
+		}
+	};
+
 
 	useEffect(() => {
 		if (token) {
 			JiraData()
+			JiraConfigData()
 		}
 	}, [token])
 
 	return (
-		<JiraContext.Provider value={{ jiraData }}>
+		<JiraContext.Provider value={{
+			jiraData,
+			jiraConfigData,
+			JiraConfiguration
+		}}>
 			{children}
 		</JiraContext.Provider>
 	)

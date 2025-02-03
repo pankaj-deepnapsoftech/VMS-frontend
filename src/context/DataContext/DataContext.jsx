@@ -40,7 +40,6 @@ const DataContextProvider = ({ children }) => {
         const toastId = toast.loading("Loading...");
         setLoading(true);
         try {
-            console.log(data)
             const formData = new FormData();
             formData.append("excel", data)
             const res = await AxiosHandler.post("/data/create", formData);

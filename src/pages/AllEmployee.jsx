@@ -4,7 +4,6 @@ import React, { useState } from "react";
 export default function AllEmployee() {
 
 	const { allEmployeesData, VerifyEmployee } = useAllEmployeeContext();
-	console.log(allEmployeesData)
 
 
 	return (

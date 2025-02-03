@@ -128,14 +128,14 @@ function Home() {
         <Modal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          title="Upload an introduction"
+          title="Bulk Upload"
           subtitle=" please upload an Excel file in XLSX or XLS format. Ensure the file is properly formatted and contains all necessary data for processing."
         />
 
         {/* Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
           {metrics.map((metric, index) => (
-            <Card key={index} data={metric}  />
+            <Card key={index} data={metric} />
           ))}
         </div>
 

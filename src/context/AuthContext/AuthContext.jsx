@@ -84,7 +84,6 @@ const AuthContextProvider = ({ children }) => {
 
   const verifyotp = async (data) => {
     const toastId = toast.loading("Loading...");
-    console.log(data)
     setLoading(true);
     try {
       const res = await AxiosHandler.post("/auth/verify-otp", data);
@@ -106,12 +105,9 @@ const AuthContextProvider = ({ children }) => {
     setLoading(true);
     try {
       const res = await AxiosHandler.post(`/auth/reset-password/${token}`, data);
-      console.log(res)
       toast.dismiss(toastId);
       toast.success(res.data.message);
-
       navigate("/sign-in")
-
     } catch (error) {
       console.log(error)
       toast.dismiss(toastId);

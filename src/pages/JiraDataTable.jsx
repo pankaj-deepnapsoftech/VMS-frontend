@@ -6,8 +6,7 @@ import * as XLSX from "xlsx";
 
 export const JiraDataTable = () => {
 	const { jiraData } = useJiraContext();
-	console.log(jiraData, "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
-
+	
 	const [searchTerm, setSearchTerm] = useState("");
 	const [currentPage, setCurrentPage] = useState(1);
 	const rowsPerPage = 10;

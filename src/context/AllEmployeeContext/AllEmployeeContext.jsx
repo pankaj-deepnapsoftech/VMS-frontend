@@ -35,8 +35,6 @@ const AllEmployeeContextProvider = ({ children }) => {
 		try {
 			const res = await AxiosHandler.patch(`/auth/verify-employee/${id}`);
 			SetAllEmployeesData()
-
-
 			toast.dismiss(toastId);
 			toast.success(res.data.message);
 			AllEmployee();

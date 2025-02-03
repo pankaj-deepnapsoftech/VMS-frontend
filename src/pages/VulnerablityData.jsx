@@ -7,13 +7,13 @@ import { Formik, Form, Field } from "formik";
 import * as XLSX from "xlsx";
 import { WorkItemValidation } from "@/Validation/VulnerabililtyDataValidation";
 import { BsPersonCheckFill } from "react-icons/bs";
+import toast from "react-hot-toast";
 
 export function VulnerabilityData() {
   const { UpdateData, AddData, allVulnerabilityData, DeleteData, AssignTask, page, setPage, BulkAssignTask } =
     useVulnerabililtyDataContext();
 
   const { allEmployeesData } = useAllEmployeeContext();
-  console.log(allEmployeesData)
 
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -25,14 +25,14 @@ export function VulnerabilityData() {
   const [editMode, setEditMode] = useState(false);
   const [editData, setEditData] = useState(null);
   const rowsPerPage = 10;
-  const [index, setIndex] = useState([1]);
+  const [index, setIndex] = useState([]);
   const [newData, setNewData] = useState([])
 
   // Extract headers dynamically for table display
   const tableHeaders =
     allVulnerabilityData.length > 0
       ? Object.keys(allVulnerabilityData[0]).filter(
-        (key) => key !== "_id" && key !== "__v"
+        (key) => key !== "_id" && key !== "__v" && key !== "updatedAt"
       )
       : [];
 
@@ -93,7 +93,6 @@ export function VulnerabilityData() {
 
   const [empName, setEmpName] = useState("")
   const [id, setID] = useState("")
-  console.log(empName)
 
   const handleAssignTask = (id) => {
     setIsOpen(true)
@@ -102,7 +101,8 @@ export function VulnerabilityData() {
   };
 
   const handleBulkAssignTask = () => {
-    setIsOpen(true)
+    index.length > 0 ? "" : toast.error("Select Tasks For Assign")
+    setIsOpen(index.length > 0)
     setID(id)
 
   };
@@ -115,28 +115,20 @@ export function VulnerabilityData() {
   };
 
   const handleSelectAll = (e) => {
-
     const isChecked = e.target.checked
     const dataId = [];
+
     if (isChecked) {
       paginatedData.map((data) => {
         dataId.push(data?._id)
       })
       setIndex(dataId)
     } else {
-
       setIndex([]);
     }
-
-
-
   }
 
-  useEffect(() => {
-    const data = allVulnerabilityData.map((item) => ({
 
-    }))
-  }, [])
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -153,26 +145,26 @@ export function VulnerabilityData() {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <div className="flex w-full lg:justify-end items-center py-2 gap-2">
+          <div className="lg:flex lg:flex-row grid grid-cols-2 gap-4 mt-4   w-full lg:justify-end  lg:items-center py-2 lg:gap-2">
             <button
               onClick={() => openModal()}
-              className="px-4 py-2 bg-[#015289] text-white text-sm font-medium rounded-md flex items-center"
+              className="px-4 py-2  bg-[#015289] text-white lg:text-sm  text-xs font-medium rounded-md flex items-center"
             >
-              <BiPlus className="h-4 w-4 mr-2" />
+              <BiPlus className="h-6 w-6 mr-1" />
               Add Vulnerability
             </button>
             <button
-              onClick={() => handleAssignTask()}
+              onClick={() => handleBulkAssignTask()}
               className="px-4 py-2 bg-[#015289] text-white text-sm font-medium rounded-md flex items-center"
             >
-              <BsPersonCheckFill className="h-5 w-5 mr-2" />
+              <BsPersonCheckFill className="h-6 w-6 mr-1" />
               Bulk Task Assign
             </button>
             <button
               onClick={() => handleDownload(filteredData)}
               className="px-4 py-2 bg-[#015289] text-white text-sm font-medium rounded-md flex items-center"
             >
-              <BiSave className="h-4 w-4 mr-2" />
+              <BiSave className="h-6 w-6 mr-1" />
               Export Data
             </button>
           </div>
@@ -198,7 +190,7 @@ export function VulnerabilityData() {
                     key={index}
                     className="px-4 py-3 text-left text-xs font-medium text-white uppercase"
                   >
-                    {header.replace(/_/g, " ")}
+                    {header === "createdAt" ? "Created Date" : header.replace(/_/g, " ")}
                   </th>
                 ))}
                 <th className="px-4 py-3 text-left text-xs font-medium text-white uppercase">
@@ -218,11 +210,16 @@ export function VulnerabilityData() {
 
                   </td>
                   {tableHeaders.map((field, i) => (
-
                     <td key={i} className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {field === "Assigned_To" ? item[field]?.full_name : item[field]
+                      {
+                        field === "createdAt" ?
+                          new Date(item[field]).toLocaleDateString("en-IN", {
+                            day: "2-digit",
+                            month: "short",
+                            year: "numeric",
+                          }) : field === "Assigned_To" ? item[field]?.full_name :
+                            item[field]
                       }
-
                     </td>
                   ))}
                   <td className="px-4 py-4 whitespace-nowrap flex justify-around gap-4">
@@ -271,7 +268,7 @@ export function VulnerabilityData() {
 
                 <div className="col-span-1 md:col-span-2 flex justify-end gap-2 mt-4 border-t pt-4">
                   <button
-                    onClick={() => setIsModalOpen(false)}
+                    onClick={() => setIsOpen(false)}
                     className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition"
                   >
                     Cancel
@@ -287,7 +284,7 @@ export function VulnerabilityData() {
                         setIsOpen(false)
                       }
                     }}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+                    className="px-4 py-2 bg-[#015289] text-white rounded-md hover:bg-blue-700 transition"
                   >
                     Save
                   </button>
@@ -318,7 +315,6 @@ export function VulnerabilityData() {
 
               {/* Form */}
               <Formik
-
                 initialValues={editData || {}}
                 onSubmit={(values) => {
                   editMode ? UpdateData(values, editData._id) : AddData(values);
@@ -347,7 +343,7 @@ export function VulnerabilityData() {
                     </button>
                     <button
                       type="submit"
-                      className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+                      className="px-4 py-2 bg-[#015289] text-white rounded-md hover:bg-blue-700 transition"
                     >
                       Save
                     </button>
@@ -360,21 +356,21 @@ export function VulnerabilityData() {
 
         <div className="flex justify-between items-center mt-4">
           <button
-            className={`px-4 py-2 border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
+            className={`px-4 py-2 bg-[#015289] text-white border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
             disabled={page === 1}
             onClick={() => setPage(page - 1)}
           >
             Previous
           </button>
           <span>
-            Page {page} of {totalPages}
+            Page {page}
+            {/* of {totalPages} */}
           </span>
           <button
-            className={`px-4 py-2 border rounded-md `}
+            className={`px-4 py-2 border rounded-md  text-white bg-[#015289]`}
             disabled={allVulnerabilityData.length < 10}
             onClick={() => setPage(page + 1)}
           >
-            {console.log(allVulnerabilityData.length)}
             Next
           </button>
         </div>

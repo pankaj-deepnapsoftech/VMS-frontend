@@ -9,6 +9,7 @@ import ApplicationVulnerability from "@/pages/ApplicationVulnerability";
 import InfraStructureVulnerability from "@/pages/InfrastructureVulnerability";
 import AllEmployee from "@/pages/AllEmployee";
 import { JiraDataTable } from "@/pages/JiraDataTable";
+import ThirdPartyConfig from "@/pages/thirdPartyConfiguration";
 
 
 export const PrivateRoutes = [
@@ -23,6 +24,10 @@ export const PrivateRoutes = [
     {
         path: "/jira-data",
         element: <JiraDataTable />
+    },
+    {
+        path: "/third-party-config",
+        element: <ThirdPartyConfig />
     },
     {
         path: "/all-customer",
