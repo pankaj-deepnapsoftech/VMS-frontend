@@ -19,10 +19,7 @@ export const PrivateRoutes = [
         path: "",
         element: <Home />
     },
-    {
-        path: "/employee-dashboard",
-        element: <EmployeeDashboard />
-    },
+   
     {
         path: "/vulnerability-data",
         element: <VulnerabilityData />
@@ -43,10 +40,7 @@ export const PrivateRoutes = [
         path: "/all-employee",
         element: <AllEmployee />
     },
-    {
-        path: "/all-employee-tasks",
-        element: <EmployeeAllTasks />
-    },
+   
     {
         path: "/application-vulnerability",
         element: <ApplicationVulnerability />

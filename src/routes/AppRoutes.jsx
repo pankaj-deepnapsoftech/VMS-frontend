@@ -5,8 +5,13 @@ import SignUp from "@/pages/Auth/SignUp";
 import ForgotPassword from "@/pages/Auth/ForgotPassword";
 import MainLayout from "@/routes/layouts/MainLayout";
 import { PrivateRoutes } from "@/routes/PrivateRoutes/PrivateRoutes";
-import { PageNotFound, ResetPassword, VerifyOtp } from "@/constants/Components-lazy-loading/components.Lazy";
+import {
+  PageNotFound,
+  ResetPassword,
+  VerifyOtp,
+} from "@/constants/Components-lazy-loading/components.Lazy";
 import { useAuthContext } from "@/context";
+import { EmployeeRoutes } from "./PrivateRoutes/employeeRoutes";
 
 const AppRoutes = () => {
   const { authenticate, token } = useAuthContext();
@@ -30,15 +35,17 @@ const AppRoutes = () => {
       )}
 
       {/* Protected routes */}
-      {isAuthenticated ? (
+      {isAuthenticated  ? (
         <Route element={<MainLayout />}>
-          {PrivateRoutes.map((item, index) => (
+          {(authenticate.role === "Admin"  ? PrivateRoutes : EmployeeRoutes).map((item, index) => (
             <Route key={index} path={item.path} element={item.element} />
           ))}
         </Route>
       ) : (
         <Route path="/*" element={<Navigate to="/sign-in" replace />} />
       )}
+
+      
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

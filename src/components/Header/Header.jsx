@@ -5,7 +5,7 @@ import { GrVulnerability } from "react-icons/gr";
 import { AiOutlineException } from "react-icons/ai";
 import { SiWikimediafoundation } from "react-icons/si";
 import { Link, NavLink } from 'react-router-dom';
-import { list } from '@/constants/constants.data';
+import { EmployeeList, list } from '@/constants/constants.data';
 import { useAuthContext } from '@/context';
 import { FaUser } from 'react-icons/fa';
 import { IoIosLogOut } from 'react-icons/io';
@@ -14,7 +14,7 @@ import { IoIosLogOut } from 'react-icons/io';
 
 function Header({ setShowMenu }) {
 
-  const { Logout, loading } = useAuthContext()
+  const { Logout, loading,authenticate } = useAuthContext()
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -39,7 +39,7 @@ function Header({ setShowMenu }) {
         <hr className="border-gray-100 mx-8" />
 
         <nav className="flex-1 p-5 space-y-2">
-          {list.map((data) => (
+          {(authenticate.role === "Admin" ?  list : EmployeeList).map((data) => (
             <NavLink
               key={data.route}
               to={data.route}
