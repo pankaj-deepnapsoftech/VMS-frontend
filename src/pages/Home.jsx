@@ -11,34 +11,6 @@ import { Modal } from '@/components/modal/FileUploadModal';
 
 
 
-
-const TableCard = ({ title }) => (
-  <div className="bg-white shadow rounded-lg p-6 mb-10">
-    <h3 className="text-gray-700 text-lg font-semibold mb-4">{title}</h3>
-    <table className="w-full text-sm text-left">
-      <thead>
-        <tr>
-          <th className="px-4 py-2 text-gray-600">Name</th>
-          <th className="px-4 py-2 text-gray-600">Oct 22</th>
-          <th className="px-4 py-2 text-gray-600">Trend</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td className="px-4 py-2">Software</td>
-          <td className="px-4 py-2">3</td>
-          <td className="px-4 py-2">⬆️</td>
-        </tr>
-        <tr>
-          <td className="px-4 py-2">Hardware</td>
-          <td className="px-4 py-2">2</td>
-          <td className="px-4 py-2">⬇️</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-);
-
 function Home() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);

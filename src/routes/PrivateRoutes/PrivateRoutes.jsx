@@ -10,12 +10,18 @@ import InfraStructureVulnerability from "@/pages/InfrastructureVulnerability";
 import AllEmployee from "@/pages/AllEmployee";
 import { JiraDataTable } from "@/pages/JiraDataTable";
 import ThirdPartyConfig from "@/pages/thirdPartyConfiguration";
+import { EmployeeAllTasks } from "@/pages/EmployeeAllTasks";
+import EmployeeDashboard from "@/pages/EmployeDashboard";
 
 
 export const PrivateRoutes = [
     {
         path: "",
         element: <Home />
+    },
+    {
+        path: "/employee-dashboard",
+        element: <EmployeeDashboard />
     },
     {
         path: "/vulnerability-data",
@@ -36,6 +42,10 @@ export const PrivateRoutes = [
     {
         path: "/all-employee",
         element: <AllEmployee />
+    },
+    {
+        path: "/all-employee-tasks",
+        element: <EmployeeAllTasks />
     },
     {
         path: "/application-vulnerability",

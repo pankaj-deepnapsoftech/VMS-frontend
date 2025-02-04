@@ -14,6 +14,8 @@ const AllEmployeeContextProvider = ({ children }) => {
 
 	const [loading, setLoading] = useState(false);
 	const [allEmployeesData, SetAllEmployeesData] = useState([]);
+	const [employeeTasksData, setEmployeeTasksData] = useState([]);
+	const [employeeCardData, setEmployeeCardData] = useState({});
 
 	const { token } = useAuthContext()
 
@@ -22,6 +24,31 @@ const AllEmployeeContextProvider = ({ children }) => {
 		try {
 			const res = await AxiosHandler.get(`/auth/all-employee`);
 			SetAllEmployeesData(res.data.users);
+
+		} catch (error) {
+			console.log(error)
+
+		}
+	}
+
+
+	const EmployeeTasks = async () => {
+
+		try {
+			const res = await AxiosHandler.get(`employee/get-employee-task`);
+			setEmployeeTasksData(res.data.data);
+
+		} catch (error) {
+			console.log(error)
+
+		}
+	}
+
+	const EmployeeData = async () => {
+
+		try {
+			const res = await AxiosHandler.get(`employee/emp-data`);
+			setEmployeeCardData(res.data);
 
 		} catch (error) {
 			console.log(error)
@@ -53,12 +80,18 @@ const AllEmployeeContextProvider = ({ children }) => {
 	useEffect(() => {
 		if (token) {
 			AllEmployee();
+			EmployeeTasks();
+			EmployeeData();
 		}
 	}, [token])
 	return (
 		<AllEmployeeContext.Provider value={{
 			allEmployeesData,
-			VerifyEmployee
+			employeeTasksData,
+			EmployeeTasks,
+			VerifyEmployee,
+			employeeCardData
+
 
 		}}>
 			{children}

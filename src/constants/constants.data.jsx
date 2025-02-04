@@ -9,9 +9,11 @@ import { SiWikimediafoundation } from "react-icons/si";
 
 export const list = [
     { title: "Dashboard", route: "", icon: BiSolidDashboard },
+    { title: "Employee Dashboard", route: "/employee-dashboard", icon: BiSolidDashboard },
     { title: "All Employee", route: "/all-employee", icon: FaPerson },
     { title: "All Customer", route: "/all-customer", icon: IoPerson },
     { title: "Vulnerability Data", route: "/vulnerability-data", icon: IoShield },
+    { title: "Employee All Tasks", route: "/all-employee-tasks", icon: IoShieldHalf },
     { title: "Third Party Data", route: "/jira-data", icon: IoShieldHalf },
     { title: "Third Party Config", route: "/third-party-config", icon: IoShieldHalf },
     { title: "Application Vulnerability", route: "/application-vulnerability", icon: MdOutlineMiscellaneousServices },

@@ -16,7 +16,7 @@ const JiraContextProvider = ({ children }) => {
 	const { token } = useAuthContext()
 
 	const [jiraData, setJiraData] = useState([])
-	const [jiraConfigData, setJiraConfigData] = useState([])
+	const [ConfigData, setConfigData] = useState([])
 
 	const JiraData = async () => {
 
@@ -34,7 +34,8 @@ const JiraContextProvider = ({ children }) => {
 
 		try {
 			const res = await AxiosHandler.get("/jira/get-jira-config");
-			setJiraConfigData(res.data.data);
+			setConfigData(res.data.data);
+			console.log(res.data.data.Domain, "$$$$$$$$$$$$$$$$$$$")
 		} catch (error) {
 			console.log(error)
 		}
@@ -47,6 +48,7 @@ const JiraContextProvider = ({ children }) => {
 
 		try {
 			const res = await AxiosHandler.post("/jira/create-jira-config", data);
+
 			navigate("/jira-data");
 			toast.dismiss(toastId);
 			toast.success(res.data.message);
@@ -68,7 +70,7 @@ const JiraContextProvider = ({ children }) => {
 	return (
 		<JiraContext.Provider value={{
 			jiraData,
-			jiraConfigData,
+			ConfigData,
 			JiraConfiguration
 		}}>
 			{children}

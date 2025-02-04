@@ -24,19 +24,19 @@ createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <AuthContextProvider>
         <DataContextProvider>
+          <AllEmployeeContextProvider>
           <VulnerabililtyDataContextProvider>
             <AllCustomerContextProvider>
-              <AllEmployeeContextProvider>
-                <JiraContextProvider>
-                  <ApplicationVulnerabilityContextProvider>
+              <JiraContextProvider>
+                <ApplicationVulnerabilityContextProvider>
 
-                    <App />
+                  <App />
 
-                  </ApplicationVulnerabilityContextProvider>
-                </JiraContextProvider>
-              </AllEmployeeContextProvider>
+                </ApplicationVulnerabilityContextProvider>
+              </JiraContextProvider>
             </AllCustomerContextProvider>
-          </VulnerabililtyDataContextProvider>
+          </VulnerabililtyDataContextProvider> 
+          </AllEmployeeContextProvider>
         </DataContextProvider>
       </AuthContextProvider>
     </BrowserRouter>
