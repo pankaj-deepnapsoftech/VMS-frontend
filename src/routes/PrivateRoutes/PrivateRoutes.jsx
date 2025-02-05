@@ -12,6 +12,7 @@ import { JiraDataTable } from "@/pages/JiraDataTable";
 import ThirdPartyConfig from "@/pages/thirdPartyConfiguration";
 import { EmployeeAllTasks } from "@/pages/EmployeeAllTasks";
 import EmployeeDashboard from "@/pages/EmployeDashboard";
+import EventusGuardianPage from "@/pages/EventusGuardian";
 
 
 export const PrivateRoutes = [
@@ -19,10 +20,13 @@ export const PrivateRoutes = [
         path: "",
         element: <Home />
     },
-   
     {
         path: "/vulnerability-data",
         element: <VulnerabilityData />
+    },
+    {
+        path: "/eventus-guardian",
+        element: <EventusGuardianPage />
     },
     {
         path: "/jira-data",
@@ -40,7 +44,7 @@ export const PrivateRoutes = [
         path: "/all-employee",
         element: <AllEmployee />
     },
-   
+
     {
         path: "/application-vulnerability",
         element: <ApplicationVulnerability />

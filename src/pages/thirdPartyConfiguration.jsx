@@ -84,24 +84,33 @@ function ThirdPartyConfig() {
 							<FaCheckCircle className="text-green-500 text-2xl mr-4" />
 							<h1 className="text-3xl  font-bold text-gray-800 mb-2">Jira Integration</h1>
 						</div>
-						<hr className="py-2 " />
-
+						<hr className="py-2 text-black  " />
 
 						<p className="text-gray-600">Welcome  These are Your Jira details</p>
 					</div>
 
-					<h2 className="text-lg font-bold   text-gray-600 mb-2">
-						Domain
-					</h2>
+
+					<div className="flex flex-row items-center justify-start">
+						<FaGlobe className='text-blue-500 w-4 h-4 mr-2' />
+						<h2 className="text-lg font-bold   text-gray-600 ">
+							Domain
+						</h2>
+					</div>
 					<h3 className="text-base   text-gray-800 mb-2">{ConfigData?.Domain}</h3>
-					<h2 className="text-lg font-bold   text-gray-600 mb-2">
-						Jira  Username
-					</h2>
+					<div className="flex flex-row items-center justify-start">
+						<FaUser className='text-blue-500 w-4 h-4 mr-2' />
+						<h2 className="text-lg font-bold   text-gray-600 ">
+							Jira Username
+						</h2>
+					</div>
 
 					<h3 className="text-base   text-gray-800 mb-2">{ConfigData?.JIRA_USERNAME}</h3>
-					<h2 className="text-lg font-bold   text-gray-600 mb-2">
-						Jira Api Key
-					</h2>
+					<div className="flex flex-row items-center justify-start">
+						<FaKey className='text-blue-500 w-4 h-4 mr-2' />
+						<h2 className="text-lg font-bold   text-gray-600 ">
+							Jira Api Key
+						</h2>
+					</div>
 
 					<h4 className=" text-sm mb-2 break-words break-all whitespace-normal">{ConfigData?.JIRA_API_KEY}</h4>
 
