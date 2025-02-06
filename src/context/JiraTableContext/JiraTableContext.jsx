@@ -35,7 +35,7 @@ const JiraContextProvider = ({ children }) => {
 		try {
 			const res = await AxiosHandler.get("/jira/get-jira-config");
 			setConfigData(res.data.data);
-			console.log(res.data.data.Domain, "$$$$$$$$$$$$$$$$$$$")
+
 		} catch (error) {
 			console.log(error)
 		}
@@ -44,7 +44,7 @@ const JiraContextProvider = ({ children }) => {
 
 	const JiraConfiguration = async (data) => {
 		const toastId = toast.loading("Loading...");
-		console.log(data)
+
 
 		try {
 			const res = await AxiosHandler.post("/jira/create-jira-config", data);

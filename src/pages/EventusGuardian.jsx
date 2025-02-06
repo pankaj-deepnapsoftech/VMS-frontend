@@ -4,7 +4,7 @@ import InputField from '@/components/InputField';
 import { GuardainValidation } from '@/Validation/GuardainValidation';
 import { useFormik } from 'formik';
 import { BiFilter, BiShield } from 'react-icons/bi';
-import { FaGlobe, FaLink, FaFolderOpen } from 'react-icons/fa';
+import { FaGlobe, FaLink, FaFolderOpen, FaUser } from 'react-icons/fa';
 import { FaDatabase, FaFingerprint } from 'react-icons/fa6';
 import { RiShieldCheckFill } from 'react-icons/ri';
 import { IoMdAirplane } from 'react-icons/io';
@@ -18,6 +18,7 @@ function EventusGuardianPage() {
 
 	const { GuardianPostData } = useVulnerabililtyDataContext();
 
+
 	const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
 		initialValues: {
 			AIR_ID: "",
@@ -29,7 +30,6 @@ function EventusGuardianPage() {
 		},
 		validationSchema: GuardainValidation,
 		onSubmit: (value) => {
-			console.log(value)
 			GuardianPostData(value);
 		}
 	})
@@ -51,7 +51,7 @@ function EventusGuardianPage() {
 										label={"Air ID"}
 										type={"text"}
 										showPassword={false}
-										icon={IoMdAirplane}
+										icon={FaUser}
 										value={values.AIR_ID}
 										onBlur={handleBlur}
 										onChange={handleChange}
@@ -112,7 +112,7 @@ function EventusGuardianPage() {
 
 								<div>
 									<label
-										htmlFor="role"
+										htmlFor="Application_required_MFA"
 										className="block text-sm font-medium text-gray-700 mb-2"
 									>
 										Application Requires MFA
@@ -122,8 +122,8 @@ function EventusGuardianPage() {
 										value={values.Application_required_MFA}
 										onChange={handleChange}
 										className='w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition'
-										id="role">
-										<option disabled selected> -- Select -- </option>
+										id="Application_required_MFA">
+										<option value="" disabled> -- Select -- </option>
 										<option value={true}>Yes</option>
 										<option value={false}>No</option>
 									</select>
@@ -132,7 +132,7 @@ function EventusGuardianPage() {
 
 								<div>
 									<label
-										htmlFor="role"
+										htmlFor="MFA_Enabled"
 										className="block text-sm font-medium text-gray-700 mb-2"
 									>
 										MFA Enabled
@@ -142,8 +142,8 @@ function EventusGuardianPage() {
 										value={values.MFA_Enabled}
 										onChange={handleChange}
 										className='w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition'
-										id="role">
-										<option disabled selected> -- Select   -- </option>
+										id="MFA_Enabled">
+										<option value="" disabled> -- Select -- </option>
 										<option value={true}>Yes</option>
 										<option value={false}>No</option>
 									</select>
@@ -152,7 +152,7 @@ function EventusGuardianPage() {
 							</div>
 							<button
 								type="submit"
-								className="w-[20%] bg-[#015289] text-white py-3 rounded-lg hover:bg-blue-700 transition duration-200"
+								className="w-[20%] bg-[#015289] text-white   py-2  rounded-lg hover:bg-blue-700 transition duration-200"
 								onClick={handleSubmit}
 							>
 								Submit
@@ -262,7 +262,7 @@ function EventusGuardianPage() {
 								/>
 							</div> */}
 					</div>
-					<div className="flex space-x-4">
+					<div className="flex space-x-2">
 						<button className="bg-gray-500 hover:bg-indigo-600    text-white px-6 py-2 rounded-md font-medium">
 							Cancel
 						</button>

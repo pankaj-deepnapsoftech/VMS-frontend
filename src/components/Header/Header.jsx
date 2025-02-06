@@ -14,7 +14,7 @@ import { IoIosLogOut } from 'react-icons/io';
 
 function Header({ setShowMenu }) {
 
-  const { Logout, loading,authenticate } = useAuthContext()
+  const { Logout, loading, authenticate } = useAuthContext()
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -26,20 +26,21 @@ function Header({ setShowMenu }) {
     }
   };
   return (
-    <div className="flex fixed  md:w-[2%] lg:w-[25%] xl:w-[25%] 2xl:w-[20%]  ">
+    <div className="flex fixed  md:w-[20%] lg:w-[25%] xl:w-[25%] 2xl:w-[20%]  overflow-y-auto">
       <div className=" flex flex-col text-white pt-8 ">
-        <Link
+        < Link
+
           onClick={setShowMenu}
           to=""
           className="flex items-center p-5 space-x-2 "
         >
           <BiBarChartAlt2 className="h-6 w-6" />
           <h1 className="text-xl font-semibold">Eventus</h1>
-        </Link>
+        </Link >
         <hr className="border-gray-100 mx-8" />
 
-        <nav className="flex-1 p-5 space-y-2">
-          {(authenticate.role === "Admin" ?  list : EmployeeList).map((data) => (
+        <nav className="flex-1 mx-2 py-5 space-y-1">
+          {(authenticate.role === "Admin" ? list : EmployeeList).map((data) => (
             <NavLink
               key={data.route}
               to={data.route}
@@ -77,8 +78,8 @@ function Header({ setShowMenu }) {
           </div>
         </div>
 
-      </div>
-    </div>
+      </div >
+    </div >
   )
 }
 

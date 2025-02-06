@@ -96,7 +96,7 @@ function ThirdPartyConfig() {
 							Domain
 						</h2>
 					</div>
-					<h3 className="text-base   text-gray-800 mb-2">{ConfigData?.Domain}</h3>
+					<h3 className="text-base  font-medium text-gray-500 mb-2">{ConfigData?.Domain}</h3>
 					<div className="flex flex-row items-center justify-start">
 						<FaUser className='text-blue-500 w-4 h-4 mr-2' />
 						<h2 className="text-lg font-bold   text-gray-600 ">
@@ -104,7 +104,7 @@ function ThirdPartyConfig() {
 						</h2>
 					</div>
 
-					<h3 className="text-base   text-gray-800 mb-2">{ConfigData?.JIRA_USERNAME}</h3>
+					<h3 className="text-base   font-medium text-gray-500 mb-2">{ConfigData?.JIRA_USERNAME}</h3>
 					<div className="flex flex-row items-center justify-start">
 						<FaKey className='text-blue-500 w-4 h-4 mr-2' />
 						<h2 className="text-lg font-bold   text-gray-600 ">
@@ -112,56 +112,10 @@ function ThirdPartyConfig() {
 						</h2>
 					</div>
 
-					<h4 className=" text-sm mb-2 break-words break-all whitespace-normal">{ConfigData?.JIRA_API_KEY}</h4>
+					<h4 className=" text-sm font-medium text-gray-500 mb-2 break-words break-all whitespace-normal">{ConfigData?.JIRA_API_KEY}</h4>
 
 
-					{/* <form onSubmit={handleSubmit} className="space-y-6">
-					<InputField
-						label={"Domain"}
-						type={"text"}
-						showPassword={false}
-						icon={FaGlobe}
-						value={JiraConfigData.Domain}
-						onBlur={handleBlur}
-						onChange={handleChange}
-						placeholder="Enter your Domain Name"
-						name="Domain"
-					/>
-					{touched.Domain && errors.Domain && <p> {errors.Domain}</p>}
-					<InputField
-						label={"Jira Username"}
-						type={"text"}
-						showPassword={false}
-						icon={FaUser}
-						value={JiraConfigData.JIRA_USERNAME}
-						onBlur={handleBlur}
-						onChange={handleChange}
-						placeholder="Enter your Jira Username"
-						name="JIRA_USERNAME"
-					/>
-					{touched.JIRA_USERNAME && errors.JIRA_USERNAME && <p> {errors.JIRA_USERNAME}</p>}
-					<InputField
-						label={"Jira Api Key"}
-						type={"text"}
-						showPassword={false}
-						icon={FaKey}
-						value={JiraConfigData.JIRA_API_KEY}
-						onBlur={handleBlur}
-						onChange={handleChange}
-						placeholder="Enter your Jira Api Key"
-						name="JIRA_API_KEY"
-					/>
-					{touched.JIRA_API_KEY && errors.JIRA_API_KEY && <p> {errors.JIRA_API_KEY}</p>}
 
-					<button
-						type="submit"
-						className="w-full bg-[#015289] text-white py-3 rounded-lg hover:bg-blue-700 transition duration-200"
-						// disabled={loading}
-						onSubmit={handleSubmit}
-					>
-						Submit
-					</button>
-				</form> */}
 				</div>
 			}
 		</div>
