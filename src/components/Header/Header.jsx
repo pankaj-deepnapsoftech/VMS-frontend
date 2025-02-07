@@ -5,7 +5,7 @@ import { GrVulnerability } from "react-icons/gr";
 import { AiOutlineException } from "react-icons/ai";
 import { SiWikimediafoundation } from "react-icons/si";
 import { Link, NavLink } from 'react-router-dom';
-import { EmployeeList, list } from '@/constants/constants.data';
+import { ClientSmeList, EmployeeList, list } from '@/constants/constants.data';
 import { useAuthContext } from '@/context';
 import { FaUser } from 'react-icons/fa';
 import { IoIosLogOut } from 'react-icons/io';
@@ -25,6 +25,28 @@ function Header({ setShowMenu }) {
       Logout()
     }
   };
+
+
+  let navList = [];
+
+  switch (authenticate?.role) {
+    case "ClientCTO":
+      navList = []; // Define if ClientCTO has a specific list
+      break;
+    case "Employee":
+      navList = EmployeeList;
+      break;
+    case "Admin":
+      navList = list;
+      break;
+    case "ClientSME":
+      navList = ClientSmeList; // Define if ClientSME has a specific list
+      break;
+    default:
+      console.log("Invalid Role: Access Denied");
+  }
+
+
   return (
     <div className="flex fixed  md:w-[20%] lg:w-[25%] xl:w-[25%] 2xl:w-[20%]  overflow-y-auto">
       <div className=" flex flex-col text-white pt-8 ">
@@ -40,7 +62,7 @@ function Header({ setShowMenu }) {
         <hr className="border-gray-100 mx-8" />
 
         <nav className="flex-1 mx-2 py-5 space-y-1">
-          {(authenticate.role === "Admin" ? list : EmployeeList).map((data) => (
+          {navList?.map((data) => (
             <NavLink
               key={data.route}
               to={data.route}
@@ -62,10 +84,10 @@ function Header({ setShowMenu }) {
               w-full
               px-10
               items-center  
-            text-red-800
+            text-indigo-600
               hover:scale-95 
              transition
-           bg-red-600 
+           bg-indigo-600 
              rounded-lg  
              justify-center"
             >

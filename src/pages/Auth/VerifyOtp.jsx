@@ -8,9 +8,9 @@ import { Link } from 'react-router-dom';
 
 function VerifyOtp() {
 
-    const { verifyotp,ResendOtp, loading } = useAuthContext()
+    const { verifyotp, ResendOtp, loading } = useAuthContext()
 
-    const [timer, setTimer] = useState(5); // Initial timer (in seconds)
+    const [timer, setTimer] = useState(60   ); // Initial timer (in seconds)
     const [isResendDisabled, setIsResendDisabled] = useState(true);
 
     useEffect(() => {

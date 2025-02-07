@@ -12,6 +12,7 @@ import {
 } from "@/constants/Components-lazy-loading/components.Lazy";
 import { useAuthContext } from "@/context";
 import { EmployeeRoutes } from "./PrivateRoutes/employeeRoutes";
+import { ClientSmeRoutes } from "./PrivateRoutes/clientSmeRoutes";
 
 const AppRoutes = () => {
   const { authenticate, token } = useAuthContext();
@@ -37,7 +38,7 @@ const AppRoutes = () => {
       {/* Protected routes */}
       {isAuthenticated  ? (
         <Route element={<MainLayout />}>
-          {(authenticate.role === "Admin"  ? PrivateRoutes : EmployeeRoutes).map((item, index) => (
+          {(authenticate.role === "Admin"  ? PrivateRoutes :authenticate.role === "Employee" ? EmployeeRoutes : authenticate.role === "ClientSME"  ? ClientSmeRoutes : []).map((item, index) => (
             <Route key={index} path={item.path} element={item.element} />
           ))}
         </Route>
