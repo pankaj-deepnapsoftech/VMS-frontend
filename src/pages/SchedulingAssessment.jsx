@@ -25,7 +25,6 @@ function SchedulingAssessmentPage() {
 	} = useVulnerabililtyDataContext();
 
 
-
 	// Extract headers dynamically for table display
 	const tableHeaders =
 		allAssesmentData?.length > 0
@@ -208,11 +207,10 @@ function SchedulingAssessmentPage() {
 										<option value="" disabled> -- Select  Tester -- </option>
 
 
-										{testerData?.map((itm, idx) => (console.log(itm)))}
+										{testerData?.map((itm, idx) => (<option key={idx} value={itm.full_name}>{itm.full_name}</option>))}
 
 
-										<option value={true}>Tester A</option>
-										<option value={false}>Tester B</option>
+
 									</select>
 									{touched.Select_Tester && errors.Select_Tester && <p className='text-red-700 text-xs'> {errors.Select_Tester}</p>}
 								</div>
