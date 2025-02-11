@@ -127,7 +127,6 @@ const AuthContextProvider = ({ children }) => {
       toast.dismiss(toastId);
       toast.success(res.data.message);
 
-
     } catch (error) {
       toast.dismiss(toastId);
       toast.error(error?.response?.data?.message);
@@ -156,7 +155,6 @@ const AuthContextProvider = ({ children }) => {
   };
 
 
-
   useEffect(() => {
     if (token) {
       getLogedInUser()
@@ -164,7 +162,18 @@ const AuthContextProvider = ({ children }) => {
   }, [token])
 
   return (
-    <authContext.Provider value={{ loading, verifyotp, ResendOtp, Forgotpassword, Resetpassword, Signin, Signup, Logout, token, authenticate }}>
+    <authContext.Provider value={{
+      loading,
+      verifyotp,
+      ResendOtp,
+      Forgotpassword,
+      Resetpassword,
+      Signin,
+      Signup,
+      Logout,
+      token,
+      authenticate
+    }}>
       {children}
     </authContext.Provider>
   );

@@ -21,6 +21,10 @@ export const PrivateRoutes = [
         element: <Home />
     },
     {
+        path: "/scheduling-assesment",
+        element: <SchedulingAssessmentPage />
+    },
+    {
         path: "/vulnerability-data",
         element: <VulnerabilityData />
     },

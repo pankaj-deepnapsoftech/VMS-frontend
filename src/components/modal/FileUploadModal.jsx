@@ -51,9 +51,23 @@ export const Modal = ({
           </button>
         </div>
         <div className='p-4'>
-          {subtitle && (
-            <p className="text-gray-600 mb-2 text-sm">{subtitle}</p>
-          )}
+          <ul className="text-left space-y-3 mb-4">
+
+            <li className="flex items-start space-x-2">
+              <span className="w-3 h-3 mt-1 bg-[#015289] rounded-full"></span>
+              <span className="text-gray-700 text-sm">Please upload an Excel file in <strong>XLSX</strong> or <strong>XLS</strong> format.</span>
+            </li>
+            <li className="flex items-start space-x-2">
+              <span className="w-3 h-3 mt-1 bg-[#015289] rounded-full"></span>
+              <span className="text-gray-700 text-sm ">Ensure the file is properly formatted and contains all necessary data.</span>
+            </li><li className="flex items-start space-x-2">
+              <span className="w-3 h-3 mt-1 bg-[#015289] rounded-full"></span>
+              <span className="text-gray-700 text-sm">If you want to download a sample file,
+                <a href="./assets/Sample_Format.xlxs" download className="text-blue-600 underline">Click Here</a>.
+              </span>
+            </li>
+          </ul>
+
 
           {/* Upload Area */}
           <div className="border-2 border-dashed border-gray-200 rounded-lg p-8 text-center hover:bg-slate-300">

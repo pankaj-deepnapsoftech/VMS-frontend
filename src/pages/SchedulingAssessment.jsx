@@ -4,12 +4,12 @@ import InputField from '@/components/InputField';
 import { SchedulingAssessmentValidation } from '@/Validation/SchedulingAssessmentValidation';
 import { useFormik } from 'formik';
 import { BiEditAlt, BiFilter, BiShield } from 'react-icons/bi';
-import { FaGlobe, FaLink, FaFolderOpen, FaUser } from 'react-icons/fa';
+import { FaGlobe, FaLink, FaFolderOpen, FaUser, FaCalendar } from 'react-icons/fa';
 import { FaDatabase, FaFingerprint } from 'react-icons/fa6';
 import { RiDeleteBinFill, RiShieldCheckFill } from 'react-icons/ri';
 import { IoMdAirplane } from 'react-icons/io';
 import { MdClose, MdSchedule } from 'react-icons/md';
-import { useVulnerabililtyDataContext } from '@/context';
+import { useAuthContext, useScheduleAssessmentContext } from '@/context';
 
 
 
@@ -21,10 +21,16 @@ function SchedulingAssessmentPage() {
 		allAssesmentData,
 		DeleteAssesment,
 		UpdateAssesment,
-		testerData
-	} = useVulnerabililtyDataContext();
+		testerData,
+		getOrgnizationData
+	} = useScheduleAssessmentContext();
 
 
+	const {
+		authenticate
+	} = useAuthContext()
+
+	
 	// Extract headers dynamically for table display
 	const tableHeaders =
 		allAssesmentData?.length > 0
@@ -53,12 +59,15 @@ function SchedulingAssessmentPage() {
 
 	const { values, errors, touched, handleBlur, handleChange, handleSubmit, setFieldValue, resetForm } = useFormik({
 		initialValues: {
+			Orgenization_id: authenticate?.role === "ClientSME" ? authenticate?._id : "",
 			Type_Of_Assesment: "",
 			Application_URL: "",
 			Data_Classification: "",
 			Select_Tester: "",
 			MFA_Enabled: "",
 			code_Upload: "",
+			task_start: "",
+			task_end: ""
 
 		},
 		validationSchema: SchedulingAssessmentValidation,
@@ -214,10 +223,63 @@ function SchedulingAssessmentPage() {
 									</select>
 									{touched.Select_Tester && errors.Select_Tester && <p className='text-red-700 text-xs'> {errors.Select_Tester}</p>}
 								</div>
+								<div>
+									<label
+										htmlFor="Select_Org"
+										className="block text-sm font-medium text-gray-700 mb-2"
+									>
+										Select Orgnization
+									</label>
+									<select
+										name='Orgenization_id'
+										value={values.Orgenization_id}
+										onChange={handleChange}
+										className='w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition'
+										id="Select_Org">
+										<option value="" disabled> -- Select Orgnization -- </option>
+
+
+										{getOrgnizationData?.map((itm, idx) => (<option key={idx} value={itm._id}>{itm.full_name}</option>))}
+
+
+
+									</select>
+									{touched.Orgenization_id && errors.Orgenization_id && <p className='text-red-700 text-xs'> {errors.Orgenization_id}</p>}
+								</div>
+
+
+
+
+								<div>
+									<InputField
+										label={"Prefred Task Start Date"}
+										type={"date"}
+										showPassword={false}
+										value={values.task_start}
+										onBlur={handleBlur}
+										onChange={handleChange}
+										placeholder="Enter your Application URL"
+										name="task_start"
+									/>
+									{touched.task_start && errors.task_start && <p className='text-red-700 text-xs'> {errors.task_start}</p>}
+								</div>
+								<div>
+									<InputField
+										label={"Prefred Task End Date"}
+										type={"date"}
+										showPassword={false}
+										value={values.task_end}
+										onBlur={handleBlur}
+										onChange={handleChange}
+										placeholder="Enter your Application URL"
+										name="task_end"
+									/>
+									{touched.task_end && errors.task_end && <p className='text-red-700 text-xs'> {errors.task_end}</p>}
+								</div>
 							</div>
 							<button
 								type="submit"
-								className="w-[20%] bg-[#015289] text-white   py-2  rounded-lg hover:bg-blue-500 transition duration-200"
+								className="lg:w-[20%] bg-[#015289] text-white   py-2  rounded-lg hover:bg-blue-500 transition duration-200"
 								onClick={handleSubmit}
 							>
 								Submit

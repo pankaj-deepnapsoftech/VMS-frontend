@@ -16,29 +16,32 @@ import {
   AuthContextProvider,
   DataContextProvider,
   JiraContextProvider,
+  SchedulingAssesmentContextProvider,
   VulnerabililtyDataContextProvider
 } from "./context";
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <BrowserRouter>
-      <AuthContextProvider>
-        <DataContextProvider>
-          <AllEmployeeContextProvider>
+
+  <BrowserRouter>
+    <AuthContextProvider>
+      <DataContextProvider>
+        <AllEmployeeContextProvider>
           <VulnerabililtyDataContextProvider>
             <AllCustomerContextProvider>
               <JiraContextProvider>
-                <ApplicationVulnerabilityContextProvider>
+                <SchedulingAssesmentContextProvider>
+                  <ApplicationVulnerabilityContextProvider>
 
-                  <App />
+                    <App />
 
-                </ApplicationVulnerabilityContextProvider>
+                  </ApplicationVulnerabilityContextProvider>
+                </SchedulingAssesmentContextProvider>
               </JiraContextProvider>
             </AllCustomerContextProvider>
-          </VulnerabililtyDataContextProvider> 
-          </AllEmployeeContextProvider>
-        </DataContextProvider>
-      </AuthContextProvider>
-    </BrowserRouter>
-  </StrictMode>
+          </VulnerabililtyDataContextProvider>
+        </AllEmployeeContextProvider>
+      </DataContextProvider>
+    </AuthContextProvider>
+  </BrowserRouter>
+
 );
