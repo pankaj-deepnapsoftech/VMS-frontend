@@ -5,7 +5,7 @@ export const SignUpValidation = object({
     email: string().email().required('E-mail is Required'),
     phone: string().min(10).max(12).required('Phone No. is Required'),
     password: string().min(4).max(12).required('Password is Required'),
-    role: string().oneOf(['Employee', 'Admin', 'ClientCTO', 'ClientSME']).required('Role is Required'),
+    role: string().oneOf(['ClientCISO', 'Assessor', 'Admin', 'ClientSME']).required('Role is Required'),
 })
 
 export const SignInValidation = object({

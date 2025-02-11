@@ -30,10 +30,10 @@ function Header({ setShowMenu }) {
   let navList = [];
 
   switch (authenticate?.role) {
-    case "ClientCTO":
+    case "ClientCISO":
       navList = []; // Define if ClientCTO has a specific list
       break;
-    case "Employee":
+    case "Assessor":
       navList = EmployeeList;
       break;
     case "Admin":
@@ -57,7 +57,7 @@ function Header({ setShowMenu }) {
           className="flex items-center p-5 space-x-2 "
         >
           <BiBarChartAlt2 className="h-6 w-6" />
-          <h1 className="text-xl font-semibold">Eventus</h1>
+          <h1 className="text-xl font-semibold">Secure Vision</h1>
         </Link >
         <hr className="border-gray-100 mx-8" />
 

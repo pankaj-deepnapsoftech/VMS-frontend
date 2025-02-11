@@ -9,7 +9,6 @@ import { SiWikimediafoundation } from "react-icons/si";
 
 export const list = [
     { title: "Dashboard", route: "", icon: BiSolidDashboard },
-    { title: "Scheduling Assessment ", route: "/scheduling-assessment", icon: BiSolidDashboard },
     { title: "All Employee", route: "/all-employee", icon: FaPerson },
     { title: "All Customer", route: "/all-customer", icon: IoPerson },
     { title: "Vulnerability Data", route: "/vulnerability-data", icon: IoShield },
@@ -24,7 +23,7 @@ export const list = [
 
 export const EmployeeList = [
     { title: "Employee Dashboard", route: "/", icon: BiSolidDashboard },
-    { title: "Employee All Tasks", route: "/all-employee-tasks", icon: IoShieldHalf },
+    { title: "All Tasks", route: "/all-employee-tasks", icon: IoShieldHalf },
 
 ]
 

@@ -126,8 +126,8 @@ function SignUp() {
               className='w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition'
               id="role">
               <option value="" disabled> -- Select a role -- </option>
-              <option value="Employee">Employee</option>
-              <option value="ClientCTO">Client CTO</option>
+              <option value="Assessor">Assessor</option>
+              <option value="ClientCISO">Client CISO</option>
               <option value="ClientSME">Client SME</option>
             </select>
             {touched.role && errors.role && <p> {errors.role}</p>}

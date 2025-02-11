@@ -56,7 +56,7 @@ function SchedulingAssessmentPage() {
 			Type_Of_Assesment: "",
 			Application_URL: "",
 			Data_Classification: "",
-			// Select_Tester: "",
+			Select_Tester: "",
 			MFA_Enabled: "",
 			code_Upload: "",
 
@@ -207,7 +207,7 @@ function SchedulingAssessmentPage() {
 										<option value="" disabled> -- Select  Tester -- </option>
 
 
-										{testerData?.map((itm, idx) => (<option key={idx} value={itm.full_name}>{itm.full_name}</option>))}
+										{testerData?.map((itm, idx) => (<option key={idx} value={itm._id}>{itm.full_name}</option>))}
 
 
 

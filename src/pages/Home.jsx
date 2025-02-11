@@ -92,7 +92,7 @@ function Home() {
             className="px-4 py-2 bg-[#015289] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
           >
             <BiPlus className="h-6 w-6" />
-            Bulk Upload
+            Report Upload
           </button>
         </div>
 
@@ -100,7 +100,7 @@ function Home() {
         <Modal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          title="Bulk Upload"
+          title="Report Upload"
           subtitle=" please upload an Excel file in XLSX or XLS format. Ensure the file is properly formatted and contains all necessary data for processing."
         />
 
