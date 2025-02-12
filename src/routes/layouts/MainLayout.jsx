@@ -3,12 +3,17 @@ import { Header } from '@/constants/Components-lazy-loading/components.Lazy'
 import React, { useEffect, useState } from 'react'
 import { AiOutlineMenu } from 'react-icons/ai';
 import { BiBarChartAlt2 } from 'react-icons/bi';
+import { FaBell } from 'react-icons/fa';
 import { Outlet, useLocation } from 'react-router-dom'
+import { NotificationSidebar } from "@components/modal/NotificationSideBar"
 
 import { Link } from 'react-router-dom';
+import { useVulnerabililtyDataContext } from '@/context';
 
 const MainLayout = () => {
 
+  const { notificationData ,NotificationsViewed} = useVulnerabililtyDataContext()
+  console.log("##############", notificationData)
 
   const [width, setWidth] = useState(window.innerWidth);
 
@@ -32,6 +37,7 @@ const MainLayout = () => {
   }, [window.innerWidth])
 
   const [showMenu, setShowMenu] = useState(false)
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <>
@@ -42,11 +48,31 @@ const MainLayout = () => {
       <div className="ml-auto mb-6 lg:w-[75%] xl:w-[80%] 2xl:w-[85%]">
         <div className="bg-white border-b border-gray-200">
           <div className="flex items-center justify-between px-2 sm:px-4 py-2">
-            <div className="flex items-center space-x-2">
+            <div className="w-full flex items-center justify-between pr-5">
               <button className="p-2 hover:bg-gray-100 rounded lg:hidden " onClick={() => setShowMenu(!showMenu)}>
                 <AiOutlineMenu className="w-5 h-5" />
               </button>
+
               <h1 className="text-base sm:text-lg font-semibold truncate capitalize">{location.pathname !== "/" ? location.pathname.replace("/", "").replace("-", " ") : "Dashboard"}</h1>
+              <div className=' flex items-end justify-end'>
+
+                <button
+                  onClick={() => setSidebarOpen(true)}
+                  className="relative flex items-center gap-2 bg-[#015289]  text-white px-4 py-3 rounded-lg hover:bg-blue-600"
+                >
+                  <FaBell />
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">0
+                    {/* {notifications.length} */}
+                  </span>
+                </button>
+              </div>
+
+              <NotificationSidebar
+              notificationsViewed={NotificationsViewed}
+                notifications={notificationData}
+                isOpen={isSidebarOpen}
+                onClose={() => setSidebarOpen(false)}
+              />
             </div>
           </div>
         </div>

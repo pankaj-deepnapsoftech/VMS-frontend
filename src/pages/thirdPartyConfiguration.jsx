@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 function ThirdPartyConfig() {
 
 	const { JiraConfiguration, ConfigData } = useJiraContext()
+	console.log(ConfigData)
 
 	const [isVerified, setIsVerified] = useState(false)
 
@@ -25,7 +26,7 @@ function ThirdPartyConfig() {
 
 	return (
 		<div className="min-h-screen bg-gray-50 flex items-start pt-16 px-6 justify-center">
-			{(ConfigData?.length !== null || ConfigData?.length > 0) ?
+			{(ConfigData === null || ConfigData?.length <= 0) ?
 				<div className="w-full md:w-1/2 p-8 md:p-12 shadow-2xl rounded-2xl">
 					<div className="mb-8">
 						<h1 className="text-3xl font-bold text-gray-800 mb-2">Jira Integration</h1>

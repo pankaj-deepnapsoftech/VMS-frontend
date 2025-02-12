@@ -8,10 +8,26 @@ import * as XLSX from "xlsx";
 import { WorkItemValidation } from "@/Validation/VulnerabililtyDataValidation";
 import { BsPersonCheckFill } from "react-icons/bs";
 import toast from "react-hot-toast";
+import { FaExclamationTriangle } from "react-icons/fa";
 
 export function VulnerabilityData() {
-  const { UpdateData, AddData, allVulnerabilityData, DeleteData, AssignTask, page, setPage, BulkAssignTask } =
+
+
+  const {
+    UpdateData,
+    AddData,
+    allVulnerabilityData,
+    topVulnerabliltyData,
+    DeleteData,
+    AssignTask,
+    page,
+    setPage,
+    BulkAssignTask,
+    CreateNotifications } =
     useVulnerabililtyDataContext();
+
+
+  console.log(topVulnerabliltyData)
 
   const { allEmployeesData } = useAllEmployeeContext();
 
@@ -130,8 +146,43 @@ export function VulnerabilityData() {
 
 
 
+  const vulnerabilities = Object.entries(topVulnerabliltyData)
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count); // Sort by count in descending order
+
+
+  const getRowColor = (rank) => {
+    return rank % 2 === 0 ? "bg-gray-100" : "bg-white";
+  };
+
+
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
+      <div className="p-10 ">
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
+            <thead>
+              <tr className="bg-[#015289] text-gray-100 uppercase text-sm">
+                <th className="py-2 px-4 border-b">Top Vulnerability</th>
+                <th className="py-2 px-4 border-b">Vulnerability Name</th>
+                <th className="py-2 px-4 border-b">Total Vulnerability</th>
+              </tr>
+            </thead>
+            <tbody>
+              {vulnerabilities?.map((product, index) => (
+                <tr key={product.rank} className={`text-center border-b hover:bg-gray-200 ${getRowColor(product.rank)}`}>
+                  <td className="py-2 px-4 flex items-center justify-center gap-2">
+                    <FaExclamationTriangle className="text-red-500" /> {index + 1}
+                  </td>
+                  <td className="py-2 px-4">{product.name}</td>
+                  <td className="py-2 px-4">{product.count}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
       <div className="p-4 md:p-6 max-w-[95%] mx-auto bg-white rounded-xl shadow-lg">
         {/* 🔍 Search Bar & Buttons */}
         <div className="mb-4 flex flex-col md:flex-row items-start md:items-center justify-between">
@@ -278,10 +329,12 @@ export function VulnerabilityData() {
                       if (!id) {
                         BulkAssignTask(empName, index)
                         setIsOpen(false)
+                        CreateNotifications(empName, `${index.length} Tasks Assign to you`)
                       }
                       else {
                         AssignTask(empName, id)
                         setIsOpen(false)
+                        CreateNotifications(empName, ` Tasks Assign to you`)
                       }
                     }}
                     className="px-4 py-2 bg-[#015289] text-white rounded-md hover:bg-blue-700 transition"
