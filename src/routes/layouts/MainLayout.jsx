@@ -12,8 +12,7 @@ import { useVulnerabililtyDataContext } from '@/context';
 
 const MainLayout = () => {
 
-  const { notificationData ,NotificationsViewed} = useVulnerabililtyDataContext()
-  console.log("##############", notificationData)
+  const { notificationData, NotificationsViewed } = useVulnerabililtyDataContext()
 
   const [width, setWidth] = useState(window.innerWidth);
 
@@ -39,6 +38,10 @@ const MainLayout = () => {
   const [showMenu, setShowMenu] = useState(false)
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
+
+
+  let notificationcount = notificationData?.filter(notification => !notification.view).length || 0;
+
   return (
     <>
 
@@ -58,17 +61,17 @@ const MainLayout = () => {
 
                 <button
                   onClick={() => setSidebarOpen(true)}
-                  className="relative flex items-center gap-2 bg-[#015289]  text-white px-4 py-3 rounded-lg hover:bg-blue-600"
+                  className="relative flex items-center gap-2 bg-[#015289]  text-white px-4 py-2 rounded-lg hover:bg-blue-600"
                 >
-                  <FaBell />
-                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">0
-                    {/* {notifications.length} */}
+                  <FaBell className="w-6 h-6" />
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                    {notificationcount}
                   </span>
                 </button>
               </div>
 
               <NotificationSidebar
-              notificationsViewed={NotificationsViewed}
+                notificationsViewed={NotificationsViewed}
                 notifications={notificationData}
                 isOpen={isSidebarOpen}
                 onClose={() => setSidebarOpen(false)}

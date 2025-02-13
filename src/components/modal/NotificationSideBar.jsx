@@ -1,36 +1,69 @@
-import { FaTimesCircle, FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
+import { FaTimesCircle, FaCheckCircle, FaExclamationTriangle, FaBell } from "react-icons/fa";
 
 export function NotificationSidebar({ notifications, isOpen, onClose, notificationsViewed }) {
 
-	console.log(notifications, "@@@@@@@@@@")
+
+
 	return (
 		<div
-			className={`fixed top-0 right-0 h-full w-80 bg-white shadow-lg z-10 transform transition-transform ${isOpen ? "translate-x-0" : "translate-x-full"
+			className={`fixed top-0 right-0 h-full w-80 bg-white shadow-lg z-10 transform transition-transform duration-300 ${isOpen ? "translate-x-0" : "translate-x-full"
 				}`}
 		>
-			<div className="p-4 border-b flex justify-between items-center bg-[#015289] ">
-				<h2 className="text-lg font-semibold text-gray-100">Notifications</h2>
-				<button onClick={onClose} className="text-white hover:text-red-700">
-					<FaTimesCircle size={20} />
+			{/* Header */}
+			<div className="p-4 border-b flex justify-between items-center bg-[#015289]">
+				<h2 className="text-lg font-semibold text-white">Notifications</h2>
+				<button onClick={onClose} className="text-white hover:text-red-400 transition">
+					<FaTimesCircle size={22} />
 				</button>
 			</div>
-			<div className="p-4 space-y-4">
-				{notifications?.length > 0 ? (
-					notifications.map((notification, index) => (
-						<div
-							onClick={() => notificationsViewed(notification?._id)}
-							key={index}
-							className={`p-3 rounded-lg flex items-center gap-3 shadow-md ${notification?.type === "success" ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700"
-								}`}
-						>
-							<h1>
-								{notification?.title}
-							</h1>
 
-						</div>
-					))
+			{/* Notifications List */}
+			<div className="p-4 space-y-3 overflow-y-auto max-h-[80vh]">
+				{notifications?.length > 0 ? (
+					notifications.map((notification, index) => {
+						const isViewed = notification?.view; // Assuming 'viewed' property
+
+						console.log(isViewed)
+						return (
+							<div
+								key={index}
+								onClick={() => notificationsViewed(notification?._id)}
+								className={`p-3 rounded-lg flex items-center gap-3 shadow-md cursor-pointer transition-all ${isViewed ? "bg-gray-200 text-gray-600" : "bg-blue-100 text-blue-900"
+									} hover:bg-blue-200`}
+							>
+								{/* Icon based on type */}
+								{/* <span className="text-lg">
+                  {notification.type === "success" ? (
+                    <FaCheckCircle className="text-green-500" />
+                  ) : notification.type === "warning" ? (
+                    <FaExclamationTriangle className="text-yellow-500" />
+                  ) : notification.type === "error" ? (
+                    <FaTimesCircle className="text-red-500" />
+                  ) : (
+                    <FaBell className="text-blue-500" />
+                  )}
+                </span> */}
+
+								{/* Notification Title */}
+								<div>
+									<h2 className="font-semibold text-sm">{notification?.title}</h2>
+
+								</div>
+
+								{/* Viewed Badge */}
+								{!isViewed ? (
+									<span className="ml-auto text-xs font-bold text-white bg-red-500 px-2 py-1 rounded-full">
+										New
+									</span>
+								) : <span className="ml-auto text-xs font-base text-blue-400  rounded-full">
+									Viewed
+								</span>
+								}
+							</div>
+						);
+					})
 				) : (
-					<p className="text-gray-600">No new notifications</p>
+					<p className="text-gray-500 text-center">No new notifications</p>
 				)}
 			</div>
 		</div>

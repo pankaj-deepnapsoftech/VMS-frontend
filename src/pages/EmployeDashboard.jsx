@@ -28,8 +28,9 @@ function EmployeeDashboard() {
       <div className="min-h-screen bg-gray-100 px-6 ">
         {/* Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-6">
-          {Object.keys(employeeCardData)?.map((item) => {
-            return (<div className="bg-white rounded-lg shadow p-6 hover:scale-105  transition">
+          {Object.keys(employeeCardData)?.map((item, idx) => {
+            return (<div key={idx}
+              className="bg-white rounded-lg shadow p-6 hover:scale-105  transition">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-base  text-black capitalize">{item === "totalData" ? "Total" : item} Task</h3>
                 <FiAlertCircle className="text-red-500" size={20} />

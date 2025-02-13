@@ -13,6 +13,7 @@ import { FaExclamationTriangle } from "react-icons/fa";
 export function VulnerabilityData() {
 
 
+
   const {
     UpdateData,
     AddData,
@@ -23,11 +24,12 @@ export function VulnerabilityData() {
     page,
     setPage,
     BulkAssignTask,
-    CreateNotifications } =
+    CreateNotifications,
+    GetAssetsOpenIssues,
+    getOrganizationData } =
     useVulnerabililtyDataContext();
 
 
-  console.log(topVulnerabliltyData)
 
   const { allEmployeesData } = useAllEmployeeContext();
 
@@ -108,11 +110,13 @@ export function VulnerabilityData() {
   };
 
   const [empName, setEmpName] = useState("")
+  const [vulTitle, setVulTitle] = useState("")
   const [id, setID] = useState("")
 
-  const handleAssignTask = (id) => {
+  const handleAssignTask = (item) => {
     setIsOpen(true)
-    setID(id)
+    setID(item._id)
+    setVulTitle(item.Application_Name)
 
   };
 
@@ -120,6 +124,7 @@ export function VulnerabilityData() {
     index.length > 0 ? "" : toast.error("Select Tasks For Assign")
     setIsOpen(index.length > 0)
     setID(id)
+
 
   };
 
@@ -155,47 +160,13 @@ export function VulnerabilityData() {
     return rank % 2 === 0 ? "bg-gray-100" : "bg-white";
   };
 
-
-
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <div className="p-10 ">
-        <div className="overflow-x-auto">
-          <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
-            <thead>
-              <tr className="bg-[#015289] text-gray-100 uppercase text-sm">
-                <th className="py-2 px-4 border-b">Top Vulnerability</th>
-                <th className="py-2 px-4 border-b">Vulnerability Name</th>
-                <th className="py-2 px-4 border-b">Total Vulnerability</th>
-              </tr>
-            </thead>
-            <tbody>
-              {vulnerabilities?.map((product, index) => (
-                <tr key={product.rank} className={`text-center border-b hover:bg-gray-200 ${getRowColor(product.rank)}`}>
-                  <td className="py-2 px-4 flex items-center justify-center gap-2">
-                    <FaExclamationTriangle className="text-red-500" /> {index + 1}
-                  </td>
-                  <td className="py-2 px-4">{product.name}</td>
-                  <td className="py-2 px-4">{product.count}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+
       <div className="p-4 md:p-6 max-w-[95%] mx-auto bg-white rounded-xl shadow-lg">
         {/* 🔍 Search Bar & Buttons */}
         <div className="mb-4 flex flex-col md:flex-row items-start md:items-center justify-between">
-          <div className="relative mt-4 md:mt-0">
-            <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-            <input
-              type="text"
-              placeholder="Search vulnerabilities..."
-              className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg w-full md:w-80"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
+
           <div className="lg:flex lg:flex-row grid grid-cols-2 gap-4 mt-4   w-full lg:justify-end  lg:items-center py-2 lg:gap-2">
             <button
               onClick={() => openModal()}
@@ -219,6 +190,59 @@ export function VulnerabilityData() {
               Export Data
             </button>
           </div>
+        </div>
+
+
+        {/* top 5 Vulnerability */}
+
+
+        <div className="py-10 ">
+          <div className="overflow-x-auto">
+            <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
+              <thead>
+                <tr className="bg-[#015289] text-gray-100 uppercase text-sm">
+                  <th className="py-2 px-4 border-b">Top Vulnerability</th>
+                  <th className="py-2 px-4 border-b">Vulnerability Name</th>
+                  <th className="py-2 px-4 border-b">Total Vulnerability</th>
+                </tr>
+              </thead>
+              <tbody>
+                {vulnerabilities?.map((product, index) => (
+                  <tr key={index} className={`text-center border-b hover:bg-gray-200 ${getRowColor(index)}`}>
+                    <td className="py-2 px-4 flex items-center justify-center gap-2">
+                      <FaExclamationTriangle className="text-red-500" /> {index + 1}
+                    </td>
+                    <td className="py-2 px-4">{product.name}</td>
+                    <td className="py-2 px-4">{product.count}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-3 lg:flex-row lg:justify-between  items-center py-3 ">
+          <div className="relative mt-4 md:mt-0">
+            <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+            <input
+              type="text"
+              placeholder="Search vulnerabilities..."
+              className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg w-full md:w-80"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+
+          <select
+            name='Get Organization '
+            onChange={(e) => GetAssetsOpenIssues(e.target.value)}
+            className=' px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition'
+            id="Select_Tester">
+            <option value="" selected disabled> -- Select  Organization -- </option>
+
+            {getOrganizationData?.map((itm, idx) => (<option key={idx} value={itm}>{itm}</option>))}
+
+          </select>
         </div>
 
         {/* 📊 Table */}
@@ -280,7 +304,9 @@ export function VulnerabilityData() {
                     <button onClick={() => handleDelete(item._id)} className="text-red-600">
                       <RiDeleteBinFill className="h-5 w-5" />
                     </button>
-                    <button onClick={() => handleAssignTask(item._id)} className="text-red-600">
+                    <button onClick={() => {
+                      handleAssignTask(item)
+                    }} className="text-red-600">
                       <BsPersonCheckFill className="h-5 w-5" />
                     </button>
                   </td>
@@ -289,6 +315,9 @@ export function VulnerabilityData() {
             </tbody>
           </table>
         </div>
+
+
+
         {isOpen && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
             <div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
@@ -313,7 +342,7 @@ export function VulnerabilityData() {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                 >
                   <option selected disabled>Select a Employee</option>
-                  {allEmployeesData?.map((item) => (<option value={item._id}>{item.full_name}</option>))}
+                  {allEmployeesData?.map((item, idx) => (<option key={idx} value={item._id}>{item.full_name}</option>))}
 
                 </select>
 
@@ -334,7 +363,7 @@ export function VulnerabilityData() {
                       else {
                         AssignTask(empName, id)
                         setIsOpen(false)
-                        CreateNotifications(empName, ` Tasks Assign to you`)
+                        CreateNotifications(empName, `${vulTitle} has Assign a New Task To You`)
                       }
                     }}
                     className="px-4 py-2 bg-[#015289] text-white rounded-md hover:bg-blue-700 transition"
