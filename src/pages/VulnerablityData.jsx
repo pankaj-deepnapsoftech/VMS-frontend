@@ -9,6 +9,7 @@ import { WorkItemValidation } from "@/Validation/VulnerabililtyDataValidation";
 import { BsPersonCheckFill } from "react-icons/bs";
 import toast from "react-hot-toast";
 import { FaExclamationTriangle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export function VulnerabilityData() {
 
@@ -16,7 +17,7 @@ export function VulnerabilityData() {
 
   const {
     UpdateData,
-    AddData,
+    AddData, AllVulnerablilty,
     allVulnerabilityData,
     topVulnerabliltyData,
     DeleteData,
@@ -160,6 +161,12 @@ export function VulnerabilityData() {
     return rank % 2 === 0 ? "bg-gray-100" : "bg-white";
   };
 
+  let navigate = useNavigate();
+
+
+  const [selected, setSelected] = useState("");
+
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
 
@@ -232,17 +239,28 @@ export function VulnerabilityData() {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
+          <div className=" w-full flex  justify-end gap-2">
 
-          <select
-            name='Get Organization '
-            onChange={(e) => GetAssetsOpenIssues(e.target.value)}
-            className=' px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition'
-            id="Select_Tester">
-            <option value="" selected disabled> -- Select  Organization -- </option>
+            <select
+              name='Get Organization '
+              value={selected}
+              onChange={(e) => {
+                setSelected(e.target.value)
+                GetAssetsOpenIssues(e.target.value)
+              }}
+              className=' px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition'
+              id="Select_Tester">
+              <option value="" selected disabled> -- Select  Organization -- </option>
 
-            {getOrganizationData?.map((itm, idx) => (<option key={idx} value={itm}>{itm}</option>))}
+              {getOrganizationData?.map((itm, idx) => (<option key={idx} value={itm}>{itm}</option>))}
 
-          </select>
+            </select>
+            <button className="p-1   bg-[#015289] text-white text-xs rounded-lg hover:bg-blue-700 transition"
+              onClick={() => {
+                AllVulnerablilty()
+                setSelected("")
+              }}>Clear Filter</button>
+          </div>
         </div>
 
         {/* 📊 Table */}
