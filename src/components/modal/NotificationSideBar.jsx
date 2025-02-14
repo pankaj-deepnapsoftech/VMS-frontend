@@ -2,7 +2,7 @@ import { FaTimesCircle, FaCheckCircle, FaExclamationTriangle, FaBell } from "rea
 
 export function NotificationSidebar({ notifications, isOpen, onClose, notificationsViewed }) {
 
-
+	let notificationcount = notifications?.filter(notification => !notification.view).length || 0;
 
 	return (
 		<div
@@ -11,7 +11,8 @@ export function NotificationSidebar({ notifications, isOpen, onClose, notificati
 		>
 			{/* Header */}
 			<div className="p-4 border-b flex justify-between items-center bg-[#015289]">
-				<h2 className="text-lg font-semibold text-white">Notifications</h2>
+				<FaBell className="w-6 h-6 text-white" />
+				<h2 className="text-lg font-semibold text-white">Notifications {notificationcount < 1 ? "" : `(${notificationcount})`}</h2>
 				<button onClick={onClose} className="text-white hover:text-red-400 transition">
 					<FaTimesCircle size={22} />
 				</button>

@@ -161,7 +161,6 @@ export function VulnerabilityData() {
     return rank % 2 === 0 ? "bg-gray-100" : "bg-white";
   };
 
-  let navigate = useNavigate();
 
 
   const [selected, setSelected] = useState("");

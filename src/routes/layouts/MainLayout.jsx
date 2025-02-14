@@ -64,9 +64,10 @@ const MainLayout = () => {
                   className="relative flex items-center gap-2 bg-[#015289]  text-white px-4 py-2 rounded-lg hover:bg-blue-600"
                 >
                   <FaBell className="w-6 h-6" />
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                    {notificationcount}
-                  </span>
+                  {
+                    notificationcount > 0 ? <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                      {notificationcount}
+                    </span> : ""}
                 </button>
               </div>
 
