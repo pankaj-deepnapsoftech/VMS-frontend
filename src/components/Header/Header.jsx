@@ -5,7 +5,7 @@ import { GrVulnerability } from "react-icons/gr";
 import { AiOutlineException } from "react-icons/ai";
 import { SiWikimediafoundation } from "react-icons/si";
 import { Link, NavLink } from 'react-router-dom';
-import { ClientSmeList, EmployeeList, list } from '@/constants/constants.data';
+import { ClientCisoList, ClientSmeList, EmployeeList, list } from '@/constants/constants.data';
 import { useAuthContext } from '@/context';
 import { FaUser } from 'react-icons/fa';
 import { IoIosLogOut } from 'react-icons/io';
@@ -31,7 +31,7 @@ function Header({ setShowMenu }) {
 
   switch (authenticate?.role) {
     case "ClientCISO":
-      navList = []; // Define if ClientCTO has a specific list
+      navList = ClientCisoList; // Define if ClientCTO has a specific list
       break;
     case "Assessor":
       navList = EmployeeList;

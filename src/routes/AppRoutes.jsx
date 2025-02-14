@@ -13,6 +13,8 @@ import {
 import { useAuthContext } from "@/context";
 import { EmployeeRoutes } from "./PrivateRoutes/employeeRoutes";
 import { ClientSmeRoutes } from "./PrivateRoutes/clientSmeRoutes";
+import UnauthorizedAccessPage from "@/pages/UnauthorizedAccess";
+import { ClientCisoRoutes } from "./PrivateRoutes/ClientCisoRoutes";
 
 const AppRoutes = () => {
   const { authenticate, token } = useAuthContext();
@@ -38,7 +40,7 @@ const AppRoutes = () => {
       {/* Protected routes */}
       {isAuthenticated  ? (
         <Route element={<MainLayout />}>
-          {(authenticate.role === "Admin"  ? PrivateRoutes :authenticate.role === "Assessor" && authenticate.employee_approve ? EmployeeRoutes : authenticate.role === "ClientSME"  ? ClientSmeRoutes : [{path:"/",element:<PageNotFound />}]).map((item, index) => (
+          {(authenticate.role === "Admin"  ? PrivateRoutes :authenticate.role === "Assessor" && authenticate.employee_approve ? EmployeeRoutes : authenticate.role === "ClientSME"  ? ClientSmeRoutes : authenticate.role === "ClientCISO"  ? ClientCisoRoutes :[{path:"/",element:<UnauthorizedAccessPage />}]).map((item, index) => (
             <Route key={index} path={item.path} element={item.element} />
           ))}
         </Route>

@@ -30,5 +30,9 @@ export const EmployeeList = [
 
 export const ClientSmeList = [
     { title: "Scheduling Assesment", route: "/", icon: BiSolidDashboard },
+]
 
+
+export const ClientCisoList = [
+    { title: "dashboard", route: "/", icon: BiSolidDashboard },
 ]

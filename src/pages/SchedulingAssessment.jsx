@@ -15,7 +15,6 @@ import { useAuthContext, useScheduleAssessmentContext } from '@/context';
 
 function SchedulingAssessmentPage() {
 
-
 	const {
 		SchedulingAssesment,
 		allAssesmentData,
@@ -108,7 +107,7 @@ function SchedulingAssessmentPage() {
 
 
 					{/* Form Section */}
-					<div className=" flex  gap-6 mb-8   ">
+					{authenticate.role === "ClientSME"  && <div className=" flex  gap-6 mb-8   ">
 						<form onSubmit={handleSubmit} className="space-y-5 w-full flex flex-col ">
 							<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
 
@@ -285,7 +284,7 @@ function SchedulingAssessmentPage() {
 								Submit
 							</button>
 						</form>
-					</div>
+					</div>}
 
 					{isOpen && (
 						<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-40">
