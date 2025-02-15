@@ -22,6 +22,23 @@ const AppRoutes = () => {
   // Check if user is authenticated and verify their login and email
   const isAuthenticated = token && authenticate?.email_verification;
 
+  const getRoleBasedRoutes = () => {
+    if (!authenticate?.role) return [{ path: "/", element: <UnauthorizedAccessPage /> }];
+    
+    switch (authenticate.role) {
+      case "Admin":
+        return PrivateRoutes;
+      case "Assessor":
+        return authenticate.employee_approve ? EmployeeRoutes : [{ path: "/", element: <UnauthorizedAccessPage /> }];
+      case "ClientSME":
+        return ClientSmeRoutes;
+      case "ClientCISO":
+        return ClientCisoRoutes;
+      default:
+        return [{ path: "/", element: <UnauthorizedAccessPage /> }];
+    }
+  };
+
   return (
     <Routes>
       {/* Public routes */}
@@ -34,21 +51,20 @@ const AppRoutes = () => {
           <Route path="/verify-otp" element={<VerifyOtp />} />
         </>
       ) : (
-        <Route path="/*" element={<Navigate to="/" replace />} />
+        <Route path={"/sign-in" || "/sign-up"} element={<Navigate to="/" replace />} />
       )}
 
       {/* Protected routes */}
-      {isAuthenticated  ? (
+      {isAuthenticated ? (
         <Route element={<MainLayout />}>
-          {(authenticate.role === "Admin"  ? PrivateRoutes :authenticate.role === "Assessor" && authenticate.employee_approve ? EmployeeRoutes : authenticate.role === "ClientSME"  ? ClientSmeRoutes : authenticate.role === "ClientCISO"  ? ClientCisoRoutes :[{path:"/",element:<UnauthorizedAccessPage />}]).map((item, index) => (
+          {getRoleBasedRoutes().map((item, index) => (
             <Route key={index} path={item.path} element={item.element} />
           ))}
         </Route>
       ) : (
-        <Route path="/*" element={<Navigate to="/sign-in" replace />} />
+        <Route path="/" element={<Navigate to="/sign-in" replace />} />
       )}
 
-      
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

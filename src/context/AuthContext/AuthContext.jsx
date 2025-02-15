@@ -22,7 +22,7 @@ const AuthContextProvider = ({ children }) => {
       console.log(error)
     }
   }
-  console.log(loading, "api")
+
   const Signin = async (data) => {
     const toastId = toast.loading("Loading...");
 
@@ -32,7 +32,6 @@ const AuthContextProvider = ({ children }) => {
       AxiosHandler.defaults.headers.authorization = `Bearer ${res.data.token}`;
       Cookies.set("token", res.data.token, { expires: 1 });
       setToken(res.data.token);
-      navigate("/");
       toast.dismiss(toastId);
       toast.success(res.data.message);
     } catch (error) {
