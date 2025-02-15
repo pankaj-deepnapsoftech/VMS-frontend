@@ -1,6 +1,15 @@
+import { useAuthContext } from "@/context";
 import { FaTimesCircle, FaCheckCircle, FaExclamationTriangle, FaBell } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export function NotificationSidebar({ notifications, isOpen, onClose, notificationsViewed }) {
+
+	const {
+		authenticate
+	} = useAuthContext()
+
+	let navigate = useNavigate();
+
 
 	let notificationcount = notifications?.filter(notification => !notification.view).length || 0;
 
@@ -28,7 +37,14 @@ export function NotificationSidebar({ notifications, isOpen, onClose, notificati
 						return (
 							<div
 								key={index}
-								onClick={() => notificationsViewed(notification?._id)}
+								onClick={() => {
+									notificationsViewed(notification?._id);
+									if (authenticate.role === "Assessor") {
+										onClose()
+										navigate("/all-employee-tasks")
+									}
+
+								}}
 								className={`p-3 rounded-lg flex items-center gap-3 shadow-md cursor-pointer transition-all ${isViewed ? "bg-gray-200 text-gray-600" : "bg-blue-100 text-blue-900"
 									} hover:bg-blue-200`}
 							>

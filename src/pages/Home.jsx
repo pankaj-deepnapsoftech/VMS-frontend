@@ -6,8 +6,9 @@ import { MdKeyboardArrowDown } from 'react-icons/md';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { AiOutlineMenu } from 'react-icons/ai';
 import Card from '@/components/Card';
-import { useDataContext } from '@/context';
+import { useAuthContext, useDataContext } from '@/context';
 import { Modal } from '@/components/modal/FileUploadModal';
+import { Loader } from '@/constants/Components-lazy-loading/components.Lazy';
 
 
 
@@ -26,6 +27,8 @@ function Home() {
     criticalHighVulnerableOverdue
 
   } = useDataContext();
+
+  const { loading } = useAuthContext();
 
   const closevulnerableItemsData = [closevulnerableItems];
 
@@ -79,6 +82,9 @@ function Home() {
       icon: IoShieldCheckmarkOutline
     }
   ];
+
+
+  
 
   return (
     <>

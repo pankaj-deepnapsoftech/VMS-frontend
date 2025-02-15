@@ -29,7 +29,7 @@ function SchedulingAssessmentPage() {
 		authenticate
 	} = useAuthContext()
 
-	
+
 	// Extract headers dynamically for table display
 	const tableHeaders =
 		allAssesmentData?.length > 0
@@ -107,7 +107,7 @@ function SchedulingAssessmentPage() {
 
 
 					{/* Form Section */}
-					{authenticate.role === "ClientSME"  && <div className=" flex  gap-6 mb-8   ">
+					{(authenticate.role === "ClientSME" || authenticate.role === "Admin") && <div className=" flex  gap-6 mb-8   ">
 						<form onSubmit={handleSubmit} className="space-y-5 w-full flex flex-col ">
 							<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
 
@@ -222,7 +222,7 @@ function SchedulingAssessmentPage() {
 									</select>
 									{touched.Select_Tester && errors.Select_Tester && <p className='text-red-700 text-xs'> {errors.Select_Tester}</p>}
 								</div>
-								<div>
+								{authenticate.role === "Admin" && <div>
 									<label
 										htmlFor="Select_Org"
 										className="block text-sm font-medium text-gray-700 mb-2"
@@ -244,7 +244,7 @@ function SchedulingAssessmentPage() {
 
 									</select>
 									{touched.Orgenization_id && errors.Orgenization_id && <p className='text-red-700 text-xs'> {errors.Orgenization_id}</p>}
-								</div>
+								</div>}
 
 
 
@@ -562,7 +562,7 @@ function SchedulingAssessmentPage() {
 					)}
 
 
-					<div className="overflow-x-auto">
+					<div id='table' className="overflow-x-auto">
 						<table className="min-w-full divide-y divide-gray-200">
 							<thead className="bg-[#015289]">
 
@@ -584,7 +584,6 @@ function SchedulingAssessmentPage() {
 							<tbody className="divide-y divide-gray-200">
 								{allAssesmentData?.map((item) => (
 									<tr key={item._id} className="hover:bg-gray-50">
-
 										{addFormHeaders.map((field, i) => (
 											<td key={i} className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
 
@@ -617,7 +616,6 @@ function SchedulingAssessmentPage() {
 							</tbody>
 						</table>
 					</div>
-
 				</section>
 			</main>
 		</div>

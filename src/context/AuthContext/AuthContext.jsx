@@ -11,6 +11,7 @@ const AuthContextProvider = ({ children }) => {
 
   const [token, setToken] = useState(Cookies.get("token"));
   const [loading, setLoading] = useState(false);
+
   const [authenticate, setAuthenticate] = useState(null);
 
   const getLogedInUser = async () => {
@@ -21,7 +22,7 @@ const AuthContextProvider = ({ children }) => {
       console.log(error)
     }
   }
-
+  console.log(loading, "api")
   const Signin = async (data) => {
     const toastId = toast.loading("Loading...");
 

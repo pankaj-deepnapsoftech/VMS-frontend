@@ -13,6 +13,8 @@ const DataContextProvider = ({ children }) => {
 
 
     const [loading, setLoading] = useState(false);
+
+
     const [cardData, setCardData] = useState(null);
     const [vulnerableItemsByRiskRatingData, setVulnerableItemsByRiskRatingData] = useState([]);
     const [vulnerableItemsByAgeData, setVulnerableItemsByAgeData] = useState([]);
@@ -38,7 +40,6 @@ const DataContextProvider = ({ children }) => {
 
     const UploadBulkData = async (data) => {
         const toastId = toast.loading("Loading...");
-        setLoading(true);
         try {
             const formData = new FormData();
             formData.append("excel", data)
@@ -64,6 +65,8 @@ const DataContextProvider = ({ children }) => {
         } catch (error) {
             console.log(error)
 
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -147,6 +150,7 @@ const DataContextProvider = ({ children }) => {
     }, [token])
     return (
         <DataContext.Provider value={{
+            loading,
             cardData,
             UploadBulkData,
             vulnerableItemsByRiskRatingData,
