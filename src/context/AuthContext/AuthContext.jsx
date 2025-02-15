@@ -11,15 +11,19 @@ const AuthContextProvider = ({ children }) => {
 
   const [token, setToken] = useState(Cookies.get("token"));
   const [loading, setLoading] = useState(false);
+  const [userLoading, setUserLoading] = useState(false);
 
   const [authenticate, setAuthenticate] = useState(null);
 
   const getLogedInUser = async () => {
+    setUserLoading(true)
     try {
       const res = await AxiosHandler.get("/auth/logedin-user");
       setAuthenticate(res.data.data)
     } catch (error) {
       console.log(error)
+    } finally {
+      setUserLoading(false)
     }
   }
 
@@ -165,6 +169,7 @@ const AuthContextProvider = ({ children }) => {
   return (
     <authContext.Provider value={{
       loading,
+      userLoading,
       verifyotp,
       ResendOtp,
       Forgotpassword,

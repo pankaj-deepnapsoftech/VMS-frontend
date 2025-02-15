@@ -1,15 +1,20 @@
-import React from 'react'
+import React from "react";
 
 function Loader() {
   return (
-    <div
-    className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-    role="status">
-    <span
-      className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
-    >Loading...</span>
-  </div>
-  )
+    <div className="flex flex-col justify-center items-center h-screen w-[100%] bg-gray-100">
+      {/* Loader Spinner */}
+      <div className="relative flex  flex-col justify-center items-center bg-white p-8 rounded-xl shadow-xl">
+        <div className="h-12 w-12 border-4 border-indigo-600 border-solid border-t-transparent rounded-full animate-spin"></div>
+        <p className="mt-4 text-xs font-bold text-gray-700 animate-pulse">
+          Loading...
+        </p>
+      </div>
+
+      {/* Loading Text */}
+
+    </div>
+  );
 }
 
-export default Loader
+export default Loader;

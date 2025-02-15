@@ -44,11 +44,6 @@ const MainLayout = () => {
   let notificationcount = notificationData?.filter(notification => !notification.view).length || 0;
 
   console.log(loading,)
-  useEffect(() => {
-    if (loading) {
-      return <Loader />
-    }
-  }, [loading])
 
 
 
