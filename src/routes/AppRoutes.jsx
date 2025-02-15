@@ -42,7 +42,7 @@ const AppRoutes = () => {
   return (
     <Routes>
       {/* Public routes */}
-      {!isAuthenticated ? (
+      {!isAuthenticated && (
         <>
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
@@ -50,20 +50,16 @@ const AppRoutes = () => {
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/verify-otp" element={<VerifyOtp />} />
         </>
-      ) : (
-        <Route path={"/sign-in" || "/sign-up"} element={<Navigate to="/" replace />} />
       )}
 
       {/* Protected routes */}
-      {isAuthenticated ? (
+      {isAuthenticated && (
         <Route element={<MainLayout />}>
           {getRoleBasedRoutes().map((item, index) => (
             <Route key={index} path={item.path} element={item.element} />
           ))}
         </Route>
-      ) : (
-        <Route path="/" element={<Navigate to="/sign-in" replace />} />
-      )}
+      ) }
 
       <Route path="*" element={<PageNotFound />} />
     </Routes>
