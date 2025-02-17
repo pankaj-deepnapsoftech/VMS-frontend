@@ -17,12 +17,16 @@ const AllEmployeeContextProvider = ({ children }) => {
 	const [employeeTasksData, setEmployeeTasksData] = useState([]);
 	const [employeeCardData, setEmployeeCardData] = useState({});
 
+
+	const [page, setPage] = useState(1)
+	const [taskPage, setTaskPage] = useState(1)
+
 	const { token } = useAuthContext()
 
 	const AllEmployee = async () => {
 
 		try {
-			const res = await AxiosHandler.get(`/auth/all-employee`);
+			const res = await AxiosHandler.get(`/auth/all-employee?page=${page}&limit=10`);
 			SetAllEmployeesData(res.data.users);
 
 		} catch (error) {
@@ -35,7 +39,7 @@ const AllEmployeeContextProvider = ({ children }) => {
 	const EmployeeTasks = async () => {
 
 		try {
-			const res = await AxiosHandler.get(`employee/get-employee-task`);
+			const res = await AxiosHandler.get(`employee/get-employee-task?page=${taskPage}&limit=10`);
 			setEmployeeTasksData(res.data.data);
 
 		} catch (error) {
@@ -83,14 +87,18 @@ const AllEmployeeContextProvider = ({ children }) => {
 			EmployeeTasks();
 			EmployeeData();
 		}
-	}, [token])
+	}, [token, page, taskPage])
 	return (
 		<AllEmployeeContext.Provider value={{
 			allEmployeesData,
 			employeeTasksData,
 			EmployeeTasks,
 			VerifyEmployee,
-			employeeCardData
+			employeeCardData,
+			page,
+			setPage,
+			taskPage,
+			setTaskPage,
 
 
 		}}>

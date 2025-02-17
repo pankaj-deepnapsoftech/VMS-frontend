@@ -15,12 +15,14 @@ const AllCustomerContextProvider = ({ children }) => {
 	const [loading, setLoading] = useState(false);
 	const [AllCustomersData, SetAllCustomerData] = useState([]);
 
+
+	const [page, setPage] = useState(1)
 	const { token } = useAuthContext()
 
 	const AllCustomers = async () => {
 
 		try {
-			const res = await AxiosHandler.get(`/auth/all-users`);
+			const res = await AxiosHandler.get(`/auth/all-users?page=${page}&limit=10`);
 			SetAllCustomerData(res.data.users);
 
 		} catch (error) {
@@ -30,16 +32,16 @@ const AllCustomerContextProvider = ({ children }) => {
 	}
 
 
-
-
 	useEffect(() => {
 		if (token) {
 			AllCustomers();
 		}
-	}, [token])
+	}, [token, page])
+
 	return (
 		<AllCustomerContext.Provider value={{
-			AllCustomersData
+			AllCustomersData, page,
+			setPage,
 
 		}}>
 			{children}

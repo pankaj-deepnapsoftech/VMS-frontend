@@ -3,7 +3,11 @@ import React, { useState } from "react";
 
 export default function AllEmployee() {
 
-	const { allEmployeesData, VerifyEmployee } = useAllEmployeeContext();
+	const {
+		allEmployeesData,
+		page,
+		setPage,
+		VerifyEmployee } = useAllEmployeeContext();
 
 
 	return (
@@ -39,12 +43,12 @@ export default function AllEmployee() {
 								<td className="px-4 py-3 border">{user.phone}</td>
 								<td className="px-4 py-3 border">{user.role}</td>
 								<td className="px-4 py-3 border">
-									{user.employee_approve ? (
+									{user?.employee_approve ? (
 										<span className="px-3 py-1 text-sm font-semibold text-green-800 bg-green-100 rounded-full">
 											Approved
 										</span>
 									) : <button
-										onClick={() => VerifyEmployee(user._id)}
+										onClick={() => VerifyEmployee(user?._id)}
 										className="px-3 py-1 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700"
 									>
 										Verify
@@ -59,6 +63,26 @@ export default function AllEmployee() {
 						))}
 					</tbody>
 				</table>
+			</div>
+			<div className="flex justify-between items-center py-12 px-5">
+				<button
+					className={`px-4 py-2 bg-[#015289] text-white border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
+					disabled={page === 1}
+					onClick={() => setPage(page - 1)}
+				>
+					Previous
+				</button>
+				<span>
+					Page {page}
+					{/* of {totalPages} */}
+				</span>
+				<button
+					className={`px-4 py-2 border rounded-md  text-white bg-[#015289]`}
+					disabled={allEmployeesData?.length < 10}
+					onClick={() => setPage(page + 1)}
+				>
+					Next
+				</button>
 			</div>
 		</div>
 	);

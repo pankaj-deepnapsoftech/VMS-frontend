@@ -14,7 +14,13 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 	const [loading, setLoading] = useState(false);
 	const [allAssesmentData, setAllAssesmentData] = useState([]);
 	const [testerData, setTesterData] = useState([]);
+	const [dashboardData, setDashboardData] = useState([]);
 	const [getOrgnizationData, setGetOrgnizationData] = useState([]);
+
+
+
+
+	const [page, setPage] = useState(1)
 
 	const { token } = useAuthContext()
 	const { EmployeeTasks } = useAllEmployeeContext()
@@ -25,14 +31,23 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 	const TotalAssessments = async () => {
 
 		try {
-			const res = await AxiosHandler.get(`/assessment/get`);
+			const res = await AxiosHandler.get(`/assessment/get?page=${page}&limit=10`);
 			setAllAssesmentData(res.data?.data);
 
 		} catch (error) {
 			console.log(error)
 		}
 	}
+	const DashboardData = async () => {
 
+		try {
+			const res = await AxiosHandler.get(`/assessment/DashboardData`);
+			setDashboardData(res.data);
+
+		} catch (error) {
+			console.log(error)
+		}
+	}
 
 	const GetOrgnization = async () => {
 
@@ -115,8 +130,9 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 			TotalAssessments();
 			TesterForAssessment();
 			GetOrgnization();
+			DashboardData()
 		}
-	}, [token])
+	}, [token, page])
 	return (
 		<AssesmentContext.Provider value={{
 			SchedulingAssesment,
@@ -124,7 +140,10 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 			DeleteAssesment,
 			UpdateAssesment,
 			testerData,
-			getOrgnizationData
+			getOrgnizationData,
+			page,
+			setPage,
+			dashboardData
 		}}>
 			{children}
 		</AssesmentContext.Provider>

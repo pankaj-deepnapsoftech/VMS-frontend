@@ -13,6 +13,8 @@ export const JiraContext = createContext();
 const JiraContextProvider = ({ children }) => {
 	let navigate = useNavigate();
 
+
+	const [page, setPage] = useState(1)
 	const { token } = useAuthContext()
 
 	const [jiraData, setJiraData] = useState([])
@@ -22,7 +24,7 @@ const JiraContextProvider = ({ children }) => {
 
 		try {
 
-			const res = await AxiosHandler.get("/jira/issues");
+			const res = await AxiosHandler.get("/jira/issues?page=${page}&limit=10");
 			setJiraData(res.data.newData);
 		} catch (error) {
 			console.log(error)
@@ -65,11 +67,13 @@ const JiraContextProvider = ({ children }) => {
 			JiraData()
 			JiraConfigData()
 		}
-	}, [token])
+	}, [token, page])
 
 	return (
 		<JiraContext.Provider value={{
 			jiraData,
+			page,
+			setPage,
 			ConfigData,
 			JiraConfiguration
 		}}>

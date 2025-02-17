@@ -23,16 +23,19 @@ export const list = [
 
 
 export const EmployeeList = [
-    { title: "Employee Dashboard", route: "/", icon: BiSolidDashboard },
+    { title: "Dashboard", route: "/", icon: BiSolidDashboard },
     { title: "All Tasks", route: "/all-employee-tasks", icon: IoShieldHalf },
 
 ]
 
 export const ClientSmeList = [
-    { title: "Scheduling Assesment", route: "/", icon: BiSolidDashboard },
+    { title: "Dashboard", route: "/", icon: BiSolidDashboard },
+    { title: "Scheduling Assesment", route: "/scheduling-assesment", icon: BiSolidDashboard },
 ]
 
 
 export const ClientCisoList = [
-    { title: "dashboard", route: "/", icon: BiSolidDashboard },
+    { title: "Dashboard", route: "/", icon: BiSolidDashboard },
+    { title: "Scheduled Tasks", route: "/scheduled-tasks", icon: IoShieldHalf },
+
 ]

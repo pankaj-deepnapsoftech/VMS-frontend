@@ -17,7 +17,8 @@ export function VulnerabilityData() {
 
   const {
     UpdateData,
-    AddData, AllVulnerablilty,
+    AddData,
+    AllVulnerablilty,
     allVulnerabilityData,
     topVulnerabliltyData,
     DeleteData,
@@ -77,15 +78,13 @@ export function VulnerabilityData() {
     )
   );
 
-  const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+
   const paginatedData = filteredData.slice(
     (currentPage - 1) * rowsPerPage,
     currentPage * rowsPerPage
   );
 
-  const handlePageChange = (page) => {
-    if (page >= 1 && page <= totalPages) setCurrentPage(page);
-  };
+
 
   // Open modal for editing or adding
   const openModal = (data = null) => {
@@ -453,7 +452,7 @@ export function VulnerabilityData() {
           </div>
         )}
 
-        <div className="flex justify-between items-center mt-4">
+        <div className="flex justify-between items-center my-16">
           <button
             className={`px-4 py-2 bg-[#015289] text-white border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
             disabled={page === 1}
@@ -463,7 +462,7 @@ export function VulnerabilityData() {
           </button>
           <span>
             Page {page}
-            {/* of {totalPages} */}
+
           </span>
           <button
             className={`px-4 py-2 border rounded-md  text-white bg-[#015289]`}

@@ -10,10 +10,16 @@ import { BsPersonCheckFill } from "react-icons/bs";
 import toast from "react-hot-toast";
 
 export function EmployeeAllTasks() {
-	const { UpdateData, AddData, AssignTask, page, setPage, BulkAssignTask } =
+	const {
+		UpdateData,
+		AddData,
+		AssignTask,
+		BulkAssignTask } =
 		useVulnerabililtyDataContext();
 
-	const { employeeTasksData } = useAllEmployeeContext();
+	const { employeeTasksData,
+		taskPage,
+		setTaskPage, } = useAllEmployeeContext();
 
 
 	const [searchTerm, setSearchTerm] = useState("");
@@ -54,6 +60,7 @@ export function EmployeeAllTasks() {
 	);
 
 	const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+
 	const paginatedData = filteredData.slice(
 		(currentPage - 1) * rowsPerPage,
 		currentPage * rowsPerPage
@@ -194,7 +201,7 @@ export function EmployeeAllTasks() {
 							</tr>
 						</thead>
 						<tbody className="divide-y divide-gray-200">
-							{paginatedData.map((item) => (
+							{paginatedData?.map((item) => (
 								<tr key={item._id} className="hover:bg-gray-50">
 									{/* <td className="px-4 py-4 whitespace-nowrap flex justify-around gap-4">
 										<input
@@ -233,7 +240,7 @@ export function EmployeeAllTasks() {
 						</tbody>
 					</table>
 				</div>
-				
+
 				{/* 📝 Modal Form */}
 				{isModalOpen && (
 					<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
@@ -260,7 +267,7 @@ export function EmployeeAllTasks() {
 									id="status"
 									className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
 								>
-									<option selected  disabled>Select a Status</option>
+									<option selected disabled>Select a Status</option>
 									<option value={"Open"}>Open
 									</option>
 									<option value={"Closed"}>Closed
@@ -284,14 +291,14 @@ export function EmployeeAllTasks() {
 									<button
 										onClick={() => {
 
-										if(status.length >0 && editData._id){
-											UpdateData({Status:status}, editData._id)
-										setIsModalOpen(false)
-										setStatus("")
+											if (status.length > 0 && editData._id) {
+												UpdateData({ Status: status }, editData._id)
+												setIsModalOpen(false)
+												setStatus("")
 
-									}setIsModalOpen(false)
+											} setIsModalOpen(false)
 										}
-									}
+										}
 										className="px-4 py-2 bg-[#015289] text-white rounded-md hover:bg-blue-700 transition"
 									>
 										Save
@@ -302,22 +309,22 @@ export function EmployeeAllTasks() {
 					</div>
 				)}
 
-				<div className="flex justify-between items-center mt-4">
+				<div className="flex justify-between items-center py-16">
 					<button
-						className={`px-4 py-2 bg-[#015289] text-white border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
-						disabled={page === 1}
-						onClick={() => setPage(page - 1)}
+						className={`px-4 py-2 bg-[#015289] text-white border rounded-md ${taskPage === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
+						disabled={taskPage === 1}
+						onClick={() => setTaskPage(taskPage - 1)}
 					>
 						Previous
 					</button>
 					<span>
-						Page {page}
+						Page {taskPage}
 						{/* of {totalPages} */}
 					</span>
 					<button
 						className={`px-4 py-2 border rounded-md  text-white bg-[#015289]`}
-						disabled={employeeTasksData.length < 10}
-						onClick={() => setPage(page + 1)}
+						disabled={paginatedData?.length < 10}
+						onClick={() => setTaskPage(taskPage + 1)}
 					>
 						Next
 					</button>

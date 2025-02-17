@@ -5,8 +5,10 @@ import { useJiraContext } from "@/context";
 import * as XLSX from "xlsx";
 
 export const JiraDataTable = () => {
-	const { jiraData } = useJiraContext();
-	
+	const { jiraData,
+		page,
+		setPage, } = useJiraContext();
+
 	const [searchTerm, setSearchTerm] = useState("");
 	const [currentPage, setCurrentPage] = useState(1);
 	const rowsPerPage = 10;
@@ -46,7 +48,6 @@ export const JiraDataTable = () => {
 		);
 	}, [processedData, searchTerm]);
 
-	const totalPages = Math.ceil(filteredData?.length / rowsPerPage);
 	const paginatedData = useMemo(() => {
 		return filteredData?.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
 	}, [filteredData, currentPage]);
@@ -130,19 +131,22 @@ export const JiraDataTable = () => {
 
 				{/* Pagination */}
 
-				<div className="mt-4 flex justify-center items-center space-x-2">
+				<div className="flex justify-between items-center py-16">
 					<button
-						onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-						className="px-3 py-1 border rounded-l-md bg-gray-200 hover:bg-gray-300"
-						disabled={currentPage === 1}
+						className={`px-4 py-2 bg-[#015289] text-white border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
+						disabled={page === 1}
+						onClick={() => setPage(page - 1)}
 					>
-						Prev
+						Previous
 					</button>
-					<span className="px-3 py-1 border">{`${currentPage} / ${totalPages}`}</span>
+					<span>
+						Page {page}
+
+					</span>
 					<button
-						onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-						className="px-3 py-1 border rounded-r-md bg-gray-200 hover:bg-gray-300"
-						disabled={currentPage === totalPages}
+						className={`px-4 py-2 border rounded-md  text-white bg-[#015289]`}
+						disabled={paginatedData?.length < 10}
+						onClick={() => setPage(page + 1)}
 					>
 						Next
 					</button>

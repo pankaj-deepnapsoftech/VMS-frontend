@@ -21,6 +21,8 @@ function SchedulingAssessmentPage() {
 		DeleteAssesment,
 		UpdateAssesment,
 		testerData,
+		page,
+		setPage,
 		getOrgnizationData
 	} = useScheduleAssessmentContext();
 
@@ -615,6 +617,26 @@ function SchedulingAssessmentPage() {
 								))}
 							</tbody>
 						</table>
+					</div>
+					<div className="flex justify-between items-center my-16">
+						<button
+							className={`px-4 py-2 bg-[#015289] text-white border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
+							disabled={page === 1}
+							onClick={() => setPage(page - 1)}
+						>
+							Previous
+						</button>
+						<span>
+							Page {page}
+							{/* of {totalPages} */}
+						</span>
+						<button
+							className={`px-4 py-2 border rounded-md  text-white bg-[#015289]`}
+							disabled={allAssesmentData?.length < 10}
+							onClick={() => setPage(page + 1)}
+						>
+							Next
+						</button>
 					</div>
 				</section>
 			</main>
