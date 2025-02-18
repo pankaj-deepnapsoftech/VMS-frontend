@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { AiOutlineMenu } from 'react-icons/ai';
 import { BiBarChartAlt2 } from 'react-icons/bi';
 import { FaBell } from 'react-icons/fa';
-import { Outlet, useLocation } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { NotificationSidebar } from "@components/modal/NotificationSideBar"
 
 import { Link } from 'react-router-dom';
@@ -12,8 +12,10 @@ import { useAuthContext, useDataContext, useVulnerabililtyDataContext } from '@/
 
 const MainLayout = () => {
 
+  const navigate = useNavigate()
   const { notificationData, NotificationsViewed } = useVulnerabililtyDataContext()
   const { loading } = useDataContext();
+  const {authenticate} = useAuthContext()
 
   const [width, setWidth] = useState(window.innerWidth);
 
@@ -43,8 +45,8 @@ const MainLayout = () => {
 
   let notificationcount = notificationData?.filter(notification => !notification.view).length || 0;
 
-  console.log(loading,)
 
+ 
 
 
   return (

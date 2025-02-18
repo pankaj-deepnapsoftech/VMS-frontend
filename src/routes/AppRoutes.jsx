@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import SignIn from "@/pages/Auth/SignIn";
 import SignUp from "@/pages/Auth/SignUp";
 import ForgotPassword from "@/pages/Auth/ForgotPassword";
@@ -42,12 +42,15 @@ const AppRoutes = () => {
     }
   };
 
+
+
+
   return (
     <Routes>
       {/* Public routes */}
       {!isAuthenticated && (
         <>
-          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
@@ -56,15 +59,13 @@ const AppRoutes = () => {
       )}
 
       {/* Protected routes */}
-      {isAuthenticated ? (
+      {isAuthenticated && (
         <Route element={<MainLayout />}>
           {getRoleBasedRoutes().map((item, index) => (
             <Route key={index} path={item.path} element={item.element} />
           ))}
         </Route>
-      ) : (
-        <Route path="*" element={<Navigate to="/sign-in" replace />} />
-      )}
+      ) }
 
       <Route path="*" element={<PageNotFound />} />
     </Routes>

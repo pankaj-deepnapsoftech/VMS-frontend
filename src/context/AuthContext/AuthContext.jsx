@@ -78,7 +78,7 @@ const AuthContextProvider = ({ children }) => {
       toast.dismiss(toastId);
       toast.success(res.data.message);
       alert("Please Check Your Email Inbox ")
-      navigate("/sign-in");
+      navigate("/");
     } catch (error) {
       toast.dismiss(toastId);
       toast.error(error?.response?.data?.message);
@@ -112,7 +112,7 @@ const AuthContextProvider = ({ children }) => {
       const res = await AxiosHandler.post(`/auth/reset-password/${token}`, data);
       toast.dismiss(toastId);
       toast.success(res.data.message);
-      navigate("/sign-in")
+      navigate("/")
     } catch (error) {
       console.log(error)
       toast.dismiss(toastId);
@@ -150,7 +150,7 @@ const AuthContextProvider = ({ children }) => {
       toast.dismiss(toastId);
       toast.success(res.data.message);
       setAuthenticate(null)
-      navigate("/sign-in");
+      navigate("/");
     } catch (error) {
       toast.dismiss(toastId);
       toast.error(error?.response?.data?.message);

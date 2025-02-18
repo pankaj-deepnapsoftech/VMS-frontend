@@ -62,7 +62,7 @@ function ForgotPassword() {
         {/* Right Side - Reset Form */}
         <div className="w-full md:w-1/2 p-8 md:p-12">
           <a
-            href="/sign-in"
+            href="/"
             className="inline-flex items-center text-gray-600 hover:text-blue-600 transition-colors mb-8"
           >
             <FaArrowLeft className="mr-2" />
@@ -166,7 +166,7 @@ function ForgotPassword() {
           <div className="mt-8 pt-8 border-t border-gray-200">
             <p className="text-center text-gray-600 text-sm">
               Remember your password?{' '}
-              <Link to="/sign-in" className="text-blue-600 hover:text-blue-700 font-medium">
+              <Link to="/" className="text-blue-600 hover:text-blue-700 font-medium">
                 Sign in
               </Link>
             </p>

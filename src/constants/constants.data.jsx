@@ -39,3 +39,9 @@ export const ClientCisoList = [
     { title: "Scheduled Tasks", route: "/scheduled-tasks", icon: IoShieldHalf },
 
 ]
+
+
+
+export const AllRoutesProtection = [
+    "/","/scheduling-assesment"
+] 
