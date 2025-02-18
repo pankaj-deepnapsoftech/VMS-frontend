@@ -23,13 +23,16 @@ const AppRoutes = () => {
   const isAuthenticated = token && authenticate?.email_verification;
 
   const getRoleBasedRoutes = () => {
-    if (!authenticate?.role) return [{ path: "/", element: <UnauthorizedAccessPage /> }];
-    
+    if (!authenticate?.role)
+      return [{ path: "/", element: <UnauthorizedAccessPage /> }];
+
     switch (authenticate.role) {
       case "Admin":
         return PrivateRoutes;
       case "Assessor":
-        return authenticate.employee_approve ? EmployeeRoutes : [{ path: "/", element: <UnauthorizedAccessPage /> }];
+        return authenticate.employee_approve
+          ? EmployeeRoutes
+          : [{ path: "/", element: <UnauthorizedAccessPage /> }];
       case "ClientSME":
         return ClientSmeRoutes;
       case "ClientCISO":
@@ -53,13 +56,15 @@ const AppRoutes = () => {
       )}
 
       {/* Protected routes */}
-      {isAuthenticated && (
+      {isAuthenticated ? (
         <Route element={<MainLayout />}>
           {getRoleBasedRoutes().map((item, index) => (
             <Route key={index} path={item.path} element={item.element} />
           ))}
         </Route>
-      ) }
+      ) : (
+        <Route path="*" element={<Navigate to="/sign-in" replace />} />
+      )}
 
       <Route path="*" element={<PageNotFound />} />
     </Routes>
