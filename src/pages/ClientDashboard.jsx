@@ -1,5 +1,6 @@
 import { useScheduleAssessmentContext } from "@/context";
 import React from "react";
+import { BiPlus } from "react-icons/bi";
 import { FiAlertCircle } from "react-icons/fi";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
@@ -19,6 +20,18 @@ export default function ClientDashboard() {
 
 	return (
 		<div className="min-h-screen bg-gray-100 p-4 sm:p-6 flex flex-col items-center">
+
+			<div className='flex w-full justify-end items-end py-4'>
+				
+
+				<button
+					// onClick={() => setIsModalOpen(true)}
+					className="px-4 py-2 bg-[#015289] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
+				>
+					<BiPlus className="h-6 w-6" />
+					Add Client SME
+				</button>
+			</div>
 			<div className="w-full max-w-6xl">
 
 				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 pb-6">

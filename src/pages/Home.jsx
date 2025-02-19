@@ -84,7 +84,7 @@ function Home() {
   ];
 
 
-  
+
 
   return (
     <>
@@ -143,7 +143,7 @@ function Home() {
 
           {/* Age and Risk Rating Chart */}
           <div className="bg-white rounded-lg shadow p-6  hover:scale-95  transition">
-            <h3 className="text-lg font-semibold mb-4">Vulnerable Items by Age and Risk Rating</h3>
+            <h3 className="text-lg font-semibold mb-4">Vulnerable Items by Age </h3>
             <div className="h-64 ">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={dataList}>

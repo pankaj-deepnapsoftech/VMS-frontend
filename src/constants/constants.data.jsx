@@ -31,17 +31,23 @@ export const EmployeeList = [
 export const ClientSmeList = [
     { title: "Dashboard", route: "/", icon: BiSolidDashboard },
     { title: "Scheduling Assesment", route: "/scheduling-assesment", icon: BiSolidDashboard },
+
 ]
 
 
 export const ClientCisoList = [
     { title: "Dashboard", route: "/", icon: BiSolidDashboard },
     { title: "Scheduled Tasks", route: "/scheduled-tasks", icon: IoShieldHalf },
+    { title: "All Employee", route: "/all-employee", icon: FaPerson },
+    { title: "Application Vulnerability", route: "/application-vulnerability", icon: MdOutlineMiscellaneousServices },
+    { title: "Infrastructure Vulnerability ", route: "/infrastructure-vulnerability", icon: GrVulnerability },
+    { title: "Exceptions", route: "/exceptions", icon: AiOutlineException },
+    { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
 
 ]
 
 
 
 export const AllRoutesProtection = [
-    "/","/scheduling-assesment"
+    "/", "/scheduling-assesment"
 ] 

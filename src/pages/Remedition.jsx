@@ -28,7 +28,7 @@ function Remedition() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-     
+
 
       {/* Main Content */}
       <div className="p-2 sm:p-4">
@@ -104,7 +104,7 @@ function Remedition() {
           {/* Unassigned Trend */}
           <div className="bg-white border border-gray-200 rounded-lg">
             <div className="p-4">
-              <h2 className="text-sm font-medium text-gray-900">Unassigned Vulnerability Groups</h2>
+              <h2 className="text-sm font-medium text-gray-900">Infrastructure & Application Vulnerability Groups</h2>
               <div className="flex items-center justify-center h-64">
                 <div className="text-center">
                   <span className="text-4xl font-bold text-gray-900">15</span>

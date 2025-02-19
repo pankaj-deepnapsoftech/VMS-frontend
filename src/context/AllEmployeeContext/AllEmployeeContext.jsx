@@ -21,13 +21,28 @@ const AllEmployeeContextProvider = ({ children }) => {
 	const [page, setPage] = useState(1)
 	const [taskPage, setTaskPage] = useState(1)
 
-	const { token } = useAuthContext()
+	const { token, authenticate } = useAuthContext()
+	console.log(token, "5456", authenticate)
+
 
 	const AllEmployee = async () => {
-
+		console.log("hero ")
 		try {
 			const res = await AxiosHandler.get(`/auth/all-employee?page=${page}&limit=10`);
 			SetAllEmployeesData(res.data.users);
+
+		} catch (error) {
+			console.log(error)
+
+		}
+	}
+
+	const AllClientSME = async () => {
+
+		try {
+			const res = await AxiosHandler.get(`/auth/all-sme?page=${page}&limit=10`);
+			console.log("hero ", res)
+			SetAllEmployeesData(res.data.data);
 
 		} catch (error) {
 			console.log(error)
@@ -65,10 +80,9 @@ const AllEmployeeContextProvider = ({ children }) => {
 		const toastId = toast.loading("Loading...");
 		try {
 			const res = await AxiosHandler.patch(`/auth/verify-employee/${id}`);
-			SetAllEmployeesData()
 			toast.dismiss(toastId);
 			toast.success(res.data.message);
-			AllEmployee();
+			authenticate?.role === "ClientCISO" ? AllClientSME() : EmployeeData();
 
 		} catch (error) {
 			console.log(error)
@@ -83,11 +97,11 @@ const AllEmployeeContextProvider = ({ children }) => {
 
 	useEffect(() => {
 		if (token) {
-			AllEmployee();
+			authenticate?.role === "ClientCISO" ? AllClientSME() : AllEmployee();
 			EmployeeTasks();
 			EmployeeData();
 		}
-	}, [token, page, taskPage])
+	}, [token, page, taskPage, authenticate])
 	return (
 		<AllEmployeeContext.Provider value={{
 			allEmployeesData,

@@ -206,9 +206,9 @@ export function VulnerabilityData() {
             <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
               <thead>
                 <tr className="bg-[#015289] text-gray-100 uppercase text-sm">
-                  <th className="py-2 px-4 border-b">Top Vulnerability</th>
+                  <th className="py-2 px-4 border-b">Top Vulnerability </th>
                   <th className="py-2 px-4 border-b">Vulnerability Name</th>
-                  <th className="py-2 px-4 border-b">Total Vulnerability</th>
+                  <th className="py-2 px-4 border-b">Total Vulnerability Instance </th>
                 </tr>
               </thead>
               <tbody>
