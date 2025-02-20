@@ -1,5 +1,5 @@
 import { useAllEmployeeContext } from "@/context";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function AllEmployee() {
 
@@ -7,7 +7,11 @@ export default function AllEmployee() {
 		allEmployeesData,
 		page,
 		setPage,
-		VerifyEmployee } = useAllEmployeeContext();
+		VerifyEmployee,
+		AllClientSME } = useAllEmployeeContext();
+
+
+	useEffect(() => { AllClientSME() }, [])
 
 
 	return (

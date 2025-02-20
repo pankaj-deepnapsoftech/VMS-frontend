@@ -9,6 +9,7 @@ export const authContext = createContext();
 const AuthContextProvider = ({ children }) => {
   let navigate = useNavigate();
 
+
   const [token, setToken] = useState(Cookies.get("token"));
   const [loading, setLoading] = useState(false);
   const [userLoading, setUserLoading] = useState(false);
@@ -54,12 +55,22 @@ const AuthContextProvider = ({ children }) => {
     setLoading(true);
     try {
       const res = await AxiosHandler.post("/auth/create", data);
-      AxiosHandler.defaults.headers.authorization = `Bearer ${res.data.token}`;
-      Cookies.set("token", res.data.token, { expires: 1 });
-      setToken(res.data.token);
+
+      if (authenticate?.role === "ClientCISO") {
+        navigate("/");
+
+
+
+      }
+      else {
+        AxiosHandler.defaults.headers.authorization = `Bearer ${res.data.token}`;
+        Cookies.set("token", res.data.token, { expires: 1 });
+        setToken(res.data.token);
+        navigate("/verify-otp");
+      }
       toast.dismiss(toastId);
       toast.success(res.data.message);
-      navigate("/verify-otp");
+
     } catch (error) {
       toast.dismiss(toastId);
       toast.error(error?.response?.data?.message);

@@ -22,8 +22,6 @@ const AllEmployeeContextProvider = ({ children }) => {
 	const [taskPage, setTaskPage] = useState(1)
 
 	const { token, authenticate } = useAuthContext()
-	console.log(token, "5456", authenticate)
-
 
 	const AllEmployee = async () => {
 		console.log("hero ")
@@ -113,6 +111,7 @@ const AllEmployeeContextProvider = ({ children }) => {
 			setPage,
 			taskPage,
 			setTaskPage,
+			AllClientSME,
 
 
 		}}>

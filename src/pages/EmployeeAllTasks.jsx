@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense,   useState } from "react";
 import { BiSearch, BiEditAlt, BiPlus, BiSave } from "react-icons/bi";
 import { RiDeleteBinFill } from "react-icons/ri";
 import { MdClose } from "react-icons/md";
@@ -19,7 +19,7 @@ export function EmployeeAllTasks() {
 
 	const { employeeTasksData,
 		taskPage,
-		setTaskPage, } = useAllEmployeeContext();
+		setTaskPage } = useAllEmployeeContext();
 
 
 	const [searchTerm, setSearchTerm] = useState("");
