@@ -15,6 +15,7 @@ import { EmployeeRoutes } from "./PrivateRoutes/employeeRoutes";
 import { ClientSmeRoutes } from "./PrivateRoutes/clientSmeRoutes";
 import UnauthorizedAccessPage from "@/pages/UnauthorizedAccess";
 import { ClientCisoRoutes } from "./PrivateRoutes/ClientCisoRoutes";
+import GettingStarted from "@/pages/Auth/GetStartedPage";
 
 const AppRoutes = () => {
   const { authenticate, token } = useAuthContext();
@@ -65,9 +66,9 @@ const AppRoutes = () => {
             <Route key={index} path={item.path} element={item.element} />
           ))}
         </Route>
-      ) }
+      )}
 
-      <Route path="*" element={<PageNotFound />} />
+      <Route path="*" element={<GettingStarted />} />
     </Routes>
   );
 };

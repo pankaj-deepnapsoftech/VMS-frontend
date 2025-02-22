@@ -24,7 +24,7 @@ const AllEmployeeContextProvider = ({ children }) => {
 	const { token, authenticate } = useAuthContext()
 
 	const AllEmployee = async () => {
-		console.log("hero ")
+
 		try {
 			const res = await AxiosHandler.get(`/auth/all-employee?page=${page}&limit=10`);
 			SetAllEmployeesData(res.data.users);

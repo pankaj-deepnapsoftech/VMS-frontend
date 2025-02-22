@@ -19,6 +19,7 @@ const RemeditionContextProvider = ({ children }) => {
 
 	const [targetStatusData, setTargetStatusData] = useState([])
 	const [dataViaStatus, setDataViaStatus] = useState([])
+	const [criticalVulnerabilitycountData, setCriticalVulnerabilitycount] = useState([])
 
 
 
@@ -28,7 +29,6 @@ const RemeditionContextProvider = ({ children }) => {
 		try {
 
 			const res = await AxiosHandler.get("/jira/JIraDataTargetsStatus");
-			console.log(res.data, "!!!!!!!!!!!!!!!!!!!!!!")
 			setTargetStatusData(res.data);
 		} catch (error) {
 			console.log(error)
@@ -40,8 +40,20 @@ const RemeditionContextProvider = ({ children }) => {
 
 		try {
 			const res = await AxiosHandler.get("/jira/JIraDataViaStatus");
-			console.log(res.data.obj, "@@@@@@@@@@@@@@@@")
 			setDataViaStatus(res?.data?.obj);
+
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+
+	const CriticalVulnerabilitycount = async () => {
+
+		try {
+			const res = await AxiosHandler.get("/employee/employee-count");
+			console.log(res, "herooo")
+			setCriticalVulnerabilitycount(res?.data?.data);
 
 		} catch (error) {
 			console.log(error)
@@ -52,6 +64,7 @@ const RemeditionContextProvider = ({ children }) => {
 		if (token) {
 			JiraDataTargetsStatus()
 			JiraDataViaStatus()
+			CriticalVulnerabilitycount()
 
 		}
 	}, [token])
@@ -59,7 +72,8 @@ const RemeditionContextProvider = ({ children }) => {
 	return (
 		<RemeditionContext.Provider value={{
 			dataViaStatus,
-			targetStatusData
+			targetStatusData,
+			criticalVulnerabilitycountData
 
 		}}>
 			{children}

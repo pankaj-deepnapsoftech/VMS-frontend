@@ -3,7 +3,7 @@ import { BiSearch, BiEditAlt, BiPlus, BiSave } from "react-icons/bi";
 import { RiDeleteBinFill } from "react-icons/ri";
 import { MdClose } from "react-icons/md";
 import { useAllEmployeeContext, useVulnerabililtyDataContext } from "@/context";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field  } from "formik";
 import * as XLSX from "xlsx";
 import { WorkItemValidation } from "@/Validation/VulnerabililtyDataValidation";
 import { BsPersonCheckFill } from "react-icons/bs";
@@ -164,7 +164,7 @@ export function VulnerabilityData() {
 
   const [selected, setSelected] = useState("");
 
-
+  let statusList = ["Open", "Closed", "Fix", "Re-Open", "On-Hold", "Exception"];
   return (
     <Suspense fallback={<div>Loading...</div>}>
 
@@ -415,18 +415,42 @@ export function VulnerabilityData() {
               <Formik
                 initialValues={editData || {}}
                 onSubmit={(values) => {
+                  console.log(editData, "hero hero hero")
+                  console.log(values, "hero hero hero")
                   editMode ? UpdateData(values, editData._id) : AddData(values);
                   setIsModalOpen(false);
                 }}
               >
                 <Form className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
-                  {(editMode ? editFormHeaders : addFormHeaders).map((field) => (
+                  {(editMode ? editFormHeaders : addFormHeaders).map((field) =>
+
+
+
+                  (
                     <div key={field} className="flex flex-col">
                       <label className="text-sm font-medium text-gray-700">{field.replace(/_/g, " ")}*</label>
-                      <Field
-                        name={field}
-                        className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
-                      />
+
+                      {field === "Status" ?
+                        <select className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                          name="Status"
+                          onChange={(e) => { editData.Status = e.target.value }}
+
+                        >
+                          <option disabled selected>---  Select a Status  ---
+                          </option>
+
+
+                          {statusList.map((item, idx) => (<option key={idx} value={item}
+                          >{item}</option>))}
+
+                        </select> :
+                        <Field
+                          name={field}
+                          className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                        />
+                      }
+
+
 
                     </div>
                   ))}

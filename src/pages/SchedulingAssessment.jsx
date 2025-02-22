@@ -58,7 +58,7 @@ function SchedulingAssessmentPage() {
 	const [selectedAssessment, setSelectedAssessment] = useState(null);
 
 
-	const { values, errors, touched, handleBlur, handleChange, handleSubmit, setFieldValue, resetForm } = useFormik({
+	const { values, errors, touched, handleBlur, handleChange, handleSubmit, setFieldValue, resetForm, setValues } = useFormik({
 		initialValues: {
 			Orgenization_id: authenticate?.role === "ClientSME" ? authenticate?._id : "",
 			Type_Of_Assesment: "",
@@ -73,7 +73,7 @@ function SchedulingAssessmentPage() {
 		},
 		validationSchema: SchedulingAssessmentValidation,
 		onSubmit: (value) => {
-			console.log(value)
+
 
 			Object.entries(value).forEach(([key, value]) => {
 				formData.append(key, value);
@@ -85,19 +85,15 @@ function SchedulingAssessmentPage() {
 			} else {
 				SchedulingAssesment(formData);
 			}
-
 			resetForm();
 		}
 	})
 
 	const handleEdit = (assessment) => {
+		setValues(assessment)
 		setSelectedAssessment(assessment);
-		setFieldValue("Type_Of_Assesment", assessment.Type_Of_Assesment || "");
-		setFieldValue("Application_URL", assessment.Application_URL || "");
-		setFieldValue("Data_Classification", assessment.Data_Classification || "");
-		setFieldValue("MFA_Enabled", assessment.MFA_Enabled || "");
-		setFieldValue("code_Upload", "");
 		setIsUpdateModalOpen(true);
+
 	};
 
 
@@ -400,13 +396,13 @@ function SchedulingAssessmentPage() {
 					)}
 
 					{isUpdateModalOpen && (
-						<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+						<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-10">
 							<div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
 
 								{/* Header */}
 								<div className="flex justify-between items-center border-b p-4 bg-[#015289]">
 									<h2 className="text-lg font-semibold text-gray-200">
-										{"Upload Code File"}
+										{"Update Details"}
 									</h2>
 									<button
 										onClick={() => setIsUpdateModalOpen(false)}
@@ -528,15 +524,10 @@ function SchedulingAssessmentPage() {
 									{touched.Select_Tester && errors.Select_Tester && <p className='text-red-700 text-xs'> {errors.Select_Tester}</p>}
 								</div> */}
 											</div>
-											{/* <button
-												type="submit"
-												className="w-[20%] bg-[#015289] text-white   py-2  rounded-lg hover:bg-blue-500 transition duration-200"
-												onClick={handleSubmit}
-											>
-												Submit
-											</button> */}
+
 											<div className="col-span-1 md:col-span-2 flex justify-end gap-2 mt-4 border-t pt-4">
 												<button
+													type='button'
 													onClick={() => setIsUpdateModalOpen(false)
 													}
 													className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition"
@@ -544,10 +535,9 @@ function SchedulingAssessmentPage() {
 													Cancel
 												</button>
 												<button
-													onClick={
+													type='submit'
+													onSubmit={
 														handleSubmit
-
-
 													}
 													className="px-4 py-2 bg-[#015289] text-white rounded-md hover:bg-blue-700 transition"
 												>

@@ -22,8 +22,9 @@ const AllCustomerContextProvider = ({ children }) => {
 	const AllCustomers = async () => {
 
 		try {
-			const res = await AxiosHandler.get(`/auth/all-users?page=${page}&limit=10`);
-			SetAllCustomerData(res.data.users);
+			const res = await AxiosHandler.get(`/auth/all-ciso?page=${page}&limit=10`);
+			console.log(res.data)
+			SetAllCustomerData(res.data.data);
 
 		} catch (error) {
 			console.log(error)
@@ -40,7 +41,8 @@ const AllCustomerContextProvider = ({ children }) => {
 
 	return (
 		<AllCustomerContext.Provider value={{
-			AllCustomersData, page,
+			AllCustomersData,
+			 page,
 			setPage,
 
 		}}>

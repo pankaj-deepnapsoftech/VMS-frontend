@@ -10,13 +10,11 @@ function Remedition() {
 
   const {
     dataViaStatus,
-    targetStatusData
+    targetStatusData,
+    criticalVulnerabilitycountData
   } = useRemeditionContext()
 
 
-  console.log("hvhovyv",
-    dataViaStatus,
-    targetStatusData, "ndsfgbiouirn")
 
   // const [selectedGroup, setSelectedGroup] = useState('All');
   // const [activeTab, setActiveTab] = useState('Overview');
@@ -57,6 +55,7 @@ function Remedition() {
     { status: 'Target Missed', none: 0, low: 0, medium: 23, high: 43, critical: 0 },
   ];
 
+  var size = Object.keys(criticalVulnerabilitycountData)?.length;
   return (
     <div className="min-h-screen bg-gray-50 p-8 ">
 
@@ -81,7 +80,6 @@ function Remedition() {
             </ResponsiveContainer>
           </div>
 
-
           <div className="w-full max-w-4xl h-72 p-8 bg-white rounded-2xl shadow-lg">
             <h2 className="text-xs font-semibold mb-4 text-center text-gray-800">Vulnerability Groups by Risk Rating and Remediation Target Status</h2>
             <ResponsiveContainer width="100%" height="100%">
@@ -98,70 +96,102 @@ function Remedition() {
             </ResponsiveContainer>
           </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          {/* Vulnerability Groups Chart */}
-          {/* <div className="bg-white border border-gray-200 rounded-lg">
-            <div className="p-4">
-              <h2 className="text-sm font-medium text-gray-900 mb-4">Vulnerability Groups by Assignment Group and State</h2>
-              <div className="h-[300px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={vulnerabilityData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                    <XAxis dataKey="state" fontSize={12} angle={-45} textAnchor="end" height={60} />
-                    <YAxis fontSize={12} />
-                    <Tooltip />
-                    <Bar dataKey="critical" fill="#dc2626" stackId="a" />
-                    <Bar dataKey="high" fill="#ea580c" stackId="a" />
-                    <Bar dataKey="medium" fill="#ca8a04" stackId="a" />
-                    <Bar dataKey="low" fill="#16a34a" stackId="a" />
-                    <Bar dataKey="none" fill="#2563eb" stackId="a" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-          </div> */}
-
-          {/* Risk Rating Chart */}
-          {/* <div className="bg-white border border-gray-200 rounded-lg">
-            <div className="p-4">
-              <h2 className="text-sm font-medium text-gray-900 mb-4">Vulnerability Groups by Risk Rating and Remediation Target Status</h2>
-              <div className="h-[300px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={riskData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                    <XAxis dataKey="status" fontSize={12} angle={-45} textAnchor="end" height={60} />
-                    <YAxis fontSize={12} />
-                    <Tooltip />
-                    <Bar dataKey="critical" fill="#dc2626" stackId="a" />
-                    <Bar dataKey="high" fill="#ea580c" stackId="a" />
-                    <Bar dataKey="medium" fill="#ca8a04" stackId="a" />
-                    <Bar dataKey="low" fill="#16a34a" stackId="a" />
-                    <Bar dataKey="none" fill="#2563eb" stackId="a" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-          </div> */}
-
           {/* Critical Vulnerabilities */}
+          <div className="bg-white border scale-95  border-gray-200 rounded-lg">
+
+
+
+            <div className="w-full  bg-white  rounded-2xl overflow-hidden">
+              <h2 className="text-sm p-4 font-medium text-gray-900">Critical Vulnerability Groups by Assignment Group</h2>
+              <table className="w-full border-collapse">
+                <thead className="">
+                  <tr>
+                    <th className="px-5 text-left">Department Name</th>
+                    <th className=" text-left">Count</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {Object.entries(criticalVulnerabilitycountData)?.map(([key, value], index) => (
+                    <tr
+                      key={key}
+                      className={index % 2 === 0 ? "bg-gray-50" : "bg-gray-100"}
+                    >
+                      <td className="py-3 px-4 font-medium text-gray-700">{key}</td>
+                      <td className="py-3 px-4 text-gray-600">{value}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Unassigned Trend */}
           <div className="bg-white border scale-95 border-gray-200 rounded-lg">
-            <div className="p-4">
+            <div className="p-1">
+              <h2 className="text-sm p-4 font-medium text-gray-900">Infrastructure & Application Vulnerability Groups</h2>
+              <div className="flex items-center justify-center h-64">
+                <div className="text-center">
+                  <span className="text-4xl font-bold text-gray-900">{size}</span>
+                  <p className="text-sm text-gray-500">Total :</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Remedition;
+
+
+
+{/* Vulnerability Groups Chart */ }
+{/* <div className="bg-white border border-gray-200 rounded-lg">
+  <div className="p-4">
+    <h2 className="text-sm font-medium text-gray-900 mb-4">Vulnerability Groups by Assignment Group and State</h2>
+    <div className="h-[300px] w-full">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={vulnerabilityData}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+          <XAxis dataKey="state" fontSize={12} angle={-45} textAnchor="end" height={60} />
+          <YAxis fontSize={12} />
+          <Tooltip />
+          <Bar dataKey="critical" fill="#dc2626" stackId="a" />
+          <Bar dataKey="high" fill="#ea580c" stackId="a" />
+          <Bar dataKey="medium" fill="#ca8a04" stackId="a" />
+          <Bar dataKey="low" fill="#16a34a" stackId="a" />
+          <Bar dataKey="none" fill="#2563eb" stackId="a" />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  </div>
+</div> */}
+
+{/* Risk Rating Chart */ }
+{/* <div className="bg-white border border-gray-200 rounded-lg">
+  <div className="p-4">
+    <h2 className="text-sm font-medium text-gray-900 mb-4">Vulnerability Groups by Risk Rating and Remediation Target Status</h2>
+    <div className="h-[300px] w-full">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={riskData}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+          <XAxis dataKey="status" fontSize={12} angle={-45} textAnchor="end" height={60} />
+          <YAxis fontSize={12} />
+          <Tooltip />
+          <Bar dataKey="critical" fill="#dc2626" stackId="a" />
+          <Bar dataKey="high" fill="#ea580c" stackId="a" />
+          <Bar dataKey="medium" fill="#ca8a04" stackId="a" />
+          <Bar dataKey="low" fill="#16a34a" stackId="a" />
+          <Bar dataKey="none" fill="#2563eb" stackId="a" />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  </div>
+</div> */}
+
+{/* <div className="p-4">
               <h2 className="text-sm font-medium text-gray-900">Critical Vulnerability Groups by Assignment Group</h2>
               <div className="mt-4 space-y-2">
                 {[
@@ -180,25 +210,4 @@ function Remedition() {
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
-
-          {/* Unassigned Trend */}
-          <div className="bg-white border scale-95 border-gray-200 rounded-lg">
-            <div className="p-4">
-              <h2 className="text-sm font-medium text-gray-900">Infrastructure & Application Vulnerability Groups</h2>
-              <div className="flex items-center justify-center h-64">
-                <div className="text-center">
-                  <span className="text-4xl font-bold text-gray-900">15</span>
-                  <p className="text-sm text-gray-500">0 (0.0%) Oct 22: 15</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default Remedition;
+            </div> */}

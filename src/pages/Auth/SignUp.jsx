@@ -4,13 +4,14 @@ import { useFormik } from 'formik';
 import InputField from '@/components/InputField';
 import { useAuthContext } from '@/context';
 import { SignUpValidation } from '@/Validation/AuthValidation';
+import { FaCompass } from 'react-icons/fa6';
 
 function SignUp() {
   const { Signup, loading } = useAuthContext()
 
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
-    initialValues: { full_name: "", phone: "", email: "", password: "", role: "" },
+    initialValues: { full_name: "", phone: "", email: "", password: "", role: "", department: "" },
     validationSchema: SignUpValidation,
     onSubmit: (value) => {
       console.log(value, "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
@@ -113,6 +114,19 @@ function SignUp() {
               name="password"
             />
             {touched.password && errors.password && <p> {errors.password}</p>}
+
+            <InputField
+              label={"Department Name"}
+              type={"text"}
+              showPassword={false}
+              icon={FaCompass}
+              value={values.department}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              placeholder="Enter your Department Name"
+              name="department"
+            />
+            {touched.department && errors.department && <p> {errors.department}</p>}
 
             <label
               htmlFor="role"

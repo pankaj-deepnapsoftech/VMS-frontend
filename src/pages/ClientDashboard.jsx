@@ -1,5 +1,5 @@
 import InputField from "@/components/InputField";
-import {  useAuthContext, useScheduleAssessmentContext } from "@/context";
+import { useAuthContext, useScheduleAssessmentContext } from "@/context";
 import { SignUpValidation } from "@/Validation/AuthValidation";
 import { useFormik } from "formik";
 import React, { useState } from "react";
@@ -46,7 +46,7 @@ export default function ClientDashboard() {
 		onSubmit: (value) => {
 			Signup(value);
 			setIsModalOpen(false);
-			
+
 		}
 	})
 
@@ -219,13 +219,13 @@ export default function ClientDashboard() {
 					})}
 				</div>
 				<div className="bg-white shadow-lg rounded-xl p-4 sm:p-6 w-full">
-					<h2 className="text-lg font-semibold mb-2 sm:mb-4 text-center">Data Visualization</h2>
+					<h2 className="text-sm font-semibold mb-2 sm:mb-4 text-left">Data Visualization</h2>
 					<ResponsiveContainer width="100%" height={300}>
 						<BarChart data={data}>
 							<XAxis dataKey="name" tick={{ fontSize: 12, }} />
 							<YAxis />
 							<Tooltip />
-							<Bar dataKey="value" fill="#3b82f6" radius={[5, 5, 0, 0]} />
+							<Bar dataKey="value" fill="#3b82f6" />
 						</BarChart>
 					</ResponsiveContainer>
 				</div>
