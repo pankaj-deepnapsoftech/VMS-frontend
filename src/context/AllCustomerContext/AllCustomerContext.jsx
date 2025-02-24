@@ -20,7 +20,7 @@ const AllCustomerContextProvider = ({ children }) => {
 	const { token } = useAuthContext()
 
 	const AllCustomers = async () => {
-
+		setLoading(true);
 		try {
 			const res = await AxiosHandler.get(`/auth/all-ciso?page=${page}&limit=10`);
 			console.log(res.data)
@@ -29,6 +29,8 @@ const AllCustomerContextProvider = ({ children }) => {
 		} catch (error) {
 			console.log(error)
 
+		} finally {
+			setLoading(false);
 		}
 	}
 
@@ -41,8 +43,9 @@ const AllCustomerContextProvider = ({ children }) => {
 
 	return (
 		<AllCustomerContext.Provider value={{
+			loading,
 			AllCustomersData,
-			 page,
+			page,
 			setPage,
 
 		}}>

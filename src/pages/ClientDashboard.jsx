@@ -55,7 +55,7 @@ export default function ClientDashboard() {
 	return (
 		<div className="min-h-screen bg-gray-100 p-4 sm:p-6 flex flex-col items-center">
 
-			<div className='flex w-full justify-end items-end py-4'>
+			{authenticate?.role === "ClientCISO" && <div className='flex w-full justify-end items-end py-4'>
 
 
 				<button
@@ -65,7 +65,9 @@ export default function ClientDashboard() {
 					<BiPlus className="h-6 w-6" />
 					Add Client SME
 				</button>
-			</div>
+			</div>}
+
+
 			{isModalOpen && (
 				<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-10">
 					<div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">

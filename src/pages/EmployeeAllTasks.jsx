@@ -1,4 +1,4 @@
-import React, { Suspense,   useState } from "react";
+import React, { Suspense, useState } from "react";
 import { BiSearch, BiEditAlt, BiPlus, BiSave } from "react-icons/bi";
 import { RiDeleteBinFill } from "react-icons/ri";
 import { MdClose } from "react-icons/md";
@@ -8,9 +8,10 @@ import * as XLSX from "xlsx";
 import { WorkItemValidation } from "@/Validation/VulnerabililtyDataValidation";
 import { BsPersonCheckFill } from "react-icons/bs";
 import toast from "react-hot-toast";
+import Loader from "@/components/Loader/Loader";
 
 export function EmployeeAllTasks() {
-	const {
+	const { loading,
 		UpdateData,
 		AddData,
 		AssignTask,
@@ -134,7 +135,7 @@ export function EmployeeAllTasks() {
 
 	return (
 		<Suspense fallback={<div>Loading...</div>}>
-			<div className="p-4 md:p-6 max-w-[95%] mx-auto bg-white rounded-xl shadow-lg">
+			{loading ? <Loader /> : <div className="p-4 md:p-6 max-w-[95%] mx-auto bg-white rounded-xl shadow-lg">
 				{/* 🔍 Search Bar & Buttons */}
 				<div className="mb-4 flex flex-col md:flex-row items-start md:items-center justify-between">
 					<div className="relative mt-4 md:mt-0">
@@ -329,7 +330,7 @@ export function EmployeeAllTasks() {
 						Next
 					</button>
 				</div>
-			</div>
+			</div>}
 		</Suspense>
 	);
 }

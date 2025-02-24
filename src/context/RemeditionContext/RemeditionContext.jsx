@@ -52,7 +52,6 @@ const RemeditionContextProvider = ({ children }) => {
 
 		try {
 			const res = await AxiosHandler.get("/employee/employee-count");
-			console.log(res, "herooo")
 			setCriticalVulnerabilitycount(res?.data?.data);
 
 		} catch (error) {

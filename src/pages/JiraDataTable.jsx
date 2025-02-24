@@ -3,9 +3,11 @@ import { BiSearch, BiEditAlt, BiPlus, BiSave } from "react-icons/bi";
 import { RiDeleteBinFill } from "react-icons/ri";
 import { useJiraContext } from "@/context";
 import * as XLSX from "xlsx";
+import Loader from "@/components/Loader/Loader";
 
 export const JiraDataTable = () => {
-	const { jiraData,
+	const { loading,
+		jiraData,
 		page,
 		setPage, } = useJiraContext();
 
@@ -62,7 +64,7 @@ export const JiraDataTable = () => {
 
 	return (
 		<Suspense fallback={<div>Loading...</div>}>
-			<div className="p-4 md:p-6 max-w-[95%] mx-auto bg-white rounded-xl shadow-lg">
+			{loading ? <Loader /> : <div className="p-4 md:p-6 max-w-[95%] mx-auto bg-white rounded-xl shadow-lg">
 				{/* Search Bar & Buttons */}
 				<div className="mb-4 flex flex-col md:flex-row items-start md:items-center justify-between">
 					<div className="relative mt-4 md:mt-0">
@@ -151,7 +153,7 @@ export const JiraDataTable = () => {
 						Next
 					</button>
 				</div>
-			</div>
+			</div>}
 		</Suspense>
 	);
 }

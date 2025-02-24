@@ -10,12 +10,13 @@ import { RiDeleteBinFill, RiShieldCheckFill } from 'react-icons/ri';
 import { IoMdAirplane } from 'react-icons/io';
 import { MdClose, MdSchedule } from 'react-icons/md';
 import { useAuthContext, useScheduleAssessmentContext } from '@/context';
+import Loader from '@/components/Loader/Loader';
 
 
 
 function SchedulingAssessmentPage() {
 
-	const {
+	const { loading,
 		SchedulingAssesment,
 		allAssesmentData,
 		DeleteAssesment,
@@ -100,7 +101,7 @@ function SchedulingAssessmentPage() {
 	return (
 		<div className="min-h-screen bg-white text-gray-black px-5 ">
 			{/* Main Content */}
-			<main className="container mx-auto px-4 py-8">
+			{loading ? <Loader /> : <main className="container mx-auto px-4 py-8">
 				<section className="mb-8">
 
 
@@ -629,7 +630,7 @@ function SchedulingAssessmentPage() {
 						</button>
 					</div>
 				</section>
-			</main>
+			</main>}
 		</div>
 	);
 }

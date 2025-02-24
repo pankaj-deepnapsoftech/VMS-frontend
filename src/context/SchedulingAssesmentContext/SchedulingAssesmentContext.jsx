@@ -12,6 +12,8 @@ export const AssesmentContext = createContext();
 const SchedulingAssesmentContextProvider = ({ children }) => {
 
 	const [loading, setLoading] = useState(false);
+
+
 	const [allAssesmentData, setAllAssesmentData] = useState([]);
 	const [testerData, setTesterData] = useState([]);
 	const [dashboardData, setDashboardData] = useState([]);
@@ -29,34 +31,40 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 
 
 	const TotalAssessments = async () => {
-
+		setLoading(true);
 		try {
 			const res = await AxiosHandler.get(`/assessment/get?page=${page}&limit=10`);
 			setAllAssesmentData(res.data?.data);
 
 		} catch (error) {
 			console.log(error)
+		} finally {
+			setLoading(false);
 		}
 	}
 	const DashboardData = async () => {
-
+		setLoading(true);
 		try {
 			const res = await AxiosHandler.get(`/assessment/DashboardData`);
 			setDashboardData(res.data);
 
 		} catch (error) {
 			console.log(error)
+		} finally {
+			setLoading(false);
 		}
 	}
 
 	const GetOrgnization = async () => {
-
+		setLoading(true);
 		try {
 			const res = await AxiosHandler.get(`/employee/get-orgnization`);
 			setGetOrgnizationData(res?.data?.data);
 
 		} catch (error) {
 			console.log(error)
+		} finally {
+			setLoading(false);
 		}
 	}
 
@@ -135,6 +143,7 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 	}, [token, page])
 	return (
 		<AssesmentContext.Provider value={{
+			loading,
 			SchedulingAssesment,
 			allAssesmentData,
 			DeleteAssesment,

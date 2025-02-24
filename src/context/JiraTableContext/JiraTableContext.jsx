@@ -14,6 +14,8 @@ const JiraContextProvider = ({ children }) => {
 	let navigate = useNavigate();
 
 
+	const [loading, setLoading] = useState(false);
+	
 	const [page, setPage] = useState(1)
 	const { token } = useAuthContext()
 
@@ -21,7 +23,7 @@ const JiraContextProvider = ({ children }) => {
 	const [ConfigData, setConfigData] = useState([])
 
 	const JiraData = async () => {
-
+		setLoading(true);
 		try {
 
 			const res = await AxiosHandler.get("/jira/issues?page=${page}&limit=10");
@@ -29,17 +31,21 @@ const JiraContextProvider = ({ children }) => {
 		} catch (error) {
 			console.log(error)
 
+		} finally {
+			setLoading(false);
 		}
 	}
 
 	const JiraConfigData = async () => {
-
+		setLoading(true);
 		try {
 			const res = await AxiosHandler.get("/jira/get-jira-config");
 			setConfigData(res.data.data);
 
 		} catch (error) {
 			console.log(error)
+		} finally {
+			setLoading(false);
 		}
 	}
 
@@ -71,6 +77,7 @@ const JiraContextProvider = ({ children }) => {
 
 	return (
 		<JiraContext.Provider value={{
+			loading,
 			jiraData,
 			page,
 			setPage,

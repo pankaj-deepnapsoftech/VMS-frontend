@@ -24,33 +24,38 @@ const AllEmployeeContextProvider = ({ children }) => {
 	const { token, authenticate } = useAuthContext()
 
 	const AllEmployee = async () => {
-
+		setLoading(true);
 		try {
 			const res = await AxiosHandler.get(`/auth/all-employee?page=${page}&limit=10`);
-			SetAllEmployeesData(res.data.users);
+
+			console.log("hero ", res)
+			SetAllEmployeesData(res.data?.users);
 
 		} catch (error) {
 			console.log(error)
 
+		} finally {
+			setLoading(false);
 		}
 	}
 
 	const AllClientSME = async () => {
-
+		setLoading(true);
 		try {
 			const res = await AxiosHandler.get(`/auth/all-sme?page=${page}&limit=10`);
-			console.log("hero ", res)
 			SetAllEmployeesData(res.data.data);
 
 		} catch (error) {
 			console.log(error)
 
+		} finally {
+			setLoading(false);
 		}
 	}
 
 
 	const EmployeeTasks = async () => {
-
+		setLoading(true);
 		try {
 			const res = await AxiosHandler.get(`employee/get-employee-task?page=${taskPage}&limit=10`);
 			setEmployeeTasksData(res.data.data);
@@ -58,11 +63,13 @@ const AllEmployeeContextProvider = ({ children }) => {
 		} catch (error) {
 			console.log(error)
 
+		} finally {
+			setLoading(false);
 		}
 	}
 
 	const EmployeeData = async () => {
-
+		setLoading(true);
 		try {
 			const res = await AxiosHandler.get(`employee/emp-data`);
 			setEmployeeCardData(res.data);
@@ -70,6 +77,8 @@ const AllEmployeeContextProvider = ({ children }) => {
 		} catch (error) {
 			console.log(error)
 
+		} finally {
+			setLoading(false);
 		}
 	}
 
@@ -99,9 +108,10 @@ const AllEmployeeContextProvider = ({ children }) => {
 			EmployeeTasks();
 			EmployeeData();
 		}
-	}, [token, page, taskPage, authenticate])
+	}, [token, page, taskPage, authenticate?.role])
 	return (
 		<AllEmployeeContext.Provider value={{
+			loading,
 			allEmployeesData,
 			employeeTasksData,
 			EmployeeTasks,

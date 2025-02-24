@@ -3,19 +3,20 @@ import { BiSearch, BiEditAlt, BiPlus, BiSave } from "react-icons/bi";
 import { RiDeleteBinFill } from "react-icons/ri";
 import { MdClose } from "react-icons/md";
 import { useAllEmployeeContext, useVulnerabililtyDataContext } from "@/context";
-import { Formik, Form, Field  } from "formik";
+import { Formik, Form, Field } from "formik";
 import * as XLSX from "xlsx";
 import { WorkItemValidation } from "@/Validation/VulnerabililtyDataValidation";
 import { BsPersonCheckFill } from "react-icons/bs";
 import toast from "react-hot-toast";
 import { FaExclamationTriangle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import Loader from "@/components/Loader/Loader";
 
 export function VulnerabilityData() {
 
 
 
-  const {
+  const { loading,
     UpdateData,
     AddData,
     AllVulnerablilty,
@@ -165,10 +166,14 @@ export function VulnerabilityData() {
   const [selected, setSelected] = useState("");
 
   let statusList = ["Open", "Closed", "Fix", "Re-Open", "On-Hold", "Exception"];
+
+
+
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
 
-      <div className="p-4 md:p-6 max-w-[95%] mx-auto bg-white rounded-xl shadow-lg">
+      {loading ? <Loader /> : <div className="p-4 md:p-6 max-w-[95%] mx-auto bg-white rounded-xl shadow-lg">
         {/* 🔍 Search Bar & Buttons */}
         <div className="mb-4 flex flex-col md:flex-row items-start md:items-center justify-between">
 
@@ -276,7 +281,7 @@ export function VulnerabilityData() {
                       handleSelectAll(e)
                     }} />
                 </th>
-                {tableHeaders.map((header, index) => (
+                {tableHeaders?.map((header, index) => (
                   <th
                     key={index}
                     className="px-4 py-3 text-left text-xs font-medium text-white uppercase"
@@ -290,7 +295,7 @@ export function VulnerabilityData() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {paginatedData.map((item) => (
+              {paginatedData?.map((item) => (
                 <tr key={item._id} className="hover:bg-gray-50">
                   <td className="px-4 py-4 whitespace-nowrap flex justify-around gap-4">
                     <input
@@ -300,7 +305,7 @@ export function VulnerabilityData() {
                       onChange={() => handleChecked(item._id)} />
 
                   </td>
-                  {tableHeaders.map((field, i) => (
+                  {tableHeaders?.map((field, i) => (
                     <td key={i} className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
                       {
                         field === "createdAt" ?
@@ -415,63 +420,63 @@ export function VulnerabilityData() {
               <Formik
                 initialValues={editData || {}}
                 onSubmit={(values) => {
-                  console.log(editData, "hero hero hero")
-                  console.log(values, "hero hero hero")
                   editMode ? UpdateData(values, editData._id) : AddData(values);
                   setIsModalOpen(false);
                 }}
               >
-                <Form className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
-                  {(editMode ? editFormHeaders : addFormHeaders).map((field) =>
+                {({ setFieldValue }) => (  // ✅ Access setFieldValue here
+                  <Form className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+                    {(editMode ? editFormHeaders : addFormHeaders).map((field) => (
+                      <div key={field} className="flex flex-col">
+                        <label className="text-sm font-medium text-gray-700">
+                          {field.replace(/_/g, " ")}*
+                        </label>
 
+                        {field === "Status" ? (
+                          <select
+                            className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                            name="Status"
+                            onChange={(e) => setFieldValue("Status", e.target.value)}  // ✅ Now works without error
+                            defaultValue=""  // Avoids React warning about uncontrolled inputs
+                          >
+                            <option disabled value="">
+                              --- Select a Status ---
+                            </option>
+                            {statusList.map((item, idx) => (
+                              <option key={idx} value={item}>
+                                {item}
+                              </option>
+                            ))}
+                          </select>
+                        ) : (
+                          <Field
+                            name={field}
+                            className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                          />
+                        )}
+                      </div>
+                    ))}
 
-
-                  (
-                    <div key={field} className="flex flex-col">
-                      <label className="text-sm font-medium text-gray-700">{field.replace(/_/g, " ")}*</label>
-
-                      {field === "Status" ?
-                        <select className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
-                          name="Status"
-                          onChange={(e) => { editData.Status = e.target.value }}
-
-                        >
-                          <option disabled selected>---  Select a Status  ---
-                          </option>
-
-
-                          {statusList.map((item, idx) => (<option key={idx} value={item}
-                          >{item}</option>))}
-
-                        </select> :
-                        <Field
-                          name={field}
-                          className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
-                        />
-                      }
-
-
-
+                    {/* Buttons */}
+                    <div className="col-span-1 md:col-span-2 flex justify-end gap-2 mt-4 border-t pt-4">
+                      <button
+                        type="button"  // Prevent accidental form submission
+                        onClick={() => setIsModalOpen(false)}
+                        className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        className="px-4 py-2 bg-[#015289] text-white rounded-md hover:bg-blue-700 transition"
+                      >
+                        Save
+                      </button>
                     </div>
-                  ))}
-
-                  {/* Buttons */}
-                  <div className="col-span-1 md:col-span-2 flex justify-end gap-2 mt-4 border-t pt-4">
-                    <button
-                      onClick={() => setIsModalOpen(false)}
-                      className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      className="px-4 py-2 bg-[#015289] text-white rounded-md hover:bg-blue-700 transition"
-                    >
-                      Save
-                    </button>
-                  </div>
-                </Form>
+                  </Form>
+                )}
               </Formik>
+
             </div>
           </div>
         )}
@@ -496,7 +501,7 @@ export function VulnerabilityData() {
             Next
           </button>
         </div>
-      </div>
+      </div>}
     </Suspense>
   );
 }
