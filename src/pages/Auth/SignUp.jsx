@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import { FaEye, FaEyeSlash, FaFacebook, FaChartLine, FaUser, FaEnvelope, FaLock, FaPhone } from 'react-icons/fa';
+import { FaEye, FaEyeSlash, FaFacebook, FaChartLine, FaUser, FaEnvelope, FaLock, FaPhone, FaObjectGroup, FaBuilding, FaUserFriends } from 'react-icons/fa';
 import { useFormik } from 'formik';
 import InputField from '@/components/InputField';
 import { useAuthContext } from '@/context';
 import { SignUpValidation } from '@/Validation/AuthValidation';
 import { FaCompass } from 'react-icons/fa6';
+import { MdBusiness } from 'react-icons/md';
 
 function SignUp() {
   const { Signup, loading } = useAuthContext()
 
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
-    initialValues: { full_name: "", phone: "", email: "", password: "", role: "", department: "" },
+    initialValues: { full_name: "", phone: "", email: "", password: "", role: "", department: "", Organization: "" },
     validationSchema: SignUpValidation,
     onSubmit: (value) => {
       console.log(value, "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
@@ -75,7 +76,7 @@ function SignUp() {
               placeholder="Enter your Full Name"
               name="full_name"
             />
-            {touched.full_name && errors.full_name && <p> {errors.full_name}</p>}
+            {touched.full_name && errors.full_name && <p className='text-red-700 text-xs'> {errors.full_name}</p>}
 
             <InputField
               label={"Email Address"}
@@ -88,7 +89,7 @@ function SignUp() {
               placeholder="Enter your Email Address"
               name="email"
             />
-            {touched.email && errors.email && <p> {errors.email}</p>}
+            {touched.email && errors.email && <p className='text-red-700 text-xs'> {errors.email}</p>}
 
             <InputField
               label={"Phone Number"}
@@ -101,7 +102,7 @@ function SignUp() {
               placeholder="Enter your Phone Number"
               name="phone"
             />
-            {touched.phone && errors.phone && <p> {errors.phone}</p>}
+            {touched.phone && errors.phone && <p className='text-red-700 text-xs'> {errors.phone}</p>}
             <InputField
               label={"Password"}
               type={"password"}
@@ -113,20 +114,20 @@ function SignUp() {
               placeholder="Enter your Password"
               name="password"
             />
-            {touched.password && errors.password && <p> {errors.password}</p>}
+            {touched.password && errors.password && <p className='text-red-700 text-xs'> {errors.password}</p>}
 
             <InputField
               label={"Department Name"}
               type={"text"}
               showPassword={false}
-              icon={FaCompass}
+              icon={FaUserFriends}
               value={values.department}
               onBlur={handleBlur}
               onChange={handleChange}
               placeholder="Enter your Department Name"
               name="department"
             />
-            {touched.department && errors.department && <p> {errors.department}</p>}
+            {touched.department && errors.department && <p className='text-red-700 text-xs'> {errors.department}</p>}
 
             <label
               htmlFor="role"
@@ -137,14 +138,30 @@ function SignUp() {
             <select
               value={values.role}
               onChange={handleChange}
-              className='w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition'
+              className='w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition'
               id="role">
               <option value="" disabled> -- Select a role -- </option>
               <option value="Assessor">Assessor</option>
               <option value="ClientCISO">Client CISO</option>
               <option value="ClientSME">Client SME</option>
             </select>
-            {touched.role && errors.role && <p> {errors.role}</p>}
+            {touched.role && errors.role && <p className='text-red-700 text-xs'> {errors.role}</p>}
+
+
+
+            {values.role === "ClientCISO" && <InputField
+              label={"Organization Name"}
+              type={"text"}
+              showPassword={false}
+              icon={FaBuilding}
+              value={values.Organization}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              placeholder="Enter your Organization Name"
+              name="Organization"
+            />
+              // {touched.Organization && errors.Organization && <p> {errors.Organization}</p>}
+            }
 
             <div className="flex items-center">
               <input
@@ -160,7 +177,6 @@ function SignUp() {
                 <a href="#" className="text-blue-600 hover:text-blue-700">Privacy Policy</a>
               </label>
             </div>
-
             <button
               type="submit"
               className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-200"

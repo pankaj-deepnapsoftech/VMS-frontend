@@ -15,6 +15,7 @@ import {
   ApplicationVulnerabilityContextProvider,
   AuthContextProvider,
   DataContextProvider,
+  ExceptionContextProvider,
   JiraContextProvider,
   RemeditionContextProvider,
   SchedulingAssesmentContextProvider,
@@ -33,12 +34,15 @@ createRoot(document.getElementById("root")).render(
                 <SchedulingAssesmentContextProvider>
                   <ApplicationVulnerabilityContextProvider>
                     <RemeditionContextProvider>
+                      <ExceptionContextProvider>
 
 
 
-                      <App />
+                        <App />
+
+
+                      </ExceptionContextProvider>
                     </RemeditionContextProvider>
-
                   </ApplicationVulnerabilityContextProvider>
                 </SchedulingAssesmentContextProvider>
               </JiraContextProvider>

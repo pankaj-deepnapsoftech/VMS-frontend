@@ -84,6 +84,7 @@ const AllEmployeeContextProvider = ({ children }) => {
 
 
 	const VerifyEmployee = async (id) => {
+
 		const toastId = toast.loading("Loading...");
 		try {
 			const res = await AxiosHandler.patch(`/auth/verify-employee/${id}`);

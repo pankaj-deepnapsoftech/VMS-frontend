@@ -8,6 +8,7 @@ import { JiraContext } from "./JiraTableContext/JiraTableContext";
 import { ApplicationVulnerabilityContext } from "./ApplicationVulnerabilityContext/ApplicationVulnerabilityContext";
 import SchedulingAssesmentContext, { AssesmentContext } from "./SchedulingAssesmentContext/SchedulingAssesmentContext";
 import { RemeditionContext } from "./RemeditionContext/RemeditionContext";
+import { ExceptionContext } from "./ExceptionContext/ExceptionContext";
 
 
 
@@ -25,6 +26,7 @@ export { default as JiraContextProvider } from "./JiraTableContext/JiraTableCont
 export { default as ApplicationVulnerabilityContextProvider } from "./ApplicationVulnerabilityContext/ApplicationVulnerabilityContext";
 export { default as SchedulingAssesmentContextProvider } from "./SchedulingAssesmentContext/SchedulingAssesmentContext";
 export { default as RemeditionContextProvider } from "./RemeditionContext/RemeditionContext";
+export { default as ExceptionContextProvider } from "./ExceptionContext/ExceptionContext";
 
 
 
@@ -43,6 +45,8 @@ export const useScheduleAssessmentContext = () =>
 	useContext(AssesmentContext)
 export const useRemeditionContext = () =>
 	useContext(RemeditionContext)
+export const useExceptionContext = () =>
+	useContext(ExceptionContext)
 
 
 

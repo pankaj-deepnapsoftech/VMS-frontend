@@ -7,6 +7,7 @@ export const SignUpValidation = object({
     password: string().min(4).max(12).required('Password is Required'),
     department: string().min(2).max(12).required('department is Required'),
     role: string().oneOf(['ClientCISO', 'Assessor', 'Admin', 'ClientSME']).required('Role is Required'),
+    
 })
 
 export const SignInValidation = object({

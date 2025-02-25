@@ -11,6 +11,8 @@ import toast from "react-hot-toast";
 import { FaExclamationTriangle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Loader from "@/components/Loader/Loader";
+import Exceptions from "./Exceptions";
+import InputField from "@/components/InputField";
 
 export function VulnerabilityData() {
 
@@ -173,335 +175,361 @@ export function VulnerabilityData() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
 
-      {loading ? <Loader /> : <div className="p-4 md:p-6 max-w-[95%] mx-auto bg-white rounded-xl shadow-lg">
-        {/* 🔍 Search Bar & Buttons */}
-        <div className="mb-4 flex flex-col md:flex-row items-start md:items-center justify-between">
+      {loading ?
+        <Loader /> :
+        <div className="p-4 md:p-6 max-w-[95%] mx-auto bg-white rounded-xl shadow-lg">
+          {/* 🔍 Search Bar & Buttons */}
+          <div className="mb-4 flex flex-col md:flex-row items-start md:items-center justify-between">
 
-          <div className="lg:flex lg:flex-row grid grid-cols-2 gap-4 mt-4   w-full lg:justify-end  lg:items-center py-2 lg:gap-2">
-            <button
-              onClick={() => openModal()}
-              className="px-4 py-2  bg-[#015289] text-white lg:text-sm  text-xs font-medium rounded-md flex items-center"
-            >
-              <BiPlus className="h-6 w-6 mr-1" />
-              Add Vulnerability
-            </button>
-            <button
-              onClick={() => handleBulkAssignTask()}
-              className="px-4 py-2 bg-[#015289] text-white text-sm font-medium rounded-md flex items-center"
-            >
-              <BsPersonCheckFill className="h-6 w-6 mr-1" />
-              Bulk Task Assign
-            </button>
-            <button
-              onClick={() => handleDownload(filteredData)}
-              className="px-4 py-2 bg-[#015289] text-white text-sm font-medium rounded-md flex items-center"
-            >
-              <BiSave className="h-6 w-6 mr-1" />
-              Export Data
-            </button>
+            <div className="lg:flex lg:flex-row grid grid-cols-2 gap-4 mt-4   w-full lg:justify-end  lg:items-center py-2 lg:gap-2">
+              <button
+                onClick={() => openModal()}
+                className="px-4 py-2  bg-[#015289] text-white lg:text-sm  text-xs font-medium rounded-md flex items-center"
+              >
+                <BiPlus className="h-6 w-6 mr-1" />
+                Add Vulnerability
+              </button>
+              <button
+                onClick={() => handleBulkAssignTask()}
+                className="px-4 py-2 bg-[#015289] text-white text-sm font-medium rounded-md flex items-center"
+              >
+                <BsPersonCheckFill className="h-6 w-6 mr-1" />
+                Bulk Task Assign
+              </button>
+              <button
+                onClick={() => handleDownload(filteredData)}
+                className="px-4 py-2 bg-[#015289] text-white text-sm font-medium rounded-md flex items-center"
+              >
+                <BiSave className="h-6 w-6 mr-1" />
+                Export Data
+              </button>
+            </div>
           </div>
-        </div>
 
 
-        {/* top 5 Vulnerability */}
+          {/* top 5 Vulnerability */}
 
 
-        <div className="py-10 ">
+          <div className="py-10 ">
+            <div className="overflow-x-auto">
+              <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
+                <thead>
+                  <tr className="bg-[#015289] text-gray-100 uppercase text-sm">
+                    <th className="py-2 px-4 border-b">Top Vulnerability </th>
+                    <th className="py-2 px-4 border-b">Vulnerability Name</th>
+                    <th className="py-2 px-4 border-b">Total Vulnerability Instance </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {vulnerabilities?.map((product, index) => (
+                    <tr key={index} className={`text-center border-b hover:bg-gray-200 ${getRowColor(index)}`}>
+                      <td className="py-2 px-4 flex items-center justify-center gap-2">
+                        <FaExclamationTriangle className="text-red-500" /> {index + 1}
+                      </td>
+                      <td className="py-2 px-4">{product.name}</td>
+                      <td className="py-2 px-4">{product.count}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-3 lg:flex-row lg:justify-between  items-center py-3 ">
+            <div className="relative mt-4 md:mt-0">
+              <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+              <input
+                type="text"
+                placeholder="Search vulnerabilities..."
+                className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg w-full md:w-80"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <div className=" w-full flex  justify-end gap-2">
+
+              <select
+                name='Get Organization '
+                value={selected}
+                onChange={(e) => {
+                  setSelected(e.target.value)
+                  GetAssetsOpenIssues(e.target.value)
+                }}
+                className=' px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition'
+                id="Select_Tester">
+                <option value="" selected disabled> -- Select  Organization -- </option>
+
+                {getOrganizationData?.map((itm, idx) => (<option key={idx} value={itm}>{itm}</option>))}
+
+              </select>
+              <button className="p-1   bg-[#015289] text-white text-xs rounded-lg hover:bg-blue-700 transition"
+                onClick={() => {
+                  AllVulnerablilty()
+                  setSelected("")
+                }}>Clear Filter</button>
+            </div>
+          </div>
+
+          {/* 📊 Table */}
           <div className="overflow-x-auto">
-            <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
-              <thead>
-                <tr className="bg-[#015289] text-gray-100 uppercase text-sm">
-                  <th className="py-2 px-4 border-b">Top Vulnerability </th>
-                  <th className="py-2 px-4 border-b">Vulnerability Name</th>
-                  <th className="py-2 px-4 border-b">Total Vulnerability Instance </th>
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-[#015289]">
+
+                <tr>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-white uppercase">
+                    <input
+                      type="checkbox"
+                      checked={selectAll}
+                      onChange={(e) => {
+                        setSelectAll(!selectAll);
+                        handleSelectAll(e)
+                      }} />
+                  </th>
+                  {tableHeaders?.map((header, index) => (
+                    <th
+                      key={index}
+                      className="px-4 py-3 text-left text-xs font-medium text-white uppercase"
+                    >
+                      {header === "createdAt" ? "Created Date" : header.replace(/_/g, " ")}
+                    </th>
+                  ))}
+                  <th className="px-4 py-3 text-left text-xs font-medium text-white uppercase">
+                    Actions
+                  </th>
                 </tr>
               </thead>
-              <tbody>
-                {vulnerabilities?.map((product, index) => (
-                  <tr key={index} className={`text-center border-b hover:bg-gray-200 ${getRowColor(index)}`}>
-                    <td className="py-2 px-4 flex items-center justify-center gap-2">
-                      <FaExclamationTriangle className="text-red-500" /> {index + 1}
+              <tbody className="divide-y divide-gray-200">
+                {paginatedData?.map((item) => (
+                  <tr key={item._id} className="hover:bg-gray-50">
+                    <td className="px-4 py-4 whitespace-nowrap flex justify-around gap-4">
+                      <input
+                        type="checkbox"
+                        value="bubbles"
+                        checked={index.filter((i) => i === item._id).length > 0}
+                        onChange={() => handleChecked(item._id)} />
+
                     </td>
-                    <td className="py-2 px-4">{product.name}</td>
-                    <td className="py-2 px-4">{product.count}</td>
+                    {tableHeaders?.map((field, i) => (
+                      <td key={i} className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {
+                          field === "createdAt" ?
+                            new Date(item[field]).toLocaleDateString("en-IN", {
+                              day: "2-digit",
+                              month: "short",
+                              year: "numeric",
+                            }) : field === "Assigned_To" ? item[field]?.full_name :
+                              item[field]
+                        }
+                      </td>
+                    ))}
+                    <td className="px-4 py-4 whitespace-nowrap flex justify-around gap-4">
+                      <button onClick={() => openModal(item)} className="text-blue-600">
+                        <BiEditAlt className="h-5 w-5" />
+                      </button>
+                      <button onClick={() => handleDelete(item._id)} className="text-red-600">
+                        <RiDeleteBinFill className="h-5 w-5" />
+                      </button>
+                      <button onClick={() => {
+                        handleAssignTask(item)
+                      }} className="text-red-600">
+                        <BsPersonCheckFill className="h-5 w-5" />
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-        </div>
-
-        <div className="flex flex-col gap-3 lg:flex-row lg:justify-between  items-center py-3 ">
-          <div className="relative mt-4 md:mt-0">
-            <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-            <input
-              type="text"
-              placeholder="Search vulnerabilities..."
-              className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg w-full md:w-80"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-          <div className=" w-full flex  justify-end gap-2">
-
-            <select
-              name='Get Organization '
-              value={selected}
-              onChange={(e) => {
-                setSelected(e.target.value)
-                GetAssetsOpenIssues(e.target.value)
-              }}
-              className=' px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition'
-              id="Select_Tester">
-              <option value="" selected disabled> -- Select  Organization -- </option>
-
-              {getOrganizationData?.map((itm, idx) => (<option key={idx} value={itm}>{itm}</option>))}
-
-            </select>
-            <button className="p-1   bg-[#015289] text-white text-xs rounded-lg hover:bg-blue-700 transition"
-              onClick={() => {
-                AllVulnerablilty()
-                setSelected("")
-              }}>Clear Filter</button>
-          </div>
-        </div>
-
-        {/* 📊 Table */}
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-[#015289]">
-
-              <tr>
-                <th className="px-4 py-3 text-left text-xs font-medium text-white uppercase">
-                  <input
-                    type="checkbox"
-                    checked={selectAll}
-                    onChange={(e) => {
-                      setSelectAll(!selectAll);
-                      handleSelectAll(e)
-                    }} />
-                </th>
-                {tableHeaders?.map((header, index) => (
-                  <th
-                    key={index}
-                    className="px-4 py-3 text-left text-xs font-medium text-white uppercase"
-                  >
-                    {header === "createdAt" ? "Created Date" : header.replace(/_/g, " ")}
-                  </th>
-                ))}
-                <th className="px-4 py-3 text-left text-xs font-medium text-white uppercase">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {paginatedData?.map((item) => (
-                <tr key={item._id} className="hover:bg-gray-50">
-                  <td className="px-4 py-4 whitespace-nowrap flex justify-around gap-4">
-                    <input
-                      type="checkbox"
-                      value="bubbles"
-                      checked={index.filter((i) => i === item._id).length > 0}
-                      onChange={() => handleChecked(item._id)} />
-
-                  </td>
-                  {tableHeaders?.map((field, i) => (
-                    <td key={i} className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {
-                        field === "createdAt" ?
-                          new Date(item[field]).toLocaleDateString("en-IN", {
-                            day: "2-digit",
-                            month: "short",
-                            year: "numeric",
-                          }) : field === "Assigned_To" ? item[field]?.full_name :
-                            item[field]
-                      }
-                    </td>
-                  ))}
-                  <td className="px-4 py-4 whitespace-nowrap flex justify-around gap-4">
-                    <button onClick={() => openModal(item)} className="text-blue-600">
-                      <BiEditAlt className="h-5 w-5" />
-                    </button>
-                    <button onClick={() => handleDelete(item._id)} className="text-red-600">
-                      <RiDeleteBinFill className="h-5 w-5" />
-                    </button>
-                    <button onClick={() => {
-                      handleAssignTask(item)
-                    }} className="text-red-600">
-                      <BsPersonCheckFill className="h-5 w-5" />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
 
 
 
-        {isOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
+          {isOpen && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+              <div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
 
-              {/* Header */}
-              <div className="flex justify-between items-center border-b p-4 bg-[#015289]">
-                <h2 className="text-lg font-semibold text-gray-200">
-                  {"Assign Task to Employee"}
-                </h2>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="text-gray-100 hover:text-gray-200 transition"
-                >
-                  <MdClose className="h-6 w-6" />
-                </button>
-              </div>
-              <div className="p-10">
-                <label htmlFor="employees" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an Employee</label>
-                <select
-                  onChange={(e) => setEmpName(e.target.value)}
-                  id="employees"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                >
-                  <option selected disabled>Select a Employee</option>
-                  {allEmployeesData?.map((item, idx) => (<option key={idx} value={item._id}>{item.full_name}</option>))}
-
-                </select>
-
-                <div className="col-span-1 md:col-span-2 flex justify-end gap-2 mt-4 border-t pt-4">
+                {/* Header */}
+                <div className="flex justify-between items-center border-b p-4 bg-[#015289]">
+                  <h2 className="text-lg font-semibold text-gray-200">
+                    {"Assign Task to Employee"}
+                  </h2>
                   <button
                     onClick={() => setIsOpen(false)}
-                    className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition"
+                    className="text-gray-100 hover:text-gray-200 transition"
                   >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={() => {
-                      if (!id) {
-                        BulkAssignTask(empName, index)
-                        setIsOpen(false)
-                        CreateNotifications(empName, `${index.length} Tasks Assign to you`)
-                      }
-                      else {
-                        AssignTask(empName, id)
-                        setIsOpen(false)
-                        CreateNotifications(empName, `${vulTitle} has Assign a New Task To You`)
-                      }
-                    }}
-                    className="px-4 py-2 bg-[#015289] text-white rounded-md hover:bg-blue-700 transition"
-                  >
-                    Save
+                    <MdClose className="h-6 w-6" />
                   </button>
                 </div>
+                <div className="p-10">
+                  <label htmlFor="employees" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an Employee</label>
+                  <select
+                    onChange={(e) => setEmpName(e.target.value)}
+                    id="employees"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                  >
+                    <option selected disabled>Select a Employee</option>
+                    {allEmployeesData?.map((item, idx) => (<option key={idx} value={item._id}>{item.full_name}</option>))}
+
+                  </select>
+
+                  <div className="col-span-1 md:col-span-2 flex justify-end gap-2 mt-4 border-t pt-4">
+                    <button
+                      onClick={() => setIsOpen(false)}
+                      className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (!id) {
+                          BulkAssignTask(empName, index)
+                          setIsOpen(false)
+                          CreateNotifications(empName, `${index.length} Tasks Assign to you`)
+                        }
+                        else {
+                          AssignTask(empName, id)
+                          setIsOpen(false)
+                          CreateNotifications(empName, `${vulTitle} has Assign a New Task To You`)
+                        }
+                      }}
+                      className="px-4 py-2 bg-[#015289] text-white rounded-md hover:bg-blue-700 transition"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
+
               </div>
-
             </div>
-          </div>
-        )}
+          )}
 
-        {/* 📝 Modal Form */}
-        {isModalOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
+          {/* 📝 Modal Form */}
+          {isModalOpen && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-10">
+              <div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
 
-              {/* Header */}
-              <div className="flex justify-between items-center border-b p-4 bg-[#015289]">
-                <h2 className="text-lg font-semibold text-gray-200">
-                  {editMode ? "Edit Vulnerability" : "Add Vulnerability"}
-                </h2>
-                <button
-                  onClick={() => setIsModalOpen(false)}
-                  className="text-gray-100 hover:text-gray-200 transition"
+                {/* Header */}
+                <div className="flex justify-between items-center border-b p-4 bg-[#015289]">
+                  <h2 className="text-lg font-semibold text-gray-200">
+                    {editMode ? "Edit Vulnerability" : "Add Vulnerability"}
+                  </h2>
+                  <button
+                    onClick={() => setIsModalOpen(false)}
+                    className="text-gray-100 hover:text-gray-200 transition"
+                  >
+                    <MdClose className="h-6 w-6" />
+                  </button>
+                </div>
+
+                {/* Form */}
+                <Formik
+                  initialValues={editData || {}}
+                  onSubmit={(values) => {
+                    console.log(values, "hero in formik")
+                    editMode ? UpdateData(values, editData._id) : AddData(values);
+                    setIsModalOpen(false);
+                  }}
                 >
-                  <MdClose className="h-6 w-6" />
-                </button>
-              </div>
+                  {({ setFieldValue, values }) => (  // ✅ Access setFieldValue here
+                    <Form className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
 
-              {/* Form */}
-              <Formik
-                initialValues={editData || {}}
-                onSubmit={(values) => {
-                  editMode ? UpdateData(values, editData._id) : AddData(values);
-                  setIsModalOpen(false);
-                }}
-              >
-                {({ setFieldValue }) => (  // ✅ Access setFieldValue here
-                  <Form className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
-                    {(editMode ? editFormHeaders : addFormHeaders).map((field) => (
-                      <div key={field} className="flex flex-col">
-                        <label className="text-sm font-medium text-gray-700">
-                          {field.replace(/_/g, " ")}*
-                        </label>
 
-                        {field === "Status" ? (
-                          <select
-                            className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
-                            name="Status"
-                            onChange={(e) => setFieldValue("Status", e.target.value)}  // ✅ Now works without error
-                            defaultValue=""  // Avoids React warning about uncontrolled inputs
-                          >
-                            <option disabled value="">
-                              --- Select a Status ---
-                            </option>
-                            {statusList.map((item, idx) => (
-                              <option key={idx} value={item}>
-                                {item}
+                      {(editMode ? editFormHeaders : addFormHeaders).map((field) => (
+                        <div key={field} className="flex flex-col">
+                          <label className="text-sm font-medium text-gray-700">
+                            {field.replace(/_/g, " ")}*
+                          </label>
+
+                          {field === "Status" ? (
+                            <select
+                              className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                              name="Status"
+                              onChange={(e) => setFieldValue("Status", e.target.value)}  // ✅ Now works without error
+                              defaultValue=""  // Avoids React warning about uncontrolled inputs
+                            >
+                              <option disabled value="">
+                                --- Select a Status ---
                               </option>
-                            ))}
-                          </select>
-                        ) : (
-                          <Field
-                            name={field}
-                            className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                              {statusList.map((item, idx) => (
+                                <option key={idx} value={item}>
+                                  {item}
+                                </option>
+                              ))}
+                            </select>
+                          ) :
+
+                            (
+                              <Field
+                                name={field}
+                                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                              />
+                            )}
+
+
+                        </div>
+                      ))}
+
+                      {values.Status === "Exception" &&
+                        <div>
+                          <InputField
+                            label={"Exception Date"}
+                            type={"date"}
+                            showPassword={false}
+                            // value={expectionTime}
+
+                            onChange={(e) => {
+                              setFieldValue("Expection_time", e.target.value)
+
+                            }}
+
                           />
-                        )}
+
+                        </div>}
+
+                      {/* Buttons */}
+                      <div className="col-span-1 md:col-span-2 flex justify-end gap-2 mt-4 border-t pt-4">
+                        <button
+                          type="button"  // Prevent accidental form submission
+                          onClick={() => setIsModalOpen(false)}
+                          className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          type="submit"
+                          className="px-4 py-2 bg-[#015289] text-white rounded-md hover:bg-blue-700 transition"
+                        >
+                          Update
+                        </button>
                       </div>
-                    ))}
+                    </Form>
+                  )}
+                </Formik>
 
-                    {/* Buttons */}
-                    <div className="col-span-1 md:col-span-2 flex justify-end gap-2 mt-4 border-t pt-4">
-                      <button
-                        type="button"  // Prevent accidental form submission
-                        onClick={() => setIsModalOpen(false)}
-                        className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        type="submit"
-                        className="px-4 py-2 bg-[#015289] text-white rounded-md hover:bg-blue-700 transition"
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </Form>
-                )}
-              </Formik>
-
+              </div>
             </div>
+          )}
+
+          <div className="flex justify-between items-center my-16">
+            <button
+              className={`px-4 py-2 bg-[#015289] text-white border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
+              disabled={page === 1}
+              onClick={() => setPage(page - 1)}
+            >
+              Previous
+            </button>
+            <span>
+              Page {page}
+
+            </span>
+            <button
+              className={`px-4 py-2 border rounded-md  text-white bg-[#015289]`}
+              disabled={allVulnerabilityData.length < 10}
+              onClick={() => setPage(page + 1)}
+            >
+              Next
+            </button>
           </div>
-        )}
-
-        <div className="flex justify-between items-center my-16">
-          <button
-            className={`px-4 py-2 bg-[#015289] text-white border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
-            disabled={page === 1}
-            onClick={() => setPage(page - 1)}
-          >
-            Previous
-          </button>
-          <span>
-            Page {page}
-
-          </span>
-          <button
-            className={`px-4 py-2 border rounded-md  text-white bg-[#015289]`}
-            disabled={allVulnerabilityData.length < 10}
-            onClick={() => setPage(page + 1)}
-          >
-            Next
-          </button>
-        </div>
-      </div>}
+        </div>}
     </Suspense>
   );
 }

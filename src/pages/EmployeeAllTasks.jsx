@@ -9,6 +9,7 @@ import { WorkItemValidation } from "@/Validation/VulnerabililtyDataValidation";
 import { BsPersonCheckFill } from "react-icons/bs";
 import toast from "react-hot-toast";
 import Loader from "@/components/Loader/Loader";
+import InputField from "@/components/InputField";
 
 export function EmployeeAllTasks() {
 	const { loading,
@@ -95,6 +96,7 @@ export function EmployeeAllTasks() {
 	// };
 
 	const [status, setStatus] = useState("")
+	const [expectionTime, setExpectionTime] = useState(new Date())
 	// const [id, setID] = useState("")
 
 	// const handleAssignTask = (id) => {
@@ -131,6 +133,7 @@ export function EmployeeAllTasks() {
 	// 	}
 	// }
 
+	let statusList = ["Open", "Closed", "Fix", "Re-Open", "On-Hold", "Exception"];
 
 
 	return (
@@ -269,18 +272,27 @@ export function EmployeeAllTasks() {
 									className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
 								>
 									<option selected disabled>Select a Status</option>
-									<option value={"Open"}>Open
-									</option>
-									<option value={"Closed"}>Closed
-									</option>
-									<option value={"Fix"}>Fix
-									</option>
-									<option value={"ReOpen"}>ReOpen
-									</option>
-									<option value={"On Hold"}>On Hold
-									</option>
+									{statusList.map((item, idx) => (
+										<option key={idx} value={item}>
+											{item}
+										</option>
+									))}
 
 								</select>
+
+								{status === "Exception" &&
+									<div>
+										<InputField
+											label={"Exception Date"}
+											type={"date"}
+											showPassword={false}
+											value={expectionTime}
+
+											onChange={(e) => { setExpectionTime(e.target.value) }}
+
+										/>
+
+									</div>}
 
 								<div className="col-span-1 md:col-span-2 flex justify-end gap-2 mt-4 border-t pt-4">
 									<button
@@ -293,7 +305,7 @@ export function EmployeeAllTasks() {
 										onClick={() => {
 
 											if (status.length > 0 && editData._id) {
-												UpdateData({ Status: status }, editData._id)
+												UpdateData({ Status: status, Expection_time: expectionTime }, editData._id)
 												setIsModalOpen(false)
 												setStatus("")
 

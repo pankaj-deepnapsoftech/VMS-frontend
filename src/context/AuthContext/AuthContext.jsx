@@ -50,6 +50,9 @@ const AuthContextProvider = ({ children }) => {
   };
 
   const Signup = async (data) => {
+
+
+    console.log("Signup data", data)
     const toastId = toast.loading("Loading...");
 
     setLoading(true);
