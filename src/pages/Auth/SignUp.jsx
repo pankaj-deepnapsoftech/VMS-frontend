@@ -212,7 +212,7 @@ function SignUp() {
 
             <p className="text-center text-gray-600 text-sm">
               Already have an account?{' '}
-              <a href="/" className="text-blue-600 hover:text-blue-700 font-medium">
+              <a href="/sign-in" className="text-blue-600 hover:text-blue-700 font-medium">
                 Sign in
               </a>
             </p>

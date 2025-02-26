@@ -51,7 +51,8 @@ const AppRoutes = () => {
       {/* Public routes */}
       {!isAuthenticated && (
         <>
-          <Route path="/" element={<SignIn />} />
+          <Route path="/" element={<GettingStarted  />} />
+          <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
@@ -68,7 +69,7 @@ const AppRoutes = () => {
         </Route>
       )}
 
-      <Route path="*" element={<GettingStarted />} />
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 };

@@ -9,7 +9,7 @@ export default function GettingStarted() {
 				<p className="text-gray-600 mb-8">Get started with your account.</p>
 
 				<div className="space-y-4 flex flex-col">
-					<NavLink to={"/"}
+					<NavLink to={"/sign-in"}
 						className="w-full bg-[#015289]  text-white py-3 rounded-xl text-lg font-medium hover:bg-blue-700 transition">
 						Sign In
 					</NavLink>
