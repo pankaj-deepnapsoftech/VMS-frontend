@@ -312,14 +312,33 @@ export function VulnerabilityData() {
                     {tableHeaders?.map((field, i) => (
                       <td key={i} className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
                         {
-                          field === "createdAt" ?
+                          field === "createdAt" ? (
                             new Date(item[field]).toLocaleDateString("en-IN", {
                               day: "2-digit",
                               month: "short",
                               year: "numeric",
-                            }) : field === "Assigned_To" ? item[field]?.full_name :
-                              item[field]
+                            })
+                          ) : field === "Assigned_To" ? (
+                            item[field]?.full_name || "-"
+                          ) : field === "detailed_Report" ? (
+                            item[field] ? (
+                              <a
+                                className="text-blue-600 underline hover:text-blue-800"
+                                href={item[field]}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                download="CodeFile"
+                              >
+                                View File
+                              </a>
+                            ) : (
+                              "-"
+                            )
+                          ) : (
+                            item[field] || "-"
+                          )
                         }
+
                       </td>
                     ))}
                     <td className="px-4 py-4 whitespace-nowrap flex justify-around gap-4">

@@ -101,6 +101,23 @@ const AllEmployeeContextProvider = ({ children }) => {
 	}
 
 
+	const UploadDetailedReport = async (id, data) => {
+		console.log(data, "pdf data")
+		const toastId = toast.loading("Loading...");
+		try {
+			const res = await AxiosHandler.post(`/data/upload-pdf/${id}`, data);
+			toast.dismiss(toastId);
+			toast.success(res.data.message);
+
+		} catch (error) {
+			console.log(error)
+			toast.dismiss(toastId);
+			toast.error(error?.response?.data?.message);
+
+		}
+	}
+
+
 
 
 	useEffect(() => {
@@ -123,6 +140,7 @@ const AllEmployeeContextProvider = ({ children }) => {
 			taskPage,
 			setTaskPage,
 			AllClientSME,
+			UploadDetailedReport
 
 
 		}}>

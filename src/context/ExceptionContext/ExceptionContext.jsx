@@ -21,8 +21,41 @@ const ExceptionContextProvider = ({ children }) => {
 	const { token, authenticate } = useAuthContext()
 
 	const [expectionData, setExpectionData] = useState([])
+	const [expectionDataFiftyDays, setExpectionDataFiftyDays] = useState([])
 
 
+
+
+
+	const AdminExcectionDataFiftyDays = async () => {
+		setLoading(true);
+		try {
+
+			const res = await AxiosHandler.get("/data/AdminExpectionDataFiftyDays");
+			console.log(res, "exception ")
+			setExpectionDataFiftyDays(res.data);
+		} catch (error) {
+			console.log(error)
+		} finally {
+			setLoading(false);
+		}
+	}
+
+
+
+	const ClientExcectionDataFiftyDays = async () => {
+		setLoading(true);
+		try {
+
+			const res = await AxiosHandler.get("/data/ClientExpectionDataFiftyDays");
+			console.log(res, "exception ")
+			setExpectionDataFiftyDays(res.data);
+		} catch (error) {
+			console.log(error)
+		} finally {
+			setLoading(false);
+		}
+	}
 
 
 
@@ -59,7 +92,11 @@ const ExceptionContextProvider = ({ children }) => {
 
 	useEffect(() => {
 		if (token) {
+
 			authenticate?.role === "ClientCISO" ? ExpectionData() : ExpectionVerifyData();
+
+			authenticate?.role === "Admin" ? AdminExcectionDataFiftyDays() :
+				ClientExcectionDataFiftyDays()
 		}
 	}, [token, authenticate])
 
@@ -68,7 +105,8 @@ const ExceptionContextProvider = ({ children }) => {
 			expectionData,
 			loading,
 			ExpectionData,
-			ExpectionVerifyData
+			ExpectionVerifyData,
+			expectionDataFiftyDays
 		}}>
 			{children}
 		</ExceptionContext.Provider>

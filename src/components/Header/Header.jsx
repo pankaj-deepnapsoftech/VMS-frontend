@@ -67,7 +67,7 @@ function Header({ setShowMenu }) {
               key={data.route}
               to={data.route}
               onClick={setShowMenu}
-              className="flex items-center px-4 py-2 space-x-4 rounded-lg   [&.active]:bg-indigo-600 transition duration-200"
+              className="flex items-center px-2 py-2 space-x-2 rounded-lg   [&.active]:bg-indigo-600 transition duration-200"
 
             >
               <data.icon className="text-white w-5 h-5" />

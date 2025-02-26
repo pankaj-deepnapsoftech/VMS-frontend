@@ -1,6 +1,6 @@
 import React, { Suspense, useState } from "react";
 import { BiSearch, BiEditAlt, BiPlus, BiSave } from "react-icons/bi";
-import { RiDeleteBinFill } from "react-icons/ri";
+import { RiDeleteBinFill, RiUpload2Fill } from "react-icons/ri";
 import { MdClose } from "react-icons/md";
 import { useAllEmployeeContext, useVulnerabililtyDataContext } from "@/context";
 import { Formik, Form, Field } from "formik";
@@ -12,16 +12,19 @@ import Loader from "@/components/Loader/Loader";
 import InputField from "@/components/InputField";
 
 export function EmployeeAllTasks() {
-	const { loading,
+	const {
+		loading,
 		UpdateData,
 		AddData,
 		AssignTask,
 		BulkAssignTask } =
 		useVulnerabililtyDataContext();
 
-	const { employeeTasksData,
+	const {
+		employeeTasksData,
 		taskPage,
-		setTaskPage } = useAllEmployeeContext();
+		setTaskPage,
+		UploadDetailedReport } = useAllEmployeeContext();
 
 
 	const [searchTerm, setSearchTerm] = useState("");
@@ -35,6 +38,7 @@ export function EmployeeAllTasks() {
 	const rowsPerPage = 10;
 	const [index, setIndex] = useState([]);
 	const [newData, setNewData] = useState([])
+	const [pdfReport, setPdfReport] = useState([])
 
 	// Extract headers dynamically for table display
 	const tableHeaders =
@@ -119,19 +123,18 @@ export function EmployeeAllTasks() {
 		XLSX.writeFile(workbook, "Vulnerabilities.xlsx");
 	};
 
-	// const handleSelectAll = (e) => {
-	// 	const isChecked = e.target.checked
-	// 	const dataId = [];
 
-	// 	if (isChecked) {
-	// 		paginatedData.map((data) => {
-	// 			dataId.push(data?._id)
-	// 		})
-	// 		setIndex(dataId)
-	// 	} else {
-	// 		setIndex([]);
-	// 	}
-	// }
+	const [taskID, setTaskID] = useState("")
+
+	const formData = new FormData();
+
+	formData.append("PDF", pdfReport);
+
+	const handleUpload = async (item) => {
+		setTaskID(item._id)
+		setIsOpen(true)
+
+	}
 
 	let statusList = ["Open", "Closed", "Fix", "Re-Open", "On-Hold", "Exception"];
 
@@ -232,10 +235,10 @@ export function EmployeeAllTasks() {
 										<button onClick={() => openModal(item)} className="text-blue-600">
 											<BiEditAlt className="h-5 w-5" />
 										</button>
-										{/* <button onClick={() => handleDelete(item._id)} className="text-red-600">
-											<RiDeleteBinFill className="h-5 w-5" />
+										<button onClick={() => handleUpload(item)} className="text-red-600">
+											<RiUpload2Fill className="h-5 w-5" />
 										</button>
-										<button onClick={() => handleAssignTask(item._id)} className="text-red-600">
+										{/* <button onClick={() => handleAssignTask(item._id)} className="text-red-600">
 											<BsPersonCheckFill className="h-5 w-5" />
 										</button> */}
 									</td>
@@ -314,9 +317,42 @@ export function EmployeeAllTasks() {
 										}
 										className="px-4 py-2 bg-[#015289] text-white rounded-md hover:bg-blue-700 transition"
 									>
-										Save
+										Submit
 									</button>
 								</div>
+							</div>
+						</div>
+					</div>
+				)}
+
+				{isOpen && (
+					<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+						<div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
+
+							{/* Header */}
+							<div className="flex justify-between items-center border-b p-4 bg-[#015289]">
+								<h2 className="text-lg font-semibold text-gray-200">
+									Upload Detailed Report
+								</h2>
+								<button
+									onClick={() => setIsOpen(false)}
+									className="text-gray-100 hover:text-gray-200 transition"
+								>
+									<MdClose className="h-6 w-6" />
+								</button>
+							</div>
+
+							{/* Form */}
+							<div className="p-8 max-w-md mx-auto   ">
+
+								<input type="file" accept="application/pdf" onChange={(e) => setPdfReport(e.target.files[0])} />
+								<button
+									onClick={() => UploadDetailedReport(taskID, formData)}
+									className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+								>
+									Upload
+								</button>
+
 							</div>
 						</div>
 					</div>

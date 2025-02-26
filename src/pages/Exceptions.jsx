@@ -18,11 +18,11 @@ const vulnerabilityData = [
   { name: 'Jun', riskAccepted: 45, awaitingMaintenance: 28 },
 ];
 
-const deferralData = [
-  { name: '14+ Days', requests: 25 },
-  { name: '30+ Days', requests: 18 },
-  { name: '45+ Days', requests: 10 },
-];
+// const deferralData = [
+//   { name: '14+ Days', requests: 25 },
+//   { name: '30+ Days', requests: 18 },
+//   { name: '45+ Days', requests: 10 },
+// ];
 
 const configItemsData = [
   { name: 'Server Apps', count: 90 },
@@ -52,7 +52,7 @@ function Exceptions() {
     expectionData,
     loading,
     ExpectionData,
-    ExpectionVerifyData } = useExceptionContext()
+    ExpectionVerifyData, expectionDataFiftyDays } = useExceptionContext()
 
   const { authenticate } = useAuthContext()
 
@@ -100,7 +100,7 @@ function Exceptions() {
   const tableHeaders =
     expectionData?.length > 0
       ? Object.keys(expectionData[0])?.filter(
-        (key) => key !== "_id" && key !== "__v" && key !== "updatedAt"
+        (key) => key !== "_id" && key !== "__v" && key !== "updatedAt" && key !== "docs"
       )
       : [];
 
@@ -119,7 +119,7 @@ function Exceptions() {
     "Remediate_Upcoming_Time_Line",
   ];
 
-  const filteredData = expectionData.filter((item) =>
+  const filteredData = expectionData?.filter((item) =>
     Object.values(item).some(
       (value) =>
         value && value.toString().toLowerCase().includes(searchTerm.toLowerCase())
@@ -138,6 +138,15 @@ function Exceptions() {
       authenticate?.role === "ClientCISO" ? ExpectionData() : ExpectionVerifyData();
     }
   };
+
+
+  console.log("chart data ", expectionDataFiftyDays)
+
+  const deferralData = Object.entries(expectionDataFiftyDays)?.map(([key, value]) => ({
+    name: { "15 days": "14+ Days", "30 days": "30+ Days", "45 days": "45+ Days" }[key] || key,
+    requests: value,
+  }));
+
 
 
 
