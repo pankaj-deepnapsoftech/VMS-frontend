@@ -50,9 +50,6 @@ const AuthContextProvider = ({ children }) => {
   };
 
   const Signup = async (data) => {
-
-
-    console.log("Signup data", data)
     const toastId = toast.loading("Loading...");
 
     setLoading(true);
@@ -61,9 +58,6 @@ const AuthContextProvider = ({ children }) => {
 
       if (authenticate?.role === "ClientCISO") {
         navigate("/");
-
-
-
       }
       else {
         AxiosHandler.defaults.headers.authorization = `Bearer ${res.data.token}`;

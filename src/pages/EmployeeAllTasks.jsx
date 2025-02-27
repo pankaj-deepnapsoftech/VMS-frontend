@@ -2,7 +2,7 @@ import React, { Suspense, useState } from "react";
 import { BiSearch, BiEditAlt, BiPlus, BiSave } from "react-icons/bi";
 import { RiDeleteBinFill, RiUpload2Fill } from "react-icons/ri";
 import { MdClose } from "react-icons/md";
-import { useAllEmployeeContext, useVulnerabililtyDataContext } from "@/context";
+import { useAllEmployeeContext, useAuthContext, useVulnerabililtyDataContext } from "@/context";
 import { Formik, Form, Field } from "formik";
 import * as XLSX from "xlsx";
 import { WorkItemValidation } from "@/Validation/VulnerabililtyDataValidation";
@@ -17,9 +17,14 @@ export function EmployeeAllTasks() {
 		UpdateData,
 		AddData,
 		AssignTask,
-		BulkAssignTask } =
+		BulkAssignTask,
+		orgnizationNotification } =
 		useVulnerabililtyDataContext();
 
+
+	const { authenticate } = useAuthContext()
+
+	console.log(authenticate, "User Data")
 	const {
 		employeeTasksData,
 		taskPage,
@@ -250,7 +255,7 @@ export function EmployeeAllTasks() {
 
 				{/* 📝 Modal Form */}
 				{isModalOpen && (
-					<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+					<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-10">
 						<div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
 
 							{/* Header */}
@@ -309,6 +314,11 @@ export function EmployeeAllTasks() {
 
 											if (status.length > 0 && editData._id) {
 												UpdateData({ Status: status, Expection_time: expectionTime }, editData._id)
+
+
+												orgnizationNotification(editData?.Organization, `${editData?.Title} is Move to Exception by ${authenticate.full_name}`);
+
+
 												setIsModalOpen(false)
 												setStatus("")
 
@@ -326,7 +336,7 @@ export function EmployeeAllTasks() {
 				)}
 
 				{isOpen && (
-					<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+					<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-10">
 						<div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
 
 							{/* Header */}

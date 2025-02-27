@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaChartBar, FaCog, FaShieldAlt, FaUsers, FaPaperPlane, FaComments } from 'react-icons/fa';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ComposedChart, Line } from 'recharts';
@@ -9,14 +9,14 @@ import { BsPersonCheckFill } from 'react-icons/bs';
 import Loader from '@/components/Loader/Loader';
 
 // Sample data for charts
-const vulnerabilityData = [
-  { name: 'Jan', riskAccepted: 20, awaitingMaintenance: 15 },
-  { name: 'Feb', riskAccepted: 25, awaitingMaintenance: 18 },
-  { name: 'Mar', riskAccepted: 30, awaitingMaintenance: 20 },
-  { name: 'Apr', riskAccepted: 35, awaitingMaintenance: 22 },
-  { name: 'May', riskAccepted: 40, awaitingMaintenance: 25 },
-  { name: 'Jun', riskAccepted: 45, awaitingMaintenance: 28 },
-];
+// const vulnerabilityData = [
+//   { name: 'Jan', riskAccepted: 20, awaitingMaintenance: 15 },
+//   { name: 'Feb', riskAccepted: 25, awaitingMaintenance: 18 },
+//   { name: 'Mar', riskAccepted: 30, awaitingMaintenance: 20 },
+//   { name: 'Apr', riskAccepted: 35, awaitingMaintenance: 22 },
+//   { name: 'May', riskAccepted: 40, awaitingMaintenance: 25 },
+//   { name: 'Jun', riskAccepted: 45, awaitingMaintenance: 28 },
+// ];
 
 // const deferralData = [
 //   { name: '14+ Days', requests: 25 },
@@ -24,20 +24,15 @@ const vulnerabilityData = [
 //   { name: '45+ Days', requests: 10 },
 // ];
 
-const configItemsData = [
-  { name: 'Server Apps', count: 90 },
-  { name: 'Databases', count: 85 },
-  { name: 'Linux Config', count: 60 },
-  { name: 'Network Config', count: 45 },
-  { name: 'Batch Scripts', count: 30 },
-  { name: 'Web Services', count: 20 },
-];
+// const configItemsData = [
+//   { name: 'Server Apps', count: 90 },
+//   { name: 'Databases', count: 85 },
+//   { name: 'Linux Config', count: 60 },
+//   { name: 'Network Config', count: 45 },
+//   { name: 'Batch Scripts', count: 30 },
+//   { name: 'Web Services', count: 20 },
+// ];
 
-// Sample chat messages
-const initialMessages = [
-  { id: 1, text: 'High severity vulnerability detected in Server Apps', sender: 'system', timestamp: '09:00 AM' },
-  { id: 2, text: 'Maintenance window scheduled for Database updates', sender: 'user', timestamp: '09:05 AM' },
-];
 
 function Exceptions() {
 
@@ -52,11 +47,14 @@ function Exceptions() {
     expectionData,
     loading,
     ExpectionData,
-    ExpectionVerifyData, expectionDataFiftyDays } = useExceptionContext()
+    ExpectionVerifyData,
+    expectionDataFiftyDays,
+    page,
+    setPage,
+    riskRating,
+    deferredVulnerableItems } = useExceptionContext()
 
   const { authenticate } = useAuthContext()
-
-
 
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -69,31 +67,6 @@ function Exceptions() {
   const [editData, setEditData] = useState(null);
   const rowsPerPage = 10;
   const [index, setIndex] = useState([]);
-
-
-
-  const [messages, setMessages] = useState(initialMessages);
-  const [newMessage, setNewMessage] = useState('');
-  const [isChatOpen, setIsChatOpen] = useState(false);
-
-  const handleSendMessage = () => {
-    e.preventDefault();
-    if (newMessage.trim()) {
-      setMessages([
-        ...messages,
-        {
-          id: messages.length + 1,
-          text: newMessage,
-          sender: 'user',
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        },
-      ]);
-      setNewMessage('');
-    }
-  };
-
-
-
 
 
 
@@ -140,7 +113,6 @@ function Exceptions() {
   };
 
 
-  console.log("chart data ", expectionDataFiftyDays)
 
   const deferralData = Object.entries(expectionDataFiftyDays)?.map(([key, value]) => ({
     name: { "15 days": "14+ Days", "30 days": "30+ Days", "45 days": "45+ Days" }[key] || key,
@@ -148,7 +120,21 @@ function Exceptions() {
   }));
 
 
+  const configItemsData = Object.entries(deferredVulnerableItems)?.map(([key, value]) => ({
+    name: key,
+    count: value,
+  }));
 
+  const vulnerabilityData = Object.entries(riskRating).map(([month, values]) => ({
+    name: month,
+    riskAccepted: values.RiskAccepted || 0,
+    awaitingMaintenance: values.AwaitingApproval || 0
+  }));
+
+
+  // useEffect(() => {
+  //   authenticate?.role === "ClientCISO" ? ExpectionData() : ExpectionVerifyData();
+  // }, [authenticate])
 
   return (
     <>
@@ -167,15 +153,15 @@ function Exceptions() {
                 </div>
                 <div className="h-64">
                   <ResponsiveContainer width="100%" height="100%">
-                    <ComposedChart data={vulnerabilityData}>
+                    <ComposedChart data={vulnerabilityData} barSize={40}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="name" />
                       <YAxis />
                       <Tooltip />
                       <Legend />
-                      <Bar dataKey="riskAccepted" stackId="a" fill="#3B82F6" name="Risk Accepted" />
-                      <Bar dataKey="awaitingMaintenance" stackId="a" fill="#34D399" name="Awaiting Maintenance" />
-                      <Line type="monotone" dataKey="riskAccepted" stroke="#1E40AF" dot={false} />
+                      <Bar dataKey="riskAccepted" stackId="a" fill="#3B82F6" width={10} name="Risk Accepted" />
+                      <Bar dataKey="awaitingMaintenance" stackId="a" fill="#34D399" name="Awaiting Approval" />
+
                     </ComposedChart>
                   </ResponsiveContainer>
                 </div>
@@ -189,7 +175,7 @@ function Exceptions() {
                 </div>
                 <div className="h-64">
                   <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={deferralData}>
+                    <BarChart data={deferralData} barSize={40}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="name" />
                       <YAxis />
@@ -208,7 +194,7 @@ function Exceptions() {
                 </div>
                 <div className="h-48">
                   <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={configItemsData}>
+                    <BarChart data={configItemsData} barSize={40}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="name" />
                       <YAxis />
@@ -220,63 +206,6 @@ function Exceptions() {
               </div>
             </div>
           </div>
-
-          {/* Chat Interface */}
-          <div className="fixed bottom-4 right-4 z-50">
-            <button
-              onClick={() => setIsChatOpen(!isChatOpen)}
-              className="bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-colors"
-            >
-              <FaComments className="h-6 w-6" />
-            </button>
-
-            {isChatOpen && (
-              <div className="absolute bottom-16 right-0 w-96 bg-white rounded-lg shadow-xl">
-                <div className="p-4 border-b">
-                  <h3 className="text-lg font-semibold">Notifications & Chat</h3>
-                </div>
-                <div className="h-96 flex flex-col">
-                  <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                    {messages.map((message) => (
-                      <div
-                        key={message.id}
-                        className={`flex flex-col ${message.sender === 'user' ? 'items-end' : 'items-start'
-                          }`}
-                      >
-                        <div
-                          className={`max-w-[80%] rounded-lg p-3 ${message.sender === 'user'
-                            ? 'bg-blue-600 text-white'
-                            : 'bg-gray-100 text-gray-900'
-                            }`}
-                        >
-                          {message.text}
-                        </div>
-                        <span className="text-xs text-gray-500 mt-1">{message.timestamp}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <form onSubmit={handleSendMessage} className="p-4 border-t">
-                    <div className="flex space-x-2">
-                      <input
-                        type="text"
-                        value={newMessage}
-                        onChange={(e) => setNewMessage(e.target.value)}
-                        placeholder="Type a message..."
-                        className="flex-1 border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                      <button
-                        type="submit"
-                        className="bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 transition-colors"
-                      >
-                        <FaPaperPlane className="h-5 w-5" />
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            )}
-          </div>
-
 
 
           <div className="p-4 mb-20 md:p-6 max-w-[95%] mx-auto bg-white rounded-xl shadow-lg">
@@ -296,15 +225,7 @@ function Exceptions() {
                 <thead className="bg-[#015289]">
 
                   <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-white uppercase">
-                      <input
-                        type="checkbox"
-                        checked={selectAll}
-                        onChange={(e) => {
-                          setSelectAll(!selectAll);
-                          handleSelectAll(e)
-                        }} />
-                    </th>
+
                     {tableHeaders?.map((header, index) => (
                       <th
                         key={index}
@@ -321,14 +242,7 @@ function Exceptions() {
                 <tbody className="divide-y divide-gray-200">
                   {paginatedData?.map((item) => (
                     <tr key={item._id} className="hover:bg-gray-50">
-                      <td className="px-4 py-4 whitespace-nowrap flex justify-around gap-4">
-                        <input
-                          type="checkbox"
-                          value="bubbles"
-                          checked={index.filter((i) => i === item._id).length > 0}
-                          onChange={() => handleChecked(item._id)} />
 
-                      </td>
                       {tableHeaders?.map((field, i) => (
 
                         <td key={i} className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -347,10 +261,10 @@ function Exceptions() {
                               ) : (
                                 <button
                                   onClick={() => {
-                                    console.log(item, "item data");
+
                                     const updatedItem = { ...item, client_Approve: true };
                                     UpdateData(updatedItem, item?._id);
-                                    authenticate?.role === "ClientCISO" ? ExpectionData() : ExpectionVerifyData();
+
                                   }}
                                   className="px-3 py-1 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700"
                                 >
@@ -383,6 +297,27 @@ function Exceptions() {
               </table>
             </div>
 
+
+            <div className="flex justify-between items-center my-16">
+              <button
+                className={`px-4 py-2 bg-[#015289] text-white border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
+                disabled={page === 1}
+                onClick={() => setPage(page - 1)}
+              >
+                Previous
+              </button>
+              <span>
+                Page {page}
+
+              </span>
+              <button
+                className={`px-4 py-2 border rounded-md  text-white bg-[#015289]`}
+                disabled={expectionData?.length < 10}
+                onClick={() => setPage(page + 1)}
+              >
+                Next
+              </button>
+            </div>
           </div>
 
         </div>}

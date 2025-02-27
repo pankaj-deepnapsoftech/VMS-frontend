@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { useAuthContext } from "..";
+import { useAuthContext, useVulnerabililtyDataContext } from "..";
 import { AxiosHandler } from "@/config/AxiosConfig";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -19,9 +19,17 @@ const ExceptionContextProvider = ({ children }) => {
 
 
 	const { token, authenticate } = useAuthContext()
+	const {
+		UpdateData,
+		DeleteData
+
+	} =
+		useVulnerabililtyDataContext();
 
 	const [expectionData, setExpectionData] = useState([])
 	const [expectionDataFiftyDays, setExpectionDataFiftyDays] = useState([])
+	const [riskRating, setRiskRating] = useState([])
+	const [deferredVulnerableItems, setDeferredVulnerableItems] = useState([])
 
 
 
@@ -30,9 +38,7 @@ const ExceptionContextProvider = ({ children }) => {
 	const AdminExcectionDataFiftyDays = async () => {
 		setLoading(true);
 		try {
-
 			const res = await AxiosHandler.get("/data/AdminExpectionDataFiftyDays");
-			console.log(res, "exception ")
 			setExpectionDataFiftyDays(res.data);
 		} catch (error) {
 			console.log(error)
@@ -46,10 +52,64 @@ const ExceptionContextProvider = ({ children }) => {
 	const ClientExcectionDataFiftyDays = async () => {
 		setLoading(true);
 		try {
-
 			const res = await AxiosHandler.get("/data/ClientExpectionDataFiftyDays");
-			console.log(res, "exception ")
 			setExpectionDataFiftyDays(res.data);
+		} catch (error) {
+			console.log(error)
+		} finally {
+			setLoading(false);
+		}
+	}
+
+
+	const AdminRiskRating = async () => {
+		setLoading(true);
+		try {
+
+			const res = await AxiosHandler.get("/data/AdminRiskRating");
+			console.log(res, "admin exception ")
+			setRiskRating(res.data.monthlyData);
+		} catch (error) {
+			console.log(error)
+		} finally {
+			setLoading(false);
+		}
+	}
+	const ClientRiskRating = async () => {
+		setLoading(true);
+		try {
+
+			const res = await AxiosHandler.get("/data/ClientRiskRating");
+			console.log(res, " client exception ")
+			setRiskRating(res.data.monthlyData);
+		} catch (error) {
+			console.log(error)
+		} finally {
+			setLoading(false);
+		}
+	}
+	const AdminDeferredVulnerableItems = async () => {
+		setLoading(true);
+		try {
+
+			const res = await AxiosHandler.get("/data/AdminDeferredVulnerableItems");
+			console.log(res, " Adimn ClientDeferredVulnerableItems ")
+			setDeferredVulnerableItems(res.data.data);
+		} catch (error) {
+			console.log(error)
+		} finally {
+			setLoading(false);
+		}
+	}
+
+
+	const ClientDeferredVulnerableItems = async () => {
+		setLoading(true);
+		try {
+
+			const res = await AxiosHandler.get("/data/ClientDeferredVulnerableItems");
+			console.log(res, " client ClientDeferredVulnerableItems ")
+			setDeferredVulnerableItems(res.data.data);
 		} catch (error) {
 			console.log(error)
 		} finally {
@@ -62,9 +122,7 @@ const ExceptionContextProvider = ({ children }) => {
 	const ExpectionData = async () => {
 		setLoading(true);
 		try {
-
-			const res = await AxiosHandler.get("/data/ExpectionApprove");
-			console.log(res, "exception ")
+			const res = await AxiosHandler.get(`/data/ExpectionApprove?page=${page}&limit=10`);
 			setExpectionData(res.data?.data);
 		} catch (error) {
 			console.log(error)
@@ -77,9 +135,7 @@ const ExceptionContextProvider = ({ children }) => {
 	const ExpectionVerifyData = async () => {
 		setLoading(true);
 		try {
-
-			const res = await AxiosHandler.get("/data/ExpectionVerify");
-
+			const res = await AxiosHandler.get(`/data/ExpectionVerify?page=${page}&limit=10`);
 			setExpectionData(res.data?.data);
 		} catch (error) {
 			console.log(error)
@@ -95,18 +151,29 @@ const ExceptionContextProvider = ({ children }) => {
 
 			authenticate?.role === "ClientCISO" ? ExpectionData() : ExpectionVerifyData();
 
-			authenticate?.role === "Admin" ? AdminExcectionDataFiftyDays() :
+			authenticate?.role !== "ClientCISO" ? AdminExcectionDataFiftyDays() :
 				ClientExcectionDataFiftyDays()
+
+			authenticate?.role !== "ClientCISO" ? AdminRiskRating() :
+				ClientRiskRating()
+
+			authenticate?.role !== "ClientCISO" ? AdminDeferredVulnerableItems() :
+				ClientDeferredVulnerableItems()
 		}
-	}, [token, authenticate])
+	}, [token, authenticate, UpdateData,
+		DeleteData,])
 
 	return (
 		<ExceptionContext.Provider value={{
 			expectionData,
 			loading,
+			page,
+			setPage,
 			ExpectionData,
 			ExpectionVerifyData,
-			expectionDataFiftyDays
+			expectionDataFiftyDays,
+			riskRating,
+			deferredVulnerableItems
 		}}>
 			{children}
 		</ExceptionContext.Provider>

@@ -2,7 +2,7 @@ import React, { Suspense, useEffect, useState } from "react";
 import { BiSearch, BiEditAlt, BiPlus, BiSave } from "react-icons/bi";
 import { RiDeleteBinFill } from "react-icons/ri";
 import { MdClose } from "react-icons/md";
-import { useAllEmployeeContext, useVulnerabililtyDataContext } from "@/context";
+import { useAllEmployeeContext, useAuthContext, useVulnerabililtyDataContext } from "@/context";
 import { Formik, Form, Field } from "formik";
 import * as XLSX from "xlsx";
 import { WorkItemValidation } from "@/Validation/VulnerabililtyDataValidation";
@@ -18,7 +18,8 @@ export function VulnerabilityData() {
 
 
 
-  const { loading,
+  const {
+    loading,
     UpdateData,
     AddData,
     AllVulnerablilty,
@@ -30,10 +31,14 @@ export function VulnerabilityData() {
     setPage,
     BulkAssignTask,
     CreateNotifications,
+    orgnizationNotification,
     GetAssetsOpenIssues,
     getOrganizationData } =
     useVulnerabililtyDataContext();
 
+
+
+  const { authenticate } = useAuthContext()
 
 
   const { allEmployeesData } = useAllEmployeeContext();
@@ -312,14 +317,18 @@ export function VulnerabilityData() {
                     {tableHeaders?.map((field, i) => (
                       <td key={i} className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
                         {
-                          field === "createdAt" ? (
-                            new Date(item[field]).toLocaleDateString("en-IN", {
-                              day: "2-digit",
-                              month: "short",
-                              year: "numeric",
-                            })
+                          field === "createdAt" || field === "Exception_time" ? (
+                            item[field] ? (
+                              new Date(item[field]).toLocaleDateString("en-IN", {
+                                day: "2-digit",
+                                month: "short",
+                                year: "numeric",
+                              })
+                            ) : (
+                              "-"
+                            )
                           ) : field === "Assigned_To" ? (
-                            item[field]?.full_name || "-"
+                            item[field]?.full_name ?? "-"
                           ) : field === "detailed_Report" ? (
                             item[field] ? (
                               <a
@@ -327,7 +336,6 @@ export function VulnerabilityData() {
                                 href={item[field]}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                download="CodeFile"
                               >
                                 View File
                               </a>
@@ -338,6 +346,7 @@ export function VulnerabilityData() {
                             item[field] || "-"
                           )
                         }
+
 
                       </td>
                     ))}
@@ -445,6 +454,10 @@ export function VulnerabilityData() {
                   onSubmit={(values) => {
                     console.log(values, "hero in formik")
                     editMode ? UpdateData(values, editData._id) : AddData(values);
+
+
+
+                    if (values.Status === "Exception") { orgnizationNotification(values.Organization, `${values.Title} is Move to Exception by ${authenticate.full_name}`) }
                     setIsModalOpen(false);
                   }}
                 >
@@ -517,7 +530,7 @@ export function VulnerabilityData() {
                           type="submit"
                           className="px-4 py-2 bg-[#015289] text-white rounded-md hover:bg-blue-700 transition"
                         >
-                          Update
+                          Save
                         </button>
                       </div>
                     </Form>
