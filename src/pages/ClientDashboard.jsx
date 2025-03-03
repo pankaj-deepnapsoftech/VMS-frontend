@@ -40,7 +40,8 @@ export default function ClientDashboard() {
 			department: "",
 			role: "ClientSME",
 			owner: authenticate?._id,
-			email_verification: true
+			employee_approve: true,
+			email_verification:true,
 		},
 		validationSchema: SignUpValidation,
 		onSubmit: (value) => {
