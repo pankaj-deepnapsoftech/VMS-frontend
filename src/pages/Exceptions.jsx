@@ -29,10 +29,38 @@ function Exceptions() {
     page,
     setPage,
     riskRating,
-    deferredVulnerableItems } = useExceptionContext()
+    deferredVulnerableItems,
+    datafetchCount,
+    setdatafetchCount,
+    AdminExcectionDataFiftyDays,
+    ClientExcectionDataFiftyDays,
+    AdminRiskRating,
+    AdminDeferredVulnerableItems,
+    ClientDeferredVulnerableItems,
+    ClientRiskRating
 
-  const { authenticate } = useAuthContext()
 
+  } = useExceptionContext()
+
+  const { authenticate, token } = useAuthContext()
+
+
+  useEffect(() => {
+    if (token) {
+
+      authenticate?.role === "ClientCISO" ? ExpectionData() : ExpectionVerifyData();
+
+      authenticate?.role !== "ClientCISO" ? AdminExcectionDataFiftyDays() :
+        ClientExcectionDataFiftyDays()
+
+      authenticate?.role !== "ClientCISO" ? AdminRiskRating() :
+        ClientRiskRating()
+
+      authenticate?.role !== "ClientCISO" ? AdminDeferredVulnerableItems() :
+        ClientDeferredVulnerableItems()
+    }
+  }, [token, authenticate, UpdateData,
+    DeleteData,])
 
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { useAllEmployeeContext, useDataContext } from '@/context';
+import { useAllEmployeeContext, useAuthContext, useDataContext } from '@/context';
 import { FiAlertCircle } from 'react-icons/fi';
 import { BiPlus } from 'react-icons/bi';
 import { Modal } from '@/components/modal/FileUploadModal';
@@ -14,8 +14,20 @@ function EmployeeDashboard() {
 
   const {
     employeeCardData,
+    datafetchCount,
+    setdatafetchCount,
+    EmployeeData
   } = useAllEmployeeContext();
 
+
+  const { token } = useAuthContext();
+
+  useEffect(() => {
+    if (token && datafetchCount === 0) {
+      EmployeeData();
+      setdatafetchCount(1);
+    }
+  }, [token])
 
 
   const data = [

@@ -9,15 +9,35 @@ export default function AllEmployee() {
 		page,
 		setPage,
 		VerifyEmployee,
-		AllClientSME } = useAllEmployeeContext();
+		EmployeeData,
+		datafetchCount,
+		setdatafetchCount,
+		AllEmployee }
+		= useAllEmployeeContext();
 
-	const { authenticate } = useAuthContext();
+
+
+
+	const { authenticate, token } = useAuthContext();
+
+
+	// useEffect(() => {
+	// 	if (authenticate?.role === "ClientCISO") { AllClientSME() }
+	// },
+	// 	[])
+
+
 
 
 	useEffect(() => {
-		if (authenticate?.role === "ClientCISO") { AllClientSME() }
-	},
-		[])
+		if (token && datafetchCount === 0) {
+			AllEmployee();
+			EmployeeData();
+
+
+			setdatafetchCount(1);
+		}
+	}, [token, page, authenticate?.role])
 
 
 	return (

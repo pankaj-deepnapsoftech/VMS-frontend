@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { AiOutlineMenu, AiOutlinePlus, AiOutlineShareAlt } from 'react-icons/ai';
 import { FaDatabase, FaHdd, FaNetworkWired, FaCog, FaStar } from 'react-icons/fa';
-import { useRemeditionContext } from '@/context';
+import { useAuthContext, useRemeditionContext } from '@/context';
 
 
 
@@ -11,15 +11,25 @@ function Remedition() {
   const {
     dataViaStatus,
     targetStatusData,
-    criticalVulnerabilitycountData
+    criticalVulnerabilitycountData,
+    datafetchCount,
+    setdatafetchCount,
+    JiraDataTargetsStatus,
+    JiraDataViaStatus,
+    CriticalVulnerabilitycount
+
   } = useRemeditionContext()
 
+  const { token } = useAuthContext()
 
-
-  // const [selectedGroup, setSelectedGroup] = useState('All');
-  // const [activeTab, setActiveTab] = useState('Overview');
-
-  // const tabs = ['Overview', 'Services', 'Service Owners', 'Vulnerable GIs', 'Exceptions', 'Remediation'];
+  useEffect(() => {
+    if (token && datafetchCount === 0) {
+      JiraDataTargetsStatus()
+      JiraDataViaStatus()
+      CriticalVulnerabilitycount()
+      setdatafetchCount(1)
+    }
+  }, [token])
 
 
 

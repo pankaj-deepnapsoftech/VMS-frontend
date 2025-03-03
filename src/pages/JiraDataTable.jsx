@@ -1,7 +1,7 @@
-import React, { Suspense, useState, useCallback, useMemo } from "react";
+import React, { Suspense, useState, useCallback, useMemo, useEffect } from "react";
 import { BiSearch, BiEditAlt, BiPlus, BiSave } from "react-icons/bi";
 import { RiDeleteBinFill } from "react-icons/ri";
-import { useJiraContext } from "@/context";
+import { useAuthContext, useJiraContext } from "@/context";
 import * as XLSX from "xlsx";
 import Loader from "@/components/Loader/Loader";
 
@@ -9,7 +9,24 @@ export const JiraDataTable = () => {
 	const { loading,
 		jiraData,
 		page,
-		setPage, } = useJiraContext();
+		setPage,
+		JiraData,
+		JiraConfigData,
+		datafetchCount,
+		setdatafetchCount,
+	} = useJiraContext();
+
+	const { token } = useAuthContext()
+
+
+	useEffect(() => {
+		if (token && datafetchCount === 0) {
+			JiraData()
+			JiraConfigData()
+			setdatafetchCount(1)
+
+		}
+	}, [token, page])
 
 	const [searchTerm, setSearchTerm] = useState("");
 	const [currentPage, setCurrentPage] = useState(1);

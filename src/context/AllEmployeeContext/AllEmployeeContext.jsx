@@ -12,6 +12,8 @@ export const AllEmployeeContext = createContext();
 const AllEmployeeContextProvider = ({ children }) => {
 
 
+	const [datafetchCount, setdatafetchCount] = useState(0)
+
 	const [loading, setLoading] = useState(false);
 	const [allEmployeesData, SetAllEmployeesData] = useState([]);
 	const [employeeTasksData, setEmployeeTasksData] = useState([]);
@@ -118,13 +120,13 @@ const AllEmployeeContextProvider = ({ children }) => {
 
 
 
-	useEffect(() => {
-		if (token) {
-			authenticate?.role === "ClientCISO" ? AllClientSME() : AllEmployee();
-			EmployeeTasks();
-			EmployeeData();
-		}
-	}, [token, page, taskPage, authenticate?.role])
+	// useEffect(() => {
+	// 	if (token) {
+	// 		authenticate?.role === "ClientCISO" ? AllClientSME() : AllEmployee();
+	// 		EmployeeTasks();
+	// 		EmployeeData();
+	// 	}
+	// }, [token, page, taskPage, authenticate?.role])
 	return (
 		<AllEmployeeContext.Provider value={{
 			loading,
@@ -138,8 +140,11 @@ const AllEmployeeContextProvider = ({ children }) => {
 			taskPage,
 			setTaskPage,
 			AllClientSME,
-			UploadDetailedReport
-
+			UploadDetailedReport,
+			EmployeeData,
+			datafetchCount,
+			setdatafetchCount,
+			AllEmployee
 
 		}}>
 			{children}

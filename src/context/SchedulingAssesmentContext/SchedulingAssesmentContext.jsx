@@ -12,7 +12,7 @@ export const AssesmentContext = createContext();
 const SchedulingAssesmentContextProvider = ({ children }) => {
 
 	const [loading, setLoading] = useState(false);
-
+	const [datafetchCount, setdatafetchCount] = useState(0)
 
 	const [allAssesmentData, setAllAssesmentData] = useState([]);
 	const [testerData, setTesterData] = useState([]);
@@ -133,14 +133,14 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 		}
 	}
 
-	useEffect(() => {
-		if (token) {
-			TotalAssessments();
-			TesterForAssessment();
-			GetOrgnization();
-			DashboardData()
-		}
-	}, [token, page])
+	// useEffect(() => {
+	// 	if (token) {
+	// 		TotalAssessments();
+	// 		TesterForAssessment();
+	// 		GetOrgnization();
+	// 		DashboardData()
+	// 	}
+	// }, [token, page])
 	return (
 		<AssesmentContext.Provider value={{
 			loading,
@@ -152,7 +152,13 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 			getOrgnizationData,
 			page,
 			setPage,
-			dashboardData
+			dashboardData,
+			datafetchCount,
+			setdatafetchCount,
+			GetOrgnization,
+			TotalAssessments,
+			TesterForAssessment,
+			DashboardData
 		}}>
 			{children}
 		</AssesmentContext.Provider>

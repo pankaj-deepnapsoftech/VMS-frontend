@@ -13,7 +13,7 @@ export const RemeditionContext = createContext();
 const RemeditionContextProvider = ({ children }) => {
 	let navigate = useNavigate();
 
-
+	const [datafetchCount, setdatafetchCount] = useState(0)
 	const [page, setPage] = useState(1)
 	const { token } = useAuthContext()
 
@@ -59,20 +59,25 @@ const RemeditionContextProvider = ({ children }) => {
 		}
 	}
 
-	useEffect(() => {
-		if (token) {
-			JiraDataTargetsStatus()
-			JiraDataViaStatus()
-			CriticalVulnerabilitycount()
+	// useEffect(() => {
+	// 	if (token) {
+	// 		JiraDataTargetsStatus()
+	// 		JiraDataViaStatus()
+	// 		CriticalVulnerabilitycount()
 
-		}
-	}, [token])
+	// 	}
+	// }, [token])
 
 	return (
 		<RemeditionContext.Provider value={{
 			dataViaStatus,
 			targetStatusData,
-			criticalVulnerabilitycountData
+			criticalVulnerabilitycountData,
+			datafetchCount,
+			setdatafetchCount,
+			JiraDataTargetsStatus,
+			JiraDataViaStatus,
+			CriticalVulnerabilitycount
 
 		}}>
 			{children}

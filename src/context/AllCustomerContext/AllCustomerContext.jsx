@@ -11,7 +11,7 @@ export const AllCustomerContext = createContext();
 
 const AllCustomerContextProvider = ({ children }) => {
 
-
+	const [dataCount, setDataCount] = useState(0)
 	const [loading, setLoading] = useState(false);
 	const [AllCustomersData, SetAllCustomerData] = useState([]);
 
@@ -34,18 +34,21 @@ const AllCustomerContextProvider = ({ children }) => {
 	}
 
 
-	useEffect(() => {
-		if (token) {
-			AllCustomers();
-		}
-	}, [token, page])
+	// useEffect(() => {
+	// 	if (token) {
+	// 		AllCustomers();
+	// 	}
+	// }, [token, page])
 
 	return (
 		<AllCustomerContext.Provider value={{
 			loading,
 			AllCustomersData,
+			AllCustomers,
 			page,
 			setPage,
+			dataCount, 
+			setDataCount
 
 		}}>
 			{children}
