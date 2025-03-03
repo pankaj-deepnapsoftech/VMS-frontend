@@ -1,15 +1,28 @@
 import Loader from "@/components/Loader/Loader";
-import { useAllCustomerContext } from "@/context";
-import React, { useState } from "react";
+import { useAllCustomerContext, useAuthContext } from "@/context";
+import React, { useEffect, useState } from "react";
 
 export default function AllCustomer() {
 
 	const {
 		loading,
 		AllCustomersData,
+		AllCustomers,
 		page,
-		setPage } = useAllCustomerContext();
-		
+		setPage,
+		setDataCount, dataCount } = useAllCustomerContext();
+
+
+	const { token } = useAuthContext()
+
+
+	useEffect(() => {
+		if (token && dataCount === 0) {
+			AllCustomers();
+			setDataCount(1)
+			console.log("hero")
+		}
+	}, [token, page])
 
 	return (
 		<>

@@ -33,15 +33,34 @@ export function VulnerabilityData() {
     CreateNotifications,
     orgnizationNotification,
     GetAssetsOpenIssues,
-    getOrganizationData } =
+    getOrganizationData,
+    datafetchCount,
+    setdatafetchCount,
+    TopVulnerablilty,
+    GetOrganization,
+    Notifications
+
+  } =
     useVulnerabililtyDataContext();
 
 
 
-  const { authenticate } = useAuthContext()
-
+  const { authenticate, token } = useAuthContext()
 
   const { allEmployeesData } = useAllEmployeeContext();
+
+
+
+
+  useEffect(() => {
+    if (token && datafetchCount === 0) {
+      AllVulnerablilty();
+      TopVulnerablilty();
+      GetOrganization();
+      Notifications();
+      setdatafetchCount(1)
+    }
+  }, [token, page])
 
 
   const [searchTerm, setSearchTerm] = useState("");

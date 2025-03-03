@@ -1,15 +1,31 @@
 import InputField from '@/components/InputField';
-import { useJiraContext } from '@/context';
+import { useAuthContext, useJiraContext } from '@/context';
 import { JiraConfiigValidation } from '@/Validation/JiraConfigurationValidation';
 import { useFormik } from 'formik';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaKey, FaGlobe, FaUser, FaCheckCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 function ThirdPartyConfig() {
 
-	const { JiraConfiguration, ConfigData } = useJiraContext()
-	console.log(ConfigData)
+	const { JiraConfiguration,
+		ConfigData,
+		JiraConfigData,
+		datafetchCount,
+		setdatafetchCount,
+	} = useJiraContext()
+
+
+	const { token } = useAuthContext()
+
+
+	useEffect(() => {
+		if (token && datafetchCount === 0) {
+
+			JiraConfigData()
+			setdatafetchCount(1)
+		}
+	}, [token])
 
 	const [isVerified, setIsVerified] = useState(false)
 

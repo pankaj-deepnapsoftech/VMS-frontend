@@ -14,6 +14,9 @@ const ExceptionContextProvider = ({ children }) => {
 	let navigate = useNavigate();
 
 
+
+	const [datafetchCount, setdatafetchCount] = useState(0)
+
 	const [loading, setLoading] = useState(false);
 	const [page, setPage] = useState(1)
 
@@ -47,8 +50,6 @@ const ExceptionContextProvider = ({ children }) => {
 		}
 	}
 
-
-
 	const ClientExcectionDataFiftyDays = async () => {
 		setLoading(true);
 		try {
@@ -60,7 +61,6 @@ const ExceptionContextProvider = ({ children }) => {
 			setLoading(false);
 		}
 	}
-
 
 	const AdminRiskRating = async () => {
 		setLoading(true);
@@ -74,6 +74,7 @@ const ExceptionContextProvider = ({ children }) => {
 			setLoading(false);
 		}
 	}
+
 	const ClientRiskRating = async () => {
 		setLoading(true);
 		try {
@@ -85,6 +86,7 @@ const ExceptionContextProvider = ({ children }) => {
 			setLoading(false);
 		}
 	}
+
 	const AdminDeferredVulnerableItems = async () => {
 		setLoading(true);
 		try {
@@ -97,7 +99,6 @@ const ExceptionContextProvider = ({ children }) => {
 			setLoading(false);
 		}
 	}
-
 
 	const ClientDeferredVulnerableItems = async () => {
 		setLoading(true);
@@ -112,8 +113,6 @@ const ExceptionContextProvider = ({ children }) => {
 		}
 	}
 
-
-
 	const ExpectionData = async () => {
 		setLoading(true);
 		try {
@@ -125,7 +124,6 @@ const ExceptionContextProvider = ({ children }) => {
 			setLoading(false);
 		}
 	}
-
 
 	const ExpectionVerifyData = async () => {
 		setLoading(true);
@@ -141,22 +139,22 @@ const ExceptionContextProvider = ({ children }) => {
 
 
 
-	useEffect(() => {
-		if (token) {
+	// useEffect(() => {
+	// 	if (token) {
 
-			authenticate?.role === "ClientCISO" ? ExpectionData() : ExpectionVerifyData();
+	// 		authenticate?.role === "ClientCISO" ? ExpectionData() : ExpectionVerifyData();
 
-			authenticate?.role !== "ClientCISO" ? AdminExcectionDataFiftyDays() :
-				ClientExcectionDataFiftyDays()
+	// 		authenticate?.role !== "ClientCISO" ? AdminExcectionDataFiftyDays() :
+	// 			ClientExcectionDataFiftyDays()
 
-			authenticate?.role !== "ClientCISO" ? AdminRiskRating() :
-				ClientRiskRating()
+	// 		authenticate?.role !== "ClientCISO" ? AdminRiskRating() :
+	// 			ClientRiskRating()
 
-			authenticate?.role !== "ClientCISO" ? AdminDeferredVulnerableItems() :
-				ClientDeferredVulnerableItems()
-		}
-	}, [token, authenticate, UpdateData,
-		DeleteData,])
+	// 		authenticate?.role !== "ClientCISO" ? AdminDeferredVulnerableItems() :
+	// 			ClientDeferredVulnerableItems()
+	// 	}
+	// }, [token, authenticate, UpdateData,
+	// 	DeleteData,])
 
 	return (
 		<ExceptionContext.Provider value={{
@@ -168,7 +166,15 @@ const ExceptionContextProvider = ({ children }) => {
 			ExpectionVerifyData,
 			expectionDataFiftyDays,
 			riskRating,
-			deferredVulnerableItems
+			deferredVulnerableItems,
+			datafetchCount,
+			setdatafetchCount,
+			AdminExcectionDataFiftyDays,
+			ClientExcectionDataFiftyDays,
+			AdminRiskRating,
+			AdminDeferredVulnerableItems,
+			ClientDeferredVulnerableItems,
+			ClientRiskRating
 		}}>
 			{children}
 		</ExceptionContext.Provider>

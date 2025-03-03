@@ -13,6 +13,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recha
 
 
 export default function ClientDashboard() {
+	
 	const { dashboardData } = useScheduleAssessmentContext()
 	const { Signup, authenticate, loading } = useAuthContext()
 

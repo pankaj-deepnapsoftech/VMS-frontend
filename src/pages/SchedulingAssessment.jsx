@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FiAlertCircle, FiRefreshCcw } from 'react-icons/fi';
 import InputField from '@/components/InputField';
 import { SchedulingAssessmentValidation } from '@/Validation/SchedulingAssessmentValidation';
@@ -24,13 +24,36 @@ function SchedulingAssessmentPage() {
 		testerData,
 		page,
 		setPage,
-		getOrgnizationData
+		getOrgnizationData,
+		datafetchCount,
+		setdatafetchCount,
+		GetOrgnization,
+		TotalAssessments,
+		TesterForAssessment,
+		DashboardData
+
 	} = useScheduleAssessmentContext();
 
 
 	const {
-		authenticate
+		authenticate,
+		token
 	} = useAuthContext()
+
+
+
+
+
+	useEffect(() => {
+		if (token && datafetchCount === 0) {
+			TotalAssessments();
+			TesterForAssessment();
+			DashboardData();
+			GetOrgnization();
+			setdatafetchCount(1)
+		}
+	}, [token, page])
+
 
 
 	// Extract headers dynamically for table display

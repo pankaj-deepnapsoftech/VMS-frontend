@@ -32,8 +32,6 @@ export function NotificationSidebar({ notifications, isOpen, onClose, notificati
 				{notifications?.length > 0 ? (
 					notifications.map((notification, index) => {
 						const isViewed = notification?.view; // Assuming 'viewed' property
-
-						console.log(isViewed)
 						return (
 							<div
 								key={index}

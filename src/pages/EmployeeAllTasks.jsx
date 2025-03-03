@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { BiSearch, BiEditAlt, BiPlus, BiSave } from "react-icons/bi";
 import { RiDeleteBinFill, RiUpload2Fill } from "react-icons/ri";
 import { MdClose } from "react-icons/md";
@@ -15,21 +15,28 @@ export function EmployeeAllTasks() {
 	const {
 		loading,
 		UpdateData,
-		AddData,
-		AssignTask,
-		BulkAssignTask,
 		orgnizationNotification } =
 		useVulnerabililtyDataContext();
 
 
-	const { authenticate } = useAuthContext()
+	const { authenticate, token } = useAuthContext()
 
-	console.log(authenticate, "User Data")
+
 	const {
 		employeeTasksData,
 		taskPage,
 		setTaskPage,
-		UploadDetailedReport } = useAllEmployeeContext();
+		UploadDetailedReport,
+		EmployeeTasks,
+		datafetchCount,
+		setdatafetchCount } = useAllEmployeeContext();
+
+	useEffect(() => {
+		if (token && datafetchCount === 0) {
+			EmployeeTasks();
+			setdatafetchCount(1);
+		}
+	}, [token, taskPage])
 
 
 	const [searchTerm, setSearchTerm] = useState("");
