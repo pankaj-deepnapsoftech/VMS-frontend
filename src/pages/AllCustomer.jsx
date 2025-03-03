@@ -20,7 +20,6 @@ export default function AllCustomer() {
 		if (token && dataCount === 0) {
 			AllCustomers();
 			setDataCount(1)
-			console.log("hero")
 		}
 	}, [token, page])
 

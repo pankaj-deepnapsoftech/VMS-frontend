@@ -25,7 +25,6 @@ const RemeditionContextProvider = ({ children }) => {
 
 
 	const JiraDataTargetsStatus = async () => {
-
 		try {
 
 			const res = await AxiosHandler.get("/jira/JIraDataTargetsStatus");
@@ -37,7 +36,6 @@ const RemeditionContextProvider = ({ children }) => {
 	}
 
 	const JiraDataViaStatus = async () => {
-
 		try {
 			const res = await AxiosHandler.get("/jira/JIraDataViaStatus");
 			setDataViaStatus(res?.data?.obj);

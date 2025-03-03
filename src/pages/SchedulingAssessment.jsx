@@ -49,10 +49,15 @@ function SchedulingAssessmentPage() {
 			TotalAssessments();
 			TesterForAssessment();
 			DashboardData();
-			GetOrgnization();
 			setdatafetchCount(1)
 		}
 	}, [token, page])
+
+	useEffect(() => {
+		if(token && authenticate?.role === "Admin"){
+			GetOrgnization();
+		}
+	},[token,authenticate])
 
 
 

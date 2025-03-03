@@ -133,14 +133,6 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 		}
 	}
 
-	// useEffect(() => {
-	// 	if (token) {
-	// 		TotalAssessments();
-	// 		TesterForAssessment();
-	// 		GetOrgnization();
-	// 		DashboardData()
-	// 	}
-	// }, [token, page])
 	return (
 		<AssesmentContext.Provider value={{
 			loading,
