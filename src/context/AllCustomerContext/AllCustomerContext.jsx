@@ -23,7 +23,6 @@ const AllCustomerContextProvider = ({ children }) => {
 		setLoading(true);
 		try {
 			const res = await AxiosHandler.get(`/auth/all-ciso?page=${page}&limit=10`);
-			console.log(res.data)
 			SetAllCustomerData(res.data.data);
 
 		} catch (error) {

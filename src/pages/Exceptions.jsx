@@ -8,30 +8,7 @@ import { RiDeleteBinFill } from 'react-icons/ri';
 import { BsPersonCheckFill } from 'react-icons/bs';
 import Loader from '@/components/Loader/Loader';
 
-// Sample data for charts
-// const vulnerabilityData = [
-//   { name: 'Jan', riskAccepted: 20, awaitingMaintenance: 15 },
-//   { name: 'Feb', riskAccepted: 25, awaitingMaintenance: 18 },
-//   { name: 'Mar', riskAccepted: 30, awaitingMaintenance: 20 },
-//   { name: 'Apr', riskAccepted: 35, awaitingMaintenance: 22 },
-//   { name: 'May', riskAccepted: 40, awaitingMaintenance: 25 },
-//   { name: 'Jun', riskAccepted: 45, awaitingMaintenance: 28 },
-// ];
 
-// const deferralData = [
-//   { name: '14+ Days', requests: 25 },
-//   { name: '30+ Days', requests: 18 },
-//   { name: '45+ Days', requests: 10 },
-// ];
-
-// const configItemsData = [
-//   { name: 'Server Apps', count: 90 },
-//   { name: 'Databases', count: 85 },
-//   { name: 'Linux Config', count: 60 },
-//   { name: 'Network Config', count: 45 },
-//   { name: 'Batch Scripts', count: 30 },
-//   { name: 'Web Services', count: 20 },
-// ];
 
 
 function Exceptions() {
@@ -132,9 +109,6 @@ function Exceptions() {
   }));
 
 
-  // useEffect(() => {
-  //   authenticate?.role === "ClientCISO" ? ExpectionData() : ExpectionVerifyData();
-  // }, [authenticate])
 
   return (
     <>

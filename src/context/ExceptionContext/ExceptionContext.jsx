@@ -67,7 +67,6 @@ const ExceptionContextProvider = ({ children }) => {
 		try {
 
 			const res = await AxiosHandler.get("/data/AdminRiskRating");
-			console.log(res, "admin exception ")
 			setRiskRating(res.data.monthlyData);
 		} catch (error) {
 			console.log(error)
@@ -78,9 +77,7 @@ const ExceptionContextProvider = ({ children }) => {
 	const ClientRiskRating = async () => {
 		setLoading(true);
 		try {
-
 			const res = await AxiosHandler.get("/data/ClientRiskRating");
-			console.log(res, " client exception ")
 			setRiskRating(res.data.monthlyData);
 		} catch (error) {
 			console.log(error)
@@ -93,7 +90,6 @@ const ExceptionContextProvider = ({ children }) => {
 		try {
 
 			const res = await AxiosHandler.get("/data/AdminDeferredVulnerableItems");
-			console.log(res, " Adimn ClientDeferredVulnerableItems ")
 			setDeferredVulnerableItems(res.data.data);
 		} catch (error) {
 			console.log(error)
@@ -108,7 +104,6 @@ const ExceptionContextProvider = ({ children }) => {
 		try {
 
 			const res = await AxiosHandler.get("/data/ClientDeferredVulnerableItems");
-			console.log(res, " client ClientDeferredVulnerableItems ")
 			setDeferredVulnerableItems(res.data.data);
 		} catch (error) {
 			console.log(error)

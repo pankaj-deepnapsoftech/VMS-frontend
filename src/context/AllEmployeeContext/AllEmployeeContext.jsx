@@ -27,8 +27,6 @@ const AllEmployeeContextProvider = ({ children }) => {
 		setLoading(true);
 		try {
 			const res = await AxiosHandler.get(`/auth/all-employee?page=${page}&limit=10`);
-
-			console.log("hero ", res)
 			SetAllEmployeesData(res.data?.users);
 
 		} catch (error) {
