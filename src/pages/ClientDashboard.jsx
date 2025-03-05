@@ -2,7 +2,7 @@ import InputField from "@/components/InputField";
 import { useAuthContext, useScheduleAssessmentContext } from "@/context";
 import { SignUpValidation } from "@/Validation/AuthValidation";
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { FaCompass, FaEnvelope, FaLock, FaPhone, FaUser } from "react-icons/fa";
 import { FaOdysee, FaWebAwesome, FaWebflow } from "react-icons/fa6";
@@ -13,10 +13,20 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recha
 
 
 export default function ClientDashboard() {
-	
-	const { dashboardData } = useScheduleAssessmentContext()
-	const { Signup, authenticate, loading } = useAuthContext()
 
+	const { dashboardData, DashboardData, datafetchCount,
+		setdatafetchCount, } = useScheduleAssessmentContext()
+	const { Signup, authenticate, loading, token } = useAuthContext()
+	console.log("dashboardData", dashboardData)
+
+	useEffect(() => {
+		if (token && datafetchCount === 0) {
+			DashboardData();
+			setdatafetchCount(1)
+		}
+	}, [token])
+ 
+	
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 
@@ -29,9 +39,6 @@ export default function ClientDashboard() {
 		{ name: "InfrastructurePenetration", value: dashboardData.InfrastructurePenetration },
 	];
 
-
-
-
 	const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
 		initialValues: {
 			full_name: "",
@@ -42,7 +49,7 @@ export default function ClientDashboard() {
 			role: "ClientSME",
 			owner: authenticate?._id,
 			employee_approve: true,
-			email_verification:true,
+			email_verification: true,
 		},
 		validationSchema: SignUpValidation,
 		onSubmit: (value) => {

@@ -39,6 +39,7 @@ export const ClientCisoList = [
     { title: "Dashboard", route: "/", icon: BiSolidDashboard },
     { title: "Scheduled Tasks", route: "/scheduled-tasks", icon: IoShieldHalf },
     { title: "All Employee", route: "/all-employee", icon: FaPerson },
+    { title: "Vulnerability Data", route: "/vulnerability-data", icon: IoShield },
     { title: "Application Vulnerability", route: "/application-vulnerability", icon: MdOutlineMiscellaneousServices },
     { title: "Infrastructure Vulnerability ", route: "/infrastructure-vulnerability", icon: GrVulnerability },
     { title: "Exceptions", route: "/exceptions", icon: AiOutlineException },

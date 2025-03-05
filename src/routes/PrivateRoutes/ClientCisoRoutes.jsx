@@ -5,6 +5,7 @@ import Exceptions from "@/pages/Exceptions";
 import InfrastructureVulnerability from "@/pages/InfrastructureVulnerability";
 import Remedition from "@/pages/Remedition";
 import SchedulingAssessmentPage from "@/pages/SchedulingAssessment";
+import { VulnerabilityData } from "@/pages/VulnerablityData";
 
 
 export const ClientCisoRoutes = [
@@ -15,6 +16,10 @@ export const ClientCisoRoutes = [
     {
         path: "/scheduled-tasks",
         element: <SchedulingAssessmentPage />
+    },
+    {
+        path: "/vulnerability-data",
+        element: <VulnerabilityData />
     },
     {
         path: "/all-employee",

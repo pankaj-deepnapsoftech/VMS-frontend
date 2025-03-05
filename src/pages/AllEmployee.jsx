@@ -12,7 +12,7 @@ export default function AllEmployee() {
 		EmployeeData,
 		datafetchCount,
 		setdatafetchCount,
-		AllEmployee }
+		AllEmployee, AllClientSME }
 		= useAllEmployeeContext();
 
 
@@ -31,17 +31,18 @@ export default function AllEmployee() {
 
 	useEffect(() => {
 		if (token && datafetchCount === 0) {
-			AllEmployee();
+
+			authenticate?.role === "ClientCISO" ? AllClientSME() : AllEmployee();
 			setdatafetchCount(1);
 		}
 	}, [token, page])
 
 	useEffect(() => {
-		if(token && authenticate?.role === "Assessor" ){
+		if (token && authenticate?.role === "Assessor") {
 			EmployeeData();
 		}
 
-	},[token,authenticate?.role])
+	}, [token, authenticate?.role])
 
 
 	return (

@@ -10,6 +10,7 @@ import { BsPersonCheckFill } from "react-icons/bs";
 import toast from "react-hot-toast";
 import Loader from "@/components/Loader/Loader";
 import InputField from "@/components/InputField";
+import { Modal } from "@/components/modal/FileUploadModal";
 
 export function EmployeeAllTasks() {
 	const {
@@ -31,13 +32,14 @@ export function EmployeeAllTasks() {
 		datafetchCount,
 		setdatafetchCount } = useAllEmployeeContext();
 
+	console.log("employeeTasksData", employeeTasksData)
+
 	useEffect(() => {
 		if (token && datafetchCount === 0) {
 			EmployeeTasks();
 			setdatafetchCount(1);
 		}
 	}, [token, taskPage])
-
 
 	const [searchTerm, setSearchTerm] = useState("");
 	const [currentPage, setCurrentPage] = useState(1);
@@ -166,7 +168,8 @@ export function EmployeeAllTasks() {
 							onChange={(e) => setSearchTerm(e.target.value)}
 						/>
 					</div>
-					<div className="lg:flex lg:flex-row grid grid-cols-2 gap-4 mt-4   w-full lg:justify-end  lg:items-center py-2 lg:gap-2">
+
+					{/* <div className="lg:flex lg:flex-row grid grid-cols-2 gap-4 mt-4   w-full lg:justify-end  lg:items-center py-2 lg:gap-2">
 						{/* <button
 							onClick={() => openModal()}
 							className="px-4 py-2  bg-[#015289] text-white lg:text-sm  text-xs font-medium rounded-md flex items-center"
@@ -181,6 +184,18 @@ export function EmployeeAllTasks() {
 							<BsPersonCheckFill className="h-6 w-6 mr-1" />
 							Bulk Task Assign
 						</button> */}
+
+
+					{/* </div> *   /  */}
+					<div className='flex justify-end items-start gap-5 py-4'>
+
+						<button
+							onClick={() => setIsModalOpen(true)}
+							className="px-4 py-2 bg-[#015289] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
+						>
+							<BiPlus className="h-6 w-6" />
+							Report Upload
+						</button>
 						<button
 							onClick={() => handleDownload(filteredData)}
 							className="px-4 py-2 bg-[#015289] text-white text-sm font-medium rounded-md flex items-center"
@@ -189,6 +204,15 @@ export function EmployeeAllTasks() {
 							Export Data
 						</button>
 					</div>
+
+
+					<Modal
+						isOpen={isModalOpen}
+						onClose={() => setIsModalOpen(false)}
+						title="Report Upload"
+						subtitle=" please upload an Excel file in XLSX or XLS format. Ensure the file is properly formatted and contains all necessary data for processing."
+					/>
+
 				</div>
 
 				{/* 📊 Table */}

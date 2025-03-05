@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FaChartBar, FaCog, FaShieldAlt, FaUsers, FaPaperPlane, FaComments } from 'react-icons/fa';
 import { AiOutlineMenu } from 'react-icons/ai';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ComposedChart, Line } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ComposedChart, Line, Cell } from 'recharts';
 import { useAuthContext, useExceptionContext, useVulnerabililtyDataContext } from '@/context';
 import { BiEditAlt, BiSearch } from 'react-icons/bi';
 import { RiDeleteBinFill } from 'react-icons/ri';
@@ -118,10 +118,13 @@ function Exceptions() {
   };
 
 
+  const colorMapping = { "15 days": "#FF0000", "30 days": "#FFBF00" }; // Red & Amber  
+  const defaultColors = ["#28A745", "#007BFF"]; // Green & Blue  
 
-  const deferralData = Object.entries(expectionDataFiftyDays)?.map(([key, value]) => ({
-    name: { "15 days": "14+ Days", "30 days": "30+ Days", "45 days": "45+ Days" }[key] || key,
+  const deferralData = Object.entries(expectionDataFiftyDays).map(([key, value], index) => ({
+    name: { "15 days": "14 Days", "30 days": "30 Days", "45 days": "45 Days" }[key] || key,
     requests: value,
+    color: colorMapping[key] || defaultColors[index % 2], // Alternates Green & Blue  
   }));
 
 
@@ -162,7 +165,7 @@ function Exceptions() {
                       <Tooltip />
                       <Legend />
                       <Bar dataKey="riskAccepted" stackId="a" fill="#3B82F6" width={10} name="Risk Accepted" />
-                      <Bar dataKey="awaitingMaintenance" stackId="a" fill="#34D399" name="Awaiting Approval" />
+                      <Bar dataKey="awaitingMaintenance" stackId="a" fill="#FFBF00" name="Awaiting Approval" />
 
                     </ComposedChart>
                   </ResponsiveContainer>
@@ -182,9 +185,14 @@ function Exceptions() {
                       <XAxis dataKey="name" />
                       <YAxis />
                       <Tooltip />
-                      <Bar dataKey="requests" fill="#2DD4BF" name="Requests" />
+                      <Bar dataKey="requests" name="Requests">
+                        {deferralData.map((entry) => (
+                          <Cell key={entry.name} fill={entry.color} />
+                        ))}
+                      </Bar>
                     </BarChart>
                   </ResponsiveContainer>
+
                 </div>
               </div>
 

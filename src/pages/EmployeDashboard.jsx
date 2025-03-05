@@ -10,7 +10,6 @@ import { Modal } from '@/components/modal/FileUploadModal';
 function EmployeeDashboard() {
 
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
     employeeCardData,
@@ -45,24 +44,6 @@ function EmployeeDashboard() {
       <div className="min-h-screen bg-gray-100 px-6 ">
 
 
-        <div className='flex justify-end items-center py-4'>
-
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="px-4 py-2 bg-[#015289] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
-          >
-            <BiPlus className="h-6 w-6" />
-            Report Upload
-          </button>
-        </div>
-
-
-        <Modal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          title="Report Upload"
-          subtitle=" please upload an Excel file in XLSX or XLS format. Ensure the file is properly formatted and contains all necessary data for processing."
-        />
 
         {/* Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-6">

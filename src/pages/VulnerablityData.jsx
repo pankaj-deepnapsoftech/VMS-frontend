@@ -16,6 +16,7 @@ import InputField from "@/components/InputField";
 
 export function VulnerabilityData() {
 
+  const [page, setPage] = useState(1)
 
 
   const {
@@ -27,8 +28,6 @@ export function VulnerabilityData() {
     topVulnerabliltyData,
     DeleteData,
     AssignTask,
-    page,
-    setPage,
     BulkAssignTask,
     CreateNotifications,
     orgnizationNotification,
@@ -54,7 +53,7 @@ export function VulnerabilityData() {
 
   useEffect(() => {
     if (token && datafetchCount === 0) {
-      AllVulnerablilty();
+      AllVulnerablilty(page);
       TopVulnerablilty();
       GetOrganization();
       Notifications();
@@ -64,7 +63,6 @@ export function VulnerabilityData() {
 
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
@@ -107,11 +105,10 @@ export function VulnerabilityData() {
 
 
   const paginatedData = filteredData.slice(
-    (currentPage - 1) * rowsPerPage,
-    currentPage * rowsPerPage
+
   );
 
-
+  console.log("page", page)
 
   // Open modal for editing or adding
   const openModal = (data = null) => {
@@ -296,96 +293,97 @@ export function VulnerabilityData() {
 
           {/* 📊 Table */}
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-[#015289]">
-
-                <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-white uppercase">
+            <table className="min-w-full border border-gray-300 shadow-sm rounded-lg overflow-hidden">
+              <thead className="bg-[#015289] text-white">
+                <tr className="h-10"> {/* Reduced row height */}
+                  <th className="px-3 py-2 text-left text-xs font-semibold uppercase">
                     <input
                       type="checkbox"
                       checked={selectAll}
                       onChange={(e) => {
                         setSelectAll(!selectAll);
-                        handleSelectAll(e)
-                      }} />
+                        handleSelectAll(e);
+                      }}
+                      className="h-3.5 w-3.5 accent-blue-500"
+                    />
                   </th>
                   {tableHeaders?.map((header, index) => (
-                    <th
-                      key={index}
-                      className="px-4 py-3 text-left text-xs font-medium text-white uppercase"
-                    >
+                    <th key={index} className="px-3 py-2 text-left text-xs font-semibold uppercase">
                       {header === "createdAt" ? "Created Date" : header.replace(/_/g, " ")}
                     </th>
                   ))}
-                  <th className="px-4 py-3 text-left text-xs font-medium text-white uppercase">
-                    Actions
-                  </th>
+                  <th className="px-3 py-2 text-left text-xs font-semibold uppercase">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200">
+
+              <tbody className="bg-white divide-y divide-gray-200">
                 {paginatedData?.map((item) => (
-                  <tr key={item._id} className="hover:bg-gray-50">
-                    <td className="px-4 py-4 whitespace-nowrap flex justify-around gap-4">
+                  <tr key={item._id} className="hover:bg-gray-100 transition h-8"> {/* Reduced row height */}
+                    {/* Checkbox Column */}
+                    <td className="px-3 py-2 text-center">
                       <input
                         type="checkbox"
-                        value="bubbles"
-                        checked={index.filter((i) => i === item._id).length > 0}
-                        onChange={() => handleChecked(item._id)} />
-
+                        checked={index.includes(item._id)}
+                        onChange={() => handleChecked(item._id)}
+                        className="h-3.5 w-3.5 accent-blue-500"
+                      />
                     </td>
+
+                    {/* Table Data */}
                     {tableHeaders?.map((field, i) => (
-                      <td key={i} className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {
-                          field === "createdAt" || field === "Exception_time" ? (
-                            item[field] ? (
-                              new Date(item[field]).toLocaleDateString("en-IN", {
-                                day: "2-digit",
-                                month: "short",
-                                year: "numeric",
-                              })
-                            ) : (
-                              "-"
-                            )
-                          ) : field === "Assigned_To" ? (
-                            item[field]?.full_name ?? "-"
-                          ) : field === "detailed_Report" ? (
-                            item[field] ? (
-                              <a
-                                className="text-blue-600 underline hover:text-blue-800"
-                                href={item[field]}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                View File
-                              </a>
-                            ) : (
-                              "-"
-                            )
-                          ) : (
-                            item[field] || "-"
-                          )
-                        }
-
-
+                      <td key={i} className="px-3 py-2 text-xs text-gray-900 whitespace-nowrap">
+                        {field === "createdAt" || field === "Exception_time"
+                          ? item[field]
+                            ? new Date(item[field]).toLocaleDateString("en-IN", {
+                              day: "2-digit",
+                              month: "short",
+                              year: "numeric",
+                            })
+                            : "-"
+                          : field === "Assigned_To"
+                            ? item[field]?.full_name ?? "-"
+                            : field === "detailed_Report"
+                              ? item[field] && (
+                                <a
+                                  className="text-blue-600 underline hover:text-blue-800"
+                                  href={item[field]}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  View File
+                                </a>
+                              )
+                              : item[field] || "-"}
                       </td>
                     ))}
-                    <td className="px-4 py-4 whitespace-nowrap flex justify-around gap-4">
-                      <button onClick={() => openModal(item)} className="text-blue-600">
-                        <BiEditAlt className="h-5 w-5" />
+
+                    {/* Action Buttons */}
+                    <td className="px-3 py-2 flex items-center space-x-2">
+                      <button
+                        onClick={() => openModal(item)}
+                        className="text-blue-600 hover:text-blue-800 transition"
+                      >
+                        <BiEditAlt className="h-4 w-4" />
                       </button>
-                      <button onClick={() => handleDelete(item._id)} className="text-red-600">
-                        <RiDeleteBinFill className="h-5 w-5" />
+                      <button
+                        onClick={() => handleDelete(item._id)}
+                        className="text-red-600 hover:text-red-800 transition"
+                      >
+                        <RiDeleteBinFill className="h-4 w-4" />
                       </button>
-                      <button onClick={() => {
-                        handleAssignTask(item)
-                      }} className="text-red-600">
-                        <BsPersonCheckFill className="h-5 w-5" />
+                      <button
+                        onClick={() => handleAssignTask(item)}
+                        className="text-green-600 hover:text-green-800 transition"
+                      >
+                        <BsPersonCheckFill className="h-4 w-4" />
                       </button>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+
+
           </div>
 
 
@@ -487,7 +485,7 @@ export function VulnerabilityData() {
                       {(editMode ? editFormHeaders : addFormHeaders).map((field) => (
                         <div key={field} className="flex flex-col">
                           <label className="text-sm font-medium text-gray-700">
-                            {field.replace(/_/g, " ")}*
+                            {field === "creator" ? "" : field.replace(/_/g, "  ")}
                           </label>
 
                           {field === "Status" ? (
@@ -507,13 +505,14 @@ export function VulnerabilityData() {
                               ))}
                             </select>
                           ) :
+                            field === "creator" ? "" :
 
-                            (
-                              <Field
-                                name={field}
-                                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
-                              />
-                            )}
+                              (
+                                <Field
+                                  name={field}
+                                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                                />
+                              )}
 
 
                         </div>
@@ -574,7 +573,7 @@ export function VulnerabilityData() {
             </span>
             <button
               className={`px-4 py-2 border rounded-md  text-white bg-[#015289]`}
-              disabled={allVulnerabilityData.length < 10}
+              disabled={allVulnerabilityData?.length < 10}
               onClick={() => setPage(page + 1)}
             >
               Next
