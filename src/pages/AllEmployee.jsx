@@ -20,15 +20,6 @@ export default function AllEmployee() {
 
 	const { authenticate, token } = useAuthContext();
 
-
-	// useEffect(() => {
-	// 	if (authenticate?.role === "ClientCISO") { AllClientSME() }
-	// },
-	// 	[])
-
-
-
-
 	useEffect(() => {
 		if (token && datafetchCount === 0) {
 
@@ -36,13 +27,6 @@ export default function AllEmployee() {
 			setdatafetchCount(1);
 		}
 	}, [token, page])
-
-	useEffect(() => {
-		if (token && authenticate?.role === "Assessor") {
-			EmployeeData();
-		}
-
-	}, [token, authenticate?.role])
 
 
 	return (

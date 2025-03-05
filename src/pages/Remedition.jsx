@@ -65,7 +65,7 @@ function Remedition() {
     { status: 'Target Missed', none: 0, low: 0, medium: 23, high: 43, critical: 0 },
   ];
 
-  var size = Object.keys(criticalVulnerabilitycountData)?.length;
+  var size = criticalVulnerabilitycountData.Totalcount
   return (
     <div className="min-h-screen bg-gray-50 p-8 ">
 

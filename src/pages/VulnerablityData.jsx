@@ -52,14 +52,16 @@ export function VulnerabilityData() {
 
 
   useEffect(() => {
+
+    AllVulnerablilty(page);
     if (token && datafetchCount === 0) {
-      AllVulnerablilty(page);
       TopVulnerablilty();
       GetOrganization();
       Notifications();
       setdatafetchCount(1)
     }
   }, [token, page])
+
 
 
   const [searchTerm, setSearchTerm] = useState("");
