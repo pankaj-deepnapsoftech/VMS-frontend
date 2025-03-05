@@ -110,7 +110,6 @@ export function VulnerabilityData() {
 
   );
 
-  console.log("page", page)
 
   // Open modal for editing or adding
   const openModal = (data = null) => {
@@ -482,65 +481,55 @@ export function VulnerabilityData() {
                 >
                   {({ setFieldValue, values }) => (  // ✅ Access setFieldValue here
                     <Form className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+                      {(editMode ? editFormHeaders : addFormHeaders).map(
+                        (field) =>
+                          field !== "creator" && field !== "Exception_time" && (
+                            <div key={field} className="flex flex-col">
+                              <label className="text-sm font-medium text-gray-700">
+                                {field.replace(/_/g, " ")}
+                              </label>
 
-
-                      {(editMode ? editFormHeaders : addFormHeaders).map((field) => (
-                        <div key={field} className="flex flex-col">
-                          <label className="text-sm font-medium text-gray-700">
-                            {field === "creator" ? "" : field.replace(/_/g, "  ")}
-                          </label>
-
-                          {field === "Status" ? (
-                            <select
-                              className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
-                              name="Status"
-                              onChange={(e) => setFieldValue("Status", e.target.value)}  // ✅ Now works without error
-                              defaultValue=""  // Avoids React warning about uncontrolled inputs
-                            >
-                              <option disabled value="">
-                                --- Select a Status ---
-                              </option>
-                              {statusList.map((item, idx) => (
-                                <option key={idx} value={item}>
-                                  {item}
-                                </option>
-                              ))}
-                            </select>
-                          ) :
-                            field === "creator" ? "" :
-
-                              (
-                                <Field
-                                  name={field}
+                              {field === "Status" ? (
+                                <select
                                   className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
-                                />
-                              )}
+                                  name="Status"
+                                  onChange={(e) => setFieldValue("Status", e.target.value)}
+                                  defaultValue=""
+                                >
+                                  <option disabled value="">--- Select a Status ---</option>
+                                  {statusList.map((item, idx) => (
+                                    <option key={idx} value={item}>{item}</option>
+                                  ))}
+                                </select>
+                              )
 
+                                :
+                                field === "Remediate_Upcoming_Time_Line" ? <InputField
 
-                        </div>
-                      ))}
+                                  type="date"
+                                  onChange={(e) => setFieldValue("Remediate_Upcoming_Time_Line", e.target.value)}
+                                /> : (
+                                  <Field
+                                    name={field}
+                                    className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                                  />
+                                )}
+                            </div>
+                          )
+                      )}
 
-                      {values.Status === "Exception" &&
-                        <div>
-                          <InputField
-                            label={"Exception Date"}
-                            type={"date"}
-                            showPassword={false}
-                            // value={expectionTime}
-
-                            onChange={(e) => {
-                              setFieldValue("Expection_time", e.target.value)
-
-                            }}
-
-                          />
-
-                        </div>}
+                      {values.Status === "Exception" && (
+                        <InputField
+                          label="Exception Date"
+                          type="date"
+                          onChange={(e) => setFieldValue("Expection_time", e.target.value)}
+                        />
+                      )}
 
                       {/* Buttons */}
                       <div className="col-span-1 md:col-span-2 flex justify-end gap-2 mt-4 border-t pt-4">
                         <button
-                          type="button"  // Prevent accidental form submission
+                          type="button"
                           onClick={() => setIsModalOpen(false)}
                           className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition"
                         >
@@ -554,6 +543,8 @@ export function VulnerabilityData() {
                         </button>
                       </div>
                     </Form>
+
+
                   )}
                 </Formik>
 

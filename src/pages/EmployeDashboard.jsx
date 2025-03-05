@@ -13,17 +13,17 @@ function EmployeeDashboard() {
 
   const {
     employeeCardData,
+    EmployeeData,
     datafetchCount,
     setdatafetchCount,
-    EmployeeData
   } = useAllEmployeeContext();
 
 
   const { token } = useAuthContext();
 
   useEffect(() => {
+    EmployeeData();
     if (token && datafetchCount === 0) {
-      EmployeeData();
       setdatafetchCount(1);
     }
   }, [token])

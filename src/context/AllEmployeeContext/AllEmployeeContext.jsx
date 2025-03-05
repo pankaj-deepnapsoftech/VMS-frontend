@@ -17,7 +17,7 @@ const AllEmployeeContextProvider = ({ children }) => {
 	const [loading, setLoading] = useState(false);
 	const [allEmployeesData, SetAllEmployeesData] = useState([]);
 	const [employeeTasksData, setEmployeeTasksData] = useState([]);
-	const [employeeCardData, setEmployeeCardData] = useState({});
+	const [employeeCardData, setEmployeeCardData] = useState([]);
 
 
 	const [page, setPage] = useState(1)
@@ -72,6 +72,7 @@ const AllEmployeeContextProvider = ({ children }) => {
 		setLoading(true);
 		try {
 			const res = await AxiosHandler.get(`employee/emp-data`);
+			console.log("employee Data ", res.data)
 			setEmployeeCardData(res.data);
 
 		} catch (error) {
