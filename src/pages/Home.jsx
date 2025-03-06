@@ -28,7 +28,7 @@ function Home() {
 
   } = useDataContext();
 
-  const { loading } = useAuthContext();
+  const { loading, authenticate } = useAuthContext();
 
   const closevulnerableItemsData = [closevulnerableItems];
 
@@ -41,6 +41,8 @@ function Home() {
 
   const newData = vulnerableItemsByRiskRatingData?.map((item) => ({ date: item.month, Critical: item.critical, High: item.high, Medium: item.medium, Low: item.low, info: item.informational }))
 
+
+  console.log("cardData", cardData)
   const metrics = [
     {
       title: ' Total Vulnerability',
@@ -56,7 +58,7 @@ function Home() {
     },
     {
       title: 'Exceptions',
-      value: 'NA',
+      value: cardData?.Exceptions,
 
       icon: IoMdSettings
     },
@@ -67,7 +69,7 @@ function Home() {
       icon: IoShieldCheckmarkOutline
     },
     {
-      title: 'Re-open',
+      title: 'Re Open',
       value: cardData?.reopen,
       icon: IoShieldCheckmarkOutline
     },

@@ -1,5 +1,5 @@
 import Loader from "@/components/Loader/Loader";
-import { useAllCustomerContext, useAuthContext } from "@/context";
+import { useAllCustomerContext, useAllEmployeeContext, useAuthContext } from "@/context";
 import React, { useEffect, useState } from "react";
 
 export default function AllCustomer() {
@@ -13,6 +13,10 @@ export default function AllCustomer() {
 		setDataCount, dataCount } = useAllCustomerContext();
 
 
+
+	const { VerifyEmployee } = useAllEmployeeContext();
+
+
 	const { token } = useAuthContext()
 
 
@@ -21,7 +25,13 @@ export default function AllCustomer() {
 			AllCustomers();
 			setDataCount(1)
 		}
-	}, [token, page])
+	}, [token, page, VerifyEmployee])
+
+	useEffect(() => {
+
+		AllCustomers();
+
+	}, [VerifyEmployee])
 
 	return (
 		<>
@@ -41,8 +51,8 @@ export default function AllCustomer() {
 								<th className="px-4 py-3 border text-left">Email</th>
 								<th className="px-4 py-3 border text-left">Phone</th>
 								<th className="px-4 py-3 border text-left">Role</th>
-
-
+								<th className="px-4 py-3 border text-left">Approval Status</th>
+								{/* <th className="px-4 py-3 border text-left">Action</th> */}
 							</tr>
 						</thead>
 						<tbody>
@@ -56,8 +66,23 @@ export default function AllCustomer() {
 									<td className="px-4 py-3 border">{user.email}</td>
 									<td className="px-4 py-3 border">{user.phone}</td>
 									<td className="px-4 py-3 border">{user.role}</td>
-
-
+									<td className="px-4 py-3 border">
+										{user?.employee_approve ? (
+											<span className="px-3 py-1 text-sm font-semibold text-green-800 bg-green-100 rounded-full">
+												Approved
+											</span>
+										) : <button
+											onClick={() => VerifyEmployee(user?._id)}
+											className="px-3 py-1 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+										>
+											Verify
+										</button>
+										}
+									</td>
+									{/* <td className="px-4 py-3 border">
+									
+									)}
+								</td> */}
 								</tr>
 							))}
 						</tbody>

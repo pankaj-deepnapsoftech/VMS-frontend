@@ -24,6 +24,7 @@ export function VulnerabilityData() {
     UpdateData,
     AddData,
     AllVulnerablilty,
+    OrgAllVulnerablilty,
     allVulnerabilityData,
     topVulnerabliltyData,
     DeleteData,
@@ -48,19 +49,19 @@ export function VulnerabilityData() {
 
   const { allEmployeesData } = useAllEmployeeContext();
 
-
+  console.log("OrgAllVulnerablilty", allVulnerabilityData)
 
 
   useEffect(() => {
 
-    AllVulnerablilty(page);
+    authenticate?.role === "Admin" ? AllVulnerablilty(page) : OrgAllVulnerablilty(page);
     if (token && datafetchCount === 0) {
       TopVulnerablilty();
       GetOrganization();
       Notifications();
       setdatafetchCount(1)
     }
-  }, [token, page])
+  }, [token, page, authenticate?.role])
 
 
 

@@ -72,7 +72,7 @@ export default function AllEmployee() {
 							className="px-4 py-2 bg-[#015289] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
 						>
 							<BiPlus className="h-6 w-6" />
-							Add Client SME
+							Add Employee
 						</button>
 					</div>}
 

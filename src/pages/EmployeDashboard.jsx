@@ -51,7 +51,7 @@ function EmployeeDashboard() {
             return (<div key={idx}
               className="bg-white rounded-lg shadow p-6 hover:scale-105  transition">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-base  text-black capitalize">{item === "totalData" ? "Total" : item} Task</h3>
+                <h3 className="text-base  text-black capitalize">{item === "totalData" ? "Total" : item.replace(/([a-z])([A-Z])/g, "$1 $2")} Task</h3>
                 <FiAlertCircle className="text-red-500" size={20} />
               </div>
               <div className="space-y-1">

@@ -121,13 +121,15 @@ const AllEmployeeContextProvider = ({ children }) => {
 
 
 
-	// useEffect(() => {
-	// 	if (token) {
-	// 		authenticate?.role === "ClientCISO" ? AllClientSME() : AllEmployee();
-	// 		EmployeeTasks();
-	// 		EmployeeData();
-	// 	}
-	// }, [token, page, taskPage, authenticate?.role])
+	useEffect(() => {
+		if (token) {
+			authenticate?.role === "ClientCISO" ? AllClientSME() : AllEmployee();
+			EmployeeTasks();
+			EmployeeData();
+		}
+	}, [token, page, taskPage, authenticate?.role])
+
+	
 	return (
 		<AllEmployeeContext.Provider value={{
 			loading,
