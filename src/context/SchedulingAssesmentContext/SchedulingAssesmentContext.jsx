@@ -89,7 +89,7 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 			toast.success(res.data.message);
 
 		} catch (error) {
-			console.log(error)
+			//console.log(error)
 			toast.dismiss(toastId);
 			toast.error(error?.response?.data?.message);
 
@@ -97,7 +97,7 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 	}
 
 	const UpdateAssesment = async (id, data) => {
-		console.log(data, "data in context ")
+		//console.log(data, "data in context ")
 		const toastId = toast.loading("Loading...");
 		try {
 			const res = await AxiosHandler.patch(`/assessment/update/${id}`, data);
@@ -107,7 +107,7 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 			toast.success(res.data.message);
 
 		} catch (error) {
-			console.log(error)
+			//console.log(error)
 			toast.dismiss(toastId);
 			toast.error(error?.response?.data?.message);
 
@@ -126,7 +126,7 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 
 
 		} catch (error) {
-			console.log(error)
+			//console.log(error)
 			toast.dismiss(toastId);
 			toast.error(error?.response?.data?.message);
 

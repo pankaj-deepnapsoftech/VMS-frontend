@@ -13,6 +13,7 @@ import ThirdPartyConfig from "@/pages/thirdPartyConfiguration";
 import { EmployeeAllTasks } from "@/pages/EmployeeAllTasks";
 import EmployeeDashboard from "@/pages/EmployeDashboard";
 import SchedulingAssessmentPage from "@/pages/SchedulingAssessment";
+import Reports from "@/pages/Reports";
 
 
 export const PrivateRoutes = [
@@ -61,5 +62,9 @@ export const PrivateRoutes = [
     {
         path: "/remedition",
         element: <Remedition />
+    },
+    {
+        path: "/reports",
+        element: <Reports />
     },
 ]

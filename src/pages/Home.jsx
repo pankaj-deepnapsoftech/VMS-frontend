@@ -42,7 +42,7 @@ function Home() {
   const newData = vulnerableItemsByRiskRatingData?.map((item) => ({ date: item.month, Critical: item.critical, High: item.high, Medium: item.medium, Low: item.low, info: item.informational }))
 
 
-  console.log("cardData", cardData)
+  //console.log("cardData", cardData)
   const metrics = [
     {
       title: ' Total Vulnerability',

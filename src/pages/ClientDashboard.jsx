@@ -17,7 +17,7 @@ export default function ClientDashboard() {
 	const { dashboardData, DashboardData, datafetchCount,
 		setdatafetchCount, } = useScheduleAssessmentContext()
 	const { Signup, authenticate, loading, token } = useAuthContext()
-	console.log("dashboardData", dashboardData)
+	//console.log("dashboardData", dashboardData)
 
 	useEffect(() => {
 		if (token && datafetchCount === 0) {

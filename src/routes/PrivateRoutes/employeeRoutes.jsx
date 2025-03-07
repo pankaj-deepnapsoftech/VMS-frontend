@@ -1,5 +1,6 @@
 import EmployeeDashboard from "@/pages/EmployeDashboard";
 import { EmployeeAllTasks } from "@/pages/EmployeeAllTasks";
+import Reports from "@/pages/Reports";
 
 export const EmployeeRoutes = [
     {
@@ -9,5 +10,9 @@ export const EmployeeRoutes = [
     {
         path: "/all-employee-tasks",
         element: <EmployeeAllTasks />
+    },
+    {
+        path: "/reports",
+        element: <Reports />
     },
 ]

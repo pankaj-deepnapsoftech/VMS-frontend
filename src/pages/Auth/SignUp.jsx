@@ -15,7 +15,7 @@ function SignUp() {
     initialValues: { full_name: "", phone: "", email: "", password: "", role: "", department: "", Organization: "" },
     validationSchema: SignUpValidation,
     onSubmit: (value) => {
-      console.log(value, "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+     // console.log(value, "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
       Signup(value);
     }
   })

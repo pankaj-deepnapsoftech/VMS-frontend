@@ -49,7 +49,7 @@ export function VulnerabilityData() {
 
   const { allEmployeesData } = useAllEmployeeContext();
 
-  console.log("OrgAllVulnerablilty", allVulnerabilityData)
+  //console.log("OrgAllVulnerablilty", allVulnerabilityData)
 
 
   useEffect(() => {
@@ -471,7 +471,7 @@ export function VulnerabilityData() {
                 <Formik
                   initialValues={editData || {}}
                   onSubmit={(values) => {
-                    console.log(values, "hero in formik")
+                    //console.log(values, "hero in formik")
                     editMode ? UpdateData(values, editData._id) : AddData(values);
 
 

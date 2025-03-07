@@ -9,6 +9,7 @@ import { ClientCisoList, ClientSmeList, EmployeeList, list } from '@/constants/c
 import { useAuthContext } from '@/context';
 import { FaUser } from 'react-icons/fa';
 import { IoIosLogOut } from 'react-icons/io';
+import toast from 'react-hot-toast';
 
 
 
@@ -43,7 +44,8 @@ function Header({ setShowMenu }) {
       navList = ClientSmeList; // Define if ClientSME has a specific list
       break;
     default:
-      console.log("Invalid Role: Access Denied");
+     // console.log("Invalid Role: Access Denied");
+     toast.error("Invalid Role: Access Denied");
   }
 
 

@@ -4,6 +4,7 @@ import ClientDashboard from "@/pages/ClientDashboard";
 import Exceptions from "@/pages/Exceptions";
 import InfrastructureVulnerability from "@/pages/InfrastructureVulnerability";
 import Remedition from "@/pages/Remedition";
+import Reports from "@/pages/Reports";
 import SchedulingAssessmentPage from "@/pages/SchedulingAssessment";
 import { VulnerabilityData } from "@/pages/VulnerablityData";
 
@@ -36,6 +37,10 @@ export const ClientCisoRoutes = [
     {
         path: "/exceptions",
         element: <Exceptions />
+    },
+    {
+        path: "/reports",
+        element: <Reports />
     },
     {
         path: "/remedition",

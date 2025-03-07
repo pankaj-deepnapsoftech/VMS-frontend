@@ -6,6 +6,7 @@ import { IoPerson, IoShield, IoShieldHalf } from "react-icons/io5";
 import { FaPerson } from "react-icons/fa6";
 import { MdOutlineMiscellaneousServices } from "react-icons/md";
 import { SiWikimediafoundation } from "react-icons/si";
+import { TbReport } from "react-icons/tb";
 
 export const list = [
     { title: "Dashboard", route: "", icon: BiSolidDashboard },
@@ -19,18 +20,21 @@ export const list = [
     { title: "Infrastructure Vulnerability ", route: "/infrastructure-vulnerability", icon: GrVulnerability },
     { title: "Exceptions", route: "/exceptions", icon: AiOutlineException },
     { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
+    { title: "Reports", route: "/reports", icon: TbReport  },
 ];
 
 
 export const EmployeeList = [
     { title: "Dashboard", route: "/", icon: BiSolidDashboard },
     { title: "All Tasks", route: "/all-employee-tasks", icon: IoShieldHalf },
+    { title: "Reports", route: "/reports", icon: TbReport  },
 
 ]
 
 export const ClientSmeList = [
     { title: "Dashboard", route: "/", icon: BiSolidDashboard },
     { title: "Scheduling Assesment", route: "/scheduling-assesment", icon: BiSolidDashboard },
+    
 
 ]
 
@@ -44,6 +48,7 @@ export const ClientCisoList = [
     { title: "Infrastructure Vulnerability ", route: "/infrastructure-vulnerability", icon: GrVulnerability },
     { title: "Exceptions", route: "/exceptions", icon: AiOutlineException },
     { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
+    { title: "Reports", route: "/reports", icon: TbReport  },
 
 ]
 

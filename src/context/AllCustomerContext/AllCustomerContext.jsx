@@ -27,6 +27,7 @@ const AllCustomerContextProvider = ({ children }) => {
 
 		} catch (error) {
 			console.log(error)
+			
 
 		} finally {
 			setLoading(false);

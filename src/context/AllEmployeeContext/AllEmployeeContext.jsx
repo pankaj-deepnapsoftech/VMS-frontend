@@ -33,6 +33,7 @@ const AllEmployeeContextProvider = ({ children }) => {
 
 		} catch (error) {
 			console.log(error)
+			
 
 		} finally {
 			setLoading(false);
@@ -72,7 +73,7 @@ const AllEmployeeContextProvider = ({ children }) => {
 		setLoading(true);
 		try {
 			const res = await AxiosHandler.get(`employee/emp-data`);
-			console.log("employee Data ", res.data)
+			//console.log("employee Data ", res.data)
 			setEmployeeCardData(res.data);
 
 		} catch (error) {
@@ -94,7 +95,7 @@ const AllEmployeeContextProvider = ({ children }) => {
 			authenticate?.role === "ClientCISO" ? AllClientSME() : EmployeeData();
 
 		} catch (error) {
-			console.log(error)
+			//console.log(error)
 			toast.dismiss(toastId);
 			toast.error(error?.response?.data?.message);
 
@@ -103,7 +104,7 @@ const AllEmployeeContextProvider = ({ children }) => {
 
 
 	const UploadDetailedReport = async (id, data) => {
-		console.log(data, "pdf data")
+		//console.log(data, "pdf data")
 		const toastId = toast.loading("Loading...");
 		try {
 			const res = await AxiosHandler.post(`/data/upload-pdf/${id}`, data);
@@ -111,7 +112,7 @@ const AllEmployeeContextProvider = ({ children }) => {
 			toast.success(res.data.message);
 
 		} catch (error) {
-			console.log(error)
+			//console.log(error)
 			toast.dismiss(toastId);
 			toast.error(error?.response?.data?.message);
 

@@ -32,7 +32,7 @@ export function EmployeeAllTasks() {
 		datafetchCount,
 		setdatafetchCount } = useAllEmployeeContext();
 
-	console.log("employeeTasksData", employeeTasksData)
+	//console.log("employeeTasksData", employeeTasksData)
 
 	useEffect(() => {
 		if (token && datafetchCount === 0) {

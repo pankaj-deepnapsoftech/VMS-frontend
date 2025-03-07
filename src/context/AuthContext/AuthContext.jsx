@@ -41,7 +41,7 @@ const AuthContextProvider = ({ children }) => {
       toast.dismiss(toastId);
       toast.success(res.data.message);
     } catch (error) {
-      console.log(error)
+      //console.log(error)
       toast.dismiss(toastId);
       toast.error(error?.response?.data?.message || "something went wrong please try again...");
     } finally {
@@ -122,7 +122,7 @@ const AuthContextProvider = ({ children }) => {
       toast.success(res.data.message);
       navigate("/")
     } catch (error) {
-      console.log(error)
+      //console.log(error)
       toast.dismiss(toastId);
       toast.error(error?.response?.data?.message);
     } finally {
