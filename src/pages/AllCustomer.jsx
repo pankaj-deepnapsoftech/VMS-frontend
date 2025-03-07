@@ -33,6 +33,7 @@ export default function AllCustomer() {
 
 	}, [VerifyEmployee])
 
+
 	return (
 		<>
 			{loading ? <Loader /> : <div className="p-8 bg-white shadow-lg rounded-lg">
@@ -50,6 +51,7 @@ export default function AllCustomer() {
 								<th className="px-4 py-3 border text-left">Full Name</th>
 								<th className="px-4 py-3 border text-left">Email</th>
 								<th className="px-4 py-3 border text-left">Phone</th>
+								<th className="px-4 py-3 border text-left">Organization</th>
 								<th className="px-4 py-3 border text-left">Role</th>
 								<th className="px-4 py-3 border text-left">Approval Status</th>
 								{/* <th className="px-4 py-3 border text-left">Action</th> */}
@@ -62,10 +64,11 @@ export default function AllCustomer() {
 									className="odd:bg-gray-50 even:bg-gray-100 hover:bg-gray-200 transition duration-200"
 								>
 									<td className="px-4 py-3 border">{index + 1}</td>
-									<td className="px-4 py-3 border">{user.full_name}</td>
-									<td className="px-4 py-3 border">{user.email}</td>
-									<td className="px-4 py-3 border">{user.phone}</td>
-									<td className="px-4 py-3 border">{user.role}</td>
+									<td className="px-4 py-3 border">{user?.full_name}</td>
+									<td className="px-4 py-3 border">{user?.email}</td>
+									<td className="px-4 py-3 border">{user?.phone}</td>
+									<td className="px-4 py-3 border">{user?.Organization}</td>
+									<td className="px-4 py-3 border">{user?.role}</td>
 									<td className="px-4 py-3 border">
 										{user?.employee_approve ? (
 											<span className="px-3 py-1 text-sm font-semibold text-green-800 bg-green-100 rounded-full">

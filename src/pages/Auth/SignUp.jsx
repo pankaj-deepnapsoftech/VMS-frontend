@@ -12,7 +12,7 @@ function SignUp() {
 
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
-    initialValues: { full_name: "", phone: "", email: "", password: "", role: "", department: "", Organization: "" },
+    initialValues: { full_name: "", phone: "", email: "", password: "", role: "", Organization: "" },
     validationSchema: SignUpValidation,
     onSubmit: (value) => {
      // console.log(value, "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
@@ -116,7 +116,7 @@ function SignUp() {
             />
             {touched.password && errors.password && <p className='text-red-700 text-xs'> {errors.password}</p>}
 
-            <InputField
+            {/* <InputField
               label={"Department Name"}
               type={"text"}
               showPassword={false}
@@ -127,7 +127,7 @@ function SignUp() {
               placeholder="Enter your Department Name"
               name="department"
             />
-            {touched.department && errors.department && <p className='text-red-700 text-xs'> {errors.department}</p>}
+            {touched.department && errors.department && <p className='text-red-700 text-xs'> {errors.department}</p>} */}
 
             <label
               htmlFor="role"

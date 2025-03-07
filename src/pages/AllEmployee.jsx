@@ -1,7 +1,7 @@
 import InputField from "@/components/InputField";
 import Loader from "@/components/Loader/Loader";
 import { useAllEmployeeContext, useAuthContext } from "@/context";
-import { SignUpValidation } from "@/Validation/AuthValidation";
+import { BaseValidationSchema } from "@/Validation/AuthValidation";
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
@@ -48,7 +48,7 @@ export default function AllEmployee() {
 			employee_approve: true,
 			email_verification: true,
 		},
-		validationSchema: SignUpValidation,
+		validationSchema: BaseValidationSchema,
 		onSubmit: (value) => {
 			Signup(value);
 			setIsModalOpen(false);
