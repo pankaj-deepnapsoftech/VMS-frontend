@@ -117,8 +117,10 @@ function SignIn() {
         {/* Right Side - Welcome Section */}
         <div className="w-full md:w-1/2 bg-[#015289] p-12 text-white flex flex-col">
           <div className="flex-1">
-            <h2 className="text-4xl font-bold mb-6">Welcome back!</h2>
-            <h3 className="text-2xl font-semibold mb-4">Please sign in to your account</h3>
+          <h1 className="text-4xl font-bold  text-white mb-2">Secure&</h1>
+          <h1 className="text-xl font-bold  text-blue-50 mb-2">Continuous Threat Exposure Management Platform</h1>
+            {/* <h2 className="text-2xl font-bold mb-6">Welcome back!</h2>
+            <h3 className="text-2xl font-semibold mb-4">Please sign in to your account</h3> */}
             <p className="text-blue-100 mb-8">
               Monitor vulnerabilities, prioritize risks, and streamline remediation efforts with our intuitive Vulnerability Dashboard.
             </p>

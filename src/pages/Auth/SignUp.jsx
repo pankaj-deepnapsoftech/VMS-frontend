@@ -26,8 +26,10 @@ function SignUp() {
         {/* Left Side - Welcome Section */}
         <div className="w-full md:w-1/2 bg-[#015289] p-12 text-white flex flex-col">
           <div className="flex-1">
-            <h2 className="text-4xl font-bold mb-6">Join us !</h2>
-            <h3 className="text-2xl font-semibold mb-4">Create your account today</h3>
+            <h2 className="text-4xl font-bold mb-3">Secure&</h2>
+            <h3 className="text-2xl font-semibold mb-4">Continuous Threat Exposure Management Platform</h3>
+
+            <p className="text-white mb-2 text-xl">Join Us !</p>
             <p className="text-blue-100 mb-8">
               Get started with our platform and unlock a world of possibilities. Identify vulnerabilities, prioritize risks, and strengthen your security with our powerful Vulnerability Dashboard.
             </p>

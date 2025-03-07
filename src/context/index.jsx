@@ -9,6 +9,7 @@ import { ApplicationVulnerabilityContext } from "./ApplicationVulnerabilityConte
 import SchedulingAssesmentContext, { AssesmentContext } from "./SchedulingAssesmentContext/SchedulingAssesmentContext";
 import { RemeditionContext } from "./RemeditionContext/RemeditionContext";
 import { ExceptionContext } from "./ExceptionContext/ExceptionContext";
+import { ReportContext } from "./ReportContext/ReportContext";
 
 
 

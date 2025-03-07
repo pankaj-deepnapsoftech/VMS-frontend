@@ -269,28 +269,31 @@ export function VulnerabilityData() {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <div className=" w-full flex  justify-end gap-2">
+            {authenticate.role === "Admin" ? (
+               <div className=" w-full flex  justify-end gap-2">
 
-              <select
-                name='Get Organization '
-                value={selected}
-                onChange={(e) => {
-                  setSelected(e.target.value)
-                  GetAssetsOpenIssues(e.target.value)
-                }}
-                className=' px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition'
-                id="Select_Tester">
-                <option value="" selected disabled> -- Select  Organization -- </option>
-
-                {getOrganizationData?.map((itm, idx) => (<option key={idx} value={itm}>{itm}</option>))}
-
-              </select>
-              <button className="p-1   bg-[#015289] text-white text-xs rounded-lg hover:bg-blue-700 transition"
-                onClick={() => {
-                  AllVulnerablilty()
-                  setSelected("")
-                }}>Clear Filter</button>
-            </div>
+               <select
+                 name='Get Organization '
+                 value={selected}
+                 onChange={(e) => {
+                   setSelected(e.target.value)
+                   GetAssetsOpenIssues(e.target.value)
+                 }}
+                 className=' px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition'
+                 id="Select_Tester">
+                 <option value="" selected disabled> -- Select  Organization -- </option>
+ 
+                 {getOrganizationData?.map((itm, idx) => (<option key={idx} value={itm}>{itm}</option>))}
+ 
+               </select>
+               <button className="p-1   bg-[#015289] text-white text-xs rounded-lg hover:bg-blue-700 transition"
+                 onClick={() => {
+                   AllVulnerablilty()
+                   setSelected("")
+                 }}>Clear Filter</button>
+             </div>
+            ) : null}
+           
           </div>
 
           {/* 📊 Table */}

@@ -37,7 +37,9 @@ const AppRoutes = () => {
       case "ClientSME":
         return ClientSmeRoutes;
       case "ClientCISO":
-        return ClientCisoRoutes;
+        return authenticate.employee_approve
+        ? ClientCisoRoutes
+        : [{ path: "/", element: <UnauthorizedAccessPage /> }];
       default:
         return [{ path: "/", element: <UnauthorizedAccessPage /> }];
     }
