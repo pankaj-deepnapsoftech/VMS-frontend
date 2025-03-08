@@ -44,8 +44,8 @@ function Header({ setShowMenu }) {
       navList = ClientSmeList; // Define if ClientSME has a specific list
       break;
     default:
-     // console.log("Invalid Role: Access Denied");
-     toast.error("Invalid Role: Access Denied");
+      // console.log("Invalid Role: Access Denied");
+      toast.error("Invalid Role: Access Denied");
   }
 
 
@@ -59,7 +59,7 @@ function Header({ setShowMenu }) {
           className="flex items-center p-5 space-x-2 "
         >
           <BiBarChartAlt2 className="h-6 w-6" />
-          <h1 className="text-xl font-semibold">Secure Vision</h1>
+          <h1 className="text-xl font-semibold">Secure&</h1>
         </Link >
         <hr className="border-gray-100 mx-8" />
 

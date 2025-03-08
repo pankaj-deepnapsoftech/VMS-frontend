@@ -22,6 +22,7 @@ function Remedition() {
 
   const { token } = useAuthContext()
 
+  
   useEffect(() => {
     if (token && datafetchCount === 0) {
       JiraDataTargetsStatus()
@@ -108,16 +109,13 @@ function Remedition() {
 
           {/* Critical Vulnerabilities */}
           <div className="bg-white border scale-95  border-gray-200 rounded-lg">
-
-
-
-            <div className="w-full  bg-white  rounded-2xl overflow-hidden">
-              <h2 className="text-sm p-4 font-medium text-gray-900">Critical Vulnerability Groups by Assignment Group</h2>
+              <div className="w-full  bg-white  rounded-2xl overflow-hidden">
+              <h2 className="text-sm p-4 font-semibold text-gray-900">Critical Vulnerability Groups by Assignment Group</h2>
               <table className="w-full border-collapse">
                 <thead className="">
                   <tr>
-                    <th className="px-5 text-left">Department Name</th>
-                    <th className=" text-left">Count</th>
+                    <th className="px-5 text-left text-xs font-normal">Department Name</th>
+                    <th className=" text-left text-xs font-normal">Count</th>
                   </tr>
                 </thead>
                 <tbody>

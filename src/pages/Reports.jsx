@@ -18,6 +18,7 @@ const Reports = () => {
   const [orgData, setOrgData] = useState([]);
   const [reportData, setReportData] = useState([]);
   const [filterData, setFilterData] = useState([]);
+
   const { token, authenticate } = useAuthContext();
   const [file, setFile] = useState("");
   const [isEdit, setIsEdit] = useState(false);
@@ -175,8 +176,8 @@ const Reports = () => {
   };
 
   const handleEdit = (report) => {
-    setEditData(report); 
-    setIsEdit(true); 
+    setEditData(report);
+    setIsEdit(true);
     setIsModalOpen(true);
   };
 
@@ -187,9 +188,10 @@ const Reports = () => {
         {authenticate.role === "Assessor" ? (
           <div className="flex w-full lg:justify-end items-center py-2 gap-2">
             <button
-              onClick={() => {
-                setIsEdit(false); 
-                setIsModalOpen(true); 
+              onClick={(e) => {
+                e.preventDefault();
+                setIsEdit(false);
+                setIsModalOpen(true);
               }}
               className="px-4 py-2 bg-[#015289] text-white text-sm font-medium rounded-md flex items-center hover:bg-[#014173]"
             >
@@ -203,25 +205,25 @@ const Reports = () => {
       {/* Filter Inputs */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         {(authenticate.role === "Admin" || authenticate.role != "Assessor") ? (
-           <input
-           type="text"
-           placeholder="Filter by Creator Name"
-           className="p-2 border border-gray-300 rounded-lg"
-           value={creatorFilter}
-           onChange={(e) => setCreatorFilter(e.target.value)}
-         />
-        ) :null}
-       
-        {(authenticate.role === "Admin" || authenticate.role === "Assessor") ? (
-           <input
-           type="text"
-           placeholder="Filter by Organization Name"
-           className="p-2 border border-gray-300 rounded-lg"
-           value={orgFilter}
-           onChange={(e) => setOrgFilter(e.target.value)}
-         />
+          <input
+            type="text"
+            placeholder="Filter by Creator Name"
+            className="p-2 border border-gray-300 rounded-lg"
+            value={creatorFilter}
+            onChange={(e) => setCreatorFilter(e.target.value)}
+          />
         ) : null}
-       
+
+        {(authenticate.role === "Admin" || authenticate.role === "Assessor") ? (
+          <input
+            type="text"
+            placeholder="Filter by Organization Name"
+            className="p-2 border border-gray-300 rounded-lg"
+            value={orgFilter}
+            onChange={(e) => setOrgFilter(e.target.value)}
+          />
+        ) : null}
+
         <input
           type="date"
           placeholder="Filter by Date"
@@ -279,7 +281,7 @@ const Reports = () => {
 
                   {/* View Report Button */}
                   <td className="px-4 py-4 text-center whitespace-nowrap text-sm text-gray-900">
-                    <button
+                    {/* <button
                       onClick={() => {
                         setFile(report?.file);
                         setIsReportOpen(true);
@@ -287,7 +289,10 @@ const Reports = () => {
                       className="bg-blue-500 text-gray-50 px-4 rounded hover:bg-blue-600 py-1"
                     >
                       View Report
-                    </button>
+                    </button> */}
+                    <a href={report?.file} target="_blank" className="bg-blue-500 text-gray-50 px-4 py-1 rounded  ">
+                      View Report
+                    </a>
                   </td>
 
                   {/* Actions */}

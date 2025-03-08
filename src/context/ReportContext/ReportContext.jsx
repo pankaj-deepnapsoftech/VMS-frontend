@@ -7,6 +7,7 @@ export const ReportContext = createContext();
 const ReportContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [reportData, setReportData] = useState([]);
+  
   const [page, setPage] = useState(1); // Pagination support if needed
   const { token } = useAuthContext();
 
