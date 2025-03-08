@@ -2,7 +2,7 @@ import React, { Suspense, useEffect, useState } from "react";
 import { BiSearch, BiEditAlt, BiPlus, BiSave } from "react-icons/bi";
 import { RiDeleteBinFill } from "react-icons/ri";
 import { MdClose } from "react-icons/md";
-import { useAllEmployeeContext, useAuthContext, useVulnerabililtyDataContext } from "@/context";
+import { useAllEmployeeContext, useAuthContext, useDataContext, useVulnerabililtyDataContext } from "@/context";
 import { Formik, Form, Field } from "formik";
 import * as XLSX from "xlsx";
 import { WorkItemValidation } from "@/Validation/VulnerabililtyDataValidation";
@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import Loader from "@/components/Loader/Loader";
 import Exceptions from "./Exceptions";
 import InputField from "@/components/InputField";
+import { Modal } from "@/components/modal/FileUploadModal";
 
 export function VulnerabilityData() {
 
@@ -67,6 +68,7 @@ export function VulnerabilityData() {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isRUModalOpen, setIsRUModalOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [selectAll, setSelectAll] = useState(false);
@@ -193,7 +195,7 @@ export function VulnerabilityData() {
   let statusList = ["Open", "Closed", "Fix", "Re-Open", "On-Hold", "Exception"];
 
 
-
+  const { UploadBulkData } = useDataContext()
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -207,27 +209,49 @@ export function VulnerabilityData() {
             <div className="lg:flex lg:flex-row grid grid-cols-2 gap-4 mt-4   w-full lg:justify-end  lg:items-center py-2 lg:gap-2">
               <button
                 onClick={() => openModal()}
-                className="px-4 py-2  bg-[#015289] text-white lg:text-sm  text-xs font-medium rounded-md flex items-center"
-              >
+                className="px-4 py-2 bg-[#015289] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row">
                 <BiPlus className="h-6 w-6 mr-1" />
                 Add Vulnerability
               </button>
               <button
                 onClick={() => handleBulkAssignTask()}
-                className="px-4 py-2 bg-[#015289] text-white text-sm font-medium rounded-md flex items-center"
+                className="px-4 py-2 bg-[#015289] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
               >
                 <BsPersonCheckFill className="h-6 w-6 mr-1" />
                 Bulk Task Assign
               </button>
               <button
                 onClick={() => handleDownload(filteredData)}
-                className="px-4 py-2 bg-[#015289] text-white text-sm font-medium rounded-md flex items-center"
+                className="px-4 py-2 bg-[#015289] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
               >
                 <BiSave className="h-6 w-6 mr-1" />
                 Export Data
               </button>
+
+              {authenticate.role !== "ClientCISO" &&
+
+
+                <button
+                  onClick={() => setIsRUModalOpen(true)}
+                  className="px-4 py-2 bg-[#015289] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
+                >
+                  <BiPlus className="h-6 w-6" />
+                  Report Upload
+                </button>
+              }
+
+
+              <Modal
+                isOpen={isRUModalOpen}
+                onClose={() => setIsRUModalOpen(false)}
+                title="Report Upload"
+                method={UploadBulkData}
+                subtitle=" please upload an Excel file in XLSX or XLS format. Ensure the file is properly formatted and contains all necessary data for processing."
+              />
             </div>
           </div>
+
+
 
 
           {/* top 5 Vulnerability */}
@@ -238,9 +262,9 @@ export function VulnerabilityData() {
               <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
                 <thead>
                   <tr className="bg-[#015289] text-gray-100 uppercase text-sm">
-                    <th className="py-2 px-4 border-b">Top Vulnerability </th>
+                    <th className="py-2 px-4 border-b">Top Vulnerabilities </th>
                     <th className="py-2 px-4 border-b">Vulnerability Name</th>
-                    <th className="py-2 px-4 border-b">Total Vulnerability Instance </th>
+                    <th className="py-2 px-4 border-b">Total Vulnerability Instances </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -270,30 +294,30 @@ export function VulnerabilityData() {
               />
             </div>
             {authenticate.role === "Admin" ? (
-               <div className=" w-full flex  justify-end gap-2">
+              <div className=" w-full flex  justify-end gap-2">
 
-               <select
-                 name='Get Organization '
-                 value={selected}
-                 onChange={(e) => {
-                   setSelected(e.target.value)
-                   GetAssetsOpenIssues(e.target.value)
-                 }}
-                 className=' px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition'
-                 id="Select_Tester">
-                 <option value="" selected disabled> -- Select  Organization -- </option>
- 
-                 {getOrganizationData?.map((itm, idx) => (<option key={idx} value={itm}>{itm}</option>))}
- 
-               </select>
-               <button className="p-1   bg-[#015289] text-white text-xs rounded-lg hover:bg-blue-700 transition"
-                 onClick={() => {
-                   AllVulnerablilty()
-                   setSelected("")
-                 }}>Clear Filter</button>
-             </div>
+                <select
+                  name='Get Organization '
+                  value={selected}
+                  onChange={(e) => {
+                    setSelected(e.target.value)
+                    GetAssetsOpenIssues(e.target.value)
+                  }}
+                  className=' px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition'
+                  id="Select_Tester">
+                  <option value="" selected disabled> -- Select  Organization -- </option>
+
+                  {getOrganizationData?.map((itm, idx) => (<option key={idx} value={itm}>{itm}</option>))}
+
+                </select>
+                <button className="p-1   bg-[#015289] text-white text-xs rounded-lg hover:bg-blue-700 transition"
+                  onClick={() => {
+                    AllVulnerablilty()
+                    setSelected("")
+                  }}>Clear Filter</button>
+              </div>
             ) : null}
-           
+
           </div>
 
           {/* 📊 Table */}
@@ -577,6 +601,6 @@ export function VulnerabilityData() {
             </button>
           </div>
         </div>}
-    </Suspense>
+    </Suspense >
   );
 }

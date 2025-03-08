@@ -10,6 +10,7 @@ import SchedulingAssesmentContext, { AssesmentContext } from "./SchedulingAssesm
 import { RemeditionContext } from "./RemeditionContext/RemeditionContext";
 import { ExceptionContext } from "./ExceptionContext/ExceptionContext";
 import { ReportContext } from "./ReportContext/ReportContext";
+import { InfrastructureVulnerabilityContext } from "./InfrastructureVulnerabilityContext/InfrastructureVulnerabilityContext";
 
 
 
@@ -28,6 +29,8 @@ export { default as ApplicationVulnerabilityContextProvider } from "./Applicatio
 export { default as SchedulingAssesmentContextProvider } from "./SchedulingAssesmentContext/SchedulingAssesmentContext";
 export { default as RemeditionContextProvider } from "./RemeditionContext/RemeditionContext";
 export { default as ExceptionContextProvider } from "./ExceptionContext/ExceptionContext";
+
+export { default as InfrastructureVulnerabilityContextProvider } from "./InfrastructureVulnerabilityContext/InfrastructureVulnerabilityContext"
 
 
 
@@ -48,6 +51,8 @@ export const useRemeditionContext = () =>
 	useContext(RemeditionContext)
 export const useExceptionContext = () =>
 	useContext(ExceptionContext)
+export const useInfrastructureVulnerabilityContext = () =>
+	useContext(InfrastructureVulnerabilityContext)
 
 
 

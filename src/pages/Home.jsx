@@ -14,7 +14,7 @@ import { Loader } from '@/constants/Components-lazy-loading/components.Lazy';
 
 function Home() {
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+
 
 
   const {
@@ -38,6 +38,8 @@ function Home() {
   vulnerableItemsByAgeData.Low,
   vulnerableItemsByAgeData.Info,
   ]
+
+  console.log("vulnerableItemsByAgeData", vulnerableItemsByRiskRatingData)
 
   const newData = vulnerableItemsByRiskRatingData?.map((item) => ({ date: item.month, Critical: item.critical, High: item.high, Medium: item.medium, Low: item.low, info: item.informational }))
 
@@ -92,29 +94,9 @@ function Home() {
     <>
       <div className="min-h-screen bg-gray-100 px-6 ">
 
-        {/* Navigation */}
-
-        <div className='flex justify-end items-center py-4'>
-
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="px-4 py-2 bg-[#015289] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
-          >
-            <BiPlus className="h-6 w-6" />
-            Report Upload
-          </button>
-        </div>
-
-
-        <Modal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          title="Report Upload"
-          subtitle=" please upload an Excel file in XLSX or XLS format. Ensure the file is properly formatted and contains all necessary data for processing."
-        />
 
         {/* Metrics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 py-6">
           {metrics.map((metric, index) => (
             <Card key={index} data={metric} />
           ))}
@@ -175,7 +157,7 @@ function Home() {
           <div className="bg-white shadow rounded-lg flex justify-center flex-col items-center hover:scale-95  transition ">
             <h3 className="text-gray-700 text-lg font-semibold mb-2">Open and Closed Vulnerable Items</h3>
             <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={newAndCloseVulnerableData}>
+              <BarChart data={newAndCloseVulnerableData} barSize={40}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="month" />
                 <YAxis />

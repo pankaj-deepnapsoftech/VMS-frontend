@@ -12,10 +12,11 @@ export const Modal = ({
   onClose,
   title,
   subtitle,
+  method
 }) => {
 
 
-  const { UploadBulkData } = useDataContext()
+
 
   const fileInputRef = useRef(null);
 
@@ -27,7 +28,10 @@ export const Modal = ({
 
   const handleFileChange = (e) => {
     const files = e.target.files[0];
-    UploadBulkData(files);
+
+    method(files);
+
+ 
     if (files && files.length > 0) {
       // Handle the selected files here
 

@@ -19,22 +19,28 @@ export const list = [
     { title: "Application Vulnerability", route: "/application-vulnerability", icon: MdOutlineMiscellaneousServices },
     { title: "Infrastructure Vulnerability ", route: "/infrastructure-vulnerability", icon: GrVulnerability },
     { title: "Exceptions", route: "/exceptions", icon: AiOutlineException },
-    { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
-    { title: "Reports", route: "/reports", icon: TbReport  },
+    // { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
+    { title: "Reports", route: "/reports", icon: TbReport },
 ];
 
 
 export const EmployeeList = [
     { title: "Dashboard", route: "/", icon: BiSolidDashboard },
     { title: "All Tasks", route: "/all-employee-tasks", icon: IoShieldHalf },
-    { title: "Reports", route: "/reports", icon: TbReport  },
+    { title: "Reports", route: "/reports", icon: TbReport },
 
 ]
 
 export const ClientSmeList = [
     { title: "Dashboard", route: "/", icon: BiSolidDashboard },
     { title: "Scheduling Assesment", route: "/scheduling-assesment", icon: BiSolidDashboard },
-    
+    { title: "Vulnerability Data", route: "/vulnerability-data", icon: IoShield },
+    { title: "Application Vulnerability", route: "/application-vulnerability", icon: MdOutlineMiscellaneousServices },
+    { title: "Infrastructure Vulnerability ", route: "/infrastructure-vulnerability", icon: GrVulnerability },
+    { title: "Exceptions", route: "/exceptions", icon: AiOutlineException },
+    { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
+    { title: "Reports", route: "/reports", icon: TbReport },
+
 
 ]
 
@@ -48,7 +54,7 @@ export const ClientCisoList = [
     { title: "Infrastructure Vulnerability ", route: "/infrastructure-vulnerability", icon: GrVulnerability },
     { title: "Exceptions", route: "/exceptions", icon: AiOutlineException },
     { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
-    { title: "Reports", route: "/reports", icon: TbReport  },
+    { title: "Reports", route: "/reports", icon: TbReport },
 
 ]
 
