@@ -32,7 +32,7 @@ const AuthContextProvider = ({ children }) => {
 
   const Signin = async (data) => {
     const toastId = toast.loading("Loading...");
-    console.log("data,sign in", data)
+
 
     setLoading(true);
     try {
@@ -40,16 +40,19 @@ const AuthContextProvider = ({ children }) => {
       AxiosHandler.defaults.headers.authorization = `Bearer ${res.data.token}`;
       Cookies.set("token", res.data.token, { expires: 1 });
       setToken(res.data.token);
-      navigate("/");
+      console.log("sign in data ", res.data)
+      if (!res.data.user.email_verification) {
+        navigate("/verify-otp");
+        ResendOtp()
+      } else {
+
+        navigate("/");
+      }
       toast.dismiss(toastId);
       toast.success(res.data.message);
     } catch (error) {
-      //console.log(error)
-      if (error?.response?.data?.message === "User email not Verifyed") {
-        navigate("/verify-otp");
-        ResendOtpWithoutLogin(data.email);
+      console.log("error data", error)
 
-      }
       toast.dismiss(toastId);
       toast.error(error?.response?.data?.message || "something went wrong please try again...");
 
@@ -140,23 +143,23 @@ const AuthContextProvider = ({ children }) => {
   };
 
 
-  const ResendOtpWithoutLogin = async (email) => {
-    const toastId = toast.loading("Loading...");
-    console.log("email :", email)
-    setLoading(true);
-    try {
-      const res = await AxiosHandler.post("/auth/resend-without-login",
-        { "email": email });
-      toast.dismiss(toastId);
-      toast.success(res.data.message);
+  // const ResendOtpWithoutLogin = async (email) => {
+  //   const toastId = toast.loading("Loading...");
+  //   console.log("email :", email)
+  //   setLoading(true);
+  //   try {
+  //     const res = await AxiosHandler.post("/auth/resend-without-login",
+  //       { "email": email });
+  //     toast.dismiss(toastId);
+  //     toast.success(res.data.message);
 
-    } catch (error) {
-      toast.dismiss(toastId);
-      toast.error(error?.response?.data?.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  //   } catch (error) {
+  //     toast.dismiss(toastId);
+  //     toast.error(error?.response?.data?.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
 
   const ResendOtp = async () => {
