@@ -14,6 +14,8 @@ const AuthContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [userLoading, setUserLoading] = useState(false);
 
+
+
   const [authenticate, setAuthenticate] = useState(null);
 
   const getLogedInUser = async () => {
@@ -30,6 +32,7 @@ const AuthContextProvider = ({ children }) => {
 
   const Signin = async (data) => {
     const toastId = toast.loading("Loading...");
+    console.log("data,sign in", data)
 
     setLoading(true);
     try {
@@ -44,6 +47,8 @@ const AuthContextProvider = ({ children }) => {
       //console.log(error)
       if (error?.response?.data?.message === "User email not Verifyed") {
         navigate("/verify-otp");
+        ResendOtpWithoutLogin(data.email);
+
       }
       toast.dismiss(toastId);
       toast.error(error?.response?.data?.message || "something went wrong please try again...");
@@ -135,6 +140,25 @@ const AuthContextProvider = ({ children }) => {
   };
 
 
+  const ResendOtpWithoutLogin = async (email) => {
+    const toastId = toast.loading("Loading...");
+    console.log("email :", email)
+    setLoading(true);
+    try {
+      const res = await AxiosHandler.post("/auth/resend-without-login",
+        { "email": email });
+      toast.dismiss(toastId);
+      toast.success(res.data.message);
+
+    } catch (error) {
+      toast.dismiss(toastId);
+      toast.error(error?.response?.data?.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
   const ResendOtp = async () => {
     const toastId = toast.loading("Loading...");
 
@@ -190,7 +214,8 @@ const AuthContextProvider = ({ children }) => {
       Signup,
       Logout,
       token,
-      authenticate
+      authenticate,
+
     }}>
       {children}
     </authContext.Provider>
