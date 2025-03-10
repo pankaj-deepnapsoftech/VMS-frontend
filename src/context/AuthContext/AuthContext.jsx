@@ -42,8 +42,12 @@ const AuthContextProvider = ({ children }) => {
       toast.success(res.data.message);
     } catch (error) {
       //console.log(error)
+      if (error?.response?.data?.message === "User email not Verifyed") {
+        navigate("/verify-otp");
+      }
       toast.dismiss(toastId);
       toast.error(error?.response?.data?.message || "something went wrong please try again...");
+
     } finally {
       setLoading(false);
     }

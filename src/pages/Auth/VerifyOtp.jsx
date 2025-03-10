@@ -10,8 +10,17 @@ function VerifyOtp() {
 
     const { verifyotp, ResendOtp, loading } = useAuthContext()
 
-    const [timer, setTimer] = useState(60   ); // Initial timer (in seconds)
+    const [timer, setTimer] = useState(60); // Initial timer (in seconds)
     const [isResendDisabled, setIsResendDisabled] = useState(true);
+
+    const [apifetch, setApiFetch] = useState(true)
+
+    useEffect(() => {
+        if (apifetch) {
+            ResendOtp()
+            setApiFetch(false)
+        }
+    }, [])
 
     useEffect(() => {
         let interval = null;
