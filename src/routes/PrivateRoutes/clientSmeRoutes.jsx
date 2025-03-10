@@ -1,6 +1,7 @@
 import ApplicationVulnerability from "@/pages/ApplicationVulnerability";
 import ClientDashboard from "@/pages/ClientDashboard";
 import Exceptions from "@/pages/Exceptions";
+import Home from "@/pages/Home";
 import InfrastructureVulnerability from "@/pages/InfrastructureVulnerability";
 import Remedition from "@/pages/Remedition";
 import Reports from "@/pages/Reports";
@@ -10,8 +11,8 @@ import { VulnerabilityData } from "@/pages/VulnerablityData";
 
 export const ClientSmeRoutes = [
     {
-        path: "/",
-        element: <ClientDashboard />
+        path: "",
+        element: <Home />
     },
     {
         path: "/scheduling-assesment",

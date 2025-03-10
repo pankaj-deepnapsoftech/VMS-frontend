@@ -2,6 +2,7 @@ import AllEmployee from "@/pages/AllEmployee";
 import ApplicationVulnerability from "@/pages/ApplicationVulnerability";
 import ClientDashboard from "@/pages/ClientDashboard";
 import Exceptions from "@/pages/Exceptions";
+import Home from "@/pages/Home";
 import InfrastructureVulnerability from "@/pages/InfrastructureVulnerability";
 import Remedition from "@/pages/Remedition";
 import Reports from "@/pages/Reports";
@@ -11,8 +12,8 @@ import { VulnerabilityData } from "@/pages/VulnerablityData";
 
 export const ClientCisoRoutes = [
     {
-        path: "/",
-        element: <ClientDashboard />
+        path: "",
+        element: <Home />
     },
     {
         path: "/scheduled-tasks",

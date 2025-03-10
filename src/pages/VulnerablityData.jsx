@@ -192,7 +192,7 @@ export function VulnerabilityData() {
 
   const [selected, setSelected] = useState("");
 
-  let statusList = ["Open", "Closed", "Fix", "Re-Open", "On-Hold", "Exception"];
+  let statusList = ["Open", "Closed", "Fix", "Re Open", "On Hold", "Exception","In Progress"];
 
 
   const { UploadBulkData } = useDataContext()

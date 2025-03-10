@@ -25,14 +25,14 @@ export const list = [
 
 
 export const EmployeeList = [
-    { title: "Dashboard", route: "/", icon: BiSolidDashboard },
+    { title: "Dashboard", route: "", icon: BiSolidDashboard },
     { title: "All Tasks", route: "/all-employee-tasks", icon: IoShieldHalf },
     { title: "Reports", route: "/reports", icon: TbReport },
 
 ]
 
 export const ClientSmeList = [
-    { title: "Dashboard", route: "/", icon: BiSolidDashboard },
+    { title: "Dashboard", route: "", icon: BiSolidDashboard },
     { title: "Scheduling Assesment", route: "/scheduling-assesment", icon: BiSolidDashboard },
     { title: "Vulnerability Data", route: "/vulnerability-data", icon: IoShield },
     { title: "Application Vulnerability", route: "/application-vulnerability", icon: MdOutlineMiscellaneousServices },
@@ -46,7 +46,8 @@ export const ClientSmeList = [
 
 
 export const ClientCisoList = [
-    { title: "Dashboard", route: "/", icon: BiSolidDashboard },
+    // { title: "Dashboard", route: "/", icon: BiSolidDashboard },
+    { title: "Dashboard", route: "", icon: BiSolidDashboard },
     { title: "Scheduled Tasks", route: "/scheduled-tasks", icon: IoShieldHalf },
     { title: "All Employee", route: "/all-employee", icon: FaPerson },
     { title: "Vulnerability Data", route: "/vulnerability-data", icon: IoShield },
