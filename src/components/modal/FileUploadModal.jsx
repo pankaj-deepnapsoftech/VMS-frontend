@@ -28,10 +28,10 @@ export const Modal = ({
 
   const handleFileChange = (e) => {
     const files = e.target.files[0];
-
+    console.log(files, "method name")
     method(files);
 
- 
+
     if (files && files.length > 0) {
       // Handle the selected files here
 
