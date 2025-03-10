@@ -22,7 +22,7 @@ function Remedition() {
 
   const { token } = useAuthContext()
 
-  
+
   useEffect(() => {
     if (token && datafetchCount === 0) {
       JiraDataTargetsStatus()
@@ -67,9 +67,11 @@ function Remedition() {
   ];
 
   var size = criticalVulnerabilitycountData.Totalcount
+
+  console.log("criticalVulnerabilitycountData :", criticalVulnerabilitycountData)
   return (
 
-    
+
     <div className="min-h-screen bg-gray-50 p-8 ">
 
 
@@ -111,7 +113,7 @@ function Remedition() {
 
           {/* Critical Vulnerabilities */}
           <div className="bg-white border scale-95  border-gray-200 rounded-lg">
-              <div className="w-full  bg-white  rounded-2xl overflow-hidden">
+            <div className="w-full  bg-white  rounded-2xl overflow-hidden">
               <h2 className="text-sm p-4 font-semibold text-gray-900">Critical Vulnerability Groups by Assignment Group</h2>
               <table className="w-full border-collapse">
                 <thead className="">
@@ -122,7 +124,7 @@ function Remedition() {
                 </thead>
                 <tbody>
                   {Object.entries(criticalVulnerabilitycountData)?.map(([key, value], index) => (
-                    <tr
+                    key === "Totalcount" ? "" : <tr
                       key={key}
                       className={index % 2 === 0 ? "bg-gray-50" : "bg-gray-100"}
                     >

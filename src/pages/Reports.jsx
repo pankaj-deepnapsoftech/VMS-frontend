@@ -291,7 +291,7 @@ const Reports = () => {
                       View Report
                     </button> */}
                     <a href={report?.file} target="_blank" className="bg-blue-500 text-gray-50 px-4 py-1 rounded  ">
-                      View Report
+                      Download Report
                     </a>
                   </td>
 

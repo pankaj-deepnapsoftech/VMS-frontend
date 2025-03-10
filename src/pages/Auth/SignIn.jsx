@@ -3,8 +3,23 @@ import { useAuthContext } from '@/context';
 import { SignInValidation } from '@/Validation/AuthValidation';
 import { useFormik } from 'formik';
 import React, { useState } from 'react';
-import { FaEye, FaEyeSlash, FaFacebook, FaChartLine, FaEnvelope, FaLock } from 'react-icons/fa';
+import {
+  FaEye,
+  FaEyeSlash,
+  FaFacebook,
+  FaChartLine,
+  FaEnvelope,
+  FaShieldAlt,
+  FaUserShield,
+  FaVirus,
+  FaLock,
+  FaFingerprint,
+  FaShieldVirus,
+  FaSatelliteDish,
+  FaCloud
+} from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { BiNetworkChart } from 'react-icons/bi';
 
 function SignIn() {
   const { Signin, loading } = useAuthContext()
@@ -16,7 +31,7 @@ function SignIn() {
     initialValues: { email: "", password: "" },
     validationSchema: SignInValidation,
     onSubmit: (value) => {
-      
+
       Signin(value)
     }
   })
@@ -115,34 +130,66 @@ function SignIn() {
         </div>
 
         {/* Right Side - Welcome Section */}
-        <div className="w-full md:w-1/2 bg-[#015289] p-12 text-white flex flex-col">
-          <div className="flex-1">
-          <h1 className="text-4xl font-bold  text-white mb-2">Secure&</h1>
-          <h1 className="text-xl font-bold  text-blue-50 mb-2">Continuous Threat Exposure Management Platform</h1>
-            {/* <h2 className="text-2xl font-bold mb-6">Welcome back!</h2>
-            <h3 className="text-2xl font-semibold mb-4">Please sign in to your account</h3> */}
-            <p className="text-blue-100 mb-8">
-              Monitor vulnerabilities, prioritize risks, and streamline remediation efforts with our intuitive Vulnerability Dashboard.
-            </p>
-
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h4 className="font-semibold">Vulnerabilities Report</h4>
-                <FaChartLine className="text-blue-200" />
+        <div className="h-screen border-l-4">
+          <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            {/* Header Section */}
+            <div className="text-center mb-16">
+              <div className="flex items-center justify-center mb-4">
+                <FaShieldAlt className="h-14 w-14 text-blue-600" />
+                <h1 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400 tracking-tight ml-2">
+                  SECURE&
+                </h1>
               </div>
-              <div className="space-y-4">
-                <div className="h-32 flex items-end gap-2">
-                  {[60, 45, 75, 50, 65, 40, 55, 70, 45, 60].map((height, i) => (
-                    <div
-                      key={i}
-                      className="flex-1 bg-white/20 rounded-t"
-                      style={{ height: `${height}%` }}
-                    ></div>
-                  ))}
-                </div>
-                <div className="flex justify-between text-sm text-blue-200">
-                  <span>Jan</span>
-                  <span>Dec</span>
+              <p className="text-xl text-gray-600  ml-14 font-light">
+                Beyond security, a Strategy
+              </p>
+            </div>
+
+            {/* Main Title */}
+            <div className="text-center mb-20">
+              <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-4 leading-tight">
+                AI POWERED RISK PRIORITIZATION AND
+                <br />
+                REMEDIATION PLATFORM
+              </h2>
+            </div>
+
+            {/* Illustration Section */}
+            <div className="relative">
+              {/* Background Pattern */}
+              <div className="absolute inset-0 z-0">
+                <BiNetworkChart className="w-full h-full text-blue-100 opacity-30" />
+              </div>
+
+              {/* Main Content */}
+              <div className="relative z-10">
+                {/* Security Features Grid */}
+
+
+                {/* Central Visualization */}
+                <div className="flex justify-center items-center gap-20">
+                  {/* Threat Side */}
+                  <div className="relative">
+                    <div className="animate-pulse">
+                      <FaVirus className="h-20 w-20 text-red-500" />
+                    </div>
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                      <div className="w-40 h-40 border-2 border-red-200 rounded-full animate-ping opacity-20" />
+                      <div className="w-32 h-32 border-2 border-red-300 rounded-full animate-ping opacity-30 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+                      <div className="w-24 h-24 border-2 border-red-400 rounded-full animate-ping opacity-40 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+                    </div>
+                  </div>
+
+                  {/* Protection Visualization */}
+                  <div className="bg-white p-8 rounded-xl shadow-xl relative group hover:shadow-2xl transition-all duration-300">
+                    <FaUserShield className="h-20 w-20 text-blue-600" />
+                    <div className="absolute -top-3 -right-3 transform rotate-12 group-hover:rotate-0 transition-transform duration-300">
+                      <FaShieldVirus className="h-10 w-10 text-green-500" />
+                    </div>
+                    <div className="absolute -bottom-3 -right-3">
+                      <FaLock className="h-8 w-8 text-blue-400" />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -154,3 +201,10 @@ function SignIn() {
 }
 
 export default SignIn;
+
+
+
+
+
+
+

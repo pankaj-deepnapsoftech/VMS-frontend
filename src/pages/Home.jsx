@@ -47,6 +47,18 @@ function Home() {
   //console.log("cardData", cardData)
   const metrics = [
     {
+      title: 'Number of Application',
+      value: 8,
+
+      icon: IoShieldOutline
+    },
+    {
+      title: ' Infrastructure IPs',
+      value: cardData?.closed,
+
+      icon: IoShieldOutline
+    },
+    {
       title: ' Total Vulnerability',
       value: cardData?.totalData,
 
@@ -96,7 +108,7 @@ function Home() {
 
 
         {/* Metrics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 py-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 py-6">
           {metrics.map((metric, index) => (
             <Card key={index} data={metric} />
           ))}

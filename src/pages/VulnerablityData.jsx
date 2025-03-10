@@ -55,7 +55,9 @@ export function VulnerabilityData() {
 
   useEffect(() => {
 
-    authenticate?.role === "Admin" ? AllVulnerablilty(page) : OrgAllVulnerablilty(page);
+    authenticate?.role === "Admin" ?
+     AllVulnerablilty(page)
+      : OrgAllVulnerablilty(page);
     if (token && datafetchCount === 0) {
       TopVulnerablilty();
       GetOrganization();
