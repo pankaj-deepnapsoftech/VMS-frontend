@@ -45,8 +45,8 @@ function SchedulingAssessmentPage() {
 
 
 	useEffect(() => {
+		TotalAssessments(page);
 		if (token && datafetchCount === 0) {
-			TotalAssessments();
 			TesterForAssessment();
 			DashboardData();
 			setdatafetchCount(1)
@@ -54,10 +54,10 @@ function SchedulingAssessmentPage() {
 	}, [token, page])
 
 	useEffect(() => {
-		if(token && authenticate?.role === "Admin"){
+		if (token && authenticate?.role === "Admin") {
 			GetOrgnization();
 		}
-	},[token,authenticate])
+	}, [token, authenticate])
 
 
 
@@ -265,7 +265,7 @@ function SchedulingAssessmentPage() {
 										<option value="" disabled> -- Select Orgnization -- </option>
 
 
-										{getOrgnizationData?.map((itm, idx) => (<option key={idx} value={itm._id}>{itm.full_name}</option>))}
+										{getOrgnizationData?.map((itm, idx) => (<option key={idx} value={itm._id}>{itm.Organization}</option>))}
 
 
 

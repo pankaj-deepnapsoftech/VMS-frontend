@@ -30,7 +30,8 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 
 
 
-	const TotalAssessments = async () => {
+	const TotalAssessments = async (page) => {
+		console.log("page", page)
 		setLoading(true);
 		try {
 			const res = await AxiosHandler.get(`/assessment/get?page=${page}&limit=10`);
@@ -55,10 +56,11 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 		}
 	}
 
-	const GetOrgnization = async () => {
+	const GetOrgnization = async (page) => {
 		setLoading(true);
 		try {
-			const res = await AxiosHandler.get(`/employee/get-orgnization`);
+			const res = await AxiosHandler.get(`/auth/all-orgs`);
+			console.log("res get org", res);
 			setGetOrgnizationData(res?.data?.data);
 
 		} catch (error) {

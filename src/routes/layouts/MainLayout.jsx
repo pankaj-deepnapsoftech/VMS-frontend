@@ -52,7 +52,7 @@ const MainLayout = () => {
   return (
     <>
 
-      <aside className={` ${showMenu ? "left-0" : "-left-full"} fixed z-10  w-[70%] flex flex-col justify-between h-screen border-r bg-[#015289] transition duration-300 sm:w-[40%]  md:w-[30%] lg:w-[25%] xl:w-[20%] 2xl:w-[15%] `}>
+      <aside className={` ${showMenu ? "left-0" : "-left-full"} fixed z-10  w-[65%] flex flex-col justify-between h-screen border-r bg-[#015289] transition duration-300 sm:w-[40%]  md:w-[30%] lg:w-[25%] xl:w-[20%] 2xl:w-[15%] `}>
         <Header setShowMenu={() => width > 1023 ? setShowMenu(true) : setShowMenu(!showMenu)} />
       </aside>
       <div className="ml-auto mb-6 lg:w-[75%] xl:w-[80%] 2xl:w-[85%]">

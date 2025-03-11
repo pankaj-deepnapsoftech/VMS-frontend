@@ -50,8 +50,9 @@ function Header({ setShowMenu }) {
 
 
   return (
-    <div className="flex fixed  md:w-[20%] lg:w-[25%] xl:w-[25%] 2xl:w-[20%]  overflow-y-auto">
-      <div className=" flex flex-col text-white pt-8 ">
+    <div className="flex h-screen fixed  overflow-y-auto
+     md:w-[28%] lg:w-[25%] xl:w-[25%] 2xl:w-[20%] ">
+      <div className=" flex flex-col text-white pt-8 h-[100%] hide-scrollbar  overflow-y-auto ">
         < Link
 
           onClick={setShowMenu}
@@ -85,6 +86,7 @@ function Header({ setShowMenu }) {
               className="flex 
               w-full
               px-10
+              my-10
               items-center  
             text-indigo-600
               hover:scale-95 
