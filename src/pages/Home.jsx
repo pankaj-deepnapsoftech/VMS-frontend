@@ -9,6 +9,7 @@ import Card from '@/components/Card';
 import { useAuthContext, useDataContext } from '@/context';
 import { Modal } from '@/components/modal/FileUploadModal';
 import { Loader } from '@/constants/Components-lazy-loading/components.Lazy';
+import NoDataFound from '@/components/NoDataFound';
 
 
 
@@ -104,6 +105,7 @@ function Home() {
 
   return (
     <>
+
       <div className="min-h-screen bg-gray-100 px-6 ">
 
 
