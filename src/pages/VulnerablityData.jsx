@@ -160,6 +160,9 @@ export function VulnerabilityData() {
   };
 
   const handleDownload = (data) => {
+    if(data.length<1){
+     return alert("Don't Have Enough Data to Download")
+    }
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Vulnerabilities");
@@ -208,6 +211,40 @@ export function VulnerabilityData() {
       {loading ?
         <Loader /> :
         <div className="p-4 md:p-6 max-w-[95%] mx-auto bg-white rounded-xl shadow-lg">
+          
+
+
+
+
+          {/* top 5 Vulnerability */}
+
+
+          <div className="py-10 ">
+            <div className="overflow-x-auto">
+              <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
+                <thead className="h-8">
+                  <tr className="bg-[#015289] text-gray-100 uppercase text-sm ">
+                    <th className=" border-b">Top Vulnerabilities </th>
+                    <th className=" border-b">Vulnerability Name</th>
+                    <th className=" border-b">Total Vulnerability Instances </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {vulnerabilities?.map((product, index) => (
+                    <tr key={index} className={`text-center border-b hover:bg-gray-300 ${getRowColor(index)}`}>
+                      <td className="  flex items-center justify-center gap-2">
+                        <FaExclamationTriangle className="text-red-500" /> {index + 1}
+                      </td>
+                      <td className=" ">{product.name}</td>
+                      <td className=" ">{product.count}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+
           {/* 🔍 Search Bar & Buttons */}
           <div className="mb-4 flex flex-col md:flex-row items-start md:items-center justify-between">
 
@@ -253,37 +290,6 @@ export function VulnerabilityData() {
                 method={UploadBulkData}
                 subtitle=" please upload an Excel file in XLSX or XLS format. Ensure the file is properly formatted and contains all necessary data for processing."
               />
-            </div>
-          </div>
-
-
-
-
-          {/* top 5 Vulnerability */}
-
-
-          <div className="py-10 ">
-            <div className="overflow-x-auto">
-              <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
-                <thead>
-                  <tr className="bg-[#015289] text-gray-100 uppercase text-sm">
-                    <th className="py-2 px-4 border-b">Top Vulnerabilities </th>
-                    <th className="py-2 px-4 border-b">Vulnerability Name</th>
-                    <th className="py-2 px-4 border-b">Total Vulnerability Instances </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {vulnerabilities?.map((product, index) => (
-                    <tr key={index} className={`text-center border-b hover:bg-gray-200 ${getRowColor(index)}`}>
-                      <td className="py-2 px-4 flex items-center justify-center gap-2">
-                        <FaExclamationTriangle className="text-red-500" /> {index + 1}
-                      </td>
-                      <td className="py-2 px-4">{product.name}</td>
-                      <td className="py-2 px-4">{product.count}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
             </div>
           </div>
 

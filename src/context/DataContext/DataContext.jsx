@@ -88,6 +88,7 @@ const DataContextProvider = ({ children }) => {
         try {
 
             const res = await AxiosHandler.get("/data/NewAndCloseVulnerable");
+            console.log(res.data,"Chart Data")
             setNewAndCloseVulnerableData(res.data.newData);
         } catch (error) {
             console.log(error)

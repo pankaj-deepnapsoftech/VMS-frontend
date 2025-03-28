@@ -113,8 +113,6 @@ function Home() {
   return (
     <>
       <div className="min-h-screen bg-gray-100 px-6 ">
-
-
         {/* Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 py-3">
           {metrics.map((metric, index) => (
@@ -122,9 +120,62 @@ function Home() {
           ))}
         </div>
 
+        {/* Risk Rating Chart */}
+        <div className="bg-white  py-2 px-3 mt-5 transition">
+          <h3 className="text-lg font-semibold text-sky-700 mb-2">
+            Vulnerable Items by Risk Rating
+          </h3>
+          <hr className="mb-4" />
+          <div className="h-72">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={newData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="date" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Area
+                  type="monotone"
+                  dataKey="Critical"
+                  stackId="1"
+                  stroke="#4B0082" // Indigo
+                  fill="#4B0082"
+                />
+                <Area
+                  type="monotone"
+                  dataKey="High"
+                  stackId="1"
+                  stroke="#DC143C" // Crimson
+                  fill="#DC143C"
+                />
+                <Area
+                  type="monotone"
+                  dataKey="Medium"
+                  stackId="1"
+                  stroke="#FF8C00" // Dark Orange
+                  fill="#FF8C00"
+                />
+                <Area
+                  type="monotone"
+                  dataKey="Low"
+                  stackId="1"
+                  stroke="#1E90FF" // Dodger Blue
+                  fill="#1E90FF"
+                />
+                <Area
+                  type="monotone"
+                  dataKey="info"
+                  stackId="1"
+                  stroke="#228B22" // Forest Green
+                  fill="#228B22"
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
         {/* Charts Section */}
 
-      
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 my-5 ">
           <div className="bg-white px-2 py-2 col-span-2">
             <h3 className="text-sky-700 text-lg font-semibold mb-2">
@@ -159,7 +210,7 @@ function Home() {
               Critical / High Vulnerable Items <br />{" "}
               <span className="text-sm">by Assignment Group</span>
             </h3>
-          
+
             <table className="w-full text-sm text-left">
               <thead>
                 <tr>
@@ -183,68 +234,11 @@ function Home() {
           </div>
         </div>
 
-          {/* Risk Rating Chart */}
-          <div className="bg-white  py-2 px-3 mt-5 transition">
-          <h3 className="text-lg font-semibold text-sky-700 mb-2">
-            Vulnerable Items by Risk Rating
-          </h3>
-          <hr className="mb-4" />
-          <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={newData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Area
-                  type="monotone"
-                  dataKey="Critical"
-                  stackId="1"
-                  stroke="#78716c"
-                  fill="#78716c"
-                />
-                <Area
-                  type="monotone"
-                  dataKey="High"
-                  stackId="1"
-                  stroke="#ef4444"
-                  fill="#ef4444"
-                />
-                <Area
-                  type="monotone"
-                  dataKey="Medium"
-                  stackId="1"
-                  stroke="#eab308"
-                  fill="#eab308"
-                />
-                <Area
-                  type="monotone"
-                  dataKey="Low"
-                  stackId="1"
-                  stroke="#8b5cf6"
-                  fill="#8b5cf6"
-                />
-                <Area
-                  type="monotone"
-                  dataKey="info"
-                  stackId="1"
-                  stroke="#14b8a6"
-                  fill="#14b8a6"
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-
-
-
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 my-5 ">
-
-        <div className="bg-white shadow rounded-lg p-6 ">
+          <div className="bg-white shadow rounded-lg p-6 ">
             <h3 className="text-sky-700 text-lg text-center font-semibold mb-4">
-              Overdue Critical / High Vulnerable Items <br /> <span className="text-sm">by Assignment
-              Group</span>
+              Overdue Critical / High Vulnerable Items <br />{" "}
+              <span className="text-sm">by Assignment Group</span>
             </h3>
             <table className="w-full text-sm text-left">
               <thead>
@@ -275,7 +269,7 @@ function Home() {
             <h3 className="text-lg text-sky-700 font-semibold mb-2">
               Vulnerable Items by Age{" "}
             </h3>
-            <hr className="mb-4"/>
+            <hr className="mb-4" />
             <div className="h-64 ">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={dataList}>
@@ -292,29 +286,25 @@ function Home() {
               </ResponsiveContainer>
             </div>
           </div>
-
         </div>
 
-        
         <div className="bg-white p-2 flex justify-center flex-col">
-            <h3 className="text-sky-700 text-lg font-semibold mb-2">
-              Open and Closed Vulnerable Items
-            </h3>
-            <hr className="mb-4"/>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={newAndCloseVulnerableData} barSize={40}>
-                <CartesianGrid strokeDasharray="2 2" />
-                <XAxis dataKey="month" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="Open" fill="#2dd4bf" />
-                <Bar dataKey="Closed" fill="#fca5a5" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-
-       
+          <h3 className="text-sky-700 text-lg font-semibold mb-2">
+            Open and Closed Vulnerable Items
+          </h3>
+          <hr className="mb-4" />
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={newAndCloseVulnerableData} barSize={40}>
+              <CartesianGrid strokeDasharray="2 2" />
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="Open" fill="#2dd4bf" />
+              <Bar dataKey="Closed" fill="#fca5a5" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       </div>
     </>
   );
