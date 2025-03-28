@@ -112,7 +112,9 @@ function Home() {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-50 px-6 py-4">
+      <div className="min-h-screen bg-gray-100 px-6 ">
+
+
         {/* Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 py-3">
           {metrics.map((metric, index) => (

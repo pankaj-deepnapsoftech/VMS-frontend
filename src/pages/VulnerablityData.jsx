@@ -49,6 +49,7 @@ export function VulnerabilityData() {
   const { authenticate, token } = useAuthContext()
 
   const { allEmployeesData } = useAllEmployeeContext();
+  console.log("allEmployeesData", AllVulnerablilty)
 
   //console.log("OrgAllVulnerablilty", allVulnerabilityData)
 
@@ -196,6 +197,8 @@ export function VulnerabilityData() {
 
   let statusList = ["Open", "Closed", "Fix", "Re Open", "On Hold", "Exception","In Progress"];
 
+  let severityList = ["Critical ", "High", "Medium", "Low", "Informational", "Other"];
+      
 
   const { UploadBulkData } = useDataContext()
 
@@ -519,21 +522,52 @@ export function VulnerabilityData() {
                                 {field.replace(/_/g, " ")}
                               </label>
 
-                              {field === "Status" ? (
+                              {
+                              
+                              
+                              field === "Assigned_To" ? (
                                 <select
                                   className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
-                                  name="Status"
-                                  onChange={(e) => setFieldValue("Status", e.target.value)}
+                                  name="Assigned_To"
+                                  onChange={(e) => setFieldValue("Assigned_To", e.target.value)}
                                   defaultValue=""
                                 >
-                                  <option disabled value="">--- Select a Status ---</option>
-                                  {statusList.map((item, idx) => (
+                                  <option disabled value="">--- Select a Tester ---</option>
+                                  {allEmployeesData?.map((item, idx) => (
+                                    <option key={idx} value={item._id}>{item.full_name}</option>
+                                  ))}
+                                </select>
+                               )
+
+                                :    field === "Severity" ? (
+                                <select
+                                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                                  name="Severity"
+                                  onChange={(e) => setFieldValue("Severity", e.target.value)}
+                                  defaultValue=""
+                                >
+                                  <option disabled value="">--- Select a Severity ---</option>
+                                  {severityList?.map((item, idx) => (
                                     <option key={idx} value={item}>{item}</option>
                                   ))}
                                 </select>
-                              )
+                               )
 
-                                :
+                                :  field === "Status" ? (
+                                  <select
+                                    className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                                    name="Status"
+                                    onChange={(e) => setFieldValue("Status", e.target.value)}
+                                    defaultValue=""
+                                  >
+                                    <option disabled value="">--- Select a Status ---</option>
+                                    {statusList.map((item, idx) => (
+                                      <option key={idx} value={item}>{item}</option>
+                                    ))}
+                                  </select>
+                                 )
+  
+                                  :
                                 field === "Remediate_Upcoming_Time_Line" ? <InputField
 
                                   type="date"
