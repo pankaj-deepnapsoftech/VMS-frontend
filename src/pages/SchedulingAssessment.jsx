@@ -11,6 +11,7 @@ import { IoMdAirplane } from 'react-icons/io';
 import { MdClose, MdSchedule } from 'react-icons/md';
 import { useAuthContext, useScheduleAssessmentContext } from '@/context';
 import Loader from '@/components/Loader/Loader';
+import NoDataFound from '@/components/NoDataFound';
 
 
 
@@ -583,7 +584,7 @@ function SchedulingAssessmentPage() {
 					)}
 
 
-					<div id='table' className="overflow-x-auto">
+					{allAssesmentData.length<1?<NoDataFound/>:<div id='table' className="overflow-x-auto">
 						<table className="min-w-full divide-y divide-gray-200">
 							<thead className="bg-[#015289]">
 
@@ -636,7 +637,7 @@ function SchedulingAssessmentPage() {
 								))}
 							</tbody>
 						</table>
-					</div>
+					</div>}
 					<div className="flex justify-between items-center my-16">
 						<button
 							className={`px-4 py-2 bg-[#015289] text-white border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}

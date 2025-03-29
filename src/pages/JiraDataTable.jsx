@@ -12,6 +12,7 @@ import { useAuthContext, useJiraContext } from "@/context";
 import * as XLSX from "xlsx";
 import Loader from "@/components/Loader/Loader";
 import toast from "react-hot-toast";
+import NoDataFound from "@/components/NoDataFound";
 
 export const JiraDataTable = () => {
   const {
@@ -85,6 +86,9 @@ export const JiraDataTable = () => {
 
   // Handle downloading data as an Excel file
   const handleDownload = useCallback(() => {
+    if(filteredData.length<1){
+      return alert("Don't Have Enough Data to Download")
+     }
     const worksheet = XLSX.utils.json_to_sheet(filteredData);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Vulnerabilities");
@@ -143,7 +147,7 @@ export const JiraDataTable = () => {
           </div>
 
           {/* Data Table */}
-          <div className="overflow-x-auto">
+        { paginatedData.length<1?<NoDataFound/>: <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-[#015289] text-white">
                 <tr>
@@ -235,7 +239,7 @@ export const JiraDataTable = () => {
                 ))}
               </tbody>
             </table>
-          </div>
+          </div>}
 
           {/* Pagination */}
 

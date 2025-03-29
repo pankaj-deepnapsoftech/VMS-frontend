@@ -67,7 +67,7 @@ export const Modal = ({
             </li><li className="flex items-start space-x-2">
               <span className="w-3 h-3 mt-1 bg-[#015289] rounded-full"></span>
               <span className="text-gray-700 text-sm">If you want to download a sample file,
-                <a href="./assets/Sample_Format.xlxs" download className="text-blue-600 underline">Click Here</a>.
+                <a href="./assets/Sample_Format.xlsx" download className="text-blue-600 underline">Click Here</a>.
               </span>
             </li>
           </ul>

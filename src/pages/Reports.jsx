@@ -1,5 +1,6 @@
 import InputField from "@/components/InputField";
 import ReportModal from "@/components/modal/ReportModal";
+import NoDataFound from "@/components/NoDataFound";
 import { AxiosHandler } from "@/config/AxiosConfig";
 import { useAuthContext } from "@/context";
 import { Form, Formik } from "formik";
@@ -234,7 +235,7 @@ const Reports = () => {
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto">
+    { filterData.length<1?<NoDataFound/>: <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-[#015289] text-white">
             <tr>
@@ -329,7 +330,7 @@ const Reports = () => {
             )}
           </tbody>
         </table>
-      </div>
+      </div>}
 
       {/* Modal Form */}
       {isModalOpen && (

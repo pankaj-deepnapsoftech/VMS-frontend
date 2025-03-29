@@ -1,4 +1,5 @@
 import Loader from "@/components/Loader/Loader";
+import NoDataFound from "@/components/NoDataFound";
 import { useAllCustomerContext, useAllEmployeeContext, useAuthContext } from "@/context";
 import React, { useEffect, useState } from "react";
 
@@ -43,7 +44,7 @@ export default function AllCustomer() {
 				</div>
 
 				{/* Table */}
-				<div className="overflow-x-auto">
+				{AllCustomersData.length<1?<NoDataFound/>:<div className="overflow-x-auto">
 					<table className="table-auto w-full border-collapse border border-gray-200">
 						<thead className="bg-[#015289]  text-white">
 							<tr>
@@ -90,7 +91,7 @@ export default function AllCustomer() {
 							))}
 						</tbody>
 					</table>
-				</div>
+				</div>}
 				<div className="flex justify-between items-center my-16 px-5">
 					<button
 						className={`px-4 py-2 bg-[#015289] text-white border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}

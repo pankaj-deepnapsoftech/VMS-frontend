@@ -14,6 +14,7 @@ import Loader from "@/components/Loader/Loader";
 import Exceptions from "./Exceptions";
 import InputField from "@/components/InputField";
 import { Modal } from "@/components/modal/FileUploadModal";
+import NoDataFound from "@/components/NoDataFound";
 
 export function VulnerabilityData() {
 
@@ -49,9 +50,7 @@ export function VulnerabilityData() {
   const { authenticate, token } = useAuthContext()
 
   const { allEmployeesData } = useAllEmployeeContext();
-  console.log("allEmployeesData", AllVulnerablilty)
-
-  //console.log("OrgAllVulnerablilty", allVulnerabilityData)
+  
 
 
   useEffect(() => {
@@ -191,7 +190,7 @@ export function VulnerabilityData() {
 
 
   const getRowColor = (rank) => {
-    return rank % 2 === 0 ? "bg-gray-100" : "bg-white";
+    return rank % 2 === 0 ? "bg-gray-200" : "bg-white";
   };
 
 
@@ -332,7 +331,7 @@ export function VulnerabilityData() {
           </div>
 
           {/* 📊 Table */}
-          <div className="overflow-x-auto">
+         {paginatedData.length<1?<NoDataFound/>: <div className="overflow-x-auto">
             <table className="min-w-full border border-gray-300 shadow-sm rounded-lg overflow-hidden">
               <thead className="bg-[#015289] text-white">
                 <tr className="h-10"> {/* Reduced row height */}
@@ -422,11 +421,7 @@ export function VulnerabilityData() {
                 ))}
               </tbody>
             </table>
-
-
-          </div>
-
-
+          </div>}
 
           {isOpen && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">

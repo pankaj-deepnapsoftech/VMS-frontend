@@ -1,5 +1,6 @@
 import InputField from "@/components/InputField";
 import Loader from "@/components/Loader/Loader";
+import NoDataFound from "@/components/NoDataFound";
 import { useAllEmployeeContext, useAuthContext } from "@/context";
 import { BaseValidationSchema } from "@/Validation/AuthValidation";
 import { useFormik } from "formik";
@@ -212,7 +213,7 @@ export default function AllEmployee() {
 				</div>
 
 				{/* Table */}
-				<div className="overflow-x-auto">
+				{allEmployeesData.length<1?<NoDataFound/>:<div className="overflow-x-auto">
 					<table className="table-auto w-full border-collapse border border-gray-200">
 						<thead className="bg-[#015289]  text-white">
 							<tr>
@@ -257,7 +258,7 @@ export default function AllEmployee() {
 							))}
 						</tbody>
 					</table>
-				</div>
+				</div>}
 				<div className="flex justify-between items-center py-12 px-5">
 					<button
 						className={`px-4 py-2 bg-[#015289] text-white border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}

@@ -7,6 +7,7 @@ import { BiEditAlt, BiSearch } from 'react-icons/bi';
 import { RiDeleteBinFill } from 'react-icons/ri';
 import { BsPersonCheckFill } from 'react-icons/bs';
 import Loader from '@/components/Loader/Loader';
+import NoDataFound from '@/components/NoDataFound';
 
 
 
@@ -60,7 +61,7 @@ function Exceptions() {
         ClientDeferredVulnerableItems()
     }
   }, [token, authenticate, UpdateData,
-    DeleteData,])
+    DeleteData,page])
 
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -230,7 +231,7 @@ function Exceptions() {
               />
             </div>
 
-            <div className="overflow-x-auto">
+            {paginatedData.length<1 ? <NoDataFound/> : <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-[#015289]">
 
@@ -305,7 +306,7 @@ function Exceptions() {
                   ))}
                 </tbody>
               </table>
-            </div>
+            </div>}
 
 
             <div className="flex justify-between items-center my-16">
