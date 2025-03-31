@@ -4,7 +4,7 @@ import { FaExclamationCircle } from 'react-icons/fa';
 import { IoLogOut } from 'react-icons/io5';
 const NoDataFound = () => {
     return (
-        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-10">
+        <div className="relative  flex flex-col items-center justify-center min-h-screen px-4 py-10">
                         <div className="flex items-center justify-center mb-4">
                             <BiErrorAlt className="text-red-400 w-14 h-14 md:w-24 md:h-24" />
                         </div>

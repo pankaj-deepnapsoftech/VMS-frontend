@@ -46,16 +46,17 @@ function EmployeeDashboard() {
 
 
         {/* Metrics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-2 py-6">
           {Object.keys(employeeCardData)?.map((item, idx) => {
             return (<div key={idx}
-              className="bg-white rounded-lg shadow p-6 hover:scale-105  transition">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-base  text-black capitalize">{item === "totalData" ? "Total" : item.replace(/([a-z])([A-Z])/g, "$1 $2")} Task</h3>
-                <FiAlertCircle className="text-red-500" size={20} />
+              className="p-2 border-r   bg-gradient-to-r from-[#DC783E]   to-[#EBA985] border-b hover:scale-95 transition ease-linear rounded">
+              <div className="flex items-center justify-start gap-2 mb-1 ">
+              <FiAlertCircle className="text-white" size={20} />
+                <h3 className="text-sm text-white font-semibold capitalize">{item === "totalData" ? "Total" : item.replace(/([a-z])([A-Z])/g, "$1 $2")} Task</h3>
+               
               </div>
               <div className="space-y-1">
-                <p className="text-3xl ">{employeeCardData[item]}</p>
+                <p className="text-3xl font-bold text-white">{employeeCardData[item]}</p>
 
 
               </div>

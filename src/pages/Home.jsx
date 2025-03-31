@@ -59,56 +59,69 @@ function Home() {
   const metrics = [
     {
       title: "Application",
-      value: 8,
-
+      value: cardData?.Infrastructure,
+      color: "from-[#F24E1E] to-[#FF866B]", // Figma Red gradient
       icon: IoShieldOutline,
+      chartColor: "#FFF",
     },
     {
-      title: " Infrastructure IPs",
-      value: cardData?.closed,
-
+      title: "Infrastructure IPs",
+      value: cardData?.Infrastructure,
+      color: "from-[#0D99FF] to-[#74C0FC]", // Figma Blue gradient
       icon: IoShieldOutline,
+      chartColor: "#FFF",
     },
     {
-      title: " Total Vulnerability",
+      title: "Total Vulnerability",
       value: cardData?.totalData,
-
+      color: "from-[#63A833] to-[#9EE999]", // Figma Cyan gradient
       icon: IoShieldOutline,
+      chartColor: "#FFF",
     },
     {
-      title: "Remedition",
+      title: "Remediation",
       value: cardData?.inProgress,
-
+      color: "from-[#A259FF] to-[#C79CFF]", // Figma Purple gradient
       icon: IoShieldCheckmarkOutline,
+      chartColor: "#FFF",
     },
     {
       title: "Exceptions",
       value: cardData?.Exceptions,
-
+      color: "from-[#F24E1E] to-[#FF866B]", // Figma Red gradient
       icon: IoMdSettings,
+      chartColor: "#FFF",
     },
     {
       title: "Open",
       value: cardData?.open,
-
+      color: "from-[#0D99FF] to-[#74C0FC]", // Figma Blue gradient
       icon: IoShieldCheckmarkOutline,
+      chartColor: "#FFF",
     },
     {
       title: "Re Open",
       value: cardData?.reopen,
       icon: IoShieldCheckmarkOutline,
+      color: "from-[#63A833] to-[#6EE999]", // Figma Cyan gradient
+      chartColor: "#FFF",
     },
     {
       title: "Closed",
       value: cardData?.closed,
       icon: IoShieldCheckmarkOutline,
+      color: "from-[#A259FF] to-[#C79CFF]", // Figma Purple gradient
+      chartColor: "#FFF",
     },
     {
       title: "On Hold",
       value: cardData?.onHold,
       icon: IoShieldCheckmarkOutline,
+      color: "from-[#333333] to-[#666666]", // Dark Gray gradient
+      chartColor: "#FFF",
     },
   ];
+
 
   return (
     <>
@@ -127,50 +140,75 @@ function Home() {
           </h3>
           <hr className="mb-4" />
           <div className="h-72">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={newData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Area
-                  type="monotone"
-                  dataKey="Critical"
-                  stackId="1"
-                  stroke="#4B0082" // Indigo
-                  fill="#4B0082"
-                />
-                <Area
-                  type="monotone"
-                  dataKey="High"
-                  stackId="1"
-                  stroke="#DC143C" // Crimson
-                  fill="#DC143C"
-                />
-                <Area
-                  type="monotone"
-                  dataKey="Medium"
-                  stackId="1"
-                  stroke="#FF8C00" // Dark Orange
-                  fill="#FF8C00"
-                />
-                <Area
-                  type="monotone"
-                  dataKey="Low"
-                  stackId="1"
-                  stroke="#1E90FF" // Dodger Blue
-                  fill="#1E90FF"
-                />
-                <Area
-                  type="monotone"
-                  dataKey="info"
-                  stackId="1"
-                  stroke="#228B22" // Forest Green
-                  fill="#228B22"
-                />
-              </AreaChart>
-            </ResponsiveContainer>
+          <ResponsiveContainer width="100%" height="100%">
+  <AreaChart data={newData}>
+    <defs>
+      <linearGradient id="criticalGradient" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#F24E1E" stopOpacity={0.8} />
+        <stop offset="100%" stopColor="#F24E1E" stopOpacity={0.2} />
+      </linearGradient>
+      <linearGradient id="highGradient" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#A259FF" stopOpacity={0.8} />
+        <stop offset="100%" stopColor="#A259FF" stopOpacity={0.2} />
+      </linearGradient>
+      <linearGradient id="mediumGradient" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#FF7262" stopOpacity={0.8} />
+        <stop offset="100%" stopColor="#FF7262" stopOpacity={0.2} />
+      </linearGradient>
+      <linearGradient id="lowGradient" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#0D99FF" stopOpacity={0.8} />
+        <stop offset="100%" stopColor="#0D99FF" stopOpacity={0.2} />
+      </linearGradient>
+      <linearGradient id="infoGradient" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#1ABCFE" stopOpacity={0.8} />
+        <stop offset="100%" stopColor="#1ABCFE" stopOpacity={0.2} />
+      </linearGradient>
+    </defs>
+
+    <CartesianGrid strokeDasharray="3 3" />
+    <XAxis dataKey="date" />
+    <YAxis />
+    <Tooltip />
+    <Legend />
+    
+    <Area
+      type="monotone"
+      dataKey="Critical"
+      stackId="1"
+      stroke="#F24E1E" // Figma Red
+      fill="url(#criticalGradient)"
+    />
+    <Area
+      type="monotone"
+      dataKey="High"
+      stackId="1"
+      stroke="#A259FF" // Figma Purple
+      fill="url(#highGradient)"
+    />
+    <Area
+      type="monotone"
+      dataKey="Medium"
+      stackId="1"
+      stroke="#FF7262" // Figma Coral
+      fill="url(#mediumGradient)"
+    />
+    <Area
+      type="monotone"
+      dataKey="Low"
+      stackId="1"
+      stroke="#0D99FF" // Figma Blue
+      fill="url(#lowGradient)"
+    />
+    <Area
+      type="monotone"
+      dataKey="info"
+      stackId="1"
+      stroke="#1ABCFE" // Figma Cyan
+      fill="url(#infoGradient)"
+    />
+  </AreaChart>
+</ResponsiveContainer>
+
           </div>
         </div>
 

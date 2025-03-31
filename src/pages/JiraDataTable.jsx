@@ -13,6 +13,7 @@ import * as XLSX from "xlsx";
 import Loader from "@/components/Loader/Loader";
 import toast from "react-hot-toast";
 import NoDataFound from "@/components/NoDataFound";
+import { Modal } from "@/components/modal/FileUploadModal";
 
 export const JiraDataTable = () => {
   const {
@@ -24,18 +25,23 @@ export const JiraDataTable = () => {
     JiraConfigData,
     datafetchCount,
     setdatafetchCount,
+    UploadJiraData,
+    JiraManualData,
+    ConfigData,
   } = useJiraContext();
 
   const { token } = useAuthContext();
 
+  console.log("jiraData from ui",jiraData)
+
   useEffect(() => {
     if (token && datafetchCount === 0) {
-      JiraData();
       JiraConfigData();
+      ConfigData === null ? JiraData() : JiraManualData();
       setdatafetchCount(1);
     }
   }, [token, page]);
-
+  const [isJDModalOpen, setIsJDModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
@@ -86,21 +92,14 @@ export const JiraDataTable = () => {
 
   // Handle downloading data as an Excel file
   const handleDownload = useCallback(() => {
-    if(filteredData.length<1){
-      return alert("Don't Have Enough Data to Download")
-     }
+    if (filteredData.length < 1) {
+      return alert("Don't Have Enough Data to Download");
+    }
     const worksheet = XLSX.utils.json_to_sheet(filteredData);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Vulnerabilities");
     XLSX.writeFile(workbook, "Vulnerabilities.xlsx");
   }, [filteredData]);
-
-
-
-  const handleUpload = () => {
-    fileInputRef.current.click(); // This will trigger the file input dialog
-  };
-  
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -129,12 +128,19 @@ export const JiraDataTable = () => {
                 Export Data
               </button>
               <button
-                onClick={handleUpload}
+                onClick={() => setIsJDModalOpen(true)}
                 className="px-4 py-2 bg-[#015289] text-white text-sm font-medium rounded-md flex items-center hover:bg-[#014173]"
               >
                 <BiUpload className="h-4 w-4 mr-2" />
                 Upload Data
               </button>
+
+              <Modal
+                isOpen={isJDModalOpen}
+                onClose={() => setIsJDModalOpen(false)}
+                title="Jira Data Upload"
+                method={UploadJiraData}
+              />
 
               {/* Hidden file input */}
               <input
@@ -147,99 +153,103 @@ export const JiraDataTable = () => {
           </div>
 
           {/* Data Table */}
-        { paginatedData.length<1?<NoDataFound/>: <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-[#015289] text-white">
-                <tr>
-                  {[
-                    "ID",
-                    "Issue Type",
-                    "Issue ID",
-                    "issue Description",
-                    "Project Name",
-                    "Project Type",
-                    "Priority",
-                    "Assignee",
-                    "Status",
-                    "Remediated Date",
-                    "Creator Name",
-                    "Creator Email Address",
-                    "Creator Account ID",
-                    "Actions",
-                  ].map((header, idx) => (
-                    <th
-                      key={idx}
-                      className="px-4 py-3 text-left text-xs font-medium uppercase"
-                    >
-                      {header}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200">
-                {paginatedData?.map((item) => (
-                  <tr key={item.id} className="hover:bg-gray-50">
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.id}
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.issueType}
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.issueId}
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.issueDescription}
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.projectName}
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.projectType}
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.priority}
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.assignee}
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.status}
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.remediatedDate}
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.creatorName}
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.creatorEmail}
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.creatorAccountId}
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap flex justify-around">
-                      <button
-                        onClick={() => {
-                          console.log(item);
-                        }}
-                        className="text-blue-600 hover:text-blue-800"
-                        title="Edit"
+          {paginatedData.length < 1 ? (
+            <NoDataFound />
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-[#015289] text-white">
+                  <tr>
+                    {[
+                      "ID",
+                      "Issue Type",
+                      "Issue ID",
+                      "issue Description",
+                      "Project Name",
+                      "Project Type",
+                      "Priority",
+                      "Assignee",
+                      "Status",
+                      "Remediated Date",
+                      "Creator Name",
+                      "Creator Email Address",
+                      "Creator Account ID",
+                      "Actions",
+                    ].map((header, idx) => (
+                      <th
+                        key={idx}
+                        className="px-4 py-3 text-left text-xs font-medium uppercase"
                       >
-                        <BiEditAlt className="h-5 w-5" />
-                      </button>
-                      <button
-                        className="text-red-600 hover:text-red-800"
-                        title="Delete"
-                      >
-                        <RiDeleteBinFill className="h-5 w-5" />
-                      </button>
-                    </td>
+                        {header}
+                      </th>
+                    ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>}
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {paginatedData?.map((item) => (
+                    <tr key={item.id} className="hover:bg-gray-50">
+                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {item.id}
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {item.issueType}
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {item.issueId}
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {item.issueDescription}
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {item.projectName}
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {item.projectType}
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {item.priority}
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {item.assignee}
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {item.status}
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {item.remediatedDate}
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {item.creatorName}
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {item.creatorEmail}
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {item.creatorAccountId}
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap flex justify-around">
+                        <button
+                          onClick={() => {
+                            console.log(item);
+                          }}
+                          className="text-blue-600 hover:text-blue-800"
+                          title="Edit"
+                        >
+                          <BiEditAlt className="h-5 w-5" />
+                        </button>
+                        <button
+                          className="text-red-600 hover:text-red-800"
+                          title="Delete"
+                        >
+                          <RiDeleteBinFill className="h-5 w-5" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
 
           {/* Pagination */}
 

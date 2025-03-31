@@ -134,7 +134,7 @@ export function EmployeeAllTasks() {
   const handleDownload = (data) => {
 	if(data.length<1){
 		return alert("Don't Have Enough Data to Download")
-	   }
+	   } 
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Vulnerabilities");

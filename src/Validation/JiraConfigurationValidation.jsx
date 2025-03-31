@@ -8,5 +8,5 @@ export const JiraConfiigValidation = object({
 		.required("JIRA Username is required"),
 	JIRA_API_KEY: string()
 		.min(8, "API Key must be at least 8 characters")
-		.required("JIRA API Key is required"),
+		.required("JIRA  API Key is required"),
 });

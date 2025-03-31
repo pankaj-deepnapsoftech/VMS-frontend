@@ -287,7 +287,7 @@ export function VulnerabilityData() {
                 onClose={() => setIsRUModalOpen(false)}
                 title="Report Upload"
                 method={UploadBulkData}
-                subtitle=" please upload an Excel file in XLSX or XLS format. Ensure the file is properly formatted and contains all necessary data for processing."
+               
               />
             </div>
           </div>

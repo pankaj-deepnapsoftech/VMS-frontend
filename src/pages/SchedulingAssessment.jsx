@@ -86,11 +86,11 @@ function SchedulingAssessmentPage() {
 
 	const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 	const [selectedAssessment, setSelectedAssessment] = useState(null);
-
+console.log("authenticate",authenticate)
 
 	const { values, errors, touched, handleBlur, handleChange, handleSubmit, setFieldValue, resetForm, setValues } = useFormik({
 		initialValues: {
-			Orgenization_id: authenticate?.role === "ClientSME" ? authenticate?._id : "",
+			Orgenization_id: authenticate?.role === "ClientSME" ? authenticate?.owner : "",
 			Type_Of_Assesment: "",
 			Application_URL: "",
 			Data_Classification: "",
