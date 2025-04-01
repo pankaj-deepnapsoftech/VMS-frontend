@@ -333,9 +333,9 @@ export function VulnerabilityData() {
           {/* 📊 Table */}
          {paginatedData.length<1?<NoDataFound/>: <div className="overflow-x-auto">
             <table className="min-w-full border border-gray-300 shadow-sm rounded-lg overflow-hidden">
-              <thead className="bg-[#015289] text-white">
+              <thead className="bg-gray-200 text-gray-600">
                 <tr className="h-10"> {/* Reduced row height */}
-                  <th className="px-3 py-2 text-left text-xs font-semibold uppercase">
+                  <th className="px-3 text-left text-xs font-semibold uppercase">
                     <input
                       type="checkbox"
                       checked={selectAll}
@@ -347,7 +347,7 @@ export function VulnerabilityData() {
                     />
                   </th>
                   {tableHeaders?.map((header, index) => (
-                    <th key={index} className="px-3 py-2 text-left text-xs font-semibold uppercase">
+                    <th key={index} className="px-3 text-left text-xs font-semibold uppercase">
                       {header === "createdAt" ? "Created Date" : header.replace(/_/g, " ")}
                     </th>
                   ))}

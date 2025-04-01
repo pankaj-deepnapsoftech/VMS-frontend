@@ -20,7 +20,7 @@ const JiraContextProvider = ({ children }) => {
   const [ConfigData, setConfigData] = useState([]);
 
   const JiraData = async () => {
-	console.log("jira   data")
+    console.log("jira   data");
     setLoading(true);
     try {
       const res = await AxiosHandler.get("/jira/issues?page=${page}&limit=10");
@@ -51,7 +51,7 @@ const JiraContextProvider = ({ children }) => {
 
     try {
       const res = await AxiosHandler.post("/jira/create-jira-config", data);
-      
+
       navigate("/jira-data");
       toast.dismiss(toastId);
       toast.success(res.data.message);
@@ -71,6 +71,7 @@ const JiraContextProvider = ({ children }) => {
       const formData = new FormData();
       formData.append("excel-jira", data);
       const res = await AxiosHandler.post("/jira/upload-data", formData);
+      JiraManualData();
       toast.dismiss(toastId);
       toast.success(res?.data?.message);
     } catch (error) {
@@ -81,20 +82,48 @@ const JiraContextProvider = ({ children }) => {
   };
 
   const JiraManualData = async () => {
-	console.log("jira manual data")
+    console.log("jira manual data");
     setLoading(true);
     try {
       const res = await AxiosHandler.get(
         `/jira/get-jira-data?page=${page}&limit=10`
       );
-	  console.log("jira manual data",res.data.data)
       setJiraData(res.data?.data);
-
-      console.log("jira data", res.data.newData);
+      
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const DeleteMultipleData = async (id) => {
+    const toastId = toast.loading("Loading...");
+    try {
+      const res = await AxiosHandler.post(`/jira/multidelete-jira-data`, {
+        id
+      });
+      JiraManualData();
+      toast.dismiss(toastId);
+      toast.success(res.data.message);
+    } catch (error) {
+      console.log(error)
+      toast.dismiss(toastId);
+      toast.error(error?.response?.data?.message);
+    }
+  };
+
+  const DeleteData = async (id) => {
+    const toastId = toast.loading("Loading...");
+    try {
+      const res = await AxiosHandler.delete(`/jira/delete-jira-data/${id}`);
+      JiraManualData();
+      toast.dismiss(toastId);
+      toast.success(res.data.message);
+    } catch (error) {
+      console.log(error)
+      toast.dismiss(toastId);
+      toast.error(error?.response?.data?.message);
     }
   };
 
@@ -119,7 +148,9 @@ const JiraContextProvider = ({ children }) => {
         JiraData,
         JiraConfigData,
         UploadJiraData,
-		JiraManualData
+        JiraManualData,
+        DeleteMultipleData,
+        DeleteData,
       }}
     >
       {children}

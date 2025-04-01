@@ -102,9 +102,7 @@ console.log("authenticate",authenticate)
 
 		},
 		validationSchema: SchedulingAssessmentValidation,
-		onSubmit: (value) => {
-
-
+		onSubmit: (value) => { 
 			Object.entries(value).forEach(([key, value]) => {
 				formData.append(key, value);
 			});
@@ -162,7 +160,7 @@ console.log("authenticate",authenticate)
 												setIsOpen(true);
 											}
 										}}
-										className='w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition'
+										className='w-full px-4 py-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 text-sm focus:border-transparent outline-none transition'
 										id="Type_Of_Assesment">
 										<option value="" disabled> -- Select Type of Assesment -- </option>
 
@@ -197,7 +195,7 @@ console.log("authenticate",authenticate)
 										name='Data_Classification'
 										value={values.Data_Classification}
 										onChange={handleChange}
-										className='w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition'
+										className='w-full px-4 py-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 text-sm focus:border-transparent outline-none transition'
 										id="Data_Classification">
 										<option value="" disabled> -- Select Data Classification -- </option>
 										<option value={"Restricted"}>Restricted</option>
@@ -219,7 +217,7 @@ console.log("authenticate",authenticate)
 										name='MFA_Enabled'
 										value={values.MFA_Enabled}
 										onChange={handleChange}
-										className='w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition'
+										className='w-full px-4 py-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 text-sm focus:border-transparent outline-none transition'
 										id="MFA_Enabled">
 										<option value="" disabled> -- Select  MFA -- </option>
 										<option value={true}>Yes</option>
@@ -238,7 +236,7 @@ console.log("authenticate",authenticate)
 										name='Select_Tester'
 										value={values.Select_Tester}
 										onChange={handleChange}
-										className='w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition'
+										className='w-full px-4 py-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 text-sm focus:border-transparent outline-none transition'
 										id="Select_Tester">
 										<option value="" disabled> -- Select  Tester -- </option>
 
@@ -261,7 +259,7 @@ console.log("authenticate",authenticate)
 										name='Orgenization_id'
 										value={values.Orgenization_id}
 										onChange={handleChange}
-										className='w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition'
+										className='w-full px-4 py-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 text-sm focus:border-transparent outline-none transition'
 										id="Select_Org">
 										<option value="" disabled> -- Select Orgnization -- </option>
 

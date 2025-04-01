@@ -122,6 +122,20 @@ function Home() {
     },
   ];
 
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
 
   return (
     <>
@@ -137,78 +151,89 @@ function Home() {
         <div className="bg-white  py-2 px-3 mt-5 transition">
           <h3 className="text-lg font-semibold text-sky-700 mb-2">
             Vulnerable Items by Risk Rating
-          </h3>
+          </h3>                        
           <hr className="mb-4" />
           <div className="h-72">
-          <ResponsiveContainer width="100%" height="100%">
-  <AreaChart data={newData}>
-    <defs>
-      <linearGradient id="criticalGradient" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stopColor="#F24E1E" stopOpacity={0.8} />
-        <stop offset="100%" stopColor="#F24E1E" stopOpacity={0.2} />
-      </linearGradient>
-      <linearGradient id="highGradient" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stopColor="#A259FF" stopOpacity={0.8} />
-        <stop offset="100%" stopColor="#A259FF" stopOpacity={0.2} />
-      </linearGradient>
-      <linearGradient id="mediumGradient" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stopColor="#FF7262" stopOpacity={0.8} />
-        <stop offset="100%" stopColor="#FF7262" stopOpacity={0.2} />
-      </linearGradient>
-      <linearGradient id="lowGradient" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stopColor="#0D99FF" stopOpacity={0.8} />
-        <stop offset="100%" stopColor="#0D99FF" stopOpacity={0.2} />
-      </linearGradient>
-      <linearGradient id="infoGradient" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stopColor="#1ABCFE" stopOpacity={0.8} />
-        <stop offset="100%" stopColor="#1ABCFE" stopOpacity={0.2} />
-      </linearGradient>
-    </defs>
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={newData}>
+                <defs>
+                  <linearGradient
+                    id="criticalGradient"
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="1"
+                  >
+                    <stop offset="0%" stopColor="#F24E1E" stopOpacity={0.8} />
+                    <stop offset="100%" stopColor="#F24E1E" stopOpacity={0.2} />
+                  </linearGradient>
+                  <linearGradient id="highGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#A259FF" stopOpacity={0.8} />
+                    <stop offset="100%" stopColor="#A259FF" stopOpacity={0.2} />
+                  </linearGradient>
+                  <linearGradient
+                    id="mediumGradient"
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="1"
+                  >
+                    <stop offset="0%" stopColor="#FF7262" stopOpacity={0.8} />
+                    <stop offset="100%" stopColor="#FF7262" stopOpacity={0.2} />
+                  </linearGradient>
+                  <linearGradient id="lowGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#0D99FF" stopOpacity={0.8} />
+                    <stop offset="100%" stopColor="#0D99FF" stopOpacity={0.2} />
+                  </linearGradient>
+                  <linearGradient id="infoGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#1ABCFE" stopOpacity={0.8} />
+                    <stop offset="100%" stopColor="#1ABCFE" stopOpacity={0.2} />
+                  </linearGradient>
+                </defs>
 
-    <CartesianGrid strokeDasharray="3 3" />
-    <XAxis dataKey="date" />
-    <YAxis />
-    <Tooltip />
-    <Legend />
-    
-    <Area
-      type="monotone"
-      dataKey="Critical"
-      stackId="1"
-      stroke="#F24E1E" // Figma Red
-      fill="url(#criticalGradient)"
-    />
-    <Area
-      type="monotone"
-      dataKey="High"
-      stackId="1"
-      stroke="#A259FF" // Figma Purple
-      fill="url(#highGradient)"
-    />
-    <Area
-      type="monotone"
-      dataKey="Medium"
-      stackId="1"
-      stroke="#FF7262" // Figma Coral
-      fill="url(#mediumGradient)"
-    />
-    <Area
-      type="monotone"
-      dataKey="Low"
-      stackId="1"
-      stroke="#0D99FF" // Figma Blue
-      fill="url(#lowGradient)"
-    />
-    <Area
-      type="monotone"
-      dataKey="info"
-      stackId="1"
-      stroke="#1ABCFE" // Figma Cyan
-      fill="url(#infoGradient)"
-    />
-  </AreaChart>
-</ResponsiveContainer>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="date" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
 
+                <Area
+                  type="monotone"
+                  dataKey="Critical"
+                  stackId="1"
+                  stroke="#F24E1E" // Figma Red
+                  fill="url(#criticalGradient)"
+                />
+                <Area
+                  type="monotone"
+                  dataKey="High"
+                  stackId="1"
+                  stroke="#A259FF" // Figma Purple
+                  fill="url(#highGradient)"
+                />
+                <Area
+                  type="monotone"
+                  dataKey="Medium"
+                  stackId="1"
+                  stroke="#FF7262" // Figma Coral
+                  fill="url(#mediumGradient)"
+                />
+                <Area
+                  type="monotone"
+                  dataKey="Low"
+                  stackId="1"
+                  stroke="#0D99FF" // Figma Blue
+                  fill="url(#lowGradient)"
+                />
+                <Area
+                  type="monotone"
+                  dataKey="info"
+                  stackId="1"
+                  stroke="#1ABCFE" // Figma Cyan
+                  fill="url(#infoGradient)"
+                />
+              </AreaChart>
+            </ResponsiveContainer>
           </div>
         </div>
 
@@ -253,7 +278,9 @@ function Home() {
               <thead>
                 <tr>
                   <th className="px-4 py-2 text-gray-600">Name</th>
-                  <th className="px-4 py-2 text-gray-600">Oct 22</th>
+                  <th className="px-4 py-2 text-gray-600">
+                    {monthNames[new Date().getMonth()]}
+                  </th>
                   <th className="px-4 py-2 text-gray-600">Trend</th>
                 </tr>
               </thead>
@@ -282,7 +309,9 @@ function Home() {
               <thead>
                 <tr>
                   <th className="px-4 py-2 text-gray-600">Name</th>
-                  <th className="px-4 py-2 text-gray-600">Oct 22</th>
+                  <th className="px-4 py-2 text-gray-600">
+                    {monthNames[new Date().getMonth()]}
+                  </th>
                   <th className="px-4 py-2 text-gray-600">Trend</th>
                 </tr>
               </thead>
@@ -326,8 +355,8 @@ function Home() {
           </div>
         </div>
 
-        <div className="bg-white p-2 flex justify-center flex-col">
-          <h3 className="text-sky-700 text-lg font-semibold mb-2">
+        <div className="bg-white p-2 flex justify-center flex-col mb-14">
+          <h3 className="text-sky-700 text-lg font-semibold ">
             Open and Closed Vulnerable Items
           </h3>
           <hr className="mb-4" />

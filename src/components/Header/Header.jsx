@@ -50,8 +50,8 @@ function Header({ setShowMenu }) {
 
 
   return (
-    <div className="flex h-screen fixed  overflow-y-auto
-     md:w-[28%] lg:w-[25%] xl:w-[25%] 2xl:w-[20%] ">
+    // <div className="flex h-screen fixed  overflow-y-auto
+    //  md:w-[28%] lg:w-[25%] xl:w-[25%] 2xl:w-[20%] ">
       <div className=" flex flex-col text-white pt-8 h-[100%] hide-scrollbar  overflow-y-auto ">
         < Link
 
@@ -105,7 +105,7 @@ function Header({ setShowMenu }) {
         </div>
 
       </div >
-    </div >
+    // </div >
   )
 }
 

@@ -4,12 +4,12 @@ import { Area, AreaChart, ResponsiveContainer } from "recharts";
 function Card({ data }) {
   // Sample trend data for the mini-chart (upward trend)
   const chartData = [
-    { value: 5 },
+    { value: 0 },
+    { value: 100 },
     { value: 10 },
-    { value: 12 },
-    { value: 15 },
-    { value: 18 },
-    { value: 22 },
+    { value: 200 },
+    { value: 80 },
+    { value: 300 },
   ];
 
   return (
@@ -29,15 +29,15 @@ function Card({ data }) {
       </div>
 
       {/* Right Side: Mini Area Chart */}
-      <div className="w-12 h-10">
+      <div className="w-20 h-10">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={chartData}>
             <Area
-              type="monotone"
+              type="basis"
               dataKey="value"
               stroke={data?.chartColor || "#FFFFFF"}
               fill={data?.chartColor || "#FFFFFF"}
-              fillOpacity={0.2}
+              fillOpacity={0.1}
             />
           </AreaChart>
         </ResponsiveContainer>

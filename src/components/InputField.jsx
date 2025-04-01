@@ -46,7 +46,7 @@ function InputField({
           onChange={onChange}
           onBlur={onBlur}
           className={`w-full pl-${Icon ? "10" : "4"} pr-${showPassword ? "12" : "4"
-            } py-2 pl-10 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition`}
+            } py-2 pl-10 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none  transition`}
           placeholder={placeholder}
           aria-label={label || placeholder}
 
