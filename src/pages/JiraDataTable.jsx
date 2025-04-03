@@ -30,6 +30,7 @@ export const JiraDataTable = () => {
     ConfigData,
     DeleteMultipleData,
     DeleteData,
+    UpdateData     
   } = useJiraContext();
 
   const { token } = useAuthContext();
@@ -135,10 +136,10 @@ export const JiraDataTable = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div className="min-h-screen bg-[#f8fafc] p-6">
+        <div className="min-h-screen bg-gray-100 p-6">
           <div className="max-w-full mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
             {/* Header */}
-            <div className="p-6 border-b border-gray-100 bg-white flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="p-6  bg-white flex flex-col md:flex-row items-center justify-between gap-4">
               <div className="relative w-full md:w-96">
                 <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
                 <input
@@ -165,14 +166,14 @@ export const JiraDataTable = () => {
                 <div className="flex flex-row items-start gap-4 justify-start w-full">
                   <button
                     onClick={handleDownload}
-                    className="px-4 py-2.5 bg-[#25265e] text-white rounded-lg flex items-center gap-2 hover:bg-[#6f68d6] transition-colors duration-200"
+                    className="px-4 py-2.5 bg-gradient-to-bl from-[#333333] to-[#666666] text-white rounded-lg flex items-center gap-2 hover:bg-[#6f68d6] transition-colors duration-200"
                   >
                     <BiSave className="h-5 w-5" />
                     <span>Export</span>
                   </button>
                   <button
                     onClick={() => setIsJDModalOpen(true)}
-                    className="px-4 py-2.5 bg-[#6366f1] text-white rounded-lg flex items-center gap-2 hover:bg-[#4f46e5] transition-colors duration-200"
+                    className="px-4 py-2.5 bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white rounded-lg flex items-center gap-2 hover:bg-[#4f46e5] transition-colors duration-200"
                   >
                     <BiUpload className="h-5 w-5" />
                     <span>Upload</span>
@@ -185,9 +186,9 @@ export const JiraDataTable = () => {
             {paginatedData.length < 1 ? (
               <NoDataFound />
             ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full table-auto text-sm rounded-xl">
-                  <thead className="bg-[#1e293b] text-white ">
+              <div className="overflow-x-auto rounded-lg m-2">
+                <table className="w-full table-auto text-sm  bg-white">
+                  <thead className="bg-gradient-to-br from-[#1f1d1d] to-[#666666]  text-white ">
                     <tr>
                       <th className="px-4 py-2 text-left">
                         <input
@@ -281,7 +282,7 @@ export const JiraDataTable = () => {
                 className={`px-4 py-2 text-sm font-medium rounded-lg ${
                   page === 1
                     ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                    : "bg-[#6366f1] text-white hover:bg-[#4f46e5]"
+                    : "bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white hover:bg-[#4f46e5]"
                 } transition-colors duration-200`}
                 disabled={page === 1}
                 onClick={() => setPage(page - 1)}
@@ -293,7 +294,7 @@ export const JiraDataTable = () => {
                 className={`px-4 py-2 text-sm font-medium rounded-lg ${
                   paginatedData.length < 10
                     ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                    : "bg-[#6366f1] text-white hover:bg-[#4f46e5]"
+                    : "bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white hover:bg-[#4f46e5]"
                 } transition-colors duration-200`}
                 disabled={paginatedData.length < 10}
                 onClick={() => setPage(page + 1)}

@@ -21,7 +21,7 @@ function Card({ data }) {
         {/* Icon & Title */}
         <div className="flex items-center gap-1 mb-0.5">
           {data?.icon && <data.icon className="h-5 w-5 text-white" />}
-          <h3 className="text-sm text-white font-medium truncate">{data?.title}</h3>
+          <h3 className="text-xs text-white font-semibold truncate">{data?.title}</h3>
         </div>
 
         {/* Value */}

@@ -139,7 +139,7 @@ function Home() {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-100 px-6 ">
+      <div className="min-h-screen bg-gray-200/30 px-6 ">
         {/* Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 py-3">
           {metrics.map((metric, index) => (
@@ -148,12 +148,12 @@ function Home() {
         </div>
 
         {/* Risk Rating Chart */}
-        <div className="bg-white  py-2 px-3 mt-5 transition">
+        <div className="bg-white  py-2 px-2 mt-5 transition rounded-lg">
           <h3 className="text-lg font-semibold text-sky-700 mb-2">
             Vulnerable Items by Risk Rating
           </h3>                        
           <hr className="mb-4" />
-          <div className="h-72">
+          <div className="h-80">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={newData}>
                 <defs>
@@ -240,7 +240,7 @@ function Home() {
         {/* Charts Section */}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 my-5 ">
-          <div className="bg-white px-2 py-2 col-span-2">
+          <div className="bg-white px-2 py-2 col-span-2 rounded-lg">
             <h3 className="text-sky-700 text-lg font-semibold mb-2">
               Closed Vulnerable Items by Remediation Target Status
             </h3>
@@ -301,8 +301,8 @@ function Home() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 my-5 ">
           <div className="bg-white shadow rounded-lg p-6 ">
-            <h3 className="text-sky-700 text-lg text-center font-semibold mb-4">
-              Overdue Critical / High Vulnerable Items <br />{" "}
+            <h3 className="text-sky-700 text-sm text-center font-semibold mb-4">
+              Overdue Critical / High Vulnerable Items <br />
               <span className="text-sm">by Assignment Group</span>
             </h3>
             <table className="w-full text-sm text-left">
@@ -332,9 +332,9 @@ function Home() {
           </div>
 
           {/* Age and Risk Rating Chart */}
-          <div className="bg-white p-4 col-span-2 ">
+          <div className="bg-white p-4 col-span-2 rounded-lg">
             <h3 className="text-lg text-sky-700 font-semibold mb-2">
-              Vulnerable Items by Age{" "}
+              Vulnerable Items by Age
             </h3>
             <hr className="mb-4" />
             <div className="h-64 ">
@@ -355,7 +355,7 @@ function Home() {
           </div>
         </div>
 
-        <div className="bg-white p-2 flex justify-center flex-col mb-14">
+        <div className="bg-white p-2 flex justify-center flex-col pb-14 rounded-lg">
           <h3 className="text-sky-700 text-lg font-semibold ">
             Open and Closed Vulnerable Items
           </h3>
@@ -371,6 +371,9 @@ function Home() {
               <Bar dataKey="Closed" fill="#fca5a5" />
             </BarChart>
           </ResponsiveContainer>
+        </div>
+        <div className="mt-6">
+
         </div>
       </div>
     </>

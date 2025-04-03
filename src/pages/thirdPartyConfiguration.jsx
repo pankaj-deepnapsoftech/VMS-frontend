@@ -89,7 +89,7 @@ function ThirdPartyConfig() {
 
 						<button
 							type="submit"
-							className="w-full bg-[#015289] text-white py-3 rounded-lg hover:bg-blue-700 transition duration-200"
+							className="w-full bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white py-3 rounded-lg hover:bg-blue-700 transition duration-200"
 							// disabled={loading}
 							onSubmit={handleSubmit}
 						>

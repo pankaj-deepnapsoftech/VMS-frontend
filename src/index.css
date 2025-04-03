@@ -10,3 +10,8 @@
 	-ms-overflow-style: none; /* Hides scrollbar in IE and Edge */
 	scrollbar-width: none; /* Hides scrollbar in Firefox */
   }
+
+
+  body {
+  @apply font-poppins;
+}

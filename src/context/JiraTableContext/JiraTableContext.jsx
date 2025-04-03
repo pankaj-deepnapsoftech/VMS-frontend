@@ -81,15 +81,16 @@ const JiraContextProvider = ({ children }) => {
     }
   };
 
-  const JiraManualData = async () => {
+  const JiraManualData = async (page) => {
     console.log("jira manual data");
     setLoading(true);
     try {
       const res = await AxiosHandler.get(
         `/jira/get-jira-data?page=${page}&limit=10`
       );
+
       setJiraData(res.data?.data);
-      
+      console.log("JiraManualData",res.data)
     } catch (error) {
       console.log(error);
     } finally {
@@ -126,6 +127,19 @@ const JiraContextProvider = ({ children }) => {
       toast.error(error?.response?.data?.message);
     }
   };
+  const UpdateData = async (id) => {
+    const toastId = toast.loading("Loading...");
+    try {
+      const res = await AxiosHandler.put(`/jira/update-jira-data/${id}`);
+      JiraManualData();
+      toast.dismiss(toastId);
+      toast.success(res.data.message);
+    } catch (error) {
+      console.log(error)
+      toast.dismiss(toastId);
+      toast.error(error?.response?.data?.message);
+    }
+  };
 
   // useEffect(() => {
   // 	if (token) {
@@ -151,6 +165,7 @@ const JiraContextProvider = ({ children }) => {
         JiraManualData,
         DeleteMultipleData,
         DeleteData,
+        UpdateData
       }}
     >
       {children}

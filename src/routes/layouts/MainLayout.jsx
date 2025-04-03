@@ -53,7 +53,7 @@ const MainLayout = () => {
     <>
 
       <aside className={`${showMenu ? "left-0" : "-left-full"} fixed z-10 w-[65%] flex flex-col justify-between 
-h-screen border-r bg-gradient-to-b from-[#0a0a13] via-[#262e50]  to-[#2081db] 
+h-screen border-r bg-gradient-to-b from-[#0a0a13] via-[#111527]  to-[#1f5281] 
 transition duration-300 sm:w-[40%] md:w-[30%] lg:w-[25%] xl:w-[20%] 2xl:w-[15%] `}>
         <Header setShowMenu={() => width > 1023 ? setShowMenu(true) : setShowMenu(!showMenu)} />
       </aside>

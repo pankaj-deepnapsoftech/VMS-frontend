@@ -126,14 +126,14 @@ console.log("authenticate",authenticate)
 
 
 	return (
-		<div className="min-h-screen bg-white text-gray-black px-5 ">
+		<div className="min-h-screen bg-gray-100 text-gray-black px-5 ">
 			{/* Main Content */}
 			{loading ? <Loader /> : <main className="container mx-auto px-4 py-8">
 				<section className="mb-8">
 
 
 					{/* Form Section */}
-					{(authenticate.role === "ClientSME" || authenticate.role === "Admin") && <div className=" flex  gap-6 mb-8   ">
+					{(authenticate.role === "ClientSME" || authenticate.role === "Admin") && <div className=" flex  gap-6 mb-8 bg-white p-4  rounded-lg ">
 						<form onSubmit={handleSubmit} className="space-y-5 w-full flex flex-col ">
 							<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
 
@@ -304,7 +304,7 @@ console.log("authenticate",authenticate)
 							</div>
 							<button
 								type="submit"
-								className="lg:w-[20%] bg-[#015289] text-white   py-2  rounded-lg hover:bg-blue-500 transition duration-200"
+								className="lg:w-[20%] bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white   py-2  rounded-lg hover:bg-blue-500 transition duration-200"
 								onClick={handleSubmit}
 							>
 								Submit
@@ -582,16 +582,16 @@ console.log("authenticate",authenticate)
 					)}
 
 
-					{allAssesmentData.length<1?<NoDataFound/>:<div id='table' className="overflow-x-auto">
-						<table className="min-w-full divide-y divide-gray-200">
-							<thead className="bg-[#015289]">
+					{allAssesmentData.length<1?<NoDataFound/>:<div id='table' className="overflow-x-auto rounded-lg">
+						<table className="min-w-full divide-y divide-gray-200 rounded-xl bg-white">
+							<thead className="bg-gradient-to-bl from-[#333333] to-[#666666] rounded-xl ">
 
 								<tr>
 
 									{addFormHeaders.map((header, index) => (
 										<th
 											key={index}
-											className="px-4 py-3 text-left text-xs font-medium text-white uppercase"
+											className="px-4  text-left text-xs font-medium text-white uppercase"
 										>
 											{header === "createdAt" ? "Created Date" : header.replace(/_/g, " ")}
 										</th>
@@ -605,7 +605,7 @@ console.log("authenticate",authenticate)
 								{allAssesmentData?.map((item) => (
 									<tr key={item._id} className="hover:bg-gray-50">
 										{addFormHeaders.map((field, i) => (
-											<td key={i} className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+											<td key={i} className="px-4    whitespace-nowrap text-sm text-gray-900">
 
 												{
 													field === "code_Upload" ?
@@ -617,7 +617,7 @@ console.log("authenticate",authenticate)
 												}
 											</td>
 										))}
-										<td className="px-4 py-4 whitespace-nowrap flex justify-around gap-4">
+										<td className="px-4 py-2 whitespace-nowrap flex justify-around gap-4">
 											<button onClick={() => handleEdit(item)} className="text-blue-600">
 												<BiEditAlt className="h-5 w-5" />
 											</button>
@@ -638,7 +638,7 @@ console.log("authenticate",authenticate)
 					</div>}
 					<div className="flex justify-between items-center my-16">
 						<button
-							className={`px-4 py-2 bg-[#015289] text-white border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
+							className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white    border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
 							disabled={page === 1}
 							onClick={() => setPage(page - 1)}
 						>
@@ -649,7 +649,7 @@ console.log("authenticate",authenticate)
 							{/* of {totalPages} */}
 						</span>
 						<button
-							className={`px-4 py-2 border rounded-md  text-white bg-[#015289]`}
+							className={`px-4 py-2 border rounded-md   bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white  `}
 							disabled={allAssesmentData?.length < 10}
 							onClick={() => setPage(page + 1)}
 						>

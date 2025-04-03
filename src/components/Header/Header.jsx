@@ -70,11 +70,11 @@ function Header({ setShowMenu }) {
               key={data.route}
               to={data.route}
               onClick={setShowMenu}
-              className="flex items-center px-2 py-2 space-x-2 rounded-lg   [&.active]:bg-gray-900 transition duration-200"
+              className="flex items-center px-2 py-2 space-x-2 rounded-lg   [&.active]:bg-gradient-to-tl from-[#5a5656] to-[#524e4e]  transition duration-200"
 
             >
               <data.icon className="text-white w-5 h-5" />
-              <p className="text-sm font-medium">{data.title}</p>
+              <p className="text-sm font-semibold text-white">{data.title}</p>
             </NavLink>
           ))}
         </nav>
@@ -91,7 +91,9 @@ function Header({ setShowMenu }) {
             text-indigo-600
               hover:scale-95 
              transition
-           bg-indigo-600 
+           bg-gradient-to-r 
+           
+           from-[#d83b3b] to-[#c26d6d] 
              rounded-lg  
              justify-center"
             >

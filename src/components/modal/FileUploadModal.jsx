@@ -21,7 +21,7 @@ export const Modal = ({ isOpen, onClose, title, method }) => {
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4 z-50">
       <div className="bg-white rounded-2xl shadow-lg max-w-lg w-full">
         {/* Header */}
-        <div className="flex justify-between items-center bg-[#015289] text-white rounded-t-2xl p-4">
+        <div className="flex justify-between items-center bg-gradient-to-bl from-[#333333] to-[#666666] text-white rounded-t-2xl p-4">
           <h2 className="text-lg font-semibold">{title}</h2>
           <button onClick={onClose} className="hover:opacity-80 transition">
             <MdClose className="h-6 w-6" />

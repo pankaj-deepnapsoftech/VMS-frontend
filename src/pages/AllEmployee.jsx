@@ -61,7 +61,7 @@ export default function AllEmployee() {
 
 		<>
 
-			{loading ? <Loader /> : <div className="m-8 bg-white shadow-lg rounded-lg">
+			{loading ? <Loader /> : <div className="m-6 p-2 bg-gray-100 shadow-lg rounded-lg">
 				{/* Table Header */}
 				<div className="flex justify-between items-center mb-4">
 
@@ -70,7 +70,7 @@ export default function AllEmployee() {
 
 						<button
 							onClick={() => setIsModalOpen(true)}
-							className="px-4 py-2 bg-[#015289] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
+							className="px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
 						>
 							<BiPlus className="h-6 w-6" />
 							Add Employee
@@ -203,8 +203,6 @@ export default function AllEmployee() {
 											</div>
 										</form>
 									</div>
-
-
 								</div>
 							</div>
 						</div>
@@ -213,16 +211,16 @@ export default function AllEmployee() {
 				</div>
 
 				{/* Table */}
-				{allEmployeesData.length<1?<NoDataFound/>:<div className="overflow-x-auto">
+				{allEmployeesData.length<1?<NoDataFound/>:<div className="overflow-x-auto rounded-lg">
 					<table className="table-auto w-full border-collapse border border-gray-200">
-						<thead className="bg-[#015289]  text-white">
+						<thead className="bg-gradient-to-bl from-[#333333] to-[#666666] text-white">
 							<tr>
-								<th className="px-4 py-3 border text-left">S No.</th>
-								<th className="px-4 py-3 border text-left">Full Name</th>
-								<th className="px-4 py-3 border text-left">Email</th>
-								<th className="px-4 py-3 border text-left">Phone</th>
-								<th className="px-4 py-3 border text-left">Role</th>
-								<th className="px-4 py-3 border text-left">Approval Status</th>
+								<th className="px-4 py-1 text-sm  border text-left"> S No.</th>
+								<th className="px-4 py-1 text-sm  border text-left">Full Name</th>
+								<th className="px-4 py-1 text-sm  border text-left">Email</th>
+								<th className="px-4 py-1 text-sm  border text-left">Phone</th>
+								<th className="px-4 py-1 text-sm  border text-left">Role</th>
+								<th className="px-4 py-1 text-sm  border text-left">Approval Status</th>
 								{/* <th className="px-4 py-3 border text-left">Action</th> */}
 							</tr>
 						</thead>
@@ -232,14 +230,14 @@ export default function AllEmployee() {
 									key={user._id}
 									className="odd:bg-gray-50 even:bg-gray-100 hover:bg-gray-200 transition duration-200"
 								>
-									<td className="px-4 py-3 border">{index + 1}</td>
-									<td className="px-4 py-3 border">{user.full_name}</td>
-									<td className="px-4 py-3 border">{user.email}</td>
-									<td className="px-4 py-3 border">{user.phone}</td>
-									<td className="px-4 py-3 border">{user.role}</td>
-									<td className="px-4 py-3 border">
+									<td className="px-2 py-1 border">{index + 1}</td>
+									<td className="px-2 py-1 border">{user.full_name}</td>
+									<td className="px-2 py-1 border">{user.email}</td>
+									<td className="px-2 py-1 border">{user.phone}</td>
+									<td className="px-2 py-1 border">{user.role}</td>
+									<td className="px-2 py-2 border">
 										{user?.employee_approve ? (
-											<span className="px-3 py-1 text-sm font-semibold text-green-800 bg-green-100 rounded-full">
+											<span className="px-3 py-1 text-sm font-semibold 1ext-green-800 bg-green-100 rounded-full">
 												Approved
 											</span>
 										) : <button
@@ -261,7 +259,7 @@ export default function AllEmployee() {
 				</div>}
 				<div className="flex justify-between items-center py-12 px-5">
 					<button
-						className={`px-4 py-2 bg-[#015289] text-white border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
+						className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
 						disabled={page === 1}
 						onClick={() => setPage(page - 1)}
 					>
@@ -272,7 +270,7 @@ export default function AllEmployee() {
 						{/* of {totalPages} */}
 					</span>
 					<button
-						className={`px-4 py-2 border rounded-md  text-white bg-[#015289]`}
+						className={`px-4 py-2 border rounded-md  text-white bg-gradient-to-tr from-[#1f1d1d] to-[#666666] `}
 						disabled={allEmployeesData?.length < 10}
 						onClick={() => setPage(page + 1)}
 					>

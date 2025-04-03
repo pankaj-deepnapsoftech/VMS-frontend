@@ -19,7 +19,7 @@ export function NotificationSidebar({ notifications, isOpen, onClose, notificati
 				}`}
 		>
 			{/* Header */}
-			<div className="p-4 border-b flex justify-between items-center bg-[#015289]">
+			<div className="p-4 border-b flex justify-between items-center bg-gradient-to-bl from-[#333333] to-[#666666]">
 				<FaBell className="w-6 h-6 text-white" />
 				<h2 className="text-lg font-semibold text-white">Notifications {notificationcount < 1 ? "" : `(${notificationcount})`}</h2>
 				<button onClick={onClose} className="text-white hover:text-red-400 transition">

@@ -150,7 +150,7 @@ function Exceptions() {
 
           {/* Main Content */}
           <div className="p-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
               {/* Chart 1: Deferred Vulnerable Items by Reason */}
               <div className="bg-white p-6 rounded-lg shadow">
                 <div className="flex items-center justify-between mb-4">
@@ -224,28 +224,28 @@ function Exceptions() {
               <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
               <input
                 type="text"
-                placeholder="Search vulnerabilities..."
+                placeholder="Search Vulnerabilities ..."
                 className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg w-full md:w-80"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
 
-            {paginatedData.length<1 ? <NoDataFound/> : <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-[#015289]">
+            {paginatedData.length<1 ? <NoDataFound/> : <div className="overflow-x-auto rounded-lg">
+              <table className="min-w-full divide-y divide-gray-200 bg-white">
+                <thead className="bg-gradient-to-bl from-[#333333] to-[#666666]">
 
                   <tr>
 
                     {tableHeaders?.map((header, index) => (
                       <th
                         key={index}
-                        className="px-4 py-3 text-left text-xs font-medium text-white uppercase"
+                        className="px-3  text-left text-xs font-medium text-white uppercase"
                       >
                         {header === "createdAt" ? "Created Date" : header.replace(/_/g, " ")}
                       </th>
                     ))}
-                    <th className="px-4 py-3 text-left text-xs font-medium text-white uppercase">
+                    <th className="px-3  text-left text-xs font-medium text-white uppercase">
                       Actions
                     </th>
                   </tr>
@@ -256,7 +256,7 @@ function Exceptions() {
 
                       {tableHeaders?.map((field, i) => (
 
-                        <td key={i} className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                        <td key={i} className="px-4 py-2 whitespace-nowrap text-sm text-gray-700">
                           {
                             field === "createdAt" || field === "Expection_time" ? (
                               new Date(item[field]).toLocaleDateString("en-IN", {
@@ -266,7 +266,7 @@ function Exceptions() {
                               })
                             ) : field === "client_Approve" ? (
                               item.client_Approve ? (
-                                <span className="px-3 py-1 text-sm font-semibold text-green-800 bg-green-100 rounded-full">
+                                <span className="px-3 py-2 text-sm font-semibold text-green-800 bg-green-100 rounded-full">
                                   Approved
                                 </span>
                               ) : (
@@ -277,7 +277,7 @@ function Exceptions() {
                                     UpdateData(updatedItem, item?._id);
 
                                   }}
-                                  className="px-3 py-1 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+                                  className="px-3 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700"
                                 >
                                   Verify
                                 </button>
@@ -289,7 +289,7 @@ function Exceptions() {
 
                         </td>
                       ))}
-                      <td className="px-4 py-4 whitespace-nowrap flex justify-around gap-4">
+                      <td className="px-4 py-2 whitespace-nowrap flex justify-around gap-4">
                         {/* <button onClick={() => openModal(item)} className="text-blue-600">
                           <BiEditAlt className="h-5 w-5" />
                         </button> */}
@@ -311,7 +311,7 @@ function Exceptions() {
 
             <div className="flex justify-between items-center my-16">
               <button
-                className={`px-4 py-2 bg-[#015289] text-white border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
+                className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
                 disabled={page === 1}
                 onClick={() => setPage(page - 1)}
               >
@@ -322,7 +322,7 @@ function Exceptions() {
 
               </span>
               <button
-                className={`px-4 py-2 border rounded-md  text-white bg-[#015289]`}
+                className={`px-4 py-2 border rounded-md  text-white bg-gradient-to-tr from-[#1f1d1d] to-[#666666] `}
                 disabled={expectionData?.length < 10}
                 onClick={() => setPage(page + 1)}
               >

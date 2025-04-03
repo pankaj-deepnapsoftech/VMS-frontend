@@ -209,7 +209,7 @@ export function VulnerabilityData() {
 
       {loading ?
         <Loader /> :
-        <div className="p-4 md:p-6 max-w-[95%] mx-auto bg-white rounded-xl shadow-lg">
+        <div className="p-4 md:p-6 max-w-[95%] mx-auto bg-gray-200/30 rounded-xl shadow-lg">
           
 
 
@@ -219,10 +219,10 @@ export function VulnerabilityData() {
 
 
           <div className="py-10 ">
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto rounded-lg">
               <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
                 <thead className="h-8">
-                  <tr className="bg-[#015289] text-gray-100 uppercase text-sm ">
+                  <tr className="bg-gradient-to-bl from-[#333333] to-[#666666] text-gray-100 uppercase text-sm ">
                     <th className=" border-b">Top Vulnerabilities </th>
                     <th className=" border-b">Vulnerability Name</th>
                     <th className=" border-b">Total Vulnerability Instances </th>
@@ -250,20 +250,20 @@ export function VulnerabilityData() {
             <div className="lg:flex lg:flex-row grid grid-cols-2 gap-4 mt-4   w-full lg:justify-end  lg:items-center py-2 lg:gap-2">
               <button
                 onClick={() => openModal()}
-                className="px-4 py-2 bg-[#015289] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row">
+                className="px-4 py-2 bg-gradient-to-bl from-[#333333] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row">
                 <BiPlus className="h-6 w-6 mr-1" />
                 Add Vulnerability
               </button>
               <button
                 onClick={() => handleBulkAssignTask()}
-                className="px-4 py-2 bg-[#015289] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
+                className="px-4 py-2 bg-gradient-to-bl from-[#333333] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
               >
                 <BsPersonCheckFill className="h-6 w-6 mr-1" />
                 Bulk Task Assign
               </button>
               <button
                 onClick={() => handleDownload(filteredData)}
-                className="px-4 py-2 bg-[#015289] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
+                className="px-4 py-2 bg-gradient-to-bl from-[#333333] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
               >
                 <BiSave className="h-6 w-6 mr-1" />
                 Export Data
@@ -274,7 +274,7 @@ export function VulnerabilityData() {
 
                 <button
                   onClick={() => setIsRUModalOpen(true)}
-                  className="px-4 py-2 bg-[#015289] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
+                  className="px-4 py-2 bg-gradient-to-bl from-[#333333] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
                 >
                   <BiPlus className="h-6 w-6" />
                   Report Upload
@@ -297,7 +297,7 @@ export function VulnerabilityData() {
               <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
               <input
                 type="text"
-                placeholder="Search vulnerabilities..."
+                placeholder="Search Vulnerabilities ..."
                 className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg w-full md:w-80"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -320,7 +320,7 @@ export function VulnerabilityData() {
                   {getOrganizationData?.map((itm, idx) => (<option key={idx} value={itm}>{itm}</option>))}
 
                 </select>
-                <button className="p-1   bg-[#015289] text-white text-xs rounded-lg hover:bg-blue-700 transition"
+                <button className="p-1   bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white text-[10px] rounded-lg hover:bg-blue-700 transition"
                   onClick={() => {
                     AllVulnerablilty()
                     setSelected("")
@@ -333,7 +333,7 @@ export function VulnerabilityData() {
           {/* 📊 Table */}
          {paginatedData.length<1?<NoDataFound/>: <div className="overflow-x-auto">
             <table className="min-w-full border border-gray-300 shadow-sm rounded-lg overflow-hidden">
-              <thead className="bg-gray-200 text-gray-600">
+              <thead className="bg-gradient-to-r from-[#333333] to-[#666666]  text-gray-100">
                 <tr className="h-10"> {/* Reduced row height */}
                   <th className="px-3 text-left text-xs font-semibold uppercase">
                     <input
@@ -428,7 +428,7 @@ export function VulnerabilityData() {
               <div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
 
                 {/* Header */}
-                <div className="flex justify-between items-center border-b p-4 bg-[#015289]">
+                <div className="flex justify-between items-center border-b p-4 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] ">
                   <h2 className="text-lg font-semibold text-gray-200">
                     {"Assign Task to Employee"}
                   </h2>
@@ -471,7 +471,7 @@ export function VulnerabilityData() {
                           CreateNotifications(empName, `${vulTitle} has Assign a New Task To You`)
                         }
                       }}
-                      className="px-4 py-2 bg-[#015289] text-white rounded-md hover:bg-blue-700 transition"
+                      className="px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white rounded-md hover:bg-blue-700 transition"
                     >
                       Save
                     </button>
@@ -488,7 +488,7 @@ export function VulnerabilityData() {
               <div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
 
                 {/* Header */}
-                <div className="flex justify-between items-center border-b p-4 bg-[#015289]">
+                <div className="flex justify-between items-center border-b p-4 bg-gradient-to-bl from-[#333333] to-[#666666]">
                   <h2 className="text-lg font-semibold text-gray-200">
                     {editMode ? "Edit Vulnerability" : "Add Vulnerability"}
                   </h2>
@@ -602,7 +602,7 @@ export function VulnerabilityData() {
                         </button>
                         <button
                           type="submit"
-                          className="px-4 py-2 bg-[#015289] text-white rounded-md hover:bg-blue-700 transition"
+                          className="px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white rounded-md hover:bg-blue-700 transition"
                         >
                           Save
                         </button>
@@ -619,7 +619,7 @@ export function VulnerabilityData() {
 
           <div className="flex justify-between items-center my-16">
             <button
-              className={`px-4 py-2 bg-[#015289] text-white border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
+              className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
               disabled={page === 1}
               onClick={() => setPage(page - 1)}
             >
@@ -630,7 +630,7 @@ export function VulnerabilityData() {
 
             </span>
             <button
-              className={`px-4 py-2 border rounded-md  text-white bg-[#015289]`}
+              className={`px-4 py-2 border rounded-md  text-white bg-gradient-to-tr from-[#1f1d1d] to-[#666666] `}
               disabled={allVulnerabilityData?.length < 10}
               onClick={() => setPage(page + 1)}
             >

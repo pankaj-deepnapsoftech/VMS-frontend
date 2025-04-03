@@ -183,7 +183,7 @@ const Reports = () => {
   };
 
   return (
-    <div className="p-4 md:p-6 mt-5 max-w-[95%] mx-auto bg-white rounded-xl shadow-lg">
+    <div className="p-4 md:p-6 mt-5 max-w-[95%] mx-auto bg-gray-100 rounded-xl shadow-lg">
       {/* Search Bar & Buttons */}
       <div className="mb-4 flex flex-col md:flex-row items-start md:items-center justify-between">
         {authenticate.role === "Assessor" ? (
@@ -235,9 +235,9 @@ const Reports = () => {
       </div>
 
       {/* Table */}
-    { filterData.length<1?<NoDataFound/>: <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-[#015289] text-white">
+    { filterData.length<1?<NoDataFound/>: <div className="overflow-x-auto rounded-md">
+        <table className="min-w-full divide-y divide-gray-200 bg-white">
+          <thead className="bg-gradient-to-bl from-[#333333] to-[#666666] rounded-e-lg text-white">
             <tr>
               {[
                 "S NO.",
@@ -261,27 +261,27 @@ const Reports = () => {
               filterData.map((report, index) => (
                 <tr key={report?._id} className="hover:bg-gray-50">
                   {/* Serial Number */}
-                  <td className="px-4 py-4 text-center whitespace-nowrap text-sm text-gray-900">
+                  <td className="px-4 py-1 text-center whitespace-nowrap text-sm text-gray-900">
                     {index + 1}
                   </td>
 
                   {/* Date (Formatted) */}
-                  <td className="px-4 py-4 text-center whitespace-nowrap text-sm text-gray-900">
+                  <td className="px-4 py-1 text-center whitespace-nowrap text-sm text-gray-900">
                     {new Date(report?.createdAt).toLocaleDateString()}
                   </td>
 
                   {/* Creator Name */}
-                  <td className="px-4 py-4 text-center whitespace-nowrap text-sm text-gray-900">
+                  <td className="px-4 py-1 text-center whitespace-nowrap text-sm text-gray-900">
                     {report.creator?.full_name || "-"}
                   </td>
 
                   {/* Organization */}
-                  <td className="px-4 py-4 text-center whitespace-nowrap text-sm text-gray-900">
+                  <td className="px-4 py-1 text-center whitespace-nowrap text-sm text-gray-900">
                     {report.Organization?.Organization || "-"}
                   </td>
 
                   {/* View Report Button */}
-                  <td className="px-4 py-4 text-center whitespace-nowrap text-sm text-gray-900">
+                  <td className="px-4 py-1 text-center whitespace-nowrap text-sm text-gray-900">
                     {/* <button
                       onClick={() => {
                         setFile(report?.file);
@@ -291,13 +291,13 @@ const Reports = () => {
                     >
                       View Report
                     </button> */}
-                    <a href={report?.file} target="_blank" className="bg-blue-500 text-gray-50 px-4 py-1 rounded  ">
+                    <a href={report?.file} target="_blank" className="bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-gray-50 px-4 py-1 rounded  ">
                       Download Report
                     </a>
                   </td>
 
                   {/* Actions */}
-                  <td className="px-4 py-4 whitespace-nowrap text-center flex justify-center gap-2 items-start">
+                  <td className="px-4 py-2 whitespace-nowrap text-center flex justify-center gap-2 items-start">
                     {authenticate.role === "Assessor" ? (
                       <>
                         <button
@@ -337,7 +337,7 @@ const Reports = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-10">
           <div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
             {/* Header */}
-            <div className="flex justify-between items-center border-b p-4 bg-[#015289]">
+            <div className="flex justify-between items-center border-b p-4 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] ">
               <h2 className="text-lg font-semibold text-gray-200">
                 {isEdit ? "Edit Detailed Report" : "Add Detailed Report"}
               </h2>
