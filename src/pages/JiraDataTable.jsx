@@ -14,6 +14,10 @@ import Loader from "@/components/Loader/Loader";
 import toast from "react-hot-toast";
 import NoDataFound from "@/components/NoDataFound";
 import { Modal } from "@/components/modal/FileUploadModal";
+import { MdClose } from "react-icons/md";
+import { useFormik } from "formik";
+import InputField from "@/components/InputField";
+import { FaEnvelope } from "react-icons/fa";
 
 export const JiraDataTable = () => {
   const {
@@ -30,7 +34,7 @@ export const JiraDataTable = () => {
     ConfigData,
     DeleteMultipleData,
     DeleteData,
-    UpdateData     
+    UpdateData,
   } = useJiraContext();
 
   const { token } = useAuthContext();
@@ -39,6 +43,7 @@ export const JiraDataTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isJDModalOpen, setIsJDModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const rowsPerPage = 10;
   const fileInputRef = useRef(null);
 
@@ -131,6 +136,22 @@ export const JiraDataTable = () => {
     DeleteMultipleData(deleteList);
   };
 
+
+const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
+    initialValues: { email: "", password: "" },
+    // validationSchema: SignInValidation,
+    onSubmit: (value) => {
+      console.log("UpdateData",value)
+      UpdateData(id,value);
+      
+    }
+  })
+
+
+
+
+
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
       {loading ? (
@@ -200,8 +221,8 @@ export const JiraDataTable = () => {
                       </th>
                       {[
                         "ID",
-                        "Issue Type",
                         "Issue ID",
+                        "Issue Type",
                         "Issue Description",
                         "Project Name",
                         "Project Type",
@@ -251,13 +272,16 @@ export const JiraDataTable = () => {
                         )}
                         <td className="px-4 py-2 whitespace-nowrap">
                           <div className="flex items-center gap-2">
-                            <button
-                              onClick={() => console.log(item)}
+                            {/* <button
+                              onClick={() => {
+                                setIsUpdateModalOpen(true);
+                                console.log(item);
+                              }}
                               className="text-[#6366f1] hover:text-[#4f46e5] transition-colors duration-150"
                               title="Edit"
                             >
                               <BiEditAlt className="h-4 w-4" />
-                            </button>
+                            </button> */}
                             <button
                               onClick={() => {
                                 DeleteData(item.issueId);
@@ -273,6 +297,69 @@ export const JiraDataTable = () => {
                     ))}
                   </tbody>
                 </table>
+              </div>
+            )}
+
+            {isUpdateModalOpen && (
+              <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-10">
+                <div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
+                  {/* Header */}
+                  <div className="flex justify-between items-center border-b p-4  bg-gradient-to-bl from-[#333333] to-[#666666]">
+                    <h2 className="text-lg font-semibold text-gray-200">
+                      {"Update Details"}
+                    </h2>
+                    <button
+                      onClick={() => setIsUpdateModalOpen(false)}
+                      className="text-gray-100 hover:text-gray-200 transition"
+                    >
+                      <MdClose className="h-6 w-6" />
+                    </button>
+                  </div>
+                  <div className="p-10 ">
+                    <div className=" flex  gap-6 mb-8   ">
+                      <form
+                        onSubmit={handleSubmit}
+                        className="space-y-5 w-full flex flex-col "
+                      >
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                          <InputField
+                            label={"Email Address"}
+                            type={"email"}
+                            showPassword={false}
+                            icon={FaEnvelope}
+                            value={values.email}
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            placeholder="Enter your Email Address"
+                            name="email"
+                          />
+                          {touched.email && errors.email && (
+                            <p> {errors.email}</p>
+                          )}
+
+
+                        </div>
+
+                        <div className="col-span-1 md:col-span-2 flex justify-end gap-2 mt-4 border-t pt-4">
+                          <button
+                            type="button"
+                            onClick={() => setIsUpdateModalOpen(false)}
+                            className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition"
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            type="submit"
+                            onSubmit={handleSubmit}
+                            className="px-4 py-2  bg-gradient-to-bl from-[#333333] to-[#666666] text-white rounded-md hover:bg-blue-700 transition"
+                          >
+                            Save
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
 

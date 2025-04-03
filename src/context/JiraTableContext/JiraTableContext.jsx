@@ -127,10 +127,10 @@ const JiraContextProvider = ({ children }) => {
       toast.error(error?.response?.data?.message);
     }
   };
-  const UpdateData = async (id) => {
+  const UpdateData = async (id,data) => {
     const toastId = toast.loading("Loading...");
     try {
-      const res = await AxiosHandler.put(`/jira/update-jira-data/${id}`);
+      const res = await AxiosHandler.put(`/jira/update-jira-data/${id}`,data);
       JiraManualData();
       toast.dismiss(toastId);
       toast.success(res.data.message);

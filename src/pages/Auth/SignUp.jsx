@@ -34,7 +34,7 @@ function SignUp() {
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="w-full max-w-6xl bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row">
         {/* Left Side - Welcome Section */}
-        <div className="h-screen border-r-4 mt-16">
+        <div className="h-[80%] border-r-4 mt-16">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             {/* Header Section */}
             <div className="text-center mb-16">

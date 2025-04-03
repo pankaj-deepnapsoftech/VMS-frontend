@@ -194,7 +194,7 @@ const Reports = () => {
                 setIsEdit(false);
                 setIsModalOpen(true);
               }}
-              className="px-4 py-2 bg-[#015289] text-white text-sm font-medium rounded-md flex items-center hover:bg-[#014173]"
+              className="px-4 py-2 bg-gradient-to-r from-[#333333] to-[#666666] text-white text-sm font-medium rounded-md flex items-center hover:bg-[#014173]"
             >
               <BiUpload className="h-4 w-4 mr-2" />
               Detailed Report
@@ -400,7 +400,7 @@ const Reports = () => {
                     </button>
                     <button
                       type="submit"
-                      className="px-4 py-2 bg-[#015289] text-white rounded-md hover:bg-blue-700 transition"
+                      className="px-4 py-2 bg-gradient-to-r from-[#333333] to-[#666666] text-white rounded-md hover:bg-blue-700 transition"
                     >
                       {isEdit ? "Update" : "Save"}
                     </button>

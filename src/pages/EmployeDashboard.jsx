@@ -4,6 +4,8 @@ import { useAllEmployeeContext, useAuthContext, useDataContext } from '@/context
 import { FiAlertCircle } from 'react-icons/fi';
 import { BiPlus } from 'react-icons/bi';
 import { Modal } from '@/components/modal/FileUploadModal';
+import Card from '@/components/Card';
+import { IoShieldCheckmarkOutline, IoShieldOutline } from 'react-icons/io5';
 
 
 
@@ -39,6 +41,53 @@ function EmployeeDashboard() {
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#FF6384"];
 
+console.log("employeeCardData",employeeCardData)
+ const metrics = [
+    {
+      title: "Total Data",
+      value: employeeCardData?.totalData ,
+      color: "from-[#F24E1E] to-[#FF866B]", // Figma Red gradient
+      icon: IoShieldOutline,
+      chartColor: "#FFF",
+    },
+    {
+      title: "Low",
+      value: employeeCardData?.open,
+      color: "from-[#0D99FF] to-[#74C0FC]", // Figma Blue gradient
+      icon: IoShieldOutline,
+      chartColor: "#FFF",
+    },
+    {
+      title: "Medium",
+      value: employeeCardData?.reopen,
+      color: "from-[#63A833] to-[#9EE999]", // Figma Cyan gradient
+      icon: IoShieldOutline,
+      chartColor: "#FFF",
+    }, 
+     {
+      title: "Critical",
+      value: employeeCardData?.inProgress,
+      icon: IoShieldCheckmarkOutline,
+      color: "from-[#0D99FF] to-[#74C0FC]", // Dark Gray gradient
+      chartColor: "#FFF",
+    },{
+      title: "Critical",
+      value: employeeCardData?.closed
+      ,
+      icon: IoShieldCheckmarkOutline,
+      color: "from-[#63A833] to-[#6EE999]", // Dark Gray gradient
+      chartColor: "#FFF",
+    },{
+      title: "Critical",
+      value: employeeCardData?.onHold,
+      icon: IoShieldCheckmarkOutline,
+      color: "from-[#333333] to-[#666666]", // Dark Gray gradient
+      chartColor: "#FFF",
+    },
+  ];
+
+
+
   return (
     <>
       <div className="min-h-screen bg-gray-100 px-6 ">
@@ -46,23 +95,13 @@ function EmployeeDashboard() {
 
 
         {/* Metrics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-2 py-6">
-          {Object.keys(employeeCardData)?.map((item, idx) => {
-            return (<div key={idx}
-              className="p-2 border-r   bg-gradient-to-r from-[#DC783E]   to-[#EBA985] border-b hover:scale-95 transition ease-linear rounded">
-              <div className="flex items-center justify-start gap-2 mb-1 ">
-              <FiAlertCircle className="text-white" size={20} />
-                <h3 className="text-sm text-white font-semibold capitalize">{item === "totalData" ? "Total" : item.replace(/([a-z])([A-Z])/g, "$1 $2")} Task</h3>
-               
-              </div>
-              <div className="space-y-1">
-                <p className="text-3xl font-bold text-white">{employeeCardData[item]}</p>
-
-
-              </div>
-            </div>
-            )
-          })}
+         
+         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mx-2 py-2">
+         
+          {metrics.map((metric, index) => (
+            <Card key={index} data={metric} />
+          ))}
+        
         </div>
 
         {/* Charts Section */}

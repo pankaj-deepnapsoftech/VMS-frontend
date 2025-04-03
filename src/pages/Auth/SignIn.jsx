@@ -130,7 +130,7 @@ function SignIn() {
         </div>
 
         {/* Right Side - Welcome Section */}
-        <div className="h-screen border-l-4">
+        <div className="h-[85%] border-l-4">
           <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             {/* Header Section */}
             <div className="text-center mb-16">

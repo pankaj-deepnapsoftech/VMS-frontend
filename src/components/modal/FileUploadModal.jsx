@@ -59,7 +59,7 @@ export const Modal = ({ isOpen, onClose, title, method }) => {
               </div>
               <p className="text-gray-900 font-medium">Drag and drop Excel files to upload</p>
               <p className="text-sm text-gray-500">Supported formats: .xlsx, .xls</p>
-              <button className="mt-4 px-4 py-2 bg-[#015289] text-white rounded-lg hover:bg-[#013b66] transition">
+              <button className="mt-4 px-4 py-2 bg-gradient-to-bl from-[#333333] to-[#666666] text-white rounded-lg hover:bg-[#013b66] transition">
                 Select Files
               </button>
               <input ref={fileInputRef} type="file" accept=".xlsx,.xls" onChange={handleFileChange} className="hidden" />

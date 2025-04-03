@@ -70,7 +70,7 @@ transition duration-300 sm:w-[40%] md:w-[30%] lg:w-[25%] xl:w-[20%] 2xl:w-[15%] 
 
                 <button
                   onClick={() => setSidebarOpen(true)}
-                  className="relative flex items-center gap-2 bg-[#015289]  text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                  className="relative flex items-center gap-2 bg-gradient-to-bl from-[#333333] to-[#666666] text-white px-4 py-2 rounded-lg hover:bg-blue-600"
                 >
                   <FaBell className="w-6 h-6" />
                   {

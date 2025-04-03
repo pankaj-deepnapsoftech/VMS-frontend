@@ -159,7 +159,7 @@ export function EmployeeAllTasks() {
       {loading ? (
         <Loader />
       ) : (
-        <div className="p-4 md:p-6 max-w-[95%] mx-auto bg-white rounded-xl shadow-lg">
+        <div className="p-4 md:p-6 max-w-[95%] mx-auto bg-gray-100 rounded-xl shadow-lg">
           {/* 🔍 Search Bar & Buttons */}
           <div className="mb-4 flex flex-col md:flex-row items-start md:items-center justify-between">
             <div className="relative mt-4 md:mt-0">
@@ -193,14 +193,14 @@ export function EmployeeAllTasks() {
             <div className="flex justify-end items-start gap-5 py-4">
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="px-4 py-2 bg-[#015289] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
+                className="px-4 py-2 bg-gradient-to-r from-[#333333] to-[#666666]   text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
               >
                 <BiPlus className="h-6 w-6" />
                 Report Upload
               </button>
               <button
                 onClick={() => handleDownload(filteredData)}
-                className="px-4 py-2 bg-[#015289] text-white text-sm font-medium rounded-md flex items-center"
+                className="px-4 py-2 bg-gradient-to-r from-[#333333] to-[#666666]   text-white text-sm font-medium rounded-md flex items-center"
               >
                 <BiSave className="h-6 w-6 mr-1" />
                 Export Data
@@ -216,11 +216,11 @@ export function EmployeeAllTasks() {
           </div>
 
           {/* 📊 Table */}
-          {paginatedData.length<1?<NoDataFound/>:<div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-[#015289]">
+          {paginatedData.length<1?<NoDataFound/>:<div className="overflow-x-auto rounded-lg">
+            <table className="min-w-full divide-y divide-gray-200 bg-white">
+              <thead className="bg-gradient-to-r from-[#333333] to-[#666666]  ">
                 <tr>
-                  {/* <th className="px-4 py-3 text-left text-xs font-medium text-white uppercase">
+                  {/* <th className="px-2  text-left text-xs font-medium text-white uppercase">
 									<input
 										type="checkbox"
 										checked={selectAll}
@@ -232,14 +232,14 @@ export function EmployeeAllTasks() {
                   {tableHeaders.map((header, index) => (
                     <th
                       key={index}
-                      className="px-4 py-3 text-left text-xs font-medium text-white uppercase"
+                      className="px-2 text-left text-xs font-medium text-white uppercase"
                     >
                       {header === "createdAt"
                         ? "Created Date"
                         : header.replace(/_/g, " ")}
                     </th>
                   ))}
-                  <th className="px-4 py-3 text-left text-xs font-medium text-white uppercase">
+                  <th className="px-2 text-left text-xs font-medium text-white uppercase">
                     Actions
                   </th>
                 </tr>
@@ -258,7 +258,7 @@ export function EmployeeAllTasks() {
                     {tableHeaders.map((field, i) => (
                       <td
                         key={i}
-                        className={`px-4 py-4 whitespace-nowrap text-sm text-gray-900 `}
+                        className={`px-4  whitespace-nowrap text-sm text-gray-900 `}
                       >
                         {field === "createdAt"
                           ? new Date(item[field]).toLocaleDateString("en-IN", {
@@ -271,7 +271,7 @@ export function EmployeeAllTasks() {
                           : item[field]}
                       </td>
                     ))}
-                    <td className="px-4 py-4 whitespace-nowrap flex justify-around gap-4">
+                    <td className="px-4 py-2 whitespace-nowrap flex justify-around gap-4">
                       <button
                         onClick={() => openModal(item)}
                         className="text-blue-600"
@@ -422,7 +422,7 @@ export function EmployeeAllTasks() {
 
           <div className="flex justify-between items-center py-16">
             <button
-              className={`px-4 py-2 bg-[#015289] text-white border rounded-md ${
+              className={`px-4 py-2 bg-gradient-to-r from-[#333333] to-[#666666]   text-white border rounded-md ${
                 taskPage === 1 ? "opacity-50 cursor-not-allowed" : ""
               }`}
               disabled={taskPage === 1}
@@ -435,7 +435,7 @@ export function EmployeeAllTasks() {
               {/* of {totalPages} */}
             </span>
             <button
-              className={`px-4 py-2 border rounded-md  text-white bg-[#015289]`}
+              className={`px-4 py-2 border rounded-md  text-white bg-gradient-to-r from-[#333333] to-[#666666]`}
               disabled={paginatedData?.length < 10}
               onClick={() => setTaskPage(taskPage + 1)}
             >

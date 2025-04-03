@@ -1,391 +1,940 @@
-import { NavLink } from "react-router-dom";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Accordion from "./component/Accordion";
+import Header from "./component/Header";
+import Footer from "./component/Footer";
 
-// export default function GettingStarted() {
-// 	return (
-// 		<div className="min-h-screen flex items-center justify-center bg-[#015289] ">
-{
-  /* <div className="bg-white rounded-xl shadow-2xl p-10 max-w-md w-full text-center">
-	<h1 className="text-3xl font-bold mb-4 text-gray-800">Welcome to Secure& !</h1>
-	<p className="text-gray-600 mb-8">Get started with your account.</p>
+import { Award, Trophy, ArrowUpRight } from "lucide-react";
 
-	<div className="space-y-4 flex flex-col">
-		<NavLink to={"/sign-in"}
-			className="w-full bg-[#015289]  text-white py-3 rounded-xl text-lg font-medium hover:bg-blue-700 transition">
-			Sign In
-		</NavLink>
-		<NavLink to={"/sign-up"}
-			className="w-full bg-gray-100 text-gray-800 py-3 rounded-xl text-lg font-medium hover:bg-gray-200 transition">
-			Sign Up
-		</NavLink>
-	</div>
-</div> */
-}
-
-// 		</div>
-// 	);
-// }
-
-import React, { useState } from "react";
-import { GiSpiderWeb } from "react-icons/gi";
-import {
-  FaBook,
-  FaBug,
-  FaChartBar,
-  FaCheckCircle,
-  FaClipboardList,
-  FaClock,
-  FaCode,
-  FaCrosshairs,
-  FaDragon,
-  FaFileAlt,
-  FaHeartbeat,
-  FaKey,
-  FaNetworkWired,
-  FaSearch,
-  FaShieldAlt,
-  FaSpider,
-  FaSyncAlt,
-  FaTools,
-} from "react-icons/fa";
-import { FiTarget } from "react-icons/fi";
-import Footer from "@/components/Footer/Footer";
-
-function GettingStarted() {
-  const features = [
+const GettingStarted = () => {
+  const testimonials = [
     {
-      icon: <FaSearch />,
-      title: "Resource discovery",
-      description:
-        "First, the scanner attempts to discover various endpoints, sensitive files, and hidden paths on the target website.",
+      company: "Curai Health",
+      logo: "https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b4e5d3f70a5951c37504bc_curai.svg",
+      quote: "Great service for Pymes",
+      content:
+        "Zerod offers an affordable, high-quality technical security review service for SMEs.",
+      author: "Melody Pereira",
+      role: "CISO at Curai Health",
+      image:
+        "https://cdn.prod.website-files.com/6554cc6279901fa…b87317/66b4e55df7ca29779eafaf01_melody-p-500.avif",
     },
     {
-      icon: <FaSpider />,
-      title: "Spidering",
-      description:
-        "Based on the target URL and endpoints it discovered in the previous phase, the Website Scanner starts to map the structure of the web application.",
-    },
-    {
-      icon: <FaBug />,
-      title: "Active scanning",
-      description:
-        "While the Spider is running, another component of the Website Scanner takes each previously discovered endpoint and tests for vulnerabilities.",
-    },
-    {
-      icon: <FaHeartbeat />,
-      title: "Passive scanning",
-      description:
-        "To detect interesting information and leaked sensitive data, the Website Vulnerability Scanner also analyzes web traffic passively.",
-    },
-    {
-      icon: <FaShieldAlt />,
-      title: "Version-based CVE detection",
-      description:
-        "Besides specific application vulnerability detection, the Website Vulnerability Scanner also discovers vulnerabilities based on software versions.",
-    },
-    {
-      icon: <FaClipboardList />,
-      title: "Full list of security tests performed",
-      description:
-        "The deep version of the Website Vulnerability Scanner performs a complete security assessment of your web application.",
+      company: "Profesional Cosmetics",
+      logo: "https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b4e79877bc409c489a3af0_cosmetics.svg",
+      quote: "Fast and quality service",
+      content:
+        "Working with Zerod was easy and fast. They gave us peace of mind when analyzing the systems and equipment.",
+      author: "Óscar Trias",
+      role: "CEO at Profesional Cosmetics",
+      image:
+        "https://cdn.prod.website-files.com/6554cc6279901fa…7/66b4e7627cfb8f840b0e0731_oscar-trias-p-500.avif",
     },
   ];
 
-  const links = [
-    {
-      href: "#use-cases",
-      label: "How it works",
-    },
+  // for second section
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 2,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
 
-    {
-      href: "#use-cases",
-      label: "About",
-      target: "_blank",
-    },
-  ];
-
-  const list = [
-    {
-      icon: <FaDragon size={40} className="text-blue-400" />,
-      title: "Get more from every scan.",
-      description:
-        "Simulate real-world attacks and uncover vulnerabilities efficiently.",
-    },
-    {
-      icon: <FaCheckCircle size={40} className="text-blue-400" />,
-      title: "Trust your results.",
-      description:
-        "Minimize false positives with proof-based validation for accurate results.",
-    },
-    {
-      icon: <FaCrosshairs size={40} className="text-blue-400" />,
-      title: "Get deeper findings.",
-      description:
-        "Detect vulnerabilities even in JavaScript-heavy applications using advanced scanning techniques.",
-    },
-    {
-      icon: <FaKey size={40} className="text-blue-400" />,
-      title: "Customize any scan. Advanced features for in-depth detection",
-      description:
-        "The Ultimate Vulnerability Scanner enhances the complexity of the scanning project by applying powerful in-depth audit mechanisms.",
-    },
-    {
-      icon: <FiTarget size={40} className="text-blue-400" />,
-      title: "Enjoy benchmark-proven performance. See for yourself!",
-      description:
-        "With extensive scanning, it covers critical risk factors and provides actionable insights, ensuring maximum security compliance.",
-    },
-    {
-      icon: <FaChartBar size={40} className="text-blue-400" />,
-      title: "Generate proof-backed reports. Make sure remediation happens",
-      description:
-        "Export in-depth reports with accurate findings for audits and compliance, ensuring vulnerabilities are addressed effectively.",
-    },
-  ];
-
-  const newFeatures = [
-    {
-      icon: <FaClock className="text-4xl text-blue-400" />,
-      title: "Start scanning in seconds - no setup required",
-      description:
-        "A cloud-based scanner, the Website Vulnerability Scanner on Pentest-Tools.com does not require installation, configuration, or maintenance. Just launch a scan, enter your target URL, and enhance results with advanced scan setup.",
-    },
-    {
-      icon: <FaSyncAlt className="text-4xl text-blue-400" />,
-      title: "Automate website security scans with flexible scheduling",
-      description:
-        "New vulnerabilities show up on the web all the time. Friday nights, Mondays, anytime. Stay ahead with scheduled scans: daily, weekly, or monthly. The moment our scanner learns of a new vulnerability, it starts looking for it automatically.",
-    },
-    {
-      icon: <FaCode className="text-4xl text-blue-400" />,
-      title: "Integrate, automate, and streamline with our API",
-      description:
-        "Many security leaders use a few pentesting tools, not just our scanner. That’s why we integrate with CI/CD pipelines, security orchestration platforms, and development frameworks, making security testing an integral part of your development process.",
-    },
-    {
-      icon: <FaNetworkWired className="text-4xl text-blue-400" />,
-      title: "Scan internal web apps without making assets public",
-      description:
-        "Need to scan assets behind firewalls, on private clouds, or internal networks? Our VPN feature enables this securely so you can detect risks without exposing your assets to the internet.",
-    },
-    {
-      icon: <FaChartBar className="text-4xl text-blue-400" />,
-      title: "Integrate scan results into the tools you already use",
-      description:
-        "Vulnerabilities can slip through the cracks when they’re hard to monitor. Sync security alerts with Jira, GitHub, Slack, and other platforms so your team gets results instantly.",
-    },
-  ];
+  const settings2 = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 2,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
 
   return (
-    <div className="min-h-screen bg-[#0d2647] py-4 px-8 flex justify-center flex-col items-center">
-      <nav className="w-full flex justify-between items-center p-4">
-        <div className="flex items-center justify-center gap-9">
-          <h1 className="text-3xl font-bold text-gray-50">
-            Secure<span className="text-rose-500">&</span>
-          </h1>
-          <ul className="flex flex-wrap gap-x-6 gap-y-3 md:mx-auto md:w-fit">
-            {links.map(({ href, icon, label, target }, index) => (
-              <li key={index}>
-                <a
-                  href={href}
-                  target={target}
-                  className="flex items-center gap-2 py-3 font-normal text-white transition-colors hover:text-rose-500 hover:underline"
-                >
-                  {label}
+    <>
+      <Header />
+      {/* Premium Security */}
+      <div className="bg-gradient-to-r from-[#0D1421] to-[#0D3A78] text-white py-12 px-4 md:px-8 lg:px-16 relative overflow-hidden">
+        <div className="absolute top-0 left-[700px]">
+          <img src="/home.png" className="" />
+        </div>
+
+        <div className="container mx-auto px-4 py-16 md:py-24 lg:py-20 relative z-10 flex flex-col h-full">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center">
+            <div className="w-full lg:w-1/2 mb-12 lg:mb-0">
+              {/* Main content */}
+              <h1 className="text-xl md:text-3xl lg:text-4xl xl:text-5xl  text-white leading-tight mb-6">
+                Vulnerability Assessment <br />& Penetration Testing (VAPT)
+              </h1>
+
+              <p className="text-gray-300 text-lg md:text-xl max-w-xl mb-10">
+                Access world-class cybersecurity experts and enhance penetration
+                testing efficiency with our AI-driven security platform.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4">
+              <a href="/sign-in" className="bg-white text-black hover:bg-gray-200 rounded-md px-8 py-6 text-base font-medium">
+                  TRY SECURE&
                 </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className=" flex items-center justify-center gap-5">
-          <button className="text-gray-700 bg-white px-6  py-2 rounded-lg hover:bg-transparent transition-all ease hover:border hover:text-white border-white">
-            Sign In
-          </button>
-        </div>
-      </nav>
-
-      <div className="container  h-screen  flex flex-col lg:flex-row justify-center items-start mt-20">
-        {/* Left Section */}
-        <div className="max-w-2xl ">
-          <h1 className="text-5xl  font-normal text-white leading-tight mb-6">
-            Proactively Secure, <br />
-            Effortlessly Comply, <br />
-            Stay Ahead of Cyber Risks.
-          </h1>
-
-          <p className="text-slate-200 text-lg max-w-xl mb-6">
-            Vulnerability Management System (VMS)—a cutting-edge solution that
-            helps organizations identify, analyze, prioritize, and eliminate
-            vulnerabilities with ease.
-          </p>
-
-          <NavLink
-            to="/sign-up"
-            className="bg-white text-gray-700 px-8 py-3 rounded-lg text-lg font-semibold shadow-md hover:bg-transparent hover:border border-white hover:text-white transition-all ease"
-          >
-            Create Free Account
-          </NavLink>
-        </div>
-
-        {/* Scanner Interface */}
-        <div className="bg-white backdrop-blur-lg rounded-2xl shadow-2xl p-12 max-w-md w-full text-center transform transition-all duration-300 hover:scale-105 lg:ml-32 mb-20 lg:mt-20 mt-20">
-          <div className="text-center mb-5">
-            <h1 className="text-2xl font-bold text-gray-800">
-              Welcome to <span className="text-blue-600">SECURE&</span>
-            </h1>
-            <p className="text-xs text-gray-600 font-semibold">
-              Beyond security, a Strategy
-            </p>
+                <button
+                  variant="outline"
+                  className="border-white text-white hover:bg-white/10 rounded-md px-8 py-6 text-base font-medium"
+                >
+                  TALK TO US
+                </button>
+              </div>
+            </div>
           </div>
-          <p className="text-gray-600 mb-6">Get started with your account.</p>
-          <div className="space-y-4">
-            <NavLink
-              to="/sign-in"
-              className="block w-full bg-blue-600 text-white py-3 rounded-lg text-lg font-medium shadow-md hover:bg-blue-700 hover:scale-105 transform transition-all duration-300"
-            >
-              Sign In
-            </NavLink>
-            <NavLink
-              to="/sign-up"
-              className="block w-full bg-gray-200 text-gray-800 py-3 rounded-lg text-lg font-medium shadow-md hover:bg-gray-300 hover:scale-105 transform transition-all duration-300"
-            >
-              Sign Up
-            </NavLink>
+
+          {/* Stats section */}
+          <div className="mt-auto pt-16 md:pt-24">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-white">
+              <div className="text-center md:text-left">
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2">
+                  +32,000
+                </h2>
+                <p className="text-gray-400">Vulnerabilities found</p>
+              </div>
+              <div className="text-center">
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2">
+                  +150
+                </h2>
+                <p className="text-gray-400">Hackers onboard</p>
+              </div>
+              <div className="text-center md:text-right">
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2">
+                  1,200
+                </h2>
+                <p className="text-gray-400">Tests per year</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h2 className="text-2xl font-semibold text-center">
+          Our ethical hackers belong to the Hall of Fame of companies like
+        </h2>
+
+        <div className="mt-8">
+          <Slider {...settings}>
+            <img
+              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b36090f7435929c39b2d51_salesforce.svg"
+              className="h-12 mx-auto"
+            />
+            <img
+              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b36090f7435929c39b2d30_yahoo.svg"
+              className="h-12 mx-auto"
+            />
+            <img
+              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b36090f7435929c39b2d04_yazoo.svg"
+              className="h-12 mx-auto"
+            />
+            <img
+              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ff7435929c39b2cea_vm.svg"
+              className="h-12 mx-auto"
+            />
+            <img
+              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ff7435929c39b2cd8_twitter.svg"
+              className="h-12 mx-auto"
+            />
+            <img
+              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ff7435929c39b2ca4_wasp.svg"
+              className="h-12 mx-auto"
+            />
+            <img
+              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ff7435929c39b2c73_sun.svg"
+              className="h-12 mx-auto"
+            />
+            <img
+              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ff7435929c39b2c18_redhat.svg"
+              className="h-12 mx-auto"
+            />
+            <img
+              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ef7435929c39b2b2b_videowidget.svg"
+              className="h-12 mx-auto"
+            />
+            <img
+              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ef7435929c39b2b1b_paypal.svg"
+              className="h-12 mx-auto"
+            />
+            <img
+              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ef7435929c39b2b14_microsoft.svg"
+              className="h-12 mx-auto"
+            />
+            <img
+              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ef7435929c39b2b10_sony.svg"
+              className="h-12 mx-auto"
+            />
+            <img
+              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ef7435929c39b2b01_markt.svg"
+              className="h-12 mx-auto"
+            />
+            <img
+              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ef7435929c39b2afd_oracle.svg"
+              className="h-12 mx-auto"
+            />
+            <img
+              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ef7435929c39b2ad7_meta.svg"
+              className="h-12 mx-auto"
+            />
+            <img
+              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ef7435929c39b2ad2_firefox.svg"
+              className="h-12 mx-auto"
+            />
+            <img
+              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ef7435929c39b2ace_goldmansachs.svg"
+              width="300"
+              className="h-12 mx-auto"
+            />
+            <img
+              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ef7435929c39b2aca_facebook.svg"
+              className="h-12 mx-auto"
+            />
+            <img
+              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608df7435929c39b2ac2_github.svg"
+              className="h-12 mx-auto"
+            />
+            <img
+              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608df7435929c39b2abe_google.svg"
+              className="h-12 mx-auto"
+            />
+            <img
+              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608df7435929c39b2aba_Adobe.svg"
+              className="h-12 mx-auto"
+            />
+            <img
+              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608df7435929c39b2ab2_cobalt.svg"
+              className="h-12 mx-auto"
+            />
+            <img
+              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608df7435929c39b2a9c_Dell.svg"
+              className="h-12 mx-auto"
+            />
+            <img
+              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608df7435929c39b2a98_amazon.svg"
+              className="h-12 mx-auto"
+            />
+            <img
+              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608df7435929c39b2a86_epic.svg"
+              className="h-12 mx-auto"
+            />
+            <img
+              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608cf7435929c39b2a53_apple.svg"
+              className="h-12 mx-auto"
+            />
+          </Slider>
+        </div>
+      </div>
+
+      {/* third section */}
+      <div className="p-10 mt-16 flex flex-col md:flex-row items-center md:items-start gap-10">
+        {/* Left Section */}
+        <div className="flex-1 max-w-lg">
+          <img
+            sizes="(max-width: 621px) 100vw, 621px"
+            srcSet="
+        https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b38b75a584085f7a203c47_Scalable-image1-p-500.png 500w,
+        https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b38b75a584085f7a203c47_Scalable-image1.png 621w
+      "
+            src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b38b75a584085f7a203c47_Scalable-image1.png"
+            alt="Scalable Image"
+            style={{ maxWidth: "100%", height: "auto" }}
+          />
+        </div>
+
+        {/* Right Section */}
+        <div className="flex-1 max-w-lg">
+          <h3 className="text-4xl md:text-6xl leading-tight px-4">
+            Pentesting processes made easy
+          </h3>
+          <p className="mt-2 text-gray-400">
+            Strengthen your defenses with Zerod's leading Pentest as a Service
+            (PtaaS), combining top ethical hackers and advanced scanning tools.
+            Our platform provides on-demand access to experts, empowering your
+            cybersecurity strategy efficiently.
+          </p>
+          <br />
+          <p className="mt-2 text-gray-400">
+            Zerod offers you comprehensive penetration testing and regulatory
+            compliance, simplifying year-round security management. Scale your
+            team and remediate smarter with our PtaaS solution, ensuring fast
+            and proactive security across all attack surfaces.
+          </p>
+        </div>
+      </div>
+
+      {/* Talent at your fingertips */}
+      <div className="min-h-screen bg-white py-24 sm:py-32">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="grid grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:grid-cols-3">
+            {/* Feature 1 */}
+            <div className="bg-white p-8">
+              <div className="text-[120px] font-bold text-gray-900 leading-none">
+                01
+              </div>
+              <h3 className="mt-6 text-3xl font-semibold leading-tight text-gray-900">
+                Talent at your fingertips
+              </h3>
+              <p className="mt-6 text-base leading-7 text-gray-600">
+                Gain instant access to a global network of qualified pen-testers
+                whose expertise aligns with the technology stack of your
+                application
+              </p>
+            </div>
+
+            {/* Feature 2 */}
+            <div className="bg-white p-8">
+              <div className="text-[120px] font-bold text-gray-900 leading-none">
+                02
+              </div>
+              <h3 className="mt-6 text-3xl font-semibold leading-tight text-gray-900">
+                Instant and Flexible
+              </h3>
+              <p className="mt-6 text-base leading-7 text-gray-600">
+                We focus 24/7 on guiding you in vulnerability remediation to
+                ensure you always maintain control of your business.
+              </p>
+            </div>
+
+            {/* Feature 3 */}
+            <div className="bg-white p-8">
+              <div className="text-[120px] font-bold text-gray-900 leading-none">
+                03
+              </div>
+              <h3 className="mt-6 text-3xl font-semibold leading-tight text-gray-900">
+                Reduce security Risk
+              </h3>
+              <p className="mt-6 text-base leading-7 text-gray-600">
+                We find and report any security breaches in real-time, thus
+                preventing them from becoming a threat.
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
-      <hr className="bg-gray-300 w-full" />
-
-      <div className="  text-white min-h-screen py-10 px-6 md:px-20">
-        <header className="text-center">
-          <h1 className="text-3xl md:text-5xl font-bold">
-            Find exploitable web app vulnerabilities with documented evidence
+      {/* Continuous and Scalable */}
+      <div className="bg-black text-white py-16 px-6">
+        <div className="text-center container">
+          <h1 className="text-4xl md:text-6xl leading-tight px-4">
+            Continuous and Scalable Security Testing
           </h1>
-          <p className="text-gray-400 mt-4 max-w-3xl mx-auto">
-            Discover and fix security vulnerabilities in your web applications
-            with our automated scanning and validation tools.
+          <p className="text-md md:text-md px-24 mt-4 text-gray-400">
+            Zerod's platform enables you to enlist top-tier ethical hackers,
+            providing assistance in pinpointing, managing, and resolving the
+            most critical vulnerabilities within your enterprise.
           </p>
-        </header>
-        <div className="relative flex flex-col items-center  px-5 bg-[#015289]   shadow-xl min-h-screen text-white">
-          {/* Red Ripple Image at the Start */}
-          <div className="mb-16 ">
+        </div>
+        <div className="p-10 flex flex-col md:flex-row items-center md:items-start gap-10">
+          {/* Left Section */}
+          <div className="flex-1 max-w-lg">
+            <h2 className="text-xl font-semibold uppercase">
+              Revolutionize Your Experience
+            </h2>
+            <p className="mt-4 text-gray-400">
+              Say farewell to the tedious back-and-forth of traditional
+              pentesting. With Zerod, the flow of information is streamlined.
+            </p>
             <img
-              src="https://pentest-tools.com/images/illustrations/red-ripple.svg"
-              alt="Red Ripple"
-              className="w-32 md:w-48 animate-pulse opacity-50   "
+              sizes="(max-width: 621px) 100vw, 621px"
+              srcSet="
+        https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b38b75a584085f7a203c47_Scalable-image1-p-500.png 500w,
+        https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b38b75a584085f7a203c47_Scalable-image1.png 621w
+      "
+              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b38b75a584085f7a203c47_Scalable-image1.png"
+              alt="Scalable Image"
+              style={{ maxWidth: "100%", height: "auto" }}
             />
           </div>
 
-          {/* Stepper Line */}
-          <div className="absolute my-20 left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-amber-200 to-transparent animate-pulse"></div>
+          {/* Right Section */}
+          <div className="flex-1 max-w-lg">
+            <h3 className="text-lg font-semibold">
+              Seamless, Efficient, Secure
+            </h3>
+            <p className="mt-2 text-gray-400">
+              Define your pentest details, choose a hacker with a closed budget,
+              and witness how Zerod delivers optimized and efficient results.
+            </p>
+            <h3 className="mt-6 text-lg font-semibold">
+              Transform your pentesting journey
+            </h3>
+            <p className="mt-2 text-gray-400">
+              Experience continuous security, efficient pentesting, and thorough
+              issue resolution for your enterprise’s critical vulnerabilities.
+            </p>
+          </div>
+        </div>
+        <div className="p-10 flex flex-col md:flex-row items-center md:items-start gap-10">
+          {/* Left Section */}
+          <div className="flex-1 max-w-lg">
+            <h3 className="text-lg font-semibold">
+              Advanced & simplified reports
+            </h3>
+            <p className="mt-2 text-gray-400">
+              Analyze real-time compliance reports clearly and concisely, based
+              on enriched data for a comprehensive understanding.
+            </p>
+            <h3 className="mt-6 text-lg font-semibold">
+              Perfect space for administration
+            </h3>
+            <p className="mt-2 text-gray-400">
+              Efficiently manage and correct identified vulnerabilities in the
+              perfect environment, ensuring robust security in your system.
+            </p>
+          </div>
 
-          {list.map((feature, index) => (
-            <div
-              key={index}
-              className={`relative flex items-center w-full max-w-4xl mb-16 ${
-                index % 2 === 0 ? "justify-start" : "justify-end"
-              }`}
-            >
-              {/* Stepper Dot */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-amber-500 rounded-full border-4 border-gray-800 shadow-lg animate-bounce"></div>
+          {/* Right Section */}
+          <div className="flex-1 max-w-lg">
+            <h2 className="text-xl font-semibold uppercase">
+              Discover and Resolve with Zerod
+            </h2>
+            <p className="mt-4 text-gray-400">
+              Benefit from streamlined management with a user-friendly
+              dashboard, simplified reports, and an efficient space for managing
+              vulnerabilities.
+            </p>
+            <img
+              sizes="(max-width: 621px) 100vw, 621px"
+              
+              style={{ maxWidth: "100%", height: "auto" }}
+            />
+          </div>
+        </div>
+      </div>
 
-              {/* Feature Card Alternative */}
-              <div className="w-5/6 md:w-1/2 bg-gray-100 shadow-xl border border-gray-100 rounded-2xl p-6 transition-transform hover:scale-105">
-                <div className="flex items-center gap-5">
-                  <div className="p-3 bg-gray-300 rounded-full">
-                    {feature.icon}
+      {/* Complete Offensive Security */}
+      <div className="px-16 py-16 container mx-auto flex flex-wrap justify-center gap-10">
+        <h1 className="text-4xl md:text-4xl font-bold leading-tight">
+          Complete Offensive Security
+        </h1>
+        <p className="text-center">
+          Elevate your cybersecurity with Zerod's comprehensive offensive
+          security services, offering human-driven penetration testing across
+          your entire digital landscape. Our advanced methodologies, from
+          dynamic testing to social engineering, provide real-time risk insights
+          and efficient remediation, helping you address current challenges and
+          build a resilient foundation for future innovations.
+        </p>
+        <Accordion />
+      </div>
+
+      {/* Elevate Security with Ethical Hackers */}
+      <div className="px-16 py-16 container mx-auto flex flex-wrap justify-center gap-10">
+        <h1 className="text-4xl md:text-4xl font-bold leading-tight">
+          Elevate Security with Ethical Hackers
+        </h1>
+        <p className="text-center">
+          Trust in Zerod's ethical hackers experts whose identities are
+          safeguarded through a rigorous verification process. These
+          professionals offer a unique blend of skills, certificactions and
+          mentorship.
+        </p>
+        <div className="container">
+          <Slider {...settings2}>
+            <div className="max-w-md pl-4 overflow-hidden rounded-lg shadow-lg">
+              {/* Header Section */}
+              <div className="p-6 bg-[#111827] text-white">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="font-medium">ENGLISH</span>
+                  <span className="px-4 py-1 text-sm bg-white text-gray-700 rounded-full">
+                    GMT +2
+                  </span>
+                </div>
+                <h1 className="text-4xl font-bold mb-3">Groot Cipher</h1>
+                <p className="text-sm">
+                  Listed at more than 100 companies hacker&apos;s hall of fame.
+                </p>
+                <p className="text-sm">
+                  Ranked as one of top 50th hackers (All time) at hackerone.
+                </p>
+              </div>
+
+              {/* Content Section */}
+              <div className="p-6 bg-white">
+                <h2 className="text-xl font-semibold mb-3">Skills</h2>
+                <div className="flex flex-wrap gap-2 mb-2">
+                  <span className="px-4 py-1 border border-gray-300 rounded-full text-gray-700">
+                    HTML
+                  </span>
+                  <span className="px-4 py-1 border border-gray-300 rounded-full text-gray-700">
+                    CSS
+                  </span>
+                  <span className="px-4 py-1 border border-gray-300 rounded-full text-gray-700">
+                    JavaScript
+                  </span>
+                  <span className="px-4 py-1 border border-gray-300 rounded-full text-gray-700">
+                    Node.js
+                  </span>
+                </div>
+                <p className="text-gray-600 mb-6">And more...</p>
+                <div className="flex gap-4 mb-8">
+                  <div>
+                    <p className="text-xs text-gray-500 mb-1">CERTIFICATIONS</p>
+                    <div className="flex items-center gap-2 border border-gray-300 rounded-md px-4 py-2">
+                      <Award className="text-indigo-900" />
+                      <span className="text-xl font-semibold">0</span>
+                    </div>
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-black">
-                      {feature.title}
-                    </h3>
-                    <p className="text-gray-700 text-sm mt-2 leading-relaxed">
-                      {feature.description}
-                    </p>
+                    <p className="text-xs text-gray-500 mb-1">HALL OF FAME</p>
+                    <div className="flex items-center gap-2 border border-gray-300 rounded-md px-4 py-2">
+                      <Trophy className="text-indigo-900" />
+                      <span className="text-xl font-semibold">41</span>
+                    </div>
                   </div>
+                </div>
+                <div className="flex justify-center">
+                  <button className="flex items-center gap-1 font-medium">
+                    FULL PROFILE <ArrowUpRight className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
             </div>
-          ))}
 
-          {/* Red Ripple Image at the End */}
-          <div className="mt-16">
-            <img
-              src="https://pentest-tools.com/images/illustrations/red-ripple.svg"
-              alt="Red Ripple"
-              className="w-32 md:w-48 animate-pulse opacity-50"
-            />
+            <div className="max-w-md pl-4 overflow-hidden rounded-lg shadow-lg">
+              {/* Header Section */}
+              <div className="p-6 bg-[#111827] text-white">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="font-medium">ENGLISH</span>
+                  <span className="px-4 py-1 text-sm bg-white text-gray-700 rounded-full">
+                    GMT +2
+                  </span>
+                </div>
+                <h1 className="text-4xl font-bold mb-3">Groot Cipher</h1>
+                <p className="text-sm">
+                  Listed at more than 100 companies hacker&apos;s hall of fame.
+                </p>
+                <p className="text-sm">
+                  Ranked as one of top 50th hackers (All time) at hackerone.
+                </p>
+              </div>
+
+              {/* Content Section */}
+              <div className="p-6 bg-white">
+                <h2 className="text-xl font-semibold mb-3">Skills</h2>
+                <div className="flex flex-wrap gap-2 mb-2">
+                  <span className="px-4 py-1 border border-gray-300 rounded-full text-gray-700">
+                    HTML
+                  </span>
+                  <span className="px-4 py-1 border border-gray-300 rounded-full text-gray-700">
+                    CSS
+                  </span>
+                  <span className="px-4 py-1 border border-gray-300 rounded-full text-gray-700">
+                    JavaScript
+                  </span>
+                  <span className="px-4 py-1 border border-gray-300 rounded-full text-gray-700">
+                    Node.js
+                  </span>
+                </div>
+                <p className="text-gray-600 mb-6">And more...</p>
+                <div className="flex gap-4 mb-8">
+                  <div>
+                    <p className="text-xs text-gray-500 mb-1">CERTIFICATIONS</p>
+                    <div className="flex items-center gap-2 border border-gray-300 rounded-md px-4 py-2">
+                      <Award className="text-indigo-900" />
+                      <span className="text-xl font-semibold">0</span>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500 mb-1">HALL OF FAME</p>
+                    <div className="flex items-center gap-2 border border-gray-300 rounded-md px-4 py-2">
+                      <Trophy className="text-indigo-900" />
+                      <span className="text-xl font-semibold">41</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex justify-center">
+                  <button className="flex items-center gap-1 font-medium">
+                    FULL PROFILE <ArrowUpRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className="max-w-md pl-4 overflow-hidden rounded-lg shadow-lg">
+              {/* Header Section */}
+              <div className="p-6 bg-[#111827] text-white">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="font-medium">ENGLISH</span>
+                  <span className="px-4 py-1 text-sm bg-white text-gray-700 rounded-full">
+                    GMT +2
+                  </span>
+                </div>
+                <h1 className="text-4xl font-bold mb-3">Groot Cipher</h1>
+                <p className="text-sm">
+                  Listed at more than 100 companies hacker&apos;s hall of fame.
+                </p>
+                <p className="text-sm">
+                  Ranked as one of top 50th hackers (All time) at hackerone.
+                </p>
+              </div>
+
+              {/* Content Section */}
+              <div className="p-6 bg-white">
+                <h2 className="text-xl font-semibold mb-3">Skills</h2>
+                <div className="flex flex-wrap gap-2 mb-2">
+                  <span className="px-4 py-1 border border-gray-300 rounded-full text-gray-700">
+                    HTML
+                  </span>
+                  <span className="px-4 py-1 border border-gray-300 rounded-full text-gray-700">
+                    CSS
+                  </span>
+                  <span className="px-4 py-1 border border-gray-300 rounded-full text-gray-700">
+                    JavaScript
+                  </span>
+                  <span className="px-4 py-1 border border-gray-300 rounded-full text-gray-700">
+                    Node.js
+                  </span>
+                </div>
+                <p className="text-gray-600 mb-6">And more...</p>
+                <div className="flex gap-4 mb-8">
+                  <div>
+                    <p className="text-xs text-gray-500 mb-1">CERTIFICATIONS</p>
+                    <div className="flex items-center gap-2 border border-gray-300 rounded-md px-4 py-2">
+                      <Award className="text-indigo-900" />
+                      <span className="text-xl font-semibold">0</span>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500 mb-1">HALL OF FAME</p>
+                    <div className="flex items-center gap-2 border border-gray-300 rounded-md px-4 py-2">
+                      <Trophy className="text-indigo-900" />
+                      <span className="text-xl font-semibold">41</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex justify-center">
+                  <button className="flex items-center gap-1 font-medium">
+                    FULL PROFILE <ArrowUpRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className="max-w-md pl-4 overflow-hidden rounded-lg shadow-lg">
+              {/* Header Section */}
+              <div className="p-6 bg-[#111827] text-white">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="font-medium">ENGLISH</span>
+                  <span className="px-4 py-1 text-sm bg-white text-gray-700 rounded-full">
+                    GMT +2
+                  </span>
+                </div>
+                <h1 className="text-4xl font-bold mb-3">Groot Cipher</h1>
+                <p className="text-sm">
+                  Listed at more than 100 companies hacker&apos;s hall of fame.
+                </p>
+                <p className="text-sm">
+                  Ranked as one of top 50th hackers (All time) at hackerone.
+                </p>
+              </div>
+
+              {/* Content Section */}
+              <div className="p-6 bg-white">
+                <h2 className="text-xl font-semibold mb-3">Skills</h2>
+                <div className="flex flex-wrap gap-2 mb-2">
+                  <span className="px-4 py-1 border border-gray-300 rounded-full text-gray-700">
+                    HTML
+                  </span>
+                  <span className="px-4 py-1 border border-gray-300 rounded-full text-gray-700">
+                    CSS
+                  </span>
+                  <span className="px-4 py-1 border border-gray-300 rounded-full text-gray-700">
+                    JavaScript
+                  </span>
+                  <span className="px-4 py-1 border border-gray-300 rounded-full text-gray-700">
+                    Node.js
+                  </span>
+                </div>
+                <p className="text-gray-600 mb-6">And more...</p>
+                <div className="flex gap-4 mb-8">
+                  <div>
+                    <p className="text-xs text-gray-500 mb-1">CERTIFICATIONS</p>
+                    <div className="flex items-center gap-2 border border-gray-300 rounded-md px-4 py-2">
+                      <Award className="text-indigo-900" />
+                      <span className="text-xl font-semibold">0</span>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500 mb-1">HALL OF FAME</p>
+                    <div className="flex items-center gap-2 border border-gray-300 rounded-md px-4 py-2">
+                      <Trophy className="text-indigo-900" />
+                      <span className="text-xl font-semibold">41</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex justify-center">
+                  <button className="flex items-center gap-1 font-medium">
+                    FULL PROFILE <ArrowUpRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </Slider>
+        </div>
+      </div>
+
+      {/* Meet those who trust in us */}
+      <div className="min-h-screen bg-gray-950 text-white">
+        {/* Hero Section */}
+        <div className="container mx-auto px-4 py-20">
+          <h1 className="text-5xl font-bold text-center mb-6">
+            Meet those who trust in us
+          </h1>
+          <p className="text-xl text-gray-400 text-center max-w-3xl mx-auto">
+            Explore the stories of the individuals we work for and how they've
+            transformed their digital security. Authentic testimonials that
+            inspire trust and reflect the dedication we put into our work.
+          </p>
+        </div>
+
+        {/* Testimonials Section */}
+        <div className="container mx-auto px-4 py-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <div
+                key={index}
+                className="bg-gray-900 rounded-2xl p-8 border border-gray-800 hover:border-blue-500 transition-all"
+              >
+                <div className="flex items-center mb-6">
+                  <img
+                    src={testimonial.logo}
+                    alt={testimonial.company}
+                    className="w-24 h-10"
+                  />
+                </div>
+                <h3 className="text-2xl font-bold mb-4">{testimonial.quote}</h3>
+                <p className="text-gray-400 mb-6">{testimonial.content}</p>
+                <div className="flex items-center">
+                  <img
+                    src={testimonial.image}
+                    alt={testimonial.author}
+                    className="w-12 h-12 mr-4"
+                  />
+                  <div>
+                    <div className="font-semibold">{testimonial.author}</div>
+                    <div className="text-gray-400">{testimonial.role}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      <div className="min-h-screen bg-[#015289]   shadow-xl  m-10 text-white p-10 flex flex-col items-center rounded-lg">
-        <div className="max-w-3xl text-left">
-          <h2 className="text-3xl font-bold mb-4">
-            How does the{" "}
-            <span className="text-blue-500">Website Vulnerability Scanner</span>{" "}
-            work?
+      {/* Compliance */}
+      <div className="max-w-6xl mx-auto px-4 py-12">
+        <h1 className="text-4xl font-normal mb-10">Compliance</h1>
+
+        <div className="border-t border-gray-200 pt-10">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="md:col-span-1">
+              <h2 className="text-3xl font-normal">Legal</h2>
+            </div>
+
+            <div className="md:col-span-3">
+              <p className="text-gray-700 mb-6 leading-relaxed">
+                Zerod.io's comprehensive legal framework ensures transparency
+                and accountability, with clear terms and conditions prioritizing
+                the protection of both clients and ethical hackers. Data
+                Confidentiality, Integrity, and Availability. Stringent data
+                protection protocols at Zerod.io guarantee the utmost care and
+                respect for client information, maintaining its confidentiality,
+                integrity, and availability.
+              </p>
+
+              <a
+                href="#"
+                className="inline-flex items-center text-black font-medium tracking-wide hover:underline"
+              >
+                KNOW MORE <ArrowUpRight className="ml-2 h-4 w-4" />
+              </a>
+            </div>
+          </div>
+        </div>
+        <div className="border-t border-gray-200 pt-10">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="md:col-span-1">
+              <h2 className="text-3xl font-normal">Legal</h2>
+            </div>
+
+            <div className="md:col-span-3">
+              <p className="text-gray-700 mb-6 leading-relaxed">
+                Zerod.io's comprehensive legal framework ensures transparency
+                and accountability, with clear terms and conditions prioritizing
+                the protection of both clients and ethical hackers. Data
+                Confidentiality, Integrity, and Availability. Stringent data
+                protection protocols at Zerod.io guarantee the utmost care and
+                respect for client information, maintaining its confidentiality,
+                integrity, and availability.
+              </p>
+
+              <a
+                href="#"
+                className="inline-flex items-center text-black font-medium tracking-wide hover:underline"
+              >
+                KNOW MORE <ArrowUpRight className="ml-2 h-4 w-4" />
+              </a>
+            </div>
+          </div>
+        </div>
+        <div className="border-t border-gray-200 pt-10">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="md:col-span-1">
+              <h2 className="text-3xl font-normal">Legal</h2>
+            </div>
+
+            <div className="md:col-span-3">
+              <p className="text-gray-700 mb-6 leading-relaxed">
+                Zerod.io's comprehensive legal framework ensures transparency
+                and accountability, with clear terms and conditions prioritizing
+                the protection of both clients and ethical hackers. Data
+                Confidentiality, Integrity, and Availability. Stringent data
+                protection protocols at Zerod.io guarantee the utmost care and
+                respect for client information, maintaining its confidentiality,
+                integrity, and availability.
+              </p>
+
+              <a
+                href="#"
+                className="inline-flex items-center text-black font-medium tracking-wide hover:underline"
+              >
+                KNOW MORE <ArrowUpRight className="ml-2 h-4 w-4" />
+              </a>
+            </div>
+          </div>
+        </div>
+        <div className="border-t border-gray-200 pt-10">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="md:col-span-1">
+              <h2 className="text-3xl font-normal">Legal</h2>
+            </div>
+
+            <div className="md:col-span-3">
+              <p className="text-gray-700 mb-6 leading-relaxed">
+                Zerod.io's comprehensive legal framework ensures transparency
+                and accountability, with clear terms and conditions prioritizing
+                the protection of both clients and ethical hackers. Data
+                Confidentiality, Integrity, and Availability. Stringent data
+                protection protocols at Zerod.io guarantee the utmost care and
+                respect for client information, maintaining its confidentiality,
+                integrity, and availability.
+              </p>
+
+              <a
+                href="#"
+                className="inline-flex items-center text-black font-medium tracking-wide hover:underline"
+              >
+                KNOW MORE <ArrowUpRight className="ml-2 h-4 w-4" />
+              </a>
+            </div>
+          </div>
+        </div>
+        <div className="border-t border-gray-200 pt-10">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="md:col-span-1">
+              <h2 className="text-3xl font-normal">Legal</h2>
+            </div>
+
+            <div className="md:col-span-3">
+              <p className="text-gray-700 mb-6 leading-relaxed">
+                Zerod.io's comprehensive legal framework ensures transparency
+                and accountability, with clear terms and conditions prioritizing
+                the protection of both clients and ethical hackers. Data
+                Confidentiality, Integrity, and Availability. Stringent data
+                protection protocols at Zerod.io guarantee the utmost care and
+                respect for client information, maintaining its confidentiality,
+                integrity, and availability.
+              </p>
+
+              <a
+                href="#"
+                className="inline-flex items-center text-black font-medium tracking-wide hover:underline"
+              >
+                KNOW MORE <ArrowUpRight className="ml-2 h-4 w-4" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Zerod Blog */}
+
+      <div className="max-w-6xl mx-auto grid grid-cols-1 py-24 md:grid-cols-2 gap-8">
+        <div className="text-center md:text-left">
+          <h2 className="text-2xl md:text-2xl lg:text-5xl mb-2">
+            Ready to get started?
           </h2>
-          <p className="text-gray-100 text-lg">
-            The Website Vulnerability Scanner is a DAST (Dynamic Application
-            Security Testing) tool designed to discover vulnerabilities like
-            XSS, SQL injection, and more. It interacts with the target
-            application by sending HTTP requests with specific payloads to
-            determine if a vulnerability exists.
+          <p className="text-gray-400 pt-4">
+            Elevate your security with Zerod's expert pentesting platform today
           </p>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10 w-full max-w-6xl ">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="bg-gray-50  p-6 rounded-lg shadow-lg backdrop-blur-md border border-gray-700"
-            >
-              <div className="text-3xl text-blue-400 mb-3">{feature.icon}</div>
-              <h3 className="text-xl text-black font-semibold mb-2">
-                {feature.title}
-              </h3>
-              <p className="text-gray-700 text-sm">{feature.description}</p>
-            </div>
-          ))}
+        <div className="text-center md:text-right">
+        <a href="/sign-in"  className="bg-black text-white hover:bg-black hover:text-white rounded-md px-6 py-4 text-base font-medium">
+            TRY SECURE&
+          </a>
+          <button
+            variant="outline"
+            className="border-black text-black hover:bg-black/10 hover:text-white rounded-md ml-4 px-6 py-4 text-base font-medium"
+          >
+            TALK TO US
+          </button>
         </div>
       </div>
-
-      <div className="min-h-screenb bg-[#015289]   shadow-xl text-white flex flex-col md:flex-row items-center p-14 m-10 rounded-lg">
-        <div className="md:w-1/3 pr-10">
-          <h1 className="text-4xl font-bold mb-6 text-white">
-            Easy enough for quick scans. <br /> Advanced enough for deep
-            testing.
-          </h1>
-        </div>
-        <div className="md:w-2/3 space-y-6">
-          {newFeatures.map((newFeatures, index) => (
-            <div
-              key={index}
-              className="flex items-center bg-white p-6 rounded-lg shadow-lg"
-            >
-              <div className="mr-6 text-blue-800">{newFeatures.icon}</div>
-              <div>
-                <h2 className="text-xl font-semibold text-black">
-                  {newFeatures.title}
-                </h2>
-                <p className="text-gray-800 mt-2">{newFeatures.description}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="mt-6 w-full flex justify-center">
-        <img
-          src="https://pentest-tools.com/hero-grid-top.svg"
-          alt="Web Security Scan"
-          className="  w-full h-auto"
-        />
-      </div>
-
-      <Footer />
-    </div>
+      <Footer/>
+    </>
   );
-}
+};
 
 export default GettingStarted;
