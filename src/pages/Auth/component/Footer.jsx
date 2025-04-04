@@ -67,11 +67,7 @@ const Footer = () => {
                                         Compliance
                                     </Link>
                                 </li>
-                                <li>
-                                    <Link href="#" className="text-gray-400 hover:text-white transition-colors">
-                                        Zerod Enterprise
-                                    </Link>
-                                </li>
+                               
                             </ul>
                         </div>
 

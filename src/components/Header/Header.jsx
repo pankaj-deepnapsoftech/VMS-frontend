@@ -7,7 +7,7 @@ import { SiWikimediafoundation } from "react-icons/si";
 import { Link, NavLink } from 'react-router-dom';
 import { ClientCisoList, ClientSmeList, EmployeeList, list } from '@/constants/constants.data';
 import { useAuthContext } from '@/context';
-import { FaUser } from 'react-icons/fa';
+import { FaShieldAlt, FaUser } from 'react-icons/fa';
 import { IoIosLogOut } from 'react-icons/io';
 import toast from 'react-hot-toast';
 
@@ -59,8 +59,12 @@ function Header({ setShowMenu }) {
           to=""
           className="flex items-center p-5 space-x-2 "
         >
-          <BiBarChartAlt2 className="h-6 w-6" />
-          <h1 className="text-xl font-semibold">Secure&</h1>
+          <div className="flex items-center justify-center mb-4">
+                          <FaShieldAlt className="h-6 w-6 text-blue-600" />
+                          <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400 tracking-tight ml-2">
+                            SECURE&
+                          </h1>
+                        </div>
         </Link >
         <hr className="border-gray-100 mx-8" />
 
@@ -70,7 +74,7 @@ function Header({ setShowMenu }) {
               key={data.route}
               to={data.route}
               onClick={setShowMenu}
-              className="flex items-center px-2 py-2 space-x-2 rounded-lg   [&.active]:bg-gradient-to-tl from-[#5a5656] to-[#524e4e]  transition duration-200"
+              className="flex items-center px-2 py-2 space-x-2 rounded-lg   [&.active]:bg-gradient-to-tl from-[#3f3b3b] to-[#2b2828]  transition duration-200"
 
             >
               <data.icon className="text-white w-5 h-5" />

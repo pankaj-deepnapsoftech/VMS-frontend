@@ -14,7 +14,7 @@ const GettingStarted = () => {
       logo: "https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b4e5d3f70a5951c37504bc_curai.svg",
       quote: "Great service for Pymes",
       content:
-        "Zerod offers an affordable, high-quality technical security review service for SMEs.",
+        "Secure& offers an affordable, high-quality technical security review service for SMEs.",
       author: "Melody Pereira",
       role: "CISO at Curai Health",
       image:
@@ -25,7 +25,7 @@ const GettingStarted = () => {
       logo: "https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b4e79877bc409c489a3af0_cosmetics.svg",
       quote: "Fast and quality service",
       content:
-        "Working with Zerod was easy and fast. They gave us peace of mind when analyzing the systems and equipment.",
+        "Working with Secure& was easy and fast. They gave us peace of mind when analyzing the systems and equipment.",
       author: "Óscar Trias",
       role: "CEO at Profesional Cosmetics",
       image:
@@ -114,21 +114,27 @@ const GettingStarted = () => {
             <div className="w-full lg:w-1/2 mb-12 lg:mb-0">
               {/* Main content */}
               <h1 className="text-xl md:text-3xl lg:text-4xl xl:text-5xl  text-white leading-tight mb-6">
-                Vulnerability Assessment <br />& Penetration Testing (VAPT)
+                AI powered Risk Prioritization and Remediation platform
               </h1>
 
               <p className="text-gray-300 text-lg md:text-xl max-w-xl mb-10">
-                Access world-class cybersecurity experts and enhance penetration
-                testing efficiency with our AI-driven security platform.
+                Enhance security with our intelligent AI-driven platform that
+                identifies, prioritizes, and remediates risks efficiently.
+                Streamline threat management, reduce vulnerabilities, and
+                safeguard your business with actionable insights and automated
+                solutions.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4">
-              <a href="/sign-in" className="bg-white text-black hover:bg-gray-200 rounded-md px-8 py-6 text-base font-medium">
+                <a
+                  href="/sign-in"
+                  className="bg-white text-black hover:bg-gray-200 rounded-md px-8 py-2 text-base font-medium"
+                >
                   TRY SECURE&
                 </a>
                 <button
                   variant="outline"
-                  className="border-white text-white hover:bg-white/10 rounded-md px-8 py-6 text-base font-medium"
+                  className="border-white text-white hover:bg-white/10 rounded-md px-8 py-2 text-base font-medium"
                 >
                   TALK TO US
                 </button>
@@ -161,7 +167,7 @@ const GettingStarted = () => {
           </div>
         </div>
 
-        <h2 className="text-2xl font-semibold text-center">
+        {/* <h2 className="text-2xl font-semibold text-center">
           Our ethical hackers belong to the Hall of Fame of companies like
         </h2>
 
@@ -273,11 +279,11 @@ const GettingStarted = () => {
               className="h-12 mx-auto"
             />
           </Slider>
-        </div>
+        </div> */}
       </div>
 
       {/* third section */}
-      <div className="p-10 mt-16 flex flex-col md:flex-row items-center md:items-start gap-10">
+      <div className="p-10 mt-16 flex flex-col md:flex-row items-center md:items-start gap-10 justify-center">
         {/* Left Section */}
         <div className="flex-1 max-w-lg">
           <img
@@ -294,18 +300,12 @@ const GettingStarted = () => {
 
         {/* Right Section */}
         <div className="flex-1 max-w-lg">
-          <h3 className="text-4xl md:text-6xl leading-tight px-4">
-            Pentesting processes made easy
+          <h3 className="text-4xl md:text-5xl leading-tight px-4">
+            Pentesting Made Simple with Secure&
           </h3>
+
           <p className="mt-2 text-gray-400">
-            Strengthen your defenses with Zerod's leading Pentest as a Service
-            (PtaaS), combining top ethical hackers and advanced scanning tools.
-            Our platform provides on-demand access to experts, empowering your
-            cybersecurity strategy efficiently.
-          </p>
-          <br />
-          <p className="mt-2 text-gray-400">
-            Zerod offers you comprehensive penetration testing and regulatory
+            Secure& offers you comprehensive penetration testing and regulatory
             compliance, simplifying year-round security management. Scale your
             team and remediate smarter with our PtaaS solution, ensuring fast
             and proactive security across all attack surfaces.
@@ -323,12 +323,11 @@ const GettingStarted = () => {
                 01
               </div>
               <h3 className="mt-6 text-3xl font-semibold leading-tight text-gray-900">
-                Talent at your fingertips
+                Expert Talent, On-Demand
               </h3>
               <p className="mt-6 text-base leading-7 text-gray-600">
-                Gain instant access to a global network of qualified pen-testers
-                whose expertise aligns with the technology stack of your
-                application
+                Instant access to a global network of vetted pentesters
+                specializing in your tech stack.
               </p>
             </div>
 
@@ -338,11 +337,11 @@ const GettingStarted = () => {
                 02
               </div>
               <h3 className="mt-6 text-3xl font-semibold leading-tight text-gray-900">
-                Instant and Flexible
+                Always Secure, Always in Control
               </h3>
               <p className="mt-6 text-base leading-7 text-gray-600">
-                We focus 24/7 on guiding you in vulnerability remediation to
-                ensure you always maintain control of your business.
+                Our 24/7 guidance helps you remediate vulnerabilities quickly,
+                ensuring continuous security without disrupting operations.
               </p>
             </div>
 
@@ -352,11 +351,14 @@ const GettingStarted = () => {
                 03
               </div>
               <h3 className="mt-6 text-3xl font-semibold leading-tight text-gray-900">
-                Reduce security Risk
+                Proactive Risk Reduction
               </h3>
               <p className="mt-6 text-base leading-7 text-gray-600">
-                We find and report any security breaches in real-time, thus
-                preventing them from becoming a threat.
+                We detect and report security breaches in real-time, stopping
+                threats before they impact your business. <br />
+                Upgrade your cybersecurity strategy with Secure&'s intelligent,
+                scalable PtaaS solution—because security should be seamless,
+                smart, and stress-free.
               </p>
             </div>
           </div>
@@ -367,23 +369,23 @@ const GettingStarted = () => {
       <div className="bg-black text-white py-16 px-6">
         <div className="text-center container">
           <h1 className="text-4xl md:text-6xl leading-tight px-4">
-            Continuous and Scalable Security Testing
+          Secure& – Continuous & Scalable Security Testing
           </h1>
           <p className="text-md md:text-md px-24 mt-4 text-gray-400">
-            Zerod's platform enables you to enlist top-tier ethical hackers,
+            Secure&'s platform enables you to enlist top-tier ethical hackers,
             providing assistance in pinpointing, managing, and resolving the
-            most critical vulnerabilities within your enterprise.
+            most critical vulnerabilities within your enterprise.Strengthen your cybersecurity with Secure&'s next-gen Pentest as a Service (PtaaS). Our platform connects you with top-tier ethical hackers to identify, manage, and remediate critical vulnerabilities efficiently—ensuring continuous, scalable security for your enterprise.
           </p>
         </div>
         <div className="p-10 flex flex-col md:flex-row items-center md:items-start gap-10">
           {/* Left Section */}
           <div className="flex-1 max-w-lg">
             <h2 className="text-xl font-semibold uppercase">
-              Revolutionize Your Experience
+            Revolutionizing Pentesting
             </h2>
             <p className="mt-4 text-gray-400">
               Say farewell to the tedious back-and-forth of traditional
-              pentesting. With Zerod, the flow of information is streamlined.
+              pentesting. With Secure&, the flow of information is streamlined.
             </p>
             <img
               sizes="(max-width: 621px) 100vw, 621px"
@@ -400,18 +402,16 @@ const GettingStarted = () => {
           {/* Right Section */}
           <div className="flex-1 max-w-lg">
             <h3 className="text-lg font-semibold">
-              Seamless, Efficient, Secure
+            No More Tedious Back-and-Forth – 
             </h3>
             <p className="mt-2 text-gray-400">
-              Define your pentest details, choose a hacker with a closed budget,
-              and witness how Zerod delivers optimized and efficient results.
+            Streamlined communication for faster security testing.
             </p>
             <h3 className="mt-6 text-lg font-semibold">
-              Transform your pentesting journey
+            Seamless, Efficient & Secure 
             </h3>
             <p className="mt-2 text-gray-400">
-              Experience continuous security, efficient pentesting, and thorough
-              issue resolution for your enterprise’s critical vulnerabilities.
+            – Define your scope, choose an expert, and get optimized results.
             </p>
           </div>
         </div>
@@ -419,25 +419,23 @@ const GettingStarted = () => {
           {/* Left Section */}
           <div className="flex-1 max-w-lg">
             <h3 className="text-lg font-semibold">
-              Advanced & simplified reports
+            Real-Time Compliance Reports 
             </h3>
             <p className="mt-2 text-gray-400">
-              Analyze real-time compliance reports clearly and concisely, based
-              on enriched data for a comprehensive understanding.
+            Gain clear insights with enriched data analysis.
             </p>
             <h3 className="mt-6 text-lg font-semibold">
-              Perfect space for administration
+            Effortless Vulnerability Management 
             </h3>
             <p className="mt-2 text-gray-400">
-              Efficiently manage and correct identified vulnerabilities in the
-              perfect environment, ensuring robust security in your system.
+            – A dedicated space to track, manage, and resolve threats effectively.
             </p>
           </div>
 
           {/* Right Section */}
           <div className="flex-1 max-w-lg">
             <h2 className="text-xl font-semibold uppercase">
-              Discover and Resolve with Zerod
+              Discover and Resolve with Secure&
             </h2>
             <p className="mt-4 text-gray-400">
               Benefit from streamlined management with a user-friendly
@@ -446,7 +444,6 @@ const GettingStarted = () => {
             </p>
             <img
               sizes="(max-width: 621px) 100vw, 621px"
-              
               style={{ maxWidth: "100%", height: "auto" }}
             />
           </div>
@@ -459,12 +456,7 @@ const GettingStarted = () => {
           Complete Offensive Security
         </h1>
         <p className="text-center">
-          Elevate your cybersecurity with Zerod's comprehensive offensive
-          security services, offering human-driven penetration testing across
-          your entire digital landscape. Our advanced methodologies, from
-          dynamic testing to social engineering, provide real-time risk insights
-          and efficient remediation, helping you address current challenges and
-          build a resilient foundation for future innovations.
+        Secure& delivers expert-driven penetration testing across your entire digital infrastructure. From dynamic testing to social engineering, our advanced methodologies provide real-time risk insights and rapid remediation—helping you secure today and prepare for tomorrow.
         </p>
         <Accordion />
       </div>
@@ -475,7 +467,7 @@ const GettingStarted = () => {
           Elevate Security with Ethical Hackers
         </h1>
         <p className="text-center">
-          Trust in Zerod's ethical hackers experts whose identities are
+          Trust in Secure&'s ethical hackers experts whose identities are
           safeguarded through a rigorous verification process. These
           professionals offer a unique blend of skills, certificactions and
           mentorship.
@@ -785,11 +777,11 @@ const GettingStarted = () => {
 
             <div className="md:col-span-3">
               <p className="text-gray-700 mb-6 leading-relaxed">
-                Zerod.io's comprehensive legal framework ensures transparency
+                Secure&.io's comprehensive legal framework ensures transparency
                 and accountability, with clear terms and conditions prioritizing
                 the protection of both clients and ethical hackers. Data
                 Confidentiality, Integrity, and Availability. Stringent data
-                protection protocols at Zerod.io guarantee the utmost care and
+                protection protocols at Secure&.io guarantee the utmost care and
                 respect for client information, maintaining its confidentiality,
                 integrity, and availability.
               </p>
@@ -811,11 +803,11 @@ const GettingStarted = () => {
 
             <div className="md:col-span-3">
               <p className="text-gray-700 mb-6 leading-relaxed">
-                Zerod.io's comprehensive legal framework ensures transparency
+                Secure&.io's comprehensive legal framework ensures transparency
                 and accountability, with clear terms and conditions prioritizing
                 the protection of both clients and ethical hackers. Data
                 Confidentiality, Integrity, and Availability. Stringent data
-                protection protocols at Zerod.io guarantee the utmost care and
+                protection protocols at Secure&.io guarantee the utmost care and
                 respect for client information, maintaining its confidentiality,
                 integrity, and availability.
               </p>
@@ -837,11 +829,11 @@ const GettingStarted = () => {
 
             <div className="md:col-span-3">
               <p className="text-gray-700 mb-6 leading-relaxed">
-                Zerod.io's comprehensive legal framework ensures transparency
+                Secure&.io's comprehensive legal framework ensures transparency
                 and accountability, with clear terms and conditions prioritizing
                 the protection of both clients and ethical hackers. Data
                 Confidentiality, Integrity, and Availability. Stringent data
-                protection protocols at Zerod.io guarantee the utmost care and
+                protection protocols at Secure&.io guarantee the utmost care and
                 respect for client information, maintaining its confidentiality,
                 integrity, and availability.
               </p>
@@ -863,11 +855,11 @@ const GettingStarted = () => {
 
             <div className="md:col-span-3">
               <p className="text-gray-700 mb-6 leading-relaxed">
-                Zerod.io's comprehensive legal framework ensures transparency
+                Secure&.io's comprehensive legal framework ensures transparency
                 and accountability, with clear terms and conditions prioritizing
                 the protection of both clients and ethical hackers. Data
                 Confidentiality, Integrity, and Availability. Stringent data
-                protection protocols at Zerod.io guarantee the utmost care and
+                protection protocols at Secure&.io guarantee the utmost care and
                 respect for client information, maintaining its confidentiality,
                 integrity, and availability.
               </p>
@@ -889,11 +881,11 @@ const GettingStarted = () => {
 
             <div className="md:col-span-3">
               <p className="text-gray-700 mb-6 leading-relaxed">
-                Zerod.io's comprehensive legal framework ensures transparency
+                Secure&.io's comprehensive legal framework ensures transparency
                 and accountability, with clear terms and conditions prioritizing
                 the protection of both clients and ethical hackers. Data
                 Confidentiality, Integrity, and Availability. Stringent data
-                protection protocols at Zerod.io guarantee the utmost care and
+                protection protocols at Secure&.io guarantee the utmost care and
                 respect for client information, maintaining its confidentiality,
                 integrity, and availability.
               </p>
@@ -909,7 +901,7 @@ const GettingStarted = () => {
         </div>
       </div>
 
-      {/* Zerod Blog */}
+      {/* Secure& Blog */}
 
       <div className="max-w-6xl mx-auto grid grid-cols-1 py-24 md:grid-cols-2 gap-8">
         <div className="text-center md:text-left">
@@ -917,22 +909,26 @@ const GettingStarted = () => {
             Ready to get started?
           </h2>
           <p className="text-gray-400 pt-4">
-            Elevate your security with Zerod's expert pentesting platform today
+            Elevate your security with Secure&'s expert pentesting platform
+            today
           </p>
         </div>
         <div className="text-center md:text-right">
-        <a href="/sign-in"  className="bg-black text-white hover:bg-black hover:text-white rounded-md px-6 py-4 text-base font-medium">
+          <a
+            href="/sign-in"
+            className="bg-black text-white hover:bg-black hover:text-white rounded-md px-6 py-2 text-base font-medium"
+          >
             TRY SECURE&
           </a>
           <button
             variant="outline"
-            className="border-black text-black hover:bg-black/10 hover:text-white rounded-md ml-4 px-6 py-4 text-base font-medium"
+            className="border-black text-black hover:bg-black/10 hover:text-white rounded-md ml-4 px-6 py-2 text-base font-medium"
           >
             TALK TO US
           </button>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 };

@@ -19,17 +19,17 @@ function Card({ data }) {
       {/* Left Side: Icon, Title & Value */}
       <div className="flex flex-col">
         {/* Icon & Title */}
-        <div className="flex items-center gap-1 mb-0.5">
+        <div className="flex items-center gap-2 mb-0.5">
           {data?.icon && <data.icon className="h-5 w-5 text-white" />}
-          <h3 className="text-xs text-white font-semibold truncate">{data?.title}</h3>
+          <h3 className="text-sm text-white font-semibold truncate">{data?.title}</h3>
         </div>
 
         {/* Value */}
-        <p className="text-xl font-bold text-white leading-none pt-1">{data?.value}</p>
+        <p className="text-lg font-bold text-white leading-none pt-1 ">{data?.value}</p>
       </div>
 
       {/* Right Side: Mini Area Chart */}
-      <div className="w-20 h-10">
+      {/* <div className="w-20 h-10">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={chartData}>
             <Area
@@ -41,7 +41,7 @@ function Card({ data }) {
             />
           </AreaChart>
         </ResponsiveContainer>
-      </div>
+      </div> */}
     </div>
   );
 }

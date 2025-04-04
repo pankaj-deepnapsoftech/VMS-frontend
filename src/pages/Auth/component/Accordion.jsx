@@ -24,24 +24,24 @@ const Accordion = () => {
 
   const items = [
     {
-      title: 'Scanning Tools',
-      content: 'Our advanced scanning tools provide comprehensive vulnerability assessment capabilities, including port scanning, service detection, and vulnerability identification. We use industry-leading tools combined with custom scripts to ensure thorough coverage of your systems.',
+      title: 'Scanning Tools ',
+      content: 'Advanced vulnerability assessments, including port scanning and service detection.',
     },
     {
       title: 'CISO as a Service',
-      content: 'Get expert security leadership without the full-time cost. Our CISO as a Service offering provides strategic guidance, security program development, and ongoing advisory services to help you build and maintain a robust security posture.',
+      content: 'Expert security leadership tailored to your business needs.',
     },
     {
       title: 'Social Engineering',
-      content: 'Test your organization\'s human security awareness through sophisticated social engineering campaigns. We simulate real-world attack scenarios including phishing, vishing, and physical security tests to identify potential vulnerabilities in your security awareness program.',
+      content: 'Simulating real-world attacks to strengthen your human firewall.',
     },
     {
       title: 'Network Security',
-      content: 'Comprehensive network security assessment including internal and external penetration testing, wireless network security analysis, and infrastructure vulnerability assessment. We help identify and remediate security gaps in your network architecture.',
+      content: 'Comprehensive defense against network-based threats.',
     },
     {
       title: 'Application Security',
-      content: 'In-depth security testing of web applications, mobile apps, and APIs. Our approach combines automated scanning with manual testing to uncover security flaws that automated tools might miss, including business logic vulnerabilities.',
+      content: '– Securing web and mobile applications with deep penetration testing.',
     },
   ];
 

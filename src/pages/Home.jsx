@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { BiBarChartAlt2, BiBookAdd, BiImageAdd, BiPlus } from "react-icons/bi";
+import { BiBarChartAlt2, BiBookAdd, BiImageAdd, BiPlus, BiRedo } from "react-icons/bi";
 import { IoShieldOutline, IoShieldCheckmarkOutline } from "react-icons/io5";
 import { IoMdSettings } from "react-icons/io";
-import { MdKeyboardArrowDown } from "react-icons/md";
+import { MdApps, MdBuild, MdKeyboardArrowDown, MdOutlineErrorOutline, MdOutlineMiscellaneousServices, MdPauseCircleOutline } from "react-icons/md";
 import {
   BarChart,
   Bar,
@@ -15,11 +15,13 @@ import {
   AreaChart,
   Area,
 } from "recharts";
-import { AiOutlineMenu } from "react-icons/ai";
+import { AiOutlineCheckCircle, AiOutlineFolderOpen, AiOutlineMenu } from "react-icons/ai";
 import Card from "@/components/Card";
 import { useAuthContext, useDataContext } from "@/context";
 import { Modal } from "@/components/modal/FileUploadModal";
 import { Loader } from "@/constants/Components-lazy-loading/components.Lazy";
+import { FaNetworkWired } from "react-icons/fa";
+import { Bug, FolderOpen } from "lucide-react";
 
 function Home() {
   const {
@@ -61,62 +63,62 @@ function Home() {
       title: "Application",
       value: cardData?.Infrastructure,
       color: "from-[#F24E1E] to-[#FF866B]", // Figma Red gradient
-      icon: IoShieldOutline,
+      icon: MdOutlineMiscellaneousServices ,
       chartColor: "#FFF",
     },
     {
       title: "Infrastructure IPs",
       value: cardData?.Infrastructure,
       color: "from-[#0D99FF] to-[#74C0FC]", // Figma Blue gradient
-      icon: IoShieldOutline,
+      icon: FaNetworkWired ,
       chartColor: "#FFF",
     },
     {
       title: "Total Vulnerability",
       value: cardData?.totalData,
       color: "from-[#63A833] to-[#9EE999]", // Figma Cyan gradient
-      icon: IoShieldOutline,
+      icon: Bug,
       chartColor: "#FFF",
     },
     {
-      title: "Remediation",
+      title: "Remediation", 
       value: cardData?.inProgress,
       color: "from-[#A259FF] to-[#C79CFF]", // Figma Purple gradient
-      icon: IoShieldCheckmarkOutline,
+      icon: MdBuild ,
       chartColor: "#FFF",
     },
     {
       title: "Exceptions",
       value: cardData?.Exceptions,
       color: "from-[#F24E1E] to-[#FF866B]", // Figma Red gradient
-      icon: IoMdSettings,
+      icon: MdOutlineErrorOutline ,
       chartColor: "#FFF",
     },
     {
       title: "Open",
       value: cardData?.open,
       color: "from-[#0D99FF] to-[#74C0FC]", // Figma Blue gradient
-      icon: IoShieldCheckmarkOutline,
+      icon: FolderOpen ,
       chartColor: "#FFF",
     },
     {
       title: "Re Open",
       value: cardData?.reopen,
-      icon: IoShieldCheckmarkOutline,
+      icon: BiRedo ,
       color: "from-[#63A833] to-[#6EE999]", // Figma Cyan gradient
       chartColor: "#FFF",
     },
     {
       title: "Closed",
       value: cardData?.closed,
-      icon: IoShieldCheckmarkOutline,
+      icon: AiOutlineCheckCircle ,
       color: "from-[#A259FF] to-[#C79CFF]", // Figma Purple gradient
       chartColor: "#FFF",
     },
     {
       title: "On Hold",
       value: cardData?.onHold,
-      icon: IoShieldCheckmarkOutline,
+      icon: MdPauseCircleOutline ,
       color: "from-[#333333] to-[#666666]", // Dark Gray gradient
       chartColor: "#FFF",
     },
