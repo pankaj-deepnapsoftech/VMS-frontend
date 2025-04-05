@@ -4,7 +4,7 @@ import { SignInValidation } from '@/Validation/AuthValidation';
 import { useAuthContext } from '@/context';
 
 
-function App() {
+function SignIn() {
   const { Signin, loading } = useAuthContext()
 
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } = useFormik({
@@ -108,7 +108,7 @@ function App() {
 
         {/* Footer */}
         <div className="text-gray-400 text-sm">
-          © Coinwave All rights reserved.
+          © Secure& All rights reserved.
         </div>
       </div>
 
@@ -120,4 +120,4 @@ function App() {
   );
 }
 
-export default App;
+export default SignIn;
