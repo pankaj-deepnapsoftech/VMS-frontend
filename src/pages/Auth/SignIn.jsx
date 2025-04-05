@@ -144,7 +144,7 @@ function SignIn() {
                 </h1>
               </div>
               <p className="text-xl text-gray-600  ml-14 font-light">
-                Beyond security, a Strategy
+                Beyond security , a Strategy
               </p>
             </div>
 
@@ -211,3 +211,139 @@ export default SignIn;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React, { useState } from 'react';
+// import { Wallet2 } from 'lucide-react';
+
+// function App() {
+//   const [email, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
+//   const [rememberMe, setRememberMe] = useState(false);
+
+//   return (
+//     <div className="min-h-screen w-full flex bg-[#0a192f]">
+//       {/* Left Panel - Login Form */}
+//       <div className="w-full md:w-[480px] p-8 flex flex-col justify-between">
+//         {/* Logo and Language Section */}
+//         <div className="flex justify-between items-center">
+//           <div className="flex items-center gap-2">
+//             <Wallet2 className="h-6 w-6 text-emerald-500" />
+//             <span className="text-white text-xl font-semibold">Coinwave</span>
+//           </div>
+//           <div className="flex items-center gap-2 text-gray-400">
+//             <span>🌐</span>
+//             <select className="bg-transparent border-none text-sm cursor-pointer">
+//               <option value="en">English</option>
+//             </select>
+//           </div>
+//         </div>
+
+//         {/* Login Form */}
+//         <div className="my-auto w-full max-w-md">
+//           <h1 className="text-3xl font-bold text-white mb-2">Login</h1>
+//           <p className="text-gray-400 mb-8">
+//             Step into the world of digital assets and decentralized systems.
+//           </p>
+
+//           {/* Metamask Button */}
+//           <button className="w-full bg-[#1a2942] text-white rounded-lg p-3 mb-6 flex items-center justify-center gap-2 hover:bg-[#233454] transition-colors">
+//             <img src="https://raw.githubusercontent.com/MetaMask/brand-resources/master/SVG/metamask-fox.svg" 
+//                  alt="MetaMask" 
+//                  className="w-6 h-6" />
+//             Sign in with Metamask
+//           </button>
+
+//           <div className="relative my-6">
+//             <div className="absolute inset-0 flex items-center">
+//               <div className="w-full border-t border-gray-700"></div>
+//             </div>
+//             <div className="relative flex justify-center text-sm">
+//               <span className="px-2 text-gray-400 bg-[#0a192f]">or sign in with email</span>
+//             </div>
+//           </div>
+
+//           {/* Email Input */}
+//           <div className="mb-4">
+//             <label className="block text-gray-400 text-sm mb-2">Email</label>
+//             <input
+//               type="email"
+//               value={email}
+//               onChange={(e) => setEmail(e.target.value)}
+//               className="w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-colors"
+//               placeholder="mail@example.com"
+//             />
+//           </div>
+
+//           {/* Password Input */}
+//           <div className="mb-6">
+//             <label className="block text-gray-400 text-sm mb-2">Password</label>
+//             <input
+//               type="password"
+//               value={password}
+//               onChange={(e) => setPassword(e.target.value)}
+//               className="w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-colors"
+//             />
+//           </div>
+
+//           {/* Remember Me & Forgot Password */}
+//           <div className="flex items-center justify-between mb-6">
+//             <label className="flex items-center gap-2 cursor-pointer">
+//               <input
+//                 type="checkbox"
+//                 checked={rememberMe}
+//                 onChange={(e) => setRememberMe(e.target.checked)}
+//                 className="w-4 h-4 rounded border-gray-700 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-0 bg-[#1a2942]"
+//               />
+//               <span className="text-gray-400 text-sm">Remember me?</span>
+//             </label>
+//             <button className="text-emerald-500 text-sm hover:text-emerald-400 transition-colors">
+//               Forgot password?
+//             </button>
+//           </div>
+
+//           {/* Login Button */}
+//           <button className="w-full bg-emerald-500 text-white rounded-lg p-3 font-medium hover:bg-emerald-600 transition-colors">
+//             Login
+//           </button>
+
+//           {/* Sign Up Link */}
+//           <p className="text-gray-400 text-sm mt-6">
+//             Not registered yet?{' '}
+//             <button className="text-emerald-500 hover:text-emerald-400 transition-colors">
+//               Create an account
+//             </button>
+//           </p>
+//         </div>
+
+//         {/* Footer */}
+//         <div className="text-gray-400 text-sm">
+//           © Coinwave All rights reserved.
+//         </div>
+//       </div>
+
+//       {/* Right Panel - Particle Globe Background */}
+//       <div className="hidden md:block flex-1 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop')] bg-cover bg-center">
+//         <div className="w-full h-full bg-[#0a192f]/80 backdrop-blur-sm"></div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default App;
