@@ -16,6 +16,7 @@ import { ClientSmeRoutes } from "./PrivateRoutes/clientSmeRoutes";
 import UnauthorizedAccessPage from "@/pages/UnauthorizedAccess";
 import { ClientCisoRoutes } from "./PrivateRoutes/ClientCisoRoutes";
 import GettingStarted from "@/pages/Auth/GetStartedPage";
+import Pricing from "@/pages/Auth/Pricing";
 
 const AppRoutes = () => {
   const { authenticate, token } = useAuthContext();
@@ -59,6 +60,7 @@ const AppRoutes = () => {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/verify-otp" element={<VerifyOtp />} />
+          <Route path="/pricing" element={<Pricing />} />
         </>
       )}
 

@@ -53,19 +53,16 @@ function Header({ setShowMenu }) {
     // <div className="flex h-screen fixed  overflow-y-auto
     //  md:w-[28%] lg:w-[25%] xl:w-[25%] 2xl:w-[20%] ">
       <div className=" flex flex-col text-white pt-8 h-[100%] hide-scrollbar  overflow-y-auto ">
-        < Link
-
-          onClick={setShowMenu}
-          to=""
-          className="flex items-center p-5 space-x-2 "
-        >
-          <div className="flex items-center justify-center mb-4">
-                          <FaShieldAlt className="h-6 w-6 text-blue-600" />
-                          <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400 tracking-tight ml-2">
-                            SECURE&
-                          </h1>
-                        </div>
-        </Link >
+        <Link to="/" className="flex items-center my-5 ml-3">
+            <img
+              src="/logo.png"
+              alt="Scalable Image"
+              style={{ width: "15%", height: "auto" }}
+            />
+            <span className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-blue-300 text-transparent bg-clip-text">
+              Secure&
+            </span>
+          </Link>
         <hr className="border-gray-100 mx-8" />
 
         <nav className="flex-1 mx-2 py-5 space-y-1">

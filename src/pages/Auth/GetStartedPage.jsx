@@ -114,7 +114,7 @@ const GettingStarted = () => {
             <div className="w-full lg:w-1/2 mb-12 lg:mb-0">
               {/* Main content */}
               <h1 className="text-xl md:text-3xl lg:text-4xl xl:text-5xl  text-white leading-tight mb-6">
-                AI powered Risk Prioritization and Remediation platform
+              AI Powered Risk Prioritization and Remediation Platform
               </h1>
 
               <p className="text-gray-300 text-lg md:text-xl max-w-xl mb-10">

@@ -23,10 +23,16 @@ function SignIn() {
       <div className="w-full md:w-[480px] p-8 flex flex-col justify-between">
         {/* Logo and Language Section */}
         <div className="flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <Wallet2 className="h-6 w-6 text-emerald-500" />
-            <span className="text-white text-xl font-semibold">Coinwave</span>
-          </div>
+        <Link to="/" className="flex items-center">
+            <img
+              src="/logo.png"
+              alt="Scalable Image"
+              style={{ width: "15%", height: "auto" }}
+            />
+            <span className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-blue-300 text-transparent bg-clip-text">
+              Secure&
+            </span>
+          </Link>
 
         </div>
 
