@@ -287,12 +287,7 @@ const GettingStarted = () => {
         {/* Left Section */}
         <div className="flex-1 max-w-lg">
           <img
-            sizes="(max-width: 621px) 100vw, 621px"
-            srcSet="
-        https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b38b75a584085f7a203c47_Scalable-image1-p-500.png 500w,
-        https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b38b75a584085f7a203c47_Scalable-image1.png 621w
-      "
-            src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b38b75a584085f7a203c47_Scalable-image1.png"
+            src="/main.png"
             alt="Scalable Image"
             style={{ maxWidth: "100%", height: "auto" }}
           />
@@ -383,17 +378,13 @@ const GettingStarted = () => {
             <h2 className="text-xl font-semibold uppercase">
             Revolutionizing Pentesting
             </h2>
-            <p className="mt-4 text-gray-400">
+            <p className="mt-4 mb-10 text-gray-400">
               Say farewell to the tedious back-and-forth of traditional
               pentesting. With Secure&, the flow of information is streamlined.
             </p>
             <img
               sizes="(max-width: 621px) 100vw, 621px"
-              srcSet="
-        https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b38b75a584085f7a203c47_Scalable-image1-p-500.png 500w,
-        https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b38b75a584085f7a203c47_Scalable-image1.png 621w
-      "
-              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b38b75a584085f7a203c47_Scalable-image1.png"
+             src="/main.png"
               alt="Scalable Image"
               style={{ maxWidth: "100%", height: "auto" }}
             />
