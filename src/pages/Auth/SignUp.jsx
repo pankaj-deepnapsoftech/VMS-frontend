@@ -1,12 +1,15 @@
 import { useFormik } from 'formik';
-import { Wallet2 } from 'lucide-react';
+import { Eye, EyeOff, Wallet2 } from 'lucide-react';
 import { useAuthContext } from '@/context';
 import { Link } from 'react-router-dom';
 import { SignUpValidation } from '@/Validation/AuthValidation';
+import { useState } from 'react';
 
 
 function SignIn() {
   const { Signup, loading } = useAuthContext()
+  
+    const [showPassword,setShowPassword] = useState(false);
 
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } = useFormik({
     initialValues: { full_name: "", phone: "", email: "", password: "", role: "", Organization: "" },
@@ -37,7 +40,7 @@ function SignIn() {
         </div>
 
         {/* Login Form */}
-        <form className="my-auto w-full max-w-md" onSubmit={handleSubmit} >
+        <form className="my-auto w-full max-w-md py-16" onSubmit={handleSubmit} >
           <h1 className="text-3xl font-bold text-white mb-2">Create New Account</h1>
           <p className="text-gray-400 mb-8">
             Step into the world of digital assets and decentralized systems.
@@ -46,7 +49,7 @@ function SignIn() {
           {/* Metamask Button */}
 
 
-         
+
 
           {/* Email Input */}
           <div className="mb-4">
@@ -91,22 +94,28 @@ function SignIn() {
             {errors.phone && touched.phone && <p className='text-red-400 p-2'>{errors.phone}</p>}
           </div>
 
-        
+
           {/* Password Input */}
-          <div className="mb-6">
+          <div className="mb-6 ">
+            <div className='relative' >
+
             <label className="block text-gray-400 text-sm mb-2">Password</label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               value={values.password}
               onChange={handleChange}
               onBlur={handleBlur}
               name='password'
               className="w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-colors"
             />
+            <div className='absolute top-[40%] right-2 text-white p-2 cursor-pointer ' onClick={()=>setShowPassword(!showPassword)} >
+              {!showPassword ? <Eye size={20} /> : <EyeOff size={20}/>}
+            </div>
+            </div>
             {errors.password && touched.password && <p className='text-red-400 p-2' >{errors.password}</p>}
           </div>
 
-         
+
 
           <div className="mb-6">
             <label className="block text-gray-400 text-sm mb-2">Role</label>
