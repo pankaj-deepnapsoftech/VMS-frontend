@@ -1,12 +1,14 @@
 import { useFormik } from 'formik';
-import { Wallet2 } from 'lucide-react';
+import { Eye, EyeOff, Wallet2 } from 'lucide-react';
 import { SignInValidation } from '@/Validation/AuthValidation';
 import { useAuthContext } from '@/context';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 
 function SignIn() {
-  const { Signin, loading } = useAuthContext()
+  const { Signin, loading } = useAuthContext();
+  const [showPassword,setShowPassword] = useState(false);
 
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } = useFormik({
     initialValues: { email: "", password: "" },
@@ -58,16 +60,22 @@ function SignIn() {
           </div>
 
           {/* Password Input */}
-          <div className="mb-6">
+          <div className="mb-6 ">
+            <div className='relative' >
+
             <label className="block text-gray-400 text-sm mb-2">Password</label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               value={values.password}
               onChange={handleChange}
               onBlur={handleBlur}
               name='password'
               className="w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-colors"
             />
+            <div className='absolute top-[40%] right-2 text-white p-2 cursor-pointer ' onClick={()=>setShowPassword(!showPassword)} >
+              {!showPassword ? <Eye size={20} /> : <EyeOff size={20}/>}
+            </div>
+            </div>
             {errors.password && touched.password && <p className='text-red-400 p-2' >{errors.password}</p>}
           </div>
 
@@ -81,9 +89,9 @@ function SignIn() {
               />
               <span className="text-gray-400 text-sm">Remember me?</span>
             </label>
-            <button className="text-emerald-500 text-sm hover:text-emerald-400 transition-colors">
+            <Link to={"/forgot-password"} className="text-emerald-500 text-sm hover:text-emerald-400 transition-colors">
               Forgot password?
-            </button>
+            </Link>
           </div>
 
           {/* Login Button */}
