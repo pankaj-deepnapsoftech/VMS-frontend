@@ -2,6 +2,7 @@ import { useFormik } from 'formik';
 import { Wallet2 } from 'lucide-react';
 import { SignInValidation } from '@/Validation/AuthValidation';
 import { useAuthContext } from '@/context';
+import { Link } from 'react-router-dom';
 
 
 function SignIn() {
@@ -31,7 +32,7 @@ function SignIn() {
 
         {/* Login Form */}
         <form className="my-auto w-full max-w-md" onSubmit={handleSubmit} >
-          <h1 className="text-3xl font-bold text-white mb-2">Login</h1>
+          <h1 className="text-3xl font-bold text-white mb-2">Welcome Back </h1>
           <p className="text-gray-400 mb-8">
             Step into the world of digital assets and decentralized systems.
           </p>
@@ -39,14 +40,7 @@ function SignIn() {
           {/* Metamask Button */}
 
 
-          <div className="relative my-6">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-700"></div>
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 text-gray-400 bg-[#0a192f]">or sign in with email</span>
-            </div>
-          </div>
+        
 
           {/* Email Input */}
           <div className="mb-4">
@@ -60,7 +54,7 @@ function SignIn() {
               className="w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-colors"
               placeholder="mail@example.com"
             />
-            {errors.email && touched.email && <p>{errors.email}</p>}
+            {errors.email && touched.email && <p className='text-red-400 p-2'>{errors.email}</p>}
           </div>
 
           {/* Password Input */}
@@ -74,7 +68,7 @@ function SignIn() {
               name='password'
               className="w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-colors"
             />
-            {errors.password && touched.password && <p>{errors.password}</p>}
+            {errors.password && touched.password && <p className='text-red-400 p-2' >{errors.password}</p>}
           </div>
 
           {/* Remember Me & Forgot Password */}
@@ -100,9 +94,9 @@ function SignIn() {
           {/* Sign Up Link */}
           <p className="text-gray-400 text-sm mt-6">
             Not registered yet?{' '}
-            <button className="text-emerald-500 hover:text-emerald-400 transition-colors">
+            <Link to="/sign-up" className="text-emerald-500 hover:text-emerald-400 transition-colors">
               Create an account
-            </button>
+            </Link>
           </p>
         </form>
 
