@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import { Eye, EyeOff, Wallet2 } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 import { useAuthContext } from '@/context';
 import { Link } from 'react-router-dom';
 import { SignUpValidation } from '@/Validation/AuthValidation';
