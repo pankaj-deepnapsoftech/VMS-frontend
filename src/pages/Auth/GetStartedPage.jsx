@@ -33,7 +33,7 @@ const GettingStarted = () => {
     },
   ];
 
- 
+
 
   const settings2 = {
     dots: true,
@@ -82,7 +82,7 @@ const GettingStarted = () => {
             <div className="w-full lg:w-1/2 mb-12 lg:mb-0">
               {/* Main content */}
               <h1 className="text-xl md:text-3xl lg:text-4xl xl:text-5xl  text-white leading-tight mb-6">
-              AI Powered Risk Prioritization and Remediation Platform
+                AI Powered Risk Prioritization and Remediation Platform
               </h1>
 
               <p className="text-gray-300 text-lg md:text-xl max-w-xl mb-10">
@@ -331,7 +331,7 @@ const GettingStarted = () => {
       <div className="bg-black text-white py-16 px-6">
         <div className="text-center container">
           <h1 className="text-4xl md:text-6xl leading-tight px-4">
-          Secure& – Continuous & Scalable Security Testing
+            Secure& – Continuous & Scalable Security Testing
           </h1>
           <p className="text-md md:text-md px-24 mt-4 text-gray-400">
             Secure&&apos;s platform enables you to enlist top-tier ethical hackers,
@@ -339,11 +339,11 @@ const GettingStarted = () => {
             most critical vulnerabilities within your enterprise.Strengthen your cybersecurity with Secure&&apos;s next-gen Pentest as a Service (PtaaS). Our platform connects you with top-tier ethical hackers to identify, manage, and remediate critical vulnerabilities efficiently—ensuring continuous, scalable security for your enterprise.
           </p>
         </div>
-        <div className="p-10 flex flex-col md:flex-row items-center md:items-start gap-10">
+        <div className="p-10 flex flex-col md:flex-row items-center md:items-start gap-20">
           {/* Left Section */}
           <div className="flex-1 max-w-lg">
             <h2 className="text-xl font-semibold uppercase">
-            Revolutionizing Pentesting
+              Revolutionizing Pentesting
             </h2>
             <p className="mt-4 mb-10 text-gray-400">
               Say farewell to the tedious back-and-forth of traditional
@@ -351,54 +351,52 @@ const GettingStarted = () => {
             </p>
             <img
               sizes="(max-width: 621px) 100vw, 621px"
-             src="/main.png"
+              src="/main.png"
               alt="Scalable Image"
               style={{ maxWidth: "100%", height: "auto" }}
             />
           </div>
 
           {/* Right Section */}
-          <div className="flex-1 max-w-lg">
-            <h3 className="text-lg font-semibold">
-            No More Tedious Back-and-Forth – 
+          <div className="flex-1 max-w-lg items-center justify-center">
+            <h3 className="text-lg font-semibold md:pt-32">
+              No More Tedious Back-and-Forth –
             </h3>
             <p className="mt-2 text-gray-400">
-            Streamlined communication for faster security testing.
+              Streamlined communication for faster security testing.
             </p>
             <h3 className="mt-6 text-lg font-semibold">
-            Seamless, Efficient & Secure 
+              Seamless, Efficient & Secure
             </h3>
             <p className="mt-2 text-gray-400">
-            – Define your scope, choose an expert, and get optimized results.
+              – Define your scope, choose an expert, and get optimized results.
+            </p>
+          </div>
+          <div className="flex-1 max-w-lg md:pt-32">
+            <h3 className="text-lg font-semibold">
+              Real-Time Compliance Reports
+            </h3>
+            <p className="mt-2 text-gray-400">
+              Gain clear insights with enriched data analysis.
+            </p>
+            <h3 className="mt-6 text-lg font-semibold">
+              Effortless Vulnerability Management
+            </h3>
+            <p className="mt-2 text-gray-400">
+              – A dedicated space to track, manage, and resolve threats effectively.
             </p>
           </div>
         </div>
-        <div className="p-10 flex flex-col md:flex-row items-center md:items-start gap-10">
-          {/* Left Section */}
-          <div className="flex-1 max-w-lg">
-            <h3 className="text-lg font-semibold">
-            Real-Time Compliance Reports 
-            </h3>
-            <p className="mt-2 text-gray-400">
-            Gain clear insights with enriched data analysis.
-            </p>
-            <h3 className="mt-6 text-lg font-semibold">
-            Effortless Vulnerability Management 
-            </h3>
-            <p className="mt-2 text-gray-400">
-            – A dedicated space to track, manage, and resolve threats effectively.
-            </p>
-          </div>
+        <div className="p-10 flex flex-col md:flex-row items-center md:items-start justify-center ">       
 
           {/* Right Section */}
-          <div className="flex-1 max-w-lg">
-            <h2 className="text-xl font-semibold uppercase">
+          <div className="flex-1 ">
+            <h2 className="text-xl font-semibold uppercase text-center">
               Discover and Resolve with Secure&
             </h2>
-            <p className="mt-4 text-gray-400">
-              Benefit from streamlined management with a user-friendly
-              dashboard, simplified reports, and an efficient space for managing
-              vulnerabilities.
+            <p className="mt-4 text-gray-400 text-center ">
+            Gain complete visibility and control over your security operations with an intuitive dashboard that brings all essential insights to one place.
+            Our platform is designed for ease of use—enabling teams to monitor, assess, and address vulnerabilities without any technical roadblocks.
             </p>
             <img
               sizes="(max-width: 621px) 100vw, 621px"
@@ -408,7 +406,7 @@ const GettingStarted = () => {
         </div>
       </div>
 
-      {/* Complete Offensive Security */}
+      {/* Complete Offensive Security
       <div className="px-16 py-16 container mx-auto flex flex-wrap justify-center gap-10">
         <h1 className="text-4xl md:text-4xl font-bold leading-tight">
           Complete Offensive Security
@@ -417,10 +415,10 @@ const GettingStarted = () => {
         Secure& delivers expert-driven penetration testing across your entire digital infrastructure. From dynamic testing to social engineering, our advanced methodologies provide real-time risk insights and rapid remediation—helping you secure today and prepare for tomorrow.
         </p>
         <Accordion />
-      </div>
+      </div> */}
 
       {/* Elevate Security with Ethical Hackers */}
-      <div className="px-16 py-16 container mx-auto flex flex-wrap justify-center gap-10">
+      {/* <div className="px-16 py-16 container mx-auto flex flex-wrap justify-center gap-10">
         <h1 className="text-4xl md:text-4xl font-bold leading-tight">
           Elevate Security with Ethical Hackers
         </h1>
@@ -433,7 +431,6 @@ const GettingStarted = () => {
         <div className="container">
           <Slider {...settings2}>
             <div className="max-w-md pl-4 overflow-hidden rounded-lg shadow-lg">
-              {/* Header Section */}
               <div className="p-6 bg-[#111827] text-white">
                 <div className="flex justify-between items-center mb-2">
                   <span className="font-medium">ENGLISH</span>
@@ -449,8 +446,6 @@ const GettingStarted = () => {
                   Ranked as one of top 50th hackers (All time) at hackerone.
                 </p>
               </div>
-
-              {/* Content Section */}
               <div className="p-6 bg-white">
                 <h2 className="text-xl font-semibold mb-3">Skills</h2>
                 <div className="flex flex-wrap gap-2 mb-2">
@@ -493,7 +488,7 @@ const GettingStarted = () => {
             </div>
 
             <div className="max-w-md pl-4 overflow-hidden rounded-lg shadow-lg">
-              {/* Header Section */}
+              
               <div className="p-6 bg-[#111827] text-white">
                 <div className="flex justify-between items-center mb-2">
                   <span className="font-medium">ENGLISH</span>
@@ -510,7 +505,7 @@ const GettingStarted = () => {
                 </p>
               </div>
 
-              {/* Content Section */}
+              
               <div className="p-6 bg-white">
                 <h2 className="text-xl font-semibold mb-3">Skills</h2>
                 <div className="flex flex-wrap gap-2 mb-2">
@@ -553,7 +548,7 @@ const GettingStarted = () => {
             </div>
 
             <div className="max-w-md pl-4 overflow-hidden rounded-lg shadow-lg">
-              {/* Header Section */}
+             
               <div className="p-6 bg-[#111827] text-white">
                 <div className="flex justify-between items-center mb-2">
                   <span className="font-medium">ENGLISH</span>
@@ -570,7 +565,7 @@ const GettingStarted = () => {
                 </p>
               </div>
 
-              {/* Content Section */}
+              
               <div className="p-6 bg-white">
                 <h2 className="text-xl font-semibold mb-3">Skills</h2>
                 <div className="flex flex-wrap gap-2 mb-2">
@@ -613,7 +608,7 @@ const GettingStarted = () => {
             </div>
 
             <div className="max-w-md pl-4 overflow-hidden rounded-lg shadow-lg">
-              {/* Header Section */}
+             
               <div className="p-6 bg-[#111827] text-white">
                 <div className="flex justify-between items-center mb-2">
                   <span className="font-medium">ENGLISH</span>
@@ -630,7 +625,7 @@ const GettingStarted = () => {
                 </p>
               </div>
 
-              {/* Content Section */}
+             
               <div className="p-6 bg-white">
                 <h2 className="text-xl font-semibold mb-3">Skills</h2>
                 <div className="flex flex-wrap gap-2 mb-2">
@@ -673,11 +668,11 @@ const GettingStarted = () => {
             </div>
           </Slider>
         </div>
-      </div>
+      </div> */}
 
-      {/* Meet those who trust in us */}
-      <div className="min-h-screen bg-gray-950 text-white">
-        {/* Hero Section */}
+
+      {/* <div className="min-h-screen bg-gray-950 text-white">
+        
         <div className="container mx-auto px-4 py-20">
           <h1 className="text-5xl font-bold text-center mb-6">
             Meet those who trust in us
@@ -689,7 +684,7 @@ const GettingStarted = () => {
           </p>
         </div>
 
-        {/* Testimonials Section */}
+       
         <div className="container mx-auto px-4 py-20">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {testimonials.map((testimonial, index) => (
@@ -721,10 +716,10 @@ const GettingStarted = () => {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
 
-      {/* Compliance */}
-      <div className="max-w-6xl mx-auto px-4 py-12">
+
+      {/* <div className="max-w-6xl mx-auto px-4 py-12">
         <h1 className="text-4xl font-normal mb-10">Compliance</h1>
 
         <div className="border-t border-gray-200 pt-10">
@@ -857,9 +852,9 @@ const GettingStarted = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
-      {/* Secure& Blog */}
+
 
       <div className="max-w-6xl mx-auto grid grid-cols-1 py-24 md:grid-cols-2 gap-8">
         <div className="text-center md:text-left">

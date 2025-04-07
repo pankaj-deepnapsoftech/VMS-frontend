@@ -22,7 +22,7 @@ const Header = () => {
 
   return (
     <nav className="bg-gradient-to-r from-[#0D1421] to-[#0D3A78] text-white py-4 px-6 md:px-12">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <div className="w-full lg:px-14 flex items-center justify-between">
         {/* Logo */}
         <div className="flex gap-14 ">
           <Link to="/" className="flex items-center">
