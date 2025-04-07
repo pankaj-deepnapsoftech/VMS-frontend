@@ -33,39 +33,7 @@ const GettingStarted = () => {
     },
   ];
 
-  // for second section
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 2,
-    autoplay: true,
-    autoplaySpeed: 2000,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
+ 
 
   const settings2 = {
     dots: true,
@@ -133,7 +101,6 @@ const GettingStarted = () => {
                   TRY SECURE&
                 </a>
                 <button
-                  variant="outline"
                   className="border-white text-white hover:bg-white/10 rounded-md px-8 py-2 text-base font-medium"
                 >
                   TALK TO US
@@ -351,7 +318,7 @@ const GettingStarted = () => {
               <p className="mt-6 text-base leading-7 text-gray-600">
                 We detect and report security breaches in real-time, stopping
                 threats before they impact your business. <br />
-                Upgrade your cybersecurity strategy with Secure&'s intelligent,
+                Upgrade your cybersecurity strategy with Secure&&apos;s intelligent,
                 scalable PtaaS solution—because security should be seamless,
                 smart, and stress-free.
               </p>
@@ -367,9 +334,9 @@ const GettingStarted = () => {
           Secure& – Continuous & Scalable Security Testing
           </h1>
           <p className="text-md md:text-md px-24 mt-4 text-gray-400">
-            Secure&'s platform enables you to enlist top-tier ethical hackers,
+            Secure&&apos;s platform enables you to enlist top-tier ethical hackers,
             providing assistance in pinpointing, managing, and resolving the
-            most critical vulnerabilities within your enterprise.Strengthen your cybersecurity with Secure&'s next-gen Pentest as a Service (PtaaS). Our platform connects you with top-tier ethical hackers to identify, manage, and remediate critical vulnerabilities efficiently—ensuring continuous, scalable security for your enterprise.
+            most critical vulnerabilities within your enterprise.Strengthen your cybersecurity with Secure&&apos;s next-gen Pentest as a Service (PtaaS). Our platform connects you with top-tier ethical hackers to identify, manage, and remediate critical vulnerabilities efficiently—ensuring continuous, scalable security for your enterprise.
           </p>
         </div>
         <div className="p-10 flex flex-col md:flex-row items-center md:items-start gap-10">
@@ -458,7 +425,7 @@ const GettingStarted = () => {
           Elevate Security with Ethical Hackers
         </h1>
         <p className="text-center">
-          Trust in Secure&'s ethical hackers experts whose identities are
+          Trust in Secure&&apos;s ethical hackers experts whose identities are
           safeguarded through a rigorous verification process. These
           professionals offer a unique blend of skills, certificactions and
           mentorship.
@@ -716,7 +683,7 @@ const GettingStarted = () => {
             Meet those who trust in us
           </h1>
           <p className="text-xl text-gray-400 text-center max-w-3xl mx-auto">
-            Explore the stories of the individuals we work for and how they've
+            Explore the stories of the individuals we work for and how they&apos;ve
             transformed their digital security. Authentic testimonials that
             inspire trust and reflect the dedication we put into our work.
           </p>
@@ -768,7 +735,7 @@ const GettingStarted = () => {
 
             <div className="md:col-span-3">
               <p className="text-gray-700 mb-6 leading-relaxed">
-                Secure&.io's comprehensive legal framework ensures transparency
+                Secure&.io&apos;s comprehensive legal framework ensures transparency
                 and accountability, with clear terms and conditions prioritizing
                 the protection of both clients and ethical hackers. Data
                 Confidentiality, Integrity, and Availability. Stringent data
@@ -794,7 +761,7 @@ const GettingStarted = () => {
 
             <div className="md:col-span-3">
               <p className="text-gray-700 mb-6 leading-relaxed">
-                Secure&.io's comprehensive legal framework ensures transparency
+                Secure&.io&apos;s comprehensive legal framework ensures transparency
                 and accountability, with clear terms and conditions prioritizing
                 the protection of both clients and ethical hackers. Data
                 Confidentiality, Integrity, and Availability. Stringent data
@@ -820,7 +787,7 @@ const GettingStarted = () => {
 
             <div className="md:col-span-3">
               <p className="text-gray-700 mb-6 leading-relaxed">
-                Secure&.io's comprehensive legal framework ensures transparency
+                Secure&.io&apos;s comprehensive legal framework ensures transparency
                 and accountability, with clear terms and conditions prioritizing
                 the protection of both clients and ethical hackers. Data
                 Confidentiality, Integrity, and Availability. Stringent data
@@ -846,7 +813,7 @@ const GettingStarted = () => {
 
             <div className="md:col-span-3">
               <p className="text-gray-700 mb-6 leading-relaxed">
-                Secure&.io's comprehensive legal framework ensures transparency
+                Secure&.io&apos;s comprehensive legal framework ensures transparency
                 and accountability, with clear terms and conditions prioritizing
                 the protection of both clients and ethical hackers. Data
                 Confidentiality, Integrity, and Availability. Stringent data
@@ -872,7 +839,7 @@ const GettingStarted = () => {
 
             <div className="md:col-span-3">
               <p className="text-gray-700 mb-6 leading-relaxed">
-                Secure&.io's comprehensive legal framework ensures transparency
+                Secure&.io&apos;s comprehensive legal framework ensures transparency
                 and accountability, with clear terms and conditions prioritizing
                 the protection of both clients and ethical hackers. Data
                 Confidentiality, Integrity, and Availability. Stringent data
@@ -900,7 +867,7 @@ const GettingStarted = () => {
             Ready to get started?
           </h2>
           <p className="text-gray-400 pt-4">
-            Elevate your security with Secure&'s expert pentesting platform
+            Elevate your security with Secure&&apos;s expert pentesting platform
             today
           </p>
         </div>
@@ -912,7 +879,6 @@ const GettingStarted = () => {
             TRY SECURE&
           </a>
           <button
-            variant="outline"
             className="border-black text-black hover:bg-black/10 hover:text-white rounded-md ml-4 px-6 py-2 text-base font-medium"
           >
             TALK TO US

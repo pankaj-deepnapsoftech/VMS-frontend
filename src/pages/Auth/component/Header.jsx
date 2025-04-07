@@ -24,21 +24,22 @@ const Header = () => {
     <nav className="bg-gradient-to-r from-[#0D1421] to-[#0D3A78] text-white py-4 px-6 md:px-12">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
-        <div className="flex gap-10 ">
+        <div className="flex gap-14 ">
           <Link to="/" className="flex items-center">
             <img
               src="/logo.png"
               alt="Scalable Image"
-              style={{ width: "15%", height: "auto" }}
+              style={{ width: "60px", height: "auto" }}
             />
             <span className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-blue-300 text-transparent bg-clip-text">
               Secure&
             </span>
           </Link>
 
+
           {/* Desktop Navigation */}
 
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center ">
             {/* Platform dropdown */}
             {/* <div className="relative group">
                             <button className="flex items-center space-x-1 font-medium" onClick={toggleDropdown}>
@@ -151,9 +152,8 @@ const Header = () => {
                 <span className="font-medium">PLATFORM</span>
                 <ChevronDown
                   size={16}
-                  className={`transition-transform ${
-                    activeDropdown === "platform-mobile" ? "rotate-180" : ""
-                  }`}
+                  className={`transition-transform ${activeDropdown === "platform-mobile" ? "rotate-180" : ""
+                    }`}
                 />
               </button>
               {activeDropdown === "platform-mobile" && (
@@ -192,9 +192,8 @@ const Header = () => {
                 <span className="font-medium">SOLUTIONS</span>
                 <ChevronDown
                   size={16}
-                  className={`transition-transform ${
-                    activeDropdown === "solutions-mobile" ? "rotate-180" : ""
-                  }`}
+                  className={`transition-transform ${activeDropdown === "solutions-mobile" ? "rotate-180" : ""
+                    }`}
                 />
               </button>
               {activeDropdown === "solutions-mobile" && (
@@ -249,9 +248,8 @@ const Header = () => {
                 <span className="font-medium">COMPANY</span>
                 <ChevronDown
                   size={16}
-                  className={`transition-transform ${
-                    activeDropdown === "company-mobile" ? "rotate-180" : ""
-                  }`}
+                  className={`transition-transform ${activeDropdown === "company-mobile" ? "rotate-180" : ""
+                    }`}
                 />
               </button>
               {activeDropdown === "company-mobile" && (
@@ -285,7 +283,7 @@ const Header = () => {
 
             {/* CTA Button */}
             <Link
-              to="/try"
+              to="/sign-in"
               className="bg-white text-[#0a0a1a] px-6 py-3 rounded-md font-medium text-center hover:bg-gray-100 transition-colors"
               onClick={closeMenu}
             >

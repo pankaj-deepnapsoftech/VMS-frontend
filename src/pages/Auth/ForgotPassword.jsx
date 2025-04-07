@@ -1,20 +1,7 @@
-import InputField from "@/components/InputField";
 import { useAuthContext } from "@/context";
 import { ForgotPasswordValidation } from "@/Validation/AuthValidation";
 import { useFormik } from "formik";
-import { Wallet2 } from "lucide-react";
-import React, { useState } from "react";
-import { BiNetworkChart } from "react-icons/bi";
-import {
-  FaEnvelope,
-  FaChartLine,
-  FaArrowLeft,
-  FaUserShield,
-  FaShieldVirus,
-  FaLock,
-  FaVirus,
-  FaShieldAlt,
-} from "react-icons/fa";
+
 import { Link } from "react-router-dom";
 
 function ForgotPassword() {
@@ -237,7 +224,7 @@ function ForgotPassword() {
             Forgot Password
           </h1>
           <p className="text-gray-400 mb-8">
-            Enter your email address and we'll send you instructions to reset
+            Enter your email address and we&apos;ll send you instructions to reset
             your password.
           </p>
 
@@ -277,12 +264,12 @@ function ForgotPassword() {
 
           {/* Sign Up Link */}
           <p className="text-gray-400 text-sm mt-6">
-            Not registered yet?{" "}
+            Back to {" "}
             <Link
-              to={"/sign-up"}
+              to={"/sign-in"}
               className="text-emerald-500 hover:text-emerald-400 transition-colors"
             >
-              Create an account
+              Sign In
             </Link>
           </p>
         </form>
