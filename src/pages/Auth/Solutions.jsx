@@ -1,5 +1,6 @@
 import Header from "@/pages/Auth/component/Header";
 import React from "react";
+import Footer from "@/pages/Auth/component/Footer";
 
 const Solutions = () => {
   return (
@@ -150,84 +151,117 @@ const Solutions = () => {
  
       {/* Section 3: Benefits */}
       <section className="bg-gray-100 text-gray-900 py-12 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl font-semibold text-center mb-6">
-            SECURE& Benefits
-          </h2>
-          <p className="text-center mb-10 text-sm max-w-3xl mx-auto">
-            <span className="text-blue-600 font-semibold">SECURE&</span> tools
-            will offer key features that set them apart from competitors,
-            providing unique solutions to address real-time challenges faced by
-            enterprises of all sizes, from small businesses to large
-            corporations.
-          </p>
+  <div className="max-w-6xl mx-auto">
+    <h2 className="text-2xl font-semibold text-center mb-6">
+      SECURE& Benefits
+    </h2>
+    <p className="text-center mb-10 text-sm max-w-3xl mx-auto">
+      <span className="text-blue-600 font-semibold">SECURE&</span> tools
+      will offer key features that set them apart from competitors,
+      providing unique solutions to address real-time challenges faced by
+      enterprises of all sizes, from small businesses to large
+      corporations.
+    </p>
 
-          <div className="relative flex justify-center items-center h-[420px] mb-10">
-            {/* Center Circle */}
-            <div className="absolute bg-blue-100 border-4 border-blue-300 rounded-full h-40 w-40 flex items-center justify-center z-10">
-              <img
-                src="/logo.png"
-                alt="Central"
-                className="w-20 h-20"
-              />
-            </div>
+    {/* Desktop Layout */}
+    <div className="relative hidden md:flex justify-center items-center h-[420px] mb-10">
+      {/* Center Circle */}
+      <div className="absolute bg-blue-100 border-4 border-blue-100 rounded-full h-40 w-40 flex items-center justify-center z-10 mt-5">
+        <img
+          src="/logo.png"
+          alt="Central"
+          className="w-20 h-20"
+        />
+      </div>
 
-            {/* Top */}
-            <div className="absolute top-0 flex flex-col items-center text-center w-48">
-              <div className="bg-white shadow-md p-3 rounded-md text-sm">
-                <strong>Intelligent API & Endpoint Discovery</strong>
-                <br />
-                Detects APIs and endpoints, monitors for misconfigurations.
-              </div>
-            </div>
-
-            {/* Top-right */}
-            <div className="absolute right-[5%] top-[15%] flex flex-col items-center text-center w-48">
-              <div className="bg-white shadow-md p-3 rounded-md text-sm">
-                <strong>Observability</strong>
-                <br />
-                Detect deviations in security posture.
-              </div>
-            </div>
-
-            {/* Bottom-right */}
-            <div className="absolute right-[5%] bottom-[15%] flex flex-col items-center text-center w-48">
-              <div className="bg-white shadow-md p-3 rounded-md text-sm">
-                <strong>Workflow-Driven Vulnerability Mgmt</strong>
-                <br />
-                Track and manage vulnerabilities efficiently.
-              </div>
-            </div>
-
-            {/* Bottom */}
-            <div className="absolute bottom-0 flex flex-col items-center text-center w-48">
-              <div className="bg-white shadow-md p-3 rounded-md text-sm">
-                <strong>Duplicate Vulnerability Removal</strong>
-                <br />
-                Eliminate redundant vulnerabilities.
-              </div>
-            </div>
-
-            {/* Bottom-left */}
-            <div className="absolute left-[5%] bottom-[15%] flex flex-col items-center text-center w-48">
-              <div className="bg-white shadow-md p-3 rounded-md text-sm">
-                <strong>Remediation Campaigns</strong>
-                <br />
-                Structured, automated remediation workflows.
-              </div>
-            </div>
-
-            {/* Top-left */}
-            <div className="absolute left-[5%] top-[15%] flex flex-col items-center text-center w-48">
-              <div className="bg-white shadow-md p-3 rounded-md text-sm">
-                <strong>Workflow-Driven Remediation</strong>
-                <br />
-                Automate fixes, streamline operations.
-              </div>
-            </div>
+      {/* Feature Boxes - Around the Circle */}
+      {[
+        {
+          className: "top-0",
+          title: "Intelligent API & Endpoint Discovery",
+          desc: "Detects APIs and endpoints, monitors for misconfigurations."
+        },
+        {
+          className: "right-[5%] top-[15%]",
+          title: "Observability",
+          desc: "Detect deviations in security posture."
+        },
+        {
+          className: "right-[5%] bottom-[15%]",
+          title: "Workflow-Driven Vulnerability Mgmt",
+          desc: "Track and manage vulnerabilities efficiently."
+        },
+        {
+          className: "bottom-0",
+          title: "Duplicate Vulnerability Removal",
+          desc: "Eliminate redundant vulnerabilities."
+        },
+        {
+          className: "left-[5%] bottom-[15%]",
+          title: "Remediation Campaigns",
+          desc: "Structured, automated remediation workflows."
+        },
+        {
+          className: "left-[5%] top-[15%]",
+          title: "Workflow-Driven Remediation",
+          desc: "Automate fixes, streamline operations."
+        },
+      ].map((item, index) => (
+        <div
+          key={index}
+          className={`absolute ${item.className} flex flex-col items-center text-center w-48`}
+        >
+          <div className="bg-white shadow-md p-3 rounded-md text-sm">
+            <strong>{item.title}</strong>
+            <br />
+            {item.desc}
           </div>
         </div>
-      </section>
+      ))}
+    </div>
+
+    {/* Mobile Layout */}
+    <div className="flex flex-col gap-6 md:hidden items-center">
+      <img src="/logo.png" alt="Central" className="w-20 h-20 mb-4" />
+      {[
+        {
+          title: "Intelligent API & Endpoint Discovery",
+          desc: "Detects APIs and endpoints, monitors for misconfigurations."
+        },
+        {
+          title: "Observability",
+          desc: "Detect deviations in security posture."
+        },
+        {
+          title: "Workflow-Driven Vulnerability Mgmt",
+          desc: "Track and manage vulnerabilities efficiently."
+        },
+        {
+          title: "Duplicate Vulnerability Removal",
+          desc: "Eliminate redundant vulnerabilities."
+        },
+        {
+          title: "Remediation Campaigns",
+          desc: "Structured, automated remediation workflows."
+        },
+        {
+          title: "Workflow-Driven Remediation",
+          desc: "Automate fixes, streamline operations."
+        },
+      ].map((item, index) => (
+        <div
+          key={index}
+          className="bg-white shadow-md p-4 rounded-md text-sm text-center w-full max-w-xs"
+        >
+          <strong>{item.title}</strong>
+          <br />
+          {item.desc}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+<Footer/>
     </div>
   );
 };
