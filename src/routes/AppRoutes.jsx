@@ -17,6 +17,7 @@ import UnauthorizedAccessPage from "@/pages/UnauthorizedAccess";
 import { ClientCisoRoutes } from "./PrivateRoutes/ClientCisoRoutes";
 import GettingStarted from "@/pages/Auth/GetStartedPage";
 import Pricing from "@/pages/Auth/Pricing";
+import Solutions from "@/pages/Auth/Solutions";
 
 const AppRoutes = () => {
   const { authenticate, token } = useAuthContext();
@@ -61,6 +62,7 @@ const AppRoutes = () => {
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/verify-otp" element={<VerifyOtp />} />
           <Route path="/pricing" element={<Pricing />} />
+          <Route path="/solutions" element={<Solutions />} />
         </>
       )}
 
