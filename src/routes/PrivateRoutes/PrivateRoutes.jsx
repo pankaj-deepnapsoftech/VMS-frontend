@@ -14,6 +14,7 @@ import { EmployeeAllTasks } from "@/pages/EmployeeAllTasks";
 import EmployeeDashboard from "@/pages/EmployeDashboard";
 import SchedulingAssessmentPage from "@/pages/SchedulingAssessment";
 import Reports from "@/pages/Reports";
+import ChatPage from "@/pages/ChatPage";
 
 
 export const PrivateRoutes = [
@@ -66,5 +67,9 @@ export const PrivateRoutes = [
     {
         path: "/reports",
         element: <Reports />
+    },
+    {
+        path: "/chat/:chatId",
+        element: <ChatPage />
     },
 ]
