@@ -89,9 +89,14 @@ const Header = () => {
                         </div> */}
 
             {/* Regular links */}
+            <div className="flex gap-10" >
             <Link to="/pricing" className="font-medium">
               PRICING
             </Link>
+            <Link to="/pricing" className="font-medium">
+            Solutions
+            </Link>
+            </div>
           </div>
 
           {/* Company dropdown */}

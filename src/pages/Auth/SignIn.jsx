@@ -90,7 +90,6 @@ function SignIn() {
             <label className="flex items-center gap-2 cursor-pointer">
               <input
                 type="checkbox"
-                required
                 className="w-4 h-4 rounded border-gray-700 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-0 bg-[#1a2942]"
               />
               <span className="text-gray-400 text-sm">Remember me?</span>

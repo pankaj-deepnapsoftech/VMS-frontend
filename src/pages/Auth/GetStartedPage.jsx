@@ -1,83 +1,34 @@
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Accordion from "./component/Accordion";
 import Header from "./component/Header";
 import Footer from "./component/Footer";
 
-import { Award, Trophy, ArrowUpRight } from "lucide-react";
 
 const GettingStarted = () => {
-  const testimonials = [
-    {
-      company: "Curai Health",
-      logo: "https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b4e5d3f70a5951c37504bc_curai.svg",
-      quote: "Great service for Pymes",
-      content:
-        "Secure& offers an affordable, high-quality technical security review service for SMEs.",
-      author: "Melody Pereira",
-      role: "CISO at Curai Health",
-      image:
-        "https://cdn.prod.website-files.com/6554cc6279901fa…b87317/66b4e55df7ca29779eafaf01_melody-p-500.avif",
-    },
-    {
-      company: "Profesional Cosmetics",
-      logo: "https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b4e79877bc409c489a3af0_cosmetics.svg",
-      quote: "Fast and quality service",
-      content:
-        "Working with Secure& was easy and fast. They gave us peace of mind when analyzing the systems and equipment.",
-      author: "Óscar Trias",
-      role: "CEO at Profesional Cosmetics",
-      image:
-        "https://cdn.prod.website-files.com/6554cc6279901fa…7/66b4e7627cfb8f840b0e0731_oscar-trias-p-500.avif",
-    },
-  ];
 
-
-
-  const settings2 = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 2,
-    autoplay: true,
-    autoplaySpeed: 2000,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
 
   return (
     <>
       <Header />
       {/* Premium Security */}
       <div className="bg-gradient-to-r from-[#0D1421] to-[#0D3A78] text-white py-12 px-4 md:px-8 lg:px-16 relative overflow-hidden">
-        <div className="absolute top-0 left-[700px]">
-          <img src="/home.png" className="" />
+        <div className="absolute top-[35%] -translate-y-[50%] left-[700px] ">
+          <div  className="flex flex-col items-center justify-center">
+            <img
+              src="/logo.png"
+              alt="Scalable Image"
+              style={{ width: "400px", height: "auto" }}
+            />
+            <span className="text-7xl font-bold bg-gradient-to-r from-blue-500 to-blue-300 text-transparent bg-clip-text">
+              Secure&
+            </span>
+          </div>
         </div>
 
         <div className="container mx-auto px-4 py-16 md:py-24 lg:py-20 relative z-10 flex flex-col h-full">
+
+
+
           <div className="flex flex-col lg:flex-row items-start lg:items-center">
             <div className="w-full lg:w-1/2 mb-12 lg:mb-0">
               {/* Main content */}
@@ -134,119 +85,7 @@ const GettingStarted = () => {
           </div>
         </div>
 
-        {/* <h2 className="text-2xl font-semibold text-center">
-          Our ethical hackers belong to the Hall of Fame of companies like
-        </h2>
 
-        <div className="mt-8">
-          <Slider {...settings}>
-            <img
-              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b36090f7435929c39b2d51_salesforce.svg"
-              className="h-12 mx-auto"
-            />
-            <img
-              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b36090f7435929c39b2d30_yahoo.svg"
-              className="h-12 mx-auto"
-            />
-            <img
-              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b36090f7435929c39b2d04_yazoo.svg"
-              className="h-12 mx-auto"
-            />
-            <img
-              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ff7435929c39b2cea_vm.svg"
-              className="h-12 mx-auto"
-            />
-            <img
-              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ff7435929c39b2cd8_twitter.svg"
-              className="h-12 mx-auto"
-            />
-            <img
-              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ff7435929c39b2ca4_wasp.svg"
-              className="h-12 mx-auto"
-            />
-            <img
-              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ff7435929c39b2c73_sun.svg"
-              className="h-12 mx-auto"
-            />
-            <img
-              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ff7435929c39b2c18_redhat.svg"
-              className="h-12 mx-auto"
-            />
-            <img
-              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ef7435929c39b2b2b_videowidget.svg"
-              className="h-12 mx-auto"
-            />
-            <img
-              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ef7435929c39b2b1b_paypal.svg"
-              className="h-12 mx-auto"
-            />
-            <img
-              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ef7435929c39b2b14_microsoft.svg"
-              className="h-12 mx-auto"
-            />
-            <img
-              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ef7435929c39b2b10_sony.svg"
-              className="h-12 mx-auto"
-            />
-            <img
-              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ef7435929c39b2b01_markt.svg"
-              className="h-12 mx-auto"
-            />
-            <img
-              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ef7435929c39b2afd_oracle.svg"
-              className="h-12 mx-auto"
-            />
-            <img
-              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ef7435929c39b2ad7_meta.svg"
-              className="h-12 mx-auto"
-            />
-            <img
-              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ef7435929c39b2ad2_firefox.svg"
-              className="h-12 mx-auto"
-            />
-            <img
-              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ef7435929c39b2ace_goldmansachs.svg"
-              width="300"
-              className="h-12 mx-auto"
-            />
-            <img
-              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608ef7435929c39b2aca_facebook.svg"
-              className="h-12 mx-auto"
-            />
-            <img
-              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608df7435929c39b2ac2_github.svg"
-              className="h-12 mx-auto"
-            />
-            <img
-              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608df7435929c39b2abe_google.svg"
-              className="h-12 mx-auto"
-            />
-            <img
-              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608df7435929c39b2aba_Adobe.svg"
-              className="h-12 mx-auto"
-            />
-            <img
-              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608df7435929c39b2ab2_cobalt.svg"
-              className="h-12 mx-auto"
-            />
-            <img
-              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608df7435929c39b2a9c_Dell.svg"
-              className="h-12 mx-auto"
-            />
-            <img
-              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608df7435929c39b2a98_amazon.svg"
-              className="h-12 mx-auto"
-            />
-            <img
-              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608df7435929c39b2a86_epic.svg"
-              className="h-12 mx-auto"
-            />
-            <img
-              src="https://cdn.prod.website-files.com/6554cc6279901fa455b87317/66b3608cf7435929c39b2a53_apple.svg"
-              className="h-12 mx-auto"
-            />
-          </Slider>
-        </div> */}
       </div>
 
       {/* third section */}
@@ -387,7 +226,7 @@ const GettingStarted = () => {
             </p>
           </div>
         </div>
-        <div className="p-10 flex flex-col md:flex-row items-center md:items-start justify-center ">       
+        <div className="p-10 flex flex-col md:flex-row items-center md:items-start justify-center ">
 
           {/* Right Section */}
           <div className="flex-1 ">
@@ -395,8 +234,8 @@ const GettingStarted = () => {
               Discover and Resolve with Secure&
             </h2>
             <p className="mt-4 text-gray-400 text-center ">
-            Gain complete visibility and control over your security operations with an intuitive dashboard that brings all essential insights to one place.
-            Our platform is designed for ease of use—enabling teams to monitor, assess, and address vulnerabilities without any technical roadblocks.
+              Gain complete visibility and control over your security operations with an intuitive dashboard that brings all essential insights to one place.
+              Our platform is designed for ease of use—enabling teams to monitor, assess, and address vulnerabilities without any technical roadblocks.
             </p>
             <img
               sizes="(max-width: 621px) 100vw, 621px"
