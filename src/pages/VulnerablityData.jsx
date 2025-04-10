@@ -6,9 +6,9 @@ import { useAllEmployeeContext, useAuthContext, useDataContext, useVulnerabililt
 import { Formik, Form, Field } from "formik";
 import * as XLSX from "xlsx";
 import { WorkItemValidation } from "@/Validation/VulnerabililtyDataValidation";
-import { BsPersonCheckFill } from "react-icons/bs";
+import { BsMailbox, BsPersonCheckFill } from "react-icons/bs";
 import toast from "react-hot-toast";
-import { FaExclamationTriangle } from "react-icons/fa";
+import { FaExclamationTriangle, FaSms } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Loader from "@/components/Loader/Loader";
 import Exceptions from "./Exceptions";
@@ -203,6 +203,8 @@ export function VulnerabilityData() {
       
 
   const { UploadBulkData } = useDataContext()
+
+  let navigate = useNavigate();
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -416,8 +418,14 @@ export function VulnerabilityData() {
                       >
                         <BsPersonCheckFill className="h-4 w-4" />
                       </button>
+                      <button
+                        onClick={() =>   navigate(`/chat/${item._id}`,{state:{item}})}
+                        className="text-green-600 hover:text-green-800 transition"
+                      >
+                        <FaSms className="h-4 w-4" />
+                      </button>
                     </td>
-                  </tr>
+                  </tr>  
                 ))}
               </tbody>
             </table>
