@@ -93,7 +93,7 @@ const Header = () => {
             <Link to="/pricing" className="font-medium">
               PRICING
             </Link>
-            <Link to="/pricing" className="font-medium">
+            <Link to="/solutions" className="font-medium">
             Solutions
             </Link>
             </div>
