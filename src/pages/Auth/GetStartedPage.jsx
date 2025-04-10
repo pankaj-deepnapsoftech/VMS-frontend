@@ -1,11 +1,58 @@
+/* eslint-disable no-irregular-whitespace */
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Header from "./component/Header";
 import Footer from "./component/Footer";
+import { ModuleCard } from "./component/ModuleCard";
+import { AlertTriangle, Box, Brain, Building, Database, FileBarChart, Link, ShieldIcon, TestTube, Users } from "lucide-react";
+import { NumberedSection } from "./component/NumberedSection";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper/modules';
+
+import 'swiper/css';
+import 'swiper/css/pagination'
+
 
 
 const GettingStarted = () => {
 
+  const features = [
+    {
+      number: "01",
+      title: "Intelligent API Discovery",
+      description: `Automatically detects and classifies APIs and high-value endpoints to identify security risks.
+Continuously monitors exposed APIs for misconfigurations, unauthorized access, and potential threats`
+    },
+    {
+      number: "02",
+      title: "Observability",
+      description: "Continuously monitors and detects deviations in security posture for proactive risk management"
+    },
+    {
+      number: "03",
+      title: "Workflow Management",
+      description: `Offers customizable dashboards, exception workflows, and ageing tracking for efficient vulnerability lifecycle management.
+Automates risk-based prioritization, escalations, and team collaboration to accelerate remediation efforts.`
+
+    },
+    {
+      number: "04",
+      title: "Workflow-Driven Vulnerability Remediation ",
+      description: "Automates and streamlines remediation processes, ensuring efficient and structured vulnerability resolution"
+    },
+    {
+      number: "05",
+      title: "Duplicate Detection",
+      description: "Identifies and eliminates redundant vulnerabilities, reducing noise and improving remediation efficiency"
+    },
+    {
+      number: "06",
+      title: "Campaign Management",
+      description: `Organizes and prioritizes security fixes into structured campaigns for systematic risk mitigation
+Applies mass vulnerability fixes based on predefined categories, accelerating threat resolution
+`
+    },
+  ]
 
   return (
     <>
@@ -13,7 +60,7 @@ const GettingStarted = () => {
       {/* Premium Security */}
       <div className="bg-gradient-to-r from-[#0D1421] to-[#0D3A78] text-white py-12 px-4 md:px-8 lg:px-16 relative overflow-hidden">
         <div className="absolute top-[35%] -translate-y-[50%] left-[700px] ">
-          <div  className="flex flex-col items-center justify-center">
+          <div className="flex flex-col items-center justify-center">
             <img
               src="/logo.png"
               alt="Scalable Image"
@@ -44,15 +91,15 @@ const GettingStarted = () => {
                 solutions.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-4 font-semibold">
                 <a
-                  href="/sign-in"
-                  className="bg-white text-black hover:bg-gray-200 rounded-md px-8 py-2 text-base font-medium"
+                  href="/sign-up"
+                  className="bg-white text-black hover:bg-gray-200 rounded-md px-8 py-2 text-base "
                 >
                   TRY SECURE&
                 </a>
                 <button
-                  className="border-white text-white hover:bg-white/10 rounded-md px-8 py-2 text-base font-medium"
+                  className="border-white text-white hover:bg-white/10 rounded-md px-8 py-2 text-base "
                 >
                   TALK TO US
                 </button>
@@ -61,7 +108,7 @@ const GettingStarted = () => {
           </div>
 
           {/* Stats section */}
-          <div className="mt-auto pt-16 md:pt-24">
+          {/* <div className="mt-auto pt-16 md:pt-24">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-white">
               <div className="text-center md:text-left">
                 <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2">
@@ -82,100 +129,154 @@ const GettingStarted = () => {
                 <p className="text-gray-400">Tests per year</p>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
 
 
       </div>
 
       {/* third section */}
-      <div className="p-10 mt-16 flex flex-col md:flex-row items-center md:items-start gap-10 justify-center">
-        {/* Left Section */}
-        <div className="flex-1 max-w-lg">
-          <img
-            src="/main.png"
-            alt="Scalable Image"
-            style={{ maxWidth: "100%", height: "auto" }}
-          />
-        </div>
+      <div className="p-10 mt-16 flex flex-col  items-center md:items-start gap-10 justify-center">
+
+
 
         {/* Right Section */}
-        <div className="flex-1 max-w-lg">
-          <h3 className="text-4xl md:text-5xl leading-tight px-4">
-            Pentesting Made Simple with Secure&
+        <div className="flex-1 text-center">
+          <h3 className="text-4xl md:text-5xl leading-tight px-4 uppercase font-semibold ">
+            Approach To Ai Powered Risk Prioritization  And Remediation Platform
           </h3>
 
           <p className="mt-2 text-gray-400">
-            Secure& offers you comprehensive penetration testing and regulatory
-            compliance, simplifying year-round security management. Scale your
-            team and remediate smarter with our PtaaS solution, ensuring fast
-            and proactive security across all attack surfaces.
+            SECURE& tools will offer key features that set them apart from competitors, providing unique solutions to address real-time challenges faced by enterprises of all sizes, from small businesses to large corporations.
           </p>
         </div>
-      </div>
-
-      {/* Talent at your fingertips */}
-      <div className="min-h-screen bg-white py-24 sm:py-32">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:grid-cols-3">
-            {/* Feature 1 */}
-            <div className="bg-white p-8">
-              <div className="text-[120px] font-bold text-gray-900 leading-none">
-                01
-              </div>
-              <h3 className="mt-6 text-3xl font-semibold leading-tight text-gray-900">
-                Expert Talent, On-Demand
-              </h3>
-              <p className="mt-6 text-base leading-7 text-gray-600">
-                Instant access to a global network of vetted pentesters
-                specializing in your tech stack.
-              </p>
-            </div>
-
-            {/* Feature 2 */}
-            <div className="bg-white p-8">
-              <div className="text-[120px] font-bold text-gray-900 leading-none">
-                02
-              </div>
-              <h3 className="mt-6 text-3xl font-semibold leading-tight text-gray-900">
-                Always Secure, Always in Control
-              </h3>
-              <p className="mt-6 text-base leading-7 text-gray-600">
-                Our 24/7 guidance helps you remediate vulnerabilities quickly,
-                ensuring continuous security without disrupting operations.
-              </p>
-            </div>
-
-            {/* Feature 3 */}
-            <div className="bg-white p-8">
-              <div className="text-[120px] font-bold text-gray-900 leading-none">
-                03
-              </div>
-              <h3 className="mt-6 text-3xl font-semibold leading-tight text-gray-900">
-                Proactive Risk Reduction
-              </h3>
-              <p className="mt-6 text-base leading-7 text-gray-600">
-                We detect and report security breaches in real-time, stopping
-                threats before they impact your business. <br />
-                Upgrade your cybersecurity strategy with Secure&&apos;s intelligent,
-                scalable PtaaS solution—because security should be seamless,
-                smart, and stress-free.
-              </p>
-            </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="rounded-2xl overflow-hidden shadow-2xl">
+            <img
+              src="/main.png"
+              alt="Security Dashboard"
+              className="w-full  object-contain"
+            />
           </div>
         </div>
       </div>
 
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+
+        {/* Security Modules Section */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Security Modules</h2>
+            <p className="text-xl text-gray-600">Comprehensive security solutions for your enterprise</p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <ModuleCard
+              icon={Users}
+              title="Persona based Dashboarding"
+            />
+            <ModuleCard
+              icon={Link}
+              title="Integration with Security Assessment tools"
+            />
+            <ModuleCard
+              icon={Database}
+              title="Critical Asset/ API Discovery & Inventory"
+            />
+            <ModuleCard
+              icon={Box}
+              title="Blackbox Scans"
+            />
+            <ModuleCard
+              icon={TestTube}
+              title="Automated Pen Test Platform"
+            />
+            <ModuleCard
+              icon={Brain}
+              title="AI Powered Remediation Factory"
+            />
+            <ModuleCard
+              icon={ShieldIcon}
+              title="Application and Infrastructure Vulnerability platform"
+            />
+            <ModuleCard
+              icon={AlertTriangle}
+              title="Risk Exceptions"
+            />
+            <ModuleCard
+              icon={FileBarChart}
+              title="Risk & Vulnerability Scorecard"
+            />
+            <ModuleCard
+              icon={Building}
+              title="Business Group Security Ratings"
+            />
+          </div>
+        </div>
+
+        {/* Platform Overview Image */}
+
+      </div>
+
+
+      {/* testing */}
+
+      <div className=" bg-gray-50">
+
+
+        {/* Numbered Sections */}
+        <div className="bg-gray-50 py-16">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Key features ( Differentiators )</h2>
+          </div>
+          <div className=" mx-auto px-4">
+            <Swiper
+              modules={[Autoplay]}
+              spaceBetween={20}
+              slidesPerView={1}
+              autoplay={{
+                delay: 3000,
+                disableOnInteraction: false,
+              }}
+              breakpoints={{
+                640: {
+                  slidesPerView: 1,
+                },
+                768: {
+                  slidesPerView: 2,
+                },
+                1024: {
+                  slidesPerView: 3,
+                },
+              }}
+            >
+              {features.map((item, index) => (
+                <SwiperSlide key={index}>
+                  <NumberedSection
+                    number={item.number}
+                    title={item.title}
+                    description={item.description}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+
+        </div>
+      </div>
+
+
+
+
       {/* Continuous and Scalable */}
       <div className="bg-black text-white py-16 px-6">
         <div className="text-center container">
-          <h1 className="text-4xl md:text-6xl leading-tight px-4">
-            Secure& – Continuous & Scalable Security Testing
+          <h1 className="text-3xl md:text-5xl leading-tight px-4 lowercase ">
+            Secure& – APPROACH TO AI POWERED RISK PRIORITIZATION AND REMEDIATION PLATFORM
+
           </h1>
           <p className="text-md md:text-md px-24 mt-4 text-gray-400">
-            Secure&&apos;s platform enables you to enlist top-tier ethical hackers,
-            providing assistance in pinpointing, managing, and resolving the
-            most critical vulnerabilities within your enterprise.Strengthen your cybersecurity with Secure&&apos;s next-gen Pentest as a Service (PtaaS). Our platform connects you with top-tier ethical hackers to identify, manage, and remediate critical vulnerabilities efficiently—ensuring continuous, scalable security for your enterprise.
+            Discover, assess, prioritize, and patch critical vulnerabilities and reduce cybersecurity risk in real time across your global hybrid Cloud, IT, OT, and IoT landscape — all from a single platform
+            SECURE& platform offers key features that set them apart from competitors, providing unique solutions to address real-time challenges faced by enterprises of all sizes, from small businesses to large corporations.
           </p>
         </div>
         <div className="p-10 flex flex-col md:flex-row items-center md:items-start gap-20">
@@ -701,19 +802,18 @@ const GettingStarted = () => {
             Ready to get started?
           </h2>
           <p className="text-gray-400 pt-4">
-            Elevate your security with Secure&&apos;s expert pentesting platform
-            today
+            Kickstart your journey with our powerful AI-driven security platform — simple, fast, and effective.
           </p>
         </div>
-        <div className="text-center md:text-right">
+        <div className="text-center md:text-right font-semibold">
           <a
-            href="/sign-in"
-            className="bg-black text-white hover:bg-black hover:text-white rounded-md px-6 py-2 text-base font-medium"
+            href="/sign-up"
+            className="bg-black text-white hover:bg-black hover:text-white rounded-md px-6 py-2 text-base "
           >
             TRY SECURE&
           </a>
           <button
-            className="border-black text-black hover:bg-black/10 hover:text-white rounded-md ml-4 px-6 py-2 text-base font-medium"
+            className="border-black text-black hover:bg-black/10 hover:text-white rounded-md ml-4 px-6 py-2 text-base "
           >
             TALK TO US
           </button>

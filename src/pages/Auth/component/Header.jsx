@@ -89,11 +89,11 @@ const Header = () => {
                         </div> */}
 
             {/* Regular links */}
-            <div className="flex gap-10" >
-            <Link to="/pricing" className="font-medium">
+            <div className="flex gap-10 font-semibold" >
+            <Link to="/pricing" className="">
               PRICING
             </Link>
-            <Link to="/pricing" className="font-medium">
+            <Link to="/pricing" className="">
             Solutions
             </Link>
             </div>
@@ -130,16 +130,16 @@ const Header = () => {
           </div>
 
           {/* User icon */}
-          <button className="text-white">
+          {/* <button className="text-white">
             <User size={20} />
-          </button>
+          </button> */}
 
           {/* CTA Button */}
           <Link
             to="/sign-in"
-            className="bg-white text-[#0a0a1a] px-6 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors"
+            className="bg-white text-[#0a0a1a] px-6 py-2 rounded-md font-semibold hover:bg-gray-100 transition-colors "
           >
-            TRY SECURE&
+            Login Secure&
           </Link>
         </div>
       </div>
