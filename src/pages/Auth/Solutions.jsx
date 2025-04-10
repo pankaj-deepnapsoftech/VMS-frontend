@@ -1,6 +1,8 @@
+/* eslint-disable no-irregular-whitespace */
 import Header from "@/pages/Auth/component/Header";
 import React from "react";
 import Footer from "@/pages/Auth/component/Footer";
+import { DownloadIcon } from "lucide-react";
 
 const Solutions = () => {
   return (
@@ -10,8 +12,9 @@ const Solutions = () => {
       <section className="bg-gray-900 text-white py-12 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="mb-6">
-            <h1 className="text-3xl font-bold mb-2">
+            <h1 className="text-3xl font-bold mb-2 flex gap-10">
               AI POWERED RISK PRIORITIZATION AND REMEDIATION PLATFORM
+              <a href="/assets/test.docx" title="Download " download={true} className=" flex px-2 pt-1 rounded-full" ><DownloadIcon/></a>
             </h1>
             <div className="bg-blue-300 h-1 w-full my-6"></div>
             <p className="text-sm">

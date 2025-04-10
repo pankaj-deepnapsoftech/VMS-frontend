@@ -4,7 +4,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Header from "./component/Header";
 import Footer from "./component/Footer";
 import { ModuleCard } from "./component/ModuleCard";
-import { AlertTriangle, Box, Brain, Building, Database, FileBarChart, Link, ShieldIcon, TestTube, Users } from "lucide-react";
+import { AlertTriangle, Box, Brain, Building, CheckCircle, Database, FileBarChart, Link, Shield, ShieldIcon, Target, TestTube, Users, Zap } from "lucide-react";
 import { NumberedSection } from "./component/NumberedSection";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
@@ -267,85 +267,7 @@ Applies mass vulnerability fixes based on predefined categories, accelerating th
 
 
 
-      {/* Continuous and Scalable */}
-      <div className="bg-black text-white py-16 px-6">
-        <div className="text-center container">
-          <h1 className="text-3xl md:text-5xl leading-tight px-4 lowercase ">
-            Secure& – APPROACH TO AI POWERED RISK PRIORITIZATION AND REMEDIATION PLATFORM
-
-          </h1>
-          <p className="text-md md:text-md px-24 mt-4 text-gray-400">
-            Discover, assess, prioritize, and patch critical vulnerabilities and reduce cybersecurity risk in real time across your global hybrid Cloud, IT, OT, and IoT landscape — all from a single platform
-            SECURE& platform offers key features that set them apart from competitors, providing unique solutions to address real-time challenges faced by enterprises of all sizes, from small businesses to large corporations.
-          </p>
-        </div>
-        <div className="p-10 flex flex-col md:flex-row items-center md:items-start gap-20">
-          {/* Left Section */}
-          <div className="flex-1 max-w-lg">
-            <h2 className="text-xl font-semibold uppercase">
-              Revolutionizing Pentesting
-            </h2>
-            <p className="mt-4 mb-10 text-gray-400">
-              Say farewell to the tedious back-and-forth of traditional
-              pentesting. With Secure&, the flow of information is streamlined.
-            </p>
-            <img
-              sizes="(max-width: 621px) 100vw, 621px"
-              src="/main.png"
-              alt="Scalable Image"
-              style={{ maxWidth: "100%", height: "auto" }}
-            />
-          </div>
-
-          {/* Right Section */}
-          <div className="flex-1 max-w-lg items-center justify-center">
-            <h3 className="text-lg font-semibold md:pt-32">
-              No More Tedious Back-and-Forth –
-            </h3>
-            <p className="mt-2 text-gray-400">
-              Streamlined communication for faster security testing.
-            </p>
-            <h3 className="mt-6 text-lg font-semibold">
-              Seamless, Efficient & Secure
-            </h3>
-            <p className="mt-2 text-gray-400">
-              – Define your scope, choose an expert, and get optimized results.
-            </p>
-          </div>
-          <div className="flex-1 max-w-lg md:pt-32">
-            <h3 className="text-lg font-semibold">
-              Real-Time Compliance Reports
-            </h3>
-            <p className="mt-2 text-gray-400">
-              Gain clear insights with enriched data analysis.
-            </p>
-            <h3 className="mt-6 text-lg font-semibold">
-              Effortless Vulnerability Management
-            </h3>
-            <p className="mt-2 text-gray-400">
-              – A dedicated space to track, manage, and resolve threats effectively.
-            </p>
-          </div>
-        </div>
-        <div className="p-10 flex flex-col md:flex-row items-center md:items-start justify-center ">
-
-          {/* Right Section */}
-          <div className="flex-1 ">
-            <h2 className="text-xl font-semibold uppercase text-center">
-              Discover and Resolve with Secure&
-            </h2>
-            <p className="mt-4 text-gray-400 text-center ">
-              Gain complete visibility and control over your security operations with an intuitive dashboard that brings all essential insights to one place.
-              Our platform is designed for ease of use—enabling teams to monitor, assess, and address vulnerabilities without any technical roadblocks.
-            </p>
-            <img
-              sizes="(max-width: 621px) 100vw, 621px"
-              style={{ maxWidth: "100%", height: "auto" }}
-            />
-          </div>
-        </div>
-      </div>
-
+    
       {/* Complete Offensive Security
       <div className="px-16 py-16 container mx-auto flex flex-wrap justify-center gap-10">
         <h1 className="text-4xl md:text-4xl font-bold leading-tight">
@@ -793,6 +715,88 @@ Applies mass vulnerability fixes based on predefined categories, accelerating th
           </div>
         </div>
       </div> */}
+
+
+      <div className="min-h-screen bg-gray-900 text-gray-100 py-16 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+              AI-Powered Risk Prioritization Platform
+            </h1>
+            <p className="text-gray-400 max-w-2xl mx-auto">
+              Discover, assess, prioritize, and patch critical vulnerabilities and reduce cybersecurity risk in real time across your global hybrid Cloud, IT, OT, and IoT landscape — all from a single platform
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 mb-16">
+            <div className="bg-gray-800 rounded-lg p-8 border border-gray-700">
+              <div className="flex items-center mb-4">
+                <Shield className="w-6 h-6 text-blue-400 mr-3" />
+                <h3 className="text-xl font-semibold">Stakeholder Driven Dashboard</h3>
+              </div>
+              <p className="text-gray-400">Comprehensive visibility and reporting for all stakeholders</p>
+            </div>
+
+            <div className="bg-gray-800 rounded-lg p-8 border border-gray-700">
+              <div className="flex items-center mb-4">
+                <Database className="w-6 h-6 text-purple-400 mr-3" />
+                <h3 className="text-xl font-semibold">Asset/API Discovery & Inventory</h3>
+              </div>
+              <p className="text-gray-400">Complete mapping of all assets and APIs across your infrastructure</p>
+            </div>
+
+            <div className="bg-gray-800 rounded-lg p-8 border border-gray-700">
+              <div className="flex items-center mb-4">
+                <Target className="w-6 h-6 text-red-400 mr-3" />
+                <h3 className="text-xl font-semibold">AI Penetration Test Platform</h3>
+              </div>
+              <p className="text-gray-400">Advanced AI-powered security testing with high accuracy</p>
+            </div>
+
+            <div className="bg-gray-800 rounded-lg p-8 border border-gray-700">
+              <div className="flex items-center mb-4">
+                <Zap className="w-6 h-6 text-yellow-400 mr-3" />
+                <h3 className="text-xl font-semibold">AI Powered Remediation Factory</h3>
+              </div>
+              <p className="text-gray-400">Automated remediation suggestions and implementation guidance</p>
+            </div>
+          </div>
+
+          <div className="bg-gray-800 rounded-lg p-8 border border-gray-700">
+            <h2 className="text-2xl font-bold mb-6">Key Features</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="flex items-start">
+                <CheckCircle className="w-5 h-5 text-green-400 mt-1 mr-3 flex-shrink-0" />
+                <div>
+                  <h4 className="font-semibold mb-2">Discovery</h4>
+                  <p className="text-gray-400">Identification of assets, systems, and applications/APIs to scan and monitor</p>
+                </div>
+              </div>
+              <div className="flex items-start">
+                <CheckCircle className="w-5 h-5 text-green-400 mt-1 mr-3 flex-shrink-0" />
+                <div>
+                  <h4 className="font-semibold mb-2">Assessment</h4>
+                  <p className="text-gray-400">Schedule and perform Regular vulnerability assessment using automated tools</p>
+                </div>
+              </div>
+              <div className="flex items-start">
+                <CheckCircle className="w-5 h-5 text-green-400 mt-1 mr-3 flex-shrink-0" />
+                <div>
+                  <h4 className="font-semibold mb-2">Verification</h4>
+                  <p className="text-gray-400">Ensuring that the applied fixes have addressed the vulnerabilities</p>
+                </div>
+              </div>
+              <div className="flex items-start">
+                <CheckCircle className="w-5 h-5 text-green-400 mt-1 mr-3 flex-shrink-0" />
+                <div>
+                  <h4 className="font-semibold mb-2">Management Scorecard</h4>
+                  <p className="text-gray-400">Risk-based scorecard for each application with industry-built Business Ratings</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
 
 
