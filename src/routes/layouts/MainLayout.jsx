@@ -22,7 +22,7 @@ const MainLayout = () => {
   const { authenticate } = useAuthContext();
 
   const [width, setWidth] = useState(window.innerWidth);
-const [temp,setTemp]=useState("")
+  const [temp, setTemp] = useState("");
   const location = useLocation();
   const [showMenu, setShowMenu] = useState(false);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -44,12 +44,11 @@ const [temp,setTemp]=useState("")
     return () => window.removeEventListener("resize", handleResize);
   }, [width]);
 
-
-  useEffect(()=>{
-    const name=location.pathname.split("/")
-    setTemp(name[1] ?? "Dashboard")
-console.log(name[1])
-  },[location.pathname])
+  useEffect(() => {
+    const name = location.pathname.split("/");
+    setTemp(name[1] ?? "Dashboard");
+    console.log(name[1]);
+  }, [location.pathname]);
   return (
     <>
       <aside

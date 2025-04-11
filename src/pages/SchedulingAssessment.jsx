@@ -126,14 +126,14 @@ console.log("authenticate",authenticate)
 
 
 	return (
-		<div className="min-h-screen bg-gray-100 text-gray-black px-5 ">
+		<div className="min-h-screen bg-background text-gray-black px-5 ">
 			{/* Main Content */}
 			{loading ? <Loader /> : <main className="container mx-auto px-4 py-8">
 				<section className="mb-8">
 
 
 					{/* Form Section */}
-					{(authenticate.role === "ClientSME" || authenticate.role === "Admin") && <div className=" flex  gap-6 mb-8 bg-white p-4  rounded-lg ">
+					{(authenticate.role === "ClientSME" || authenticate.role === "Admin") && <div className=" flex  gap-6 mb-8 bg-gray-100 p-4  rounded-lg ">
 						<form onSubmit={handleSubmit} className="space-y-5 w-full flex flex-col ">
 							<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
 
@@ -178,6 +178,10 @@ console.log("authenticate",authenticate)
 										<option value={"Infrastructure Vulnerability Scan"}>Infrastructure Vulnerability Scan</option>
 
 										<option value={"Infrastructure Penetration Testing"}>Infrastructure Penetration Testing</option>
+										<option value={"Mobile Application Penetration Test"}>Mobile Application Penetration Test</option>
+										<option value={"Red Team exercise"}>Red Team exercise</option>
+										<option value={"Attack Simulation Exercise"}>Attack Simulation Exercise</option>
+										<option value={"Configuration Audits"}>Configuration Audits</option>
 
 
 									</select>

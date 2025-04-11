@@ -183,7 +183,7 @@ const Reports = () => {
   };
 
   return (
-    <div className="p-4 md:p-6 mt-5 max-w-[95%] mx-auto bg-gray-100 rounded-xl shadow-lg">
+    <div className="p-4 md:p-6 mt-5 max-w-[95%] mx-auto bg-gray-200/30 rounded-xl shadow-lg">
       {/* Search Bar & Buttons */}
       <div className="mb-4 flex flex-col md:flex-row items-start md:items-center justify-between">
         {authenticate.role === "Assessor" ? (

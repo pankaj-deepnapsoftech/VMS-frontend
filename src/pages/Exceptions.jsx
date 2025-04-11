@@ -145,7 +145,7 @@ function Exceptions() {
   return (
     <>
       {loading ? <Loader /> :
-        <div className="min-h-screen bg-gray-100 relative">
+        <div className="min-h-screen bg-background relative">
 
 
           {/* Main Content */}

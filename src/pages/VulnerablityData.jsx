@@ -211,7 +211,7 @@ export function VulnerabilityData() {
 
       {loading ?
         <Loader /> :
-        <div className="p-4 md:p-6 max-w-[95%] mx-auto bg-gray-200/30 rounded-xl shadow-lg">
+        <div className="p-4 md:p-6 max-w-[100%] mx-auto bg-background ">
           
 
 

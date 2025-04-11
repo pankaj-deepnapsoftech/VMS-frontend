@@ -1,8 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { BiBarChartAlt2, BiBookAdd, BiImageAdd, BiPlus, BiRedo } from "react-icons/bi";
+import {
+  BiBarChartAlt2,
+  BiBookAdd,
+  BiImageAdd,
+  BiPlus,
+  BiRedo,
+} from "react-icons/bi";
 import { IoShieldOutline, IoShieldCheckmarkOutline } from "react-icons/io5";
 import { IoMdSettings } from "react-icons/io";
-import { MdApps, MdBuild, MdKeyboardArrowDown, MdOutlineErrorOutline, MdOutlineMiscellaneousServices, MdPauseCircleOutline } from "react-icons/md";
+import {
+  MdApps,
+  MdBuild,
+  MdKeyboardArrowDown,
+  MdOutlineErrorOutline,
+  MdOutlineMiscellaneousServices,
+  MdPauseCircleOutline,
+} from "react-icons/md";
 import {
   BarChart,
   Bar,
@@ -14,8 +27,15 @@ import {
   ResponsiveContainer,
   AreaChart,
   Area,
+  PieChart,
+  Pie,
+  Cell,
 } from "recharts";
-import { AiOutlineCheckCircle, AiOutlineFolderOpen, AiOutlineMenu } from "react-icons/ai";
+import {
+  AiOutlineCheckCircle,
+  AiOutlineFolderOpen,
+  AiOutlineMenu,
+} from "react-icons/ai";
 import Card from "@/components/Card";
 import { useAuthContext, useDataContext } from "@/context";
 import { Modal } from "@/components/modal/FileUploadModal";
@@ -37,6 +57,15 @@ function Home() {
   const { loading, authenticate } = useAuthContext();
 
   const closevulnerableItemsData = [closevulnerableItems];
+console.log("jsghidublrj",closevulnerableItemsData)
+  const data = [
+    { name: "Open", value: cardData?.open },
+    { name: "Re Open", value: cardData?.reopen },
+    { name: "Closed", value: cardData?.closed },
+    { name: "On Hold", value: cardData?.onHold },
+  ];
+
+  const COLORS = ["#B91C1C", "#EF4444", "#FBBF24", "#3B82F6", "#10B981"];
 
   const dataList = [
     vulnerableItemsByAgeData.Critical,
@@ -46,7 +75,9 @@ function Home() {
     vulnerableItemsByAgeData.Info,
   ];
 
-  console.log("vulnerableItemsByAgeData", vulnerableItemsByRiskRatingData);
+
+
+  console.log("vulnerableItemsByAgeData", dataList);
 
   const newData = vulnerableItemsByRiskRatingData?.map((item) => ({
     date: item.month,
@@ -61,16 +92,16 @@ function Home() {
   const metrics = [
     {
       title: "Application",
-      value: cardData?.Infrastructure,
+      value: cardData?.Application,
       color: "from-[#F24E1E] to-[#FF866B]", // Figma Red gradient
-      icon: MdOutlineMiscellaneousServices ,
+      icon: MdOutlineMiscellaneousServices,
       chartColor: "#FFF",
     },
     {
       title: "Infrastructure IPs",
       value: cardData?.Infrastructure,
       color: "from-[#0D99FF] to-[#74C0FC]", // Figma Blue gradient
-      icon: FaNetworkWired ,
+      icon: FaNetworkWired,
       chartColor: "#FFF",
     },
     {
@@ -81,47 +112,19 @@ function Home() {
       chartColor: "#FFF",
     },
     {
-      title: "Remediation", 
+      title: "Remediation",
       value: cardData?.inProgress,
       color: "from-[#A259FF] to-[#C79CFF]", // Figma Purple gradient
-      icon: MdBuild ,
+      icon: MdBuild,
       chartColor: "#FFF",
     },
     {
       title: "Exceptions",
       value: cardData?.Exceptions,
       color: "from-[#F24E1E] to-[#FF866B]", // Figma Red gradient
-      icon: MdOutlineErrorOutline ,
+      icon: MdOutlineErrorOutline,
       chartColor: "#FFF",
-    },
-    {
-      title: "Open",
-      value: cardData?.open,
-      color: "from-[#0D99FF] to-[#74C0FC]", // Figma Blue gradient
-      icon: FolderOpen ,
-      chartColor: "#FFF",
-    },
-    {
-      title: "Re Open",
-      value: cardData?.reopen,
-      icon: BiRedo ,
-      color: "from-[#63A833] to-[#6EE999]", // Figma Cyan gradient
-      chartColor: "#FFF",
-    },
-    {
-      title: "Closed",
-      value: cardData?.closed,
-      icon: AiOutlineCheckCircle ,
-      color: "from-[#A259FF] to-[#C79CFF]", // Figma Purple gradient
-      chartColor: "#FFF",
-    },
-    {
-      title: "On Hold",
-      value: cardData?.onHold,
-      icon: MdPauseCircleOutline ,
-      color: "from-[#333333] to-[#666666]", // Dark Gray gradient
-      chartColor: "#FFF",
-    },
+    }
   ];
 
   const monthNames = [
@@ -141,101 +144,166 @@ function Home() {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-200/30 px-6 ">
+      <div className="min-h-screen bg-background px-6 ">
         {/* Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 py-3">
           {metrics.map((metric, index) => (
             <Card key={index} data={metric} />
           ))}
         </div>
-
-        {/* Risk Rating Chart */}
-        <div className="bg-white  py-2 px-2 mt-5 transition rounded-lg">
-          <h3 className="text-lg font-semibold text-sky-700 mb-2">
-            Vulnerable Items by Risk Rating
-          </h3>                        
-          <hr className="mb-4" />
-          <div className="h-80">
+        <div className="w-full h-full  py-2 px-1 mt-5 transition rounded-lg flex lg:flex-row flex-col  gap-2">
+          <div className="bg-white lg:w-[30%] w-full h-96 py-2  transition rounded-lg flex ">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={newData}>
-                <defs>
-                  <linearGradient
-                    id="criticalGradient"
-                    x1="0"
-                    y1="0"
-                    x2="0"
-                    y2="1"
-                  >
-                    <stop offset="0%" stopColor="#F24E1E" stopOpacity={0.8} />
-                    <stop offset="100%" stopColor="#F24E1E" stopOpacity={0.2} />
-                  </linearGradient>
-                  <linearGradient id="highGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#A259FF" stopOpacity={0.8} />
-                    <stop offset="100%" stopColor="#A259FF" stopOpacity={0.2} />
-                  </linearGradient>
-                  <linearGradient
-                    id="mediumGradient"
-                    x1="0"
-                    y1="0"
-                    x2="0"
-                    y2="1"
-                  >
-                    <stop offset="0%" stopColor="#FF7262" stopOpacity={0.8} />
-                    <stop offset="100%" stopColor="#FF7262" stopOpacity={0.2} />
-                  </linearGradient>
-                  <linearGradient id="lowGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#0D99FF" stopOpacity={0.8} />
-                    <stop offset="100%" stopColor="#0D99FF" stopOpacity={0.2} />
-                  </linearGradient>
-                  <linearGradient id="infoGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#1ABCFE" stopOpacity={0.8} />
-                    <stop offset="100%" stopColor="#1ABCFE" stopOpacity={0.2} />
-                  </linearGradient>
-                </defs>
-
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date" />
-                <YAxis />
+              <PieChart>
+                <Pie
+                  data={data}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={40}
+                  outerRadius={100}
+                  fill="#8884d8"
+                  paddingAngle={1}
+                  dataKey="value"
+                  label
+                >
+                  {data.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  ))}
+                </Pie>
                 <Tooltip />
                 <Legend />
-
-                <Area
-                  type="monotone"
-                  dataKey="Critical"
-                  stackId="1"
-                  stroke="#F24E1E" // Figma Red
-                  fill="url(#criticalGradient)"
-                />
-                <Area
-                  type="monotone"
-                  dataKey="High"
-                  stackId="1"
-                  stroke="#A259FF" // Figma Purple
-                  fill="url(#highGradient)"
-                />
-                <Area
-                  type="monotone"
-                  dataKey="Medium"
-                  stackId="1"
-                  stroke="#FF7262" // Figma Coral
-                  fill="url(#mediumGradient)"
-                />
-                <Area
-                  type="monotone"
-                  dataKey="Low"
-                  stackId="1"
-                  stroke="#0D99FF" // Figma Blue
-                  fill="url(#lowGradient)"
-                />
-                <Area
-                  type="monotone"
-                  dataKey="info"
-                  stackId="1"
-                  stroke="#1ABCFE" // Figma Cyan
-                  fill="url(#infoGradient)"
-                />
-              </AreaChart>
+              </PieChart>
             </ResponsiveContainer>
+          </div>
+          {/* Risk Rating Chart */}
+          <div className="bg-white  lg:w-[70%] w-full py-2 px-2 transition rounded-lg">
+            <h3 className="text-lg font-semibold text-sky-700 mb-2">
+              Vulnerable Items by Risk Rating
+            </h3>
+            <hr className="mb-4" />
+            <div className="h-72">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={newData}>
+                  <defs>
+                    <linearGradient
+                      id="criticalGradient"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
+                      <stop offset="0%" stopColor="#F24E1E" stopOpacity={0.8} />
+                      <stop
+                        offset="100%"
+                        stopColor="#F24E1E"
+                        stopOpacity={0.2}
+                      />
+                    </linearGradient>
+                    <linearGradient
+                      id="highGradient"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
+                      <stop offset="0%" stopColor="#A259FF" stopOpacity={0.8} />
+                      <stop
+                        offset="100%"
+                        stopColor="#A259FF"
+                        stopOpacity={0.2}
+                      />
+                    </linearGradient>
+                    <linearGradient
+                      id="mediumGradient"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
+                      <stop offset="0%" stopColor="#FF7262" stopOpacity={0.8} />
+                      <stop
+                        offset="100%"
+                        stopColor="#FF7262"
+                        stopOpacity={0.2}
+                      />
+                    </linearGradient>
+                    <linearGradient
+                      id="lowGradient"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
+                      <stop offset="0%" stopColor="#0D99FF" stopOpacity={0.8} />
+                      <stop
+                        offset="100%"
+                        stopColor="#0D99FF"
+                        stopOpacity={0.2}
+                      />
+                    </linearGradient>
+                    <linearGradient
+                      id="infoGradient"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
+                      <stop offset="0%" stopColor="#1ABCFE" stopOpacity={0.8} />
+                      <stop
+                        offset="100%"
+                        stopColor="#1ABCFE"
+                        stopOpacity={0.2}
+                      />
+                    </linearGradient>
+                  </defs>
+
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="date" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+
+                  <Area
+                    type="monotone"
+                    dataKey="Critical"
+                    stackId="1"
+                    stroke= {COLORS[0]}  // Figma Red
+                    fill="url(#criticalGradient)"
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="High"
+                    stackId="1"
+                    stroke= {COLORS[1]}  // Figma Purple
+                    fill="url(#highGradient)"
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="Medium"
+                    stackId="1"
+                    stroke= {COLORS[2]}  // Figma Coral
+                    fill="url(#mediumGradient)"
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="Low"
+                    stackId="1"
+                    stroke= {COLORS[3]}  // Figma Blue
+                    fill="url(#lowGradient)"
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="info"
+                    stackId="1"
+                    stroke= {COLORS[4]} // Figma Cyan
+                    fill="url(#infoGradient)"
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
           </div>
         </div>
 
@@ -251,21 +319,21 @@ function Home() {
               <BarChart data={closevulnerableItemsData} layout="vertical">
                 {/* <CartesianGrid strokeDasharray="3 3" /> */}
                 <XAxis type="number" />
-                <YAxis type="category" dataKey="name" hide={true} />
+                <YAxis type="category" dataKey="name" hide={false} />
                 <Tooltip />
                 <Bar
                   dataKey="TargetMissed"
-                  fill="#2dd4bf"
+                  fill={COLORS[0]} 
                   name="Target Missed"
                 />
-                <Bar dataKey="TargetMet" fill="#a5b4fc" name="Target Met" />
-                <Bar dataKey="NoTarget" fill="#fca5a5" name="No Target" />
+                <Bar dataKey="TargetMet" fill={COLORS[1]}  name="Target Met" />
+                <Bar dataKey="NoTarget" fill={COLORS[2]}  name="No Target" />
                 <Bar
                   dataKey="ApproachingTarget"
-                  fill="#ffc107"
+                  fill={COLORS[3]} 
                   name="Approaching Target"
                 />
-                <Bar dataKey="InFlight" fill="#9c27b0" name="In Flight" />
+                <Bar dataKey="InFlight" fill={COLORS[4]}  name="In Flight" />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -347,10 +415,10 @@ function Home() {
                   <YAxis />
                   <Tooltip />
                   {/* <Legend /> */}
-                  <Bar dataKey="0-30 Days" fill="#fca5a5" />
-                  <Bar dataKey="31-60 Days" fill="#22d3ee" />
-                  <Bar dataKey="61-90 Days" fill="#818cf8" />
-                  <Bar dataKey="90+ Days" fill="#9c27b0" />
+                  <Bar dataKey="0-30 Days" fill={COLORS[0]}  />
+                  <Bar dataKey="31-60 Days" fill={COLORS[1]}  />
+                  <Bar dataKey="61-90 Days" fill={COLORS[2]}  />
+                  <Bar dataKey="90+ Days" fill={COLORS[3]}  />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -369,14 +437,13 @@ function Home() {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Bar dataKey="Open" fill="#2dd4bf" />
-              <Bar dataKey="Closed" fill="#fca5a5" />
+              <Bar dataKey="Open" fill={COLORS[0]} />
+              <Bar dataKey="Closed" fill={COLORS[3]}  />
+              <Bar dataKey="Exception" fill={COLORS[4]}  />
             </BarChart>
           </ResponsiveContainer>
         </div>
-        <div className="mt-6">
-
-        </div>
+        <div className="mt-6"></div>
       </div>
     </>
   );

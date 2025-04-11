@@ -159,7 +159,7 @@ export function EmployeeAllTasks() {
       {loading ? (
         <Loader />
       ) : (
-        <div className="p-4 md:p-6 max-w-[95%] mx-auto bg-gray-100 rounded-xl shadow-lg">
+        <div className="p-4 md:p-6 max-w-[95%] mx-auto bg-background rounded-xl shadow-lg">
           {/* 🔍 Search Bar & Buttons */}
           <div className="mb-4 flex flex-col md:flex-row items-start md:items-center justify-between">
             <div className="relative mt-4 md:mt-0">

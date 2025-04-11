@@ -90,7 +90,7 @@ console.log("employeeCardData",employeeCardData)
 
   return (
     <>
-      <div className="min-h-screen bg-gray-100 px-6 ">
+      <div className="min-h-screen bg-background px-6 ">
 
 
 

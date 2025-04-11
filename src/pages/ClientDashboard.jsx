@@ -62,7 +62,7 @@ export default function ClientDashboard() {
 
 
 	return (
-		<div className="min-h-screen bg-gray-100 p-4 sm:p-6 flex flex-col items-center">
+		<div className="min-h-screen bg-background p-4 sm:p-6 flex flex-col items-center">
 
 
 			<div className="w-full max-w-6xl">

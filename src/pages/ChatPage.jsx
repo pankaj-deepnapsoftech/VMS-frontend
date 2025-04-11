@@ -69,7 +69,7 @@ const ChatPage = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-white relative">
+    <div className="flex flex-col h-screen bg-background relative">
       {/* Chat Messages */}
       <div className="flex-1 p-4 pb-32  max-w-screen-lg   mx-auto w-full">
         {messages.map((msg) => (
