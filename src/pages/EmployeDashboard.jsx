@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect } from 'react';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { useAllEmployeeContext, useAuthContext, useDataContext } from '@/context';
-import { FiAlertCircle } from 'react-icons/fi';
-import { BiPlus } from 'react-icons/bi';
-import { Modal } from '@/components/modal/FileUploadModal';
+import { useAllEmployeeContext, useAuthContext } from '@/context';
 import Card from '@/components/Card';
 import { IoShieldCheckmarkOutline, IoShieldOutline } from 'react-icons/io5';
 
@@ -40,8 +37,7 @@ function EmployeeDashboard() {
   ];
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#FF6384"];
-
-console.log("employeeCardData",employeeCardData)
+ 
  const metrics = [
     {
       title: "Total Data",
@@ -113,10 +109,10 @@ console.log("employeeCardData",employeeCardData)
                 data={data}
                 cx="50%"
                 cy="50%"
-                innerRadius={50}
+                innerRadius={35}
                 outerRadius={100}
                 fill="#8884d8"
-                paddingAngle={5}
+                paddingAngle={0}
                 dataKey="value"
                 label
               >

@@ -27,7 +27,7 @@ export const list = [
 
 export const EmployeeList = [
     { title: "Dashboard", route: "", icon: BiSolidDashboard },
-    { title: "All Tasks", route: "/all-employee-tasks", icon: IoShieldHalf },
+    { title: "All Tasks", route: "/employee-tasks", icon: IoShieldHalf },
     { title: "Reports", route: "/reports", icon: TbReport },
 
 ]

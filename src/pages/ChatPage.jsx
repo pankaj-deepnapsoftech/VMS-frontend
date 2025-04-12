@@ -5,63 +5,93 @@ import { useVulnerabililtyDataContext } from "@/context";
 
 const ChatPage = () => {
   const { chatId } = useParams();
-  const location=useLocation()
-  console.log(location,"dsnkgoauhgljkblkjfdn");
-  const {item}=location.state || {};
-  console.log("Item :",item)
-  const { ChatDataPost, GetChatData, chatData } = useVulnerabililtyDataContext();
+  const location = useLocation();
+  const { item } = location.state || {};
+
+  const {
+    ChatDataPost,
+    GetChatData,
+    chatData,
+    isLoading,
+  } = useVulnerabililtyDataContext();
 
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
   const bottomRef = useRef(null);
+  const [initialChecked, setInitialChecked] = useState(false); // To prevent repeated posting
 
+  const classification = item?.Vulnerability_Classification || '';
+  const question = classification.split("-")[1] ?? classification.split("-")[0];
+
+  // Step 1: Always fetch chat data first on load
   useEffect(() => {
-    if (chatId) GetChatData(chatId);
-  }, [chatId]);
+    if (chatId) {
+      GetChatData(chatId);
+    }
+  }, [chatId, location.pathname]);
 
+  // Step 2: When chatData is updated, format it
   useEffect(() => {
     if (chatData?.length) {
-      const formatted = chatData.flatMap((item) => [
+      const formatted = chatData.flatMap((entry) => [
         {
-          id: item._id + "_user",
+          id: `${entry._id}_user`,
           sender: "user",
-          text: item.text,
+          text: entry.text,
         },
         {
-          id: item._id + "_ai",
+          id: `${entry._id}_ai`,
           sender: "ai",
-          text: item.gpt_res,
+          text: entry.gpt_res,
         },
       ]);
       setMessages(formatted);
     }
   }, [chatData]);
 
+  // Step 3: Scroll to bottom when messages change
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  // Step 4: Auto-send first question only ONCE if chat is empty
+  useEffect(() => {
+    if (
+      !isLoading &&
+      chatId &&
+      !initialChecked &&
+      chatData?.length === 0 &&
+      item?._id
+    ) {
+      const firstPrompt = `Remediation measures for this ${question}. Keep it short in two points.`;
+      ChatDataPost({ text: firstPrompt, task: item._id });
+      setInitialChecked(true); // Prevent future calls
+    }
+  }, [isLoading, chatData, chatId, item?._id]);
+
+  // Send message
   const handleSend = () => {
-    const trimmed = input.trim();
-    if (!trimmed) return;
+    const trimmedInput = input.trim();
+    if (!trimmedInput) return;
 
     const timestamp = Date.now();
-    const userMsg = {
+
+    const userMessage = {
       id: `${timestamp}_user`,
       sender: "user",
-      text: trimmed,
+      text: trimmedInput,
     };
 
-    const aiTypingMsg = {
+    const aiTypingMessage = {
       id: `${timestamp}_ai_typing`,
       sender: "ai",
       text: "Typing...",
     };
 
-    setMessages((prev) => [...prev, userMsg, aiTypingMsg]);
+    setMessages((prev) => [...prev, userMessage, aiTypingMessage]);
     setInput("");
 
-    ChatDataPost({ text: trimmed, task: chatId });
+    ChatDataPost({ text: trimmedInput, task: chatId });
 
     setTimeout(() => {
       GetChatData(chatId);
@@ -69,13 +99,14 @@ const ChatPage = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-background relative">
-      {/* Chat Messages */}
-      <div className="flex-1 p-4 pb-32  max-w-screen-lg   mx-auto w-full">
+    <div className="flex flex-col h-screen relative">
+      <div className="flex-1 p-4 pb-32 max-w-screen-lg mx-auto w-full">
         {messages.map((msg) => (
           <div
             key={msg.id}
-            className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
+            className={`flex ${
+              msg.sender === "user" ? "justify-end" : "justify-start"
+            }`}
           >
             {msg.sender === "ai" && (
               <img
@@ -91,27 +122,30 @@ const ChatPage = () => {
                   : "bg-gray-100 text-gray-800 rounded-bl-none"
               }`}
             >
-              {msg.sender === "user" && <FaUserCircle className="w-5 h-5 mt-0.5" />}
-              <span className="whitespace-pre-wrap break-words ">{msg.text}</span>
+              {msg.sender === "user" && (
+                <FaUserCircle className="w-5 h-5 mt-0.5" />
+              )}
+              <span className="whitespace-pre-wrap break-words">
+                {msg.text}
+              </span>
             </div>
           </div>
         ))}
         <div ref={bottomRef} />
       </div>
 
-      {/* Input Field */}
-      <div className="fixed bottom-10 lg:left-20  w-full bg-white border-t p-3 ">
+      <div className="fixed bottom-10 lg:left-20 w-full bg-white border-t p-3">
         <div className="flex items-center gap-2 max-w-screen-md mx-auto w-full px-2 sm:px-0">
           <input
             type="text"
             placeholder="Type your message..."
-            className="flex-1 border border-gray-300 rounded-full px-4 py-2 w-fulltext-sm focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-sm"
+            className="flex-1 border border-gray-300 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-sm"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
           />
           <button
-            className="bg-blue-600 text-white px-4 sm:px-6 py-2 text-sm rounded-full hover:bg-blue-700 transition font-semibold shadow whitespace-nowrap"
+            className="bg-blue-600 text-white px-4 sm:px-6 py-2 text-sm rounded-full hover:bg-blue-700 transition font-semibold shadow"
             onClick={handleSend}
           >
             Send

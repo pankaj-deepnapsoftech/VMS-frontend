@@ -16,6 +16,8 @@ import Loader from "@/components/Loader/Loader";
 import InputField from "@/components/InputField";
 import { Modal } from "@/components/modal/FileUploadModal";
 import NoDataFound from "@/components/NoDataFound";
+import { FaSms } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export function EmployeeAllTasks() {
   const { loading, UpdateData, orgnizationNotification } =
@@ -154,12 +156,18 @@ export function EmployeeAllTasks() {
 
   let statusList = ["Open", "Closed", "Fix", "Re-Open", "On-Hold", "Exception"];
 
+
+  let navigate = useNavigate();
+
+
+
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
       {loading ? (
         <Loader />
       ) : (
-        <div className="p-4 md:p-6 max-w-[95%] mx-auto bg-background rounded-xl shadow-lg">
+        <div className="p-4 md:p-6 max-w-[100%] max-h-full   bg-background  ">
           {/* 🔍 Search Bar & Buttons */}
           <div className="mb-4 flex flex-col md:flex-row items-start md:items-center justify-between">
             <div className="relative mt-4 md:mt-0">
@@ -284,6 +292,12 @@ export function EmployeeAllTasks() {
                       >
                         <RiUpload2Fill className="h-5 w-5" />
                       </button>
+                      <button
+                                              onClick={() =>   navigate(`/chat/${item._id}`,{state:{item}})}
+                                              className="text-green-600 hover:text-green-800 transition"
+                                            >
+                                              <FaSms className="h-4 w-4" />
+                                            </button>
                       {/* <button onClick={() => handleAssignTask(item._id)} className="text-red-600">
 											<BsPersonCheckFill className="h-5 w-5" />
 										</button> */}

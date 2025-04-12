@@ -91,10 +91,10 @@ const Header = () => {
             {/* Regular links */}
             <div className="flex gap-10 font-semibold" >
             <Link to="/pricing" className="">
-              PRICING
+              PRICING   
             </Link>
             <Link to="/solutions" className="font-semibold">
-            Solutions
+            SOLUTIONS
             </Link>
             </div>
           </div>

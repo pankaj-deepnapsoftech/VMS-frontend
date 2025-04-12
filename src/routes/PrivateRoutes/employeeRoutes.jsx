@@ -9,7 +9,7 @@ export const EmployeeRoutes = [
         element: <EmployeeDashboard />
     },
     {
-        path: "/all-employee-tasks",
+        path: "/employee-tasks",
         element: <EmployeeAllTasks />
     },
     {
