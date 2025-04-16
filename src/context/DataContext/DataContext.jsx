@@ -1,8 +1,10 @@
+/* eslint-disable react/prop-types */
 import { AxiosHandler } from "@/config/AxiosConfig";
 import { useAuthContext } from "..";
 import { createContext, useState, useEffect } from "react";
 import toast from "react-hot-toast";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const DataContext = createContext();
 
 const DataContextProvider = ({ children }) => {
@@ -20,6 +22,8 @@ const DataContextProvider = ({ children }) => {
   const [criticalHighVulnerableOverdue, setCriticalHighVulnerableOverdue] =
     useState([]);
 
+    const [exploitability,setExploitability] = useState([]);
+
   const { token } = useAuthContext();
 
   const getHomeCardData = async () => {
@@ -28,6 +32,8 @@ const DataContextProvider = ({ children }) => {
       setCardData(res.data);
     } catch (error) {
       console.log(error);
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -44,6 +50,8 @@ const DataContextProvider = ({ children }) => {
       //console.log(error)
       toast.dismiss(toastId);
       toast.error(error?.response?.data?.message);
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -66,6 +74,8 @@ const DataContextProvider = ({ children }) => {
       setVulnerableItemsByAgeData(res.data);
     } catch (error) {
       console.log(error);
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -76,6 +86,8 @@ const DataContextProvider = ({ children }) => {
       setNewAndCloseVulnerableData(res.data.newData);
     } catch (error) {
       console.log(error);
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -86,6 +98,8 @@ const DataContextProvider = ({ children }) => {
       setClosevulnerableItems(res.data);
     } catch (error) {
       console.log(error);
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -96,6 +110,8 @@ const DataContextProvider = ({ children }) => {
       setCriticalHighVulnerable(res.data);
     } catch (error) {
       console.log(error);
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -106,8 +122,22 @@ const DataContextProvider = ({ children }) => {
       setCriticalHighVulnerableOverdue(res.data);
     } catch (error) {
       console.log(error);
+    }finally{
+      setLoading(false);
     }
   };
+
+  const GetExploitability = async () => {
+    setLoading(true);
+    try {
+      const res = await AxiosHandler.get("/data/TopExploitability");
+      setExploitability(res.data.data);
+    } catch (error) {
+      console.log(error);
+    }finally{
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
     if (token) {
@@ -118,6 +148,7 @@ const DataContextProvider = ({ children }) => {
       ClosevulnerableItems();
       CriticalHighVulnerable();
       CriticalHighVulnerableOverdue();
+      GetExploitability()
     }
   }, [token]);
   return (
@@ -132,6 +163,8 @@ const DataContextProvider = ({ children }) => {
         closevulnerableItems,
         criticalHighVulnerable,
         criticalHighVulnerableOverdue,
+        exploitability
+        
       }}
     >
       {children}

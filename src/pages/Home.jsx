@@ -1,20 +1,8 @@
-import React, { useEffect, useState } from "react";
+
 import {
-  BiBarChartAlt2,
-  BiBookAdd,
-  BiImageAdd,
-  BiPlus,
-  BiRedo,
-} from "react-icons/bi";
-import { IoShieldOutline, IoShieldCheckmarkOutline } from "react-icons/io5";
-import { IoMdSettings } from "react-icons/io";
-import {
-  MdApps,
   MdBuild,
-  MdKeyboardArrowDown,
   MdOutlineErrorOutline,
   MdOutlineMiscellaneousServices,
-  MdPauseCircleOutline,
 } from "react-icons/md";
 import {
   BarChart,
@@ -31,17 +19,12 @@ import {
   Pie,
   Cell,
 } from "recharts";
-import {
-  AiOutlineCheckCircle,
-  AiOutlineFolderOpen,
-  AiOutlineMenu,
-} from "react-icons/ai";
+
 import Card from "@/components/Card";
-import { useAuthContext, useDataContext } from "@/context";
-import { Modal } from "@/components/modal/FileUploadModal";
-import { Loader } from "@/constants/Components-lazy-loading/components.Lazy";
+import { useDataContext } from "@/context";
 import { FaNetworkWired } from "react-icons/fa";
-import { Bug, FolderOpen } from "lucide-react";
+import { Bug } from "lucide-react";
+import BarGraph from "@/components/BarGraph";
 
 function Home() {
   const {
@@ -52,12 +35,12 @@ function Home() {
     closevulnerableItems,
     criticalHighVulnerable,
     criticalHighVulnerableOverdue,
+    exploitability
   } = useDataContext();
 
-  const { loading, authenticate } = useAuthContext();
 
   const closevulnerableItemsData = [closevulnerableItems];
-console.log("jsghidublrj",closevulnerableItemsData)
+  console.log("jsghidublrj", closevulnerableItemsData)
   const data = [
     { name: "Open", value: cardData?.open },
     { name: "Re Open", value: cardData?.reopen },
@@ -142,6 +125,7 @@ console.log("jsghidublrj",closevulnerableItemsData)
     "December",
   ];
 
+
   return (
     <>
       <div className="min-h-screen bg-background px-6 ">
@@ -150,6 +134,12 @@ console.log("jsghidublrj",closevulnerableItemsData)
           {metrics.map((metric, index) => (
             <Card key={index} data={metric} />
           ))}
+        </div>
+        {/* exploybality */}
+
+        <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-2xl my-6">
+          <h2 className="text-2xl font-bold mb-6 text-gray-800">Exploitability</h2>
+          <BarGraph data={exploitability} />
         </div>
         <div className="w-full h-full  py-2 px-1 mt-5 transition rounded-lg flex lg:flex-row flex-col  gap-2">
           <div className="bg-white lg:w-[30%] w-full h-96 py-2  transition rounded-lg flex ">
@@ -270,35 +260,35 @@ console.log("jsghidublrj",closevulnerableItemsData)
                     type="monotone"
                     dataKey="Critical"
                     stackId="1"
-                    stroke= {COLORS[0]}  // Figma Red
+                    stroke={COLORS[0]}  // Figma Red
                     fill="url(#criticalGradient)"
                   />
                   <Area
                     type="monotone"
                     dataKey="High"
                     stackId="1"
-                    stroke= {COLORS[1]}  // Figma Purple
+                    stroke={COLORS[1]}  // Figma Purple
                     fill="url(#highGradient)"
                   />
                   <Area
                     type="monotone"
                     dataKey="Medium"
                     stackId="1"
-                    stroke= {COLORS[2]}  // Figma Coral
+                    stroke={COLORS[2]}  // Figma Coral
                     fill="url(#mediumGradient)"
                   />
                   <Area
                     type="monotone"
                     dataKey="Low"
                     stackId="1"
-                    stroke= {COLORS[3]}  // Figma Blue
+                    stroke={COLORS[3]}  // Figma Blue
                     fill="url(#lowGradient)"
                   />
                   <Area
                     type="monotone"
                     dataKey="info"
                     stackId="1"
-                    stroke= {COLORS[4]} // Figma Cyan
+                    stroke={COLORS[4]} // Figma Cyan
                     fill="url(#infoGradient)"
                   />
                 </AreaChart>
@@ -323,17 +313,17 @@ console.log("jsghidublrj",closevulnerableItemsData)
                 <Tooltip />
                 <Bar
                   dataKey="TargetMissed"
-                  fill={COLORS[0]} 
+                  fill={COLORS[0]}
                   name="Target Missed"
                 />
-                <Bar dataKey="TargetMet" fill={COLORS[1]}  name="Target Met" />
-                <Bar dataKey="NoTarget" fill={COLORS[2]}  name="No Target" />
+                <Bar dataKey="TargetMet" fill={COLORS[1]} name="Target Met" />
+                <Bar dataKey="NoTarget" fill={COLORS[2]} name="No Target" />
                 <Bar
                   dataKey="ApproachingTarget"
-                  fill={COLORS[3]} 
+                  fill={COLORS[3]}
                   name="Approaching Target"
                 />
-                <Bar dataKey="InFlight" fill={COLORS[4]}  name="In Flight" />
+                <Bar dataKey="InFlight" fill={COLORS[4]} name="In Flight" />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -415,10 +405,10 @@ console.log("jsghidublrj",closevulnerableItemsData)
                   <YAxis />
                   <Tooltip />
                   {/* <Legend /> */}
-                  <Bar dataKey="0-30 Days" fill={COLORS[0]}  />
-                  <Bar dataKey="31-60 Days" fill={COLORS[1]}  />
-                  <Bar dataKey="61-90 Days" fill={COLORS[2]}  />
-                  <Bar dataKey="90+ Days" fill={COLORS[3]}  />
+                  <Bar dataKey="0-30 Days" fill={COLORS[0]} />
+                  <Bar dataKey="31-60 Days" fill={COLORS[1]} />
+                  <Bar dataKey="61-90 Days" fill={COLORS[2]} />
+                  <Bar dataKey="90+ Days" fill={COLORS[3]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -438,8 +428,8 @@ console.log("jsghidublrj",closevulnerableItemsData)
               <Tooltip />
               <Legend />
               <Bar dataKey="Open" fill={COLORS[0]} />
-              <Bar dataKey="Closed" fill={COLORS[3]}  />
-              <Bar dataKey="Exception" fill={COLORS[4]}  />
+              <Bar dataKey="Closed" fill={COLORS[3]} />
+              <Bar dataKey="Exception" fill={COLORS[4]} />
             </BarChart>
           </ResponsiveContainer>
         </div>

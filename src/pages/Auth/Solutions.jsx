@@ -1,6 +1,5 @@
 /* eslint-disable no-irregular-whitespace */
 import Header from "@/pages/Auth/component/Header";
-import React from "react";
 import Footer from "@/pages/Auth/component/Footer";
 import { DownloadIcon } from "lucide-react";
 

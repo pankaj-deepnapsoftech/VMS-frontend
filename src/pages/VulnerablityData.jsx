@@ -15,6 +15,7 @@ import Exceptions from "./Exceptions";
 import InputField from "@/components/InputField";
 import { Modal } from "@/components/modal/FileUploadModal";
 import NoDataFound from "@/components/NoDataFound";
+import { excelDateToJSDate } from "@/utils/utils";
 
 export function VulnerabilityData() {
 
@@ -184,11 +185,6 @@ export function VulnerabilityData() {
 
 
 
-  const vulnerabilities = Object.entries(topVulnerabliltyData)
-    .map(([name, count]) => ({ name, count }))
-    .sort((a, b) => b.count - a.count); // Sort by count in descending order
-
-
   const getRowColor = (rank) => {
     return rank % 2 === 0 ? "bg-gray-200" : "bg-white";
   };
@@ -228,16 +224,18 @@ export function VulnerabilityData() {
                     <th className=" border-b">Top Vulnerabilities </th>
                     <th className=" border-b">Vulnerability Name</th>
                     <th className=" border-b">Total Vulnerability Instances </th>
+                    <th className=" border-b">Exploitability </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {vulnerabilities?.map((product, index) => (
+                  {topVulnerabliltyData?.map((product, index) => (
                     <tr key={index} className={`text-center border-b hover:bg-gray-300 ${getRowColor(index)}`}>
                       <td className="  flex items-center justify-center gap-2">
                         <FaExclamationTriangle className="text-red-500" /> {index + 1}
                       </td>
                       <td className=" ">{product.name}</td>
                       <td className=" ">{product.count}</td>
+                      <td className=" ">{product.exploitability}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -382,7 +380,8 @@ export function VulnerabilityData() {
                             })
                             : "-"
                           : field === "Assigned_To"
-                            ? item[field]?.full_name ?? "-"
+                            ? item[field]?.full_name ?? "-" : field === "Remediated_Date" && item[field] ? excelDateToJSDate(item.
+                              Remediated_Date) 
                             : field === "detailed_Report"
                               ? item[field] && (
                                 <a
