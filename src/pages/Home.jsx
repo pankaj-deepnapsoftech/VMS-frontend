@@ -48,6 +48,13 @@ function Home() {
     { name: "On Hold", value: cardData?.onHold },
   ];
 
+  const data1 = [
+    { name: "Application Assessed", value: 20 },
+    { name: "Application Not Assessed", value: 40},
+    { name: "IP's Assessed", value: 50},
+    { name: "IP's Not Assessed", value: 10},
+  ];
+
   const COLORS = ["#B91C1C", "#EF4444", "#FBBF24", "#3B82F6", "#10B981"];
 
   const dataList = [
@@ -135,12 +142,9 @@ function Home() {
             <Card key={index} data={metric} />
           ))}
         </div>
-        {/* exploybality */}
 
-        <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-2xl my-6">
-          <h2 className="text-2xl font-bold mb-6 text-gray-800">Exploitability</h2>
-          <BarGraph data={exploitability} />
-        </div>
+
+
         <div className="w-full h-full  py-2 px-1 mt-5 transition rounded-lg flex lg:flex-row flex-col  gap-2">
           <div className="bg-white lg:w-[30%] w-full h-96 py-2  transition rounded-lg flex ">
             <ResponsiveContainer width="100%" height="100%">
@@ -296,6 +300,42 @@ function Home() {
             </div>
           </div>
         </div>
+
+        {/* exploybality */}
+        <div className="flex gap-3" >
+        <div className="bg-white p-8 rounded-xl shadow-lg w-full lg:w-1/2 ">
+            <h2 className="text-2xl font-bold mb-6 text-gray-800">Exploitability</h2>
+            <BarGraph data={exploitability} />
+          </div>
+          <div className="bg-white lg:w-1/2 w-full h-96 py-2  transition rounded-lg flex ">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={data1}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={40}
+                  outerRadius={100}
+                  fill="#8884d8"
+                  paddingAngle={1}
+                  dataKey="value"
+                  label
+                >
+                  {data1.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  ))}
+                </Pie>
+                <Tooltip />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          
+        </div>
+
 
         {/* Charts Section */}
 

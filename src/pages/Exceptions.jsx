@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { FaChartBar, FaCog, FaShieldAlt, FaUsers, FaPaperPlane, FaComments } from 'react-icons/fa';
-import { AiOutlineMenu } from 'react-icons/ai';
+import { useEffect, useState } from 'react';
+import { FaChartBar} from 'react-icons/fa';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ComposedChart, Line, Cell } from 'recharts';
 import { useAuthContext, useExceptionContext, useVulnerabililtyDataContext } from '@/context';
-import { BiEditAlt, BiSearch } from 'react-icons/bi';
+import { BiSearch } from 'react-icons/bi';
 import { RiDeleteBinFill } from 'react-icons/ri';
-import { BsPersonCheckFill } from 'react-icons/bs';
 import Loader from '@/components/Loader/Loader';
 import NoDataFound from '@/components/NoDataFound';
+import { excelDateToJSDate } from '@/utils/utils';
 
 
 
@@ -17,7 +16,6 @@ function Exceptions() {
   const {
     UpdateData,
     DeleteData,
-    AssignTask
   } =
     useVulnerabililtyDataContext();
 
@@ -31,8 +29,6 @@ function Exceptions() {
     setPage,
     riskRating,
     deferredVulnerableItems,
-    datafetchCount,
-    setdatafetchCount,
     AdminExcectionDataFiftyDays,
     ClientExcectionDataFiftyDays,
     AdminRiskRating,
@@ -65,14 +61,7 @@ function Exceptions() {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-  const [selectAll, setSelectAll] = useState(false);
-  const [editMode, setEditMode] = useState(false);
-  const [editData, setEditData] = useState(null);
   const rowsPerPage = 10;
-  const [index, setIndex] = useState([]);
 
 
 
@@ -83,20 +72,6 @@ function Exceptions() {
       )
       : [];
 
-  // Headers for the Add form (show all fields)
-  const addFormHeaders = tableHeaders.filter(
-    (key) => key !== "createdAt" && key !== "updatedAt"
-  );
-
-  // Headers for the Edit form (restrict to specific fields)
-  const editFormHeaders = [
-    "Vulnerability_Classification",
-    "Scan_Type",
-    "Severity",
-    "Priority",
-    "Status",
-    "Remediate_Upcoming_Time_Line",
-  ];
 
   const filteredData = expectionData?.filter((item) =>
     Object.values(item).some(
@@ -264,7 +239,7 @@ function Exceptions() {
                                 month: "short",
                                 year: "numeric",
                               })
-                            ) : field === "client_Approve" ? (
+                            ) :   field === "client_Approve" ? (
                               item.client_Approve ? (
                                 <span className="px-3 py-2 text-sm font-semibold text-green-800 bg-green-100 rounded-full">
                                   Approved
@@ -282,7 +257,8 @@ function Exceptions() {
                                   Verify
                                 </button>
                               )
-                            ) : (
+                            ) : field === "Remediated_Date" && item[field] ? excelDateToJSDate(item.
+                                                          Remediated_Date)  : (
                               item[field]
                             )
                           }
