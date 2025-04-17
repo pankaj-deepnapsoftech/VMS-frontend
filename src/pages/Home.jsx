@@ -146,7 +146,11 @@ function Home() {
 
 
         <div className="w-full h-full  py-2 px-1 mt-5 transition rounded-lg flex lg:flex-row flex-col  gap-2">
-          <div className="bg-white lg:w-[30%] w-full h-96 py-2  transition rounded-lg flex ">
+          <div className="bg-white lg:w-[30%] w-full h-96 py-2  transition rounded-lg flex flex-col ">
+          <h3 className="text-lg p-1 font-semibold text-sky-700 ">
+              Vulnerability Status
+            </h3>
+            <hr className="mb-1" />
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -303,12 +307,19 @@ function Home() {
 
         {/* exploybality */}
         <div className="flex gap-3" >
-        <div className="bg-white p-8 rounded-xl shadow-lg w-full lg:w-1/2 ">
-            <h2 className="text-2xl font-bold mb-6 text-gray-800">Exploitability</h2>
+        <div className="bg-white p-6 rounded-xl shadow-lg w-full lg:w-1/2 ">
+        <h3 className="text-lg p-1 font-semibold text-sky-700 ">
+        Exploitability
+            </h3>
+            <hr className="mb-4" />
             <BarGraph data={exploitability} />
           </div>
-          <div className="bg-white lg:w-1/2 w-full h-96 py-2  transition rounded-lg flex ">
-            <ResponsiveContainer width="100%" height="100%">
+          <div className="bg-white lg:w-1/2 w-full h-96 py-1  transition rounded-lg flex flex-col">
+          <h3 className="text-lg p-1 font-semibold text-sky-700 ">
+              Inventory Status
+            </h3>
+            <hr className="mb-1" />
+            <ResponsiveContainer width="100%" height="90%">
               <PieChart>
                 <Pie
                   data={data1}
