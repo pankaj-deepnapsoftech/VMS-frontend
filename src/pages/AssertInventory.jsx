@@ -22,7 +22,7 @@ import { Modal } from "@/components/modal/FileUploadModal";
 import NoDataFound from "@/components/NoDataFound";
 import { excelDateToJSDate } from "@/utils/utils";
 
-export function VulnerabilityData() {
+export function AssertInventory() {
   const [page, setPage] = useState(1);
 
   const {
@@ -120,6 +120,7 @@ export function VulnerabilityData() {
       DeleteData(id);
     }
   };
+
   const handleChecked = (id) => {
     let data = index.filter((item) => item === id);
     if (data.length > 0) {
@@ -207,7 +208,7 @@ export function VulnerabilityData() {
         <div className="p-4 md:p-6 max-w-[100%] mx-auto bg-background ">
           {/* top 5 Vulnerability */}
 
-          <div className="py-10 ">
+          {/* <div className="py-10 ">
             <div className="overflow-x-auto rounded-lg">
               <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
                 <thead className="h-8">
@@ -240,10 +241,10 @@ export function VulnerabilityData() {
                 </tbody>
               </table>
             </div>
-          </div>
+          </div> */}
 
           {/* 🔍 Search Bar & Buttons */}
-          <div className="mb-4 flex flex-col md:flex-row items-start md:items-center justify-between">
+          {/* <div className="mb-4 flex flex-col md:flex-row items-start md:items-center justify-between">
             <div className="lg:flex lg:flex-row grid grid-cols-2 gap-4 mt-4   w-full lg:justify-end  lg:items-center py-2 lg:gap-2">
               <button
                 onClick={() => openModal()}
@@ -284,7 +285,7 @@ export function VulnerabilityData() {
                 method={UploadBulkData}
               />
             </div>
-          </div>
+          </div> */}
 
           <div className="flex flex-col gap-3 lg:flex-row lg:justify-between  items-center py-3 ">
             <div className="relative mt-4 md:mt-0">

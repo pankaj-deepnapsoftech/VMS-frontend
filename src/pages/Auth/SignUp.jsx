@@ -1,20 +1,30 @@
 import { useFormik } from 'formik';
 import { Eye, EyeOff } from 'lucide-react';
-import { useAuthContext } from '@/context';
+import { useAuthContext, useScheduleAssessmentContext } from '@/context';
 import { Link } from 'react-router-dom';
 import { SignUpValidation } from '@/Validation/AuthValidation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 
 function SignIn() {
   const { Signup, loading } = useAuthContext()
+    const { GetOrgnization,  getOrgnizationData  } = useScheduleAssessmentContext();
+    console.log("getOrgnizationData",getOrgnizationData)
   
+
+
+      useEffect(() => {
+      
+          GetOrgnization();
+       
+      }, [])
     const [showPassword,setShowPassword] = useState(false);
 
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } = useFormik({
-    initialValues: { full_name: "", phone: "", email: "", password: "", role: "", Organization: "" },
+    initialValues: { full_name: "", phone: "", email: "", password: "", role: "", Organization: "", owner:"" },
     validationSchema: SignUpValidation,
     onSubmit: (value) => {
+      console.log("value : ",value)
       Signup(value)
     }
 
@@ -89,7 +99,7 @@ function SignIn() {
               onBlur={handleBlur}
               name='phone'
               className="w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-colors"
-              placeholder="mail@example.com"
+              placeholder="Enter Your Phone Number"
             />
             {errors.phone && touched.phone && <p className='text-red-400 p-2'>{errors.phone}</p>}
           </div>
@@ -146,8 +156,26 @@ function SignIn() {
             {errors.Organization && touched.Organization && <p className='text-red-400 p-2' >{errors.Organization}</p>}
           </div>}
 
+          {values.role==="ClientSME" && <div>
+            <label
+										htmlFor="Select_Org"
+										className="block text-sm font-medium text-gray-700 mb-2"
+									>
+										Select Orgnization
+									</label>
+									<select
+										name='owner'
+										value={values.owner}
+										onChange={handleChange}
+										className='w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-colors'
+										id="Select_Org">
+										<option value="" disabled> -- Select Orgnization -- </option>
+										{getOrgnizationData?.map((itm, idx) => (<option key={idx} value={itm._id}>{itm.Organization}</option>))}
+									</select>
+									{touched.owner && errors.owner && <p className='text-red-700 text-xs'> {errors.owner}</p>}</div>}
+
           {/* Login Button */}
-          <button disabled={loading} type='submit' className="w-full bg-emerald-500 text-white rounded-lg p-3 font-medium hover:bg-emerald-600 transition-colors">
+          <button disabled={loading} type='submit' className="w-full bg-emerald-500 text-white rounded-lg p-3 font-medium hover:bg-emerald-600 transition-colors my-10">
             Sign Up
           </button>
 
