@@ -16,6 +16,7 @@ import InputField from "@/components/InputField";
 import { Modal } from "@/components/modal/FileUploadModal";
 import NoDataFound from "@/components/NoDataFound";
 import { excelDateToJSDate } from "@/utils/utils";
+import AllowedModal from "@/components/modal/AllowedModal";
 
 export function VulnerabilityData() {
 
@@ -51,13 +52,13 @@ export function VulnerabilityData() {
   const { authenticate, token } = useAuthContext()
 
   const { allEmployeesData } = useAllEmployeeContext();
-  
+
 
 
   useEffect(() => {
 
     authenticate?.role === "Admin" ?
-     AllVulnerablilty(page)
+      AllVulnerablilty(page)
       : OrgAllVulnerablilty(page);
     if (token && datafetchCount === 0) {
       TopVulnerablilty();
@@ -73,7 +74,6 @@ export function VulnerabilityData() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isRUModalOpen, setIsRUModalOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
   const [selectAll, setSelectAll] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [editData, setEditData] = useState(null);
@@ -160,8 +160,8 @@ export function VulnerabilityData() {
   };
 
   const handleDownload = (data) => {
-    if(data.length<1){
-     return alert("Don't Have Enough Data to Download")
+    if (data.length < 1) {
+      return alert("Don't Have Enough Data to Download")
     }
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
@@ -193,10 +193,10 @@ export function VulnerabilityData() {
 
   const [selected, setSelected] = useState("");
 
-  let statusList = ["Open", "Closed", "Fix", "Re Open", "On Hold", "Exception","In Progress"];
+  let statusList = ["Open", "Closed", "Fix", "Re Open", "On Hold", "Exception", "In Progress"];
 
   let severityList = ["Critical ", "High", "Medium", "Low", "Informational", "Other"];
-      
+
 
   const { UploadBulkData } = useDataContext()
 
@@ -208,7 +208,7 @@ export function VulnerabilityData() {
       {loading ?
         <Loader /> :
         <div className="p-4 md:p-6 max-w-[100%] mx-auto bg-background ">
-          
+
 
 
 
@@ -287,7 +287,7 @@ export function VulnerabilityData() {
                 onClose={() => setIsRUModalOpen(false)}
                 title="Report Upload"
                 method={UploadBulkData}
-               
+
               />
             </div>
           </div>
@@ -331,7 +331,7 @@ export function VulnerabilityData() {
           </div>
 
           {/* 📊 Table */}
-         {paginatedData.length<1?<NoDataFound/>: <div className="overflow-x-auto">
+          {paginatedData.length < 1 ? <NoDataFound /> : <div className="overflow-x-auto">
             <table className="min-w-full border border-gray-300 shadow-sm rounded-lg overflow-hidden">
               <thead className="bg-gradient-to-r from-[#333333] to-[#666666]  text-gray-100">
                 <tr className="h-10"> {/* Reduced row height */}
@@ -381,19 +381,19 @@ export function VulnerabilityData() {
                             : "-"
                           : field === "Assigned_To"
                             ? item[field]?.full_name ?? "-" : field === "Remediated_Date" && item[field] ? excelDateToJSDate(item.
-                              Remediated_Date) 
-                            : field === "detailed_Report"
-                              ? item[field] && (
-                                <a
-                                  className="text-blue-600 underline hover:text-blue-800"
-                                  href={item[field]}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                >
-                                  View File
-                                </a>
-                              )
-                              : item[field] || "-"}
+                              Remediated_Date)
+                              : field === "detailed_Report"
+                                ? item[field] && (
+                                  <a
+                                    className="text-blue-600 underline hover:text-blue-800"
+                                    href={item[field]}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    View File
+                                  </a>
+                                )
+                                : item[field] || "-"}
                       </td>
                     ))}
 
@@ -418,13 +418,13 @@ export function VulnerabilityData() {
                         <BsPersonCheckFill className="h-4 w-4" />
                       </button>
                       <button
-                        onClick={() =>   navigate(`/chat/${item._id}`,{state:{item}})}
+                        onClick={() => navigate(`/chat/${item._id}`, { state: { item } })}
                         className="text-green-600 hover:text-green-800 transition"
                       >
                         <FaSms className="h-4 w-4" />
                       </button>
                     </td>
-                  </tr>  
+                  </tr>
                 ))}
               </tbody>
             </table>
@@ -531,61 +531,61 @@ export function VulnerabilityData() {
                               </label>
 
                               {
-                              
-                              
-                              field === "Assigned_To" ? (
-                                <select
-                                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
-                                  name="Assigned_To"
-                                  onChange={(e) => setFieldValue("Assigned_To", e.target.value)}
-                                  defaultValue=""
-                                >
-                                  <option disabled value="">--- Select a Tester ---</option>
-                                  {allEmployeesData?.map((item, idx) => (
-                                    <option key={idx} value={item._id}>{item.full_name}</option>
-                                  ))}
-                                </select>
-                               )
 
-                                :    field === "Severity" ? (
-                                <select
-                                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
-                                  name="Severity"
-                                  onChange={(e) => setFieldValue("Severity", e.target.value)}
-                                  defaultValue=""
-                                >
-                                  <option disabled value="">--- Select a Severity ---</option>
-                                  {severityList?.map((item, idx) => (
-                                    <option key={idx} value={item}>{item}</option>
-                                  ))}
-                                </select>
-                               )
 
-                                :  field === "Status" ? (
+                                field === "Assigned_To" ? (
                                   <select
                                     className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
-                                    name="Status"
-                                    onChange={(e) => setFieldValue("Status", e.target.value)}
+                                    name="Assigned_To"
+                                    onChange={(e) => setFieldValue("Assigned_To", e.target.value)}
                                     defaultValue=""
                                   >
-                                    <option disabled value="">--- Select a Status ---</option>
-                                    {statusList.map((item, idx) => (
-                                      <option key={idx} value={item}>{item}</option>
+                                    <option disabled value="">--- Select a Tester ---</option>
+                                    {allEmployeesData?.map((item, idx) => (
+                                      <option key={idx} value={item._id}>{item.full_name}</option>
                                     ))}
                                   </select>
-                                 )
-  
-                                  :
-                                field === "Remediate_Upcoming_Time_Line" ? <InputField
+                                )
 
-                                  type="date"
-                                  onChange={(e) => setFieldValue("Remediate_Upcoming_Time_Line", e.target.value)}
-                                /> : (
-                                  <Field
-                                    name={field}
-                                    className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
-                                  />
-                                )}
+                                  : field === "Severity" ? (
+                                    <select
+                                      className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                                      name="Severity"
+                                      onChange={(e) => setFieldValue("Severity", e.target.value)}
+                                      defaultValue=""
+                                    >
+                                      <option disabled value="">--- Select a Severity ---</option>
+                                      {severityList?.map((item, idx) => (
+                                        <option key={idx} value={item}>{item}</option>
+                                      ))}
+                                    </select>
+                                  )
+
+                                    : field === "Status" ? (
+                                      <select
+                                        className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                                        name="Status"
+                                        onChange={(e) => setFieldValue("Status", e.target.value)}
+                                        defaultValue=""
+                                      >
+                                        <option disabled value="">--- Select a Status ---</option>
+                                        {statusList.map((item, idx) => (
+                                          <option key={idx} value={item}>{item}</option>
+                                        ))}
+                                      </select>
+                                    )
+
+                                      :
+                                      field === "Remediate_Upcoming_Time_Line" ? <InputField
+
+                                        type="date"
+                                        onChange={(e) => setFieldValue("Remediate_Upcoming_Time_Line", e.target.value)}
+                                      /> : (
+                                        <Field
+                                          name={field}
+                                          className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                                        />
+                                      )}
                             </div>
                           )
                       )}
@@ -645,6 +645,8 @@ export function VulnerabilityData() {
             </button>
           </div>
         </div>}
+
+    
     </Suspense >
   );
 }

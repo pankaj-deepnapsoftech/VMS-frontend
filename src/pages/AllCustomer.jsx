@@ -1,4 +1,5 @@
 import Loader from "@/components/Loader/Loader";
+import AllowedModal from "@/components/modal/AllowedModal";
 import NoDataFound from "@/components/NoDataFound";
 import {
   useAllCustomerContext,
@@ -6,6 +7,7 @@ import {
   useAuthContext,
 } from "@/context";
 import React, { useEffect, useState } from "react";
+import { IoShieldCheckmarkSharp } from "react-icons/io5";
 
 export default function AllCustomer() {
   const {
@@ -19,6 +21,8 @@ export default function AllCustomer() {
   } = useAllCustomerContext();
 
   const { VerifyEmployee } = useAllEmployeeContext();
+  
+    const [isChecked, setIsChecked] = useState(false);
 
   const { token } = useAuthContext();
 
@@ -71,6 +75,9 @@ export default function AllCustomer() {
                     <th className="px-2 py-1   border text-sm text-left">
                       Approval Status
                     </th>
+                    <th className="px-2 py-1   border text-sm text-left">
+                      Allowed Pages
+                    </th>
                     {/* <th className="px-4 py-3 border text-left">Action</th> */}
                   </tr>
                 </thead>
@@ -110,11 +117,11 @@ export default function AllCustomer() {
                           </button>
                         )}
                       </td>
-                      {/* <td className="px-4 py-3 border">
-									
-									)}
-								</td> */}
+                      <td onClick={()=>setIsChecked(!isChecked)} className="px-2 py-1 border text-md font-medium">
+                        <IoShieldCheckmarkSharp size={24} color="#0092ca" />
+                      </td>
                     </tr>
+
                   ))}
                 </tbody>
               </table>
@@ -122,9 +129,8 @@ export default function AllCustomer() {
           )}
           <div className="flex justify-between items-center my-16 px-5">
             <button
-              className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white border rounded-md ${
-                page === 1 ? "opacity-50 cursor-not-allowed" : ""
-              }`}
+              className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               disabled={page === 1}
               onClick={() => setPage(page - 1)}
             >
@@ -144,6 +150,10 @@ export default function AllCustomer() {
           </div>
         </div>
       )}
+
+      <div className="h-full w-full flex items-center justify-center" >
+        {isChecked && <AllowedModal setIsChecked={setIsChecked} isChecked={isChecked} />}
+      </div>
     </>
   );
 }
