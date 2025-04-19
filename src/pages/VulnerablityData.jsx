@@ -2,7 +2,12 @@ import React, { Suspense, useEffect, useState } from "react";
 import { BiSearch, BiEditAlt, BiPlus, BiSave } from "react-icons/bi";
 import { RiDeleteBinFill } from "react-icons/ri";
 import { MdClose } from "react-icons/md";
-import { useAllEmployeeContext, useAuthContext, useDataContext, useVulnerabililtyDataContext } from "@/context";
+import {
+  useAllEmployeeContext,
+  useAuthContext,
+  useDataContext,
+  useVulnerabililtyDataContext,
+} from "@/context";
 import { Formik, Form, Field } from "formik";
 import * as XLSX from "xlsx";
 import { WorkItemValidation } from "@/Validation/VulnerabililtyDataValidation";
@@ -19,9 +24,7 @@ import { excelDateToJSDate } from "@/utils/utils";
 import AllowedModal from "@/components/modal/AllowedModal";
 
 export function VulnerabilityData() {
-
-  const [page, setPage] = useState(1)
-
+  const [page, setPage] = useState(1);
 
   const {
     loading,
@@ -42,33 +45,24 @@ export function VulnerabilityData() {
     setdatafetchCount,
     TopVulnerablilty,
     GetOrganization,
-    Notifications
+    Notifications,
+  } = useVulnerabililtyDataContext();
 
-  } =
-    useVulnerabililtyDataContext();
-
-
-
-  const { authenticate, token } = useAuthContext()
+  const { authenticate, token } = useAuthContext();
 
   const { allEmployeesData } = useAllEmployeeContext();
 
-
-
   useEffect(() => {
-
-    authenticate?.role === "Admin" ?
-      AllVulnerablilty(page)
+    authenticate?.role === "Admin"
+      ? AllVulnerablilty(page)
       : OrgAllVulnerablilty(page);
     if (token && datafetchCount === 0) {
       TopVulnerablilty();
       GetOrganization();
       Notifications();
-      setdatafetchCount(1)
+      setdatafetchCount(1);
     }
-  }, [token, page, authenticate?.role])
-
-
+  }, [token, page, authenticate?.role]);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -79,14 +73,14 @@ export function VulnerabilityData() {
   const [editData, setEditData] = useState(null);
   const rowsPerPage = 10;
   const [index, setIndex] = useState([]);
-  const [newData, setNewData] = useState([])
+  const [newData, setNewData] = useState([]);
 
   // Extract headers dynamically for table display
   const tableHeaders =
     allVulnerabilityData.length > 0
       ? Object.keys(allVulnerabilityData[0]).filter(
-        (key) => key !== "_id" && key !== "__v" && key !== "updatedAt"
-      )
+          (key) => key !== "_id" && key !== "__v" && key !== "updatedAt"
+        )
       : [];
 
   // Headers for the Add form (show all fields)
@@ -107,15 +101,12 @@ export function VulnerabilityData() {
   const filteredData = allVulnerabilityData.filter((item) =>
     Object.values(item).some(
       (value) =>
-        value && value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+        value &&
+        value.toString().toLowerCase().includes(searchTerm.toLowerCase())
     )
   );
 
-
-  const paginatedData = filteredData.slice(
-
-  );
-
+  const paginatedData = filteredData.slice();
 
   // Open modal for editing or adding
   const openModal = (data = null) => {
@@ -130,38 +121,34 @@ export function VulnerabilityData() {
     }
   };
   const handleChecked = (id) => {
-
-    let data = index.filter((item) => item === id)
+    let data = index.filter((item) => item === id);
     if (data.length > 0) {
-      data = index.filter((item) => item !== id)
-      setIndex(data)
+      data = index.filter((item) => item !== id);
+      setIndex(data);
     } else {
-      setIndex((pre) => ([...pre, id]))
+      setIndex((pre) => [...pre, id]);
     }
   };
 
-  const [empName, setEmpName] = useState("")
-  const [vulTitle, setVulTitle] = useState("")
-  const [id, setID] = useState("")
+  const [empName, setEmpName] = useState("");
+  const [vulTitle, setVulTitle] = useState("");
+  const [id, setID] = useState("");
 
   const handleAssignTask = (item) => {
-    setIsOpen(true)
-    setID(item._id)
-    setVulTitle(item.Application_Name)
-
+    setIsOpen(true);
+    setID(item._id);
+    setVulTitle(item.Application_Name);
   };
 
   const handleBulkAssignTask = () => {
-    index.length > 0 ? "" : toast.error("Select Tasks For Assign")
-    setIsOpen(index.length > 0)
-    setID(id)
-
-
+    index.length > 0 ? "" : toast.error("Select Tasks For Assign");
+    setIsOpen(index.length > 0);
+    setID(id);
   };
 
   const handleDownload = (data) => {
     if (data.length < 1) {
-      return alert("Don't Have Enough Data to Download")
+      return alert("Don't Have Enough Data to Download");
     }
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
@@ -170,51 +157,55 @@ export function VulnerabilityData() {
   };
 
   const handleSelectAll = (e) => {
-    const isChecked = e.target.checked
+    const isChecked = e.target.checked;
     const dataId = [];
 
     if (isChecked) {
       paginatedData.map((data) => {
-        dataId.push(data?._id)
-      })
-      setIndex(dataId)
+        dataId.push(data?._id);
+      });
+      setIndex(dataId);
     } else {
       setIndex([]);
     }
-  }
-
-
+  };
 
   const getRowColor = (rank) => {
     return rank % 2 === 0 ? "bg-gray-200" : "bg-white";
   };
 
-
-
   const [selected, setSelected] = useState("");
 
-  let statusList = ["Open", "Closed", "Fix", "Re Open", "On Hold", "Exception", "In Progress"];
+  let statusList = [
+    "Open",
+    "Closed",
+    "Fix",
+    "Re Open",
+    "On Hold",
+    "Exception",
+    "In Progress",
+  ];
 
-  let severityList = ["Critical ", "High", "Medium", "Low", "Informational", "Other"];
+  let severityList = [
+    "Critical ",
+    "High",
+    "Medium",
+    "Low",
+    "Informational",
+    "Other",
+  ];
 
-
-  const { UploadBulkData } = useDataContext()
+  const { UploadBulkData } = useDataContext();
 
   let navigate = useNavigate();
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-
-      {loading ?
-        <Loader /> :
+      {loading ? (
+        <Loader />
+      ) : (
         <div className="p-4 md:p-6 max-w-[100%] mx-auto bg-background ">
-
-
-
-
-
           {/* top 5 Vulnerability */}
-
 
           <div className="py-10 ">
             <div className="overflow-x-auto rounded-lg">
@@ -223,15 +214,23 @@ export function VulnerabilityData() {
                   <tr className="bg-gradient-to-bl from-[#333333] to-[#666666] text-gray-100 uppercase text-sm ">
                     <th className=" border-b">Top Vulnerabilities </th>
                     <th className=" border-b">Vulnerability Name</th>
-                    <th className=" border-b">Total Vulnerability Instances </th>
+                    <th className=" border-b">
+                      Total Vulnerability Instances{" "}
+                    </th>
                     <th className=" border-b">Exploitability </th>
                   </tr>
                 </thead>
                 <tbody>
                   {topVulnerabliltyData?.map((product, index) => (
-                    <tr key={index} className={`text-center border-b hover:bg-gray-300 ${getRowColor(index)}`}>
+                    <tr
+                      key={index}
+                      className={`text-center border-b hover:bg-gray-300 ${getRowColor(
+                        index
+                      )}`}
+                    >
                       <td className="  flex items-center justify-center gap-2">
-                        <FaExclamationTriangle className="text-red-500" /> {index + 1}
+                        <FaExclamationTriangle className="text-red-500" />{" "}
+                        {index + 1}
                       </td>
                       <td className=" ">{product.name}</td>
                       <td className=" ">{product.count}</td>
@@ -243,14 +242,13 @@ export function VulnerabilityData() {
             </div>
           </div>
 
-
           {/* 🔍 Search Bar & Buttons */}
           <div className="mb-4 flex flex-col md:flex-row items-start md:items-center justify-between">
-
             <div className="lg:flex lg:flex-row grid grid-cols-2 gap-4 mt-4   w-full lg:justify-end  lg:items-center py-2 lg:gap-2">
               <button
                 onClick={() => openModal()}
-                className="px-4 py-2 bg-gradient-to-bl from-[#333333] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row">
+                className="px-4 py-2 bg-gradient-to-bl from-[#333333] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
+              >
                 <BiPlus className="h-6 w-6 mr-1" />
                 Add Vulnerability
               </button>
@@ -269,9 +267,7 @@ export function VulnerabilityData() {
                 Export Data
               </button>
 
-              {authenticate.role !== "ClientCISO" &&
-
-
+              {authenticate.role !== "ClientCISO" && (
                 <button
                   onClick={() => setIsRUModalOpen(true)}
                   className="px-4 py-2 bg-gradient-to-bl from-[#333333] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
@@ -279,15 +275,13 @@ export function VulnerabilityData() {
                   <BiPlus className="h-6 w-6" />
                   Report Upload
                 </button>
-              }
-
+              )}
 
               <Modal
                 isOpen={isRUModalOpen}
                 onClose={() => setIsRUModalOpen(false)}
                 title="Report Upload"
                 method={UploadBulkData}
-
               />
             </div>
           </div>
@@ -305,135 +299,168 @@ export function VulnerabilityData() {
             </div>
             {authenticate.role === "Admin" ? (
               <div className=" w-full flex  justify-end gap-2">
-
                 <select
-                  name='Get Organization '
+                  name="Get Organization "
                   value={selected}
                   onChange={(e) => {
-                    setSelected(e.target.value)
-                    GetAssetsOpenIssues(e.target.value)
+                    setSelected(e.target.value);
+                    GetAssetsOpenIssues(e.target.value);
                   }}
-                  className=' px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition'
-                  id="Select_Tester">
-                  <option value="" selected disabled> -- Select  Organization -- </option>
+                  className=" px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                  id="Select_Tester"
+                >
+                  <option value="" selected disabled>
+                    {" "}
+                    -- Select Organization --{" "}
+                  </option>
 
-                  {getOrganizationData?.map((itm, idx) => (<option key={idx} value={itm}>{itm}</option>))}
-
+                  {getOrganizationData?.map((itm, idx) => (
+                    <option key={idx} value={itm}>
+                      {itm}
+                    </option>
+                  ))}
                 </select>
-                <button className="p-1   bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white text-[10px] rounded-lg hover:bg-blue-700 transition"
+                <button
+                  className="p-1   bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white text-[10px] rounded-lg hover:bg-blue-700 transition"
                   onClick={() => {
-                    AllVulnerablilty()
-                    setSelected("")
-                  }}>Clear Filter</button>
+                    AllVulnerablilty();
+                    setSelected("");
+                  }}
+                >
+                  Clear Filter
+                </button>
               </div>
             ) : null}
-
           </div>
 
           {/* 📊 Table */}
-          {paginatedData.length < 1 ? <NoDataFound /> : <div className="overflow-x-auto">
-            <table className="min-w-full border border-gray-300 shadow-sm rounded-lg overflow-hidden">
-              <thead className="bg-gradient-to-r from-[#333333] to-[#666666]  text-gray-100">
-                <tr className="h-10"> {/* Reduced row height */}
-                  <th className="px-3 text-left text-xs font-semibold uppercase">
-                    <input
-                      type="checkbox"
-                      checked={selectAll}
-                      onChange={(e) => {
-                        setSelectAll(!selectAll);
-                        handleSelectAll(e);
-                      }}
-                      className="h-3.5 w-3.5 accent-blue-500"
-                    />
-                  </th>
-                  {tableHeaders?.map((header, index) => (
-                    <th key={index} className="px-3 text-left text-xs font-semibold uppercase">
-                      {header === "createdAt" ? "Created Date" : header.replace(/_/g, " ")}
-                    </th>
-                  ))}
-                  <th className="px-3 py-2 text-left text-xs font-semibold uppercase">Actions</th>
-                </tr>
-              </thead>
-
-              <tbody className="bg-white divide-y divide-gray-200">
-                {paginatedData?.map((item) => (
-                  <tr key={item._id} className="hover:bg-gray-100 transition h-8"> {/* Reduced row height */}
-                    {/* Checkbox Column */}
-                    <td className="px-3 py-2 text-center">
+          {paginatedData.length < 1 ? (
+            <NoDataFound />
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="min-w-full border border-gray-300 shadow-sm rounded-lg overflow-hidden">
+                <thead className="bg-gradient-to-r from-[#333333] to-[#666666]  text-gray-100">
+                  <tr className="h-10">
+                    {" "}
+                    {/* Reduced row height */}
+                    <th className="px-3 text-left text-xs font-semibold uppercase">
                       <input
                         type="checkbox"
-                        checked={index.includes(item._id)}
-                        onChange={() => handleChecked(item._id)}
+                        checked={selectAll}
+                        onChange={(e) => {
+                          setSelectAll(!selectAll);
+                          handleSelectAll(e);
+                        }}
                         className="h-3.5 w-3.5 accent-blue-500"
                       />
-                    </td>
-
-                    {/* Table Data */}
-                    {tableHeaders?.map((field, i) => (
-                      <td key={i} className="px-3 py-2 text-xs text-gray-900 whitespace-nowrap">
-                        {field === "createdAt" || field === "Exception_time"
-                          ? item[field]
-                            ? new Date(item[field]).toLocaleDateString("en-IN", {
-                              day: "2-digit",
-                              month: "short",
-                              year: "numeric",
-                            })
-                            : "-"
-                          : field === "Assigned_To"
-                            ? item[field]?.full_name ?? "-" : field === "Remediated_Date" && item[field] ? excelDateToJSDate(item.
-                              Remediated_Date)
-                              : field === "detailed_Report"
-                                ? item[field] && (
-                                  <a
-                                    className="text-blue-600 underline hover:text-blue-800"
-                                    href={item[field]}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                  >
-                                    View File
-                                  </a>
-                                )
-                                : item[field] || "-"}
-                      </td>
+                    </th>
+                    {tableHeaders?.map((header, index) => (
+                      <th
+                        key={index}
+                        className="px-3 text-left text-xs font-semibold uppercase"
+                      >
+                        {header === "createdAt"
+                          ? "Created Date"
+                          : header.replace(/_/g, " ")}
+                      </th>
                     ))}
-
-                    {/* Action Buttons */}
-                    <td className="px-3 py-2 flex items-center space-x-2">
-                      <button
-                        onClick={() => openModal(item)}
-                        className="text-blue-600 hover:text-blue-800 transition"
-                      >
-                        <BiEditAlt className="h-4 w-4" />
-                      </button>
-                      <button
-                        onClick={() => handleDelete(item._id)}
-                        className="text-red-600 hover:text-red-800 transition"
-                      >
-                        <RiDeleteBinFill className="h-4 w-4" />
-                      </button>
-                      <button
-                        onClick={() => handleAssignTask(item)}
-                        className="text-green-600 hover:text-green-800 transition"
-                      >
-                        <BsPersonCheckFill className="h-4 w-4" />
-                      </button>
-                      <button
-                        onClick={() => navigate(`/chat/${item._id}`, { state: { item } })}
-                        className="text-green-600 hover:text-green-800 transition"
-                      >
-                        <FaSms className="h-4 w-4" />
-                      </button>
-                    </td>
+                    <th className="px-3 py-2 text-left text-xs font-semibold uppercase">
+                      Actions
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>}
+                </thead>
+
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {paginatedData?.map((item) => (
+                    <tr
+                      key={item._id}
+                      className="hover:bg-gray-100 transition h-8"
+                    >
+                      {" "}
+                      {/* Reduced row height */}
+                      {/* Checkbox Column */}
+                      <td className="px-3 py-2 text-center">
+                        <input
+                          type="checkbox"
+                          checked={index.includes(item._id)}
+                          onChange={() => handleChecked(item._id)}
+                          className="h-3.5 w-3.5 accent-blue-500"
+                        />
+                      </td>
+                      {/* Table Data */}
+                      {tableHeaders?.map((field, i) => (
+                        <td
+                          key={i}
+                          className="px-3 py-2 text-xs text-gray-900 whitespace-nowrap"
+                        >
+                          {field === "createdAt" || field === "Exception_time"
+                            ? item[field]
+                              ? new Date(item[field]).toLocaleDateString(
+                                  "en-IN",
+                                  {
+                                    day: "2-digit",
+                                    month: "short",
+                                    year: "numeric",
+                                  }
+                                )
+                              : "-"
+                            : field === "Assigned_To"
+                            ? item[field]?.full_name ?? "-"
+                            : field === "Remediated_Date" && item[field]
+                            ? excelDateToJSDate(item.Remediated_Date)
+                            : field === "detailed_Report"
+                            ? item[field] && (
+                                <a
+                                  className="text-blue-600 underline hover:text-blue-800"
+                                  href={item[field]}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  View File
+                                </a>
+                              )
+                            : item[field] || "-"}
+                        </td>
+                      ))}
+                      {/* Action Buttons */}
+                      <td className="px-3 py-2 flex items-center space-x-2">
+                        <button
+                          onClick={() => openModal(item)}
+                          className="text-blue-600 hover:text-blue-800 transition"
+                        >
+                          <BiEditAlt className="h-4 w-4" />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(item._id)}
+                          className="text-red-600 hover:text-red-800 transition"
+                        >
+                          <RiDeleteBinFill className="h-4 w-4" />
+                        </button>
+                        <button
+                          onClick={() => handleAssignTask(item)}
+                          className="text-green-600 hover:text-green-800 transition"
+                        >
+                          <BsPersonCheckFill className="h-4 w-4" />
+                        </button>
+                        <button
+                          onClick={() =>
+                            navigate(`/chat/${item._id}`, { state: { item } })
+                          }
+                          className="text-green-600 hover:text-green-800 transition"
+                        >
+                          <FaSms className="h-4 w-4" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
 
           {isOpen && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
               <div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
-
                 {/* Header */}
                 <div className="flex justify-between items-center border-b p-4 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] ">
                   <h2 className="text-lg font-semibold text-gray-200">
@@ -447,15 +474,25 @@ export function VulnerabilityData() {
                   </button>
                 </div>
                 <div className="p-10">
-                  <label htmlFor="employees" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an Employee</label>
+                  <label
+                    htmlFor="employees"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Select an Employee
+                  </label>
                   <select
                     onChange={(e) => setEmpName(e.target.value)}
                     id="employees"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                   >
-                    <option selected disabled>Select a Employee</option>
-                    {allEmployeesData?.map((item, idx) => (<option key={idx} value={item._id}>{item.full_name}</option>))}
-
+                    <option selected disabled>
+                      Select a Employee
+                    </option>
+                    {allEmployeesData?.map((item, idx) => (
+                      <option key={idx} value={item._id}>
+                        {item.full_name}
+                      </option>
+                    ))}
                   </select>
 
                   <div className="col-span-1 md:col-span-2 flex justify-end gap-2 mt-4 border-t pt-4">
@@ -468,14 +505,19 @@ export function VulnerabilityData() {
                     <button
                       onClick={() => {
                         if (!id) {
-                          BulkAssignTask(empName, index)
-                          setIsOpen(false)
-                          CreateNotifications(empName, `${index.length} Tasks Assign to you`)
-                        }
-                        else {
-                          AssignTask(empName, id)
-                          setIsOpen(false)
-                          CreateNotifications(empName, `${vulTitle} has Assign a New Task To You`)
+                          BulkAssignTask(empName, index);
+                          setIsOpen(false);
+                          CreateNotifications(
+                            empName,
+                            `${index.length} Tasks Assign to you`
+                          );
+                        } else {
+                          AssignTask(empName, id);
+                          setIsOpen(false);
+                          CreateNotifications(
+                            empName,
+                            `${vulTitle} has Assign a New Task To You`
+                          );
                         }
                       }}
                       className="px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white rounded-md hover:bg-blue-700 transition"
@@ -484,7 +526,6 @@ export function VulnerabilityData() {
                     </button>
                   </div>
                 </div>
-
               </div>
             </div>
           )}
@@ -493,7 +534,6 @@ export function VulnerabilityData() {
           {isModalOpen && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-10">
               <div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
-
                 {/* Header */}
                 <div className="flex justify-between items-center border-b p-4 bg-gradient-to-bl from-[#333333] to-[#666666]">
                   <h2 className="text-lg font-semibold text-gray-200">
@@ -512,80 +552,102 @@ export function VulnerabilityData() {
                   initialValues={editData || {}}
                   onSubmit={(values) => {
                     //console.log(values, "hero in formik")
-                    editMode ? UpdateData(values, editData._id) : AddData(values);
+                    editMode
+                      ? UpdateData(values, editData._id)
+                      : AddData(values);
 
-
-
-                    if (values.Status === "Exception") { orgnizationNotification(values.Organization, `${values.Title} is Move to Exception by ${authenticate.full_name}`) }
+                    if (values.Status === "Exception") {
+                      orgnizationNotification(
+                        values.Organization,
+                        `${values.Title} is Move to Exception by ${authenticate.full_name}`
+                      );
+                    }
                     setIsModalOpen(false);
                   }}
                 >
-                  {({ setFieldValue, values }) => (  // ✅ Access setFieldValue here
+                  {(
+                    { setFieldValue, values } // ✅ Access setFieldValue here
+                  ) => (
                     <Form className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
                       {(editMode ? editFormHeaders : addFormHeaders).map(
                         (field) =>
-                          field !== "creator" && field !== "Exception_time" && (
+                          field !== "creator" &&
+                          field !== "Exception_time" && (
                             <div key={field} className="flex flex-col">
                               <label className="text-sm font-medium text-gray-700">
                                 {field.replace(/_/g, " ")}
                               </label>
 
-                              {
-
-
-                                field === "Assigned_To" ? (
-                                  <select
-                                    className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
-                                    name="Assigned_To"
-                                    onChange={(e) => setFieldValue("Assigned_To", e.target.value)}
-                                    defaultValue=""
-                                  >
-                                    <option disabled value="">--- Select a Tester ---</option>
-                                    {allEmployeesData?.map((item, idx) => (
-                                      <option key={idx} value={item._id}>{item.full_name}</option>
-                                    ))}
-                                  </select>
-                                )
-
-                                  : field === "Severity" ? (
-                                    <select
-                                      className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
-                                      name="Severity"
-                                      onChange={(e) => setFieldValue("Severity", e.target.value)}
-                                      defaultValue=""
-                                    >
-                                      <option disabled value="">--- Select a Severity ---</option>
-                                      {severityList?.map((item, idx) => (
-                                        <option key={idx} value={item}>{item}</option>
-                                      ))}
-                                    </select>
-                                  )
-
-                                    : field === "Status" ? (
-                                      <select
-                                        className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
-                                        name="Status"
-                                        onChange={(e) => setFieldValue("Status", e.target.value)}
-                                        defaultValue=""
-                                      >
-                                        <option disabled value="">--- Select a Status ---</option>
-                                        {statusList.map((item, idx) => (
-                                          <option key={idx} value={item}>{item}</option>
-                                        ))}
-                                      </select>
+                              {field === "Assigned_To" ? (
+                                <select
+                                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                                  name="Assigned_To"
+                                  onChange={(e) =>
+                                    setFieldValue("Assigned_To", e.target.value)
+                                  }
+                                  defaultValue=""
+                                >
+                                  <option disabled value="">
+                                    --- Select a Tester ---
+                                  </option>
+                                  {allEmployeesData?.map((item, idx) => (
+                                    <option key={idx} value={item._id}>
+                                      {item.full_name}
+                                    </option>
+                                  ))}
+                                </select>
+                              ) : field === "Severity" ? (
+                                <select
+                                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                                  name="Severity"
+                                  onChange={(e) =>
+                                    setFieldValue("Severity", e.target.value)
+                                  }
+                                  defaultValue=""
+                                >
+                                  <option disabled value="">
+                                    --- Select a Severity ---
+                                  </option>
+                                  {severityList?.map((item, idx) => (
+                                    <option key={idx} value={item}>
+                                      {item}
+                                    </option>
+                                  ))}
+                                </select>
+                              ) : field === "Status" ? (
+                                <select
+                                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                                  name="Status"
+                                  onChange={(e) =>
+                                    setFieldValue("Status", e.target.value)
+                                  }
+                                  defaultValue=""
+                                >
+                                  <option disabled value="">
+                                    --- Select a Status ---
+                                  </option>
+                                  {statusList.map((item, idx) => (
+                                    <option key={idx} value={item}>
+                                      {item}
+                                    </option>
+                                  ))}
+                                </select>
+                              ) : field === "Remediate_Upcoming_Time_Line" ? (
+                                <InputField
+                                  type="date"
+                                  onChange={(e) =>
+                                    setFieldValue(
+                                      "Remediate_Upcoming_Time_Line",
+                                      e.target.value
                                     )
-
-                                      :
-                                      field === "Remediate_Upcoming_Time_Line" ? <InputField
-
-                                        type="date"
-                                        onChange={(e) => setFieldValue("Remediate_Upcoming_Time_Line", e.target.value)}
-                                      /> : (
-                                        <Field
-                                          name={field}
-                                          className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
-                                        />
-                                      )}
+                                  }
+                                />
+                              ) : (
+                                <Field
+                                  name={field}
+                                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                                />
+                              )}
                             </div>
                           )
                       )}
@@ -594,7 +656,9 @@ export function VulnerabilityData() {
                         <InputField
                           label="Exception Date"
                           type="date"
-                          onChange={(e) => setFieldValue("Expection_time", e.target.value)}
+                          onChange={(e) =>
+                            setFieldValue("Expection_time", e.target.value)
+                          }
                         />
                       )}
 
@@ -615,27 +679,23 @@ export function VulnerabilityData() {
                         </button>
                       </div>
                     </Form>
-
-
                   )}
                 </Formik>
-
               </div>
             </div>
           )}
 
           <div className="flex justify-between items-center my-16">
             <button
-              className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
+              className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white border rounded-md ${
+                page === 1 ? "opacity-50 cursor-not-allowed" : ""
+              }`}
               disabled={page === 1}
               onClick={() => setPage(page - 1)}
             >
               Previous
             </button>
-            <span>
-              Page {page}
-
-            </span>
+            <span>Page {page}</span>
             <button
               className={`px-4 py-2 border rounded-md  text-white bg-gradient-to-tr from-[#1f1d1d] to-[#666666] `}
               disabled={allVulnerabilityData?.length < 10}
@@ -644,9 +704,8 @@ export function VulnerabilityData() {
               Next
             </button>
           </div>
-        </div>}
-
-    
-    </Suspense >
+        </div>
+      )}
+    </Suspense>
   );
 }

@@ -266,12 +266,7 @@ console.log("authenticate",authenticate)
 										className='w-full px-4 py-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 text-sm focus:border-transparent outline-none transition'
 										id="Select_Org">
 										<option value="" disabled> -- Select Orgnization -- </option>
-
-
 										{getOrgnizationData?.map((itm, idx) => (<option key={idx} value={itm._id}>{itm.Organization}</option>))}
-
-
-
 									</select>
 									{touched.Orgenization_id && errors.Orgenization_id && <p className='text-red-700 text-xs'> {errors.Orgenization_id}</p>}
 								</div>}

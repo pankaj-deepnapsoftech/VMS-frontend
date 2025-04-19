@@ -4,7 +4,7 @@ import { FaPersonBooth } from "react-icons/fa";
 import { GrVulnerability } from "react-icons/gr";
 import { IoPerson, IoShield, IoShieldHalf } from "react-icons/io5";
 import { FaPerson } from "react-icons/fa6";
-import { MdOutlineMiscellaneousServices } from "react-icons/md";
+import { MdInventory2, MdOutlineMiscellaneousServices } from "react-icons/md";
 import { SiWikimediafoundation } from "react-icons/si";
 import { TbReport } from "react-icons/tb";
 import { Bug, CalendarClock, Settings, Table, UserCircle, Users } from "lucide-react";
@@ -12,6 +12,7 @@ import { Bug, CalendarClock, Settings, Table, UserCircle, Users } from "lucide-r
 export const list = [
     { title: "Dashboard", route: "", icon: BiSolidDashboard },
     { title: "Scheduling Assesment", route: "/scheduling-assesment", icon: CalendarClock },
+    { title: "Assert Inventory", route: "/assert-inventory", icon: MdInventory2 },
     { title: "Employees", route: "/all-employee", icon: Users },
     { title: "Customers", route: "/all-customer", icon: UserCircle },
     { title: "Vulnerability Data", route: "/vulnerability-data", icon: Bug },
@@ -41,8 +42,6 @@ export const ClientSmeList = [
     { title: "Exceptions", route: "/exceptions", icon: AiOutlineException },
     { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
     { title: "Reports", route: "/reports", icon: TbReport },
-
-
 ]
 
 

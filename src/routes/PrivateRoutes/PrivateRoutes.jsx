@@ -15,6 +15,7 @@ import EmployeeDashboard from "@/pages/EmployeDashboard";
 import SchedulingAssessmentPage from "@/pages/SchedulingAssessment";
 import Reports from "@/pages/Reports";
 import ChatPage from "@/pages/ChatPage";
+import { AssertInventory } from "@/pages/AssertInventory";
 
 
 export const PrivateRoutes = [
@@ -71,5 +72,9 @@ export const PrivateRoutes = [
     {
         path: "/chat/:chatId",
         element: <ChatPage />
+    },
+    {
+        path: "/assert-inventory",
+        element: <AssertInventory />
     },
 ]
