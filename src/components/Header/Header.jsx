@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react'
 import { BiBarChartAlt2, BiSolidDashboard } from 'react-icons/bi';
 import { MdOutlineMiscellaneousServices } from "react-icons/md";
@@ -28,11 +29,12 @@ function Header({ setShowMenu }) {
   };
 
 
+
   let navList = [];
 
   switch (authenticate?.role) {
     case "ClientCISO":
-      navList = ClientCisoList; // Define if ClientCTO has a specific list
+      navList = ClientCisoList.filter((item) => authenticate.allowed_paths.some((ite) => item.route === ite.value)); // Define if ClientCTO has a specific list
       break;
     case "Assessor":
       navList = EmployeeList;

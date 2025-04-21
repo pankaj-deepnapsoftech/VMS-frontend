@@ -18,11 +18,13 @@ export default function AllCustomer() {
     setPage,
     setDataCount,
     dataCount,
+    
   } = useAllCustomerContext();
 
   const { VerifyEmployee } = useAllEmployeeContext();
   
     const [isChecked, setIsChecked] = useState(false);
+    const [dataId,setDataId] = useState(null);
 
   const { token } = useAuthContext();
 
@@ -117,7 +119,7 @@ export default function AllCustomer() {
                           </button>
                         )}
                       </td>
-                      <td onClick={()=>setIsChecked(!isChecked)} className="px-2 py-1 border text-md font-medium">
+                      <td onClick={()=>{setIsChecked(!isChecked),setDataId(user._id)}} className="px-2 py-1 border text-md font-medium">
                         <IoShieldCheckmarkSharp size={24} color="#0092ca" />
                       </td>
                     </tr>
@@ -152,7 +154,7 @@ export default function AllCustomer() {
       )}
 
       <div className="h-full w-full flex items-center justify-center" >
-        {isChecked && <AllowedModal setIsChecked={setIsChecked} isChecked={isChecked} />}
+        {isChecked && <AllowedModal setIsChecked={setIsChecked} isChecked={isChecked} id={dataId} />}
       </div>
     </>
   );

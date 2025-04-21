@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 
 export const authContext = createContext();
 
+// eslint-disable-next-line react/prop-types
 const AuthContextProvider = ({ children }) => {
   let navigate = useNavigate();
 

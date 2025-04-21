@@ -12,7 +12,7 @@ import { VulnerabilityData } from "@/pages/VulnerablityData";
 
 export const ClientCisoRoutes = [
     {
-        path: "",
+        path: "/",
         element: <Home />
     },
     {
