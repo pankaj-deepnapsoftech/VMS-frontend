@@ -65,9 +65,26 @@ const AuthContextProvider = ({ children }) => {
   const Signup = async (data) => {
     const toastId = toast.loading("Loading...");
 
+    console.log(data);
+
+    let newData ;
+
+    if(data.role !== "ClientSME"){
+      newData = {
+        Organization:data.Organization,
+        email:data.email,
+        full_name:data.full_name,
+        password:data.password,
+        phone:data.phone,
+        role:data.role
+      }
+    } else{
+      newData = data
+    }
+
     setLoading(true);
     try {
-      const res = await AxiosHandler.post("/auth/create", data);
+      const res = await AxiosHandler.post("/auth/create", newData);
 
       if (authenticate?.role === "ClientCISO") {
         navigate("/");
