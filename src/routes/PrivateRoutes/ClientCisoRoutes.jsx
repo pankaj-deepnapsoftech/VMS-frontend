@@ -16,7 +16,7 @@ export const ClientCisoRoutes = [
         element: <Home />
     },
     {
-        path: "/scheduled-tasks",
+        path: "/Scheduling Assesment",
         element: <SchedulingAssessmentPage />
     },
     {

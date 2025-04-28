@@ -1,14 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react'
-import { BiBarChartAlt2, BiSolidDashboard } from 'react-icons/bi';
-import { MdOutlineMiscellaneousServices } from "react-icons/md";
-import { GrVulnerability } from "react-icons/gr";
-import { AiOutlineException } from "react-icons/ai";
-import { SiWikimediafoundation } from "react-icons/si";
 import { Link, NavLink } from 'react-router-dom';
 import { ClientCisoList, ClientSmeList, EmployeeList, list } from '@/constants/constants.data';
 import { useAuthContext } from '@/context';
-import { FaShieldAlt, FaUser } from 'react-icons/fa';
 import { IoIosLogOut } from 'react-icons/io';
 import toast from 'react-hot-toast';
 
@@ -16,7 +10,7 @@ import toast from 'react-hot-toast';
 
 function Header({ setShowMenu }) {
 
-  const { Logout, loading, authenticate } = useAuthContext()
+  const { Logout, authenticate } = useAuthContext()
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -43,7 +37,7 @@ function Header({ setShowMenu }) {
       navList = list;
       break;
     case "ClientSME":
-      navList = ClientSmeList; // Define if ClientSME has a specific list
+      navList = ClientSmeList.filter((item) => authenticate.allowed_paths.some((ite) => item.route === ite.value));
       break;
     default:
       // console.log("Invalid Role: Access Denied");

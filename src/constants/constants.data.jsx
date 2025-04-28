@@ -12,7 +12,7 @@ import { Bug, CalendarClock, Settings, Table, UserCircle, Users } from "lucide-r
 export const list = [
     { title: "Dashboard", route: "", icon: BiSolidDashboard },
     { title: "Scheduling Assesment", route: "/scheduling-assesment", icon: CalendarClock },
-    { title: "Assert Inventory", route: "/assert-inventory", icon: MdInventory2 },
+    { title: "Asset Inventory", route: "/assert-inventory", icon: MdInventory2 },
     { title: "Employees", route: "/all-employee", icon: Users },
     { title: "Customers", route: "/all-customer", icon: UserCircle },
     { title: "Vulnerability Data", route: "/vulnerability-data", icon: Bug },
@@ -34,7 +34,7 @@ export const EmployeeList = [
 ]
 
 export const ClientSmeList = [
-    { title: "Dashboard", route: "", icon: BiSolidDashboard },
+    { title: "Dashboard", route: "/", icon: BiSolidDashboard },
     { title: "Scheduling Assesment", route: "/scheduling-assesment", icon: BiSolidDashboard },
     { title: "Vulnerability Data", route: "/vulnerability-data", icon: IoShield },
     { title: "Application Vulnerability", route: "/application-vulnerability", icon: MdOutlineMiscellaneousServices },
@@ -48,7 +48,7 @@ export const ClientSmeList = [
 export const ClientCisoList = [
     // { title: "Dashboard", route: "/", icon: BiSolidDashboard },
     { title: "Dashboard", route: "/", icon: BiSolidDashboard },
-    { title: "Scheduled Tasks", route: "/scheduled-tasks", icon: IoShieldHalf },
+    { title: "Scheduling Assesment", route: "/scheduling-assesment", icon: IoShieldHalf },
     { title: "All Employee", route: "/all-employee", icon: FaPerson },
     { title: "Vulnerability Data", route: "/vulnerability-data", icon: IoShield },
     { title: "Application Vulnerability", route: "/application-vulnerability", icon: MdOutlineMiscellaneousServices },

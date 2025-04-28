@@ -7,19 +7,13 @@ import { FaBell } from "react-icons/fa";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { NotificationSidebar } from "@components/modal/NotificationSideBar";
 
-import { Link } from "react-router-dom";
 import {
-  useAuthContext,
-  useDataContext,
   useVulnerabililtyDataContext,
 } from "@/context";
 
 const MainLayout = () => {
-  const navigate = useNavigate();
   const { notificationData, NotificationsViewed } =
     useVulnerabililtyDataContext();
-  const { loading } = useDataContext();
-  const { authenticate } = useAuthContext();
 
   const [width, setWidth] = useState(window.innerWidth);
   const [temp, setTemp] = useState("");

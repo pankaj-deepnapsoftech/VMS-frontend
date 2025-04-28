@@ -59,7 +59,7 @@ Applies mass vulnerability fixes based on predefined categories, accelerating th
       <Header />
       {/* Premium Security */}
       <div className="bg-gradient-to-r from-[#0D1421] to-[#0D3A78] text-white py-12 px-4 md:px-8 lg:px-16 relative overflow-hidden">
-        <div className="absolute top-[35%] -translate-y-[50%] left-[700px] ">
+        <div className="absolute top-[43%] -translate-y-[50%] right-28 ">
           <div className="flex flex-col items-center justify-center">
             <img
               src="/logo.png"
