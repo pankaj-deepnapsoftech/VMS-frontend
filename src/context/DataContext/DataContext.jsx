@@ -24,11 +24,12 @@ const DataContextProvider = ({ children }) => {
 
     const [exploitability,setExploitability] = useState([]);
 
-  const { token } = useAuthContext();
+  const { token, authenticate } = useAuthContext();
 
   const getHomeCardData = async () => {
     try {
       const res = await AxiosHandler.get("/data/total-data-count");
+      console.log('authenticate', authenticate)
       setCardData(res.data);
     } catch (error) {
       console.log(error);
@@ -36,6 +37,30 @@ const DataContextProvider = ({ children }) => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (authenticate !== null && Array.isArray(authenticate.allowed_paths)) {
+      const allowedValues = authenticate.allowed_paths.map(route => route?.value);
+
+      const updatedCardData = { ...cardData };
+
+      if (!allowedValues.includes('/exceptions')) {
+        updatedCardData.Exceptions = 0;
+      }
+      if (!allowedValues.includes('/application-vulnerability')) {
+        updatedCardData.Application = 0;
+      }
+      if (!allowedValues.includes('/infrastructure-vulnerability')) {
+        updatedCardData.Infrastructure = 0;
+      }
+      if (!allowedValues.includes('/remedition')) {
+        updatedCardData.inProgress = 0;
+      }
+      setCardData(updatedCardData);
+    
+    }
+  }, [authenticate]);
+
 
   const UploadBulkData = async (data) => {
     const toastId = toast.loading("Loading...");

@@ -37,10 +37,9 @@ function Home() {
     criticalHighVulnerableOverdue,
     exploitability
   } = useDataContext();
-
+  console.log('all cards data =', cardData)
 
   const closevulnerableItemsData = [closevulnerableItems];
-  console.log("jsghidublrj", closevulnerableItemsData)
   const data = [
     { name: "Open", value: cardData?.open },
     { name: "Re Open", value: cardData?.reopen },
@@ -64,10 +63,6 @@ function Home() {
     vulnerableItemsByAgeData.Low,
     vulnerableItemsByAgeData.Info,
   ];
-
-
-
-  console.log("vulnerableItemsByAgeData", dataList);
 
   const newData = vulnerableItemsByRiskRatingData?.map((item) => ({
     date: item.month,

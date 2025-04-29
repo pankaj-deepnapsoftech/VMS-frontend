@@ -23,7 +23,7 @@ const AuthContextProvider = ({ children }) => {
     setUserLoading(true)
     try {
       const res = await AxiosHandler.get("/auth/logedin-user");
-      setAuthenticate(res.data.data)
+      setAuthenticate(res.data.data);
     } catch (error) {
       console.log(error)
     } finally {
