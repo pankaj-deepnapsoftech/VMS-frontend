@@ -22,9 +22,7 @@ export default function AllEmployee() {
 		= useAllEmployeeContext();
 
 
-
-
-	const { authenticate, token, Signup, ChangeStatus,loading:authloading } = useAuthContext();
+	const { authenticate, token, Signup, ChangeStatus, loading: authloading } = useAuthContext();
 
 	useEffect(() => {
 		if (token && datafetchCount === 0) {
@@ -32,7 +30,7 @@ export default function AllEmployee() {
 			authenticate?.role === "ClientCISO" ? AllClientSME() : AllEmployee();
 			setdatafetchCount(1);
 		}
-	}, [token, page,authloading])
+	}, [token, page, authloading])
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 

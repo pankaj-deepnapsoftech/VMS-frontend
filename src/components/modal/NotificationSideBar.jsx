@@ -39,7 +39,7 @@ export function NotificationSidebar({ notifications, isOpen, onClose, notificati
 									notificationsViewed(notification?._id);
 									if (authenticate.role === "Assessor") {
 										onClose()
-										navigate("/all-employee-tasks")
+										navigate("/employee-tasks")
 									}
 
 								}}
