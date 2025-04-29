@@ -248,8 +248,12 @@ function SchedulingAssessmentPage() {
 										id="Select_Tester">
 										<option value="" disabled> -- Select  Tester -- </option>
 
-
-										{testerData?.map((itm, idx) => (<option key={idx} value={itm._id}>{itm.full_name}</option>))}
+										
+										{testerData?.filter(itm => itm.deactivate).map((itm, idx) => (
+											<option key={idx} value={itm._id}>
+												{itm.full_name}
+											</option>
+										))}
 
 
 
@@ -474,7 +478,6 @@ function SchedulingAssessmentPage() {
 														id="Type_Of_Assesment">
 														<option value="" disabled> -- Select Type of Assesment -- </option>
 
-
 														<option value={"Secure Code Scan"}>Secure Code Scan
 														</option>
 
@@ -488,6 +491,10 @@ function SchedulingAssessmentPage() {
 														<option value={"Infrastructure Vulnerability Scan"}>Infrastructure Vulnerability Scan</option>
 
 														<option value={"Infrastructure Penetration Testing"}>Infrastructure Penetration Testing</option>
+														<option value={"Mobile Application Penetration Test"}>Mobile Application Penetration Test</option>
+														<option value={"Red Team exercise"}>Red Team exercise</option>
+														<option value={"Attack Simulation Exercise"}>Attack Simulation Exercise</option>
+														<option value={"Configuration Audits"}>Configuration Audits</option>
 
 
 													</select>
