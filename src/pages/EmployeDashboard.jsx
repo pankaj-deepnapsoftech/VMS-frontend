@@ -47,37 +47,37 @@ function EmployeeDashboard() {
       chartColor: "#FFF",
     },
     {
-      title: "Low",
+      title: "Open",
       value: employeeCardData?.open,
       color: "from-[#0D99FF] to-[#74C0FC]", // Figma Blue gradient
       icon: IoShieldOutline,
       chartColor: "#FFF",
     },
     {
-      title: "Medium",
+      title: "Re Open",
       value: employeeCardData?.reopen,
       color: "from-[#63A833] to-[#9EE999]", // Figma Cyan gradient
       icon: IoShieldOutline,
       chartColor: "#FFF",
     }, 
      {
-      title: "Critical",
+      title: "In Progress",
       value: employeeCardData?.inProgress,
       icon: IoShieldCheckmarkOutline,
       color: "from-[#0D99FF] to-[#74C0FC]", // Dark Gray gradient
       chartColor: "#FFF",
     },{
-      title: "Critical",
+      title: "Closed",
       value: employeeCardData?.closed
       ,
       icon: IoShieldCheckmarkOutline,
       color: "from-[#63A833] to-[#6EE999]", // Dark Gray gradient
       chartColor: "#FFF",
     },{
-      title: "Critical",
+      title: "On Hold",
       value: employeeCardData?.onHold,
       icon: IoShieldCheckmarkOutline,
-      color: "from-[#333333] to-[#666666]", // Dark Gray gradient
+      color: "from-[#F24E1E] to-[#FF866B]", // Dark Gray gradient
       chartColor: "#FFF",
     },
   ];
