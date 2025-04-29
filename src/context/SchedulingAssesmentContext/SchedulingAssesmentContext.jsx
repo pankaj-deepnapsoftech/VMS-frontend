@@ -99,7 +99,7 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 	}
 
 	const UpdateAssesment = async (id, data) => {
-		//console.log(data, "data in context ")
+		console.log(data, "data in context ")
 		const toastId = toast.loading("Loading...");
 		try {
 			const res = await AxiosHandler.patch(`/assessment/update/${id}`, data);
@@ -135,6 +135,19 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 		}
 	}
 
+	const CreateNotifications = async (reciver_id, title) => {
+		console.log('notification create')
+		try {
+			const res = await AxiosHandler.post(`/notification/create`, {
+				reciver_id,
+				title,
+			});
+		} catch (error) {
+			console.log(error);
+			toast.error(error?.response?.data?.message);
+		}
+	};
+
 	return (
 		<AssesmentContext.Provider value={{
 			loading,
@@ -152,7 +165,10 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 			GetOrgnization,
 			TotalAssessments,
 			TesterForAssessment,
-			DashboardData
+			DashboardData,
+
+
+			CreateNotifications
 		}}>
 			{children}
 		</AssesmentContext.Provider>

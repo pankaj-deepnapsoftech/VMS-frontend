@@ -9,7 +9,7 @@ import { FaDatabase, FaFingerprint } from 'react-icons/fa6';
 import { RiDeleteBinFill, RiShieldCheckFill } from 'react-icons/ri';
 import { IoMdAirplane } from 'react-icons/io';
 import { MdClose, MdSchedule } from 'react-icons/md';
-import { useAuthContext, useScheduleAssessmentContext } from '@/context';
+import { useAuthContext, useScheduleAssessmentContext, useVulnerabililtyDataContext } from '@/context';
 import Loader from '@/components/Loader/Loader';
 import NoDataFound from '@/components/NoDataFound';
 
@@ -31,8 +31,11 @@ function SchedulingAssessmentPage() {
 		GetOrgnization,
 		TotalAssessments,
 		TesterForAssessment,
-		DashboardData
+		DashboardData,
 
+
+
+		CreateNotifications
 	} = useScheduleAssessmentContext();
 
 
@@ -86,7 +89,6 @@ function SchedulingAssessmentPage() {
 
 	const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 	const [selectedAssessment, setSelectedAssessment] = useState(null);
-console.log("authenticate",authenticate)
 
 	const { values, errors, touched, handleBlur, handleChange, handleSubmit, setFieldValue, resetForm, setValues } = useFormik({
 		initialValues: {
@@ -106,13 +108,18 @@ console.log("authenticate",authenticate)
 			Object.entries(value).forEach(([key, value]) => {
 				formData.append(key, value);
 			});
+
 			if (selectedAssessment) {
-				UpdateAssesment(selectedAssessment._id, formData);
+				UpdateAssesment(selectedAssessment._id, formData);		
 				setSelectedAssessment(null)
 				setIsUpdateModalOpen(false);
 			} else {
 				SchedulingAssesment(formData);
 			}
+			CreateNotifications(
+				value.Select_Tester,
+				`Scheduling assesment assign to you`
+			);
 			resetForm();
 		}
 	})
@@ -121,7 +128,6 @@ console.log("authenticate",authenticate)
 		setValues(assessment)
 		setSelectedAssessment(assessment);
 		setIsUpdateModalOpen(true);
-
 	};
 
 
@@ -130,8 +136,6 @@ console.log("authenticate",authenticate)
 			{/* Main Content */}
 			{loading ? <Loader /> : <main className="container mx-auto px-4 py-8">
 				<section className="mb-8">
-
-
 					{/* Form Section */}
 					{(authenticate.role === "ClientSME" || authenticate.role === "Admin") && <div className=" flex  gap-6 mb-8 bg-gray-100 p-4  rounded-lg ">
 						<form onSubmit={handleSubmit} className="space-y-5 w-full flex flex-col ">
