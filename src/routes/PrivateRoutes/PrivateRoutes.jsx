@@ -16,6 +16,7 @@ import SchedulingAssessmentPage from "@/pages/SchedulingAssessment";
 import Reports from "@/pages/Reports";
 import ChatPage from "@/pages/ChatPage";
 import { AssertInventory } from "@/pages/AssertInventory";
+import ChangePassword from "@/pages/ChangePassword";
 
 
 export const PrivateRoutes = [
@@ -76,5 +77,9 @@ export const PrivateRoutes = [
     {
         path: "/assert-inventory",
         element: <AssertInventory />
+    },
+    {
+        path: "/change-password",
+        element: <ChangePassword />
     },
 ]

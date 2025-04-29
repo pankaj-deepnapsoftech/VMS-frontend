@@ -8,6 +8,7 @@ import { MdInventory2, MdOutlineMiscellaneousServices } from "react-icons/md";
 import { SiWikimediafoundation } from "react-icons/si";
 import { TbReport } from "react-icons/tb";
 import { Bug, CalendarClock, Settings, Table, UserCircle, Users } from "lucide-react";
+import { TbLockPassword } from "react-icons/tb";
 
 export const list = [
     { title: "Dashboard", route: "", icon: BiSolidDashboard },
@@ -23,6 +24,7 @@ export const list = [
     { title: "Exceptions", route: "/exceptions", icon: AiOutlineException },
     // { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
     { title: "Reports", route: "/reports", icon: TbReport },
+    {title:"Change Password",route:"/change-password", icon:TbLockPassword }
 ];
 
 
@@ -30,6 +32,7 @@ export const EmployeeList = [
     { title: "Dashboard", route: "", icon: BiSolidDashboard },
     { title: "All Tasks", route: "/employee-tasks", icon: IoShieldHalf },
     { title: "Reports", route: "/reports", icon: TbReport },
+    {title:"Change Password",route:"/change-password", icon:TbLockPassword }
 
 ]
 
@@ -42,6 +45,7 @@ export const ClientSmeList = [
     { title: "Exceptions", route: "/exceptions", icon: AiOutlineException },
     { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
     { title: "Reports", route: "/reports", icon: TbReport },
+    {title:"Change Password",route:"/change-password", icon:TbLockPassword }
 ]
 
 
@@ -56,6 +60,7 @@ export const ClientCisoList = [
     { title: "Exceptions", route: "/exceptions", icon: AiOutlineException },
     { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
     { title: "Reports", route: "/reports", icon: TbReport },
+    {title:"Change Password",route:"/change-password", icon:TbLockPassword },
 
 ]
 

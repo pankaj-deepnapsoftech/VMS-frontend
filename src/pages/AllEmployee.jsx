@@ -4,7 +4,7 @@ import NoDataFound from "@/components/NoDataFound";
 import { useAllEmployeeContext, useAuthContext } from "@/context";
 import { BaseValidationSchema } from "@/Validation/AuthValidation";
 import { useFormik } from "formik";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { FaCompass, FaEnvelope, FaLock, FaPhone, FaUser } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
@@ -16,7 +16,6 @@ export default function AllEmployee() {
 		page,
 		setPage,
 		VerifyEmployee,
-		EmployeeData,
 		datafetchCount,
 		setdatafetchCount,
 		AllEmployee, AllClientSME }
@@ -25,7 +24,7 @@ export default function AllEmployee() {
 
 
 
-	const { authenticate, token, Signup } = useAuthContext();
+	const { authenticate, token, Signup, ChangeStatus,loading:authloading } = useAuthContext();
 
 	useEffect(() => {
 		if (token && datafetchCount === 0) {
@@ -33,7 +32,7 @@ export default function AllEmployee() {
 			authenticate?.role === "ClientCISO" ? AllClientSME() : AllEmployee();
 			setdatafetchCount(1);
 		}
-	}, [token, page])
+	}, [token, page,authloading])
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -55,7 +54,19 @@ export default function AllEmployee() {
 			setIsModalOpen(false);
 
 		}
-	})
+	});
+
+	const handleChangeStatus = (type, id) => {
+		switch (type) {
+			case "activate":
+				ChangeStatus({ deactivate: true }, id);
+				break;
+			// eslint-disable-next-line no-duplicate-case
+			case "deactivate":
+				ChangeStatus({ deactivate: false }, id);
+				break;
+		}
+	}
 
 	return (
 
@@ -211,7 +222,7 @@ export default function AllEmployee() {
 				</div>
 
 				{/* Table */}
-				{allEmployeesData.length<1?<NoDataFound/>:<div className="overflow-x-auto rounded-lg">
+				{allEmployeesData.length < 1 ? <NoDataFound /> : <div className="overflow-x-auto rounded-lg">
 					<table className="table-auto w-full border-collapse border border-gray-200">
 						<thead className="bg-gradient-to-bl from-[#333333] to-[#666666] text-white">
 							<tr>
@@ -221,6 +232,7 @@ export default function AllEmployee() {
 								<th className="px-4 py-1 text-sm  border text-left">Phone</th>
 								<th className="px-4 py-1 text-sm  border text-left">Role</th>
 								<th className="px-4 py-1 text-sm  border text-left">Approval Status</th>
+								<th className="px-4 py-1 text-sm  border text-left">Status</th>
 								{/* <th className="px-4 py-3 border text-left">Action</th> */}
 							</tr>
 						</thead>
@@ -247,6 +259,11 @@ export default function AllEmployee() {
 											Verify
 										</button>
 										}
+									</td>
+
+									<td className="px-2 py-1 border">
+										{user?.deactivate ? <button onClick={() => handleChangeStatus("deactivate", user._id)} type="button" className="bg-green-400 text-white px-3 py-1 rounded-2xl" >Activate</button>
+											: <button type="button" onClick={() => handleChangeStatus("activate", user._id)} className="bg-red-400 text-white px-3 py-1 rounded-2xl" >Deactivate</button>}
 									</td>
 									{/* <td className="px-4 py-3 border">
 									

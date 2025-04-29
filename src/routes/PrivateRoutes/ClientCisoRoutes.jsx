@@ -1,5 +1,6 @@
 import AllEmployee from "@/pages/AllEmployee";
 import ApplicationVulnerability from "@/pages/ApplicationVulnerability";
+import ChangePassword from "@/pages/ChangePassword";
 import ClientDashboard from "@/pages/ClientDashboard";
 import Exceptions from "@/pages/Exceptions";
 import Home from "@/pages/Home";
@@ -46,4 +47,9 @@ export const ClientCisoRoutes = [
     {
         path: "/remedition",
         element: <Remedition />
-    }]
+    },
+    {
+        path: "/change-password",
+        element: <ChangePassword />
+    },
+]
