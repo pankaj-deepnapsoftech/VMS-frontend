@@ -23,19 +23,6 @@ const ExceptionContextProvider = ({ children }) => {
 
 
 
-
-	const AdminExcectionDataFiftyDays = async () => {
-		setLoading(true);
-		try {
-			const res = await AxiosHandler.get("/data/AdminExpectionDataFiftyDays");
-			setExpectionDataFiftyDays(res.data);
-		} catch (error) {
-			console.log(error)
-		} finally {
-			setLoading(false);
-		}
-	}
-
 	const ClientExcectionDataFiftyDays = async () => {
 		setLoading(true);
 		try {
@@ -48,18 +35,6 @@ const ExceptionContextProvider = ({ children }) => {
 		}
 	}
 
-	const AdminRiskRating = async () => {
-		setLoading(true);
-		try {
-
-			const res = await AxiosHandler.get("/data/AdminRiskRating");
-			setRiskRating(res.data.monthlyData);
-		} catch (error) {
-			console.log(error)
-		} finally {
-			setLoading(false);
-		}
-	}
 
 	const ClientRiskRating = async () => {
 		setLoading(true);
@@ -73,18 +48,6 @@ const ExceptionContextProvider = ({ children }) => {
 		}
 	}
 
-	const AdminDeferredVulnerableItems = async () => {
-		setLoading(true);
-		try {
-
-			const res = await AxiosHandler.get("/data/AdminDeferredVulnerableItems");
-			setDeferredVulnerableItems(res.data.data);
-		} catch (error) {
-			console.log(error)
-		} finally {
-			setLoading(false);
-		}
-	}
 
 	const ClientDeferredVulnerableItems = async () => {
 		setLoading(true);
@@ -125,22 +88,6 @@ const ExceptionContextProvider = ({ children }) => {
 
 
 
-	// useEffect(() => {
-	// 	if (token) {
-
-	// 		authenticate?.role === "ClientCISO" ? ExpectionData() : ExpectionVerifyData();
-
-	// 		authenticate?.role !== "ClientCISO" ? AdminExcectionDataFiftyDays() :
-	// 			ClientExcectionDataFiftyDays()
-
-	// 		authenticate?.role !== "ClientCISO" ? AdminRiskRating() :
-	// 			ClientRiskRating()
-
-	// 		authenticate?.role !== "ClientCISO" ? AdminDeferredVulnerableItems() :
-	// 			ClientDeferredVulnerableItems()
-	// 	}
-	// }, [token, authenticate, UpdateData,
-	// 	DeleteData,])
 
 	return (
 		<ExceptionContext.Provider value={{
@@ -155,10 +102,7 @@ const ExceptionContextProvider = ({ children }) => {
 			deferredVulnerableItems,
 			datafetchCount,
 			setdatafetchCount,
-			AdminExcectionDataFiftyDays,
 			ClientExcectionDataFiftyDays,
-			AdminRiskRating,
-			AdminDeferredVulnerableItems,
 			ClientDeferredVulnerableItems,
 			ClientRiskRating
 		}}>
