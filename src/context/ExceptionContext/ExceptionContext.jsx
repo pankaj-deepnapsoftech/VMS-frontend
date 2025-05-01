@@ -1,33 +1,19 @@
-import { createContext, useEffect, useState } from "react";
+/* eslint-disable react/prop-types */
+import { createContext, useState } from "react";
 import { useAuthContext, useVulnerabililtyDataContext } from "..";
 import { AxiosHandler } from "@/config/AxiosConfig";
-import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-
-
-
 
 
 export const ExceptionContext = createContext();
 
 const ExceptionContextProvider = ({ children }) => {
-	let navigate = useNavigate();
-
-
 
 	const [datafetchCount, setdatafetchCount] = useState(0)
 
 	const [loading, setLoading] = useState(false);
 	const [page, setPage] = useState(1)
 
-
-	const { token, authenticate } = useAuthContext()
-	const {
-		UpdateData,
-		DeleteData
-
-	} =
-		useVulnerabililtyDataContext();
 
 	const [expectionData, setExpectionData] = useState([])
 	const [expectionDataFiftyDays, setExpectionDataFiftyDays] = useState([])
