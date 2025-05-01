@@ -38,28 +38,28 @@ const DataContextProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    if (authenticate !== null && Array.isArray(authenticate.allowed_paths)) {
-      const allowedValues = authenticate.allowed_paths.map(route => route?.value);
+  // useEffect(() => {
+  //   if (authenticate !== null && Array.isArray(authenticate.allowed_paths)) {
+  //     const allowedValues = authenticate.allowed_paths.map(route => route?.value);
 
-      const updatedCardData = { ...cardData };
+  //     const updatedCardData = { ...cardData };
 
-      if (!allowedValues.includes('/exceptions')) {
-        updatedCardData.Exceptions = 0;
-      }
-      if (!allowedValues.includes('/application-vulnerability')) {
-        updatedCardData.Application = 0;
-      }
-      if (!allowedValues.includes('/infrastructure-vulnerability')) {
-        updatedCardData.Infrastructure = 0;
-      }
-      if (!allowedValues.includes('/remedition')) {
-        updatedCardData.inProgress = 0;
-      }
-      setCardData(updatedCardData);
+  //     if (!allowedValues.includes('/exceptions')) {
+  //       updatedCardData.Exceptions = 0;
+  //     }
+  //     if (!allowedValues.includes('/application-vulnerability')) {
+  //       updatedCardData.Application = 0;
+  //     }
+  //     if (!allowedValues.includes('/infrastructure-vulnerability')) {
+  //       updatedCardData.Infrastructure = 0;
+  //     }
+  //     if (!allowedValues.includes('/remedition')) {
+  //       updatedCardData.inProgress = 0;
+  //     }
+  //     setCardData(updatedCardData);
     
-    }
-  }, [authenticate]);
+  //   }
+  // }, [authenticate]);
 
 
   const UploadBulkData = async (data) => {
