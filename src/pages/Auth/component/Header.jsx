@@ -21,17 +21,17 @@ const Header = () => {
   };
 
   return (
-    <nav className="bg-gradient-to-r from-[#0D1421] to-[#0D3A78] text-white py-4 px-6 md:px-12">
-      <div className="w-full lg:px-14 flex items-center justify-between">
+    <nav className="bg-[#111826] text-white py-4 px-6 md:px-12">
+      <div className="w-full max-w-screen-xl mx-auto flex items-center justify-between">
         {/* Logo */}
-        <div className="flex gap-14 ">
+        <div className="flex items-center justify-between space-x-2">
           <Link to="/" className="flex items-center">
             <img
               src="/logo.png"
               alt="Scalable Image"
               style={{ width: "60px", height: "auto" }}
             />
-            <span className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-blue-300 text-transparent bg-clip-text">
+            <span className="text-3xl font-bold bg-gradient-to-r from-gray-300 to-gray-50 text-transparent bg-clip-text">
               Secure&
             </span>
           </Link>
@@ -39,7 +39,7 @@ const Header = () => {
 
           {/* Desktop Navigation */}
 
-          <div className="hidden md:flex items-center ">
+         
             {/* Platform dropdown */}
             {/* <div className="relative group">
                             <button className="flex items-center space-x-1 font-medium" onClick={toggleDropdown}>
@@ -87,19 +87,19 @@ const Header = () => {
                                 </div>
                             )}
                         </div> */}
-
             {/* Regular links */}
-            <div className="flex gap-10 font-semibold" >
-            <Link to="/pricing" className="">
+            <div className="relative left-96 hidden md:flex items-center justify-between w-full ">
+            <div className="flex items-center space-x-8 text-gray-400 font-medium">
+            {/* <div className="flex gap-10 text-[#a0a1ac] font-semibold" > */}
+            <Link to="/pricing" className="font-semibold hover:text-[#8defff] transition">
               PRICING   
             </Link>
-            <Link to="/solutions" className="font-semibold">
+            <Link to="/solutions" className="font-semibold hover:text-[#8defff] transition">
             SOLUTIONS
             </Link>
             </div>
           </div>
 
-          {/* Company dropdown */}
         </div>
 
         {/* Mobile menu button */}
@@ -137,7 +137,7 @@ const Header = () => {
           {/* CTA Button */}
           <Link
             to="/sign-in"
-            className="bg-white text-[#0a0a1a] px-6 py-2 rounded-md font-semibold hover:bg-gray-100 transition-colors "
+            className="bg-white text-[#0a0a1a] px-4 py-2 rounded-md font-semibold hover:bg-gray-100 transition-colors "
           >
             Login Secure&
           </Link>

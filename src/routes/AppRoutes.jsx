@@ -18,6 +18,7 @@ import { ClientCisoRoutes } from "./PrivateRoutes/ClientCisoRoutes";
 import GettingStarted from "@/pages/Auth/GetStartedPage";
 import Pricing from "@/pages/Auth/Pricing";
 import Solutions from "@/pages/Auth/Solutions";
+import LandingPage from "@/pages/Auth/LandingPage";
 
 const AppRoutes = () => {
   const { authenticate, token } = useAuthContext();
@@ -55,7 +56,8 @@ const AppRoutes = () => {
       {/* Public routes */}
       {!isAuthenticated && (
         <>
-          <Route path="/" element={<GettingStarted  />} />
+          {/* <Route path="/" element={<GettingStarted  />} /> */}
+          <Route path="/" element={<LandingPage/>} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
