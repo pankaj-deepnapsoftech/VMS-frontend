@@ -8,23 +8,23 @@ import { useEffect, useState } from 'react';
 
 function SignIn() {
   const { Signup, loading } = useAuthContext()
-    const { GetOrgnization,  getOrgnizationData  } = useScheduleAssessmentContext();
-    console.log("getOrgnizationData",getOrgnizationData)
-  
+  const { GetOrgnization, getOrgnizationData } = useScheduleAssessmentContext();
+  console.log("getOrgnizationData", getOrgnizationData)
 
 
-      useEffect(() => {
-      
-          GetOrgnization();
-       
-      }, [])
-    const [showPassword,setShowPassword] = useState(false);
+
+  useEffect(() => {
+
+    GetOrgnization();
+
+  }, [])
+  const [showPassword, setShowPassword] = useState(false);
 
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } = useFormik({
-    initialValues: { full_name: "", phone: "", email: "", password: "", role: "", Organization: "", owner:"" },
+    initialValues: { full_name: "", phone: "", email: "", password: "", role: "", Organization: "", owner: "" },
     validationSchema: SignUpValidation,
     onSubmit: (value) => {
-      console.log("value : ",value)
+      console.log("value : ", value)
       Signup(value)
     }
 
@@ -36,7 +36,7 @@ function SignIn() {
       <div className="w-full md:w-[480px] p-8 flex flex-col justify-between">
         {/* Logo and Language Section */}
         <div className="flex justify-between items-center">
-        <Link to="/" className="flex items-center">
+          <Link to="/" className="flex items-center">
             <img
               src="/logo.png"
               alt="Scalable Image"
@@ -71,7 +71,7 @@ function SignIn() {
               onBlur={handleBlur}
               name='full_name'
               className="w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-colors"
-              placeholder="mail@example.com"
+              placeholder="Enter Full Name"
             />
             {errors.full_name && touched.full_name && <p className='text-red-400 p-2'>{errors.full_name}</p>}
           </div>
@@ -109,18 +109,19 @@ function SignIn() {
           <div className="mb-6 ">
             <div className='relative' >
 
-            <label className="block text-gray-400 text-sm mb-2">Password</label>
-            <input
-              type={showPassword ? "text" : "password"}
-              value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              name='password'
-              className="w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-colors"
-            />
-            <div className='absolute top-[40%] right-2 text-white p-2 cursor-pointer ' onClick={()=>setShowPassword(!showPassword)} >
-              {!showPassword ? <Eye size={20} /> : <EyeOff size={20}/>}
-            </div>
+              <label className="block text-gray-400 text-sm mb-2">Password</label>
+              <input
+                type={showPassword ? "text" : "password"}
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                name='password'
+                placeholder="Enter Password"
+                className="w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-colors"
+              />
+              <div className='absolute top-[40%] right-2 text-white p-2 cursor-pointer ' onClick={() => setShowPassword(!showPassword)} >
+                {!showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
+              </div>
             </div>
             {errors.password && touched.password && <p className='text-red-400 p-2' >{errors.password}</p>}
           </div>
@@ -156,23 +157,23 @@ function SignIn() {
             {errors.Organization && touched.Organization && <p className='text-red-400 p-2' >{errors.Organization}</p>}
           </div>}
 
-          {values.role==="ClientSME" && <div>
+          {values.role === "ClientSME" && <div>
             <label
-										htmlFor="Select_Org"
-										className="block text-sm font-medium text-gray-700 mb-2"
-									>
-										Select Orgnization
-									</label>
-									<select
-										name='owner'
-										value={values.owner}
-										onChange={handleChange}
-										className='w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-colors'
-										id="Select_Org">
-										<option value="" disabled> -- Select Orgnization -- </option>
-										{getOrgnizationData?.map((itm, idx) => (<option key={idx} value={itm._id}>{itm.Organization}</option>))}
-									</select>
-									{touched.owner && errors.owner && <p className='text-red-700 text-xs'> {errors.owner}</p>}</div>}
+              htmlFor="Select_Org"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Select Orgnization
+            </label>
+            <select
+              name='owner'
+              value={values.owner}
+              onChange={handleChange}
+              className='w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-colors'
+              id="Select_Org">
+              <option value="" disabled> -- Select Orgnization -- </option>
+              {getOrgnizationData?.map((itm, idx) => (<option key={idx} value={itm._id}>{itm.Organization}</option>))}
+            </select>
+            {touched.owner && errors.owner && <p className='text-red-700 text-xs'> {errors.owner}</p>}</div>}
 
           {/* Login Button */}
           <button disabled={loading} type='submit' className="w-full bg-emerald-500 text-white rounded-lg p-3 font-medium hover:bg-emerald-600 transition-colors my-10">

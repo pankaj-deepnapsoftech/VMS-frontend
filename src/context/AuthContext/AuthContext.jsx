@@ -23,7 +23,7 @@ const AuthContextProvider = ({ children }) => {
     setUserLoading(true)
     try {
       const res = await AxiosHandler.get("/auth/logedin-user");
-      setAuthenticate(res.data.data)
+      setAuthenticate(res.data.data);
     } catch (error) {
       console.log(error)
     } finally {
@@ -67,18 +67,18 @@ const AuthContextProvider = ({ children }) => {
 
     console.log(data);
 
-    let newData ;
+    let newData;
 
-    if(data.role !== "ClientSME"){
+    if (data.role !== "ClientSME") {
       newData = {
-        Organization:data.Organization,
-        email:data.email,
-        full_name:data.full_name,
-        password:data.password,
-        phone:data.phone,
-        role:data.role
+        Organization: data.Organization,
+        email: data.email,
+        full_name: data.full_name,
+        password: data.password,
+        phone: data.phone,
+        role: data.role
       }
-    } else{
+    } else {
       newData = data
     }
 
@@ -160,26 +160,6 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-
-  // const ResendOtpWithoutLogin = async (email) => {
-  //   const toastId = toast.loading("Loading...");
-  //   console.log("email :", email)
-  //   setLoading(true);
-  //   try {
-  //     const res = await AxiosHandler.post("/auth/resend-without-login",
-  //       { "email": email });
-  //     toast.dismiss(toastId);
-  //     toast.success(res.data.message);
-
-  //   } catch (error) {
-  //     toast.dismiss(toastId);
-  //     toast.error(error?.response?.data?.message);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-
   const ResendOtp = async () => {
     const toastId = toast.loading("Loading...");
 
@@ -216,6 +196,28 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
+  const ChangePassword = async (data) => {
+    try {
+      const res = await AxiosHandler.put("/auth/change-password",data);
+      toast.success(res.data.message)
+    } catch (error) {
+      toast.error(error.response.data.message)
+    }
+  }
+
+  const ChangeStatus = async(data,id) => {
+    setLoading(true);
+    try {
+      const res = await AxiosHandler.put(`/auth/deactivate/${id}`,data);
+      toast.success(res.data.message);
+
+    } catch (error) {
+      toast.error(error.response.data.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
 
   useEffect(() => {
     if (token) {
@@ -236,7 +238,8 @@ const AuthContextProvider = ({ children }) => {
       Logout,
       token,
       authenticate,
-
+      ChangePassword,
+      ChangeStatus
     }}>
       {children}
     </authContext.Provider>

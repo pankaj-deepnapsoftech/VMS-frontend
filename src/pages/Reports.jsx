@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import InputField from "@/components/InputField";
 import ReportModal from "@/components/modal/ReportModal";
 import NoDataFound from "@/components/NoDataFound";

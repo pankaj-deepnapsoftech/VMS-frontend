@@ -68,13 +68,8 @@ function Remedition() {
 
   var size = criticalVulnerabilitycountData.Totalcount
 
-  console.log("criticalVulnerabilitycountData :", criticalVulnerabilitycountData)
   return (
-
-
     <div className="min-h-screen bg-background p-8 ">
-
-
       {/* Main Content */}
       <div className="p-2 sm:p-4 ">
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 ">

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { AxiosHandler } from "@/config/AxiosConfig";
 import { useAuthContext } from "..";
 import { createContext, useState, useEffect } from "react";
@@ -5,8 +6,6 @@ import toast from "react-hot-toast";
 
 
 export const AllEmployeeContext = createContext();
-
-
 
 
 const AllEmployeeContextProvider = ({ children }) => {

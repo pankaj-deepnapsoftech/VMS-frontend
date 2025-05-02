@@ -1,6 +1,6 @@
 import AllEmployee from "@/pages/AllEmployee";
 import ApplicationVulnerability from "@/pages/ApplicationVulnerability";
-import ClientDashboard from "@/pages/ClientDashboard";
+import ChangePassword from "@/pages/ChangePassword";
 import Exceptions from "@/pages/Exceptions";
 import Home from "@/pages/Home";
 import InfrastructureVulnerability from "@/pages/InfrastructureVulnerability";
@@ -16,7 +16,7 @@ export const ClientCisoRoutes = [
         element: <Home />
     },
     {
-        path: "/scheduled-tasks",
+        path: "/scheduling-assesment",
         element: <SchedulingAssessmentPage />
     },
     {
@@ -46,4 +46,9 @@ export const ClientCisoRoutes = [
     {
         path: "/remedition",
         element: <Remedition />
-    }]
+    },
+    {
+        path: "/change-password",
+        element: <ChangePassword />
+    },
+]

@@ -24,11 +24,12 @@ const DataContextProvider = ({ children }) => {
 
     const [exploitability,setExploitability] = useState([]);
 
-  const { token } = useAuthContext();
+  const { token, authenticate } = useAuthContext();
 
   const getHomeCardData = async () => {
     try {
       const res = await AxiosHandler.get("/data/total-data-count");
+      console.log('authenticate', authenticate)
       setCardData(res.data);
     } catch (error) {
       console.log(error);
@@ -36,6 +37,9 @@ const DataContextProvider = ({ children }) => {
       setLoading(false);
     }
   };
+
+  
+
 
   const UploadBulkData = async (data) => {
     const toastId = toast.loading("Loading...");

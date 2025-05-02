@@ -21,20 +21,17 @@ function Exceptions() {
 
   const {
     expectionData,
-    loading,
-    ExpectionData,
-    ExpectionVerifyData,
-    expectionDataFiftyDays,
-    page,
-    setPage,
-    riskRating,
-    deferredVulnerableItems,
-    AdminExcectionDataFiftyDays,
-    ClientExcectionDataFiftyDays,
-    AdminRiskRating,
-    AdminDeferredVulnerableItems,
-    ClientDeferredVulnerableItems,
-    ClientRiskRating
+			loading,
+			page,
+			setPage,
+			ExpectionData,
+			ExpectionVerifyData,
+			expectionDataFiftyDays,
+			riskRating,
+			deferredVulnerableItems,
+			ClientExcectionDataFiftyDays,
+			ClientDeferredVulnerableItems,
+			ClientRiskRating
 
 
   } = useExceptionContext()
@@ -42,18 +39,13 @@ function Exceptions() {
   const { authenticate, token } = useAuthContext()
 
 
+
   useEffect(() => {
     if (token) {
 
       authenticate?.role === "ClientCISO" ? ExpectionData() : ExpectionVerifyData();
-
-      authenticate?.role !== "ClientCISO" ? AdminExcectionDataFiftyDays() :
         ClientExcectionDataFiftyDays()
-
-      authenticate?.role !== "ClientCISO" ? AdminRiskRating() :
         ClientRiskRating()
-
-      authenticate?.role !== "ClientCISO" ? AdminDeferredVulnerableItems() :
         ClientDeferredVulnerableItems()
     }
   }, [token, authenticate, UpdateData,
@@ -115,6 +107,7 @@ function Exceptions() {
     awaitingMaintenance: values.AwaitingApproval || 0
   }));
 
+  console.log(vulnerabilityData)
 
 
   return (

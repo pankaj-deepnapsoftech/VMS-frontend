@@ -6,8 +6,8 @@ export const AllowedPaths = [
         value:"/",
     },
     {
-        name:"Scheduled Tasks",
-        value:"/scheduled-tasks",
+        name:"Scheduling Assesment",
+        value:"/scheduling-assesment",
     },
     {
         name:"Vulnerability Data",

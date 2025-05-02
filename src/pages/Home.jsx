@@ -21,7 +21,7 @@ import {
 } from "recharts";
 
 import Card from "@/components/Card";
-import { useDataContext } from "@/context";
+import { useAuthContext, useDataContext } from "@/context";
 import { FaNetworkWired } from "react-icons/fa";
 import { Bug } from "lucide-react";
 import BarGraph from "@/components/BarGraph";
@@ -38,9 +38,10 @@ function Home() {
     exploitability
   } = useDataContext();
 
+  const {authenticate} = useAuthContext();
+  console.log(authenticate)
 
   const closevulnerableItemsData = [closevulnerableItems];
-  console.log("jsghidublrj", closevulnerableItemsData)
   const data = [
     { name: "Open", value: cardData?.open },
     { name: "Re Open", value: cardData?.reopen },
@@ -65,10 +66,6 @@ function Home() {
     vulnerableItemsByAgeData.Info,
   ];
 
-
-
-  console.log("vulnerableItemsByAgeData", dataList);
-
   const newData = vulnerableItemsByRiskRatingData?.map((item) => ({
     date: item.month,
     Critical: item.critical,
@@ -78,7 +75,6 @@ function Home() {
     info: item.informational,
   }));
 
-  //console.log("cardData", cardData)
   const metrics = [
     {
       title: "Application",
@@ -322,7 +318,7 @@ function Home() {
             <ResponsiveContainer width="100%" height="90%">
               <PieChart>
                 <Pie
-                  data={data1}
+                  data={authenticate.role === "Admin" && data1}
                   cx="50%"
                   cy="50%"
                   innerRadius={40}

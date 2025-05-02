@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { useContext } from "react";
 import { authContext } from "./AuthContext/AuthContext";
 import { DataContext } from "./DataContext/DataContext";

@@ -1,3 +1,4 @@
+import ChangePassword from "@/pages/ChangePassword";
 import ChatPage from "@/pages/ChatPage";
 import EmployeeDashboard from "@/pages/EmployeDashboard";
 import { EmployeeAllTasks } from "@/pages/EmployeeAllTasks";
@@ -19,5 +20,9 @@ export const EmployeeRoutes = [
     {
         path: "/chat/:chatId",
         element: <ChatPage />
+    },
+    {
+        path: "/change-password",
+        element: <ChangePassword />
     },
 ]

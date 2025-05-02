@@ -15,7 +15,7 @@ const RemeditionContextProvider = ({ children }) => {
 
 	const [datafetchCount, setdatafetchCount] = useState(0)
 	const [page, setPage] = useState(1)
-	const { token } = useAuthContext()
+	const { token, authenticate } = useAuthContext()
 
 	const [targetStatusData, setTargetStatusData] = useState([])
 	const [dataViaStatus, setDataViaStatus] = useState([])
@@ -27,7 +27,7 @@ const RemeditionContextProvider = ({ children }) => {
 	const JiraDataTargetsStatus = async () => {
 		try {
 
-			const res = await AxiosHandler.get("/jira/JIraDataTargetsStatus");
+			const res = await AxiosHandler.get(`/jira/JIraDataTargetsStatus?userid=${authenticate._id}`);
 			setTargetStatusData(res.data);
 		} catch (error) {
 			console.log(error)
@@ -37,7 +37,7 @@ const RemeditionContextProvider = ({ children }) => {
 
 	const JiraDataViaStatus = async () => {
 		try {
-			const res = await AxiosHandler.get("/jira/JIraDataViaStatus");
+			const res = await AxiosHandler.get(`/jira/JIraDataViaStatus?userid=${authenticate._id}`);
 			setDataViaStatus(res?.data?.obj);
 
 		} catch (error) {
