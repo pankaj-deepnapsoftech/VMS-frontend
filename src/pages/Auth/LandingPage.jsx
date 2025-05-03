@@ -1,12 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import "/public/Font/LexendDeca.ttf";
-import { FaApple, FaCommentDots, FaCube, FaMousePointer } from "react-icons/fa";
+import { FaApple, FaCommentDots, FaCube, FaMousePointer, } from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination, Autoplay } from "swiper/modules";
 import { IoLogoGooglePlaystore } from "react-icons/io5";
+
 const plans = [
   {
     name: "Basic",
@@ -190,8 +191,8 @@ const LandingPage = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-gradient-to-bl from-[#343537] to-[#26282a] rounded-xl p-6 shadow-slate-100 hover:shadow-2xl transition">
-                <div className="bg-[#26272b] w-12 h-12 flex items-center justify-center rounded-md mb-4">
-                  <FaMousePointer className="text-[#ff6d6d]" size={20} />
+                <div className="bg-[#26272b] w-12 h-12 flex items-center justify-center rounded-xl mb-4 shadow-inner shadow-slate-950 ">
+                  <FaMousePointer className="text-[#ff6d6d] " size={25} />
                 </div>
                 <h4 className="text-lg font-semibold mb-2">Easy Customize</h4>
                 <p className="text-[#d7e1ec] text-sm">
@@ -201,8 +202,8 @@ const LandingPage = () => {
               </div>
 
               <div className="bg-gradient-to-bl from-[#343537] to-[#26282a] rounded-xl p-6 shadow-slate-100 hover:shadow-2xl transition">
-                <div className="bg-[#26272b] w-12 h-12 flex items-center justify-center rounded-md mb-4">
-                  <FaCube className="text-[#8defff]" size={20} />
+                <div className="bg-[#26272b] w-12 h-12 flex items-center justify-center rounded-xl mb-4 shadow-inner shadow-slate-950 ">
+                  <FaCube className="text-[#8defff]" size={25} />
                 </div>
                 <h4 className="text-lg font-semibold mb-2">
                   Different Layouts
@@ -213,7 +214,7 @@ const LandingPage = () => {
               </div>
 
               <div className="bg-gradient-to-t from-[#343537] to-[#26282a] rounded-xl p-6 shadow-slate-100 hover:shadow-2xl transition">
-                <div className="bg-[#26272b] w-12 h-12 flex items-center justify-center rounded-md mb-4">
+                <div className="bg-[#26272b] w-12 h-12 flex items-center justify-center rounded-xl shadow-inner shadow-slate-950  mb-4">
                   <FaCommentDots className="text-[#00ffa3]" size={20} />
                 </div>
                 <h4 className="text-lg font-semibold mb-2">Friendly Support</h4>
@@ -275,10 +276,13 @@ const LandingPage = () => {
                   );
                 })}
               </ul>
-              <button className="w-full py-2 my-5 bg-[#3b3d42] rounded-lg font-semibold hover:bg-[#4b4d52] transition">
+              {/* <button className="w-full py-2 my-5 bg-[#3b3d42] rounded-lg font-semibold hover:bg-[#4b4d52] transition">
                 Select Plan
+              </button> */}
+              <button className=" bg-gradient-to-tr from-[#383b40] text-xl  rounded-lg before:ease relative h-16 w-60 overflow-hidden  text-gray-300 shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 hover:text-white  hover:before:h-64 hover:before:-translate-y-32">
+                <span className="relative z-10">Select plan</span>
               </button>
-            </div>  
+            </div>
           ))}
         </div>
       </section>
@@ -308,7 +312,7 @@ const LandingPage = () => {
                 />
               </div>
               <textarea
-                rows="5"
+                rows="10"
                 placeholder="Your question"
                 className="w-full bg-[#2e2f31] border border-gray-600 shadow-inner shadow-black rounded-md px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               ></textarea>
@@ -317,14 +321,13 @@ const LandingPage = () => {
               </button>
             </form>
           </div>
-
           <div className="bg-gradient-to-br from-[#393d40] to-[#26282a] rounded-xl p-8 space-y-6 shadow-white">
             <div>
               <h3 className="text-3xl font-semibold text-[#d7dee1] mb-4">
                 Get The App:
               </h3>
               <div className=" space-y-4">
-                <button className="bg-gradient-to-tr mr-8 from-[#383b40] text-xl rounded-lg before:ease relative h-20 w-48 overflow-hidden text-gray-300 shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 hover:text-white hover:before:h-64 hover:before:-translate-y-32">
+                <button className="bg-gradient-to-tr mr-8  from-[#383b40] text-xl rounded-lg before:ease relative h-20 w-48 overflow-hidden text-gray-300 shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 hover:text-white hover:before:h-64 hover:before:-translate-y-32">
                   <span className="relative z-10 flex items-center justify-center gap-2">
                     <FaApple className="text-2xl" />
                     Apple Store
@@ -356,21 +359,86 @@ const LandingPage = () => {
                 </li>
               </ul>
             </div>
-          </div>
-        </div>
-
-        <div className="mt-12 flex flex-col items-center justify-center text-sm text-gray-500">
+            <div className="mt-12 flex flex-col items-center justify-center text-sm text-gray-500">
           <div className="flex space-x-4 mb-4">
-            <i className="fab fa-facebook-f"></i>
-            <i className="fab fa-twitter"></i>
-            <i className="fab fa-youtube"></i>
+          {/* <FaTwitter/> */} <i className="fab fa-twitter"></i>
+          {/* <FaFacebook/> */}<i className="fab fa-facebook"></i>
+          <i className="fab fa-youtube"></i>
           </div>
           <p>
-            © 2025. Neon.{" "}
+            © 2025. Neon.{""}
             <a href="#" className="underline">
               Privacy Policy
             </a>
           </p>
+        </div>
+          </div>
+        </div>
+
+      </section>
+      <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-white py-16">
+      <div className="max-w-7xl mx-auto px-4 pt-8 text-white">
+  {/* Header Section */}
+  <div className="text-center">
+    <div className="flex flex-1">
+    <h2 className="text-6xl font-bold mb-12">How it works</h2>
+    <div className="w-2 h-4  text-white"></div>
+    <p className="text-gray-400 text-xl mt-5 ml-24">Quick and Intuitive Profile Configuration</p>
+    </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4  w-[1600px] max-w-screen-xl mx-auto">
+          <div className=" relative group bg-gradient-to-br from-[#393d40] to-[#25282a] ml-10 rounded-xl p-6  min-h-[300px] transition-transform duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl transition duration-600">
+                <div className="bg-[#282a2d] w-12 h-12 flex items-center justify-center shadow-inner shadow-slate-950 rounded-xl mb-4">
+                   <span className=" text-cyan-400 text-2xl ">01</span>
+                </div>
+                
+                <h4 className="text-2xl mb-3 pt-3 text-left">Easy Customize</h4>
+                <p className="text-gray-400 text-md leading-relaxed text-left">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do.
+                </p>
+                <div className="absolute left-6 right-6 bottom-0 h-[2px] bg-cyan-400 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></div>
+              </div>
+
+              <div className=" relative group bg-gradient-to-br from-[#393d40] to-[#25282a] ml-10 rounded-xl p-6  min-h-[300px] transition-transform duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl transition duration-600">
+                <div className="bg-[#282a2d] w-12 h-12 flex items-center justify-center shadow-inner shadow-slate-950 rounded-xl mb-4 ">
+                   <span className=" text-cyan-400 text-2xl ">02</span>
+                </div>
+                
+                <h4 className="text-2xl mb-3 pt-3 text-left">Easy Customize</h4>
+                <p className="text-gray-400 text-md leading-relaxed text-left">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do.
+                </p>
+                <div className="absolute left-6 right-6 bottom-0 h-[2px] bg-cyan-400 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></div>
+              </div>
+
+              <div className=" relative group bg-gradient-to-br from-[#393d40] to-[#25282a] ml-10 rounded-xl p-6  min-h-[300px] transition-transform duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl transition duration-600">
+                <div className="bg-[#282a2d] w-12 h-12 flex items-center justify-center shadow-inner shadow-slate-950 rounded-xl mb-4">
+                   <span className=" text-cyan-400 text-2xl ">03</span>
+                </div>
+                
+                <h4 className="text-2xl mb-3 pt-3 text-left">Easy Customize</h4>
+                <p className="text-gray-400 text-md leading-relaxed text-left">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do.
+                </p>
+                <div className="absolute left-6 right-6 bottom-0 h-[2px] bg-cyan-400 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></div>
+              </div>
+
+              <div className=" relative group bg-gradient-to-br from-[#393d40] to-[#25282a] ml-10 rounded-xl p-6  min-h-[300px] transition-transform duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl transition duration-600">
+                <div className="bg-[#282a2d] w-12 h-12 flex items-center justify-center shadow-inner shadow-slate-950 rounded-xl mb-4">
+                   <span className=" text-cyan-400 text-2xl ">04</span>
+                </div>
+                
+                <h4 className="text-2xl mb-3 pt-3 text-left">Easy Customize</h4>
+                <p className="text-gray-400 text-md leading-relaxed text-left">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do.
+                </p>
+                <div className="absolute left-6 right-6 bottom-0 h-[2px] bg-cyan-400 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></div>
+              </div>
+          </div>
+          </div>
         </div>
       </section>
     </>

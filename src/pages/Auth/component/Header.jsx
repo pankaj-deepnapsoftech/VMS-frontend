@@ -92,14 +92,13 @@ const Header = () => {
             <div className="flex items-center space-x-8 text-gray-400 font-medium">
             {/* <div className="flex gap-10 text-[#a0a1ac] font-semibold" > */}
             <Link to="/pricing" className="font-semibold hover:text-[#8defff] transition">
-              PRICING   
+            PRICING  
             </Link>
             <Link to="/solutions" className="font-semibold hover:text-[#8defff] transition">
             SOLUTIONS
             </Link>
             </div>
           </div>
-
         </div>
 
         {/* Mobile menu button */}
