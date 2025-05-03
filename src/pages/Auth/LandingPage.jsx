@@ -5,7 +5,7 @@ import { FaApple, FaCommentDots, FaCube, FaMousePointer, } from "react-icons/fa"
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import { FaMessage } from "react-icons/fa6";
+import { FaArrowPointer, FaMessage } from "react-icons/fa6";
 import { Pagination, Autoplay } from "swiper/modules";
 import { IoLogoGooglePlaystore } from "react-icons/io5";
 
@@ -331,7 +331,7 @@ const LandingPage = () => {
               <div className="h-[22vh]">
                 <div className="flex gap-5">
                   <div className="shadow-2xl relative -top-2 h-[60px] w-[60px] flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
-                    <GiPerspectiveDiceSixFacesFour className="text-5xl text-[#a1a4ab]" />
+                    {/* <GiPerspectiveDiceSixFacesFour className="text-5xl text-[#a1a4ab]" /> */}
                   </div>
                   <h2 className="text-[#D7E1E0] text-xl font-bold">Easy <br /> Customization</h2>
                 </div>
