@@ -8,6 +8,8 @@ import "swiper/css/pagination";
 import { FaArrowPointer, FaMessage } from "react-icons/fa6";
 import { Pagination, Autoplay } from "swiper/modules";
 import { IoLogoGooglePlaystore } from "react-icons/io5";
+import { GiPerspectiveDiceSixFacesFour } from "react-icons/gi";
+import { X } from "lucide-react";
 
 const plans = [
   {
@@ -70,6 +72,8 @@ const slides = [
   },
 ];
 
+
+
 const LandingPage = () => {
   const [scrolled, setScrolled] = useState(false);
   const swiperRef = useRef(null);
@@ -82,6 +86,7 @@ const LandingPage = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  
   return (
     <>
       <nav
@@ -227,90 +232,93 @@ const LandingPage = () => {
         </div>
       </section>
 
-      <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-[#d7e1ec] py-10">
-        <div className="w-full md:w-1/2">
-          <h2 className="text-4xl py-[30px] px-[160px] font-bold mb-[70px]">
-            Pricing Plans
-          </h2>
-        </div>
-        <div className=" pb-12 max-w-6xl mx-auto grid md:grid-cols-3 gap-6">
-          {plans.map((plan, index) => (
-            <div
-              key={index}
-              className={`relative rounded-2xl p-8 bg-gradient-to-bl from-[#343537] to-[#26282a] shadow-lg hover:shadow-2xl transition duration-400 `}
-            >
-              {plan.popular && (
-                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#ff8c68] text-white text-sm w-[365px] h-9 text-center px-4 py-2 rounded-t-lg shadow-slate-100 font-semibold">
-                  Popular
-                </div>
-              )}
-              <h3 className="text-2xl  text-[#9b9ca7] font-semibold text-center mb-4">
-                {plan.name}
-              </h3>
-              <div className="flex items-center justify-center mb-6">
-                <div
-                  className={`h-6 w-1.5 ${plan.highlightColor} rounded-full mr-2`}
-                />
-                <p className="text-5xl font-bold">{plan.price}</p>
-                <span className="ml-2 text-gray-400">Per Month</span>
-              </div>
-              <hr className="border-gray-700 mb-6" />
-              <ul className="space-y-3 mb-6">
-                {plan.features.map((feature, i) => {
-                  const label =
-                    typeof feature === "string" ? feature : feature.label;
-                  const available =
-                    typeof feature === "string" ? true : feature.available;
+  <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-[#d7e1ec] py-10">
+ 
+  <div className="w-full text-center md:text-left px-6 md:px-40">
+    <h2 className="text-3xl md:text-4xl font-bold mb-10">Pricing Plans</h2>
+  </div>
 
-                  return (
-                    <li
-                      key={i}
-                      className={`flex items-center space-x-2 ${available ? "text-white" : "text-gray-500"
-                        }`}
-                    >
-                      <span>✔</span>
-                      <span>{label}</span>
-                    </li>
-                  );
-                })}
-              </ul>
-              {/* <button className="w-full py-2 my-5 bg-[#3b3d42] rounded-lg font-semibold hover:bg-[#4b4d52] transition">
-                Select Plan
-              </button> */}
-              <button className=" bg-gradient-to-tr from-[#383b40] text-xl  rounded-lg before:ease relative h-16 w-60 overflow-hidden  text-gray-300 shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 hover:text-white  hover:before:h-64 hover:before:-translate-y-32">
-                <span className="relative z-10">Select plan</span>
-              </button>
-            </div>
-          ))}
+  <div className="pb-12 max-w-6xl mx-auto flex overflow-x-auto md:grid md:grid-cols-3 gap-6 snap-x snap-mandatory md:overflow-visible px-4 md:px-0">
+    {plans.map((plan, index) => (
+      <div
+        key={index}
+        className="snap-center shrink-0 w-[90%] sm:w-[300px] md:w-full bg-gradient-to-bl from-[#343537] to-[#26282a] rounded-2xl p-6 shadow-lg hover:shadow-2xl transition duration-400 relative mx-auto"
+      >
+      
+        {plan.popular && (
+          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#ff8c68] text-white text-sm w-[355px] md:w-[365px]  md:h-10 text-center px-4 py-2 rounded-t-lg shadow-slate-100 font-semibold">
+            Popular
+          </div>
+        )}
+
+      
+        <h3 className="text-2xl text-[#9b9ca7] font-semibold text-center mb-4">
+          {plan.name}
+        </h3>
+
+      
+        <div className="flex items-center justify-center mb-6">
+          <div className={`h-6 w-1.5 ${plan.highlightColor} rounded-full mr-2`} />
+          <p className="text-5xl font-bold">{plan.price}</p>
+          <span className="ml-2 text-gray-400">Per Month</span>
         </div>
-      </section>
+
+        <hr className="border-gray-700 mb-6" />
+
+    
+        <ul className="space-y-3 mb-6 text-sm">
+          {plan.features.map((feature, i) => {
+            const label = typeof feature === "string" ? feature : feature.label;
+            const available = typeof feature === "string" ? true : feature.available;
+
+            return (
+              <li
+                key={i}
+                className={`flex items-center space-x-2 ${available ? "text-white" : "text-gray-500 line-through"}`}
+              >
+                <span>✔</span>
+                <span>{label}</span>
+              </li>
+            );
+          })}
+        </ul>
+
+  
+        <button className="mt-auto bg-gradient-to-tr from-[#383b40] text-xl rounded-lg relative h-14 w-full overflow-hidden text-gray-300 shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 hover:text-white hover:before:h-64 hover:before:-translate-y-32">
+          <span className="relative z-10">Select Plan</span>
+        </button>
+      </div>
+    ))}
+  </div>
+</section>
+
 
       <section>
         <div className="h-full w-full pt-12 bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f]">
           <h1 className="text-white text-center text-[40px] font-bold pt-4">Welcome to Neon</h1>
-          <div className="flex flex-wrap gap-3 justify-between h-[60vh] w-full">
+          <div className="flex flex-col sm:flex-row sm:flex-wrap gap-8 justify-between items-center h-auto w-full px-4 sm:px-8 py-10">
          
-            <div className="pl-14 pt-10 w-full sm:w-[30%] h-full">
-              <div className="h-[22vh]">
-                <div className="flex justify-end gap-5">
+            <div className=" w-full sm:w-[30%]">
+              <div className="mb-10 mt-10">
+                <div className="flex justify-end max-[800px]:justify-start gap-4">
                   <h2 className="text-[#D7E1E0] text-xl font-bold">Friendly Support</h2>
                   <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
                     <FaMessage className="text-3xl text-[#a1a4ab]" />
                   </div>
                 </div>
-                <p className="text-[#A0A1AC] text-end">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium cupiditate.</p>
+                <p className="text-[#A0A1AC] md:text-end">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium cupiditate.</p>
               </div>
-              <div className="flex justify-end  items-start">
+              <div className="flex justify-end max-[800px]:justify-start  items-start">
                 <div className="w-64 h-[2.5px] rounded-md shadow-2xl bg-[#2f2f2f]  ml-1 mt-1"></div>
               </div>
               <div className="h-[30vh] pt-10">
-                <div className="flex justify-end gap-5">
+                <div className="flex justify-end max-[800px]:justify-start gap-4">
                   <h2 className="text-[#D7E1E0] text-xl font-bold">User-friendly UI</h2>
                   <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
                     <FaArrowPointer className="text-3xl text-[#a1a4ab]" />
                   </div>
                 </div>
-                <p className="text-[#A0A1AC] text-end">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium cupiditate.</p>
+                <p className="text-[#A0A1AC] md:text-end">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium cupiditate.</p>
               </div>
             </div>
 
@@ -333,7 +341,7 @@ const LandingPage = () => {
               <div className="h-[22vh]">
                 <div className="flex gap-5">
                   <div className="shadow-2xl relative -top-2 h-[60px] w-[60px] flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
-                    {/* <GiPerspectiveDiceSixFacesFour className="text-5xl text-[#a1a4ab]" /> */}
+                    <GiPerspectiveDiceSixFacesFour className="text-5xl text-[#a1a4ab]" />
                   </div>
                   <h2 className="text-[#D7E1E0] text-xl font-bold">Easy <br /> Customization</h2>
                 </div>
@@ -428,14 +436,17 @@ const LandingPage = () => {
                 </li>
               </ul>
             </div>
-          </div>
-        </div>
-
-        <div className="mt-12 flex flex-col items-center justify-center text-sm text-gray-500">
-          <div className="flex space-x-4 mb-4">
+            <div className=" flex flex-col items-center justify-center text-sm text-gray-500">
+          <div className="flex space-x-4 pt-12 mb-1">
+            <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] text-white text-xl flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
             <i className="fab fa-facebook-f"></i>
+                  </div>
+            <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] text-white text-xl flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
             <i className="fab fa-twitter"></i>
+                  </div>
+            <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] text-white text-xl flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
             <i className="fab fa-youtube"></i>
+                  </div>
           </div>
           <p>
             © 2025. Neon.{" "}
@@ -444,20 +455,24 @@ const LandingPage = () => {
             </a>
           </p>
         </div>
+          </div>
+        </div>
+
+        
         
 
       </section>
       <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-white py-16">
       <div className="max-w-7xl mx-auto px-4 pt-8 text-white">
   {/* Header Section */}
-  <div className="text-center">
-    <div className="flex flex-1">
-    <h2 className="text-6xl font-bold mb-12">How it works</h2>
+  <div className="text-center mb-12 ">
+    <div className="flex flex-col md:flex-row items-center justify-center  md:gap-10">
+    <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 md:mb-0">How it works</h2>
     <div className="w-2 h-4  text-white"></div>
-    <p className="text-gray-400 text-xl mt-5 ml-24">Quick and Intuitive Profile Configuration</p>
+    <p className="text-gray-400 text-lg sm:text-xl mt-2 md:mt-5 md:ml-6 text-center md:text-left">Quick and Intuitive Profile Configuration</p>
     </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4  w-[1600px] max-w-screen-xl mx-auto">
-          <div className=" relative group bg-gradient-to-br from-[#393d40] to-[#25282a] ml-10 rounded-xl p-6  min-h-[300px]  duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl transition duration-600">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 pt-8 md:pt-16 gap-6">
+          <div className=" relative group bg-gradient-to-br from-[#393d40] to-[#25282a] rounded-xl p-6 min-h-[300px] transition-transform duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl">
                 <div className="bg-[#282a2d] w-12 h-12 flex items-center justify-center shadow-inner shadow-slate-950 rounded-xl mb-4">
                    <span className=" text-cyan-400 text-2xl ">01</span>
                 </div>
@@ -470,7 +485,7 @@ const LandingPage = () => {
                 <div className="absolute left-6 right-6 bottom-0 h-[2px] bg-cyan-400 scale-x-0 group-hover:scale-x-100 origin-left  duration-300"></div>
               </div>
 
-              <div className=" relative group bg-gradient-to-br from-[#393d40] to-[#25282a] ml-10 rounded-xl p-6  min-h-[300px] transition-transform duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl transition duration-600">
+              <div className=" relative group bg-gradient-to-br from-[#393d40] to-[#25282a] rounded-xl p-6 min-h-[300px] transition-transform duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl">
                 <div className="bg-[#282a2d] w-12 h-12 flex items-center justify-center shadow-inner shadow-slate-950 rounded-xl mb-4 ">
                    <span className=" text-cyan-400 text-2xl ">02</span>
                 </div>
@@ -483,7 +498,7 @@ const LandingPage = () => {
                 <div className="absolute left-6 right-6 bottom-0 h-[2px] bg-cyan-400 scale-x-0 group-hover:scale-x-100 origin-left  duration-300"></div>
               </div>
 
-              <div className=" relative group bg-gradient-to-br from-[#393d40] to-[#25282a] ml-10 rounded-xl p-6  min-h-[300px]  duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl transition duration-600">
+              <div className=" relative group bg-gradient-to-br from-[#393d40] to-[#25282a] rounded-xl p-6 min-h-[300px] transition-transform duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl">
                 <div className="bg-[#282a2d] w-12 h-12 flex items-center justify-center shadow-inner shadow-slate-950 rounded-xl mb-4">
                    <span className=" text-cyan-400 text-2xl ">03</span>
                 </div>
@@ -496,7 +511,7 @@ const LandingPage = () => {
                 <div className="absolute left-6 right-6 bottom-0 h-[2px] bg-cyan-400 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></div>
               </div>
 
-              <div className=" relative group bg-gradient-to-br from-[#393d40] to-[#25282a] ml-10 rounded-xl p-6  min-h-[300px]  duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl transition duration-600">
+              <div className="  relative group bg-gradient-to-br from-[#393d40] to-[#25282a] rounded-xl p-6 min-h-[300px] transition-transform duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl">
                 <div className="bg-[#282a2d] w-12 h-12 flex items-center justify-center shadow-inner shadow-slate-950 rounded-xl mb-4">
                    <span className=" text-cyan-400 text-2xl ">04</span>
                 </div>
