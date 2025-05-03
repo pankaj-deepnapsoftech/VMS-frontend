@@ -279,7 +279,7 @@ const LandingPage = () => {
               {/* <button className="w-full py-2 my-5 bg-[#3b3d42] rounded-lg font-semibold hover:bg-[#4b4d52] transition">
                 Select Plan
               </button> */}
-              <button className=" bg-gradient-to-tr from-[#383b40] text-xl  rounded-lg before:ease relative h-16 w-60 overflow-hidden  text-gray-300 shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 hover:text-white  hover:before:h-64 hover:before:-translate-y-32">
+              <button className=" bg-gradient-to-tr from-[#383b40] text-xl rounded-lg before:ease relative h-16 w-60 overflow-hidden  text-gray-300 shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 hover:text-white  hover:before:h-64 hover:before:-translate-y-32">
                 <span className="relative z-10">Select plan</span>
               </button>
             </div>
@@ -400,8 +400,8 @@ const LandingPage = () => {
               </div>
 
               <div className=" relative group bg-gradient-to-br from-[#393d40] to-[#25282a] ml-10 rounded-xl p-6  min-h-[300px] transition-transform duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl transition duration-600">
-                <div className="bg-[#282a2d] w-12 h-12 flex items-center justify-center shadow-inner shadow-slate-950 rounded-xl mb-4 ">
-                   <span className=" text-cyan-400 text-2xl ">02</span>
+                <div className="bg-[#282a2d] w-12 h-12 flex items-center justify-center shadow-inner shadow-slate-950 rounded-xl mb-4">
+                   <span className=" text-cyan-400 text-2xl ">03</span>
                 </div>
                 
                 <h4 className="text-2xl mb-3 pt-3 text-left">Easy Customize</h4>
