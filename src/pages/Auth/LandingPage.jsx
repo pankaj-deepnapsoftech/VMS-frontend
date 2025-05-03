@@ -5,6 +5,7 @@ import { FaApple, FaCommentDots, FaCube, FaMousePointer, } from "react-icons/fa"
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
+import { FaArrowPointer, FaMessage } from "react-icons/fa6";
 import { Pagination, Autoplay } from "swiper/modules";
 import { IoLogoGooglePlaystore } from "react-icons/io5";
 
@@ -84,9 +85,8 @@ const LandingPage = () => {
   return (
     <>
       <nav
-        className={`${
-          scrolled ? "bg-[#1e1f22]" : "bg-transparent"
-        } text-white py-4 px-6 md:px-12 fixed w-full top-0 z-50 transition-colors duration-100`}
+        className={`${scrolled ? "bg-[#1e1f22]" : "bg-transparent"
+          } text-white py-4 px-6 md:px-12 fixed w-full top-0 z-50 transition-colors duration-100`}
       >
         <div className="w-full max-w-screen-xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-2">
@@ -164,9 +164,8 @@ const LandingPage = () => {
                     <img
                       src={slide.image}
                       alt={slide.title}
-                      className={`drop-shadow-lg ${
-                        index === 2 ? "max-w-sm" : "max-w-md"
-                      }`}
+                      className={`drop-shadow-lg ${index === 2 ? "max-w-sm" : "max-w-md"
+                        }`}
                     />
                   </div>
                 </div>
@@ -266,9 +265,8 @@ const LandingPage = () => {
                   return (
                     <li
                       key={i}
-                      className={`flex items-center space-x-2 ${
-                        available ? "text-white" : "text-gray-500"
-                      }`}
+                      className={`flex items-center space-x-2 ${available ? "text-white" : "text-gray-500"
+                        }`}
                     >
                       <span>✔</span>
                       <span>{label}</span>
@@ -279,7 +277,7 @@ const LandingPage = () => {
               {/* <button className="w-full py-2 my-5 bg-[#3b3d42] rounded-lg font-semibold hover:bg-[#4b4d52] transition">
                 Select Plan
               </button> */}
-              <button className=" bg-gradient-to-tr from-[#383b40] text-xl rounded-lg before:ease relative h-16 w-60 overflow-hidden  text-gray-300 shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 hover:text-white  hover:before:h-64 hover:before:-translate-y-32">
+              <button className=" bg-gradient-to-tr from-[#383b40] text-xl  rounded-lg before:ease relative h-16 w-60 overflow-hidden  text-gray-300 shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 hover:text-white  hover:before:h-64 hover:before:-translate-y-32">
                 <span className="relative z-10">Select plan</span>
               </button>
             </div>
@@ -287,6 +285,77 @@ const LandingPage = () => {
         </div>
       </section>
 
+      <section>
+        <div className="h-full w-full pt-12 bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f]">
+          <h1 className="text-white text-center text-[40px] font-bold pt-4">Welcome to Neon</h1>
+          <div className="flex flex-wrap gap-3 justify-between h-[60vh] w-full">
+         
+            <div className="pl-14 pt-10 w-full sm:w-[30%] h-full">
+              <div className="h-[22vh]">
+                <div className="flex justify-end gap-5">
+                  <h2 className="text-[#D7E1E0] text-xl font-bold">Friendly Support</h2>
+                  <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
+                    <FaMessage className="text-3xl text-[#a1a4ab]" />
+                  </div>
+                </div>
+                <p className="text-[#A0A1AC] text-end">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium cupiditate.</p>
+              </div>
+              <div className="flex justify-end  items-start">
+                <div className="w-64 h-[2.5px] rounded-md shadow-2xl bg-[#2f2f2f]  ml-1 mt-1"></div>
+              </div>
+              <div className="h-[30vh] pt-10">
+                <div className="flex justify-end gap-5">
+                  <h2 className="text-[#D7E1E0] text-xl font-bold">User-friendly UI</h2>
+                  <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
+                    <FaArrowPointer className="text-3xl text-[#a1a4ab]" />
+                  </div>
+                </div>
+                <p className="text-[#A0A1AC] text-end">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium cupiditate.</p>
+              </div>
+            </div>
+
+            <div className="w-full sm:w-[30%] h-full flex items-center justify-center mt-10 sm:mt-0">
+              <div className="border border-[#918f8f86] shadow-2xl flex justify-center items-center rounded-[50%] w-[300px] sm:w-[400px] h-[300px] sm:h-[380px] relative overflow-hidden group">
+                <img
+                  className="h-[90%] w-[90%] object-cover rounded-[50%] absolute opacity-100 group-hover:opacity-0 transition-opacity duration-1000"
+                  src="https://images.unsplash.com/photo-1745541643943-8908ceee4dc4?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxOTB8fHxlbnwwfHx8fHw%3D"
+                  alt=""
+                />
+                <img
+                  className="h-[90%] w-[90%] object-cover rounded-[50%] absolute opacity-0 group-hover:opacity-100 transition-opacity duration-1000"
+                  src="https://images.unsplash.com/photo-1586805372042-327a923a697a?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjR8fHRyYWZmaWN8ZW58MHx8MHx8fDA%3D"
+                  alt=""
+                />
+              </div>
+            </div>
+            
+            <div className="w-full sm:w-[30%] h-full pt-10">
+              <div className="h-[22vh]">
+                <div className="flex gap-5">
+                  <div className="shadow-2xl relative -top-2 h-[60px] w-[60px] flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
+                    {/* <GiPerspectiveDiceSixFacesFour className="text-5xl text-[#a1a4ab]" /> */}
+                  </div>
+                  <h2 className="text-[#D7E1E0] text-xl font-bold">Easy <br /> Customization</h2>
+                </div>
+                <p className="text-[#A0A1AC]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium cupiditate.</p>
+              </div>
+              <div className="flex items-start">
+                <div className="w-64 h-[2.5px] rounded-md shadow-2xl bg-[#2f2f2f]  ml-1 mt-1"></div>
+              </div>
+              <div className="h-[22vh] pt-10">
+                <div className="flex gap-5">
+                  <div className="shadow-2xl relative -top-2 h-[60px] w-[60px] flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
+                    <FaMessage className="text-3xl text-[#a1a4ab]" />
+                  </div>
+                  <h2 className="text-[#D7E1E0] text-xl font-bold pb-2">Simple Setup</h2>
+                </div>
+                <p className="text-[#A0A1AC]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium cupiditate.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
       <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-white py-16 px-6 md:px-20">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
           <div>
@@ -336,7 +405,7 @@ const LandingPage = () => {
 
                 <button className=" bg-gradient-to-tr from-[#383b40] text-xl  rounded-lg before:ease relative h-20 w-48 overflow-hidden  text-gray-300 shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 hover:text-white  hover:before:h-64 hover:before:-translate-y-32">
                   <span className="relative z-10 flex item-center justify-center gap-2">
-                    <IoLogoGooglePlaystore className="text-2xl"/>
+                    <IoLogoGooglePlaystore className="text-2xl" />
                     Google store
                   </span>
                 </button>
@@ -359,21 +428,23 @@ const LandingPage = () => {
                 </li>
               </ul>
             </div>
-            <div className="mt-12 flex flex-col items-center justify-center text-sm text-gray-500">
+          </div>
+        </div>
+
+        <div className="mt-12 flex flex-col items-center justify-center text-sm text-gray-500">
           <div className="flex space-x-4 mb-4">
-          {/* <FaTwitter/> */} <i className="fab fa-twitter"></i>
-          {/* <FaFacebook/> */}<i className="fab fa-facebook"></i>
-          <i className="fab fa-youtube"></i>
+            <i className="fab fa-facebook-f"></i>
+            <i className="fab fa-twitter"></i>
+            <i className="fab fa-youtube"></i>
           </div>
           <p>
-            © 2025. Neon.{""}
+            © 2025. Neon.{" "}
             <a href="#" className="underline">
               Privacy Policy
             </a>
           </p>
         </div>
-          </div>
-        </div>
+        
 
       </section>
       <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-white py-16">
@@ -386,7 +457,7 @@ const LandingPage = () => {
     <p className="text-gray-400 text-xl mt-5 ml-24">Quick and Intuitive Profile Configuration</p>
     </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4  w-[1600px] max-w-screen-xl mx-auto">
-          <div className=" relative group bg-gradient-to-br from-[#393d40] to-[#25282a] ml-10 rounded-xl p-6  min-h-[300px] transition-transform duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl transition duration-600">
+          <div className=" relative group bg-gradient-to-br from-[#393d40] to-[#25282a] ml-10 rounded-xl p-6  min-h-[300px]  duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl transition duration-600">
                 <div className="bg-[#282a2d] w-12 h-12 flex items-center justify-center shadow-inner shadow-slate-950 rounded-xl mb-4">
                    <span className=" text-cyan-400 text-2xl ">01</span>
                 </div>
@@ -396,10 +467,23 @@ const LandingPage = () => {
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do.
                 </p>
-                <div className="absolute left-6 right-6 bottom-0 h-[2px] bg-cyan-400 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></div>
+                <div className="absolute left-6 right-6 bottom-0 h-[2px] bg-cyan-400 scale-x-0 group-hover:scale-x-100 origin-left  duration-300"></div>
               </div>
 
               <div className=" relative group bg-gradient-to-br from-[#393d40] to-[#25282a] ml-10 rounded-xl p-6  min-h-[300px] transition-transform duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl transition duration-600">
+                <div className="bg-[#282a2d] w-12 h-12 flex items-center justify-center shadow-inner shadow-slate-950 rounded-xl mb-4 ">
+                   <span className=" text-cyan-400 text-2xl ">02</span>
+                </div>
+                
+                <h4 className="text-2xl mb-3 pt-3 text-left">Easy Customize</h4>
+                <p className="text-gray-400 text-md leading-relaxed text-left">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do.
+                </p>
+                <div className="absolute left-6 right-6 bottom-0 h-[2px] bg-cyan-400 scale-x-0 group-hover:scale-x-100 origin-left  duration-300"></div>
+              </div>
+
+              <div className=" relative group bg-gradient-to-br from-[#393d40] to-[#25282a] ml-10 rounded-xl p-6  min-h-[300px]  duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl transition duration-600">
                 <div className="bg-[#282a2d] w-12 h-12 flex items-center justify-center shadow-inner shadow-slate-950 rounded-xl mb-4">
                    <span className=" text-cyan-400 text-2xl ">03</span>
                 </div>
@@ -412,20 +496,7 @@ const LandingPage = () => {
                 <div className="absolute left-6 right-6 bottom-0 h-[2px] bg-cyan-400 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></div>
               </div>
 
-              <div className=" relative group bg-gradient-to-br from-[#393d40] to-[#25282a] ml-10 rounded-xl p-6  min-h-[300px] transition-transform duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl transition duration-600">
-                <div className="bg-[#282a2d] w-12 h-12 flex items-center justify-center shadow-inner shadow-slate-950 rounded-xl mb-4">
-                   <span className=" text-cyan-400 text-2xl ">03</span>
-                </div>
-                
-                <h4 className="text-2xl mb-3 pt-3 text-left">Easy Customize</h4>
-                <p className="text-gray-400 text-md leading-relaxed text-left">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do.
-                </p>
-                <div className="absolute left-6 right-6 bottom-0 h-[2px] bg-cyan-400 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></div>
-              </div>
-
-              <div className=" relative group bg-gradient-to-br from-[#393d40] to-[#25282a] ml-10 rounded-xl p-6  min-h-[300px] transition-transform duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl transition duration-600">
+              <div className=" relative group bg-gradient-to-br from-[#393d40] to-[#25282a] ml-10 rounded-xl p-6  min-h-[300px]  duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl transition duration-600">
                 <div className="bg-[#282a2d] w-12 h-12 flex items-center justify-center shadow-inner shadow-slate-950 rounded-xl mb-4">
                    <span className=" text-cyan-400 text-2xl ">04</span>
                 </div>
