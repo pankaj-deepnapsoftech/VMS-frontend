@@ -9,9 +9,7 @@ const Footer = () => {
       <div>
         <div className="mb-6">
           <Link to="/" className="flex items-center">
-            <span className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-blue-300 text-transparent bg-clip-text">
-              Secure&
-            </span>
+            <img src="/logo.png" className="h-28" />
           </Link>
         </div>
         <p className="text-gray-400 mb-6 max-w-sm">
