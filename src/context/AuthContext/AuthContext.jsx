@@ -1,3 +1,4 @@
+/* eslint-disable no-const-assign */
 import { AxiosHandler } from "@/config/AxiosConfig";
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -14,10 +15,10 @@ const AuthContextProvider = ({ children }) => {
   const [token, setToken] = useState(Cookies.get("token"));
   const [loading, setLoading] = useState(false);
   const [userLoading, setUserLoading] = useState(false);
-
-
-
+  const [runner,setRunner] = useState(1);
   const [authenticate, setAuthenticate] = useState(null);
+
+  
 
   const getLogedInUser = async () => {
     setUserLoading(true)
@@ -210,9 +211,9 @@ const AuthContextProvider = ({ children }) => {
     try {
       const res = await AxiosHandler.put(`/auth/deactivate/${id}`,data);
       toast.success(res.data.message);
-
+      setRunner(prev => prev + 1)
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error?.response?.data?.message);
     } finally {
       setLoading(false);
     }
@@ -239,7 +240,8 @@ const AuthContextProvider = ({ children }) => {
       token,
       authenticate,
       ChangePassword,
-      ChangeStatus
+      ChangeStatus,
+      runner
     }}>
       {children}
     </authContext.Provider>

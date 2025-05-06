@@ -16,21 +16,15 @@ export default function AllEmployee() {
 		page,
 		setPage,
 		VerifyEmployee,
-		datafetchCount,
-		setdatafetchCount,
 		AllEmployee, AllClientSME }
 		= useAllEmployeeContext();
 
 
-	const { authenticate, token, Signup, ChangeStatus, loading: authloading } = useAuthContext();
+	const { authenticate, token, Signup, ChangeStatus, runner } = useAuthContext()
 
 	useEffect(() => {
-		if (token && datafetchCount === 0) {
-
-			authenticate?.role === "ClientCISO" ? AllClientSME() : AllEmployee();
-			setdatafetchCount(1);
-		}
-	}, [token, page, authloading])
+		authenticate?.role === "ClientCISO" ? AllClientSME() : AllEmployee();
+	}, [token, page, runner])
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -59,7 +53,6 @@ export default function AllEmployee() {
 			case "activate":
 				ChangeStatus({ deactivate: true }, id);
 				break;
-			// eslint-disable-next-line no-duplicate-case
 			case "deactivate":
 				ChangeStatus({ deactivate: false }, id);
 				break;
@@ -272,6 +265,7 @@ export default function AllEmployee() {
 						</tbody>
 					</table>
 				</div>}
+
 				<div className="flex justify-between items-center py-12 px-5">
 					<button
 						className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}

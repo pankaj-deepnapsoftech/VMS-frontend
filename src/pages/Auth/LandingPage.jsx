@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import "/public/Font/LexendDeca.ttf";
-import { FaApple, FaCommentDots, FaCube, FaMousePointer, } from "react-icons/fa";
+import { FaApple, FaBullseye, FaClone, FaEye,  FaProjectDiagram, FaSearch, FaTools, } from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -53,10 +53,10 @@ const plans = [
 
 const slides = [
   {
-    title: "Do More Tasks with Neon",
-    text: "Our app was designed to let you manage your time more effectively. Also, it is a great personal companion for every smartphone user.",
+    title: "AI Powered Risk Prioritization and Remediation Platform",
+    text: "Enhance security with our intelligent AI-driven platform that identifies, prioritizes, and remediates risks efficiently. Streamline threat management, reduce vulnerabilities, and safeguard your business with actionable insights and automated solutions.",
     buttonText: "Start Using for Free",
-    image: "/image-02.png",
+    image: "/logo.png",
   },
   {
     title: "#1 Everyday Application",
@@ -73,6 +73,41 @@ const slides = [
 ];
 
 
+const features = [
+  {
+    icon: FaSearch,
+    title: "Intelligent API Discovery",
+    description: `Automatically detects and classifies APIs and high-value endpoints to identify security risks.
+Continuously monitors exposed APIs for misconfigurations, unauthorized access, and potential threats.`
+  },
+  {
+    icon: FaEye,
+    title: "Observability",
+    description: "Continuously monitors and detects deviations in security posture for proactive risk management."
+  },
+  {
+    icon: FaProjectDiagram,
+    title: "Workflow Management",
+    description: `Offers customizable dashboards, exception workflows, and ageing tracking for efficient vulnerability lifecycle management.
+Automates risk-based prioritization, escalations, and team collaboration to accelerate remediation efforts.`
+  },
+  {
+    icon: FaTools,
+    title: "Workflow-Driven Vulnerability Remediation",
+    description: "Automates and streamlines remediation processes, ensuring efficient and structured vulnerability resolution."
+  },
+  {
+    icon: FaClone,
+    title: "Duplicate Detection",
+    description: "Identifies and eliminates redundant vulnerabilities, reducing noise and improving remediation efficiency."
+  },
+  {
+    icon: FaBullseye,
+    title: "Campaign Management",
+    description: `Organizes and prioritizes security fixes into structured campaigns for systematic risk mitigation.
+Applies mass vulnerability fixes based on predefined categories, accelerating threat resolution.`
+  },
+];
 
 const LandingPage = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -95,11 +130,14 @@ const LandingPage = () => {
       >
         <div className="w-full max-w-screen-xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <img
-              src="/logos.png"
-              alt="Logo"
-              style={{ width: "100px", height: "auto" }}
-            />
+            <div className="flex gap-2 items-center justify-center">
+              <img
+                src="/logo.png"
+                alt="Scalable Image"
+                style={{ width: "70px", height: "auto" }}
+              />
+
+            </div>
           </div>
 
           <div className="hidden md:flex items-center space-x-12 text-gray-400 text-lg">
@@ -182,51 +220,29 @@ const LandingPage = () => {
 
       <section className="bg-gradient-to-b from-[#343537] to-[#26282a] text-white py-16 px-4 md:px-20">
         <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row items-center gap-12">
-          <div className="w-full md:w-1/2 flex justify-center">
+          <div className="w-full md:w-1/3 flex justify-center">
             <img src="/image-04.png" alt="Illustration" className="max-w-sm" />
           </div>
 
-          <div className="w-full md:w-1/2">
+          <div className="w-full md:w-2/3 ">
             <h2 className="text-4xl font-bold mb-2">Features</h2>
             <p className="text-gray-400 mb-8">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore...
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-gradient-to-bl from-[#343537] to-[#26282a] rounded-xl p-6 shadow-slate-100 hover:shadow-2xl transition">
-                <div className="bg-[#26272b] w-12 h-12 flex items-center justify-center rounded-xl mb-4 shadow-inner shadow-slate-950 ">
-                  <FaMousePointer className="text-[#ff6d6d] " size={25} />
+            <div className="flex gap-4 w-full overflow-x-scroll">
+              {features.map((item, index) =>
+                <div key={index} className="bg-gradient-to-bl from-[#414244] to-[#36393b] rounded-xl p-6 shadow-slate-100 hover:shadow-2xl transition min-w-72 ">
+                  <div className="bg-[#26272b] w-12 h-12 flex items-center justify-center rounded-xl mb-4 shadow-inner shadow-slate-950 ">
+                    {item.icon && <item.icon className="text-[#ff6d6d] " size={25} />}
+                  </div>
+                  <h4 className="text-lg font-semibold mb-2">{item.title}</h4>
+                  <p className="text-[#d7e1ec] text-sm">
+                   {item.description}
+                  </p>
                 </div>
-                <h4 className="text-lg font-semibold mb-2">Easy Customize</h4>
-                <p className="text-[#d7e1ec] text-sm">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do.
-                </p>
-              </div>
-
-              <div className="bg-gradient-to-bl from-[#343537] to-[#26282a] rounded-xl p-6 shadow-slate-100 hover:shadow-2xl transition">
-                <div className="bg-[#26272b] w-12 h-12 flex items-center justify-center rounded-xl mb-4 shadow-inner shadow-slate-950 ">
-                  <FaCube className="text-[#8defff]" size={25} />
-                </div>
-                <h4 className="text-lg font-semibold mb-2">
-                  Different Layouts
-                </h4>
-                <p className="text-[#d7e1ec] text-sm">
-                  Lorem ipsum dolor sit amet,
-                </p>
-              </div>
-
-              <div className="bg-gradient-to-t from-[#343537] to-[#26282a] rounded-xl p-6 shadow-slate-100 hover:shadow-2xl transition">
-                <div className="bg-[#26272b] w-12 h-12 flex items-center justify-center rounded-xl shadow-inner shadow-slate-950  mb-4">
-                  <FaCommentDots className="text-[#00ffa3]" size={20} />
-                </div>
-                <h4 className="text-lg font-semibold mb-2">Friendly Support</h4>
-                <p className="text-gray-400 text-sm">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do.
-                </p>
-              </div>
+              )}
             </div>
           </div>
         </div>
