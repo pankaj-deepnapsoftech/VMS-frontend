@@ -8,7 +8,7 @@ const Solutions = () => {
     <div className="font-poppins">
       <Header />
       {/* Section 1: Header */}
-      <section className="bg-gradient-to-b from-[#343537] to-[#17181a] text-white py-12 px-6">
+      <section className="bg-gradient-to-b from-[#343537] to-[#17181a] text-white pt-32 py-12 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="mb-6">
             <h1 className="text-3xl font-bold mb-2 flex gap-10">

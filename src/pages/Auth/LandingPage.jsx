@@ -6,12 +6,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { FaArrowPointer, FaMessage } from "react-icons/fa6";
-import { Pagination, Autoplay } from "swiper/modules";
+
 import { IoLogoGooglePlaystore } from "react-icons/io5";
 import { GiPerspectiveDiceSixFacesFour } from "react-icons/gi";
 import { X } from "lucide-react";
 import Footer from "./component/Footer";
 import { FiArrowRight, FiChevronUp } from "react-icons/fi";
+import Header from "./component/Header";
 
 const plans = [
   {
@@ -60,54 +61,44 @@ const slides = [
     buttonText: "Start Using for Free",
     image: "/logo.png",
   },
-  {
-    title: "#1 Everyday Application",
-    text: "Welcome to Neon, an award-winning & easy-to-use mobile application that revolutionizes your daily work tasks.",
-    buttonText: "Start using for free",
-    image: "/image-01.png",
-  },
-  {
-    title: "Awesome  Performance",
-    text: "Neon delivers high performance and a variety of features that you’ll surely appreciate even if you use a budget-class device.",
-    buttonText: "Start Using for Free",
-    image: "/image-03.png",
-  },
 ];
-
 
 const features = [
   {
     icon: FaSearch,
     title: "Intelligent API Discovery",
     description: `Automatically detects and classifies APIs and high-value endpoints to identify security risks.
-Continuously monitors exposed APIs for misconfigurations, unauthorized access, and potential threats.`
+Continuously monitors exposed APIs for misconfigurations, unauthorized access, and potential threats.`,
   },
   {
     icon: FaEye,
     title: "Observability",
-    description: "Continuously monitors and detects deviations in security posture for proactive risk management."
+    description:
+      "Continuously monitors and detects deviations in security posture for proactive risk management.",
   },
   {
     icon: FaProjectDiagram,
     title: "Workflow Management",
     description: `Offers customizable dashboards, exception workflows, and ageing tracking for efficient vulnerability lifecycle management.
-Automates risk-based prioritization, escalations, and team collaboration to accelerate remediation efforts.`
+Automates risk-based prioritization, escalations, and team collaboration to accelerate remediation efforts.`,
   },
   {
     icon: FaTools,
     title: "Workflow-Driven Vulnerability Remediation",
-    description: "Automates and streamlines remediation processes, ensuring efficient and structured vulnerability resolution."
+    description:
+      "Automates and streamlines remediation processes, ensuring efficient and structured vulnerability resolution.",
   },
   {
     icon: FaClone,
     title: "Duplicate Detection",
-    description: "Identifies and eliminates redundant vulnerabilities, reducing noise and improving remediation efficiency."
+    description:
+      "Identifies and eliminates redundant vulnerabilities, reducing noise and improving remediation efficiency.",
   },
   {
     icon: FaBullseye,
     title: "Campaign Management",
     description: `Organizes and prioritizes security fixes into structured campaigns for systematic risk mitigation.
-Applies mass vulnerability fixes based on predefined categories, accelerating threat resolution.`
+Applies mass vulnerability fixes based on predefined categories, accelerating threat resolution.`,
   },
 ];
 
@@ -126,99 +117,41 @@ const LandingPage = () => {
 
   return (
     <>
-      <nav
-        className={`${scrolled ? "bg-[#1e1f22]" : "bg-transparent"
-          } text-white py-4 px-6 md:px-12 fixed w-full top-0 z-50 transition-colors duration-100`}
-      >
-        <div className="w-full max-w-screen-xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="flex gap-2 items-center justify-center">
-              <img
-                src="/logo.png"
-                alt="Scalable Image"
-                style={{ width: "70px", height: "auto" }}
-              />
-
-            </div>
-          </div>
-
-          <div className="hidden md:flex items-center space-x-12 text-gray-400 text-lg">
-            <Link
-              to="/"
-              className="relative text-[#8defff] after:block after:h-[2px] after:bg-[#8defff] after:scale-x-100 after:mt-1"
-            >
-              Home
-            </Link>
-            <Link to="/pricing" className="hover:text-[#8defff] transition">
-              Pricing
-            </Link>
-            <Link to="/features" className="hover:text-[#8defff] transition">
-              Features
-            </Link>
-            <Link to="/contact" className="hover:text-[#8defff] transition">
-              Contact
-            </Link>
-            <Link to="/solutions" className="hover:text-[#8defff] transition">
-              Solutions
-            </Link>
-
-            {/* <button className="bg-[#2c2e33] box-shadow: inset 8rem 0 0 0 var(--color), inset -8rem 0 0 0 var(--color)  w-[180px] h-[60px] font-semibold py-2 px-3 rounded-lg hover:bg-[#3b3d42] transition shadow-lg">
-            Get App
-          </button> */}
-
-            <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
-              <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-              <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-                Get App
-              </span>
-            </button>
-          </div>
-        </div>
-      </nav>
+      <Header />
 
       <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-[#d7e1ec] py-10">
-        <div
-          className="max-w-screen-xl mx-auto px-4"
-          onMouseEnter={() => swiperRef.current?.autoplay.start()}
-          onMouseLeave={() => swiperRef.current?.autoplay.stop()}
-        >
-          <Swiper
-            modules={[Pagination, Autoplay]}
-            pagination={{ clickable: true }}
-            loop={true}
-            autoplay={{ delay: 1500, disableOnInteraction: false }}
-            onSwiper={(swiper) => (swiperRef.current = swiper)}
-          >
-            {slides.map((slide, index) => (
-              <SwiperSlide key={index}>
-                <div className="flex flex-col pt-[100px] md:flex-row items-center justify-between gap-12">
-                  <div className="  md:w-1/2">
-                    <h2 className="text-[500px] md:text-5xl font-bold mb-4">
-                      {slide.title}
-                    </h2>
-                    <p className="text-gray-400 mb-6 text-[22px]">
-                      {slide.text}
-                    </p>
+        <div className="max-w-screen-xl mx-auto px-4">
+          {slides.map((slide, index) => (
+            <div
+              key={index}
+              className="flex flex-col pt-[100px] md:flex-row items-center justify-between gap-12"
+            >
+              <div className="  md:w-1/2">
+                <h2 className="text-[500px] md:text-5xl font-bold mb-4">
+                  {slide.title}
+                </h2>
+                <p className="text-gray-400 mb-6 text-[22px]">{slide.text}</p>
 
-                    <button className=" bg-gradient-to-tr from-[#383b40] text-xl h-20 w-60 rounded-lg before:ease relative overflow-hidden  text-gray-300 shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 mt-8 hover:text-white  hover:before:h-64 hover:before:-translate-y-32">
-                      <span className="relative z-10"> {slide.buttonText}</span>
-                    </button>
-                  </div>
+                <button className=" bg-gradient-to-tr from-[#383b40] mb-10 text-xl h-20 w-60 rounded-lg before:ease relative overflow-hidden  text-gray-300 shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 mt-8 hover:text-white  hover:before:h-64 hover:before:-translate-y-32">
+                  <span className="relative z-10"> {slide.buttonText}</span>
+                </button>
+              </div>
 
-                  <div className="md:w-1/2 flex justify-center">
-                    <img
-                      src={slide.image}
-                      alt={slide.title}
-                      className={`drop-shadow-lg ${index === 2 ? "max-w-sm" : "max-w-md"
-                        }`}
-                    />
-                  </div>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+              <div className="md:w-1/2 flex justify-center">
+                <img
+                  src={slide.image}
+                  alt={slide.title}
+                  className={`drop-shadow-lg ${
+                    index === 2 ? "max-w-sm" : "max-w-md"
+                  }`}
+                />
+              </div>
+            </div>
+          ))}
         </div>
       </section>
+
+     
 
       <section className="bg-gradient-to-b from-[#343537] to-[#26282a] text-white py-16 px-4 md:px-20">
         <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row items-center gap-12">
@@ -234,17 +167,20 @@ const LandingPage = () => {
             </p>
 
             <div className="flex gap-4 w-full overflow-x-scroll">
-              {features.map((item, index) =>
-                <div key={index} className="bg-gradient-to-bl from-[#414244] to-[#36393b] rounded-xl p-6 shadow-slate-100 hover:shadow-2xl transition min-w-72 ">
+              {features.map((item, index) => (
+                <div
+                  key={index}
+                  className="bg-gradient-to-bl from-[#414244] to-[#36393b] rounded-xl p-6 shadow-slate-100 hover:shadow-2xl transition min-w-72 "
+                >
                   <div className="bg-[#26272b] w-12 h-12 flex items-center justify-center rounded-xl mb-4 shadow-inner shadow-slate-950 ">
-                    {item.icon && <item.icon className="text-[#ff6d6d] " size={25} />}
+                    {item.icon && (
+                      <item.icon className="text-[#ff6d6d] " size={25} />
+                    )}
                   </div>
                   <h4 className="text-lg font-semibold mb-2">{item.title}</h4>
-                  <p className="text-[#d7e1ec] text-sm">
-                    {item.description}
-                  </p>
+                  <p className="text-[#d7e1ec] text-sm">{item.description}</p>
                 </div>
-              )}
+              ))}
             </div>
           </div>
         </div>
@@ -311,6 +247,7 @@ const LandingPage = () => {
         </div>
       </section> */}
 
+             
 
       <section>
         <div className="h-full w-full pt-12 bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f]">
@@ -320,24 +257,34 @@ const LandingPage = () => {
             <div className=" w-full sm:w-[30%]">
               <div className="mb-10 mt-10">
                 <div className="flex justify-end max-[800px]:justify-start gap-4">
-                  <h2 className="text-[#D7E1E0] text-xl font-bold">Friendly Support</h2>
+                  <h2 className="text-[#D7E1E0] text-xl font-bold">
+                    Friendly Support
+                  </h2>
                   <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
                     <FaMessage className="text-3xl text-[#a1a4ab]" />
                   </div>
                 </div>
-                <p className="text-[#A0A1AC] md:text-end">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium cupiditate.</p>
+                <p className="text-[#A0A1AC] md:text-end">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Praesentium cupiditate.
+                </p>
               </div>
               <div className="flex justify-end max-[800px]:justify-start  items-start">
                 <div className="w-64 h-[2.5px] rounded-md shadow-2xl bg-[#2f2f2f]  ml-1 mt-1"></div>
               </div>
               <div className="h-[30vh] pt-10">
                 <div className="flex justify-end max-[800px]:justify-start gap-4">
-                  <h2 className="text-[#D7E1E0] text-xl font-bold">User-friendly UI</h2>
+                  <h2 className="text-[#D7E1E0] text-xl font-bold">
+                    User-friendly UI
+                  </h2>
                   <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
                     <FaArrowPointer className="text-3xl text-[#a1a4ab]" />
                   </div>
                 </div>
-                <p className="text-[#A0A1AC] md:text-end">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium cupiditate.</p>
+                <p className="text-[#A0A1AC] md:text-end">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Praesentium cupiditate.
+                </p>
               </div>
             </div>
 
@@ -362,9 +309,14 @@ const LandingPage = () => {
                   <div className="shadow-2xl relative -top-2 h-[60px] w-[60px] flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
                     <GiPerspectiveDiceSixFacesFour className="text-5xl text-[#a1a4ab]" />
                   </div>
-                  <h2 className="text-[#D7E1E0] text-xl font-bold">Easy <br /> Customization</h2>
+                  <h2 className="text-[#D7E1E0] text-xl font-bold">
+                    Easy <br /> Customization
+                  </h2>
                 </div>
-                <p className="text-[#A0A1AC]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium cupiditate.</p>
+                <p className="text-[#A0A1AC]">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Praesentium cupiditate.
+                </p>
               </div>
               <div className="flex items-start">
                 <div className="w-64 h-[2.5px] rounded-md shadow-2xl bg-[#2f2f2f]  ml-1 mt-1"></div>
@@ -374,14 +326,18 @@ const LandingPage = () => {
                   <div className="shadow-2xl relative -top-2 h-[60px] w-[60px] flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
                     <FaMessage className="text-3xl text-[#a1a4ab]" />
                   </div>
-                  <h2 className="text-[#D7E1E0] text-xl font-bold pb-2">Simple Setup</h2>
+                  <h2 className="text-[#D7E1E0] text-xl font-bold pb-2">
+                    Simple Setup
+                  </h2>
                 </div>
-                <p className="text-[#A0A1AC]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium cupiditate.</p>
+                <p className="text-[#A0A1AC]">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Praesentium cupiditate.
+                </p>
               </div>
             </div>
           </div>
         </div>
-
       </section>
 
       <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-white py-16 px-6 md:px-20">
