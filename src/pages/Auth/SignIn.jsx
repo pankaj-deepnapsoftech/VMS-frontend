@@ -49,7 +49,7 @@ function SignIn() {
               onBlur={handleBlur}
               name="email"
               className="w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-colors"
-              placeholder="mail@example.com"
+              placeholder="Enter email"
             />
             {errors.email && touched.email && (
               <p className="text-red-400 p-2">{errors.email}</p>
@@ -68,6 +68,7 @@ function SignIn() {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 name="password"
+                placeholder="Enter password"
                 className="w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-colors"
               />
               <div
@@ -103,7 +104,7 @@ function SignIn() {
           <button
             disabled={loading}
             type="submit"
-            className="w-full bg-gradient-to-t from-[#0371c0] to-blue-400 text-white rounded-full p-3 font-medium hover:"
+            className="w-full bg-gradient-to-t from-[#0371c0] to-blue-400 text-white rounded-lg p-3 font-medium hover:"
           >
             Login
           </button>

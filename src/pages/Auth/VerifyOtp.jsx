@@ -230,7 +230,7 @@ function VerifyOtp() {
 
           <div className="flex justify-end">     
             <button
-              className="w-full  bg-gradient-to-t from-[#0371c0] to-blue-300 text-white py-2 rounded-full transition duration-200 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
+              className="w-full  bg-gradient-to-t from-[#0371c0] to-blue-300 text-white py-2 rounded-lg transition duration-200 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
               disabled={isResendDisabled}
               onClick={ResendOtp}
             >
@@ -241,7 +241,7 @@ function VerifyOtp() {
           <button
             disabled={loading}
             type="submit"
-            className="w-full bg-gradient-to-t from-[#0371c0] to-blue-400 text-white rounded-full text-white rounded-full p-3 my-5 font-medium hover:bg-blue-600 transition-colors"
+            className="w-full bg-gradient-to-t from-[#0371c0] to-blue-400 text-white rounded-lg  p-3 my-5 font-medium hover:bg-blue-600 transition-colors"
           >
             Submit
           </button>

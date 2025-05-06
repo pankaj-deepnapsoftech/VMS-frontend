@@ -157,7 +157,7 @@ function SignIn() {
           </div>}
 
           {values.role === "Client SME" && <div>
-            
+
             <label
               htmlFor="Select_Org"
               className="block text-sm font-medium text-gray-700 mb-2"
@@ -176,7 +176,7 @@ function SignIn() {
             {touched.owner && errors.owner && <p className='text-red-700 text-xs'> {errors.owner}</p>}</div>}
 
           {/* Login Button */}
-          <button disabled={loading} type='submit' className="w-full bg-gradient-to-t from-[#0371c0] to-blue-400 text-white rounded-full p-3 font-medium hover:bg-emerald-600 transition-colors my-10">
+          <button disabled={loading} type='submit' className="w-full bg-gradient-to-t from-[#0371c0] to-blue-400 text-white rounded-lg p-3 font-medium hover:bg-emerald-600 transition-colors my-10">
             Sign Up
           </button>
 
