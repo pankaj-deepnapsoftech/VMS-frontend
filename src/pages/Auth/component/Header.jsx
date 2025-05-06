@@ -290,10 +290,10 @@ const Header = () => {
             <Link to="/pricing" className="hover:text-[#8defff] transition">
               Pricing
             </Link>
-            <Link to="/features" className="hover:text-[#8defff] transition">
+            <Link to="#features" className="hover:text-[#8defff] transition">
               Features
             </Link>
-            <Link to="/contact" className="hover:text-[#8defff] transition">
+            <Link to="#contact" className="hover:text-[#8defff] transition">
               Contact
             </Link>
             <Link to="/solutions" className="hover:text-[#8defff] transition">

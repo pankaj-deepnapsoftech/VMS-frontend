@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "/public/Font/LexendDeca.ttf";
 import { FaApple, FaBullseye, FaClone, FaEye, FaProjectDiagram, FaSearch, FaTools, } from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -104,6 +104,7 @@ Applies mass vulnerability fixes based on predefined categories, accelerating th
 
 const LandingPage = () => {
   const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate()
   const swiperRef = useRef(null);
   useEffect(() => {
     const handleScroll = () => {
@@ -132,7 +133,7 @@ const LandingPage = () => {
                 </h2>
                 <p className="text-gray-400 mb-6 text-[22px]">{slide.text}</p>
 
-                <button className=" bg-gradient-to-tr from-[#383b40] mb-10 text-xl h-20 w-60 rounded-lg before:ease relative overflow-hidden  text-gray-300 shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 mt-8 hover:text-white  hover:before:h-64 hover:before:-translate-y-32">
+                <button onClick={()=>navigate("/sign-up")} className=" bg-gradient-to-tr from-[#383b40] mb-10 text-xl h-20 w-60 rounded-lg before:ease relative overflow-hidden  text-gray-300 shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 mt-8 hover:text-white  hover:before:h-64 hover:before:-translate-y-32">
                   <span className="relative z-10"> {slide.buttonText}</span>
                 </button>
               </div>
@@ -153,7 +154,7 @@ const LandingPage = () => {
 
      
 
-      <section className="bg-gradient-to-b from-[#343537] to-[#26282a] text-white py-16 px-4 md:px-20">
+      <section id="features" className="bg-gradient-to-b from-[#343537] to-[#26282a] text-white py-16 px-4 md:px-20">
         <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row items-center gap-12">
           <div className="w-full md:w-1/3 flex justify-center">
             <img src="/image-04.png" alt="Illustration" className="max-w-sm" />
@@ -340,7 +341,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-white py-16 px-6 md:px-20">
+      <section id="contact" className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-white py-16 px-6 md:px-20">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
           <div>
             <h2 className="text-4xl text-gray-200 font-bold mb-6">
