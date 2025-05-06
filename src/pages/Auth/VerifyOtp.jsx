@@ -184,7 +184,7 @@ function VerifyOtp() {
       <div className="w-full md:w-[480px] p-8 flex flex-col justify-between">
         {/* Logo and Language Section */}
         <div className="flex justify-between items-center">
-        <Link to="/" className="flex items-center">
+        {/* <Link to="/" className="flex items-center">
             <img
               src="/logo.png"
               alt="Scalable Image"
@@ -193,14 +193,14 @@ function VerifyOtp() {
             <span className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-blue-300 text-transparent bg-clip-text">
               Secure&
             </span>
-          </Link>
+          </Link> */}
         </div>
 
         {/* Login Form */}
         <form className="my-auto w-full max-w-md" onSubmit={handleSubmit}>
           <h1 className="text-3xl font-bold text-white mb-8">Verify OTP</h1>
           <p className="text-gray-400 mb-8">
-            Enter your OTP and we'll Verify Your Details.
+            Enter your OTP and we&apos;ll Verify Your Details.
           </p>
 
           {/* Metamask Button */}
@@ -220,7 +220,7 @@ function VerifyOtp() {
               onChange={handleChange}
               onBlur={handleBlur}
               name="otp"
-              className="w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-colors"
+              className="w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:blue-emerald-500 focus:ring-1 focus:ring-blue-500 outline-none transition-colors"
               placeholder="Enter OTP Here"
             />
             {errors.otp && touched.otp && (
@@ -230,18 +230,18 @@ function VerifyOtp() {
 
           <div className="flex justify-end">     
             <button
-              className="w-full bg-blue-600 text-white py-2 rounded-lg transition duration-200 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
+              className="w-full  bg-gradient-to-t from-[#0371c0] to-blue-300 text-white py-2 rounded-full transition duration-200 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
               disabled={isResendDisabled}
               onClick={ResendOtp}
             >
-              {isResendDisabled ? `Resend OTP i   n ${timer}s` : "Resend OTP"}
+              {isResendDisabled ? `Resend OTP in ${timer}s` : "Resend OTP"}
             </button>
           </div>
           {/* Login Button */}
           <button
             disabled={loading}
             type="submit"
-            className="w-full bg-emerald-500 text-white rounded-lg p-3 my-5 font-medium hover:bg-emerald-600 transition-colors"
+            className="w-full bg-gradient-to-t from-[#0371c0] to-blue-400 text-white rounded-full text-white rounded-full p-3 my-5 font-medium hover:bg-blue-600 transition-colors"
           >
             Submit
           </button>
@@ -251,22 +251,25 @@ function VerifyOtp() {
             Not registered yet?{" "}
             <Link
               to={"/sign-up"}
-              className="text-emerald-500 hover:text-emerald-400 transition-colors"
+              className="text-white hover:text-blue-500 transition-colors"
             >
-              Create an account
+              Login
             </Link>
           </p>
         </form>
 
         {/* Footer */}
-        <div className="text-gray-400 text-sm">
-          © Secure& All rights reserved.
-        </div>
+      
       </div>
 
       {/* Right Panel - Particle Globe Background */}
       <div className="hidden md:block flex-1 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop')] bg-cover bg-center">
-        <div className="w-full h-full bg-[#0a192f]/5 backdrop-blur-sm"></div>
+      <div className="w-full h-full bg-[#0a192f]/80 backdrop-blur-sm flex items-center justify-center">
+          <div className="text-center px-4 mt-10">
+          
+            <img src="/logo.png" />
+          </div>
+        </div>
       </div>
     </div>
   );

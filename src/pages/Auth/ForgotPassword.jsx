@@ -206,16 +206,7 @@ function ForgotPassword() {
       <div className="w-full md:w-[480px] p-8 flex flex-col justify-between">
         {/* Logo and Language Section */}
         <div className="flex justify-between items-center">
-          <Link to="/" className="flex items-center">
-            <img
-              src="/logo.png"
-              alt="Scalable Image"
-              style={{ width: "15%", height: "auto" }}
-            />
-            <span className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-blue-300 text-transparent bg-clip-text">
-              Secure&
-            </span>
-          </Link>
+          
         </div>
 
         {/* Login Form */}
@@ -245,7 +236,7 @@ function ForgotPassword() {
               onChange={handleChange}
               onBlur={handleBlur}
               name="email"
-              className="w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-colors"
+              className="w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:border-emerald-500 focus:ring-1 focus:ring-blue-500 outline-none transition-colors"
               placeholder="mail@example.com"
             />
             {errors.email && touched.email && (
@@ -257,7 +248,7 @@ function ForgotPassword() {
           <button
             disabled={loading}
             type="submit"
-            className="w-full bg-emerald-500 text-white rounded-lg p-3 font-medium hover:bg-emerald-600 transition-colors"
+            className="w-full  bg-gradient-to-t from-[#0371c0] to-blue-400 text-white rounded-full p-3 font-medium hover:bg-emerald-600 transition-colors"
           >
             Send Mail
           </button>
@@ -267,7 +258,7 @@ function ForgotPassword() {
             Back to {" "}
             <Link
               to={"/sign-in"}
-              className="text-emerald-500 hover:text-emerald-400 transition-colors"
+              className="text-white hover:text-blue-400 transition-colors"
             >
               Sign In
             </Link>
@@ -275,14 +266,16 @@ function ForgotPassword() {
         </form>
 
         {/* Footer */}
-        <div className="text-gray-400 text-sm">
-          © Secure& All rights reserved.
-        </div>
+       
       </div>
 
       {/* Right Panel - Particle Globe Background */}
       <div className="hidden md:block flex-1 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop')] bg-cover bg-center">
-        <div className="w-full h-full bg-[#0a192f]/80 backdrop-blur-sm"></div>
+      <div className="w-full h-full bg-[#0a192f]/80 backdrop-blur-sm flex items-center justify-center">
+          <div className="text-center px-4 mt-10">
+            <img src="/logo.png" />
+          </div>
+        </div>
       </div>
     </div>
   );
