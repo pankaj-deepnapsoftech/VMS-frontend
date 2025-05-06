@@ -1,8 +1,16 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "/public/Font/LexendDeca.ttf";
-import { FaApple, FaBullseye, FaClone, FaEye, FaProjectDiagram, FaSearch, FaTools, } from "react-icons/fa";
-import { Swiper, SwiperSlide } from "swiper/react";
+import {
+  FaApple,
+  FaBullseye,
+  FaClone,
+  FaEye,
+  FaProjectDiagram,
+  FaSearch,
+  FaTools,
+} from "react-icons/fa";
+
 import "swiper/css";
 import "swiper/css/pagination";
 import { FaArrowPointer, FaMessage } from "react-icons/fa6";
@@ -10,8 +18,6 @@ import { FaArrowPointer, FaMessage } from "react-icons/fa6";
 import { IoLogoGooglePlaystore } from "react-icons/io5";
 import { GiPerspectiveDiceSixFacesFour } from "react-icons/gi";
 import { X } from "lucide-react";
-import Footer from "./component/Footer";
-import { FiArrowRight, FiChevronUp } from "react-icons/fi";
 import Header from "./component/Header";
 
 const plans = [
@@ -103,19 +109,6 @@ Applies mass vulnerability fixes based on predefined categories, accelerating th
 ];
 
 const LandingPage = () => {
-  const [scrolled, setScrolled] = useState(false);
-  const navigate = useNavigate()
-  const swiperRef = useRef(null);
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-
   return (
     <>
       <Header />
@@ -125,26 +118,49 @@ const LandingPage = () => {
           {slides.map((slide, index) => (
             <div
               key={index}
-              className="flex flex-col pt-[100px] md:flex-row items-center justify-between gap-12"
+              className="flex flex-col md:flex-row items-center justify-between gap-12 py-12"
             >
-              <div className="  md:w-1/2">
-                <h2 className="text-[500px] md:text-5xl font-bold mb-4">
+              
+              <div className="w-full md:w-1/2 text-center md:text-left flex flex-col items-center md:items-start">
+                {/* Title */}
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 mt-16">
                   {slide.title}
                 </h2>
-                <p className="text-gray-400 mb-6 text-[22px]">{slide.text}</p>
 
-                <button onClick={()=>navigate("/sign-up")} className=" bg-gradient-to-tr from-[#383b40] mb-10 text-xl h-20 w-60 rounded-lg before:ease relative overflow-hidden  text-gray-300 shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 mt-8 hover:text-white  hover:before:h-64 hover:before:-translate-y-32">
-                  <span className="relative z-10"> {slide.buttonText}</span>
-                </button>
+                
+                <div className="md:hidden mb-4">
+                  <img
+                    src={slide.image}
+                    alt={slide.title}
+                    className={`drop-shadow-lg mx-auto ${
+                      index === 2 ? "max-w-xs" : "max-w-sm"
+                    } w-full h-auto`}
+                  />
+                </div>
+
+                {/* Text */}
+                <p className="text-gray-400 mb-6 text-lg sm:text-xl">
+                  {slide.text}
+                </p>
+
+                {/* Button */}
+                <div className="flex justify-center md:justify-start">
+                  <button className="bg-gradient-to-tr from-[#383b40] text-md md:text-lg h-16 w-48 rounded-lg relative overflow-hidden text-gray-300 shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 mt-4 hover:text-white hover:before:h-64 hover:before:-translate-y-32">
+                    <span className="relative z-10">{slide.buttonText}</span>
+                  </button>
+                </div>
               </div>
 
-              <div className="md:w-1/2 flex justify-center">
+              {/* Image only visible on desktop */}
+              <div className="hidden md:flex w-full md:w-1/2 justify-center">
                 <img
                   src={slide.image}
                   alt={slide.title}
                   className={`drop-shadow-lg ${
-                    index === 2 ? "max-w-sm" : "max-w-md"
-                  }`}
+                    index === 2
+                      ? "max-w-xs sm:max-w-sm"
+                      : "max-w-sm sm:max-w-md"
+                  } w-full h-auto`}
                 />
               </div>
             </div>
@@ -152,9 +168,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-     
-
-      <section id="features" className="bg-gradient-to-b from-[#343537] to-[#26282a] text-white py-16 px-4 md:px-20">
+      <section className="bg-gradient-to-b from-[#343537] to-[#26282a] text-white py-16 px-4 md:px-20">
         <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row items-center gap-12">
           <div className="w-full md:w-1/3 flex justify-center">
             <img src="/image-04.png" alt="Illustration" className="max-w-sm" />
@@ -187,11 +201,11 @@ const LandingPage = () => {
         </div>
       </section>
 
-{/* pricing */}
-      {/* <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-[#d7e1ec] py-10">
-
+      <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-[#d7e1ec] py-10">
         <div className="w-full text-center md:text-left px-6 md:px-40">
-          <h2 className="text-3xl md:text-4xl font-bold mb-10">Pricing Plans</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-10">
+            Pricing Plans
+          </h2>
         </div>
 
         <div className="pb-12 max-w-6xl mx-auto flex overflow-x-auto md:grid md:grid-cols-3 gap-6 snap-x snap-mandatory md:overflow-visible px-4 md:px-0">
@@ -200,37 +214,39 @@ const LandingPage = () => {
               key={index}
               className="snap-center shrink-0 w-[90%] sm:w-[300px] md:w-full bg-gradient-to-bl from-[#343537] to-[#26282a] rounded-2xl p-6 shadow-lg hover:shadow-2xl transition duration-400 relative mx-auto"
             >
-
               {plan.popular && (
                 <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#ff8c68] text-white text-sm w-[355px] md:w-[365px]  md:h-10 text-center px-4 py-2 rounded-t-lg shadow-slate-100 font-semibold">
                   Popular
                 </div>
               )}
 
-
               <h3 className="text-2xl text-[#9b9ca7] font-semibold text-center mb-4">
                 {plan.name}
               </h3>
 
-
               <div className="flex items-center justify-center mb-6">
-                <div className={`h-6 w-1.5 ${plan.highlightColor} rounded-full mr-2`} />
+                <div
+                  className={`h-6 w-1.5 ${plan.highlightColor} rounded-full mr-2`}
+                />
                 <p className="text-5xl font-bold">{plan.price}</p>
                 <span className="ml-2 text-gray-400">Per Month</span>
               </div>
 
               <hr className="border-gray-700 mb-6" />
 
-
               <ul className="space-y-3 mb-6 text-sm">
                 {plan.features.map((feature, i) => {
-                  const label = typeof feature === "string" ? feature : feature.label;
-                  const available = typeof feature === "string" ? true : feature.available;
+                  const label =
+                    typeof feature === "string" ? feature : feature.label;
+                  const available =
+                    typeof feature === "string" ? true : feature.available;
 
                   return (
                     <li
                       key={i}
-                      className={`flex items-center space-x-2 ${available ? "text-white" : "text-gray-500 line-through"}`}
+                      className={`flex items-center space-x-2 ${
+                        available ? "text-white" : "text-gray-500 line-through"
+                      }`}
                     >
                       <span>✔</span>
                       <span>{label}</span>
@@ -239,22 +255,20 @@ const LandingPage = () => {
                 })}
               </ul>
 
-
               <button className="mt-auto bg-gradient-to-tr from-[#383b40] text-xl rounded-lg relative h-14 w-full overflow-hidden text-gray-300 shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 hover:text-white hover:before:h-64 hover:before:-translate-y-32">
                 <span className="relative z-10">Select Plan</span>
               </button>
             </div>
           ))}
         </div>
-      </section> */}
-
-             
+      </section>
 
       <section>
         <div className="h-full w-full pt-12 bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f]">
-          <h1 className="text-white text-center text-[40px] font-bold pt-4">Welcome to Secure&</h1>
+          <h1 className="text-white text-center text-[40px] font-bold pt-4">
+            Welcome to Neon
+          </h1>
           <div className="flex flex-col sm:flex-row sm:flex-wrap gap-8 justify-between items-center h-auto w-full px-4 sm:px-8 py-10">
-
             <div className=" w-full sm:w-[30%]">
               <div className="mb-10 mt-10">
                 <div className="flex justify-end max-[800px]:justify-start gap-4">
@@ -273,7 +287,7 @@ const LandingPage = () => {
               <div className="flex justify-end max-[800px]:justify-start  items-start">
                 <div className="w-64 h-[2.5px] rounded-md shadow-2xl bg-[#2f2f2f]  ml-1 mt-1"></div>
               </div>
-              <div className="h-[30vh] pt-10">
+              <div className="h-[30vh] pt-16">
                 <div className="flex justify-end max-[800px]:justify-start gap-4">
                   <h2 className="text-[#D7E1E0] text-xl font-bold">
                     User-friendly UI
@@ -304,8 +318,8 @@ const LandingPage = () => {
               </div>
             </div>
 
-            <div className="w-full sm:w-[30%] h-full pt-10">
-              <div className="h-[22vh]">
+            <div className="w-full sm:w-[30%] h-full ">
+              <div className="h-[22vh] ">
                 <div className="flex gap-5">
                   <div className="shadow-2xl relative -top-2 h-[60px] w-[60px] flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
                     <GiPerspectiveDiceSixFacesFour className="text-5xl text-[#a1a4ab]" />
@@ -340,8 +354,7 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
-
-      <section id="contact" className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-white py-16 px-6 md:px-20">
+      <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-white py-16 px-6 md:px-20">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
           <div>
             <h2 className="text-4xl text-gray-200 font-bold mb-6">
@@ -425,25 +438,28 @@ const LandingPage = () => {
                   <i className="fab fa-youtube"></i>
                 </div>
               </div>
-              
+              <p>
+                © 2025. Neon.{" "}
+                <a href="#" className="underline">
+                  Privacy Policy
+                </a>
+              </p>
             </div>
           </div>
         </div>
-
-
-
-
       </section>
-
-      {/* how its work */}
-      {/* <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-white py-16">
+      <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-white py-16">
         <div className="max-w-7xl mx-auto px-4 pt-8 text-white">
-          
+          {/* Header Section */}
           <div className="text-center mb-12 ">
             <div className="flex flex-col md:flex-row items-center justify-center  md:gap-10">
-              <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 md:mb-0">How it works</h2>
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 md:mb-0">
+                How it works
+              </h2>
               <div className="w-2 h-4  text-white"></div>
-              <p className="text-gray-400 text-lg sm:text-xl mt-2 md:mt-5 md:ml-6 text-center md:text-left">Quick and Intuitive Profile Configuration</p>
+              <p className="text-gray-400 text-lg sm:text-xl mt-2 md:mt-5 md:ml-6 text-center md:text-left">
+                Quick and Intuitive Profile Configuration
+              </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 pt-8 md:pt-16 gap-6">
               <div className=" relative group bg-gradient-to-br from-[#393d40] to-[#25282a] rounded-xl p-6 min-h-[300px] transition-transform duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl">
@@ -500,91 +516,7 @@ const LandingPage = () => {
             </div>
           </div>
         </div>
-      </section> */}
-
-      {/* your carrer */}
-      {/* <section>
-        <div className="bg-[#2E3032] text-white   py-36 px-12 h-full ">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
-
-            <div className="space-y-6">
-              <h2 className="text-3xl font-bold">
-                Your Career <br /> <span className="text-gray-300">Starts Here!</span>
-              </h2>
-              <ul className="space-y-2 text-sm text-gray-300">
-                <li className="flex items-center">
-                  <span className="text-orange-500 mr-2">●</span> Creative Space
-                </li>
-                <li className="flex items-center">
-                  <span className="text-orange-500 mr-2">●</span> Growing Career
-                </li>
-                <li className="flex items-center">
-                  <span className="text-orange-500 mr-2">●</span> Cookies
-                </li>
-                <li className="flex items-center">
-                  <span className="text-orange-500 mr-2">●</span> Benefits
-                </li>
-              </ul>
-              <p className="text-gray-400 text-sm">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-              </p>
-              <p className="text-teal-400 text-sm">+1 800 603 6035</p>
-            </div>
-
-
-            <div>
-              <img
-                src="https://plus.unsplash.com/premium_photo-1661540917329-d73859798902?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt="Office"
-                className="rounded-lg w-full h-auto object-cover"
-              />
-            </div>
-
-
-            <div className="space-y-4">
-              <div className="flex justify-between items-center  border-b border-t border-gray-700 hover:rounded-xl hover:shadow-2xl py-6 px-3 hover:bg-[#ffffff1e] hover:backdrop-blur-3xl w-full transition-all duration-700">
-                <p className="text-cyan-400">Junior Developer</p>
-                <p>Seattle</p>
-                <p>Full Time</p>
-                <FiArrowRight className="text-gray-400" />
-              </div>
-              <div className="flex justify-between items-center border-b  border-gray-700 hover:rounded-xl hover:shadow-2xl py-6 px-3 hover:bg-[#ffffff1e] hover:backdrop-blur-3xl w-full transition-all duration-700">
-                <p className="text-cyan-400">Junior Developer</p>
-                <p>Seattle</p>
-                <p>Full Time</p>
-                <FiArrowRight className="text-gray-400" />
-              </div>
-              <div className="flex justify-between items-center border-b  border-gray-700 hover:rounded-xl hover:shadow-2xl py-6 px-3 hover:bg-[#ffffff1e] hover:backdrop-blur-3xl w-full transition-all duration-700">
-                <p className="text-cyan-400">Junior Developer</p>
-                <p>Seattle</p>
-                <p>Full Time</p>
-                <FiArrowRight className="text-gray-400" />
-              </div>
-              <div className="flex justify-between items-center border-b  border-gray-700 hover:rounded-xl hover:shadow-2xl py-6 px-3 hover:bg-[#ffffff1e] hover:backdrop-blur-3xl w-full transition-all duration-700">
-                <p className="text-cyan-400">Junior Developer</p>
-                <p>Seattle</p>
-                <p>Full Time</p>
-                <FiArrowRight className="text-gray-400" />
-              </div>
-            </div>
-          </div>
-
-
-          <div className="mt-10 text-gray-400 text-sm">
-            <span>Welcome to Our Office: </span>
-            <span className="text-white font-medium">
-              9870 St Vincent Place, Glasgow, DC 45 Fr 45
-            </span>
-          </div>
-
-          <a href="#navbar">
-            <button className="fixed bottom-6 right-6 bg-cyan-500 p-3 rounded-lg shadow-lg text-white hover:bg-cyan-600 transition-all">
-              <FiChevronUp size={24} />
-            </button>
-          </a>
-        </div>
-      </section> */}
-      <Footer/>
+      </section>
     </>
   );
 };
