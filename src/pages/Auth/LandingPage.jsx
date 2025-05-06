@@ -1,15 +1,24 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import "/public/Font/LexendDeca.ttf";
-import { FaApple, FaBullseye, FaClone, FaEye,  FaProjectDiagram, FaSearch, FaTools, } from "react-icons/fa";
-import { Swiper, SwiperSlide } from "swiper/react";
+import {
+  FaApple,
+  FaBullseye,
+  FaClone,
+  FaEye,
+  FaProjectDiagram,
+  FaSearch,
+  FaTools,
+} from "react-icons/fa";
+
 import "swiper/css";
 import "swiper/css/pagination";
 import { FaArrowPointer, FaMessage } from "react-icons/fa6";
-import { Pagination, Autoplay } from "swiper/modules";
+
 import { IoLogoGooglePlaystore } from "react-icons/io5";
 import { GiPerspectiveDiceSixFacesFour } from "react-icons/gi";
 import { X } from "lucide-react";
+import Header from "./component/Header";
 
 const plans = [
   {
@@ -58,165 +67,85 @@ const slides = [
     buttonText: "Start Using for Free",
     image: "/logo.png",
   },
-  {
-    title: "#1 Everyday Application",
-    text: "Welcome to Neon, an award-winning & easy-to-use mobile application that revolutionizes your daily work tasks.",
-    buttonText: "Start using for free",
-    image: "/image-01.png",
-  },
-  {
-    title: "Awesome  Performance",
-    text: "Neon delivers high performance and a variety of features that you’ll surely appreciate even if you use a budget-class device.",
-    buttonText: "Start Using for Free",
-    image: "/image-03.png",
-  },
 ];
-
 
 const features = [
   {
     icon: FaSearch,
     title: "Intelligent API Discovery",
     description: `Automatically detects and classifies APIs and high-value endpoints to identify security risks.
-Continuously monitors exposed APIs for misconfigurations, unauthorized access, and potential threats.`
+Continuously monitors exposed APIs for misconfigurations, unauthorized access, and potential threats.`,
   },
   {
     icon: FaEye,
     title: "Observability",
-    description: "Continuously monitors and detects deviations in security posture for proactive risk management."
+    description:
+      "Continuously monitors and detects deviations in security posture for proactive risk management.",
   },
   {
     icon: FaProjectDiagram,
     title: "Workflow Management",
     description: `Offers customizable dashboards, exception workflows, and ageing tracking for efficient vulnerability lifecycle management.
-Automates risk-based prioritization, escalations, and team collaboration to accelerate remediation efforts.`
+Automates risk-based prioritization, escalations, and team collaboration to accelerate remediation efforts.`,
   },
   {
     icon: FaTools,
     title: "Workflow-Driven Vulnerability Remediation",
-    description: "Automates and streamlines remediation processes, ensuring efficient and structured vulnerability resolution."
+    description:
+      "Automates and streamlines remediation processes, ensuring efficient and structured vulnerability resolution.",
   },
   {
     icon: FaClone,
     title: "Duplicate Detection",
-    description: "Identifies and eliminates redundant vulnerabilities, reducing noise and improving remediation efficiency."
+    description:
+      "Identifies and eliminates redundant vulnerabilities, reducing noise and improving remediation efficiency.",
   },
   {
     icon: FaBullseye,
     title: "Campaign Management",
     description: `Organizes and prioritizes security fixes into structured campaigns for systematic risk mitigation.
-Applies mass vulnerability fixes based on predefined categories, accelerating threat resolution.`
+Applies mass vulnerability fixes based on predefined categories, accelerating threat resolution.`,
   },
 ];
 
 const LandingPage = () => {
-  const [scrolled, setScrolled] = useState(false);
-  const swiperRef = useRef(null);
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  
   return (
     <>
-      <nav
-        className={`${scrolled ? "bg-[#1e1f22]" : "bg-transparent"
-          } text-white py-4 px-6 md:px-12 fixed w-full top-0 z-50 transition-colors duration-100`}
-      >
-        <div className="w-full max-w-screen-xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="flex gap-2 items-center justify-center">
-              <img
-                src="/logo.png"
-                alt="Scalable Image"
-                style={{ width: "70px", height: "auto" }}
-              />
-
-            </div>
-          </div>
-
-          <div className="hidden md:flex items-center space-x-12 text-gray-400 text-lg">
-            <Link
-              to="/"
-              className="relative text-[#8defff] after:block after:h-[2px] after:bg-[#8defff] after:scale-x-100 after:mt-1"
-            >
-              Home
-            </Link>
-            <Link to="/pricing" className="hover:text-[#8defff] transition">
-              Pricing
-            </Link>
-            <Link to="/features" className="hover:text-[#8defff] transition">
-              Features
-            </Link>
-            <Link to="/contact" className="hover:text-[#8defff] transition">
-              Contact
-            </Link>
-            <Link to="/solutions" className="hover:text-[#8defff] transition">
-              Solutions
-            </Link>
-
-            {/* <button className="bg-[#2c2e33] box-shadow: inset 8rem 0 0 0 var(--color), inset -8rem 0 0 0 var(--color)  w-[180px] h-[60px] font-semibold py-2 px-3 rounded-lg hover:bg-[#3b3d42] transition shadow-lg">
-            Get App
-          </button> */}
-
-            <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
-              <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-              <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-                Get App
-              </span>
-            </button>
-          </div>
-        </div>
-      </nav>
+      <Header />
 
       <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-[#d7e1ec] py-10">
-        <div
-          className="max-w-screen-xl mx-auto px-4"
-          onMouseEnter={() => swiperRef.current?.autoplay.start()}
-          onMouseLeave={() => swiperRef.current?.autoplay.stop()}
-        >
-          <Swiper
-            modules={[Pagination, Autoplay]}
-            pagination={{ clickable: true }}
-            loop={true}
-            autoplay={{ delay: 1500, disableOnInteraction: false }}
-            onSwiper={(swiper) => (swiperRef.current = swiper)}
-          >
-            {slides.map((slide, index) => (
-              <SwiperSlide key={index}>
-                <div className="flex flex-col pt-[100px] md:flex-row items-center justify-between gap-12">
-                  <div className="  md:w-1/2">
-                    <h2 className="text-[500px] md:text-5xl font-bold mb-4">
-                      {slide.title}
-                    </h2>
-                    <p className="text-gray-400 mb-6 text-[22px]">
-                      {slide.text}
-                    </p>
+        <div className="max-w-screen-xl mx-auto px-4">
+          {slides.map((slide, index) => (
+            <div
+              key={index}
+              className="flex flex-col pt-[100px] md:flex-row items-center justify-between gap-12"
+            >
+              <div className="  md:w-1/2">
+                <h2 className="text-[500px] md:text-5xl font-bold mb-4">
+                  {slide.title}
+                </h2>
+                <p className="text-gray-400 mb-6 text-[22px]">{slide.text}</p>
 
-                    <button className=" bg-gradient-to-tr from-[#383b40] text-xl h-20 w-60 rounded-lg before:ease relative overflow-hidden  text-gray-300 shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 mt-8 hover:text-white  hover:before:h-64 hover:before:-translate-y-32">
-                      <span className="relative z-10"> {slide.buttonText}</span>
-                    </button>
-                  </div>
+                <button className=" bg-gradient-to-tr from-[#383b40] mb-10 text-xl h-20 w-60 rounded-lg before:ease relative overflow-hidden  text-gray-300 shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 mt-8 hover:text-white  hover:before:h-64 hover:before:-translate-y-32">
+                  <span className="relative z-10"> {slide.buttonText}</span>
+                </button>
+              </div>
 
-                  <div className="md:w-1/2 flex justify-center">
-                    <img
-                      src={slide.image}
-                      alt={slide.title}
-                      className={`drop-shadow-lg ${index === 2 ? "max-w-sm" : "max-w-md"
-                        }`}
-                    />
-                  </div>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+              <div className="md:w-1/2 flex justify-center">
+                <img
+                  src={slide.image}
+                  alt={slide.title}
+                  className={`drop-shadow-lg ${
+                    index === 2 ? "max-w-sm" : "max-w-md"
+                  }`}
+                />
+              </div>
+            </div>
+          ))}
         </div>
       </section>
+
+     
 
       <section className="bg-gradient-to-b from-[#343537] to-[#26282a] text-white py-16 px-4 md:px-20">
         <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row items-center gap-12">
@@ -232,109 +161,124 @@ const LandingPage = () => {
             </p>
 
             <div className="flex gap-4 w-full overflow-x-scroll">
-              {features.map((item, index) =>
-                <div key={index} className="bg-gradient-to-bl from-[#414244] to-[#36393b] rounded-xl p-6 shadow-slate-100 hover:shadow-2xl transition min-w-72 ">
+              {features.map((item, index) => (
+                <div
+                  key={index}
+                  className="bg-gradient-to-bl from-[#414244] to-[#36393b] rounded-xl p-6 shadow-slate-100 hover:shadow-2xl transition min-w-72 "
+                >
                   <div className="bg-[#26272b] w-12 h-12 flex items-center justify-center rounded-xl mb-4 shadow-inner shadow-slate-950 ">
-                    {item.icon && <item.icon className="text-[#ff6d6d] " size={25} />}
+                    {item.icon && (
+                      <item.icon className="text-[#ff6d6d] " size={25} />
+                    )}
                   </div>
                   <h4 className="text-lg font-semibold mb-2">{item.title}</h4>
-                  <p className="text-[#d7e1ec] text-sm">
-                   {item.description}
-                  </p>
+                  <p className="text-[#d7e1ec] text-sm">{item.description}</p>
                 </div>
-              )}
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-  <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-[#d7e1ec] py-10">
- 
-  <div className="w-full text-center md:text-left px-6 md:px-40">
-    <h2 className="text-3xl md:text-4xl font-bold mb-10">Pricing Plans</h2>
-  </div>
-
-  <div className="pb-12 max-w-6xl mx-auto flex overflow-x-auto md:grid md:grid-cols-3 gap-6 snap-x snap-mandatory md:overflow-visible px-4 md:px-0">
-    {plans.map((plan, index) => (
-      <div
-        key={index}
-        className="snap-center shrink-0 w-[90%] sm:w-[300px] md:w-full bg-gradient-to-bl from-[#343537] to-[#26282a] rounded-2xl p-6 shadow-lg hover:shadow-2xl transition duration-400 relative mx-auto"
-      >
-      
-        {plan.popular && (
-          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#ff8c68] text-white text-sm w-[355px] md:w-[365px]  md:h-10 text-center px-4 py-2 rounded-t-lg shadow-slate-100 font-semibold">
-            Popular
-          </div>
-        )}
-
-      
-        <h3 className="text-2xl text-[#9b9ca7] font-semibold text-center mb-4">
-          {plan.name}
-        </h3>
-
-      
-        <div className="flex items-center justify-center mb-6">
-          <div className={`h-6 w-1.5 ${plan.highlightColor} rounded-full mr-2`} />
-          <p className="text-5xl font-bold">{plan.price}</p>
-          <span className="ml-2 text-gray-400">Per Month</span>
+      <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-[#d7e1ec] py-10">
+        <div className="w-full text-center md:text-left px-6 md:px-40">
+          <h2 className="text-3xl md:text-4xl font-bold mb-10">
+            Pricing Plans
+          </h2>
         </div>
 
-        <hr className="border-gray-700 mb-6" />
+        <div className="pb-12 max-w-6xl mx-auto flex overflow-x-auto md:grid md:grid-cols-3 gap-6 snap-x snap-mandatory md:overflow-visible px-4 md:px-0">
+          {plans.map((plan, index) => (
+            <div
+              key={index}
+              className="snap-center shrink-0 w-[90%] sm:w-[300px] md:w-full bg-gradient-to-bl from-[#343537] to-[#26282a] rounded-2xl p-6 shadow-lg hover:shadow-2xl transition duration-400 relative mx-auto"
+            >
+              {plan.popular && (
+                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#ff8c68] text-white text-sm w-[355px] md:w-[365px]  md:h-10 text-center px-4 py-2 rounded-t-lg shadow-slate-100 font-semibold">
+                  Popular
+                </div>
+              )}
 
-    
-        <ul className="space-y-3 mb-6 text-sm">
-          {plan.features.map((feature, i) => {
-            const label = typeof feature === "string" ? feature : feature.label;
-            const available = typeof feature === "string" ? true : feature.available;
+              <h3 className="text-2xl text-[#9b9ca7] font-semibold text-center mb-4">
+                {plan.name}
+              </h3>
 
-            return (
-              <li
-                key={i}
-                className={`flex items-center space-x-2 ${available ? "text-white" : "text-gray-500 line-through"}`}
-              >
-                <span>✔</span>
-                <span>{label}</span>
-              </li>
-            );
-          })}
-        </ul>
+              <div className="flex items-center justify-center mb-6">
+                <div
+                  className={`h-6 w-1.5 ${plan.highlightColor} rounded-full mr-2`}
+                />
+                <p className="text-5xl font-bold">{plan.price}</p>
+                <span className="ml-2 text-gray-400">Per Month</span>
+              </div>
 
-  
-        <button className="mt-auto bg-gradient-to-tr from-[#383b40] text-xl rounded-lg relative h-14 w-full overflow-hidden text-gray-300 shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 hover:text-white hover:before:h-64 hover:before:-translate-y-32">
-          <span className="relative z-10">Select Plan</span>
-        </button>
-      </div>
-    ))}
-  </div>
-</section>
+              <hr className="border-gray-700 mb-6" />
 
+              <ul className="space-y-3 mb-6 text-sm">
+                {plan.features.map((feature, i) => {
+                  const label =
+                    typeof feature === "string" ? feature : feature.label;
+                  const available =
+                    typeof feature === "string" ? true : feature.available;
+
+                  return (
+                    <li
+                      key={i}
+                      className={`flex items-center space-x-2 ${
+                        available ? "text-white" : "text-gray-500 line-through"
+                      }`}
+                    >
+                      <span>✔</span>
+                      <span>{label}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+
+              <button className="mt-auto bg-gradient-to-tr from-[#383b40] text-xl rounded-lg relative h-14 w-full overflow-hidden text-gray-300 shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 hover:text-white hover:before:h-64 hover:before:-translate-y-32">
+                <span className="relative z-10">Select Plan</span>
+              </button>
+            </div>
+          ))}
+        </div>
+      </section>
 
       <section>
         <div className="h-full w-full pt-12 bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f]">
-          <h1 className="text-white text-center text-[40px] font-bold pt-4">Welcome to Neon</h1>
+          <h1 className="text-white text-center text-[40px] font-bold pt-4">
+            Welcome to Neon
+          </h1>
           <div className="flex flex-col sm:flex-row sm:flex-wrap gap-8 justify-between items-center h-auto w-full px-4 sm:px-8 py-10">
-         
             <div className=" w-full sm:w-[30%]">
               <div className="mb-10 mt-10">
                 <div className="flex justify-end max-[800px]:justify-start gap-4">
-                  <h2 className="text-[#D7E1E0] text-xl font-bold">Friendly Support</h2>
+                  <h2 className="text-[#D7E1E0] text-xl font-bold">
+                    Friendly Support
+                  </h2>
                   <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
                     <FaMessage className="text-3xl text-[#a1a4ab]" />
                   </div>
                 </div>
-                <p className="text-[#A0A1AC] md:text-end">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium cupiditate.</p>
+                <p className="text-[#A0A1AC] md:text-end">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Praesentium cupiditate.
+                </p>
               </div>
               <div className="flex justify-end max-[800px]:justify-start  items-start">
                 <div className="w-64 h-[2.5px] rounded-md shadow-2xl bg-[#2f2f2f]  ml-1 mt-1"></div>
               </div>
               <div className="h-[30vh] pt-10">
                 <div className="flex justify-end max-[800px]:justify-start gap-4">
-                  <h2 className="text-[#D7E1E0] text-xl font-bold">User-friendly UI</h2>
+                  <h2 className="text-[#D7E1E0] text-xl font-bold">
+                    User-friendly UI
+                  </h2>
                   <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
                     <FaArrowPointer className="text-3xl text-[#a1a4ab]" />
                   </div>
                 </div>
-                <p className="text-[#A0A1AC] md:text-end">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium cupiditate.</p>
+                <p className="text-[#A0A1AC] md:text-end">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Praesentium cupiditate.
+                </p>
               </div>
             </div>
 
@@ -352,16 +296,21 @@ const LandingPage = () => {
                 />
               </div>
             </div>
-            
+
             <div className="w-full sm:w-[30%] h-full pt-10">
               <div className="h-[22vh]">
                 <div className="flex gap-5">
                   <div className="shadow-2xl relative -top-2 h-[60px] w-[60px] flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
                     <GiPerspectiveDiceSixFacesFour className="text-5xl text-[#a1a4ab]" />
                   </div>
-                  <h2 className="text-[#D7E1E0] text-xl font-bold">Easy <br /> Customization</h2>
+                  <h2 className="text-[#D7E1E0] text-xl font-bold">
+                    Easy <br /> Customization
+                  </h2>
                 </div>
-                <p className="text-[#A0A1AC]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium cupiditate.</p>
+                <p className="text-[#A0A1AC]">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Praesentium cupiditate.
+                </p>
               </div>
               <div className="flex items-start">
                 <div className="w-64 h-[2.5px] rounded-md shadow-2xl bg-[#2f2f2f]  ml-1 mt-1"></div>
@@ -371,14 +320,18 @@ const LandingPage = () => {
                   <div className="shadow-2xl relative -top-2 h-[60px] w-[60px] flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
                     <FaMessage className="text-3xl text-[#a1a4ab]" />
                   </div>
-                  <h2 className="text-[#D7E1E0] text-xl font-bold pb-2">Simple Setup</h2>
+                  <h2 className="text-[#D7E1E0] text-xl font-bold pb-2">
+                    Simple Setup
+                  </h2>
                 </div>
-                <p className="text-[#A0A1AC]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium cupiditate.</p>
+                <p className="text-[#A0A1AC]">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Praesentium cupiditate.
+                </p>
               </div>
             </div>
           </div>
         </div>
-
       </section>
       <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-white py-16 px-6 md:px-20">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
@@ -453,46 +406,46 @@ const LandingPage = () => {
               </ul>
             </div>
             <div className=" flex flex-col items-center justify-center text-sm text-gray-500">
-          <div className="flex space-x-4 pt-12 mb-1">
-            <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] text-white text-xl flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
-            <i className="fab fa-facebook-f"></i>
-                  </div>
-            <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] text-white text-xl flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
-            <i className="fab fa-twitter"></i>
-                  </div>
-            <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] text-white text-xl flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
-            <i className="fab fa-youtube"></i>
-                  </div>
+              <div className="flex space-x-4 pt-12 mb-1">
+                <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] text-white text-xl flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
+                  <i className="fab fa-facebook-f"></i>
+                </div>
+                <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] text-white text-xl flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
+                  <i className="fab fa-twitter"></i>
+                </div>
+                <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] text-white text-xl flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
+                  <i className="fab fa-youtube"></i>
+                </div>
+              </div>
+              <p>
+                © 2025. Neon.{" "}
+                <a href="#" className="underline">
+                  Privacy Policy
+                </a>
+              </p>
+            </div>
           </div>
-          <p>
-            © 2025. Neon.{" "}
-            <a href="#" className="underline">
-              Privacy Policy
-            </a>
-          </p>
         </div>
-          </div>
-        </div>
-
-        
-        
-
       </section>
       <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-white py-16">
-      <div className="max-w-7xl mx-auto px-4 pt-8 text-white">
-  {/* Header Section */}
-  <div className="text-center mb-12 ">
-    <div className="flex flex-col md:flex-row items-center justify-center  md:gap-10">
-    <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 md:mb-0">How it works</h2>
-    <div className="w-2 h-4  text-white"></div>
-    <p className="text-gray-400 text-lg sm:text-xl mt-2 md:mt-5 md:ml-6 text-center md:text-left">Quick and Intuitive Profile Configuration</p>
-    </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 pt-8 md:pt-16 gap-6">
-          <div className=" relative group bg-gradient-to-br from-[#393d40] to-[#25282a] rounded-xl p-6 min-h-[300px] transition-transform duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl">
+        <div className="max-w-7xl mx-auto px-4 pt-8 text-white">
+          {/* Header Section */}
+          <div className="text-center mb-12 ">
+            <div className="flex flex-col md:flex-row items-center justify-center  md:gap-10">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 md:mb-0">
+                How it works
+              </h2>
+              <div className="w-2 h-4  text-white"></div>
+              <p className="text-gray-400 text-lg sm:text-xl mt-2 md:mt-5 md:ml-6 text-center md:text-left">
+                Quick and Intuitive Profile Configuration
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 pt-8 md:pt-16 gap-6">
+              <div className=" relative group bg-gradient-to-br from-[#393d40] to-[#25282a] rounded-xl p-6 min-h-[300px] transition-transform duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl">
                 <div className="bg-[#282a2d] w-12 h-12 flex items-center justify-center shadow-inner shadow-slate-950 rounded-xl mb-4">
-                   <span className=" text-cyan-400 text-2xl ">01</span>
+                  <span className=" text-cyan-400 text-2xl ">01</span>
                 </div>
-                
+
                 <h4 className="text-2xl mb-3 pt-3 text-left">Easy Customize</h4>
                 <p className="text-gray-400 text-md leading-relaxed text-left">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
@@ -503,9 +456,9 @@ const LandingPage = () => {
 
               <div className=" relative group bg-gradient-to-br from-[#393d40] to-[#25282a] rounded-xl p-6 min-h-[300px] transition-transform duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl">
                 <div className="bg-[#282a2d] w-12 h-12 flex items-center justify-center shadow-inner shadow-slate-950 rounded-xl mb-4 ">
-                   <span className=" text-cyan-400 text-2xl ">02</span>
+                  <span className=" text-cyan-400 text-2xl ">02</span>
                 </div>
-                
+
                 <h4 className="text-2xl mb-3 pt-3 text-left">Easy Customize</h4>
                 <p className="text-gray-400 text-md leading-relaxed text-left">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
@@ -516,9 +469,9 @@ const LandingPage = () => {
 
               <div className=" relative group bg-gradient-to-br from-[#393d40] to-[#25282a] rounded-xl p-6 min-h-[300px] transition-transform duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl">
                 <div className="bg-[#282a2d] w-12 h-12 flex items-center justify-center shadow-inner shadow-slate-950 rounded-xl mb-4">
-                   <span className=" text-cyan-400 text-2xl ">03</span>
+                  <span className=" text-cyan-400 text-2xl ">03</span>
                 </div>
-                
+
                 <h4 className="text-2xl mb-3 pt-3 text-left">Easy Customize</h4>
                 <p className="text-gray-400 text-md leading-relaxed text-left">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
@@ -529,9 +482,9 @@ const LandingPage = () => {
 
               <div className="  relative group bg-gradient-to-br from-[#393d40] to-[#25282a] rounded-xl p-6 min-h-[300px] transition-transform duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl">
                 <div className="bg-[#282a2d] w-12 h-12 flex items-center justify-center shadow-inner shadow-slate-950 rounded-xl mb-4">
-                   <span className=" text-cyan-400 text-2xl ">04</span>
+                  <span className=" text-cyan-400 text-2xl ">04</span>
                 </div>
-                
+
                 <h4 className="text-2xl mb-3 pt-3 text-left">Easy Customize</h4>
                 <p className="text-gray-400 text-md leading-relaxed text-left">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
@@ -539,7 +492,7 @@ const LandingPage = () => {
                 </p>
                 <div className="absolute left-6 right-6 bottom-0 h-[2px] bg-cyan-400 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></div>
               </div>
-          </div>
+            </div>
           </div>
         </div>
       </section>
