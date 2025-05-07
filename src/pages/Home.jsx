@@ -131,7 +131,7 @@ function Home() {
 
   return (
     <>
-      <div className="min-h-screen bg-background px-6 ">
+      <div className="min-h-screen bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] px-6 py-6 ">
         {/* Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 py-3">
           {metrics.map((metric, index) => (
@@ -141,9 +141,9 @@ function Home() {
 
 
 
-        <div className="w-full h-full  py-2 px-1 mt-5 transition rounded-lg flex lg:flex-row flex-col  gap-2">
-          <div className="bg-white lg:w-[30%] w-full h-96 py-2  transition rounded-lg flex flex-col ">
-          <h3 className="text-lg p-1 font-semibold text-sky-700 ">
+        <div className="w-full h-full  py-2  mt-5 mb-3  transition rounded-lg flex lg:flex-row flex-col  gap-2">
+          <div className="bg-[#151515] lg:w-[30%] w-full h-96 py-2 transition rounded-lg flex flex-col ">
+          <h3 className="text-lg p-2 font-semibold text-gray-200 ">
               Vulnerability Status
             </h3>
             <hr className="mb-1" />
@@ -173,8 +173,8 @@ function Home() {
             </ResponsiveContainer>
           </div>
           {/* Risk Rating Chart */}
-          <div className="bg-white  lg:w-[70%] w-full py-2 px-2 transition rounded-lg">
-            <h3 className="text-lg font-semibold text-sky-700 mb-2">
+          <div className="bg-[#151515]  lg:w-[70%]  w-full py-2 px-2 transition rounded-lg">
+            <h3 className="text-lg p-1 font-semibold text-gray-200 mb-2">
               Vulnerable Items by Risk Rating
             </h3>
             <hr className="mb-4" />
@@ -303,15 +303,15 @@ function Home() {
 
         {/* exploybality */}
         <div className="flex gap-3" >
-        <div className="bg-white p-6 rounded-xl shadow-lg w-full lg:w-1/2 ">
-        <h3 className="text-lg p-1 font-semibold text-sky-700 ">
+        <div className="bg-[#151515] p-3  rounded-xl shadow-lg w-full lg:w-1/2 ">
+        <h3 className="text-lg p-1 font-semibold text-gray-200 ">
         Exploitability
             </h3>
-            <hr className="mb-4" />
-            <BarGraph data={exploitability} />
+            <hr className="mb-4 " />
+            <BarGraph data={exploitability}  />
           </div>
-          <div className="bg-white lg:w-1/2 w-full h-96 py-1  transition rounded-lg flex flex-col">
-          <h3 className="text-lg p-1 font-semibold text-sky-700 ">
+          <div className="bg-[#151515] lg:w-1/2 w-full h-96 py-1  transition rounded-lg flex flex-col">
+          <h3 className="text-lg p-2 font-semibold text-gray-200 ">
               Inventory Status
             </h3>
             <hr className="mb-1" />
@@ -347,8 +347,8 @@ function Home() {
         {/* Charts Section */}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 my-5 ">
-          <div className="bg-white px-2 py-2 col-span-2 rounded-lg">
-            <h3 className="text-sky-700 text-lg font-semibold mb-2">
+          <div className="bg-[#151515] px-2 py-2 col-span-2 rounded-lg">
+            <h3 className="text-gray-200 text-lg p-1 font-semibold mb-2">
               Closed Vulnerable Items by Remediation Target Status
             </h3>
             <hr className="mb-2" />
@@ -375,8 +375,8 @@ function Home() {
             </ResponsiveContainer>
           </div>
 
-          <div className="bg-white p-4 rounded-lg shadow ">
-            <h3 className="text-sky-700 text-lg text-center font-semibold mb-2">
+          <div className="bg-[#151515] p-4 rounded-lg shadow ">
+            <h3 className="text-gray-200 text-lg text-center font-semibold mb-2">
               Critical / High Vulnerable Items <br />{" "}
               <span className="text-sm">by Assignment Group</span>
             </h3>
@@ -384,19 +384,19 @@ function Home() {
             <table className="w-full text-sm text-left">
               <thead>
                 <tr>
-                  <th className="px-4 py-2 text-gray-600">Name</th>
-                  <th className="px-4 py-2 text-gray-600">
+                  <th className="px-4 py-2 text-gray-300">Name</th>
+                  <th className="px-4 py-2 text-gray-300">
                     {monthNames[new Date().getMonth()]}
                   </th>
-                  <th className="px-4 py-2 text-gray-600">Trend</th>
+                  <th className="px-4 py-2 text-gray-300">Trend</th>
                 </tr>
               </thead>
               <tbody>
                 {Object.entries(criticalHighVulnerable).map(([key, value]) => (
                   <tr key={key}>
-                    <td className="px-4 py-2 border-b">{key}</td>
-                    <td className="px-4 py-2 border-b">{value}</td>
-                    <td className="px-4 py-2 border-b">
+                    <td className="px-4 py-2 text-gray-400 border-b">{key}</td>
+                    <td className="px-4 py-2 text-gray-400 border-b">{value}</td>
+                    <td className="px-4 py-2  border-b">
                       {value > 0 ? "⬆️" : "➖"}
                     </td>
                   </tr>
@@ -407,28 +407,28 @@ function Home() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 my-5 ">
-          <div className="bg-white shadow rounded-lg p-6 ">
-            <h3 className="text-sky-700 text-sm text-center font-semibold mb-4">
+          <div className="bg-[#151515] shadow rounded-lg p-6 ">
+            <h3 className="text-gray-200 text-sm text-center font-semibold mb-4">
               Overdue Critical / High Vulnerable Items <br />
               <span className="text-sm">by Assignment Group</span>
             </h3>
             <table className="w-full text-sm text-left">
               <thead>
                 <tr>
-                  <th className="px-4 py-2 text-gray-600">Name</th>
-                  <th className="px-4 py-2 text-gray-600">
+                  <th className="px-4 py-2 text-gray-300">Name</th>
+                  <th className="px-4 py-2 text-gray-300">
                     {monthNames[new Date().getMonth()]}
                   </th>
-                  <th className="px-4 py-2 text-gray-600">Trend</th>
+                  <th className="px-4 py-2 text-gray-300">Trend</th>
                 </tr>
               </thead>
               <tbody>
                 {Object.entries(criticalHighVulnerableOverdue).map(
                   ([key, value]) => (
                     <tr key={key}>
-                      <td className="px-4 py-2 border-b">{key}</td>
-                      <td className="px-4 py-2 border-b">{value}</td>
-                      <td className="px-4 py-2 border-b">
+                      <td className="px-4 py-2 text-gray-400 border-b">{key}</td>
+                      <td className="px-4 py-2 text-gray-400 border-b">{value}</td>
+                      <td className="px-4 py-2 text-gray-400 border-b">
                         {value > 0 ? "⬆️" : "➖"}
                       </td>
                     </tr>
@@ -439,8 +439,8 @@ function Home() {
           </div>
 
           {/* Age and Risk Rating Chart */}
-          <div className="bg-white p-4 col-span-2 rounded-lg">
-            <h3 className="text-lg text-sky-700 font-semibold mb-2">
+          <div className="bg-[#151515] p-4 col-span-2 rounded-lg">
+            <h3 className="text-lg text-gray-200 font-semibold mb-2">
               Vulnerable Items by Age
             </h3>
             <hr className="mb-4" />
@@ -462,8 +462,8 @@ function Home() {
           </div>
         </div>
 
-        <div className="bg-white p-2 flex justify-center flex-col pb-14 rounded-lg">
-          <h3 className="text-sky-700 text-lg font-semibold ">
+        <div className="bg-[#151515] p-2 flex justify-center flex-col pb-14 rounded-lg">
+          <h3 className="text-gray-200 p-2 text-lg font-semibold ">
             Open and Closed Vulnerable Items
           </h3>
           <hr className="mb-4" />

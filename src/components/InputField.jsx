@@ -17,12 +17,12 @@ function InputField({
   const inputType = showPassword && toggle ? "text" : type;
 
   return (
-    <div className="mb-1">
+    <div className="mb-1 ">
       {/* Label */}
       {label && (
         <label
           htmlFor={name}
-          className="block text-sm font-medium text-gray-700 mb-2"
+          className="block text-sm font-medium text-gray-200 mb-2"
         >
           {label}
         </label>
@@ -46,7 +46,7 @@ function InputField({
           onChange={onChange}
           onBlur={onBlur}
           className={`w-full pl-${Icon ? "10" : "4"} pr-${showPassword ? "12" : "4"
-            } py-2 pl-10 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none  transition`}
+            } py-2 pl-10 rounded-lg  border text-gray-300 bg-gray-600 border-gray-500 focus:ring-2 focus:ring-gray-500 focus:border-transparent outline-none  transition`}
           placeholder={placeholder}
           aria-label={label || placeholder}
 

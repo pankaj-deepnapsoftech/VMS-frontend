@@ -7,7 +7,7 @@ const BarGraph = ({ data }) => {
       {data.map((item, index) => (
         <div key={index} className="space-y-2">
           <div className="flex justify-between text-sm">
-            <span className="font-medium text-gray-700">{item.label}</span>
+            <span className="font-medium text-gray-300">{item.label}</span>
             <span className="text-gray-500">{item?.value ? item?.value?.toFixed(2) : 0}%</span>
           </div>
           <div className="h-2 bg-gray-100 rounded-full overflow-hidden">

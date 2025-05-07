@@ -49,7 +49,7 @@ const MainLayout = () => {
         className={`${
           showMenu ? "left-0" : "-left-full"
         } fixed z-10 w-[65%] flex flex-col justify-between 
-h-screen border-r bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] 
+h-screen  bg-gradient-to-t from-[#151515] to-[#212224] 
 transition duration-300 sm:w-[40%] md:w-[30%] lg:w-[25%] xl:w-[20%] 2xl:w-[15%] `}
       >
         <Header
@@ -59,7 +59,7 @@ transition duration-300 sm:w-[40%] md:w-[30%] lg:w-[25%] xl:w-[20%] 2xl:w-[15%] 
         />
       </aside>
       <div className="ml-auto mb-6 lg:w-[75%] xl:w-[80%] 2xl:w-[85%]">
-        <div className="bg-white border-b border-gray-200">
+        <div className="bg-gradient-to-t from-[#1a1c1e] to-[#212325]  border-gray-200">
           <div className="flex items-center justify-between px-2 sm:px-4 py-2">
             <div className="w-full flex items-center justify-between pr-5">
               <button
@@ -69,7 +69,7 @@ transition duration-300 sm:w-[40%] md:w-[30%] lg:w-[25%] xl:w-[20%] 2xl:w-[15%] 
                 <AiOutlineMenu className="w-5 h-5" />
               </button>
 
-              <h1 className="text-base sm:text-lg font-semibold truncate capitalize">
+              <h1 className="text-base sm:text-xl text-white font-semibold truncate capitalize">
                 {location.pathname !== "/"
                   ? temp?.replace("-", " ")
                   : "Dashboard"}

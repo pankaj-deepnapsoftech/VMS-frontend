@@ -102,7 +102,7 @@ function EmployeeDashboard() {
 
         {/* Charts Section */}
 
-        <div className="w-full h-96 py-6 rounded-lg shadow bg-white flex justify-center items-center hover:scale-95  transition">
+        <div className="w-full h-96 py-6 rounded-lg shadow  flex justify-center items-center hover:scale-95  transition">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie

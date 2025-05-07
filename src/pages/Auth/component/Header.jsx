@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ChevronDown, Menu, User, X } from "lucide-react";
+import { ChevronDown, Link2, Menu, User, X } from "lucide-react";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -285,10 +285,11 @@ const Header = () => {
             >
               Home
             </Link>
-            <Link to="/pricing"  className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left">
+           
+            <Link  to="/pricing"  className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left">
               Pricing
             </Link>
-            <Link to="#features"  className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left">
+            <Link className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left">
               Features
             </Link>
             <Link to="#contact"  className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left">

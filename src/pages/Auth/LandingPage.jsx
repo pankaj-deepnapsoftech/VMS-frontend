@@ -114,7 +114,6 @@ const LandingPage = () => {
   return (
     <>
       <Header />
-
       <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-[#d7e1ec] py-10">
         <div className="max-w-screen-xl mx-auto px-4">
           {slides.map((slide, index) => (
@@ -122,14 +121,12 @@ const LandingPage = () => {
               key={index}
               className="flex flex-col md:flex-row items-center justify-between gap-12 py-12"
             >
-              
               <div className="w-full md:w-1/2 text-center md:text-left flex flex-col items-center md:items-start">
                 {/* Title */}
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 mt-16">
                   {slide.title}
                 </h2>
 
-                
                 <div className="md:hidden mb-4">
                   <img
                     src={slide.image}
@@ -177,6 +174,7 @@ const LandingPage = () => {
           </div>
 
           <div className="w-full md:w-2/3 ">
+          
             <h2 className="text-4xl font-bold mb-2">Features</h2>
             <p className="text-gray-400 mb-8">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
