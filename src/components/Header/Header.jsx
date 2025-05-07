@@ -1,16 +1,18 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react'
-import { Link, NavLink } from 'react-router-dom';
-import { ClientCisoList, ClientSmeList, EmployeeList, list } from '@/constants/constants.data';
-import { useAuthContext } from '@/context';
-import { IoIosLogOut } from 'react-icons/io';
-import toast from 'react-hot-toast';
-
-
+import React, { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import {
+  ClientCisoList,
+  ClientSmeList,
+  EmployeeList,
+  list,
+} from "@/constants/constants.data";
+import { useAuthContext } from "@/context";
+import { IoIosLogOut } from "react-icons/io";
+import toast from "react-hot-toast";
 
 function Header({ setShowMenu }) {
-
-  const { Logout, authenticate } = useAuthContext()
+  const { Logout, authenticate } = useAuthContext();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -18,17 +20,17 @@ function Header({ setShowMenu }) {
 
   const handleLogout = (id) => {
     if (window.confirm("Are you sure you want to log out?")) {
-      Logout()
+      Logout();
     }
   };
-
-
 
   let navList = [];
 
   switch (authenticate?.role) {
     case "ClientCISO":
-      navList = ClientCisoList.filter((item) => authenticate.allowed_paths.some((ite) => item.route === ite.value)); // Define if ClientCTO has a specific list
+      navList = ClientCisoList.filter((item) =>
+        authenticate.allowed_paths.some((ite) => item.route === ite.value)
+      ); // Define if ClientCTO has a specific list
       break;
     case "Assessor":
       navList = EmployeeList;
@@ -37,50 +39,57 @@ function Header({ setShowMenu }) {
       navList = list;
       break;
     case "ClientSME":
-      navList = ClientSmeList.filter((item) => authenticate.allowed_paths.some((ite) => item.route === ite.value));
+      navList = ClientSmeList.filter((item) =>
+        authenticate.allowed_paths.some((ite) => item.route === ite.value)
+      );
       break;
     default:
       // console.log("Invalid Role: Access Denied");
       toast.error("Invalid Role: Access Denied");
   }
 
-
   return (
     // <div className="flex h-screen fixed  overflow-y-auto
     //  md:w-[28%] lg:w-[25%] xl:w-[25%] 2xl:w-[20%] ">
-      <div className=" flex flex-col text-white pt-8 h-[100%] hide-scrollbar  overflow-y-auto ">
-        <Link to="/" className="flex items-center my-5 ml-3">
-            <img
-              src="/logo.png"
-              alt="Scalable Image"
-              style={{ width: "15%", height: "auto" }}
-            />
-            <span className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-blue-300 text-transparent bg-clip-text">
-              Secure&
-            </span>
-          </Link>
-        <hr className="border-gray-100 mx-8" />
+    <div className=" flex flex-col text-white  h-[100%] hide-scrollbar  overflow-y-auto ">
+      <Link to="/" className="flex items-center my-2 ml-3">
+        <div className="flex gap-2 pt-2 items-center justify-center ">
+          <div
+            className="w-[100px] h-[100px]  bg-gradient-to-t from-gray-100 to-blue-500"
+            style={{
+              WebkitMaskImage: "url('/logo.png')",
+              WebkitMaskRepeat: "no-repeat",
+              WebkitMaskPosition: "center",
+              WebkitMaskSize: "contain",
+              maskImage: "url('/logo.png')",
+              maskRepeat: "no-repeat",
+              maskPosition: "center",
+              maskSize: "contain",
+            }}
+          ></div>
+        </div>
+      </Link>
+      <hr className="border-gray-100 mx-8" />
 
-        <nav className="flex-1 mx-2 py-5 space-y-1">
-          {navList?.map((data) => (
-            <NavLink
-              key={data.route}
-              to={data.route}
-              onClick={setShowMenu}
-              className="flex items-center px-2 py-2 space-x-2 rounded-lg   [&.active]:bg-gradient-to-tl from-[#3f3b3b] to-[#2b2828]  transition duration-200"
-
-            >
-              <data.icon className="text-white w-5 h-5" />
-              <p className="text-sm font-semibold text-white">{data.title}</p>
-            </NavLink>
-          ))}
-        </nav>
-        <hr className="border-gray-100 mx-8" />
-        <div className=" h-full p-2 flex  justify-start items-end ">
-          <div className="relative p-5 flex ">
-            <button
-              onClick={handleLogout}
-              className="flex 
+      <nav className="flex-1 mx-2 py-5 space-y-1">
+        {navList?.map((data) => (
+          <NavLink
+            key={data.route}
+            to={data.route}
+            onClick={setShowMenu}
+            className="flex items-center px-2 py-2 space-x-2 rounded-lg   [&.active]:bg-gradient-to-tl from-[#3f3b3b] to-[#2b2828]  transition duration-200"
+          >
+            <data.icon className="text-white w-5 h-5" />
+            <p className="text-sm font-semibold text-white">{data.title}</p>
+          </NavLink>
+        ))}
+      </nav>
+      <hr className="border-gray-100 mx-8" />
+      <div className=" h-full p-2 flex  justify-start items-end ">
+        <div className="relative p-5 flex ">
+          <button
+            onClick={handleLogout}
+            className="flex 
               w-full
               px-10
               my-10
@@ -93,19 +102,16 @@ function Header({ setShowMenu }) {
            from-[#d83b3b] to-[#c26d6d] 
              rounded-lg  
              justify-center"
-            >
-              <p className='text-base text-white p-2 font-medium'>
-                Log Out
-              </p>
+          >
+            <p className="text-base text-white p-2 font-medium">Log Out</p>
 
-              <IoIosLogOut className='w-6 h-6 text-white ' />
-            </button>
-          </div>
+            <IoIosLogOut className="w-6 h-6 text-white " />
+          </button>
         </div>
-
-      </div >
+      </div>
+    </div>
     // </div >
-  )
+  );
 }
 
 export default Header;

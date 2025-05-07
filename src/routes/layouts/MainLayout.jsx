@@ -49,7 +49,7 @@ const MainLayout = () => {
         className={`${
           showMenu ? "left-0" : "-left-full"
         } fixed z-10 w-[65%] flex flex-col justify-between 
-h-screen border-r bg-gradient-to-b from-[#1c1c36] via-[#111527]  to-[#0e2b46] 
+h-screen border-r bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] 
 transition duration-300 sm:w-[40%] md:w-[30%] lg:w-[25%] xl:w-[20%] 2xl:w-[15%] `}
       >
         <Header

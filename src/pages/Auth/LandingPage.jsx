@@ -19,6 +19,7 @@ import { IoLogoGooglePlaystore } from "react-icons/io5";
 import { GiPerspectiveDiceSixFacesFour } from "react-icons/gi";
 import { X } from "lucide-react";
 import Header from "./component/Header";
+import Footer from "./component/Footer";
 
 const plans = [
   {
@@ -108,6 +109,7 @@ Applies mass vulnerability fixes based on predefined categories, accelerating th
   },
 ];
 
+
 const LandingPage = () => {
   return (
     <>
@@ -181,7 +183,7 @@ const LandingPage = () => {
               eiusmod tempor incididunt ut labore et dolore...
             </p>
 
-            <div className="flex gap-4 w-full overflow-x-scroll">
+            <div className="flex gap-4 w-full overflow-x-scroll custom-scrollbar ">
               {features.map((item, index) => (
                 <div
                   key={index}
@@ -201,7 +203,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-[#d7e1ec] py-10">
+      {/* <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-[#d7e1ec] py-10">
         <div className="w-full text-center md:text-left px-6 md:px-40">
           <h2 className="text-3xl md:text-4xl font-bold mb-10">
             Pricing Plans
@@ -261,7 +263,7 @@ const LandingPage = () => {
             </div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       <section>
         <div className="h-full w-full pt-12 bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f]">
@@ -287,7 +289,7 @@ const LandingPage = () => {
               <div className="flex justify-end max-[800px]:justify-start  items-start">
                 <div className="w-64 h-[2.5px] rounded-md shadow-2xl bg-[#2f2f2f]  ml-1 mt-1"></div>
               </div>
-              <div className="h-[30vh] pt-16">
+              <div className="h-[30vh] pt-24 md:pt-16">
                 <div className="flex justify-end max-[800px]:justify-start gap-4">
                   <h2 className="text-[#D7E1E0] text-xl font-bold">
                     User-friendly UI
@@ -319,7 +321,7 @@ const LandingPage = () => {
             </div>
 
             <div className="w-full sm:w-[30%] h-full ">
-              <div className="h-[22vh] ">
+              <div className="h-[22vh] pt-12 md:pb-44">
                 <div className="flex gap-5">
                   <div className="shadow-2xl relative -top-2 h-[60px] w-[60px] flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
                     <GiPerspectiveDiceSixFacesFour className="text-5xl text-[#a1a4ab]" />
@@ -448,9 +450,9 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
-      <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-white py-16">
+      {/* <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-white py-16">
         <div className="max-w-7xl mx-auto px-4 pt-8 text-white">
-          {/* Header Section */}
+      
           <div className="text-center mb-12 ">
             <div className="flex flex-col md:flex-row items-center justify-center  md:gap-10">
               <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 md:mb-0">
@@ -516,7 +518,8 @@ const LandingPage = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
+      <Footer/>
     </>
   );
 };

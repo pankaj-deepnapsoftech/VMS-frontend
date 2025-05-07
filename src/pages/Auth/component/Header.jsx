@@ -7,9 +7,7 @@ const Header = () => {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [scrolled, setScrolled] = useState(false);
   const swiperRef = useRef(null);
-  const navigate=useNavigate()
-
-
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -283,29 +281,30 @@ const Header = () => {
           <div className="hidden md:flex items-center space-x-12 text-gray-400 text-lg">
             <Link
               to="/"
-              className="relative text-[#8defff] after:block after:h-[2px] after:bg-[#8defff] after:scale-x-100 after:mt-1"
+              className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left"
             >
               Home
             </Link>
-            <Link to="/pricing" className="hover:text-[#8defff] transition">
+            <Link to="/pricing"  className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left">
               Pricing
             </Link>
-            <Link to="#features" className="hover:text-[#8defff] transition">
+            <Link to="#features"  className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left">
               Features
             </Link>
-            <Link to="#contact" className="hover:text-[#8defff] transition">
+            <Link to="#contact"  className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left">
               Contact
             </Link>
-            <Link to="/solutions" className="hover:text-[#8defff] transition">
+            <Link to="/solutions"  className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left">
               Solutions
             </Link>
 
-           
-
-            <button onClick={()=>navigate("/sign-in")} className="relative inline-flex h-12 w-20 overflow-hidden rounded-full p-[1px]  focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 ">
+            <button
+              onClick={() => navigate("/sign-in")}
+              className="relative inline-flex h-12 w-20 overflow-hidden rounded-full p-[1px]  focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 "
+            >
               <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
               <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-                Login 
+                Login
               </span>
             </button>
           </div>
