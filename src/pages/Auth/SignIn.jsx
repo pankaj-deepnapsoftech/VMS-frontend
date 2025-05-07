@@ -4,10 +4,12 @@ import { SignInValidation } from "@/Validation/AuthValidation";
 import { useAuthContext } from "@/context";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 
 function SignIn() {
   const { Signin, loading } = useAuthContext();
   const [showPassword, setShowPassword] = useState(false);
+  const [disabled,setDisabled] = useState(true)
 
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
     useFormik({
@@ -18,11 +20,15 @@ function SignIn() {
       },
     });
 
+    const handleOnChnage = (val) => {
+      setDisabled(false)
+    }
+
   return (
     <div className="min-h-screen w-full flex bg-[#0a192f]">
       {/* Left Panel - Login Form */}
       <div className="w-full md:w-[480px] p-8 flex flex-col justify-between">
-        
+
         {/* Logo and Language Section */}
         <div className="flex justify-between items-center">
           {/* <Link to="/" className="flex items-center">
@@ -38,8 +44,8 @@ function SignIn() {
         <form className="my-auto w-full max-w-md" onSubmit={handleSubmit}>
           {/* Email Input */}
           <span className="text-3xl font-bold block pb-10 bg-blue-300 text-transparent bg-clip-text">
-          Sign In
-        </span>
+            Sign In
+          </span>
           <div className="mb-4 ">
             <label className="block text-gray-400 text-sm mb-2">Email</label>
             <input
@@ -84,7 +90,8 @@ function SignIn() {
           </div>
 
           {/* Remember Me & Forgot Password */}
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center  justify-between mb-6">
+           
             <label className="flex items-center gap-2 cursor-pointer">
               <input
                 type="checkbox"
@@ -99,10 +106,16 @@ function SignIn() {
               Forgot password?
             </Link>
           </div>
+          <div>
+          <ReCAPTCHA
+              sitekey="6Lex_jArAAAAAD33jbEHS_Qldtzkz7-iOEqA0kLO"
+              onChange={handleOnChnage}
+            />,
+          </div>
 
           {/* Login Button */}
           <button
-            disabled={loading}
+            disabled={loading || disabled}
             type="submit"
             className="w-full bg-gradient-to-t from-[#0371c0] to-blue-400 text-white rounded-lg p-3 font-medium hover:"
           >
