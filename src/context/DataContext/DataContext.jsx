@@ -51,7 +51,7 @@ const DataContextProvider = ({ children }) => {
       toast.success(res?.data?.message);
       getHomeCardData();
     } catch (error) {
-      //console.log(error)
+      console.log(error)
       toast.dismiss(toastId);
       toast.error(error?.response?.data?.message);
     }finally{
