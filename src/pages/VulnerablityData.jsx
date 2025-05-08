@@ -75,13 +75,30 @@ export function VulnerabilityData() {
   const [index, setIndex] = useState([]);
   const [newData, setNewData] = useState([]);
 
+
+  const vulnerabilitiesItems = {
+    Organization: "",
+    Application_Name: "",
+    Title: "",
+    Vulnerability_Classification: "",
+    Scan_Type: "",
+    Severity: "",
+    Priority: "",
+    Status: "",
+    Remediated_Date: "",
+    Ageing: "",
+    Remediate_Upcoming_Time_Line: "",
+  }
+
   // Extract headers dynamically for table display
   const tableHeaders =
     allVulnerabilityData.length > 0
       ? Object.keys(allVulnerabilityData[0]).filter(
           (key) => key !== "_id" && key !== "__v" && key !== "updatedAt"
         )
-      : [];
+      :   Object.keys(vulnerabilitiesItems).filter(
+        (key) => key !== "_id" && key !== "__v" && key !== "updatedAt"
+      ) ;
 
   // Headers for the Add form (show all fields)
   const addFormHeaders = tableHeaders.filter(

@@ -64,12 +64,28 @@ export function EmployeeAllTasks() {
   const { UploadBulkData } = useDataContext();
 
   // Extract headers dynamically for table display
+  
+  const vulnerabilitiesItems = {
+    Organization: "",
+    Application_Name: "",
+    Title: "",
+    Vulnerability_Classification: "",
+    Scan_Type: "",
+    Severity: "",
+    Priority: "",
+    Status: "",
+    Remediated_Date: "",
+    Ageing: "",
+    Remediate_Upcoming_Time_Line: "",
+  }
   const tableHeaders =
     employeeTasksData.length > 0
       ? Object.keys(employeeTasksData[0]).filter(
         (key) => key !== "_id" && key !== "__v" && key !== "updatedAt"
       )
-      : [];
+      :  Object.keys(vulnerabilitiesItems).filter(
+        (key) => key !== "_id" && key !== "__v" && key !== "updatedAt"
+      );
 
   // Headers for the Add form (show all fields)
   const addFormHeaders = tableHeaders.filter(
@@ -105,21 +121,7 @@ export function EmployeeAllTasks() {
     setIsEditOpen(true);
   };
 
-  // const handleDelete = (id) => {
-  // 	if (window.confirm("Are you sure you want to delete this vulnerability?")) {
-  // 		DeleteData(id);
-  // 	}
-  // };
-  // const handleChecked = (id) => {
 
-  // 	let data = index.filter((item) => item === id)
-  // 	if (data.length > 0) {
-  // 		data = index.filter((item) => item !== id)
-  // 		setIndex(data)
-  // 	} else {
-  // 		setIndex((pre) => ([...pre, id]))
-  // 	}
-  // };
 
   const [status, setStatus] = useState("");
   const [expectionTime, setExpectionTime] = useState(new Date());
@@ -171,13 +173,13 @@ export function EmployeeAllTasks() {
   };
 
   let severityList = [
-      "Critical ",
-      "High",
-      "Medium",
-      "Low",
-      "Informational",
-      "Other",
-    ];
+    "Critical ",
+    "High",
+    "Medium",
+    "Low",
+    "Informational",
+    "Other",
+  ];
 
 
 
@@ -463,7 +465,7 @@ export function EmployeeAllTasks() {
           )}
 
 
-{isModalOpen1 && (
+          {isModalOpen1 && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-10">
               <div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
                 {/* Header */}
@@ -481,7 +483,21 @@ export function EmployeeAllTasks() {
 
                 {/* Form */}
                 <Formik
-                  initialValues={editData1 || {}}
+                  initialValues={editData1 || {
+                    Organization: "",
+                    Application_Name: "",
+                    Title: "",
+                    Vulnerability_Classification: "",
+                    Assigned_To: "",
+                    Scan_Type: "",
+                    Severity: "",
+                    Priority: "",
+                    Status: "",
+                    Remediated_Date: "",
+                    Ageing: "",
+                    Remediate_Upcoming_Time_Line: "",
+                    Expection_time: "",
+                  }}
                   onSubmit={(values) => {
                     //console.log(values, "hero in formik")
                     editMode1
@@ -501,7 +517,7 @@ export function EmployeeAllTasks() {
                     { setFieldValue, values } // ✅ Access setFieldValue here
                   ) => (
                     <Form className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
-                      {(editMode ? editFormHeaders : addFormHeaders).map(
+                      {(editMode1 ? editFormHeaders : addFormHeaders).map(
                         (field) =>
                           field !== "creator" &&
                           field !== "Exception_time" && (
