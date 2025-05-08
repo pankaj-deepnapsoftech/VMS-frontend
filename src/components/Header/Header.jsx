@@ -51,11 +51,11 @@ function Header({ setShowMenu }) {
   return (
     // <div className="flex h-screen fixed  overflow-y-auto
     //  md:w-[28%] lg:w-[25%] xl:w-[25%] 2xl:w-[20%] ">
-    <div className=" flex flex-col text-white  h-[100%] hide-scrollbar  overflow-y-auto ">
+    <div className=" flex flex-col text-white  h-[100%] hide-scrollbar bg-[#1d1f22]  overflow-y-auto ">
       <Link to="/" className="flex items-center my-2 ml-3">
-        <div className="flex gap-2 pt-2 items-center justify-center ">
+        <div className="flex gap-2 pt-2 items-center justify-center ml-14 ">
           <div
-            className="w-[100px] h-[100px]  bg-gradient-to-t from-gray-100 to-blue-500"
+            className="w-[100px] h-[100px] left-10 bg-gradient-to-t from-gray-100 to-blue-500"
             style={{
               WebkitMaskImage: "url('/logo.png')",
               WebkitMaskRepeat: "no-repeat",
@@ -77,7 +77,7 @@ function Header({ setShowMenu }) {
             key={data.route}
             to={data.route}
             onClick={setShowMenu}
-            className="flex items-center px-2 py-2 space-x-2 rounded-lg   [&.active]:bg-gradient-to-tl from-[#3f3b3b] to-[#2b2828]  transition duration-200"
+            className="flex items-center px-2 py-2 space-x-2 rounded-lg   [&.active]:bg-gradient-to-tl from-[#8f5151] to-[#551919]  transition duration-200"
           >
             <data.icon className="text-white w-5 h-5" />
             <p className="text-sm font-semibold text-white">{data.title}</p>

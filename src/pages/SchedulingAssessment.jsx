@@ -432,10 +432,10 @@ function SchedulingAssessmentPage() {
 
 					{isUpdateModalOpen && (
 						<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-10">
-							<div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
+							<div className="bg-[#0c121b] rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
 
 								{/* Header */}
-								<div className="flex justify-between items-center border-b p-4 bg-[#015289]">
+								<div className="flex justify-between items-center border-b p-4 bg-[#212224]">
 									<h2 className="text-lg font-semibold text-gray-200">
 										{"Update Details"}
 									</h2>
@@ -454,9 +454,9 @@ function SchedulingAssessmentPage() {
 												<div>
 													<label
 														htmlFor="Type_Of_Assesment"
-														className="block text-sm font-medium text-gray-700 mb-2"
+														className="block text-sm font-medium text-gray-300  mb-2"
 													>
-														Type of Assesment
+														Type of Assessment
 													</label>
 													<select
 
@@ -474,7 +474,7 @@ function SchedulingAssessmentPage() {
 																setIsOpen(true);
 															}
 														}}
-														className='w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gray-300 focus:border-transparent outline-none transition'
+														className='w-full px-4 bg-gray-800 text-gray-300 py-3 rounded-lg border border-gray-800 focus:ring-2 focus:ring-gray-800 focus:border-transparent outline-none transition'
 														id="Type_Of_Assesment">
 														<option value="" disabled> -- Select Type of Assesment -- </option>
 
@@ -504,7 +504,7 @@ function SchedulingAssessmentPage() {
 												<div>
 													<label
 														htmlFor="Data_Classification"
-														className="block text-sm font-medium text-gray-700 mb-2"
+														className="block text-sm font-medium text-gray-300 mb-2"
 													>
 														Data Classification
 													</label>
@@ -512,7 +512,7 @@ function SchedulingAssessmentPage() {
 														name='Data_Classification'
 														value={values.Data_Classification}
 														onChange={handleChange}
-														className='w-full px-4 py-3 rounded-lg text-gray-300 bg-gray-600 border-gray-500 focus:ring-2 focus:ring-gray-300 focus:border-transparent outline-none transition'
+														className='w-full px-4 py-3 rounded-lg text-gray-300 bg-gray-800 border-gray-500 focus:ring-2 focus:ring-gray-300 focus:border-transparent outline-none transition'
 														id="Data_Classification">
 														<option value="" disabled> -- Select Data Classification -- </option>
 														<option value={"Restricted"}>Restricted</option>
@@ -526,7 +526,7 @@ function SchedulingAssessmentPage() {
 												<div>
 													<label
 														htmlFor="MFA_Enabled"
-														className="block text-sm font-medium text-gray-700 mb-2"
+														className="block text-sm font-medium text-gray-300 mb-2"
 													>
 														MFA Enabled
 													</label>
@@ -534,7 +534,7 @@ function SchedulingAssessmentPage() {
 														name='MFA_Enabled'
 														value={values.MFA_Enabled}
 														onChange={handleChange}
-														className='w-full px-4 py-3 rounded-lg text-gray-300 bg-gray-600 border-gray-500 focus:ring-2 focus:ring-gray-300 focus:border-transparent outline-none transition'
+														className='w-full px-4 py-3 rounded-lg text-gray-300 bg-gray-800 border-gray-500 focus:ring-2 focus:ring-gray-300 focus:border-transparent outline-none transition'
 														id="MFA_Enabled">
 														<option value="" disabled> -- Select  MFA -- </option>
 														<option value={true}>Yes</option>
@@ -568,7 +568,7 @@ function SchedulingAssessmentPage() {
 													type='button'
 													onClick={() => setIsUpdateModalOpen(false)
 													}
-													className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition"
+													className="px-4 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-300 transition"
 												>
 													Cancel
 												</button>
@@ -577,7 +577,7 @@ function SchedulingAssessmentPage() {
 													onSubmit={
 														handleSubmit
 													}
-													className="px-4 py-2 bg-[#015289] text-white rounded-md hover:bg-gray-700 transition"
+													className="px-4 py-2 bg-[#0d273a] text-white rounded-md hover:bg-gray-700 transition"
 												>
 													Save
 												</button>
@@ -593,7 +593,7 @@ function SchedulingAssessmentPage() {
 
 
 					{allAssesmentData.length<1?<NoDataFound/>:<div id='table' className="overflow-x-auto rounded-lg">
-						<table className="min-w-full divide-y divide-gray-200 rounded-xl bg-white">
+						<table className="min-w-full divide-y divide-gray-200 rounded-xl bg-[#2d333b]">
 							<thead className="bg-gradient-to-bl from-[#333333] to-[#666666] rounded-xl ">
 
 								<tr>
@@ -613,13 +613,13 @@ function SchedulingAssessmentPage() {
 							</thead>
 							<tbody className="divide-y divide-gray-200">
 								{allAssesmentData?.map((item) => (
-									<tr key={item._id} className="hover:bg-gray-50">
+									<tr key={item._id} className="hover:bg-[#53565c]">
 										{addFormHeaders.map((field, i) => (
-											<td key={i} className="px-4    whitespace-nowrap text-sm text-gray-900">
+											<td key={i} className="px-4    whitespace-nowrap text-sm text-white">
 
 												{
 													field === "code_Upload" ?
-														<a className='text-blue-600' href=''
+														<a className='text-red-00/60' href=''
 															download={"CodeFile"}>
 															{item[field] === "" ? "" : "Download File"}
 														</a> : field === "MFA_Enabled" ? item[field] === true ? "Yes" : "No" :

@@ -205,7 +205,7 @@ export function AssertInventory() {
       {loading ? (
         <Loader />
       ) : (
-        <div className="p-4 md:p-6 max-w-[100%] mx-auto bg-background ">
+        <div className="p-4 md:p-6 max-w-[100%] mx-auto bg-[#2a2c2f] ">
           {/* top 5 Vulnerability */}
 
           {/* <div className="py-10 ">
@@ -339,8 +339,8 @@ export function AssertInventory() {
             <NoDataFound />
           ) : (
             <div className="overflow-x-auto">
-              <table className="min-w-full border border-gray-300 shadow-sm rounded-lg overflow-hidden">
-                <thead className="bg-gradient-to-r from-[#333333] to-[#666666]  text-gray-100">
+              <table className="min-w-full border border-gray-300 shadow-sm bg-[#2d333b] rounded-lg overflow-hidden">
+                <thead className="bg-gradient-to-bl from-[#333333] to-[#666666] text-white">
                   <tr className="h-10">
                     {" "}
                     {/* Reduced row height */}
@@ -371,16 +371,16 @@ export function AssertInventory() {
                   </tr>
                 </thead>
 
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-[#2d333b] text-white divide-y divide-gray-200">
                   {paginatedData?.map((item) => (
                     <tr
                       key={item._id}
-                      className="hover:bg-gray-100 transition h-8"
+                      className="hover:bg-[#53565c] transition h-8"
                     >
                       {" "}
                       {/* Reduced row height */}
                       {/* Checkbox Column */}
-                      <td className="px-3 py-2 text-center">
+                      <td className="px-3 py-2 text-center text-white">
                         <input
                           type="checkbox"
                           checked={index.includes(item._id)}
