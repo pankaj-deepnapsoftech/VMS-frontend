@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useRef } from "react";
 import { MdClose } from "react-icons/md";
 import { IoCloudUploadOutline } from "react-icons/io5";
