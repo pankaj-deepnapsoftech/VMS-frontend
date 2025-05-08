@@ -5,6 +5,7 @@ import { MdClose } from "react-icons/md";
 import {
   useAllEmployeeContext,
   useAuthContext,
+  useDataContext,
   useVulnerabililtyDataContext,
 } from "@/context";
 import { Formik, Form, Field } from "formik";
@@ -57,6 +58,8 @@ export function EmployeeAllTasks() {
   const [index, setIndex] = useState([]);
   const [newData, setNewData] = useState([]);
   const [pdfReport, setPdfReport] = useState([]);
+
+    const { UploadBulkData } = useDataContext();
 
   // Extract headers dynamically for table display
   const tableHeaders =
@@ -219,6 +222,7 @@ export function EmployeeAllTasks() {
               isOpen={isModalOpen}
               onClose={() => setIsModalOpen(false)}
               title="Report Upload"
+              method={UploadBulkData}
               subtitle=" please upload an Excel file in XLSX or XLS format. Ensure the file is properly formatted and contains all necessary data for processing."
             />
           </div>
