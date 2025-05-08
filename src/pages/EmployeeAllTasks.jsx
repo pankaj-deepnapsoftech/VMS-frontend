@@ -74,9 +74,6 @@ export function EmployeeAllTasks() {
     Severity: "",
     Priority: "",
     Status: "",
-    Remediated_Date: "",
-    Ageing: "",
-    Remediate_Upcoming_Time_Line: "",
   }
   const tableHeaders =
     employeeTasksData.length > 0
@@ -483,21 +480,7 @@ export function EmployeeAllTasks() {
 
                 {/* Form */}
                 <Formik
-                  initialValues={editData1 || {
-                    Organization: "",
-                    Application_Name: "",
-                    Title: "",
-                    Vulnerability_Classification: "",
-                    Assigned_To: "",
-                    Scan_Type: "",
-                    Severity: "",
-                    Priority: "",
-                    Status: "",
-                    Remediated_Date: "",
-                    Ageing: "",
-                    Remediate_Upcoming_Time_Line: "",
-                    Expection_time: "",
-                  }}
+                  initialValues={editData1 || vulnerabilitiesItems}
                   onSubmit={(values) => {
                     //console.log(values, "hero in formik")
                     editMode1

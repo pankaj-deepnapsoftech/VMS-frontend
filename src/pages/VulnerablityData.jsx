@@ -85,9 +85,6 @@ export function VulnerabilityData() {
     Severity: "",
     Priority: "",
     Status: "",
-    Remediated_Date: "",
-    Ageing: "",
-    Remediate_Upcoming_Time_Line: "",
   }
 
   // Extract headers dynamically for table display
@@ -566,7 +563,7 @@ export function VulnerabilityData() {
 
                 {/* Form */}
                 <Formik
-                  initialValues={editData || {}}
+                  initialValues={editData || vulnerabilitiesItems}
                   onSubmit={(values) => {
                     //console.log(values, "hero in formik")
                     editMode
