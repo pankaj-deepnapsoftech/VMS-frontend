@@ -1,19 +1,24 @@
 import Footer from "@/components/Footer/Footer";
 import { Header } from "@/constants/Components-lazy-loading/components.Lazy";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
-import { BiBarChartAlt2 } from "react-icons/bi";
 import { FaBell } from "react-icons/fa";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { NotificationSidebar } from "@components/modal/NotificationSideBar";
 
 import {
+  useAuthContext,
   useVulnerabililtyDataContext,
 } from "@/context";
+import ChangePasswordModal from "@/modals/ChangePasswordModal";
+import useChangePassword from "@/hooks/changePassword";
 
 const MainLayout = () => {
   const { notificationData, NotificationsViewed } =
     useVulnerabililtyDataContext();
+  const { authenticate } = useAuthContext();
+
+  const { isOpen, openModal, closeModal } = useChangePassword();
 
   const [width, setWidth] = useState(window.innerWidth);
   const [temp, setTemp] = useState("");
@@ -43,12 +48,17 @@ const MainLayout = () => {
     setTemp(name[1] ?? "Dashboard");
     console.log(name[1]);
   }, [location.pathname]);
+
+  useEffect(() => {
+    if (!authenticate.mustChangePassword) {
+      openModal()
+    }
+  }, [authenticate.mustChangePassword])
   return (
     <>
       <aside
-        className={`${
-          showMenu ? "left-0" : "-left-full"
-        } fixed z-10 w-[65%] flex flex-col justify-between 
+        className={`${showMenu ? "left-0" : "-left-full"
+          } fixed z-10 w-[65%] flex flex-col justify-between 
 h-screen  bg-gradient-to-t from-[#151515] to-[#212224] 
 transition duration-300 sm:w-[40%] md:w-[30%] lg:w-[25%] xl:w-[20%] 2xl:w-[15%] `}
       >
@@ -102,6 +112,8 @@ transition duration-300 sm:w-[40%] md:w-[30%] lg:w-[25%] xl:w-[20%] 2xl:w-[15%] 
         <Outlet />
       </div>
       <Footer />
+
+      <ChangePasswordModal isOpen={isOpen} onClose={closeModal} />
     </>
   );
 };

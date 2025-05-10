@@ -200,7 +200,8 @@ const AuthContextProvider = ({ children }) => {
   const ChangePassword = async (data) => {
     try {
       const res = await AxiosHandler.put("/auth/change-password",data);
-      toast.success(res.data.message)
+      toast.success(res.data.message);
+      getLogedInUser();
     } catch (error) {
       toast.error(error.response.data.message)
     }
