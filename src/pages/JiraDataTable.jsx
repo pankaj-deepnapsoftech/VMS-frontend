@@ -136,21 +136,15 @@ export const JiraDataTable = () => {
     DeleteMultipleData(deleteList);
   };
 
-
-const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
-    initialValues: { email: "", password: "" },
-    // validationSchema: SignInValidation,
-    onSubmit: (value) => {
-      console.log("UpdateData",value)
-      UpdateData(id,value);
-      
-    }
-  })
-
-
-
-
-
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: { email: "", password: "" },
+      // validationSchema: SignInValidation,
+      onSubmit: (value) => {
+        console.log("UpdateData", value);
+        UpdateData(id, value);
+      },
+    });
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -209,7 +203,7 @@ const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useF
             ) : (
               <div className="overflow-x-auto rounded-lg m-2">
                 <table className="w-full table-auto text-sm  bg-white">
-                  <thead className="bg-gradient-to-br from-[#1f1d1d] to-[#666666]  text-white ">
+                  <thead className="bg-gradient-to-bl from-[#333333] to-[#666666] text-white ">
                     <tr>
                       <th className="px-4 py-2 text-left">
                         <input
@@ -243,7 +237,7 @@ const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useF
                       ))}
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-100">
+                  <tbody className="bg-[#2d333b]  hover:bg-[#53565c] transition text-white">
                     {paginatedData.map((item) => (
                       <tr
                         key={item.id}
@@ -336,8 +330,6 @@ const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useF
                           {touched.email && errors.email && (
                             <p> {errors.email}</p>
                           )}
-
-
                         </div>
 
                         <div className="col-span-1 md:col-span-2 flex justify-end gap-2 mt-4 border-t pt-4">

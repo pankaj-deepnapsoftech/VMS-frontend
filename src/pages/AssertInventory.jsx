@@ -205,7 +205,7 @@ export function AssertInventory() {
       {loading ? (
         <Loader />
       ) : (
-        <div className="p-4 md:p-6 max-w-[100%] mx-auto bg-[#2a2c2f] ">
+        <div className="p-4 md:p-6 max-w-[100%] mx-auto min-h-screen bg-[#2a2c2f] ">
           {/* top 5 Vulnerability */}
 
           {/* <div className="py-10 ">
@@ -696,7 +696,7 @@ export function AssertInventory() {
             >
               Previous
             </button>
-            <span>Page {page}</span>
+            <span className="text-white">Page {page}</span>
             <button
               className={`px-4 py-2 border rounded-md  text-white bg-gradient-to-tr from-[#1f1d1d] to-[#666666] `}
               disabled={allVulnerabilityData?.length < 10}

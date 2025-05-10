@@ -65,7 +65,7 @@ export default function AllEmployee() {
             
 			{loading ? <Loader /> : <div className="m-6 p-2 bg-[#2a2c2f] shadow-lg rounded-lg">
 				{/* Table Header */}
-				<div className="flex justify-between items-center mb-4">
+				<div className="flex justify-between items-center">
 
 					{authenticate?.role === "ClientCISO" && <div className='flex w-full justify-end items-end py-4'>
 
@@ -254,7 +254,7 @@ export default function AllEmployee() {
 
 									<td className="px-2 py-1 border">
 										{user?.deactivate ? <button onClick={() => handleChangeStatus("deactivate", user._id)} type="button" className="bg-green-400 text-white px-3 py-1 rounded-2xl" >Activate</button>
-											: <button type="button" onClick={() => handleChangeStatus("activate", user._id)} className="bg-red-400 text-white px-3 py-1 rounded-2xl" >Deactivate</button>}
+											: <button type="button" onClick={() => handleChangeStatus("activate", user._id)} className="bg-red-400/60 text-white px-3 py-1 rounded-2xl" >Deactivate</button>}
 									</td>
 									{/* <td className="px-4 py-3 border">
 									
