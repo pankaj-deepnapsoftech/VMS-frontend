@@ -142,7 +142,7 @@ function Home() {
 
 
         <div className="w-full h-full  py-2  mt-5 mb-3  transition rounded-lg flex lg:flex-row flex-col  gap-2">
-          <div className="bg-[#151515] lg:w-[30%] w-full h-96 py-2 transition rounded-lg flex flex-col ">
+          <div className="bg-[#2a2c2f] lg:w-[30%] w-full h-96 py-2 transition rounded-lg flex flex-col ">
           <h3 className="text-lg p-2 font-semibold text-gray-200 ">
               Vulnerability Status
             </h3>
@@ -173,7 +173,7 @@ function Home() {
             </ResponsiveContainer>
           </div>
           {/* Risk Rating Chart */}
-          <div className="bg-[#151515]  lg:w-[70%]  w-full py-2 px-2 transition rounded-lg">
+          <div className="bg-[#2a2c2f]  lg:w-[70%]  w-full py-2 px-2 transition rounded-lg">
             <h3 className="text-lg p-1 font-semibold text-gray-200 mb-2">
               Vulnerable Items by Risk Rating
             </h3>
@@ -302,15 +302,15 @@ function Home() {
         </div>
 
         {/* exploybality */}
-        <div className="flex gap-3" >
-        <div className="bg-[#151515] p-3  rounded-xl shadow-lg w-full lg:w-1/2 ">
+        <div className="flex gap-2" >
+        <div className="bg-[#2a2c2f] p-3  rounded-xl shadow-lg w-full lg:w-1/2 ">
         <h3 className="text-lg p-1 font-semibold text-gray-200 ">
         Exploitability
             </h3>
             <hr className="mb-4 " />
             <BarGraph data={exploitability}  />
           </div>
-          <div className="bg-[#151515] lg:w-1/2 w-full h-96 py-1  transition rounded-lg flex flex-col">
+          <div className="bg-[#2a2c2f] lg:w-1/2 w-full h-96 py-1  transition rounded-lg flex flex-col">
           <h3 className="text-lg p-2 font-semibold text-gray-200 ">
               Inventory Status
             </h3>
@@ -346,8 +346,8 @@ function Home() {
 
         {/* Charts Section */}
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 my-5 ">
-          <div className="bg-[#151515] px-2 py-2 col-span-2 rounded-lg">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 my-5 ">
+          <div className="bg-[#2a2c2f] px-2 py-2 col-span-2 rounded-lg">
             <h3 className="text-gray-200 text-lg p-1 font-semibold mb-2">
               Closed Vulnerable Items by Remediation Target Status
             </h3>
@@ -375,7 +375,7 @@ function Home() {
             </ResponsiveContainer>
           </div>
 
-          <div className="bg-[#151515] p-4 rounded-lg shadow ">
+          <div className="bg-[#2a2c2f] p-4 rounded-lg shadow ">
             <h3 className="text-gray-200 text-lg text-center font-semibold mb-2">
               Critical / High Vulnerable Items <br />{" "}
               <span className="text-sm">by Assignment Group</span>
@@ -385,7 +385,7 @@ function Home() {
               <thead>
                 <tr>
                   <th className="px-4 py-2 text-gray-300">Name</th>
-                  <th className="px-4 py-2 text-gray-300">
+                  <th className="px-3 py-2 text-gray-300">
                     {monthNames[new Date().getMonth()]}
                   </th>
                   <th className="px-4 py-2 text-gray-300">Trend</th>
@@ -406,8 +406,8 @@ function Home() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 my-5 ">
-          <div className="bg-[#151515] shadow rounded-lg p-6 ">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 my-5 ">
+          <div className="bg-[#2a2c2f] shadow rounded-lg p-6 ">
             <h3 className="text-gray-200 text-sm text-center font-semibold mb-4">
               Overdue Critical / High Vulnerable Items <br />
               <span className="text-sm">by Assignment Group</span>
@@ -419,7 +419,7 @@ function Home() {
                   <th className="px-4 py-2 text-gray-300">
                     {monthNames[new Date().getMonth()]}
                   </th>
-                  <th className="px-4 py-2 text-gray-300">Trend</th>
+                  <th className="px-2 py-2 text-gray-300">Trend</th>
                 </tr>
               </thead>
               <tbody>
@@ -439,7 +439,7 @@ function Home() {
           </div>
 
           {/* Age and Risk Rating Chart */}
-          <div className="bg-[#151515] p-4 col-span-2 rounded-lg">
+          <div className="bg-[#2a2c2f] p-4 col-span-2 rounded-lg">
             <h3 className="text-lg text-gray-200 font-semibold mb-2">
               Vulnerable Items by Age
             </h3>
@@ -462,7 +462,7 @@ function Home() {
           </div>
         </div>
 
-        <div className="bg-[#151515] p-2 flex justify-center flex-col pb-14 rounded-lg">
+        <div className="bg-[#2a2c2f] p-2 flex justify-center flex-col pb-14 rounded-lg">
           <h3 className="text-gray-200 p-2 text-lg font-semibold ">
             Open and Closed Vulnerable Items
           </h3>

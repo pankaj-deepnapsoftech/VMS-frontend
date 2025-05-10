@@ -65,7 +65,6 @@ const slides = [
   {
     title: "AI Powered Risk Prioritization and Remediation Platform",
     text: "Enhance security with our intelligent AI-driven platform that identifies, prioritizes, and remediates risks efficiently. Streamline threat management, reduce vulnerabilities, and safeguard your business with actionable insights and automated solutions.",
-    buttonText: "Start Using for Free",
     image: "/logo.png",
   },
 ];
@@ -109,7 +108,6 @@ Applies mass vulnerability fixes based on predefined categories, accelerating th
   },
 ];
 
-
 const LandingPage = () => {
   return (
     <>
@@ -143,11 +141,11 @@ const LandingPage = () => {
                 </p>
 
                 {/* Button */}
-                <div className="flex justify-center md:justify-start">
+                {/* <div className="flex justify-center md:justify-start">
                   <button className="bg-gradient-to-tr from-[#383b40] text-md md:text-lg h-16 w-48 rounded-lg relative overflow-hidden text-gray-300 shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 mt-4 hover:text-white hover:before:h-64 hover:before:-translate-y-32">
                     <span className="relative z-10">{slide.buttonText}</span>
                   </button>
-                </div>
+                </div> */}
               </div>
 
               {/* Image only visible on desktop */}
@@ -174,11 +172,9 @@ const LandingPage = () => {
           </div>
 
           <div className="w-full md:w-2/3 ">
-          
             <h2 className="text-4xl font-bold mb-2">Features</h2>
             <p className="text-gray-400 mb-8">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore...
+            SECURE& tools will offer key features that set them apart from competitors, providing unique solutions to address real-time challenges faced by enterprises of all sizes, from small businesses to large corporations.
             </p>
 
             <div className="flex gap-4 w-full overflow-x-scroll custom-scrollbar ">
@@ -266,39 +262,37 @@ const LandingPage = () => {
       <section>
         <div className="h-full w-full pt-12 bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f]">
           <h1 className="text-white text-center text-[40px] font-bold pt-4">
-            Welcome to Neon
+            Welcome 
           </h1>
           <div className="flex flex-col sm:flex-row sm:flex-wrap gap-8 justify-between items-center h-auto w-full px-4 sm:px-8 py-10">
             <div className=" w-full sm:w-[30%]">
               <div className="mb-10 mt-10">
                 <div className="flex justify-end max-[800px]:justify-start gap-4">
                   <h2 className="text-[#D7E1E0] text-xl font-bold">
-                    Friendly Support
+                  Stakeholder Driven Dashboard
                   </h2>
                   <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
                     <FaMessage className="text-3xl text-[#a1a4ab]" />
                   </div>
                 </div>
-                <p className="text-[#A0A1AC] md:text-end">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Praesentium cupiditate.
+                <p className="text-[#A0A1AC]">
+                Comprehensive visibility and reporting for all stakeholders
                 </p>
               </div>
               <div className="flex justify-end max-[800px]:justify-start  items-start">
                 <div className="w-64 h-[2.5px] rounded-md shadow-2xl bg-[#2f2f2f]  ml-1 mt-1"></div>
               </div>
               <div className="h-[30vh] pt-24 md:pt-16">
-                <div className="flex justify-end max-[800px]:justify-start gap-4">
+              <div className="flex justify-end max-[800px]:justify-start gap-4">
                   <h2 className="text-[#D7E1E0] text-xl font-bold">
-                    User-friendly UI
+                  AI Penetration Test Platform
                   </h2>
                   <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
                     <FaArrowPointer className="text-3xl text-[#a1a4ab]" />
                   </div>
                 </div>
-                <p className="text-[#A0A1AC] md:text-end">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Praesentium cupiditate.
+                <p className="text-[#A0A1AC]">
+                Advanced AI-powered security testing with high accuracy
                 </p>
               </div>
             </div>
@@ -307,14 +301,14 @@ const LandingPage = () => {
               <div className="border border-[#918f8f86] shadow-2xl flex justify-center items-center rounded-[50%] w-[300px] sm:w-[400px] h-[300px] sm:h-[380px] relative overflow-hidden group">
                 <img
                   className="h-[90%] w-[90%] object-cover rounded-[50%] absolute opacity-100 group-hover:opacity-0 transition-opacity duration-1000"
-                  src="https://images.unsplash.com/photo-1745541643943-8908ceee4dc4?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxOTB8fHxlbnwwfHx8fHw%3D"
+                  src="./logo.png"
                   alt=""
                 />
-                <img
+                {/* <img
                   className="h-[90%] w-[90%] object-cover rounded-[50%] absolute opacity-0 group-hover:opacity-100 transition-opacity duration-1000"
                   src="https://images.unsplash.com/photo-1586805372042-327a923a697a?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjR8fHRyYWZmaWN8ZW58MHx8MHx8fDA%3D"
                   alt=""
-                />
+                /> */}
               </div>
             </div>
 
@@ -325,12 +319,11 @@ const LandingPage = () => {
                     <GiPerspectiveDiceSixFacesFour className="text-5xl text-[#a1a4ab]" />
                   </div>
                   <h2 className="text-[#D7E1E0] text-xl font-bold">
-                    Easy <br /> Customization
+                  Asset/API Discovery & Inventory
                   </h2>
                 </div>
                 <p className="text-[#A0A1AC]">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Praesentium cupiditate.
+                Complete mapping of all assets and APIs across your infrastructure
                 </p>
               </div>
               <div className="flex items-start">
@@ -342,12 +335,11 @@ const LandingPage = () => {
                     <FaMessage className="text-3xl text-[#a1a4ab]" />
                   </div>
                   <h2 className="text-[#D7E1E0] text-xl font-bold pb-2">
-                    Simple Setup
+                  AI Powered Remediation Factory
                   </h2>
                 </div>
                 <p className="text-[#A0A1AC]">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Praesentium cupiditate.
+                Automated remediation suggestions and implementation guidance
                 </p>
               </div>
             </div>
@@ -360,11 +352,11 @@ const LandingPage = () => {
             <h2 className="text-4xl text-gray-200 font-bold mb-6">
               Get in Touch
             </h2>
-            <p className="text-gray-400 mb-8">
+            {/* <p className="text-gray-400 mb-8">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor
               sit amet, consectetur adipiscing.
-            </p>
+            </p> */}
             <form className="space-y-6">
               <div className="flex flex-col md:flex-row gap-4">
                 <input
@@ -388,8 +380,8 @@ const LandingPage = () => {
               </button>
             </form>
           </div>
-          <div className="bg-gradient-to-br from-[#393d40] to-[#26282a] rounded-xl p-8 space-y-6 shadow-white">
-            <div>
+          <div className="bg-gradient-to-br from-[#393d40] to-[#26282a] rounded-xl p-8 space-y-6 h-[200px] shadow-white">
+            {/* <div>
               <h3 className="text-3xl font-semibold text-[#d7dee1] mb-4">
                 Get The App:
               </h3>
@@ -408,25 +400,25 @@ const LandingPage = () => {
                   </span>
                 </button>
               </div>
-            </div>
+            </div> */}
 
-            <div className="pt-5">
+            <div className="pt-5 text-center ">
               <h3 className="text-3xl font-semibold mt-4 mb-4">Contacts:</h3>
               <ul className="text-gray-300 space-y-3">
-                <li>
+                {/* <li>
                   <span className="text-gray-400 ">Ph.</span> 1-800-901-234
-                </li>
+                </li> */}
                 <li>
-                  <span className="text-gray-400">Mail.</span> info@demolink.org
+                  <span className="text-gray-400">Mail.</span> enquiry@securend.ai
                 </li>
-                <li>
+                {/* <li>
                   <span className="text-gray-400">Office.</span> Lorem ipsum
                   dolor sit amet,
                   <br /> consectetur adipiscing elit.
-                </li>
+                </li> */}
               </ul>
             </div>
-            <div className=" flex flex-col items-center justify-center text-sm text-gray-500">
+            {/* <div className=" flex flex-col items-center m-10 justify-center text-sm text-gray-500">
               <div className="flex space-x-4 pt-12 mb-1">
                 <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] text-white text-xl flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
                   <i className="fab fa-facebook-f"></i>
@@ -444,7 +436,7 @@ const LandingPage = () => {
                   Privacy Policy
                 </a>
               </p>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
@@ -517,7 +509,7 @@ const LandingPage = () => {
           </div>
         </div>
       </section> */}
-      <Footer/>
+      <Footer />
     </>
   );
 };

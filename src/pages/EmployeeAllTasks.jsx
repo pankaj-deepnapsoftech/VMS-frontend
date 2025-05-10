@@ -5,6 +5,7 @@ import { MdClose } from "react-icons/md";
 import {
   useAllEmployeeContext,
   useAuthContext,
+  useDataContext,
   useVulnerabililtyDataContext,
 } from "@/context";
 import { Formik, Form, Field } from "formik";
@@ -20,11 +21,9 @@ import { FaSms } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 export function EmployeeAllTasks() {
-  const { loading, UpdateData, orgnizationNotification } =
-    useVulnerabililtyDataContext();
+  const { loading, UpdateData, orgnizationNotification, AddData } = useVulnerabililtyDataContext();
 
   const { authenticate, token } = useAuthContext();
-
   const {
     employeeTasksData,
     taskPage,
@@ -33,6 +32,7 @@ export function EmployeeAllTasks() {
     EmployeeTasks,
     datafetchCount,
     setdatafetchCount,
+    allEmployeesData
   } = useAllEmployeeContext();
 
   //console.log("employeeTasksData", employeeTasksData)
@@ -47,24 +47,42 @@ export function EmployeeAllTasks() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen1, setIsModalOpen1] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [selectAll, setSelectAll] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [editMode1, setEditMode1] = useState(false);
   const [editData, setEditData] = useState(null);
+  const [editData1, setEditData1] = useState(null);
   const rowsPerPage = 10;
   const [index, setIndex] = useState([]);
   const [newData, setNewData] = useState([]);
   const [pdfReport, setPdfReport] = useState([]);
 
+  const { UploadBulkData } = useDataContext();
+
   // Extract headers dynamically for table display
+  
+  const vulnerabilitiesItems = {
+    Organization: "",
+    Application_Name: "",
+    Title: "",
+    Vulnerability_Classification: "",
+    Scan_Type: "",
+    Severity: "",
+    Priority: "",
+    Status: "",
+  }
   const tableHeaders =
     employeeTasksData.length > 0
       ? Object.keys(employeeTasksData[0]).filter(
-          (key) => key !== "_id" && key !== "__v" && key !== "updatedAt"
-        )
-      : [];
+        (key) => key !== "_id" && key !== "__v" && key !== "updatedAt"
+      )
+      :  Object.keys(vulnerabilitiesItems).filter(
+        (key) => key !== "_id" && key !== "__v" && key !== "updatedAt"
+      );
 
   // Headers for the Add form (show all fields)
   const addFormHeaders = tableHeaders.filter(
@@ -100,21 +118,7 @@ export function EmployeeAllTasks() {
     setIsEditOpen(true);
   };
 
-  // const handleDelete = (id) => {
-  // 	if (window.confirm("Are you sure you want to delete this vulnerability?")) {
-  // 		DeleteData(id);
-  // 	}
-  // };
-  // const handleChecked = (id) => {
 
-  // 	let data = index.filter((item) => item === id)
-  // 	if (data.length > 0) {
-  // 		data = index.filter((item) => item !== id)
-  // 		setIndex(data)
-  // 	} else {
-  // 		setIndex((pre) => ([...pre, id]))
-  // 	}
-  // };
 
   const [status, setStatus] = useState("");
   const [expectionTime, setExpectionTime] = useState(new Date());
@@ -134,9 +138,9 @@ export function EmployeeAllTasks() {
   // };
 
   const handleDownload = (data) => {
-	if(data.length<1){
-		return alert("Don't Have Enough Data to Download")
-	   } 
+    if (data.length < 1) {
+      return alert("Don't Have Enough Data to Download")
+    }
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Vulnerabilities");
@@ -158,6 +162,21 @@ export function EmployeeAllTasks() {
 
 
   let navigate = useNavigate();
+
+  const openVulnerablityModal = (data = null) => {
+    setEditData1(data);
+    setEditMode1(!!data);
+    setIsModalOpen1(true);
+  };
+
+  let severityList = [
+    "Critical ",
+    "High",
+    "Medium",
+    "Low",
+    "Informational",
+    "Other",
+  ];
 
 
 
@@ -200,6 +219,13 @@ export function EmployeeAllTasks() {
             {/* </div> *   /  */}
             <div className="flex justify-end items-start gap-5 py-4">
               <button
+                onClick={() => openVulnerablityModal()}
+                className="px-4 py-2 bg-gradient-to-bl from-[#333333] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
+              >
+                <BiPlus className="h-6 w-6 mr-1" />
+                Add Vulnerability
+              </button>
+              <button
                 onClick={() => setIsModalOpen(true)}
                 className="px-4 py-2 bg-gradient-to-r from-[#333333] to-[#666666]   text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
               >
@@ -219,12 +245,13 @@ export function EmployeeAllTasks() {
               isOpen={isModalOpen}
               onClose={() => setIsModalOpen(false)}
               title="Report Upload"
+              method={UploadBulkData}
               subtitle=" please upload an Excel file in XLSX or XLS format. Ensure the file is properly formatted and contains all necessary data for processing."
             />
           </div>
 
           {/* 📊 Table */}
-          {paginatedData.length<1?<NoDataFound/>:<div className="overflow-x-auto rounded-lg">
+          {paginatedData.length < 1 ? <NoDataFound /> : <div className="overflow-x-auto rounded-lg">
             <table className="min-w-full divide-y divide-gray-200 bg-white">
               <thead className="bg-gradient-to-r from-[#333333] to-[#666666]  ">
                 <tr>
@@ -270,18 +297,18 @@ export function EmployeeAllTasks() {
                       >
                         {field === "createdAt"
                           ? new Date(item[field]).toLocaleDateString("en-IN", {
-                              day: "2-digit",
-                              month: "short",
-                              year: "numeric",
-                            })
+                            day: "2-digit",
+                            month: "short",
+                            year: "numeric",
+                          })
                           : field === "Assigned_To"
-                          ? item[field]?.full_name
-                          : item[field]}
+                            ? item[field]?.full_name
+                            : item[field]}
                       </td>
                     ))}
                     <td className="px-4 py-2 whitespace-nowrap flex justify-around gap-4">
                       <button
-                        onClick={() => openModal(item)}
+                        onClick={() => openVulnerablityModal(item)}
                         className="text-blue-600"
                       >
                         <BiEditAlt className="h-5 w-5" />
@@ -293,11 +320,11 @@ export function EmployeeAllTasks() {
                         <RiUpload2Fill className="h-5 w-5" />
                       </button>
                       <button
-                                              onClick={() =>   navigate(`/chat/${item._id}`,{state:{item}})}
-                                              className="text-green-600 hover:text-green-800 transition"
-                                            >
-                                              <FaSms className="h-4 w-4" />
-                                            </button>
+                        onClick={() => navigate(`/chat/${item._id}`, { state: { item } })}
+                        className="text-green-600 hover:text-green-800 transition"
+                      >
+                        <FaSms className="h-4 w-4" />
+                      </button>
                       {/* <button onClick={() => handleAssignTask(item._id)} className="text-red-600">
 											<BsPersonCheckFill className="h-5 w-5" />
 										</button> */}
@@ -434,11 +461,165 @@ export function EmployeeAllTasks() {
             </div>
           )}
 
+
+          {isModalOpen1 && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-10">
+              <div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
+                {/* Header */}
+                <div className="flex justify-between items-center border-b p-4 bg-gradient-to-bl from-[#333333] to-[#666666]">
+                  <h2 className="text-lg font-semibold text-gray-200">
+                    {editMode ? "Edit Vulnerability" : "Add Vulnerability"}
+                  </h2>
+                  <button
+                    onClick={() => setIsModalOpen1(false)}
+                    className="text-gray-100 hover:text-gray-200 transition"
+                  >
+                    <MdClose className="h-6 w-6" />
+                  </button>
+                </div>
+
+                {/* Form */}
+                <Formik
+                  initialValues={editData1 || vulnerabilitiesItems}
+                  onSubmit={(values) => {
+                    //console.log(values, "hero in formik")
+                    editMode1
+                      ? UpdateData(values, editData._id1)
+                      : AddData(values);
+
+                    if (values.Status === "Exception") {
+                      orgnizationNotification(
+                        values.Organization,
+                        `${values.Title} is Move to Exception by ${authenticate.full_name}`
+                      );
+                    }
+                    setIsModalOpen(false);
+                  }}
+                >
+                  {(
+                    { setFieldValue, values } // ✅ Access setFieldValue here
+                  ) => (
+                    <Form className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+                      {(editMode1 ? editFormHeaders : addFormHeaders).map(
+                        (field) =>
+                          field !== "creator" &&
+                          field !== "Exception_time" && (
+                            <div key={field} className="flex flex-col">
+                              <label className="text-sm font-medium text-gray-700">
+                                {field.replace(/_/g, " ")}
+                              </label>
+
+                              {field === "Assigned_To" ? (
+                                <select
+                                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                                  name="Assigned_To"
+                                  onChange={(e) =>
+                                    setFieldValue("Assigned_To", e.target.value)
+                                  }
+                                  defaultValue=""
+                                >
+                                  <option disabled value="">
+                                    --- Select a Tester ---
+                                  </option>
+                                  {allEmployeesData?.map((item, idx) => (
+                                    <option key={idx} value={item._id}>
+                                      {item.full_name}
+                                    </option>
+                                  ))}
+                                </select>
+                              ) : field === "Severity" ? (
+                                <select
+                                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                                  name="Severity"
+                                  onChange={(e) =>
+                                    setFieldValue("Severity", e.target.value)
+                                  }
+                                  defaultValue=""
+                                >
+                                  <option disabled value="">
+                                    --- Select a Severity ---
+                                  </option>
+                                  {severityList?.map((item, idx) => (
+                                    <option key={idx} value={item}>
+                                      {item}
+                                    </option>
+                                  ))}
+                                </select>
+                              ) : field === "Status" ? (
+                                <select
+                                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                                  name="Status"
+                                  onChange={(e) =>
+                                    setFieldValue("Status", e.target.value)
+                                  }
+                                  defaultValue=""
+                                >
+                                  <option disabled value="">
+                                    --- Select a Status ---
+                                  </option>
+                                  {statusList.map((item, idx) => (
+                                    <option key={idx} value={item}>
+                                      {item}
+                                    </option>
+                                  ))}
+                                </select>
+                              ) : field === "Remediate_Upcoming_Time_Line" ? (
+                                <InputField
+                                  type="date"
+                                  onChange={(e) =>
+                                    setFieldValue(
+                                      "Remediate_Upcoming_Time_Line",
+                                      e.target.value
+                                    )
+                                  }
+                                />
+                              ) : (
+                                <Field
+                                  name={field}
+                                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                                />
+                              )}
+                            </div>
+                          )
+                      )}
+
+                      {values.Status === "Exception" && (
+                        <InputField
+                          label="Exception Date"
+                          type="date"
+                          onChange={(e) =>
+                            setFieldValue("Expection_time", e.target.value)
+                          }
+                        />
+                      )}
+
+                      {/* Buttons */}
+                      <div className="col-span-1 md:col-span-2 flex justify-end gap-2 mt-4 border-t pt-4">
+                        <button
+                          type="button"
+                          onClick={() => setIsModalOpen1(false)}
+                          className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          type="submit"
+                          className="px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white rounded-md hover:bg-blue-700 transition"
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </Form>
+                  )}
+                </Formik>
+              </div>
+            </div>
+          )}
+
           <div className="flex justify-between items-center py-16">
             <button
-              className={`px-4 py-2 bg-gradient-to-r from-[#333333] to-[#666666]   text-white border rounded-md ${
-                taskPage === 1 ? "opacity-50 cursor-not-allowed" : ""
-              }`}
+              className={`px-4 py-2 bg-gradient-to-r from-[#333333] to-[#666666]   text-white border rounded-md ${taskPage === 1 ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               disabled={taskPage === 1}
               onClick={() => setTaskPage(taskPage - 1)}
             >

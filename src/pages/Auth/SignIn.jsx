@@ -108,7 +108,7 @@ function SignIn() {
           </div>
           <div>
           <ReCAPTCHA
-              sitekey="6Lex_jArAAAAAD33jbEHS_Qldtzkz7-iOEqA0kLO"
+              sitekey={import.meta.env.VITE_HUMAN_VERIFICATION}
               onChange={handleOnChnage}
             />,
           </div>
