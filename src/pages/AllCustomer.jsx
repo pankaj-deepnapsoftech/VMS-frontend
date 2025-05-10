@@ -154,7 +154,7 @@ export default function AllCustomer() {
       )}
 
       <div className="h-full w-full flex items-center justify-center" >
-        {isChecked && <AllowedModal setIsChecked={setIsChecked} isChecked={isChecked} id={dataId} />}
+        <AllowedModal setIsChecked={setIsChecked} isChecked={isChecked} id={dataId} />
       </div>
     </>
   );

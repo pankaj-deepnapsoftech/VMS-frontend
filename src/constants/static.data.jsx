@@ -44,11 +44,11 @@ export const AllowedPaths = [
 
 
 export const ChartsColor = {
-    Informational:"",
-    Low:"",
-    Medium:"",
-    High:"",
-    Critical:"",
+    Informational:"#A0C878",
+    Low:"#60B5FF",
+    Medium:"#F3C623",
+    High:"#E83F25",
+    Critical:"#E55050",
 }
 
 
