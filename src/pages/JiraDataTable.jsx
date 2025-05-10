@@ -158,7 +158,7 @@ const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useF
         <Loader />
       ) : (
         <div className="min-h-screen bg-background p-6">
-          <div className="max-w-full mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+          <div className="max-w-full mx-auto bg-[#565656] rounded-xl shadow-lg overflow-hidden">
             {/* Header */}
             <div className="p-6  bg-white flex flex-col md:flex-row items-center justify-between gap-4">
               <div className="relative w-full md:w-96">

@@ -25,6 +25,8 @@ import { useAuthContext, useDataContext } from "@/context";
 import { FaNetworkWired } from "react-icons/fa";
 import { Bug } from "lucide-react";
 import BarGraph from "@/components/BarGraph";
+import { useState } from "react";
+
 
 function Home() {
   const {
@@ -40,6 +42,12 @@ function Home() {
 
   const {authenticate} = useAuthContext();
   console.log(authenticate)
+  const [showUserMenu, setShowUserMenu] = useState(false);
+
+  const user = {
+    name: "Dinki",
+    email: "dinki@gmail.com",
+  };
 
   const closevulnerableItemsData = [closevulnerableItems];
   const data = [
@@ -480,8 +488,11 @@ function Home() {
             </BarChart>
           </ResponsiveContainer>
         </div>
+        
         <div className="mt-6"></div>
+       
       </div>
+     
     </>
   );
 }

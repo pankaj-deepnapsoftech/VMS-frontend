@@ -289,11 +289,11 @@ export function AssertInventory() {
 
           <div className="flex flex-col gap-3 lg:flex-row lg:justify-between  items-center py-3 ">
             <div className="relative mt-4 md:mt-0">
-              <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+              <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-200 h-5 w-5" />
               <input
                 type="text"
                 placeholder="Search Vulnerabilities ..."
-                className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg w-full md:w-80"
+                className="pl-10 pr-4 py-2 border border-gray-400 text-white bg-[#565656] rounded-lg w-full md:w-80"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -301,13 +301,13 @@ export function AssertInventory() {
             {authenticate.role === "Admin" ? (
               <div className=" w-full flex  justify-end gap-2">
                 <select
-                  name="Get Organization "
+                  name="Get Organization"
                   value={selected}
                   onChange={(e) => {
                     setSelected(e.target.value);
                     GetAssetsOpenIssues(e.target.value);
                   }}
-                  className=" px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                  className=" px-3 py-2 rounded-lg border border-gray-300 bg-[#565656] text-white focus:ring-2 focus:ring-gray-600 focus:border-transparent outline-none transition"
                   id="Select_Tester"
                 >
                   <option value="" selected disabled>
@@ -322,7 +322,7 @@ export function AssertInventory() {
                   ))}
                 </select>
                 <button
-                  className="p-1   bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white text-[10px] rounded-lg hover:bg-blue-700 transition"
+                  className="p-1   bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white text-[10px] rounded-lg hover:bg-gray-700 transition"
                   onClick={() => {
                     AllVulnerablilty();
                     setSelected("");
@@ -392,7 +392,7 @@ export function AssertInventory() {
                       {tableHeaders?.map((field, i) => (
                         <td
                           key={i}
-                          className="px-3 py-2 text-xs text-gray-900 whitespace-nowrap"
+                          className="px-3 py-2 text-xs text-gray-200 whitespace-nowrap"
                         >
                           {field === "createdAt" || field === "Exception_time"
                             ? item[field]

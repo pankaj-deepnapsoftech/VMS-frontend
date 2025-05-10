@@ -7,19 +7,23 @@ import { FaBell } from "react-icons/fa";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { NotificationSidebar } from "@components/modal/NotificationSideBar";
 
-import {
-  useVulnerabililtyDataContext,
-} from "@/context";
+import { useAuthContext, useVulnerabililtyDataContext } from "@/context";
+import UserProfile from "@/pages/UserProfile";
+import { getInitials } from "@/utils/profile";
 
 const MainLayout = () => {
   const { notificationData, NotificationsViewed } =
     useVulnerabililtyDataContext();
+    const {authenticate} = useAuthContext();
 
   const [width, setWidth] = useState(window.innerWidth);
   const [temp, setTemp] = useState("");
   const location = useLocation();
   const [showMenu, setShowMenu] = useState(false);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
+ 
+ 
 
   let notificationcount =
     notificationData?.filter((notification) => !notification.view).length || 0;
@@ -58,7 +62,7 @@ transition duration-300 sm:w-[40%] md:w-[30%] lg:w-[25%] xl:w-[20%] 2xl:w-[15%] 
           }
         />
       </aside>
-      <div className="ml-auto mb-6 lg:w-[75%] xl:w-[80%] 2xl:w-[85%]">
+      <div className="ml-auto mb-6 lg:w-[75%] xl:w-[80%] 2xl:w-[85%] h-screen bg-background">
         <div className="bg-gradient-to-t from-[#1a1c1e] to-[#212325]  border-gray-200">
           <div className="flex items-center justify-between px-2 sm:px-4 py-2">
             <div className="w-full flex items-center justify-between pr-5">
@@ -88,6 +92,53 @@ transition duration-300 sm:w-[40%] md:w-[30%] lg:w-[25%] xl:w-[20%] 2xl:w-[15%] 
                     ""
                   )}
                 </button>
+
+                <div className="relative ml-4 flex text-white items-center gap-3 ">
+                  <button
+                    onClick={() => setShowUserMenu(!showUserMenu)}
+                    className="bg-blue-400 text-white rounded-full w-10 h-10 flex items-center justify-center"
+                  >
+                    {getInitials(authenticate?.full_name)}
+                  </button>
+                  {authenticate?.role}
+
+                  {/* {showUserMenu && (
+                    <div className="absolute right-0 mt-2 w-64 bg-[#4f4f4f] rounded-lg shadow-lg z-50">
+                      <div className="flex items-center gap-2 px-4 py-3 border-b">
+                        <div className="bg-blue-400 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">
+                          {user.name
+                            .split(" ")
+                            .map((n) => n[0])
+                            .join("")
+                            .toUpperCase()}
+                        </div>
+                        <div>
+                          <p className="text-sm font-semibold text-gray-200">
+                            {user.name}
+                          </p>
+                          <p className="text-xs text-gray-400">{user.email}</p>
+                        </div>
+                      </div>
+                      <ul className="text-sm text-gray-200">
+                        <li
+                          className="px-4 py-2 hover:bg-gray-500 cursor-pointer flex items-center gap-2"
+                          onClick={() => {
+                          
+                            console.log("Logout");
+                          }}
+                        >
+                          ⤴️ Logout
+                        </li>
+                        <li
+                          className="px-4 py-2 hover:bg-gray-500 cursor-pointer flex items-center gap-2"
+                          onClick={() => setShowUserMenu(false)}
+                        >
+                          ❌ Close
+                        </li>
+                      </ul>
+                    </div>
+                  )} */}
+                </div>
               </div>
 
               <NotificationSidebar
@@ -101,7 +152,10 @@ transition duration-300 sm:w-[40%] md:w-[30%] lg:w-[25%] xl:w-[20%] 2xl:w-[15%] 
         </div>
         <Outlet />
       </div>
+    
       <Footer />
+      <UserProfile showUserMenu={showUserMenu} setShowMenu={setShowUserMenu} />
+  
     </>
   );
 };

@@ -62,8 +62,8 @@ export default function AllEmployee() {
 	return (
 
 		<>
-
-			{loading ? <Loader /> : <div className="m-6 p-2 bg-gray-100 shadow-lg rounded-lg">
+            
+			{loading ? <Loader /> : <div className="m-6 p-2 bg-[#2a2c2f] shadow-lg rounded-lg">
 				{/* Table Header */}
 				<div className="flex justify-between items-center mb-4">
 
@@ -82,7 +82,7 @@ export default function AllEmployee() {
 
 					{isModalOpen && (
 						<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-10">
-							<div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
+							<div className="bg-black rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
 
 								{/* Header */}
 								<div className="flex justify-between items-center border-b p-4 bg-[#015289]">
@@ -214,7 +214,7 @@ export default function AllEmployee() {
 
 				{/* Table */}
 				{allEmployeesData.length < 1 ? <NoDataFound /> : <div className="overflow-x-auto rounded-lg">
-					<table className="table-auto w-full border-collapse border border-gray-200">
+					<table className="table-auto w-full border-b  bg-[#2d333b] ">
 						<thead className="bg-gradient-to-bl from-[#333333] to-[#666666] text-white">
 							<tr>
 								<th className="px-4 py-1 text-sm  border text-left"> S No.</th>
@@ -231,7 +231,7 @@ export default function AllEmployee() {
 							{allEmployeesData?.map((user, index) => (
 								<tr
 									key={user._id}
-									className="odd:bg-gray-50 even:bg-gray-100 hover:bg-gray-200 transition duration-200"
+									className="bg-[#2d333b]  text-gray-200 hover:bg-[#53565c]  transition duration-200"
 								>
 									<td className="px-2 py-1 border">{index + 1}</td>
 									<td className="px-2 py-1 border">{user.full_name}</td>
@@ -240,7 +240,7 @@ export default function AllEmployee() {
 									<td className="px-2 py-1 border">{user.role}</td>
 									<td className="px-2 py-2 border">
 										{user?.employee_approve ? (
-											<span className="px-3 py-1 text-sm font-semibold 1ext-green-800 bg-green-100 rounded-full">
+											<span className="px-3 py-1 text-sm font-semibold text-green-800 bg-green-100 rounded-full">
 												Approved
 											</span>
 										) : <button
@@ -274,7 +274,7 @@ export default function AllEmployee() {
 					>
 						Previous
 					</button>
-					<span>
+					<span className="text-white">
 						Page {page}
 						{/* of {totalPages} */}
 					</span>
@@ -287,6 +287,7 @@ export default function AllEmployee() {
 					</button>
 				</div>
 			</div>}
+			
 		</>
 	);
 }

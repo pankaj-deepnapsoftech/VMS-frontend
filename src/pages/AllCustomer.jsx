@@ -44,7 +44,7 @@ export default function AllCustomer() {
       {loading ? (
         <Loader />
       ) : (
-        <div className="m-6 p-2 bg-gray-100 shadow-lg rounded-lg">
+        <div className="m-6 p-2 bg-[#2a2c2f] shadow-lg rounded-lg">
           {/* Table Header */}
           <div className="flex justify-between items-center mb-4"></div>
 
@@ -53,7 +53,7 @@ export default function AllCustomer() {
             <NoDataFound />
           ) : (
             <div className="overflow-x-auto rounded-lg ">
-              <table className="table-auto w-full border-collapse border border-gray-200 bg-white rounded-xl ">
+              <table className="table-auto w-full border-none  bg-[#2d333b]  rounded-md ">
                 <thead className="bg-gradient-to-bl from-[#333333] to-[#666666] text-white">
                   <tr>
                     <th className="px-2 py-1  border text-left text-sm ">
@@ -87,7 +87,7 @@ export default function AllCustomer() {
                   {AllCustomersData?.map((user, index) => (
                     <tr
                       key={user._id}
-                      className="bg-white hover:bg-gray-200 transition duration-200"
+                      className="bg-[#2d333b]  text-gray-200 hover:bg-[#53565c]  transition duration-200"
                     >
                       <td className="px-2 py-1 border">{index + 1}</td>
                       <td className="px-2 py-1 border text-md font-medium">
@@ -138,7 +138,7 @@ export default function AllCustomer() {
             >
               Previous
             </button>
-            <span>
+            <span className='text-white'>
               Page {page}
               {/* of {totalPages} */}
             </span>
@@ -153,9 +153,9 @@ export default function AllCustomer() {
         </div>
       )}
 
-      <div className="h-full w-full flex items-center justify-center" >
-        {isChecked && <AllowedModal setIsChecked={setIsChecked} isChecked={isChecked} id={dataId} />}
-      </div>
+      {  isChecked && <div className="h-full w-full flex items-center justify-center" >
+      <AllowedModal setIsChecked={setIsChecked} isChecked={isChecked} id={dataId} />
+      </div>}
     </>
   );
 }

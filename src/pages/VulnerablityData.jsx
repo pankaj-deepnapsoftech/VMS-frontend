@@ -185,7 +185,7 @@ export function VulnerabilityData() {
   };
 
   const getRowColor = (rank) => {
-    return rank % 2 === 0 ? "bg-gray-200" : "bg-white";
+    return rank % 2 === 0 ? "bg-[#2d333b]" : "bg-[#53565c]";
   };
 
   const [selected, setSelected] = useState("");
@@ -223,7 +223,7 @@ export function VulnerabilityData() {
 
           <div className="py-10 ">
             <div className="overflow-x-auto rounded-lg">
-              <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
+              <table className="min-w-full  border border-gray-500 shadow-md rounded-lg">
                 <thead className="h-8">
                   <tr className="bg-gradient-to-bl from-[#333333] to-[#666666] text-gray-100 uppercase text-sm ">
                     <th className=" border-b">Top Vulnerabilities </th>
@@ -238,7 +238,7 @@ export function VulnerabilityData() {
                   {topVulnerabliltyData?.map((product, index) => (
                     <tr
                       key={index}
-                      className={`text-center border-b hover:bg-gray-300 ${getRowColor(
+                      className={`text-center text-gray-300 border-b  hover:bg-gray-500 ${getRowColor(
                         index
                       )}`}
                     >
@@ -302,11 +302,11 @@ export function VulnerabilityData() {
 
           <div className="flex flex-col gap-3 lg:flex-row lg:justify-between  items-center py-3 ">
             <div className="relative mt-4 md:mt-0">
-              <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+              <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-200 h-5 w-5" />
               <input
                 type="text"
                 placeholder="Search Vulnerabilities ..."
-                className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg w-full md:w-80"
+               className="pl-10 pr-4 py-2 border border-gray-400 text-white bg-[#565656] rounded-lg w-full md:w-80"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -320,7 +320,7 @@ export function VulnerabilityData() {
                     setSelected(e.target.value);
                     GetAssetsOpenIssues(e.target.value);
                   }}
-                  className=" px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                  className="  px-3 py-2 rounded-lg border border-gray-300 bg-[#565656] text-white focus:ring-2 focus:ring-gray-600 focus:border-transparent outline-none transition"
                   id="Select_Tester"
                 >
                   <option value="" selected disabled>
@@ -384,11 +384,11 @@ export function VulnerabilityData() {
                   </tr>
                 </thead>
 
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-[#2d333b]  divide-y divide-gray-200">
                   {paginatedData?.map((item) => (
                     <tr
                       key={item._id}
-                      className="hover:bg-gray-100 transition h-8"
+                      className="hover:bg-[#53565c] transition h-8"
                     >
                       {" "}
                       {/* Reduced row height */}
@@ -405,7 +405,7 @@ export function VulnerabilityData() {
                       {tableHeaders?.map((field, i) => (
                         <td
                           key={i}
-                          className="px-3 py-2 text-xs text-gray-900 whitespace-nowrap"
+                          className="px-3 py-2 text-xs text-gray-200 whitespace-nowrap"
                         >
                           {field === "createdAt" || field === "Exception_time"
                             ? item[field]
