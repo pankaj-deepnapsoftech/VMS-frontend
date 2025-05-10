@@ -63,7 +63,7 @@ export default function AllEmployee() {
 
 		<>
 
-			{loading ? <Loader /> : <div className="m-6 p-2 bg-gray-100 shadow-lg rounded-lg">
+			{loading ? <Loader /> : <div className="m-6 p-2 bg-[#2a2c2f] shadow-lg rounded-lg">
 				{/* Table Header */}
 				<div className="flex justify-between items-center mb-4">
 
@@ -231,7 +231,7 @@ export default function AllEmployee() {
 							{allEmployeesData?.map((user, index) => (
 								<tr
 									key={user._id}
-									className="odd:bg-gray-50 even:bg-gray-100 hover:bg-gray-200 transition duration-200"
+									className="bg-[#2d333b]  hover:bg-[#53565c] transition text-white duration-200"
 								>
 									<td className="px-2 py-1 border">{index + 1}</td>
 									<td className="px-2 py-1 border">{user.full_name}</td>
@@ -240,7 +240,7 @@ export default function AllEmployee() {
 									<td className="px-2 py-1 border">{user.role}</td>
 									<td className="px-2 py-2 border">
 										{user?.employee_approve ? (
-											<span className="px-3 py-1 text-sm font-semibold 1ext-green-800 bg-green-100 rounded-full">
+											<span className="px-3 py-1 text-sm font-semibold 1ext-green-800 bg-green-600/60 rounded-full">
 												Approved
 											</span>
 										) : <button
@@ -254,7 +254,7 @@ export default function AllEmployee() {
 
 									<td className="px-2 py-1 border">
 										{user?.deactivate ? <button onClick={() => handleChangeStatus("deactivate", user._id)} type="button" className="bg-green-400 text-white px-3 py-1 rounded-2xl" >Activate</button>
-											: <button type="button" onClick={() => handleChangeStatus("activate", user._id)} className="bg-red-400 text-white px-3 py-1 rounded-2xl" >Deactivate</button>}
+											: <button type="button" onClick={() => handleChangeStatus("activate", user._id)} className="bg-red-400/60 text-white px-3 py-1 rounded-2xl" >Deactivate</button>}
 									</td>
 									{/* <td className="px-4 py-3 border">
 									

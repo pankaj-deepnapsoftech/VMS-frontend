@@ -44,7 +44,7 @@ export default function AllCustomer() {
       {loading ? (
         <Loader />
       ) : (
-        <div className="m-6 p-2 bg-gray-100 shadow-lg rounded-lg">
+        <div className="m-6 p-2 bg-[#2a2c2f] shadow-lg rounded-lg">
           {/* Table Header */}
           <div className="flex justify-between items-center mb-4"></div>
 
@@ -87,7 +87,7 @@ export default function AllCustomer() {
                   {AllCustomersData?.map((user, index) => (
                     <tr
                       key={user._id}
-                      className="bg-white hover:bg-gray-200 transition duration-200"
+                      className="bg-[#2d333b]  hover:bg-[#53565c] transition text-white duration-200"
                     >
                       <td className="px-2 py-1 border">{index + 1}</td>
                       <td className="px-2 py-1 border text-md font-medium">

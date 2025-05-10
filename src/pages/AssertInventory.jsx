@@ -205,7 +205,7 @@ export function AssertInventory() {
       {loading ? (
         <Loader />
       ) : (
-        <div className="p-4 md:p-6 max-w-[100%] mx-auto bg-[#2a2c2f] ">
+        <div className="p-4 md:p-6 max-w-[100%] mx-auto min-h-screen bg-[#2a2c2f] ">
           {/* top 5 Vulnerability */}
 
           {/* <div className="py-10 ">
@@ -293,7 +293,7 @@ export function AssertInventory() {
               <input
                 type="text"
                 placeholder="Search Vulnerabilities ..."
-                className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg w-full md:w-80"
+                className="pl-10 pr-4 py-2 text-gray-300 bg-gray-600 border border-gray-500 focus:ring-2 focus:ring-gray-500 rounded-lg w-full md:w-80"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -307,7 +307,7 @@ export function AssertInventory() {
                     setSelected(e.target.value);
                     GetAssetsOpenIssues(e.target.value);
                   }}
-                  className=" px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                  className=" px-3 py-2 text-gray-300 bg-gray-600 border border-gray-500 focus:ring-2 focus:ring-gray-500 rounded-lg  outline-none transition"
                   id="Select_Tester"
                 >
                   <option value="" selected disabled>
@@ -322,7 +322,7 @@ export function AssertInventory() {
                   ))}
                 </select>
                 <button
-                  className="p-1   bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white text-[10px] rounded-lg hover:bg-blue-700 transition"
+                  className="p-1 text-gray-300 bg-gray-600 border border-gray-500 focus:ring-2 focus:ring-gray-500 rounded-lg  transition"
                   onClick={() => {
                     AllVulnerablilty();
                     setSelected("");
@@ -392,7 +392,7 @@ export function AssertInventory() {
                       {tableHeaders?.map((field, i) => (
                         <td
                           key={i}
-                          className="px-3 py-2 text-xs text-gray-900 whitespace-nowrap"
+                          className="px-3 py-2 text-xs text-white whitespace-nowrap"
                         >
                           {field === "createdAt" || field === "Exception_time"
                             ? item[field]
@@ -696,7 +696,7 @@ export function AssertInventory() {
             >
               Previous
             </button>
-            <span>Page {page}</span>
+            <span className="text-white">Page {page}</span>
             <button
               className={`px-4 py-2 border rounded-md  text-white bg-gradient-to-tr from-[#1f1d1d] to-[#666666] `}
               disabled={allVulnerabilityData?.length < 10}
