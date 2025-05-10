@@ -65,7 +65,7 @@ export default function AllEmployee() {
 
 			{loading ? <Loader /> : <div className="m-6 p-2 bg-[#2a2c2f] shadow-lg rounded-lg">
 				{/* Table Header */}
-				<div className="flex justify-between items-center mb-4">
+				<div className="flex justify-between items-center">
 
 					{authenticate?.role === "ClientCISO" && <div className='flex w-full justify-end items-end py-4'>
 

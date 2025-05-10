@@ -2,6 +2,7 @@ import InputField from '@/components/InputField';
 import { useAuthContext } from '@/context';
 import { ResetPasswordValidation } from '@/Validation/AuthValidation';
 import { useFormik } from 'formik';
+import { Wallet2 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { BiNetworkChart } from 'react-icons/bi';
 import { FaEye, FaEyeSlash, FaFacebook, FaChartLine, FaEnvelope, FaLock, FaShieldVirus, FaUserShield, FaVirus, FaShieldAlt } from 'react-icons/fa';
@@ -21,7 +22,7 @@ function ResetPassword() {
     initialValues: { password: "" },
     validationSchema: ResetPasswordValidation,
     onSubmit: (value) => {
-      Resetpassword(value)
+      Resetpassword(value,queryParams.get("token"))
     }
   })
 
@@ -199,7 +200,7 @@ function ResetPassword() {
   <form className="my-auto w-full max-w-md" onSubmit={handleSubmit} >
     <h1 className="text-3xl font-bold text-white mb-8">Reset Password</h1>
     <p className="text-gray-400 mb-8">
-    Enter your email address and we'll send you instructions to reset your password.
+    Enter your email address and we&apos;ll send you instructions to reset your password.
     </p>
 
     {/* Metamask Button */}

@@ -38,3 +38,19 @@ export const AllowedPaths = [
         value:"/remedition",
     },
 ]
+
+
+
+
+
+export const ChartsColor = {
+    Informational:"",
+    Low:"",
+    Medium:"",
+    High:"",
+    Critical:"",
+}
+
+
+
+

@@ -116,7 +116,6 @@ const AuthContextProvider = ({ children }) => {
       setToken(res.data.token);
       toast.dismiss(toastId);
       toast.success(res.data.message);
-      alert("Please Check Your Email Inbox ")
       navigate("/");
     } catch (error) {
       toast.dismiss(toastId);
@@ -143,7 +142,7 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const Resetpassword = async (data) => {
+  const Resetpassword = async (data,token) => {
     const toastId = toast.loading("Loading...");
 
     setLoading(true);
