@@ -52,7 +52,7 @@ const MainLayout = () => {
   }, [location.pathname]);
 
   useEffect(() => {
-    if (!authenticate.mustChangePassword) {
+    if (!authenticate?.mustChangePassword) {
       openModal()
     }
   }, [authenticate.mustChangePassword])
