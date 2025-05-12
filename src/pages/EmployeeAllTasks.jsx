@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { BiSearch, BiEditAlt, BiPlus, BiSave } from "react-icons/bi";
 import { RiDeleteBinFill, RiUpload2Fill } from "react-icons/ri";
-import { MdClose, MdDeleteOutline } from "react-icons/md";
+import { MdClose, MdDeleteOutline, MdOutlineDeleteOutline } from "react-icons/md";
 import {
   useAllEmployeeContext,
   useAuthContext,
@@ -21,7 +21,7 @@ import { FaSms } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 export function EmployeeAllTasks() {
-  const { loading, UpdateData, orgnizationNotification, AddData } = useVulnerabililtyDataContext();
+  const { loading, UpdateData, orgnizationNotification, AddData, BulkDataDelete,DeleteData } = useVulnerabililtyDataContext();
 
   const { authenticate, token } = useAuthContext();
   const {
@@ -59,12 +59,12 @@ export function EmployeeAllTasks() {
   const [index, setIndex] = useState([]);
   const [newData, setNewData] = useState([]);
   const [pdfReport, setPdfReport] = useState([]);
-  
+
 
   const { UploadBulkData } = useDataContext();
 
   // Extract headers dynamically for table display
-  
+
   const vulnerabilitiesItems = {
     Organization: "",
     Application_Name: "",
@@ -80,7 +80,7 @@ export function EmployeeAllTasks() {
       ? Object.keys(employeeTasksData[0]).filter(
         (key) => key !== "_id" && key !== "__v" && key !== "updatedAt"
       )
-      :  Object.keys(vulnerabilitiesItems).filter(
+      : Object.keys(vulnerabilitiesItems).filter(
         (key) => key !== "_id" && key !== "__v" && key !== "updatedAt"
       );
 
@@ -118,7 +118,7 @@ export function EmployeeAllTasks() {
     setIsEditOpen(true);
   };
 
-    const handleChecked = (id) => {
+  const handleChecked = (id) => {
     let data = index.filter((item) => item === id);
     if (data.length > 0) {
       data = index.filter((item) => item !== id);
@@ -128,7 +128,7 @@ export function EmployeeAllTasks() {
     }
   };
 
-    const handleSelectAll = (e) => {
+  const handleSelectAll = (e) => {
     const isChecked = e.target.checked;
     const dataId = [];
 
@@ -141,6 +141,11 @@ export function EmployeeAllTasks() {
       setIndex([]);
     }
   };
+
+
+  const handleBulkDeleteTask = () => {
+    index.length > 0 ? BulkDataDelete(index) : toast.error("Select Tasks For Delete");
+  }
 
 
   const [status, setStatus] = useState("");
@@ -201,6 +206,13 @@ export function EmployeeAllTasks() {
     "Other",
   ];
 
+  
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this vulnerability?")) {
+      DeleteData(id);
+    }
+  };
+
 
 
 
@@ -249,13 +261,13 @@ export function EmployeeAllTasks() {
                 Add Vulnerability
               </button>
               <button
-                onClick={() => openVulnerablityModal()}
+                onClick={handleBulkDeleteTask}
                 className="px-4 py-2 bg-gradient-to-bl from-[#333333] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
               >
-                <MdDeleteOutline  className="h-6 w-6 mr-1" />
-               Delete Data
+                <MdDeleteOutline className="h-6 w-6 mr-1" />
+                Delete Data
               </button>
-            
+
               <button
                 onClick={() => setIsModalOpen(true)}
                 className="px-4 py-2 bg-gradient-to-r from-[#333333] to-[#666666]   text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
@@ -271,7 +283,7 @@ export function EmployeeAllTasks() {
                 Export Data
               </button>
             </div>
-            
+
 
             <Modal
               isOpen={isModalOpen}
@@ -288,14 +300,14 @@ export function EmployeeAllTasks() {
               <thead className="bg-gradient-to-r from-[#333333] to-[#666666]  ">
                 <tr>
                   <th className="px-2  text-left text-xs font-medium text-white uppercase">
-									<input
-										type="checkbox"
-										checked={selectAll}
-										onChange={(e) => {
-											setSelectAll(!selectAll);
-											handleSelectAll(e)
-										}} />
-								</th>
+                    <input
+                      type="checkbox"
+                      checked={selectAll}
+                      onChange={(e) => {
+                        setSelectAll(!selectAll);
+                        handleSelectAll(e)
+                      }} />
+                  </th>
                   {tableHeaders.map((header, index) => (
                     <th
                       key={index}
@@ -315,13 +327,13 @@ export function EmployeeAllTasks() {
                 {paginatedData?.map((item) => (
                   <tr key={item._id} className="hover:bg-gray-500">
                     <td className="px-4 py-4 whitespace-nowrap flex justify-around gap-4">
-										<input
-											type="checkbox"
-											value="bubbles"
-											checked={index.filter((i) => i === item._id).length > 0}
-											onChange={() => handleChecked(item._id)} />
+                      <input
+                        type="checkbox"
+                        value="bubbles"
+                        checked={index.filter((i) => i === item._id).length > 0}
+                        onChange={() => handleChecked(item._id)} />
 
-									</td>
+                    </td>
                     {tableHeaders.map((field, i) => (
                       <td
                         key={i}
@@ -339,6 +351,12 @@ export function EmployeeAllTasks() {
                       </td>
                     ))}
                     <td className="px-4 py-2 whitespace-nowrap flex justify-around gap-4">
+                      <button
+                        onClick={() => handleDelete(item._id)}
+                        className="text-red-600"
+                      >
+                        <MdOutlineDeleteOutline  className="h-5 w-5" />
+                      </button>
                       <button
                         onClick={() => openVulnerablityModal(item)}
                         className="text-blue-600"

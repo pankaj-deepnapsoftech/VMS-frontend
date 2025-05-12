@@ -383,7 +383,7 @@ export const JiraDataTable = () => {
             </div>
           </div>
 
-          <
+          <Modal
             isOpen={isJDModalOpen}
             onClose={() => setIsJDModalOpen(false)}
             title="Jira Data Upload"

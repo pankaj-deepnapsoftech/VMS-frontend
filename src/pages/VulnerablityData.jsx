@@ -159,7 +159,6 @@ export function VulnerabilityData() {
 
   const handleBulkDeleteTask = () => {
    index.length > 0 ? BulkDataDelete(index) : toast.error("Select Tasks For Delete");
-   
   }
 
   const handleDownload = (data) => {
