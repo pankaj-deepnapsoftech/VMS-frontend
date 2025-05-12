@@ -53,15 +53,15 @@ export default function PasswordChange() {
   }
 
   return (
-    <div className="min-h-full py-20 bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-full py-20 bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className={`bg-white rounded-lg shadow-md overflow-hidden`}>
-          <div className={`bg-gradient-to-r from-[#333333] to-[#666666] p-6 text-white`}>
+          <div className={`bg-gradient-color p-6 text-white`}>
             <h1 className="text-2xl font-bold">Change Password</h1>
             <p className="mt-2 opacity-90">Update your password to keep your account secure</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="p-6 space-y-6">
+          <form onSubmit={handleSubmit} className="p-6 space-y-6 bg-gradient-color  text-white">
             <div className="space-y-2">
               <label
                 htmlFor="currentPassword"
@@ -77,7 +77,7 @@ export default function PasswordChange() {
                   type={showCurrentPassword ? "text" : "password"}
                   value={formData.currentPassword}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 rounded-md border  focus:ring-2  focus:border-transparent transition-all outline-none`}
+                  className={`w-full px-4 py-3 rounded-md  bg-input  focus:ring-2  focus:border-transparent transition-all outline-none`}
                   placeholder="Enter your current password"
                   required
                 />
@@ -106,7 +106,7 @@ export default function PasswordChange() {
                   type={showNewPassword ? "text" : "password"}
                   value={formData.newPassword}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 rounded-md border  focus:ring-2  focus:border-transparent transition-all outline-none`}
+                  className={`w-full px-4 py-3 rounded-md bg-input   focus:ring-2  focus:border-transparent transition-all outline-none`}
                   placeholder="Enter your new password"
                   required
                 />
@@ -159,7 +159,7 @@ export default function PasswordChange() {
                   type={showConfirmPassword ? "text" : "password"}
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 rounded-md border transition-all outline-none ${
+                  className={`w-full px-4 py-3 rounded-md bg-input  transition-all outline-none ${
                     formData.confirmPassword
                       ? passwordMatch
                         ? ` focus:ring-2  focus:border-transparent`
@@ -185,7 +185,7 @@ export default function PasswordChange() {
 
             <button
               type="submit"
-              className={`w-full bg-gradient-to-r from-[#333333] to-[#666666]  text-white py-3 rounded-md font-medium shadow-sm hover:shadow transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 `}>
+              className={`w-full bg-background shadow-lg  text-white py-3 rounded-md font-medium  hover:shadow transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 `}>
               Change Password
             </button>
           </form>

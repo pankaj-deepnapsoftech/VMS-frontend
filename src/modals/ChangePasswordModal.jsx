@@ -60,14 +60,14 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
         <div className="min-h-full py-20 bg-black/50 flex items-center justify-center p-4 fixed top-0 left-0 z-10 w-full">
             <div className="w-full max-w-md">
                 <div className={`bg-white rounded-lg shadow-md overflow-hidden`}>
-                    <div className={`bg-gradient-to-r from-[#333333] to-[#666666] p-6 text-white`}>
+                    <div className={`bg-gradient-color p-6 text-white`}>
                         <h1 className="text-2xl font-bold flex items-center justify-between">Change Password
                             {/* <button className="p-2 hover:bg-[#3b3b3b] rounded-lg" onClick={onClose} ><IoClose size={24} /></button>   */}
                         </h1>
                         <p className="mt-2 opacity-90">Update your password to keep your account secure</p>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="p-6 space-y-6">
+                    <form onSubmit={handleSubmit} className="p-6 space-y-6 text-white bg-gradient-color">
                         <div className="space-y-2">
                             <label
                                 htmlFor="currentPassword"
@@ -83,7 +83,7 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
                                     type={showCurrentPassword ? "text" : "password"}
                                     value={formData.currentPassword}
                                     onChange={handleInputChange}
-                                    className={`w-full px-4 py-3 rounded-md border  focus:ring-2  focus:border-transparent transition-all outline-none`}
+                                    className={`w-full px-4 py-3 rounded-md bg-input  focus:ring-2  focus:border-transparent transition-all outline-none`}
                                     placeholder="Enter your current password"
                                     required
                                 />
@@ -112,7 +112,7 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
                                     type={showNewPassword ? "text" : "password"}
                                     value={formData.newPassword}
                                     onChange={handleInputChange}
-                                    className={`w-full px-4 py-3 rounded-md border  focus:ring-2  focus:border-transparent transition-all outline-none`}
+                                    className={`w-full px-4 py-3 rounded-md bg-input   focus:ring-2  focus:border-transparent transition-all outline-none`}
                                     placeholder="Enter your new password"
                                     required
                                 />
@@ -164,7 +164,7 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
                                     type={showConfirmPassword ? "text" : "password"}
                                     value={formData.confirmPassword}
                                     onChange={handleInputChange}
-                                    className={`w-full px-4 py-3 rounded-md border transition-all outline-none ${formData.confirmPassword
+                                    className={`w-full px-4 py-3 rounded-md bg-input  transition-all outline-none ${formData.confirmPassword
                                             ? passwordMatch
                                                 ? ` focus:ring-2  focus:border-transparent`
                                                 : ` focus:ring-2 focus:border-transparent`
@@ -189,7 +189,7 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
 
                         <button
                             type="submit"
-                            className={`w-full bg-gradient-to-r from-[#333333] to-[#666666]  text-white py-3 rounded-md font-medium shadow-sm hover:shadow transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 `}>
+                            className={`w-full bg-background  text-white py-3 rounded-md font-medium shadow-sm hover:shadow transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 `}>
                             Change Password
                         </button>
                     </form>

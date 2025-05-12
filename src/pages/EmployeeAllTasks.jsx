@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { BiSearch, BiEditAlt, BiPlus, BiSave } from "react-icons/bi";
 import { RiDeleteBinFill, RiUpload2Fill } from "react-icons/ri";
-import { MdClose } from "react-icons/md";
+import { MdClose, MdDeleteOutline } from "react-icons/md";
 import {
   useAllEmployeeContext,
   useAuthContext,
@@ -50,7 +50,6 @@ export function EmployeeAllTasks() {
   const [isModalOpen1, setIsModalOpen1] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
   const [selectAll, setSelectAll] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [editMode1, setEditMode1] = useState(false);
@@ -60,6 +59,7 @@ export function EmployeeAllTasks() {
   const [index, setIndex] = useState([]);
   const [newData, setNewData] = useState([]);
   const [pdfReport, setPdfReport] = useState([]);
+  
 
   const { UploadBulkData } = useDataContext();
 
@@ -118,6 +118,29 @@ export function EmployeeAllTasks() {
     setIsEditOpen(true);
   };
 
+    const handleChecked = (id) => {
+    let data = index.filter((item) => item === id);
+    if (data.length > 0) {
+      data = index.filter((item) => item !== id);
+      setIndex(data);
+    } else {
+      setIndex((pre) => [...pre, id]);
+    }
+  };
+
+    const handleSelectAll = (e) => {
+    const isChecked = e.target.checked;
+    const dataId = [];
+
+    if (isChecked) {
+      paginatedData.map((data) => {
+        dataId.push(data?._id);
+      });
+      setIndex(dataId);
+    } else {
+      setIndex([]);
+    }
+  };
 
 
   const [status, setStatus] = useState("");
@@ -194,7 +217,7 @@ export function EmployeeAllTasks() {
               <input
                 type="text"
                 placeholder="Search vulnerabilities..."
-                className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg w-full md:w-80"
+                className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg w-full md:w-80 bg-input text-white"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -217,7 +240,7 @@ export function EmployeeAllTasks() {
 						</button> */}
 
             {/* </div> *   /  */}
-            <div className="flex justify-end items-start gap-5 py-4">
+            <div className="flex justify-end items-start gap-5 py-4 flex-wrap">
               <button
                 onClick={() => openVulnerablityModal()}
                 className="px-4 py-2 bg-gradient-to-bl from-[#333333] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
@@ -225,6 +248,14 @@ export function EmployeeAllTasks() {
                 <BiPlus className="h-6 w-6 mr-1" />
                 Add Vulnerability
               </button>
+              <button
+                onClick={() => openVulnerablityModal()}
+                className="px-4 py-2 bg-gradient-to-bl from-[#333333] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
+              >
+                <MdDeleteOutline  className="h-6 w-6 mr-1" />
+               Delete Data
+              </button>
+            
               <button
                 onClick={() => setIsModalOpen(true)}
                 className="px-4 py-2 bg-gradient-to-r from-[#333333] to-[#666666]   text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
@@ -240,6 +271,7 @@ export function EmployeeAllTasks() {
                 Export Data
               </button>
             </div>
+            
 
             <Modal
               isOpen={isModalOpen}
@@ -255,7 +287,7 @@ export function EmployeeAllTasks() {
             <table className="min-w-full divide-y divide-gray-200 bg-white">
               <thead className="bg-gradient-to-r from-[#333333] to-[#666666]  ">
                 <tr>
-                  {/* <th className="px-2  text-left text-xs font-medium text-white uppercase">
+                  <th className="px-2  text-left text-xs font-medium text-white uppercase">
 									<input
 										type="checkbox"
 										checked={selectAll}
@@ -263,7 +295,7 @@ export function EmployeeAllTasks() {
 											setSelectAll(!selectAll);
 											handleSelectAll(e)
 										}} />
-								</th> */}
+								</th>
                   {tableHeaders.map((header, index) => (
                     <th
                       key={index}
@@ -279,21 +311,21 @@ export function EmployeeAllTasks() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200">
+              <tbody className="divide-y bg-table">
                 {paginatedData?.map((item) => (
-                  <tr key={item._id} className="hover:bg-gray-50">
-                    {/* <td className="px-4 py-4 whitespace-nowrap flex justify-around gap-4">
+                  <tr key={item._id} className="hover:bg-gray-500">
+                    <td className="px-4 py-4 whitespace-nowrap flex justify-around gap-4">
 										<input
 											type="checkbox"
 											value="bubbles"
 											checked={index.filter((i) => i === item._id).length > 0}
 											onChange={() => handleChecked(item._id)} />
 
-									</td> */}
+									</td>
                     {tableHeaders.map((field, i) => (
                       <td
                         key={i}
-                        className={`px-4  whitespace-nowrap text-sm text-gray-900 `}
+                        className={`px-4  whitespace-nowrap text-sm text-white `}
                       >
                         {field === "createdAt"
                           ? new Date(item[field]).toLocaleDateString("en-IN", {
@@ -422,9 +454,9 @@ export function EmployeeAllTasks() {
 
           {isOpen && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-              <div className="bg-white rounded-xl shadow-2xl w-full max-w-md md:max-w-lg lg:max-w-xl max-h-[90vh] overflow-y-auto">
+              <div className="bg-background rounded-xl shadow-2xl w-full max-w-md md:max-w-lg lg:max-w-xl max-h-[90vh] overflow-y-auto">
                 {/* Header */}
-                <div className="flex justify-between items-center border-b p-4 bg-[#015289] rounded-t-xl">
+                <div className="flex justify-between items-center border-b p-4 bg-gradient-color rounded-t-xl">
                   <h2 className="text-lg font-semibold text-white">
                     Upload Detailed Report
                   </h2>
@@ -452,7 +484,7 @@ export function EmployeeAllTasks() {
 
                   <button
                     onClick={() => UploadDetailedReport(taskID, formData)}
-                    className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition duration-200"
+                    className="w-full px-4 py-2 bg-gradient-color text-white rounded-lg font-semibold hover:bg-blue-700 transition duration-200"
                   >
                     Upload
                   </button>
@@ -625,7 +657,7 @@ export function EmployeeAllTasks() {
             >
               Previous
             </button>
-            <span>
+            <span className="text-white" >
               Page {taskPage}
               {/* of {totalPages} */}
             </span>
