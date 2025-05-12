@@ -120,9 +120,9 @@ function Exceptions() {
           <div className="p-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
               {/* Chart 1: Deferred Vulnerable Items by Reason */}
-              <div className="bg-white p-6 rounded-lg shadow">
+              <div className="bg-[#2d333b] p-6 rounded-lg shadow">
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-semibold text-gray-900">Deferred Vulnerable Items by Reason</h2>
+                  <h2 className="text-lg font-semibold text-white">Deferred Vulnerable Items by Reason</h2>
                   <FaChartBar className="h-5 w-5 text-gray-400" />
                 </div>
                 <div className="h-64">
@@ -142,9 +142,9 @@ function Exceptions() {
               </div>
 
               {/* Chart 2: Deferral Requests About to Expire */}
-              <div className="bg-white p-6 rounded-lg shadow">
+              <div className="bg-[#2d333b] p-6 rounded-lg shadow">
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-semibold text-gray-900">Deferral Requests About to Expire</h2>
+                  <h2 className="text-lg font-semibold text-white">Deferral Requests About to Expire</h2>
                   <FaChartBar className="h-5 w-5 text-gray-400" />
                 </div>
                 <div className="h-64">
@@ -166,9 +166,9 @@ function Exceptions() {
               </div>
 
               {/* Chart 3: Configuration Items */}
-              <div className="bg-white p-6 rounded-lg shadow lg:col-span-2">
+              <div className="bg-[#2d333b] p-6 rounded-lg shadow text-white lg:col-span-2">
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-semibold text-gray-900">Deferred Vulnerable Items by Configuration Item</h2>
+                  <h2 className="text-lg font-semibold text-white">Deferred Vulnerable Items by Configuration Item</h2>
                   <FaChartBar className="h-5 w-5 text-gray-400" />
                 </div>
                 <div className="h-48">
@@ -187,13 +187,13 @@ function Exceptions() {
           </div>
 
 
-          <div className="p-4 mb-20 md:p-6 max-w-[95%] mx-auto bg-white rounded-xl shadow-lg">
+          <div className="p-4 mb-20 md:p-6 max-w-[95%] mx-auto bg-[#2d333b] rounded-xl shadow-lg">
             <div className="relative mt-4 py-5 md:mt-0">
-              <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+              <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white h-5 w-5" />
               <input
                 type="text"
                 placeholder="Search Vulnerabilities ..."
-                className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg w-full md:w-80"
+                className="pl-10 pr-4 py-2 border text-white border-gray-300 rounded-lg w-full md:w-80"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />

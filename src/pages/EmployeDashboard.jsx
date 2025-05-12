@@ -4,11 +4,7 @@ import { useAllEmployeeContext, useAuthContext } from '@/context';
 import Card from '@/components/Card';
 import { IoShieldCheckmarkOutline, IoShieldOutline } from 'react-icons/io5';
 
-
-
 function EmployeeDashboard() {
-
-
 
   const {
     employeeCardData,
@@ -17,16 +13,7 @@ function EmployeeDashboard() {
     setdatafetchCount,
   } = useAllEmployeeContext();
 
-
   const { token } = useAuthContext();
-
-  useEffect(() => {
-    EmployeeData();
-    if (token && datafetchCount === 0) {
-      setdatafetchCount(1);
-    }
-  }, [token])
-
 
   const data = [
     { name: "In Progress", value: employeeCardData.inProgress },
@@ -82,13 +69,9 @@ function EmployeeDashboard() {
     },
   ];
 
-
-
   return (
     <>
       <div className="min-h-screen bg-background px-6 ">
-
-
 
         {/* Metrics Grid */}
          
@@ -125,12 +108,8 @@ function EmployeeDashboard() {
             </PieChart>
           </ResponsiveContainer>
         </div>
-
-
       </div>
-
     </>
-
   );
 }
 

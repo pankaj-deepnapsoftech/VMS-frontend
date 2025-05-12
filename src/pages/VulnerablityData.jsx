@@ -718,7 +718,7 @@ export function VulnerabilityData() {
             >
               Previous
             </button>
-            <span>Page {page}</span>
+            <span className="text-white"> Page {page}</span>
             <button
               className={`px-4 py-2 border rounded-md  text-white bg-gradient-to-tr from-[#1f1d1d] to-[#666666] `}
               disabled={allVulnerabilityData?.length < 10}
