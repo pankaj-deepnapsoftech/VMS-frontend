@@ -154,13 +154,13 @@ export const JiraDataTable = () => {
         <div className="min-h-screen bg-background p-6">
           <div className="max-w-full mx-auto bg-[#565656] rounded-xl shadow-lg overflow-hidden">
             {/* Header */}
-            <div className="p-6  bg-white flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="p-6  bg-[#333333] flex flex-col md:flex-row items-center justify-between gap-4">
               <div className="relative w-full md:w-96">
                 <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
                 <input
                   type="text"
                   placeholder="Search..."
-                  className="pl-10 pr-4 py-2.5 w-full border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#6366f1] focus:border-transparent transition-all duration-200"
+                  className="pl-10 pr-4 py-2.5 border-gray-500 text-white bg-[#565656] rounded-lg w-full md:w-80 focus:border-transparent transition-all duration-200"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -202,7 +202,7 @@ export const JiraDataTable = () => {
               <NoDataFound />
             ) : (
               <div className="overflow-x-auto rounded-lg m-2">
-                <table className="w-full table-auto text-sm  bg-white">
+                <table className="w-full table-auto text-sm bg-white">
                   <thead className="bg-gradient-to-bl from-[#333333] to-[#666666] text-white ">
                     <tr>
                       <th className="px-4 py-2 text-left">
@@ -237,18 +237,18 @@ export const JiraDataTable = () => {
                       ))}
                     </tr>
                   </thead>
-                  <tbody className="bg-[#2d333b]  hover:bg-[#53565c] transition text-white">
+                  <tbody className="bg-[#2d333b] transition">
                     {paginatedData.map((item) => (
                       <tr
                         key={item.id}
-                        className={`hover:bg-gray-50 transition-colors duration-150 ${
+                        className={`hover:bg-gray-500 border-b transition-colors duration-150 ${
                           selectedRows.includes(item) ? "bg-indigo-50" : ""
                         }`}
                       >
                         <td className="px-4 py-2">
                           <input
                             type="checkbox"
-                            className="rounded border-gray-300 text-[#6366f1] focus:ring-[#6366f1]"
+                            className="rounded border-gray-300  text-white focus:ring-[#6366f1]"
                             checked={selectedRows.includes(item)}
                             onChange={() => handleSelectRow(item)}
                           />
@@ -258,7 +258,8 @@ export const JiraDataTable = () => {
                             key !== "creatorAccountId" && (
                               <td
                                 key={key}
-                                className="px-4 py-2 text-gray-700 whitespace-nowrap"
+                                className="px-4 py-2 text-white whitespace-nowrap"
+
                               >
                                 {value}
                               </td>
@@ -280,7 +281,7 @@ export const JiraDataTable = () => {
                               onClick={() => {
                                 DeleteData(item.issueId);
                               }}
-                              className="text-red-600 hover:text-red-800 transition-colors duration-150"
+                              className="text-red-600 hover:text-red-800 transition-colors ml-5 duration-150"
                               title="Delete"
                             >
                               <RiDeleteBinFill className="h-4 w-4" />
@@ -356,24 +357,24 @@ export const JiraDataTable = () => {
             )}
 
             {/* Pagination */}
-            <div className="flex items-center justify-between px-6 py-4 bg-gray-50">
+            <div className="flex items-center justify-between px-6 py-4 bg-[#333333]">
               <button
-                className={`px-4 py-2 text-sm font-medium rounded-lg ${
+                className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white border rounded-md  ${
                   page === 1
                     ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                    : "bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white hover:bg-[#4f46e5]"
+                    : "bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  "
                 } transition-colors duration-200`}
                 disabled={page === 1}
                 onClick={() => setPage(page - 1)}
               >
                 Previous
               </button>
-              <span className="text-sm text-gray-600">Page {page}</span>
+              <span className=" text-white">Page {page}</span>
               <button
-                className={`px-4 py-2 text-sm font-medium rounded-lg ${
+                className={`px-4 py-2 border rounded-md  text-white bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  ${
                   paginatedData.length < 10
                     ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                    : "bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white hover:bg-[#4f46e5]"
+                    : "bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  "
                 } transition-colors duration-200`}
                 disabled={paginatedData.length < 10}
                 onClick={() => setPage(page + 1)}

@@ -41,12 +41,12 @@ function ThirdPartyConfig() {
 
 
 	return (
-		<div className="min-h-screen bg-background flex items-start pt-16 px-6 justify-center">
+		<div className="min-h-screen bg-[#2a2c2f] flex items-start pt-16 px-6 justify-center">
 			{(ConfigData === null || ConfigData?.length <= 0) ?
-				<div className="w-full md:w-1/2 p-8 md:p-12 shadow-2xl rounded-2xl ">
+				<div className="w-full md:w-1/2 p-8 md:p-12 shadow-xl rounded-2xl ">
 					<div className="mb-8">
-						<h1 className="text-3xl font-bold text-gray-800 mb-2">Jira Integration</h1>
-						<p className="text-gray-600">Welcome  Please enter your Jira details</p>
+						<h1 className="text-3xl font-bold text-white mb-2">Jira Integration</h1>
+						<p className="text-gray-200">Welcome  Please enter your Jira details</p>
 					</div>
 
 					<form onSubmit={handleSubmit} className="space-y-6">
@@ -63,7 +63,6 @@ function ThirdPartyConfig() {
 						/>
 						{touched.Domain && errors.Domain && <p> {errors.Domain}</p>}
 						<InputField
-							label={"Jira Username"}
 							type={"text"}
 							showPassword={false}
 							icon={FaUser}
@@ -72,7 +71,8 @@ function ThirdPartyConfig() {
 							onChange={handleChange}
 							placeholder="Enter your Jira Username"
 							name="JIRA_USERNAME"
-						/>
+						/>	label={"Jira Username"}
+						
 						{touched.JIRA_USERNAME && errors.JIRA_USERNAME && <p> {errors.JIRA_USERNAME}</p>}
 						<InputField
 							label={"Jira Api Key"}
@@ -133,9 +133,6 @@ function ThirdPartyConfig() {
 					</div>
 
 					<h4 className=" text-sm font-medium text-gray-500 mb-2 break-words break-all whitespace-normal">{ConfigData?.JIRA_API_KEY}</h4>
-
-
-
 				</div>
 			}
 		</div>
