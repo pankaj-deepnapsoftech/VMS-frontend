@@ -81,7 +81,7 @@ function Home() {
     High: item.high,
     Medium: item.medium,
     Low: item.low,
-    info: item.informational,
+    Informational: item.informational,
   }));
 
   const metrics = [

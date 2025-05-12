@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { BiSearch, BiEditAlt, BiPlus, BiSave } from "react-icons/bi";
 import { RiDeleteBinFill } from "react-icons/ri";
 import { MdClose } from "react-icons/md";
@@ -10,18 +10,15 @@ import {
 } from "@/context";
 import { Formik, Form, Field } from "formik";
 import * as XLSX from "xlsx";
-import { WorkItemValidation } from "@/Validation/VulnerabililtyDataValidation";
-import { BsMailbox, BsPersonCheckFill } from "react-icons/bs";
+import {  BsPersonCheckFill } from "react-icons/bs";
 import toast from "react-hot-toast";
 import { FaExclamationTriangle, FaSms } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Loader from "@/components/Loader/Loader";
-import Exceptions from "./Exceptions";
 import InputField from "@/components/InputField";
 import { Modal } from "@/components/modal/FileUploadModal";
 import NoDataFound from "@/components/NoDataFound";
 import { excelDateToJSDate } from "@/utils/utils";
-import AllowedModal from "@/components/modal/AllowedModal";
 
 export function VulnerabilityData() {
   const [page, setPage] = useState(1);
@@ -46,6 +43,7 @@ export function VulnerabilityData() {
     TopVulnerablilty,
     GetOrganization,
     Notifications,
+    BulkDataDelete
   } = useVulnerabililtyDataContext();
 
   const { authenticate, token } = useAuthContext();
@@ -62,6 +60,7 @@ export function VulnerabilityData() {
       Notifications();
       setdatafetchCount(1);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token, page, authenticate?.role]);
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -71,9 +70,7 @@ export function VulnerabilityData() {
   const [selectAll, setSelectAll] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [editData, setEditData] = useState(null);
-  const rowsPerPage = 10;
   const [index, setIndex] = useState([]);
-  const [newData, setNewData] = useState([]);
 
 
   const vulnerabilitiesItems = {
@@ -159,6 +156,11 @@ export function VulnerabilityData() {
     setIsOpen(index.length > 0);
     setID(id);
   };
+
+  const handleBulkDeleteTask = () => {
+   index.length > 0 ? BulkDataDelete(index) : toast.error("Select Tasks For Delete");
+   
+  }
 
   const handleDownload = (data) => {
     if (data.length < 1) {
@@ -267,6 +269,13 @@ export function VulnerabilityData() {
                 Add Vulnerability
               </button>
               <button
+                onClick={handleBulkDeleteTask}
+                className="px-4 py-2 bg-gradient-to-bl from-[#333333] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
+              >
+                <BsPersonCheckFill className="h-6 w-6 mr-1" />
+                Bulk Delete
+              </button>
+               <button
                 onClick={() => handleBulkAssignTask()}
                 className="px-4 py-2 bg-gradient-to-bl from-[#333333] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 transition-colors flex flex-row"
               >
