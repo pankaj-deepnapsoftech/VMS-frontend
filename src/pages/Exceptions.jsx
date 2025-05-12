@@ -193,14 +193,14 @@ function Exceptions() {
               <input
                 type="text"
                 placeholder="Search Vulnerabilities ..."
-                className="pl-10 pr-4 py-2 border text-white border-gray-300 rounded-lg w-full md:w-80"
+                className="pl-10 pr-4 py-2 border text-white bg-[#333333] border-gray-300 rounded-lg w-full md:w-80"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
 
             {paginatedData.length<1 ? <NoDataFound/> : <div className="overflow-x-auto rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200 bg-white">
+              <table className="min-w-full divide-y divide-gray-200 text-white">
                 <thead className="bg-gradient-to-bl from-[#333333] to-[#666666]">
 
                   <tr>
@@ -218,13 +218,13 @@ function Exceptions() {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
+                <tbody className="divide-y divide-gray-200 bg-[#2d333b] text-white">
                   {paginatedData?.map((item) => (
-                    <tr key={item._id} className="hover:bg-gray-50">
+                    <tr key={item._id} className="hover:bg-gray-500 text-white">
 
                       {tableHeaders?.map((field, i) => (
 
-                        <td key={i} className="px-4 py-2 whitespace-nowrap text-sm text-gray-700">
+                        <td key={i} className="px-4 py-2 whitespace-nowrap text-sm text-white">
                           {
                             field === "createdAt" || field === "Expection_time" ? (
                               new Date(item[field]).toLocaleDateString("en-IN", {
@@ -234,7 +234,7 @@ function Exceptions() {
                               })
                             ) :   field === "client_Approve" ? (
                               item.client_Approve ? (
-                                <span className="px-3 py-2 text-sm font-semibold text-green-800 bg-green-100 rounded-full">
+                                <span className="px-2 py-1 text-sm font-semibold text-green-800 bg-green-100 rounded-full">
                                   Approved
                                 </span>
                               ) : (
@@ -286,7 +286,7 @@ function Exceptions() {
               >
                 Previous
               </button>
-              <span>
+              <span className="text-white">
                 Page {page}
 
               </span>

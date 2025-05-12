@@ -210,7 +210,7 @@ const Reports = () => {
           <input
             type="text"
             placeholder="Filter by Creator Name"
-            className="p-2 border border-gray-300 rounded-lg"
+            className="p-2 border border-gray-300 rounded-lg text-white bg-[#333333]"
             value={creatorFilter}
             onChange={(e) => setCreatorFilter(e.target.value)}
           />
@@ -220,7 +220,7 @@ const Reports = () => {
           <input
             type="text"
             placeholder="Filter by Organization Name"
-            className="p-2 border border-gray-300 rounded-lg"
+            className="p-2 border border-gray-300 text-white rounded-lg bg-[#333333]"
             value={orgFilter}
             onChange={(e) => setOrgFilter(e.target.value)}
           />
@@ -229,7 +229,7 @@ const Reports = () => {
         <input
           type="date"
           placeholder="Filter by Date"
-          className="p-2 border border-gray-300 rounded-lg"
+          className="p-2 border border-gray-300 text-white rounded-lg bg-[#333333]"
           value={dateFilter}
           onChange={(e) => setDateFilter(e.target.value)}
         />
@@ -237,7 +237,7 @@ const Reports = () => {
 
       {/* Table */}
     { filterData.length<1?<NoDataFound/>: <div className="overflow-x-auto rounded-md">
-        <table className="min-w-full divide-y divide-gray-200 bg-white">
+        <table className="min-w-full divide-y divide-gray-200 bg-[#2d333b]">
           <thead className="bg-gradient-to-bl from-[#333333] to-[#666666] rounded-e-lg text-white">
             <tr>
               {[
@@ -260,24 +260,24 @@ const Reports = () => {
           <tbody className="divide-y divide-gray-200">
             {filterData.length > 0 ? (
               filterData.map((report, index) => (
-                <tr key={report?._id} className="hover:bg-gray-50">
+                <tr key={report?._id} className="hover:bg-gray-500 border-b">
                   {/* Serial Number */}
-                  <td className="px-4 py-1 text-center whitespace-nowrap text-sm text-gray-900">
+                  <td className="px-4 py-1 text-center whitespace-nowrap text-sm text-white">
                     {index + 1}
                   </td>
 
                   {/* Date (Formatted) */}
-                  <td className="px-4 py-1 text-center whitespace-nowrap text-sm text-gray-900">
+                  <td className="px-4 py-1 text-center whitespace-nowrap text-sm text-white">
                     {new Date(report?.createdAt).toLocaleDateString()}
                   </td>
 
                   {/* Creator Name */}
-                  <td className="px-4 py-1 text-center whitespace-nowrap text-sm text-gray-900">
+                  <td className="px-4 py-1 text-center whitespace-nowrap text-sm text-white">
                     {report.creator?.full_name || "-"}
                   </td>
 
                   {/* Organization */}
-                  <td className="px-4 py-1 text-center whitespace-nowrap text-sm text-gray-900">
+                  <td className="px-4 py-1 text-center whitespace-nowrap text-sm text-white">
                     {report.Organization?.Organization || "-"}
                   </td>
 

@@ -212,7 +212,7 @@ export const JiraDataTable = () => {
                           checked={selectedRows.length === paginatedData.length}
                           onChange={handleSelectAll}
                         />
-                      </th>
+                   2   </th>
                       {[
                         "ID",
                         "Issue ID",
@@ -259,11 +259,10 @@ export const JiraDataTable = () => {
                               <td
                                 key={key}
                                 className="px-4 py-2 text-white whitespace-nowrap"
-
                               >
                                 {value}
                               </td>
-                            )
+                            ) 
                         )}
                         <td className="px-4 py-2 whitespace-nowrap">
                           <div className="flex items-center gap-2">
@@ -384,7 +383,7 @@ export const JiraDataTable = () => {
             </div>
           </div>
 
-          <Modal
+          <
             isOpen={isJDModalOpen}
             onClose={() => setIsJDModalOpen(false)}
             title="Jira Data Upload"
