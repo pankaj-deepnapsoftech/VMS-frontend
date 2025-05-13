@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useAuthContext } from "@/context";
 import React from "react";
 
@@ -11,9 +12,9 @@ const Card = ({ children, gradient }) => {
   );
 };
 
-const Dashboard = () => {
+const Dashboard = ({setGetDataFromSession}) => {
 
-  const {authenticate} = useAuthContext();
+  const { authenticate } = useAuthContext();
   const products = [
     {
       title: "CTVM",
@@ -126,12 +127,14 @@ const Dashboard = () => {
             <h2 className="text-xl font-semibold mb-4">Products</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {products.map((product, i) => (
-                <Card key={i} gradient={product.gradient}>
-                  <h3 className="text-md font-medium text-white">
-                    {product.title}
-                  </h3>
-                  <p className="text-sm text-gray-400 mt-1">{product.desc}</p>
-                </Card>
+                <div key={i} onClick={()=>{sessionStorage.setItem("main-page","true"),setGetDataFromSession("true")}}>
+                  <Card  gradient={product.gradient} >
+                    <h3 className="text-md font-medium text-white">
+                      {product.title}
+                    </h3>
+                    <p className="text-sm text-gray-400 mt-1">{product.desc}</p>
+                  </Card>
+                </div>
               ))}
             </div>
           </div>
