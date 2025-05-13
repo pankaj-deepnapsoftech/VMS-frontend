@@ -106,7 +106,7 @@ const Dashboard = ({setGetDataFromSession}) => {
         </div>
 
         {/* Right Side */}
-        <div className="flex-1 relative gap-10 ml-50 min-w-[300px]">
+        <div className="flex-1 relative gap-10 ml-20 min-w-[300px]">
           <h2 className="text-xl font-semibold mb-4">
             Active products <span className="text-gray-400">(1)</span>
           </h2>
