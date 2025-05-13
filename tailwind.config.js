@@ -13,6 +13,7 @@ export default {
       },
       backgroundImage: {
         "gradient-color": "linear-gradient(to right, #333333, #666666)",
+        "gradient-image": "url('/gradient.jpg')"
       },
     },
   },
