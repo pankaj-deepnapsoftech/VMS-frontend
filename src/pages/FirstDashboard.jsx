@@ -1,3 +1,4 @@
+import { useAuthContext } from "@/context";
 import React from "react";
 
 // Card component with border gradient
@@ -11,6 +12,8 @@ const Card = ({ children, gradient }) => {
 };
 
 const Dashboard = () => {
+
+  const {authenticate} = useAuthContext();
   const products = [
     {
       title: "CTVM",
@@ -68,7 +71,7 @@ const Dashboard = () => {
     <div className="min-h-screen flex flex-col bg-center text-white font-sans bg-gradient-image bg-cover">
       {/* Header */}
       <div className="px-6 pt-6">
-        <h1 className="text-4xl font-bold text-blue-400">Hello,</h1>
+        <h1 className="text-4xl font-bold text-blue-400">Hello, {authenticate.full_name}</h1>
         <p className="mt-2 text-gray-400">
           Please choose a product to work with.
         </p>
@@ -77,8 +80,8 @@ const Dashboard = () => {
       {/* Main Content */}
       <div className="flex flex-col lg:flex-row gap-x-10 px-6 mt-6 flex-grow">
         {/* Left Side */}
-        <div className="w-full lg:max-w-md mb-10 lg:mb-0">
-          <Card gradient="from-[#29292b] via-[#3d3d40] to-[#2c2c2e]">
+        <div className="w-full lg:max-w-md mb-10 lg:mb-0"  >
+          <Card gradient="from-[#29292b] via-[#3d3d40] to-[#2c2c2e]" o>
             <div className="flex items-start gap-3">
               <div className="bg-red-600 p-2 rounded-full">
                 <span role="img" aria-label="shield">
