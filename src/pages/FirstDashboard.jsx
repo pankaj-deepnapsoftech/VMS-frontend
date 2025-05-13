@@ -69,7 +69,7 @@ const Dashboard = () => {
       {/* Header */}
       <div className="px-6 pt-6">
         <h1 className="text-4xl font-bold text-blue-400">Hello,</h1>
-        <p className="mt-2 text-gray-400">
+        <p className="mt-10 text-gray-200">
           Please choose a product to work with.
         </p>
       </div>
@@ -77,7 +77,7 @@ const Dashboard = () => {
       {/* Main Content */}
       <div className="flex flex-col lg:flex-row gap-x-10 px-6 mt-6 flex-grow">
         {/* Left Side */}
-        <div className="w-full lg:max-w-md mb-10 lg:mb-0">
+        <div className="w-full lg:max-w-md mt-20 mb-10 lg:mb-0">
           <Card gradient="from-[#29292b] via-[#3d3d40] to-[#2c2c2e]">
             <div className="flex items-start gap-3">
               <div className="bg-red-600 p-2 rounded-full">
@@ -102,7 +102,7 @@ const Dashboard = () => {
         </div>
 
         {/* Right Side */}
-        <div className="flex-1 relative gap-10 ml-50 min-w-[300px]">
+        <div className="flex-1 relative gap-10 ml-20 min-w-[300px]">
           <h2 className="text-xl font-semibold mb-4">
             Active products <span className="text-gray-400">(1)</span>
           </h2>
