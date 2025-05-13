@@ -11,6 +11,7 @@ import UserProfile from "@/pages/UserProfile";
 import { getInitials } from "@/utils/profile";
 import ChangePasswordModal from "@/modals/ChangePasswordModal";
 import useChangePassword from "@/hooks/changePassword";
+import FirstDashboard from "@/pages/FirstDashboard";
 
 const MainLayout = () => {
   const { notificationData, NotificationsViewed } =
@@ -25,6 +26,8 @@ const MainLayout = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+
+  const getDataFromSession = sessionStorage.getItem("main-page")
  
  
 
@@ -50,6 +53,10 @@ const MainLayout = () => {
     setTemp(name[1] ?? "Dashboard");
     console.log(name[1]);
   }, [location.pathname]);
+
+  if(!getDataFromSession){
+    return <FirstDashboard />
+  }
 
   useEffect(() => {
     if (!authenticate?.mustChangePassword) {

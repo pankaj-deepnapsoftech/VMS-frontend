@@ -19,7 +19,7 @@ import GettingStarted from "@/pages/Auth/GetStartedPage";
 import Pricing from "@/pages/Auth/Pricing";
 import Solutions from "@/pages/Auth/Solutions";
 import LandingPage from "@/pages/Auth/LandingPage";
-import FirstDashboard from "@/pages/FirstDashboard";
+
 
 const AppRoutes = () => {
   const { authenticate, token } = useAuthContext();
@@ -58,8 +58,8 @@ const AppRoutes = () => {
       {!isAuthenticated && (
         <>
           {/* <Route path="/" element={<GettingStarted  />} /> */}
-          {/* <Route path="/" element={<LandingPage/>} /> */}
-          <Route path="/" element={<FirstDashboard/>} />
+          <Route path="/" element={<LandingPage/>} />
+          {/* <Route path="/" element={<FirstDashboard/>} /> */}
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
