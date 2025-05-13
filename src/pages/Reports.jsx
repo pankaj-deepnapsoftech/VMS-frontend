@@ -296,7 +296,7 @@ const Reports = () => {
                       Download Report
                     </a>
                   </td>
-
+ 
                   {/* Actions */}
                   <td className="px-4 py-2 whitespace-nowrap text-center flex justify-center gap-2 items-start">
                     {authenticate.role === "Assessor" ? (
@@ -336,7 +336,7 @@ const Reports = () => {
       {/* Modal Form */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-10">
-          <div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
+          <div className="bg-input rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
             {/* Header */}
             <div className="flex justify-between items-center border-b p-4 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] ">
               <h2 className="text-lg font-semibold text-gray-200">
