@@ -3,13 +3,11 @@
 import { useState } from "react"
 import { EyeIcon, EyeOffIcon, LockIcon } from "lucide-react"
 import { useAuthContext } from "@/context"
-import { IoClose } from "react-icons/io5";
 
 
 const ChangePasswordModal = ({ isOpen, onClose }) => {
 
-    const { ChangePassword,authenticate } = useAuthContext();
-    console.log("this is authentication data ",authenticate);
+    const { ChangePassword } = useAuthContext();
 
     const [showCurrentPassword, setShowCurrentPassword] = useState(false)
     const [showNewPassword, setShowNewPassword] = useState(false)

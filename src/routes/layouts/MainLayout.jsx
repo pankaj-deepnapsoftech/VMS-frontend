@@ -1,6 +1,6 @@
 import Footer from "@/components/Footer/Footer";
 import { Header } from "@/constants/Components-lazy-loading/components.Lazy";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { FaBell } from "react-icons/fa";
 import { Outlet, useLocation } from "react-router-dom";
@@ -12,6 +12,7 @@ import { getInitials } from "@/utils/profile";
 import ChangePasswordModal from "@/modals/ChangePasswordModal";
 import useChangePassword from "@/hooks/changePassword";
 import FirstDashboard from "@/pages/FirstDashboard";
+import Loader from "@/components/Loader/Loader";
 
 const MainLayout = () => {
   const { notificationData, NotificationsViewed } =
@@ -27,9 +28,12 @@ const MainLayout = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
 
-  const getDataFromSession = sessionStorage.getItem("main-page")
+  const [getDataFromSession,setGetDataFromSession] = useState(() => {
+  return  sessionStorage.getItem("main-page");
+})
+
  
- 
+ console.log("this is something ",getDataFromSession)
 
   let notificationcount =
     notificationData?.filter((notification) => !notification.view).length || 0;
@@ -54,17 +58,20 @@ const MainLayout = () => {
     console.log(name[1]);
   }, [location.pathname]);
 
-  if(!getDataFromSession){
-    return <FirstDashboard />
-  }
+
 
   useEffect(() => {
     if (!authenticate?.mustChangePassword) {
       openModal()
     }
   }, [authenticate.mustChangePassword])
+
   return (
-    <>
+    !getDataFromSession ? <FirstDashboard setGetDataFromSession={setGetDataFromSession} /> :
+   ( 
+   <Suspense fallback={<Loader/>}>
+
+   
       <aside
         className={`${showMenu ? "left-0" : "-left-full"
           } fixed z-10 w-[65%] flex flex-col justify-between 
@@ -173,7 +180,7 @@ transition duration-300 sm:w-[40%] md:w-[30%] lg:w-[25%] xl:w-[20%] 2xl:w-[15%] 
   
 
       <ChangePasswordModal isOpen={isOpen} onClose={closeModal} />
-    </>
+    </Suspense>)
   );
 };
 
