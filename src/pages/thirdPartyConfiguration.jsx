@@ -71,7 +71,8 @@ function ThirdPartyConfig() {
 							onChange={handleChange}
 							placeholder="Enter your Jira Username"
 							name="JIRA_USERNAME"
-						/>	label={"Jira Username"}
+							label={"Jira Username"}
+						/>	
 						
 						{touched.JIRA_USERNAME && errors.JIRA_USERNAME && <p> {errors.JIRA_USERNAME}</p>}
 						<InputField
