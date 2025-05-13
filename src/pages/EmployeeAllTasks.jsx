@@ -10,8 +10,6 @@ import {
 } from "@/context";
 import { Formik, Form, Field } from "formik";
 import * as XLSX from "xlsx";
-import { WorkItemValidation } from "@/Validation/VulnerabililtyDataValidation";
-import { BsPersonCheckFill } from "react-icons/bs";
 import toast from "react-hot-toast";
 import Loader from "@/components/Loader/Loader";
 import InputField from "@/components/InputField";
@@ -388,7 +386,7 @@ export function EmployeeAllTasks() {
           {/* 📝 Modal Form */}
           {isEditOpen && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-              <div className="bg-white rounded-xl shadow-2xl w-full max-w-md md:max-w-lg lg:max-w-xl max-h-[90vh] overflow-y-auto">
+              <div className="bg-background rounded-xl shadow-2xl w-full max-w-md md:max-w-lg lg:max-w-xl max-h-[90vh] overflow-y-auto">
                 {/* Header */}
                 <div className="flex justify-between items-center border-b p-4 bg-[#015289] rounded-t-xl">
                   <h2 className="text-lg font-semibold text-white">
@@ -514,7 +512,7 @@ export function EmployeeAllTasks() {
 
           {isModalOpen1 && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-10">
-              <div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
+              <div className="bg-background rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
                 {/* Header */}
                 <div className="flex justify-between items-center border-b p-4 bg-gradient-to-bl from-[#333333] to-[#666666]">
                   <h2 className="text-lg font-semibold text-gray-200">
@@ -549,19 +547,19 @@ export function EmployeeAllTasks() {
                   {(
                     { setFieldValue, values } // ✅ Access setFieldValue here
                   ) => (
-                    <Form className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+                    <Form className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 text-white">
                       {(editMode1 ? editFormHeaders : addFormHeaders).map(
                         (field) =>
                           field !== "creator" &&
                           field !== "Exception_time" && (
                             <div key={field} className="flex flex-col">
-                              <label className="text-sm font-medium text-gray-700">
+                              <label className="text-sm font-medium ">
                                 {field.replace(/_/g, " ")}
                               </label>
 
                               {field === "Assigned_To" ? (
                                 <select
-                                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                                  className="w-full p-2 border bg-input rounded-md focus:ring-2 focus:ring-blue-500 transition"
                                   name="Assigned_To"
                                   onChange={(e) =>
                                     setFieldValue("Assigned_To", e.target.value)
@@ -579,7 +577,7 @@ export function EmployeeAllTasks() {
                                 </select>
                               ) : field === "Severity" ? (
                                 <select
-                                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                                  className="w-full p-2 border bg-input rounded-md focus:ring-2 focus:ring-blue-500 transition"
                                   name="Severity"
                                   onChange={(e) =>
                                     setFieldValue("Severity", e.target.value)
@@ -597,18 +595,18 @@ export function EmployeeAllTasks() {
                                 </select>
                               ) : field === "Status" ? (
                                 <select
-                                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                                  className="w-full p-2 border bg-input rounded-md focus:ring-2 focus:ring-blue-500 transition"
                                   name="Status"
                                   onChange={(e) =>
                                     setFieldValue("Status", e.target.value)
                                   }
                                   defaultValue=""
                                 >
-                                  <option disabled value="">
+                                  <option className="text-white" disabled value="">
                                     --- Select a Status ---
                                   </option>
                                   {statusList.map((item, idx) => (
-                                    <option key={idx} value={item}>
+                                    <option key={idx} value={item} className="text-white" >
                                       {item}
                                     </option>
                                   ))}
@@ -626,7 +624,7 @@ export function EmployeeAllTasks() {
                               ) : (
                                 <Field
                                   name={field}
-                                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                                  className="w-full p-2 border rounded-md bg-input focus:ring-2 focus:ring-blue-500 transition"
                                 />
                               )}
                             </div>
