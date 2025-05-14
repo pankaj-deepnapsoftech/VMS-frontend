@@ -16,6 +16,8 @@
   @apply font-poppins;
   scroll-behavior: smooth;
 }
+
+
 @keyframes growWidth {
   from {
     width: 0;
