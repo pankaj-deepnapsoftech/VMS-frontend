@@ -33,7 +33,6 @@ const MainLayout = () => {
   })
 
 
-  console.log("this is something ", getDataFromSession)
 
   let notificationcount =
     notificationData?.filter((notification) => !notification.view).length || 0;

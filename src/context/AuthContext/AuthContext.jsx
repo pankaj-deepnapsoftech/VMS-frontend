@@ -187,6 +187,7 @@ const AuthContextProvider = ({ children }) => {
       toast.dismiss(toastId);
       toast.success(res.data.message);
       setAuthenticate(null)
+      sessionStorage.removeItem("main-page")
       navigate("/");
     } catch (error) {
       toast.dismiss(toastId);

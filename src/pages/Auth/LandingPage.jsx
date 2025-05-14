@@ -1,8 +1,6 @@
-import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState} from "react";
 import "/public/Font/LexendDeca.ttf";
 import {
-  FaApple,
   FaBullseye,
   FaClone,
   FaEye,
@@ -15,51 +13,10 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { FaArrowPointer, FaMessage } from "react-icons/fa6";
 
-import { IoLogoGooglePlaystore } from "react-icons/io5";
 import { GiPerspectiveDiceSixFacesFour } from "react-icons/gi";
-import { X } from "lucide-react";
 import Header from "./component/Header";
 import Footer from "./component/Footer";
 
-const plans = [
-  {
-    name: "Basic",
-    price: "$14",
-    features: [
-      "32 GB Cloud Storage",
-      "eCommerce Integration",
-      { label: "Regular Updates", available: false },
-      { label: "24/7 Support", available: false },
-      { label: "Regular Updates", available: false },
-    ],
-    highlightColor: "bg-cyan-400",
-  },
-  {
-    name: "Standard",
-    price: "$30",
-    popular: true,
-    features: [
-      "32 GB Cloud Storage",
-      "eCommerce Integration",
-      "Regular Updates",
-      "24/7 Support",
-      { label: "Regular Updates", available: false },
-    ],
-    highlightColor: "bg-orange-400",
-  },
-  {
-    name: "Premium",
-    price: "$50",
-    features: [
-      "32 GB Cloud Storage",
-      "eCommerce Integration",
-      "Regular Updates",
-      "24/7 Support",
-      "Regular Updates",
-    ],
-    highlightColor: "bg-green-400",
-  },
-];
 
 const slides = [
   {
@@ -108,7 +65,17 @@ Applies mass vulnerability fixes based on predefined categories, accelerating th
   },
 ];
 
+
+
 const LandingPage = () => {
+
+  const [onload,setOnload] = useState(false);
+
+
+
+ useEffect(() => {
+      setOnload(true);
+  }, []);
   return (
     <>
       <Header />
@@ -117,7 +84,7 @@ const LandingPage = () => {
           {slides.map((slide, index) => (
             <div
               key={index}
-              className="flex flex-col md:flex-row items-center justify-between gap-12 py-12"
+              className="flex flex-col md:flex-row items-center justify-between gap-12 py-12 px-10 2xl:px-0"
             >
               <div className="w-full md:w-1/2 text-center md:text-left flex flex-col items-center md:items-start">
                 {/* Title */}
@@ -149,15 +116,25 @@ const LandingPage = () => {
               </div>
 
               {/* Image only visible on desktop */}
-              <div className="hidden md:flex w-full md:w-1/2 justify-center">
+              <div className={`hidden md:flex w-full md:w-1/2 items-center h-full justify-end ${onload ? "scale-100" : "scale-0"} transition-all duration-1000`}>
                 <img
                   src={slide.image}
                   alt={slide.title}
-                  className={`drop-shadow-lg ${
+                  className={`drop-shadow-lg bg-gradient-to-t from-gray-100 to-blue-500 ${
                     index === 2
                       ? "max-w-xs sm:max-w-sm"
                       : "max-w-sm sm:max-w-md"
-                  } w-full h-auto`}
+                  } w-[70%] h-auto`}
+                  style={{
+                  WebkitMaskImage: "url('/logo.png')",
+                  WebkitMaskRepeat: "no-repeat",
+                  WebkitMaskPosition: "center",
+                  WebkitMaskSize: "contain",
+                  maskImage: "url('/logo.png')",
+                  maskRepeat: "no-repeat",
+                  maskPosition: "center",
+                  maskSize: "contain",
+                }}
                 />
               </div>
             </div>
