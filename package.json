@@ -25,6 +25,7 @@
     "react-icons": "^5.5.0",
     "react-pdf": "^9.2.1",
     "react-router-dom": "^6.28.2",
+    "react-router-hash-link": "^2.4.3",
     "react-slick": "^0.30.3",
     "recharts": "^2.15.0",
     "slick-carousel": "^1.8.1",

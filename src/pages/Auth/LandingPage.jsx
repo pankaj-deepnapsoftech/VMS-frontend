@@ -323,7 +323,7 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
-      <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-white py-16 px-6 md:px-20">
+      <section id="book-demo" className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-white py-16 px-6 md:px-20">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
           <div>
             <h2 className="text-4xl text-gray-200 font-bold mb-6">

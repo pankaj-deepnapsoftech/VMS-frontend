@@ -271,19 +271,32 @@ const Header = () => {
             >
               Home
             </Link>
-           
-            <Link  to="/pricing"  className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left">
+
+            <Link
+              to="/pricing"
+              className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left"
+            >
               Pricing
             </Link>
-            <Link className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left">
-              Features
-            </Link>
-            <Link to="#contact"  className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left">
-              Contact
-            </Link>
-            <Link to="/solutions"  className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left">
+
+            <Link
+              to="/solutions"
+              className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left"
+            >
               Solutions
             </Link>
+            <Link
+              to="/"
+              className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left"
+            >
+              Contacts
+            </Link>
+            <a
+              href="/#book-demo"
+              className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left"
+            >
+              Book Demo{" "}
+            </a>
 
             <button
               onClick={() => navigate("/sign-in")}
