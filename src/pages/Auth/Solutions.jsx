@@ -2,11 +2,14 @@
 import Header from "@/pages/Auth/component/Header";
 import Footer from "@/pages/Auth/component/Footer";
 import { DownloadIcon } from "lucide-react";
+import BookDemo from "../BookDemo";
+import useBookDemo from "@/hooks/BookDemo";
 
 const Solutions = () => {
+  const {isOpen,openModal,closeModal} = useBookDemo()
   return (
     <div className="font-poppins">
-      <Header />
+      <Header openModal={openModal} />
       {/* Section 1: Header */}
       <section className="bg-gradient-to-b from-[#343537] to-[#17181a] text-white pt-32 py-12 px-6">
         <div className="max-w-6xl mx-auto">
@@ -313,6 +316,7 @@ const Solutions = () => {
         </div>
       </section>
       <Footer />
+      <BookDemo closeModal={closeModal} isOpen={isOpen} />
     </div>
   );
 };

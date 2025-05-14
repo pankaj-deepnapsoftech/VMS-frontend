@@ -21,6 +21,7 @@ const BookDemo = ({closeModal,isOpen}) => {
   };
 
   const handleSubmit = async (values, actions) => {
+    console.log("this function is call right now")
     try {
       const response = await AxiosHandler.post("/book-demo/add-book-demo",values)
       console.log("Submitted successfully:", response.data);

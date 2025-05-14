@@ -2,11 +2,14 @@ import React from "react";
 import { Check } from "lucide-react";
 import Header from "./component/Header";
 import Footer from "./component/Footer";
+import useBookDemo from "@/hooks/BookDemo";
+import BookDemo from "../BookDemo";
 
 function Pricing() {
+  const {isOpen,openModal,closeModal} = useBookDemo()
   return (
     <>
-      <Header />
+      <Header openModal={openModal} />
       <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white py-20 px-4">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
@@ -17,23 +20,23 @@ function Pricing() {
               AI powered Risk Prioritization and Remediation platform
             </p>
           </div>
-          <div class="bg-gray-800/50 rounded-2xl shadow-md p-6 max-w-md mx-auto text-center">
-            <h2 class="text-2xl font-bold text-gray-300 mb-2">Pricing</h2>
-            <p class="text-gray-300 mb-4">
+          <div className="bg-gray-800/50 rounded-2xl shadow-md p-6 max-w-md mx-auto text-center">
+            <h2 className="text-2xl font-bold text-gray-300 mb-2">Pricing</h2>
+            <p className="text-gray-300 mb-4">
               Our pricing plans are tailored to suit your business needs.
             </p>
-            <p class="text-gray-200 font-medium">
+            <p className="text-gray-200 font-medium">
               For more enquiry, contact us at:
             </p>
-            <p class="mt-2 text-blue-600">
+            <p className="mt-2 text-blue-600">
               📞{" "}
-              <a href="tel: +919205404075" class="hover:underline">
+              <a href="tel: +919205404075" className="hover:underline">
               +91 9205404075
               </a>
             </p>
-            <p class="text-blue-600">
+            <p className="text-blue-600">
               ✉️{" "}
-              <a href="mailto:itsybizz@gmail.com" class="hover:underline">
+              <a href="mailto:itsybizz@gmail.com" className="hover:underline">
               itsybizz@gmail.com
               </a>
             </p>
@@ -44,6 +47,7 @@ function Pricing() {
         </div>
       </div>
       <Footer />
+      <BookDemo closeModal={closeModal} isOpen={isOpen} />
     </>
   );
 }
