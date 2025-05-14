@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 
-const Header = () => {
+// eslint-disable-next-line react/prop-types
+const Header = ({openModal}) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
@@ -291,12 +292,12 @@ const Header = () => {
             >
               Contacts
             </Link>
-            <a
-              href="/#book-demo"
+            <Link
+            onClick={openModal}
               className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left"
             >
               Book Demo{" "}
-            </a>
+            </Link>
 
             <button
               onClick={() => navigate("/sign-in")}

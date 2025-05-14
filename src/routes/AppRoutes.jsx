@@ -15,7 +15,6 @@ import { EmployeeRoutes } from "./PrivateRoutes/employeeRoutes";
 import { ClientSmeRoutes } from "./PrivateRoutes/clientSmeRoutes";
 import UnauthorizedAccessPage from "@/pages/UnauthorizedAccess";
 import { ClientCisoRoutes } from "./PrivateRoutes/ClientCisoRoutes";
-import GettingStarted from "@/pages/Auth/GetStartedPage";
 import Pricing from "@/pages/Auth/Pricing";
 import Solutions from "@/pages/Auth/Solutions";
 import LandingPage from "@/pages/Auth/LandingPage";
@@ -68,7 +67,6 @@ const AppRoutes = () => {
           <Route path="/verify-otp" element={<VerifyOtp />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/solutions" element={<Solutions />} />
-          <Route path="/book-demo" element={<BookDemo/>}/>
         </>
       )}
 

@@ -3,8 +3,15 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { bookDemoSchema } from "../Validation/BookDemoValidation";
 import axios from "axios";
 import { AxiosHandler } from "@/config/AxiosConfig";
+import { IoClose } from "react-icons/io5";
 
-const BookDemo = () => {
+// eslint-disable-next-line react/prop-types
+const BookDemo = ({closeModal,isOpen}) => {
+
+  if(!isOpen){
+    return null
+  }
+
   const initialValues = {
     fullName: "",
     phoneNumber: "",
@@ -26,8 +33,13 @@ const BookDemo = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1c1c1e] text-white px-4 py-10">
+    <div className="min-h-screen bg-[#1c1c1e]/40 text-white px-4 py-10 fixed top-0 left-0 w-full z-50">
       <div className="w-full sm:w-11/12 md:w-3/4 lg:w-2/5 mx-auto bg-[#2e2f31] p-6 md:p-8 rounded-2xl shadow-lg mt-20">
+      <div className="text-end" >
+        <button className="p-2 hover:bg-gray-700 rounded-lg" onClick={closeModal} >
+          <IoClose size={20} />
+        </button>
+      </div>
         <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">
           Book a Free Demo
         </h2>

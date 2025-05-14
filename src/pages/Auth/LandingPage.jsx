@@ -16,6 +16,8 @@ import { FaArrowPointer, FaMessage } from "react-icons/fa6";
 import { GiPerspectiveDiceSixFacesFour } from "react-icons/gi";
 import Header from "./component/Header";
 import Footer from "./component/Footer";
+import BookDemo from "../BookDemo";
+import useBookDemo from "@/hooks/BookDemo";
 
 
 const slides = [
@@ -71,14 +73,15 @@ const LandingPage = () => {
 
   const [onload,setOnload] = useState(false);
 
-
+  const {isOpen,openModal,closeModal} = useBookDemo()
 
  useEffect(() => {
       setOnload(true);
   }, []);
+
   return (
     <>
-      <Header />
+      <Header openModal={openModal} />
       <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-[#d7e1ec] py-10">
         <div className="max-w-screen-xl mx-auto px-4">
           {slides.map((slide, index) => (
@@ -487,6 +490,7 @@ const LandingPage = () => {
         </div>
       </section> */}
       <Footer />
+      <BookDemo closeModal={closeModal} isOpen={isOpen} />
     </>
   );
 };
