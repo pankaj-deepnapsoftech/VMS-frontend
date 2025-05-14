@@ -1,6 +1,6 @@
 import { AiOutlineException } from "react-icons/ai";
 import { BiSolidDashboard } from "react-icons/bi";
-import { FaPersonBooth } from "react-icons/fa";
+import { FaPersonBooth, FaRegBookmark } from "react-icons/fa";
 import { GrVulnerability } from "react-icons/gr";
 import { IoPerson, IoShield, IoShieldHalf } from "react-icons/io5";
 import { FaPerson } from "react-icons/fa6";
@@ -22,6 +22,7 @@ export const list = [
     { title: "Application Vulnerability", route: "/application-vulnerability", icon: MdOutlineMiscellaneousServices },
     { title: "Infrastructure Vulnerability ", route: "/infrastructure-vulnerability", icon: GrVulnerability },
     { title: "Exceptions", route: "/exceptions", icon: AiOutlineException },
+    {title: "Book Demo", route:"/book-demo",icon:FaRegBookmark },
     // { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
     { title: "Reports", route: "/reports", icon: TbReport },
     {title:"Change Password",route:"/change-password", icon:TbLockPassword }

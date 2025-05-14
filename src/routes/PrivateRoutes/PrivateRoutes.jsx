@@ -13,6 +13,7 @@ import Reports from "@/pages/Reports";
 import ChatPage from "@/pages/ChatPage";
 import { AssertInventory } from "@/pages/AssertInventory";
 import ChangePassword from "@/pages/ChangePassword";
+import AdminBookDemo from "@/pages/AdminBookDemo";
 
 
 export const PrivateRoutes = [
@@ -78,4 +79,8 @@ export const PrivateRoutes = [
         path: "/change-password",
         element: <ChangePassword />
     },
+    {
+        path: "/book-demo",
+        element:<AdminBookDemo/>
+    }
 ]
