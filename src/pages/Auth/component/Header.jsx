@@ -17,7 +17,9 @@ const Header = ({openModal}) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-
+  function pathModifier(path){
+    window.location.href = path
+  }
 
   return (
     // <nav className="bg-[#111826] text-white py-4 px-6 md:px-12">
@@ -287,10 +289,10 @@ const Header = ({openModal}) => {
               Solutions
             </Link>
             <Link
-              to="/"
+            onClick={()=>pathModifier("#book-demo")}
               className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left"
             >
-              Contacts
+              Contact us
             </Link>
             <Link
             onClick={openModal}

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { AxiosHandler } from "@/config/AxiosConfig";
 import toast from "react-hot-toast";
+import { DateModifier } from "@/utils/utils";
 
 const AdminBookDemo = () => {
   const [demos, setDemos] = useState([]);
@@ -68,7 +69,7 @@ const AdminBookDemo = () => {
                   <td className="py-3 px-4">{demo.name}</td>
                   <td className="py-3 px-4">{demo.phone}</td>
                   <td className="py-3 px-4">{demo.email}</td>
-                  <td className="py-3 px-4">{demo.date}</td>
+                  <td className="py-3 px-4">{DateModifier(demo.date)}</td>
                   <td className="py-3 px-4">{demo.message}</td>
                   <td className="py-3 px-4">
                     <button
