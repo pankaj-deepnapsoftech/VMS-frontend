@@ -10,6 +10,7 @@ export default {
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
+        lexendDeca:["lexendDeca","sans-serif"]
       },
       backgroundImage: {
         "gradient-color": "linear-gradient(to right, #333333, #666666)",

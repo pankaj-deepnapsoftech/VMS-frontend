@@ -76,7 +76,7 @@ const Dashboard = ({ setGetDataFromSession }) => {
       <div className="px-6 pt-6">
         <h1 className="text-2xl font-semibold text-sky-500 pb-10">Secure&</h1>
         <h2 className="text-4xl font-bold text-blue-400">
-          Hello, {authenticate.full_name}
+          Hello, <span className="capitalize font-lexendDeca" >{authenticate.full_name}</span>
         </h2>
         <p className="mt-2 text-gray-400">
           Please choose a product to work with.
@@ -84,7 +84,7 @@ const Dashboard = ({ setGetDataFromSession }) => {
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-col lg:flex-row gap-x-10 px-6 mt-6 flex-grow">
+      <div className="flex flex-col lg:flex-row gap-x-10 px-6 mt-6 flex-grow py-10">
         {/* Left Side */}
         <div className="w-full lg:max-w-md mb-10 lg:mb-0">
           <Card gradient="bg-transparent">
@@ -104,9 +104,12 @@ const Dashboard = ({ setGetDataFromSession }) => {
                 </p>
               </div>
             </div>
+            <div className="text-end pt-3" >
+
             <button className="mt-4 bg-blue-600/60 hover:bg-blue-800/70 text-white px-4 py-2 rounded-md">
               Protect account
             </button>
+            </div>
           </Card>
         </div>
 
