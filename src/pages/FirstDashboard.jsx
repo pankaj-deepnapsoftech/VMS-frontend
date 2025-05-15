@@ -72,10 +72,10 @@ const Dashboard = ({setGetDataFromSession}) => {
     <div className="min-h-screen flex flex-col bg-center text-white font-sans bg-gradient-image bg-cover">
       {/* Header */}
       <div className="px-6 pt-6">
-        <h1 className="text-2xl font-semibold text-sky-500">Securend</h1>
-        <h1 className="text-4xl font-bold text-blue-400">
+        <h1 className="text-2xl font-semibold text-sky-500 pb-10">Secure&</h1>
+        <h2 className="text-4xl font-bold text-blue-400">
           Hello, {authenticate.full_name}
-        </h1>
+        </h2>
         <p className="mt-2 text-gray-400">
           Please choose a product to work with.
         </p>
@@ -152,17 +152,16 @@ const Dashboard = ({setGetDataFromSession}) => {
         <div className="max-w-4xl mx-auto text-center space-y-2 leading-snug">
           <p>
             24/7 support{" "}
-            <span className="whitespace-nowrap">+65 3159-4398</span> •{" "}
             <a
-              href="mailto:support@group-ib.com"
+              href="mailto:contact@securend.ai"
               className="text-blue-400 hover:underline"
             >
-              support@group-ib.com
+              contact@securend.ai
             </a>
           </p>
           <p className="text-gray-400">
-            © 2003 – 2025{" "}
-            <span className="text-white font-medium">Group-IB</span> is global
+            © 2025{" "}
+            <span className="text-white font-medium">Secure&</span> is global
             leader in attribution-based threat intelligence, best-in-class
             threat hunting, fraud prevention, and cybercrime investigations.
           </p>
