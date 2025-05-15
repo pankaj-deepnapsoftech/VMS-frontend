@@ -1,5 +1,4 @@
-import React from "react";
-import { Routes, Route, Navigate, useNavigate, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import SignIn from "@/pages/Auth/SignIn";
 import SignUp from "@/pages/Auth/SignUp";
 import ForgotPassword from "@/pages/Auth/ForgotPassword";
@@ -18,8 +17,7 @@ import { ClientCisoRoutes } from "./PrivateRoutes/ClientCisoRoutes";
 import Pricing from "@/pages/Auth/Pricing";
 import Solutions from "@/pages/Auth/Solutions";
 import LandingPage from "@/pages/Auth/LandingPage";
-import BookDemo from "@/pages/BookDemo";
-
+import BookDemo from "@/modals/BookDemo";
 
 const AppRoutes = () => {
   const { authenticate, token } = useAuthContext();
@@ -42,24 +40,19 @@ const AppRoutes = () => {
         return ClientSmeRoutes;
       case "ClientCISO":
         return authenticate.employee_approve
-        ? ClientCisoRoutes
-        : [{ path: "/", element: <UnauthorizedAccessPage /> }];
+          ? ClientCisoRoutes
+          : [{ path: "/", element: <UnauthorizedAccessPage /> }];
       default:
         return [{ path: "/", element: <UnauthorizedAccessPage /> }];
     }
   };
-
-
-
 
   return (
     <Routes>
       {/* Public routes */}
       {!isAuthenticated && (
         <>
-          {/* <Route path="/" element={<GettingStarted  />} /> */}
-          <Route path="/" element={<LandingPage/>} />
-          {/* <Route path="/" element={<FirstDashboard/>} /> */}
+          <Route path="/" element={<LandingPage />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -67,6 +60,7 @@ const AppRoutes = () => {
           <Route path="/verify-otp" element={<VerifyOtp />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/solutions" element={<Solutions />} />
+          <Route path="/book-demo" element={<BookDemo />} />
         </>
       )}
 

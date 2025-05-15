@@ -293,6 +293,7 @@ const Header = ({openModal}) => {
               Contacts
             </Link>
             <Link
+            to="/book-demo"
             onClick={openModal}
               className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left"
             >
