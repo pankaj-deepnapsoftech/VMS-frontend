@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState} from "react";
+import { Suspense, useEffect, useState } from "react";
 import "/public/Font/LexendDeca.ttf";
 import {
   FaBullseye,
@@ -20,7 +20,6 @@ import Footer from "./component/Footer";
 import useBookDemo from "@/hooks/BookDemo";
 import BookDemo from "@/modals/BookDemo";
 import Loader from "@/components/Loader/Loader";
-
 
 const slides = [
   {
@@ -69,20 +68,17 @@ Applies mass vulnerability fixes based on predefined categories, accelerating th
   },
 ];
 
-
-
 const LandingPage = () => {
+  const [onload, setOnload] = useState(false);
 
-  const [onload,setOnload] = useState(false);
+  const { isOpen, openModal, closeModal } = useBookDemo();
 
-  const {isOpen,openModal,closeModal} = useBookDemo()
-
- useEffect(() => {
-      setOnload(true);
+  useEffect(() => {
+    setOnload(true);
   }, []);
 
   return (
-    <Suspense fallback={<Loader/>}>
+    <Suspense fallback={<Loader />}>
       <Header openModal={openModal} />
       <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-[#d7e1ec] py-10">
         <div className="max-w-screen-xl mx-auto px-4">
@@ -121,7 +117,11 @@ const LandingPage = () => {
               </div>
 
               {/* Image only visible on desktop */}
-              <div className={`hidden md:flex w-full md:w-1/2 items-center h-full justify-end ${onload ? "scale-100" : "scale-0"} transition-all duration-1000`}>
+              <div
+                className={`hidden md:flex w-full md:w-1/2 items-center h-full justify-end ${
+                  onload ? "scale-100" : "scale-0"
+                } transition-all duration-1000`}
+              >
                 <img
                   src={slide.image}
                   alt={slide.title}
@@ -131,15 +131,15 @@ const LandingPage = () => {
                       : "max-w-sm sm:max-w-md"
                   } w-[70%] h-auto`}
                   style={{
-                  WebkitMaskImage: "url('/logo.png')",
-                  WebkitMaskRepeat: "no-repeat",
-                  WebkitMaskPosition: "center",
-                  WebkitMaskSize: "contain",
-                  maskImage: "url('/logo.png')",
-                  maskRepeat: "no-repeat",
-                  maskPosition: "center",
-                  maskSize: "contain",
-                }}
+                    WebkitMaskImage: "url('/logo.png')",
+                    WebkitMaskRepeat: "no-repeat",
+                    WebkitMaskPosition: "center",
+                    WebkitMaskSize: "contain",
+                    maskImage: "url('/logo.png')",
+                    maskRepeat: "no-repeat",
+                    maskPosition: "center",
+                    maskSize: "contain",
+                  }}
                 />
               </div>
             </div>
@@ -156,7 +156,10 @@ const LandingPage = () => {
           <div className="w-full md:w-2/3 ">
             <h2 className="text-4xl font-bold mb-2">Features</h2>
             <p className="text-gray-400 mb-8">
-            SECURE& tools will offer key features that set them apart from competitors, providing unique solutions to address real-time challenges faced by enterprises of all sizes, from small businesses to large corporations.
+              SECURE& tools will offer key features that set them apart from
+              competitors, providing unique solutions to address real-time
+              challenges faced by enterprises of all sizes, from small
+              businesses to large corporations.
             </p>
 
             <div className="flex gap-4 w-full overflow-x-scroll custom-scrollbar ">
@@ -244,37 +247,37 @@ const LandingPage = () => {
       <section>
         <div className="h-full w-full pt-12 bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f]">
           <h1 className="text-white text-center text-[40px] font-bold pt-4">
-            Welcome 
+            Welcome
           </h1>
           <div className="flex flex-col sm:flex-row sm:flex-wrap gap-8 justify-between items-center h-auto w-full px-4 sm:px-8 py-10">
             <div className=" w-full sm:w-[30%]">
               <div className="mb-10 mt-10">
                 <div className="flex justify-end max-[800px]:justify-start gap-4">
                   <h2 className="text-[#D7E1E0] text-xl font-bold">
-                  Stakeholder Driven Dashboard
+                    Stakeholder Driven Dashboard
                   </h2>
                   <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
                     <FaMessage className="text-3xl text-[#a1a4ab]" />
                   </div>
                 </div>
                 <p className="text-[#A0A1AC]">
-                Comprehensive visibility and reporting for all stakeholders
+                  Comprehensive visibility and reporting for all stakeholders
                 </p>
               </div>
               <div className="flex justify-end max-[800px]:justify-start  items-start">
                 <div className="w-64 h-[2.5px] rounded-md shadow-2xl bg-[#2f2f2f]  ml-1 mt-1"></div>
               </div>
               <div className="h-[30vh] pt-24 md:pt-16">
-              <div className="flex justify-end max-[800px]:justify-start gap-4">
+                <div className="flex justify-end max-[800px]:justify-start gap-4">
                   <h2 className="text-[#D7E1E0] text-xl font-bold">
-                  AI Penetration Test Platform
+                    AI Penetration Test Platform
                   </h2>
                   <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
                     <FaArrowPointer className="text-3xl text-[#a1a4ab]" />
                   </div>
                 </div>
                 <p className="text-[#A0A1AC]">
-                Advanced AI-powered security testing with high accuracy
+                  Advanced AI-powered security testing with high accuracy
                 </p>
               </div>
             </div>
@@ -301,11 +304,12 @@ const LandingPage = () => {
                     <GiPerspectiveDiceSixFacesFour className="text-5xl text-[#a1a4ab]" />
                   </div>
                   <h2 className="text-[#D7E1E0] text-xl font-bold">
-                  Asset/API Discovery & Inventory
+                    Asset/API Discovery & Inventory
                   </h2>
                 </div>
                 <p className="text-[#A0A1AC]">
-                Complete mapping of all assets and APIs across your infrastructure
+                  Complete mapping of all assets and APIs across your
+                  infrastructure
                 </p>
               </div>
               <div className="flex items-start">
@@ -317,112 +321,61 @@ const LandingPage = () => {
                     <FaMessage className="text-3xl text-[#a1a4ab]" />
                   </div>
                   <h2 className="text-[#D7E1E0] text-xl font-bold pb-2">
-                  AI Powered Remediation Factory
+                    AI Powered Remediation Factory
                   </h2>
                 </div>
                 <p className="text-[#A0A1AC]">
-                Automated remediation suggestions and implementation guidance
+                  Automated remediation suggestions and implementation guidance
                 </p>
               </div>
             </div>
           </div>
         </div>
       </section>
-      <section id="book-demo" className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-white py-16 px-6 md:px-20">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
-          <div>
-            <h2 className="text-4xl text-gray-200 font-bold mb-6">
+      <section
+        id="book-demo"
+        className="w-full bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] flex items-center justify-center text-white py-20 px-6 md:px-20"
+      >
+        <div className="gap-12 items-center">
+          {/* Left Column - Contact Form */}
+          <div className="space-y-8">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Get in Touch
             </h2>
-            {/* <p className="text-gray-400 mb-8">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor
-              sit amet, consectetur adipiscing.
-            </p> */}
+            <p className="text-lg text-gray-400">
+              We&apos;d love to hear from you. Fill out the form and we’ll be in
+              touch.
+            </p>
+
             <form className="space-y-6">
               <div className="flex flex-col md:flex-row gap-4">
                 <input
                   type="text"
                   placeholder="Your name*"
-                  className="w-full bg-[#2e2f31] border border-gray-600 shadow-inner shadow-black rounded-md px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full bg-[#2e2f31] border border-gray-600 rounded-md px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <input
                   type="email"
                   placeholder="Your e-mail address *"
-                  className="w-full bg-[#2e2f31] border border-gray-600 shadow-inner shadow-black rounded-md px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full bg-[#2e2f31] border border-gray-600 rounded-md px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-              <textarea        
-
-                rows="10"
-                placeholder="Your question"
-                className="w-full bg-[#2e2f31] border border-gray-600 shadow-inner shadow-black rounded-md px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              <textarea
+                rows="6"
+                placeholder="Your message"
+                className="w-full bg-[#2e2f31] border border-gray-600 rounded-md px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               ></textarea>
-              <button className=" bg-gradient-to-tr from-[#383b40] text-xl  rounded-lg before:ease relative h-20 w-40 overflow-hidden  text-gray-300 shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 hover:text-white  hover:before:h-64 hover:before:-translate-y-32">
+
+              <button className="relative h-16 w-40 overflow-hidden text-lg rounded-lg bg-gradient-to-tr from-[#383b40] text-gray-300 shadow-xl transition-all duration-300 before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 hover:text-white hover:before:h-64 hover:before:-translate-y-32">
                 <span className="relative z-10">Submit</span>
               </button>
             </form>
           </div>
-          <div className="bg-gradient-to-br from-[#393d40] to-[#26282a] rounded-xl p-8 space-y-6 h-[200px] shadow-white">
-            {/* <div>
-              <h3 className="text-3xl font-semibold text-[#d7dee1] mb-4">
-                Get The App:
-              </h3>
-              <div className=" space-y-4">
-                <button className="bg-gradient-to-tr mr-8  from-[#383b40] text-xl rounded-lg before:ease relative h-20 w-48 overflow-hidden text-gray-300 shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 hover:text-white hover:before:h-64 hover:before:-translate-y-32">
-                  <span className="relative z-10 flex items-center justify-center gap-2">
-                    <FaApple className="text-2xl" />
-                    Apple Store
-                  </span>
-                </button>
 
-                <button className=" bg-gradient-to-tr from-[#383b40] text-xl  rounded-lg before:ease relative h-20 w-48 overflow-hidden  text-gray-300 shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 hover:text-white  hover:before:h-64 hover:before:-translate-y-32">
-                  <span className="relative z-10 flex item-center justify-center gap-2">
-                    <IoLogoGooglePlaystore className="text-2xl" />
-                    Google store
-                  </span>
-                </button>
-              </div>
-            </div> */}
-
-            <div className="pt-5 text-center ">
-              <h3 className="text-3xl font-semibold mt-4 mb-4">Contacts:</h3>
-              <ul className="text-gray-300 space-y-3">
-                {/* <li>
-                  <span className="text-gray-400 ">Ph.</span> 1-800-901-234
-                </li> */}
-                <li>
-                  <span className="text-gray-400">Mail.</span> enquiry@securend.ai
-                </li>
-                {/* <li>
-                  <span className="text-gray-400">Office.</span> Lorem ipsum
-                  dolor sit amet,
-                  <br /> consectetur adipiscing elit.
-                </li> */}
-              </ul>
-            </div>
-            {/* <div className=" flex flex-col items-center m-10 justify-center text-sm text-gray-500">
-              <div className="flex space-x-4 pt-12 mb-1">
-                <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] text-white text-xl flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
-                  <i className="fab fa-facebook-f"></i>
-                </div>
-                <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] text-white text-xl flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
-                  <i className="fab fa-twitter"></i>
-                </div>
-                <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] text-white text-xl flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
-                  <i className="fab fa-youtube"></i>
-                </div>
-              </div>
-              <p>
-                © 2025. Neon.{" "}
-                <a href="#" className="underline">
-                  Privacy Policy
-                </a>
-              </p>
-            </div> */}
-          </div>
+          {/* Right Column - Contact Info */}
         </div>
       </section>
+
       {/* <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-white py-16">
         <div className="max-w-7xl mx-auto px-4 pt-8 text-white">
       
@@ -499,5 +452,3 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
-
- 
