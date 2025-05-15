@@ -2,6 +2,7 @@ import  { useState } from 'react'
 
 const useBookDemo = () => {
    const [isOpen, setIsOpen] = useState(false);
+   console.log("this is only for testing",isOpen)
 
   function openModal() {
     setIsOpen(true);

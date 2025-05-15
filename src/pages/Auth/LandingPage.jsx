@@ -1,4 +1,4 @@
-import { useEffect, useState} from "react";
+import { Suspense, useEffect, useState} from "react";
 import "/public/Font/LexendDeca.ttf";
 import {
   FaBullseye,
@@ -18,6 +18,8 @@ import Header from "./component/Header";
 import Footer from "./component/Footer";
 // import BookDemo from "../BookDemo";
 import useBookDemo from "@/hooks/BookDemo";
+import BookDemo from "@/modals/BookDemo";
+import Loader from "@/components/Loader/Loader";
 
 
 const slides = [
@@ -80,7 +82,7 @@ const LandingPage = () => {
   }, []);
 
   return (
-    <>
+    <Suspense fallback={<Loader/>}>
       <Header openModal={openModal} />
       <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-[#d7e1ec] py-10">
         <div className="max-w-screen-xl mx-auto px-4">
@@ -490,8 +492,8 @@ const LandingPage = () => {
         </div>
       </section> */}
       <Footer />
-      {/* <BookDemo closeModal={closeModal} isOpen={isOpen} /> */}
-    </>
+      <BookDemo closeModal={closeModal} isOpen={isOpen} />
+    </Suspense>
   );
 };
 

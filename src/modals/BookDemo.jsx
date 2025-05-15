@@ -1,14 +1,24 @@
+import { bookDemoSchema } from "@/Validation/BookDemoValidation";
+import { useFormik } from "formik";
 import { IoClose } from "react-icons/io5";
 
 // eslint-disable-next-line react/prop-types
-const BookDemo = ({ closeModal, isOpen }) => {
-//   if (!isOpen) return null;
+const BookDemo = ({ isOpen, closeModal }) => {
+  console.log(isOpen)
+  if (!isOpen) return null;
+
+  const { values, errors, touched, handleBlur, handleChange, handleReset } = useFormik({
+    initialValues: { name: "", email: "", phone: "", date: "", message: "" },
+    validationSchema: bookDemoSchema,
+    onSubmit: (value) => {
+      console.log(value)
+    }
+  })
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-60 z-50 flex items-center justify-center px-4">
       <div className="bg-[#2e2f31] w-full sm:w-10/12 md:w-2/3 lg:w-1/3 p-6 rounded-2xl relative text-white">
-        <button
-          onClick={closeModal}
+        <button onClick={closeModal}
           className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-700"
         >
           <IoClose size={22} />
@@ -21,30 +31,53 @@ const BookDemo = ({ closeModal, isOpen }) => {
             type="text"
             placeholder="Your Name"
             className="w-full bg-[#1c1c1e] border border-gray-600 rounded-md px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            name="name"
+            value={values.name}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
+          {touched.name && errors.name && <p className="text-red-400 text-lg" >{errors.name}</p>}
 
           <input
             type="tel"
             placeholder="Phone Number"
             className="w-full bg-[#1c1c1e] border border-gray-600 rounded-md px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            name="phone"
+            value={values.phone}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
+          {touched.phone && errors.phone && <p className="text-red-400 text-lg" >{errors.name}</p>}
 
           <input
             type="email"
             placeholder="Email Address"
             className="w-full bg-[#1c1c1e] border border-gray-600 rounded-md px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            name="email"
+            value={values.email}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
+          {touched.name && errors.name && <p className="text-red-400 text-lg" >{errors.name}</p>}
 
           <input
             type="date"
             placeholder="Preferred Date"
             className="w-full bg-[#1c1c1e] border border-gray-600 rounded-md px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            name="date"
+            value={values.date}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
 
           <textarea
             placeholder="Your Message"
             rows={4}
             className="w-full bg-[#1c1c1e] border border-gray-600 rounded-md px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            name="message"
+            value={values.message}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
 
           <div className="flex justify-center">
