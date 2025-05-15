@@ -66,14 +66,7 @@ const Footer = () => {
               Contact Us
             </Link>
           </li>
-          <li>
-            <a
-              href="mailto:enquiry@securend.ai"
-              className="text-gray-400 hover:text-white transition-colors break-words"
-            >
-              enquiry@securend.ai
-            </a>
-          </li>
+         
           <li>
             <a
               href="mailto:contact@securend.ai"

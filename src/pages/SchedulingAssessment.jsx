@@ -816,7 +816,7 @@ function SchedulingAssessmentPage() {
               >
                 Previous
               </button>
-              <span>
+              <span className="text-white" >
                 Page {page}
                 {/* of {totalPages} */}
               </span>
