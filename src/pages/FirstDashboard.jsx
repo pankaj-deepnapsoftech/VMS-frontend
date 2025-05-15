@@ -75,7 +75,7 @@ const Dashboard = ({ setGetDataFromSession }) => {
       {/* Header */}
       <div className="px-6 pt-6">
         <h1 className="text-2xl font-semibold text-sky-500 pb-10">Secure&</h1>
-        <h2 className="text-4xl font-bold text-blue-400">
+        <h2 className="text-4xl font-bold text-blue-600">
           Hello, {authenticate.full_name}
         </h2>
         <p className="mt-2 text-gray-400">
