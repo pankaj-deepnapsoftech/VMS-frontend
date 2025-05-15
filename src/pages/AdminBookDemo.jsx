@@ -11,7 +11,6 @@ const AdminBookDemo = () => {
     try {
       // eslint-disable-next-line no-undef
       const response = await AxiosHandler.get("/book-demo/get-all-book")
-      console.log()
       setDemos(response.data.data);
     } catch (error) {
       console.error("Error fetching demo data:", error);
