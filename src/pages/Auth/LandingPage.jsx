@@ -280,15 +280,15 @@ const LandingPage = () => {
             <div className="w-full sm:w-[30%] h-full flex items-center justify-center mt-10 sm:mt-0">
               <div className="border border-[#918f8f86] shadow-2xl flex justify-center items-center rounded-[50%] w-[300px] sm:w-[400px] h-[300px] sm:h-[380px] relative overflow-hidden group">
                 <img
-                  className="h-[90%] w-[90%] object-cover rounded-[50%] absolute opacity-100 group-hover:opacity-0 transition-opacity duration-1000"
+                  className="h-full w-[90%] object-contain rounded-[50%] absolute opacity-100 group-hover:opacity-0 transition-opacity duration-1000"
                   src="./logo.png"
                   alt=""
                 />
-                {/* <img
-                  className="h-[90%] w-[90%] object-cover rounded-[50%] absolute opacity-0 group-hover:opacity-100 transition-opacity duration-1000"
-                  src="https://images.unsplash.com/photo-1586805372042-327a923a697a?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjR8fHRyYWZmaWN8ZW58MHx8MHx8fDA%3D"
+                <img
+                  className="h-full w-full object-cover rounded-[50%] absolute opacity-0 group-hover:opacity-100 transition-opacity duration-1000"
+                  src="./landing-2.png"
                   alt=""
-                /> */}
+                />
               </div>
             </div>
 

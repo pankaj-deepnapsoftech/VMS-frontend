@@ -1,7 +1,6 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { bookDemoSchema } from "../Validation/BookDemoValidation";
-import axios from "axios";
 import { AxiosHandler } from "@/config/AxiosConfig";
 import { IoClose } from "react-icons/io5";
 
