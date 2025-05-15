@@ -352,13 +352,14 @@ const LandingPage = () => {
                   className="w-full bg-[#2e2f31] border border-gray-600 shadow-inner shadow-black rounded-md px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-              <textarea
+              <textarea        
+
                 rows="10"
                 placeholder="Your question"
                 className="w-full bg-[#2e2f31] border border-gray-600 shadow-inner shadow-black rounded-md px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               ></textarea>
               <button className=" bg-gradient-to-tr from-[#383b40] text-xl  rounded-lg before:ease relative h-20 w-40 overflow-hidden  text-gray-300 shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 hover:text-white  hover:before:h-64 hover:before:-translate-y-32">
-                <span className="relative z-10">Subscribe</span>
+                <span className="relative z-10">Submit</span>
               </button>
             </form>
           </div>
@@ -498,3 +499,5 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
+
+ 

@@ -72,6 +72,7 @@ const Dashboard = ({setGetDataFromSession}) => {
     <div className="min-h-screen flex flex-col bg-center text-white font-sans bg-gradient-image bg-cover">
       {/* Header */}
       <div className="px-6 pt-6">
+        <h1 className="text-2xl font-semibold text-sky-500">Securend</h1>
         <h1 className="text-4xl font-bold text-blue-400">
           Hello, {authenticate.full_name}
         </h1>
@@ -96,7 +97,7 @@ const Dashboard = ({setGetDataFromSession}) => {
                   Protect your account with two-factor authentication
                 </h2>
                 <p className="text-sm text-gray-400 mt-1">
-                  Each time you log into your Group-IB SSO account, you will
+                  Each time you log into your SSO account, you will
                   need to enter a code to verify
                 </p>
               </div>
@@ -109,11 +110,11 @@ const Dashboard = ({setGetDataFromSession}) => {
 
         {/* Right Side */}
         <div className="flex-1 relative gap-10 ml-20 min-w-[300px]">
-          <h2 className="text-xl font-semibold mb-4">
+          {/* <h2 className="text-xl font-semibold mb-4">
             Active products <span className="text-gray-400">(1)</span>
-          </h2>
+          </h2> */}
 
-          {/* Active Product Card */}
+          {/* Active Product Card
           <div className="w-[260px] rounded-xl p-4 text-white mb-10 bg-gradient-to-r from-gray-800 to-gray-900/90">
             <div className="flex flex-col justify-between h-full">
               <div>
@@ -125,11 +126,11 @@ const Dashboard = ({setGetDataFromSession}) => {
               </div>
               <div className="text-right mt-2 text-2xl">&rarr;</div>
             </div>
-          </div>
+          </div> */}
 
           {/* Products Grid */}
           <div>
-            <h2 className="text-xl font-semibold mb-4">Products</h2>
+            {/* <h2 className="text-xl font-semibold mb-4">Products</h2> */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {products.map((product, i) => (
                 <div key={i} onClick={()=>{sessionStorage.setItem("main-page","true"),setGetDataFromSession("true")}}>

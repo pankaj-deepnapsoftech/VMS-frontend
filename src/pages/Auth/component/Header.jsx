@@ -273,12 +273,12 @@ const Header = ({openModal}) => {
               Home
             </Link>
 
-            <Link
+            {/* <Link
               to="/pricing"
               className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left"
             >
               Pricing
-            </Link>
+            </Link> */}
 
             <Link
               to="/solutions"
