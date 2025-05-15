@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import { IoClose } from "react-icons/io5";
 import axios from "axios"; // Make sure axios is installed
 import { AxiosHandler } from "@/config/AxiosConfig";
+import toast from "react-hot-toast";
 
 // eslint-disable-next-line react/prop-types
 const BookDemo = ({ isOpen, closeModal }) => {
@@ -15,8 +16,7 @@ const BookDemo = ({ isOpen, closeModal }) => {
     onSubmit: async (values, { resetForm }) => {
       try {
         const response = await AxiosHandler.post("/book-demo/add-book-demo",values);
-        console.log("Success:", response.data);
-        alert("Demo booked successfully!");
+        toast.success(response.data.message || "something not respond");
         resetForm(); // Clear form after submission
         closeModal(); // Optional: close modal after submission
       } catch (error) {

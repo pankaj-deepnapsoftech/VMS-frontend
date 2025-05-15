@@ -29,7 +29,7 @@ const AdminBookDemo = () => {
       await AxiosHandler.delete("/book-demo/delete-book/" + id)
       setDemos(demos.filter((demo) => demo.id !== id));
       toast.success("Deleted successfully!");
-      fetchDemoData
+      fetchDemoData()
     } catch (error) {
       console.error("Error deleting demo:", error);
       alert("Failed to delete. Please try again.");
