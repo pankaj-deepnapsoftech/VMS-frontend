@@ -3,7 +3,7 @@ import { Check } from "lucide-react";
 import Header from "./component/Header";
 import Footer from "./component/Footer";
 import useBookDemo from "@/hooks/BookDemo";
-import BookDemo from "../BookDemo";
+// import BookDemo from "../BookDemo";
 
 function Pricing() {
   const {isOpen,openModal,closeModal} = useBookDemo()

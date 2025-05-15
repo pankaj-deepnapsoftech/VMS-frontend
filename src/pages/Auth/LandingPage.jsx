@@ -16,7 +16,7 @@ import { FaArrowPointer, FaMessage } from "react-icons/fa6";
 import { GiPerspectiveDiceSixFacesFour } from "react-icons/gi";
 import Header from "./component/Header";
 import Footer from "./component/Footer";
-import BookDemo from "../BookDemo";
+// import BookDemo from "../BookDemo";
 import useBookDemo from "@/hooks/BookDemo";
 
 
@@ -490,7 +490,7 @@ const LandingPage = () => {
         </div>
       </section> */}
       <Footer />
-      <BookDemo closeModal={closeModal} isOpen={isOpen} />
+      {/* <BookDemo closeModal={closeModal} isOpen={isOpen} /> */}
     </>
   );
 };

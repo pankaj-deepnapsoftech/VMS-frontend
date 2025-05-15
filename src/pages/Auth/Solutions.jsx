@@ -2,7 +2,7 @@
 import Header from "@/pages/Auth/component/Header";
 import Footer from "@/pages/Auth/component/Footer";
 import { DownloadIcon } from "lucide-react";
-import BookDemo from "../BookDemo";
+// import BookDemo from "../BookDemo";
 import useBookDemo from "@/hooks/BookDemo";
 
 const Solutions = () => {
