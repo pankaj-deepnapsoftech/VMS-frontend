@@ -76,7 +76,7 @@ const Dashboard = ({ setGetDataFromSession }) => {
       <div className="px-6 pt-6">
         <h1 className="text-2xl font-semibold text-sky-500 pb-10">Secure&</h1>
         <h2 className="text-4xl font-bold text-blue-400">
-          Hello, <span className="capitalize font-lexendDeca" >{authenticate.full_name}</span>
+          Hello i, <span className="capitalize font-lexendDeca" >{authenticate.full_name}</span>
         </h2>
         <p className="mt-2 text-gray-400">
           Please choose a product to work with.
