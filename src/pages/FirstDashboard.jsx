@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useAuthContext } from "@/context";
-import "./animation.css"; 
+import "./animation.css";
 
 const Card = ({ children, gradient }) => {
   return (
@@ -73,7 +73,7 @@ const Dashboard = ({ setGetDataFromSession }) => {
   return (
     <div className="min-h-screen flex flex-col bg-center text-white font-sans bg-gradient-image bg-contain">
       {/* Header */}
-      <div className="px-6 pt-6">
+      <div className="px-2 pt-6 sm:px-6">
         <h1 className="text-2xl font-semibold text-sky-500 pb-10">Secure&</h1>
         <h2 className="text-4xl font-bold text-blue-400">
           Hello, <span className="capitalize font-lexendDeca" >{authenticate.full_name}</span>
@@ -84,11 +84,11 @@ const Dashboard = ({ setGetDataFromSession }) => {
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-col lg:flex-row gap-x-10 px-6 mt-6 flex-grow py-10">
+      <div className="flex flex-col lg:flex-row gap-x-10 px-2 sm:px-6 mt-6 flex-grow py-10">
         {/* Left Side */}
         <div className="w-full lg:max-w-md mb-10 lg:mb-0">
           <Card gradient="bg-transparent">
-            <div className="flex items-start  gap-3">
+            <div className="flex items-start gap-3">
               <div className="bg-red-600 p-2 rounded-full">
                 <span role="img" aria-label="shield">
                   🔒
@@ -104,17 +104,16 @@ const Dashboard = ({ setGetDataFromSession }) => {
                 </p>
               </div>
             </div>
-            <div className="text-end pt-3" >
-
-            <button className="mt-4 bg-blue-600/60 hover:bg-blue-800/70 text-white px-4 py-2 rounded-md">
-              Protect account
-            </button>
+            <div className="text-end pt-3">
+              <button className="mt-4 bg-blue-600/60 hover:bg-blue-800/70 text-white px-4 py-2 rounded-md">
+                Protect account
+              </button>
             </div>
           </Card>
         </div>
 
         {/* Right Side */}
-        <div className="flex-1 relative gap-10 ml-20 min-w-[300px]">
+        <div className="flex-1 relative gap-10 ml-0 lg:ml-20 min-w-[300px] px-2 sm:px-4">
           <div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {products.map((product, i) => (
@@ -142,7 +141,7 @@ const Dashboard = ({ setGetDataFromSession }) => {
       </div>
 
       {/* Footer */}
-      <footer className="w-full mt-20 text-xs text-white px-4 py-6 ">
+      <footer className="w-full mt-20 text-xs text-white px-4 py-6">
         <div className="max-w-4xl mx-auto text-center space-y-2 leading-snug">
           <p>
             24/7 support{" "}
