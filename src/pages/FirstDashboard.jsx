@@ -1,20 +1,22 @@
 /* eslint-disable react/prop-types */
 import { useAuthContext } from "@/context";
-import React from "react";
+import "./animation.css"; 
 
-// Card component with border gradient
-// eslint-disable-next-line react/prop-types
 const Card = ({ children, gradient }) => {
   return (
-    <div className={`p-[1px] rounded-xl bg-gradient-to-br ${gradient}`}>
-      <div className="rounded-xl bg-[#1c1c1e] p-4 h-full">{children}</div>
+    <div
+      className={`p-[1px] rounded-xl bg-gradient-to-br ${gradient} transform transition duration-300 hover:scale-105 hover:shadow-xl`}
+    >
+      <div className="rounded-xl bg-[#1c1c1e] p-6 min-h-[180px] backdrop-blur-md bg-opacity-80 transition-colors duration-300">
+        {children}
+      </div>
     </div>
   );
 };
 
-const Dashboard = ({setGetDataFromSession}) => {
-
+const Dashboard = ({ setGetDataFromSession }) => {
   const { authenticate } = useAuthContext();
+
   const products = [
     {
       title: "CTVM",
@@ -72,7 +74,7 @@ const Dashboard = ({setGetDataFromSession}) => {
     <div className="min-h-screen flex flex-col bg-center text-white font-sans bg-gradient-image bg-cover">
       {/* Header */}
       <div className="px-6 pt-6">
-        <h1 className="text-2xl font-semibold text-sky-500">Securend</h1>
+        <h1 className="text-2xl font-semibold text-sky-500 pb-10">Securend</h1>
         <h1 className="text-4xl font-bold text-blue-400">
           Hello, {authenticate.full_name}
         </h1>
@@ -85,8 +87,8 @@ const Dashboard = ({setGetDataFromSession}) => {
       <div className="flex flex-col lg:flex-row gap-x-10 px-6 mt-6 flex-grow">
         {/* Left Side */}
         <div className="w-full lg:max-w-md mb-10 lg:mb-0">
-          <Card gradient="from-[#29292b] via-[#3d3d40] to-[#2c2c2e]" o>
-            <div className="flex items-start gap-3">
+          <Card gradient="bg-transparent">
+            <div className="flex items-start  gap-3">
               <div className="bg-red-600 p-2 rounded-full">
                 <span role="img" aria-label="shield">
                   🔒
@@ -97,8 +99,8 @@ const Dashboard = ({setGetDataFromSession}) => {
                   Protect your account with two-factor authentication
                 </h2>
                 <p className="text-sm text-gray-400 mt-1">
-                  Each time you log into your SSO account, you will
-                  need to enter a code to verify
+                  Each time you log into your SSO account, you will need to
+                  enter a code to verify
                 </p>
               </div>
             </div>
@@ -110,35 +112,24 @@ const Dashboard = ({setGetDataFromSession}) => {
 
         {/* Right Side */}
         <div className="flex-1 relative gap-10 ml-20 min-w-[300px]">
-          {/* <h2 className="text-xl font-semibold mb-4">
-            Active products <span className="text-gray-400">(1)</span>
-          </h2> */}
-
-          {/* Active Product Card
-          <div className="w-[260px] rounded-xl p-4 text-white mb-10 bg-gradient-to-r from-gray-800 to-gray-900/90">
-            <div className="flex flex-col justify-between h-full">
-              <div>
-                <div className="flex items-center gap-2">
-                  <h3 className="text-lg font-medium">Threat Intelligence</h3>
-                  <span className="h-2.5 w-2.5 rounded-full shadow-md bg-green-500" />
-                </div>
-                <p className="text-sm">Available till 31 March 2026</p>
-              </div>
-              <div className="text-right mt-2 text-2xl">&rarr;</div>
-            </div>
-          </div> */}
-
-          {/* Products Grid */}
           <div>
-            {/* <h2 className="text-xl font-semibold mb-4">Products</h2> */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {products.map((product, i) => (
-                <div key={i} onClick={()=>{sessionStorage.setItem("main-page","true"),setGetDataFromSession("true")}}>
-                  <Card  gradient={product.gradient} >
-                    <h3 className="text-md font-medium text-white">
+                <div
+                  key={i}
+                  className="animate-fade-in cursor-pointer"
+                  onClick={() => {
+                    sessionStorage.setItem("main-page", "true");
+                    setGetDataFromSession("true");
+                  }}
+                >
+                  <Card gradient={product.gradient}>
+                    <h3 className="text-lg font-semibold group-hover:text-blue-300">
                       {product.title}
                     </h3>
-                    <p className="text-sm text-gray-400 mt-1">{product.desc}</p>
+                    <p className="text-sm text-gray-400 mt-2 group-hover:text-gray-300">
+                      {product.desc}
+                    </p>
                   </Card>
                 </div>
               ))}
