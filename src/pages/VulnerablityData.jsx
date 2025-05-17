@@ -555,7 +555,7 @@ export function VulnerabilityData() {
           {/* 📝 Modal Form */}
           {isModalOpen && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-10">
-              <div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
+              <div className="bg-table rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
                 {/* Header */}
                 <div className="flex justify-between items-center border-b p-4 bg-gradient-to-bl from-[#333333] to-[#666666]">
                   <h2 className="text-lg font-semibold text-gray-200">

@@ -55,7 +55,7 @@ function Header({ setShowMenu }) {
       <Link to="/" className="flex items-center my-2 ml-3">
         <div className="flex gap-2 pt-2 items-center justify-center ml-14 ">
           <div
-            className="w-[100px] h-[100px] left-10 bg-gradient-to-t from-gray-100 to-blue-500"
+            className="w-[100px] h-[100px] bg-blue-500"
             style={{
               WebkitMaskImage: "url('/logo.png')",
               WebkitMaskRepeat: "no-repeat",
@@ -85,7 +85,7 @@ function Header({ setShowMenu }) {
         ))}
       </nav>
       <hr className="border-gray-100 mx-8" />
-      <div className=" h-full p-2 flex  justify-start items-end ">
+      <div className=" h-full p-2 flex justify-start items-end ">
         <div className="relative p-5 flex ">
           <button
             onClick={handleLogout}

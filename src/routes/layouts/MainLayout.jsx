@@ -97,7 +97,7 @@ transition duration-300 sm:w-[40%] md:w-[30%] lg:w-[25%] xl:w-[20%] 2xl:w-[15%] 
                   <h1 className="text-base sm:text-xl text-white font-semibold truncate capitalize">
                     {location.pathname !== "/"
                       ? temp?.replace("-", " ")
-                      : "Dashboard"}
+                      : "Risk Prioritization Hub"}
                   </h1>
                   <div className=" flex items-end justify-end">
                     <button

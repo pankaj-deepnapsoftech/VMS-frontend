@@ -316,7 +316,7 @@ const Solutions = () => {
         </div>
       </section>
       <Footer />
-      <BookDemo closeModal={closeModal} isOpen={isOpen} />
+      {/* <BookDemo closeModal={closeModal} isOpen={isOpen} /> */}
     </div>
   );
 };

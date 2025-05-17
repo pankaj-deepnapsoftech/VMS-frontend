@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 
 // eslint-disable-next-line react/prop-types
-const Header = ({openModal}) => {
+const Header = ({ openModal }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
@@ -17,8 +17,8 @@ const Header = ({openModal}) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  function pathModifier(path){
-    window.location.href = path
+  function pathModifier(path) {
+    window.location.href = path;
   }
 
   return (
@@ -250,21 +250,19 @@ const Header = ({openModal}) => {
       >
         <div className="w-full max-w-screen-xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <div className="flex gap-2 items-center justify-center">
-              <div
-                className="w-[100px] h-[100px] bg-gradient-to-t from-gray-100 to-blue-500"
-                style={{
-                  WebkitMaskImage: "url('/logo.png')",
-                  WebkitMaskRepeat: "no-repeat",
-                  WebkitMaskPosition: "center",
-                  WebkitMaskSize: "contain",
-                  maskImage: "url('/logo.png')",
-                  maskRepeat: "no-repeat",
-                  maskPosition: "center",
-                  maskSize: "contain",
-                }}
-              ></div>
-            </div>
+            <div
+              className="w-[100px] h-[100px] bg-blue-500"
+              style={{
+                WebkitMaskImage: "url('/logo.png')",
+                WebkitMaskRepeat: "no-repeat",
+                WebkitMaskPosition: "center",
+                WebkitMaskSize: "contain",
+                maskImage: "url('/logo.png')",
+                maskRepeat: "no-repeat",                         
+                maskPosition: "center",
+                maskSize: "contain",
+              }}
+            ></div>
           </div>
 
           <div className="hidden md:flex items-center space-x-12 text-gray-400 text-lg">
@@ -289,13 +287,13 @@ const Header = ({openModal}) => {
               Solutions
             </Link>
             <Link
-            onClick={()=>pathModifier("#book-demo")}
+              onClick={() => pathModifier("#book-demo")}
               className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left"
             >
               Contact us
             </Link>
             <Link
-            onClick={openModal}
+              onClick={openModal}
               className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left"
             >
               Book Demo{" "}
