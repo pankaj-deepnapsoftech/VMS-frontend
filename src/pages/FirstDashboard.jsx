@@ -1,5 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useAuthContext } from "@/context";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { FaUserCircle } from "react-icons/fa";
 import "./animation.css";
 
 const Card = ({ children, gradient }) => {
@@ -16,6 +19,8 @@ const Card = ({ children, gradient }) => {
 
 const Dashboard = ({ setGetDataFromSession }) => {
   const { authenticate } = useAuthContext();
+  const navigate = useNavigate();
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const products = [
     {
@@ -71,12 +76,35 @@ const Dashboard = ({ setGetDataFromSession }) => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-center text-white font-sans bg-gradient-image bg-contain">
+    <div className="min-h-screen flex flex-col bg-center text-white font-sans bg-gradient-image bg-contain relative">
+      {/* Profile Icon with Logout Dropdown */}
+      <div className="absolute top-6 right-6 z-50">
+        <div className="relative">
+          <FaUserCircle
+            className="text-white text-3xl cursor-pointer hover:text-blue-400 transition duration-300"
+            onClick={() => setShowDropdown(!showDropdown)}
+          />
+          {showDropdown && (
+            <div className="absolute right-0 mt-2 w-36 bg-[#1c1c1e] border border-gray-700 rounded-md shadow-lg py-2 z-50">
+              <button
+                className="block w-full text-left px-4 py-2 text-sm text-white hover:bg-gray-700 transition"
+                onClick={() => {
+                  sessionStorage.clear();
+                  navigate("/");
+                }}
+              >
+                Logout
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* Header */}
       <div className="px-2 pt-6 sm:px-6">
         <h1 className="text-2xl font-semibold text-sky-500 pb-10">Secure&</h1>
         <h2 className="text-4xl font-bold text-blue-400">
-          Hello, <span className="capitalize font-lexendDeca" >{authenticate.full_name}</span>
+          Hello, <span className="capitalize font-lexendDeca">{authenticate.full_name}</span>
         </h2>
         <p className="mt-2 text-gray-400">
           Please choose a product to work with.
@@ -90,9 +118,7 @@ const Dashboard = ({ setGetDataFromSession }) => {
           <Card gradient="bg-transparent">
             <div className="flex items-start gap-3">
               <div className="bg-red-600 p-2 rounded-full">
-                <span role="img" aria-label="shield">
-                  🔒
-                </span>
+                <span role="img" aria-label="shield">🔒</span>
               </div>
               <div>
                 <h2 className="text-lg font-semibold text-white">
@@ -145,16 +171,12 @@ const Dashboard = ({ setGetDataFromSession }) => {
         <div className="max-w-4xl mx-auto text-center space-y-2 leading-snug">
           <p>
             24/7 support{" "}
-            <a
-              href="mailto:contact@securend.ai"
-              className="text-blue-400 hover:underline"
-            >
+            <a href="mailto:contact@securend.ai" className="text-blue-400 hover:underline">
               contact@securend.ai
             </a>
           </p>
           <p className="text-gray-400">
-            © 2025{" "}
-            <span className="text-white font-medium">Secure&</span> is global
+            © 2025 <span className="text-white font-medium">Secure&</span> is global
             leader in attribution-based threat intelligence, best-in-class
             threat hunting, fraud prevention, and cybercrime investigations.
           </p>
