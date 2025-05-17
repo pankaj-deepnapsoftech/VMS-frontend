@@ -71,10 +71,10 @@ const Dashboard = ({ setGetDataFromSession }) => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-center text-white font-sans bg-gradient-image bg-contain">
+    <div className="min-h-screen flex flex-col bg-right text-white font-sans bg-gradient-image bg-cover">
       {/* Header */}
       <div className="px-2 pt-6 sm:px-6">
-        <h1 className="text-2xl font-semibold text-sky-500 pb-10">Secure&</h1>
+        {/* <h1 className="text-2xl font-semibold text-sky-500 pb-10">Secure&</h1> */}
         <h2 className="text-4xl font-bold text-blue-400">
           Hello, <span className="capitalize font-lexendDeca" >{authenticate.full_name}</span>
         </h2>
@@ -87,7 +87,7 @@ const Dashboard = ({ setGetDataFromSession }) => {
       <div className="flex flex-col lg:flex-row gap-x-10 px-2 sm:px-6 mt-6 flex-grow py-10">
         {/* Left Side */}
         <div className="w-full lg:max-w-md mb-10 lg:mb-0">
-          <Card gradient="bg-transparent">
+          {/* <Card gradient="bg-transparent">
             <div className="flex items-start gap-3">
               <div className="bg-red-600 p-2 rounded-full">
                 <span role="img" aria-label="shield">
@@ -109,7 +109,7 @@ const Dashboard = ({ setGetDataFromSession }) => {
                 Protect account
               </button>
             </div>
-          </Card>
+          </Card> */}
         </div>
 
         {/* Right Side */}
@@ -141,7 +141,7 @@ const Dashboard = ({ setGetDataFromSession }) => {
       </div>
 
       {/* Footer */}
-      <footer className="w-full mt-20 text-xs text-white px-4 py-6">
+      {/* <footer className="w-full mt-20 text-xs text-white px-4 py-6">
         <div className="max-w-4xl mx-auto text-center space-y-2 leading-snug">
           <p>
             24/7 support{" "}
@@ -159,7 +159,7 @@ const Dashboard = ({ setGetDataFromSession }) => {
             threat hunting, fraud prevention, and cybercrime investigations.
           </p>
         </div>
-      </footer>
+      </footer> */}
     </div>
   );
 };
