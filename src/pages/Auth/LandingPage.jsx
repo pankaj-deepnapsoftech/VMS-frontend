@@ -20,7 +20,6 @@ import Footer from "./component/Footer";
 import useBookDemo from "@/hooks/BookDemo";
 import BookDemo from "@/modals/BookDemo";
 import Loader from "@/components/Loader/Loader";
-import RiskOperations from "./RiskOperations";
 
 const slides = [
   {
@@ -248,9 +247,12 @@ const LandingPage = () => {
       <section>
         <div className="h-full w-full pt-12 bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f]">
           <h1 className="text-white text-center text-[40px] font-bold pt-4">
-            Business aligned & AI Powered risk management
+            Business aligned & AI Powered Risk Management
           </h1>
-          <RiskOperations/>
+          <section class="text-center ">
+            <img src="section.png" alt="section" class="inline-block" />
+          </section>
+
           {/* <div className="flex flex-col sm:flex-row sm:flex-wrap gap-8 justify-between items-center h-auto w-full px-4 sm:px-8 py-10">
             <div className=" w-full sm:w-[30%]">
               <div className="mb-10 mt-10">
