@@ -2,8 +2,6 @@
 import { useAuthContext } from "@/context";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-hot-toast";
-import Cookies from "js-cookie";
 import "./animation.css";
 
 // Card component with gradient border
@@ -29,13 +27,13 @@ function getInitials(fullName) {
 }
 
 const Dashboard = ({ setGetDataFromSession }) => {
-  const { authenticate, setAuthenticate,Logout } = useAuthContext();
+  const { authenticate,  Logout } = useAuthContext();
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
   const [loading, setLoading] = useState(false);
   const dropdownRef = useRef(null);
 
- 
+
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -51,15 +49,13 @@ const Dashboard = ({ setGetDataFromSession }) => {
   }, []);
 
   const products = [
-    { title: "CTVM", desc: "Continuous Threat and Vulnerability Management", gradient: "from-[#ff7e5f] to-[#feb47b]" },
-    { title: "VI", desc: "Vulnerability Intelligence for known/unknown threats", gradient: "from-[#6a11cb] to-[#2575fc]" },
-    { title: "ASM", desc: "Attack Surface Monitoring for real-time visibility", gradient: "from-[#00c6ff] to-[#0072ff]" },
-    { title: "DarkWeb", desc: "Monitor stolen data on dark web forums & markets", gradient: "from-[#f7971e] to-[#ffd200]" },
-    { title: "API Discovery", desc: "Discover, classify, and secure exposed APIs", gradient: "from-[#43cea2] to-[#185a9d]" },
-    { title: "AI PT", desc: "Automated AI-driven Penetration Testing", gradient: "from-[#f953c6] to-[#b91d73]" },
-    { title: "AI Remediation Factory", desc: "AI-based solution fixing vulnerabilities at scale", gradient: "from-[#2193b0] to-[#6dd5ed]" },
     { title: "Asset Inventory", desc: "Centralized asset visibility and management", gradient: "from-[#ee9ca7] to-[#ffdde1]" },
-    { title: "Reporting", desc: "Generate reports & dashboards automatically", gradient: "from-[#a1c4fd] to-[#c2e9fb]" },
+    { title: "TVM", desc: "Threat and Vulnerability Management", gradient: "from-[#ff7e5f] to-[#feb47b]" },
+    { title: "ASM", desc: "Attack Surface Monitoring for real-time visibility", gradient: "from-[#00c6ff] to-[#0072ff]" },
+    { title: "Remediation Factory", desc: "Automated remediation of vulnerabilities or security issues across an organization.", gradient: "from-[#6a11cb] to-[#2575fc]" },
+    { title: "GRC", desc: "Governance, Risk, and Compliance", gradient: "from-[#f7971e] to-[#ffd200]" },
+    { title: "TPRM", desc: "Third-Party Risk Management", gradient: "from-[#43cea2] to-[#185a9d]" },
+    { title: "Reports", desc: "Generate reports & dashboards automatically", gradient: "from-[#a1c4fd] to-[#c2e9fb]" },
     { title: "Administration", desc: "Admin control panel for team and roles", gradient: "from-[#fceabb] to-[#f8b500]" },
   ];
 
