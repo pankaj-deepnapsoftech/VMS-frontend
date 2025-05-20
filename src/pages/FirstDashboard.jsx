@@ -20,11 +20,13 @@ const Card = ({ children, gradient }) => {
 
 // Function to get initials from full name
 function getInitials(fullName) {
-  return fullName
-    ?.split(" ")
-    .filter(Boolean)
-    .map((item) => item[0].toUpperCase())
-    .join("") || "A";
+  return (
+    fullName
+      ?.split(" ")
+      .filter(Boolean)
+      .map((item) => item[0].toUpperCase())
+      .join("") || "A"
+  );
 }
 
 const Dashboard = ({ setGetDataFromSession }) => {
@@ -33,8 +35,6 @@ const Dashboard = ({ setGetDataFromSession }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [loading, setLoading] = useState(false);
   const dropdownRef = useRef(null);
-
-
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -50,14 +50,46 @@ const Dashboard = ({ setGetDataFromSession }) => {
   }, []);
 
   const products = [
-    { title: "Asset Inventory", desc: "Centralized asset visibility and management", gradient: "from-[#ee9ca7] to-[#ffdde1]" },
-    { title: "TVM", desc: "Threat and Vulnerability Management", gradient: "from-[#ff7e5f] to-[#feb47b]" },
-    { title: "ASM", desc: "Attack Surface Monitoring for real-time visibility", gradient: "from-[#00c6ff] to-[#0072ff]" },
-    { title: "Remediation Factory", desc: "Automated remediation of vulnerabilities or security issues across an organization.", gradient: "from-[#6a11cb] to-[#2575fc]" },
-    { title: "GRC", desc: "Governance, Risk, and Compliance", gradient: "from-[#f7971e] to-[#ffd200]" },
-    { title: "TPRM", desc: "Third-Party Risk Management", gradient: "from-[#43cea2] to-[#185a9d]" },
-    { title: "Reports", desc: "Generate reports & dashboards automatically", gradient: "from-[#a1c4fd] to-[#c2e9fb]" },
-    { title: "Administration", desc: "Admin control panel for team and roles", gradient: "from-[#fceabb] to-[#f8b500]" },
+    {
+      title: "Asset Inventory",
+      desc: "Centralized asset visibility and management",
+      gradient: "from-[#ee9ca7] to-[#ffdde1]",
+    },
+    {
+      title: "TVM",
+      desc: "Threat and Vulnerability Management",
+      gradient: "from-[#ff7e5f] to-[#feb47b]",
+    },
+    {
+      title: "ASM",
+      desc: "Attack Surface Monitoring for real-time visibility",
+      gradient: "from-[#00c6ff] to-[#0072ff]",
+    },
+    {
+      title: "Remediation Factory",
+      desc: "Automated remediation of vulnerabilities or security issues across an organization.",
+      gradient: "from-[#6a11cb] to-[#2575fc]",
+    },
+    {
+      title: "GRC",
+      desc: "Governance, Risk, and Compliance",
+      gradient: "from-[#f7971e] to-[#ffd200]",
+    },
+    {
+      title: "TPRM",
+      desc: "Third-Party Risk Management",
+      gradient: "from-[#43cea2] to-[#185a9d]",
+    },
+    {
+      title: "Reports",
+      desc: "Generate reports & dashboards automatically",
+      gradient: "from-[#a1c4fd] to-[#c2e9fb]",
+    },
+    {
+      title: "Administration",
+      desc: "Admin control panel for team and roles",
+      gradient: "from-[#fceabb] to-[#f8b500]",
+    },
   ];
 
   return (
@@ -95,11 +127,12 @@ const Dashboard = ({ setGetDataFromSession }) => {
       {/* Header */}
       <div className="px-2 pt-6 sm:px-6">
         <h2 className="text-4xl font-bold text-blue-400">
-          Hello, <span className="capitalize font-lexendDeca">{authenticate?.full_name}</span>
+          Hello,{" "}
+          <span className="capitalize font-lexendDeca">
+            {authenticate?.full_name}
+          </span>
         </h2>
-        <p className="mt-2 text-gray-400">
-          Welcome to risk operations center
-        </p>
+        <p className="mt-2 text-gray-400">Welcome to risk operations center</p>
       </div>
       <div className="flex flex-col items-center gap-8 pt-10">
         {/* Header */}
