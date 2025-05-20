@@ -59,7 +59,6 @@ const Dashboard = () => {
 
   return (
     <div className="container mx-auto p-4 md:p-8 bg-gradient-image h-screen">
-
       <div className="absolute top-4 right-6 z-20" ref={dropdownRef}>
         <div className="relative">
           <button
@@ -101,7 +100,7 @@ const Dashboard = () => {
       </div>
       <div className="flex flex-col items-center gap-8 pt-10">
         {/* Header */}
-        <div className="w-full max-w-5xl  bg-white/30 backdrop-blur-sm text-white p-6 text-center text-xl md:text-2xl font-medium rounded-md">
+        <div className="rounded-md bg-[#191925] p-4 text-white text-center  h-24 flex items-center justify-center">
           Secure& Vulnerability & Risk Operations Centre (VROC)
         </div>
 
@@ -139,7 +138,6 @@ const Dashboard = () => {
               {products[3].desc}
             </p>
           </Card>
-
         </div>
 
         {/* Middle Section with Arrows */}
@@ -148,14 +146,21 @@ const Dashboard = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-5xl z-10">
             <div className="md:col-start-1 md:col-end-2 flex justify-center">
-
-              <div className={`bg-gradient-to-br ${products[3].gradient} text-white p-4 flex items-center justify-center text-center rounded-md h-24 w-full max-w-xs`}>
-                AI-VA
+              <div
+                className={`p-[1px] rounded-md bg-gradient-to-br ${products[3].gradient} w-full max-w-xs transition-transform transform hover:scale-105`}
+              >
+                <div className="rounded-md bg-[#1c1c1e] p-4 text-white text-center h-24 flex items-center justify-center">
+                  AI-VA
+                </div>
               </div>
             </div>
             <div className="md:col-start-2 md:col-end-3 flex justify-center">
-              <div className="bg-blue-700 text-white p-4 flex items-center justify-center text-center rounded-md h-24 w-full max-w-xs">
-                Vulnerability Intelligence
+              <div
+                className={`p-[1px] rounded-md bg-gradient-to-br ${products[2].gradient} w-full max-w-xs transition-transform transform hover:scale-105`}
+              >                              
+                <div className="rounded-md bg-[#1c1c1e] p-4 text-white text-center h-24 flex items-center justify-center">
+                  Vulnerability Intelligence
+                </div>
               </div>
             </div>
           </div>
@@ -209,7 +214,6 @@ const Dashboard = () => {
               {products[7].desc}
             </p>
           </Card>
-
         </div>
 
         {/* Footer */}
