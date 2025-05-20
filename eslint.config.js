@@ -7,6 +7,7 @@ import unusedImports from 'eslint-plugin-unused-imports' // New plugin
 
 export default [
   { ignores: ['dist'] },
+  
   {
     files: ['**/*.{js,jsx}'],
     languageOptions: {

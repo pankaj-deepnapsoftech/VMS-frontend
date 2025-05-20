@@ -3,6 +3,7 @@ import { useAuthContext } from "@/context";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./animation.css";
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp } from "lucide-react";
 
 // Card component with gradient border
 const Card = ({ children, gradient }) => {
@@ -27,7 +28,7 @@ function getInitials(fullName) {
 }
 
 const Dashboard = ({ setGetDataFromSession }) => {
-  const { authenticate,  Logout } = useAuthContext();
+  const { authenticate, Logout } = useAuthContext();
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -60,8 +61,8 @@ const Dashboard = ({ setGetDataFromSession }) => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-right text-white font-sans bg-gradient-image bg-contain relative">
-      {/* Profile Icon and Dropdown */}
+    <div className="container mx-auto p-4 md:p-8 bg-gradient-image h-screen">
+
       <div className="absolute top-4 right-6 z-20" ref={dropdownRef}>
         <div className="relative">
           <button
@@ -100,33 +101,130 @@ const Dashboard = ({ setGetDataFromSession }) => {
           Welcome to risk operations center
         </p>
       </div>
+      <div className="flex flex-col items-center gap-8 pt-10">
+        {/* Header */}
+        <div className="w-full max-w-5xl  bg-white/30 backdrop-blur-sm text-white p-6 text-center text-xl md:text-2xl font-medium rounded-md">
+          Secure& Vulnerability & Risk Operations Centre (VROC)
+        </div>
 
-      {/* Main Content */}
-      <div className="flex flex-col lg:flex-row gap-x-10 px-2 sm:px-6 mt-6 flex-grow py-10">
-        <div className="w-full lg:max-w-md mb-10 lg:mb-0"></div>
-        <div className="flex-1 relative gap-10 ml-0 mt-10 lg:ml-20 min-w-[300px] px-2 sm:px-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {products.map((product, i) => (
-              <div
-                key={i}
-                className="animate-fade-in cursor-pointer"
-                onClick={() => {
-                  sessionStorage.setItem("main-page", product.title);
-                  setGetDataFromSession("true");
-                }}
-              >
-                <Card gradient={product.gradient}>
-                  <h3 className="text-lg font-semibold group-hover:text-blue-300">
-                    {product.title}
-                  </h3>
-                  <p className="text-sm text-gray-400 mt-2 group-hover:text-gray-300">
-                    {product.desc}
-                  </p>
-                </Card>
+        {/* Second Row */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-5xl">
+          <Card gradient={products[0].gradient}>
+            <h3 className="text-lg font-semibold text-gray-200 group-hover:text-blue-300">
+              {products[0].title}
+            </h3>
+            <p className="text-sm text-gray-400 mt-2 group-hover:text-gray-300">
+              {products[0].desc}
+            </p>
+          </Card>
+          <Card gradient={products[1].gradient}>
+            <h3 className="text-lg font-semibold text-gray-200 group-hover:text-blue-300">
+              {products[1].title}
+            </h3>
+            <p className="text-sm text-gray-400 mt-2 group-hover:text-gray-300">
+              {products[1].desc}
+            </p>
+          </Card>
+          <Card gradient={products[2].gradient}>
+            <h3 className="text-lg font-semibold text-gray-200 group-hover:text-blue-300">
+              {products[2].title}
+            </h3>
+            <p className="text-sm text-gray-400 mt-2 group-hover:text-gray-300">
+              {products[2].desc}
+            </p>
+          </Card>
+          <Card gradient={products[3].gradient}>
+            <h3 className="text-lg font-semibold text-gray-200 group-hover:text-blue-300">
+              {products[3].title}
+            </h3>
+            <p className="text-sm text-gray-400 mt-2 group-hover:text-gray-300">
+              {products[3].desc}
+            </p>
+          </Card>
+
+        </div>
+
+        {/* Middle Section with Arrows */}
+        <div className="relative w-full max-w-5xl flex justify-center">
+          <div className="hidden md:flex absolute top-0 left-1/2 -translate-x-1/2 w-[60%] h-16 border-b-2 border-l-2 border-r-2 border-blue-700"></div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-5xl z-10">
+            <div className="md:col-start-1 md:col-end-2 flex justify-center">
+
+              <div className={`bg-gradient-to-br ${products[3].gradient} text-white p-4 flex items-center justify-center text-center rounded-md h-24 w-full max-w-xs`}>
+                AI-VA
               </div>
-            ))}
+            </div>
+            <div className="md:col-start-2 md:col-end-3 flex justify-center">
+              <div className="bg-blue-700 text-white p-4 flex items-center justify-center text-center rounded-md h-24 w-full max-w-xs">
+                Vulnerability Intelligence
+              </div>
+            </div>
+          </div>
+
+          {/* Arrows for mobile */}
+          <div className="flex md:hidden flex-col items-center gap-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <ArrowUp className="text-blue-700" />
+            <ArrowDown className="text-blue-700" />
+          </div>
+
+          {/* Arrows for desktop */}
+          <div className="hidden md:block absolute top-0 left-[25%] -translate-x-1/2 mt-16">
+            <ArrowRight className="text-blue-700" />
+          </div>
+          <div className="hidden md:block absolute top-0 right-[25%] translate-x-1/2 mt-16">
+            <ArrowLeft className="text-blue-700" />
           </div>
         </div>
+
+        {/* Bottom Row */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-5xl">
+          <Card gradient={products[4].gradient}>
+            <h3 className="text-lg font-semibold text-gray-200 group-hover:text-blue-300">
+              {products[4].title}
+            </h3>
+            <p className="text-sm text-gray-400 mt-2 group-hover:text-gray-300">
+              {products[4].desc}
+            </p>
+          </Card>
+          <Card gradient={products[5].gradient}>
+            <h3 className="text-lg font-semibold text-gray-200 group-hover:text-blue-300">
+              {products[5].title}
+            </h3>
+            <p className="text-sm text-gray-400 mt-2 group-hover:text-gray-300">
+              {products[5].desc}
+            </p>
+          </Card>
+          <Card gradient={products[6].gradient}>
+            <h3 className="text-lg font-semibold text-gray-200 group-hover:text-blue-300">
+              {products[6].title}
+            </h3>
+            <p className="text-sm text-gray-400 mt-2 group-hover:text-gray-300">
+              {products[6].desc}
+            </p>
+          </Card>
+          <Card gradient={products[7].gradient}>
+            <h3 className="text-lg font-semibold text-gray-200 group-hover:text-blue-300">
+              {products[7].title}
+            </h3>
+            <p className="text-sm text-gray-400 mt-2 group-hover:text-gray-300">
+              {products[7].desc}
+            </p>
+          </Card>
+
+        </div>
+
+        {/* Footer */}
+        {/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-5xl justify-end">
+          <div className="sm:col-start-2 sm:col-end-3">
+            <div className="bg-emerald-500 text-white p-4 flex items-center justify-center text-center rounded-md h-12 mb-4">
+              In House
+            </div>
+            <div className="bg-blue-700 text-white p-4 flex items-center justify-center text-center rounded-md h-12">
+              Integrations
+            </div>
+          </div>
+        </div> */}
       </div>
     </div>
   );
