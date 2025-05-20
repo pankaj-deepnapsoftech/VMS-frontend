@@ -17,7 +17,7 @@ import Loader from "@/components/Loader/Loader";
 const MainLayout = () => {
   const { notificationData, NotificationsViewed } =
     useVulnerabililtyDataContext();
-  const { authenticate } = useAuthContext();
+  const { authenticate, getDataFromSession } = useAuthContext();
 
   const { isOpen, openModal, closeModal } = useChangePassword();
 
@@ -28,14 +28,8 @@ const MainLayout = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
 
-  const [getDataFromSession, setGetDataFromSession] = useState(() => {
-    return sessionStorage.getItem("main-page");
-  })
 
-
-
-  let notificationcount =
-    notificationData?.filter((notification) => !notification.view).length || 0;
+  let notificationcount = notificationData?.filter((notification) => !notification.view).length || 0;
 
   useEffect(() => {
     const handleResize = () => setWidth(window.innerWidth);
@@ -66,7 +60,7 @@ const MainLayout = () => {
   }, [authenticate.mustChangePassword])
 
   return (
-    !getDataFromSession ? <FirstDashboard setGetDataFromSession={setGetDataFromSession} /> :
+    !getDataFromSession ? <FirstDashboard /> :
       (
         <Suspense fallback={<Loader />}>
 

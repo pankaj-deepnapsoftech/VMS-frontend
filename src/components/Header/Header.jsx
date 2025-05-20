@@ -10,9 +10,10 @@ import {
 import { useAuthContext } from "@/context";
 import { IoIosLogOut } from "react-icons/io";
 import toast from "react-hot-toast";
+import { products } from "@/constants/static.data";
 
 function Header({ setShowMenu }) {
-  const { Logout, authenticate } = useAuthContext();
+  const { Logout, authenticate,getDataFromSession } = useAuthContext();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -36,7 +37,11 @@ function Header({ setShowMenu }) {
       navList = EmployeeList;
       break;
     case "Admin":
-      navList = list;
+       products.map((item)=>{
+        if(getDataFromSession === item.title){
+         navList = item.allowedPath
+        }
+      });
       break;
     case "ClientSME":
       navList = ClientSmeList.filter((item) =>

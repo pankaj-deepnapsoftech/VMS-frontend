@@ -29,7 +29,6 @@ export const PrivateRoutes = [
         path: "/vulnerability-data",
         element: <VulnerabilityData />
     },
-
     {
         path: "/jira-data",
         element: <JiraDataTable />

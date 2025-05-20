@@ -17,6 +17,9 @@ const AuthContextProvider = ({ children }) => {
   const [userLoading, setUserLoading] = useState(false);
   const [runner,setRunner] = useState(1);
   const [authenticate, setAuthenticate] = useState(null);
+    const [getDataFromSession, setGetDataFromSession] = useState(() => {
+    return sessionStorage.getItem("VROC");
+  })
 
   
 
@@ -187,7 +190,8 @@ const AuthContextProvider = ({ children }) => {
       toast.dismiss(toastId);
       toast.success(res.data.message);
       setAuthenticate(null)
-      sessionStorage.removeItem("main-page")
+      setGetDataFromSession(null)
+      sessionStorage.removeItem("VROC")
       navigate("/");
     } catch (error) {
       toast.dismiss(toastId);
@@ -242,7 +246,9 @@ const AuthContextProvider = ({ children }) => {
       authenticate,
       ChangePassword,
       ChangeStatus,
-      runner
+      runner,
+      getDataFromSession,
+      setGetDataFromSession
     }}>
       {children}
     </authContext.Provider>

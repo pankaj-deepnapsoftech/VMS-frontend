@@ -4,12 +4,13 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./animation.css";
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp } from "lucide-react";
+import { products } from "@/constants/static.data";
 
 // Card component with gradient border
-const Card = ({ children, gradient }) => {
+const Card = ({ children, gradient,HandleClick }) => {
   return (
-    <div
-      className={`p-[1px] rounded-xl bg-gradient-to-br ${gradient} transform transition duration-300 hover:scale-105 hover:shadow-xl`}
+    <div onClick={HandleClick}
+      className={`p-[1px] rounded-xl bg-gradient-to-br ${gradient} transform transition duration-300 hover:scale-105 hover:shadow-xl cursor-pointer`}
     >
       <div className="rounded-xl bg-[#1c1c1e] p-6 min-h-[180px] backdrop-blur-md bg-opacity-80 transition-colors duration-300">
         {children}
@@ -29,12 +30,17 @@ function getInitials(fullName) {
   );
 }
 
-const Dashboard = ({ setGetDataFromSession }) => {
-  const { authenticate, Logout } = useAuthContext();
+const Dashboard = () => {
+  const { authenticate, Logout,setGetDataFromSession } = useAuthContext();
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
   const [loading, setLoading] = useState(false);
   const dropdownRef = useRef(null);
+
+  const HandleClick = (item) => {
+    sessionStorage.setItem("VROC",item)
+    setGetDataFromSession(item)
+  }
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -49,48 +55,7 @@ const Dashboard = ({ setGetDataFromSession }) => {
     };
   }, []);
 
-  const products = [
-    {
-      title: "Asset Inventory",
-      desc: "Centralized asset visibility and management",
-      gradient: "from-[#ee9ca7] to-[#ffdde1]",
-    },
-    {
-      title: "TVM",
-      desc: "Threat and Vulnerability Management",
-      gradient: "from-[#ff7e5f] to-[#feb47b]",
-    },
-    {
-      title: "ASM",
-      desc: "Attack Surface Monitoring for real-time visibility",
-      gradient: "from-[#00c6ff] to-[#0072ff]",
-    },
-    {
-      title: "Remediation Factory",
-      desc: "Automated remediation of vulnerabilities or security issues across an organization.",
-      gradient: "from-[#6a11cb] to-[#2575fc]",
-    },
-    {
-      title: "GRC",
-      desc: "Governance, Risk, and Compliance",
-      gradient: "from-[#f7971e] to-[#ffd200]",
-    },
-    {
-      title: "TPRM",
-      desc: "Third-Party Risk Management",
-      gradient: "from-[#43cea2] to-[#185a9d]",
-    },
-    {
-      title: "Reports",
-      desc: "Generate reports & dashboards automatically",
-      gradient: "from-[#a1c4fd] to-[#c2e9fb]",
-    },
-    {
-      title: "Administration",
-      desc: "Admin control panel for team and roles",
-      gradient: "from-[#fceabb] to-[#f8b500]",
-    },
-  ];
+
 
   return (
     <div className="container mx-auto p-4 md:p-8 bg-gradient-image h-screen">
@@ -142,7 +107,7 @@ const Dashboard = ({ setGetDataFromSession }) => {
 
         {/* Second Row */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-5xl">
-          <Card gradient={products[0].gradient}>
+          <Card HandleClick={()=>HandleClick(products[0].title)} gradient={products[0].gradient}>
             <h3 className="text-lg font-semibold text-gray-200 group-hover:text-blue-300">
               {products[0].title}
             </h3>
@@ -150,7 +115,7 @@ const Dashboard = ({ setGetDataFromSession }) => {
               {products[0].desc}
             </p>
           </Card>
-          <Card gradient={products[1].gradient}>
+          <Card HandleClick={()=>HandleClick(products[1].title)} gradient={products[1].gradient}>
             <h3 className="text-lg font-semibold text-gray-200 group-hover:text-blue-300">
               {products[1].title}
             </h3>
@@ -158,7 +123,7 @@ const Dashboard = ({ setGetDataFromSession }) => {
               {products[1].desc}
             </p>
           </Card>
-          <Card gradient={products[2].gradient}>
+          <Card HandleClick={()=>HandleClick(products[2].title)} gradient={products[2].gradient}>
             <h3 className="text-lg font-semibold text-gray-200 group-hover:text-blue-300">
               {products[2].title}
             </h3>
@@ -166,7 +131,7 @@ const Dashboard = ({ setGetDataFromSession }) => {
               {products[2].desc}
             </p>
           </Card>
-          <Card gradient={products[3].gradient}>
+          <Card gradient={products[3].gradient} HandleClick={()=>HandleClick(products[3].title)} >
             <h3 className="text-lg font-semibold text-gray-200 group-hover:text-blue-300">
               {products[3].title}
             </h3>
@@ -212,7 +177,7 @@ const Dashboard = ({ setGetDataFromSession }) => {
 
         {/* Bottom Row */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-5xl">
-          <Card gradient={products[4].gradient}>
+          <Card gradient={products[4].gradient} HandleClick={()=>HandleClick(products[4].title)} >
             <h3 className="text-lg font-semibold text-gray-200 group-hover:text-blue-300">
               {products[4].title}
             </h3>
@@ -220,7 +185,7 @@ const Dashboard = ({ setGetDataFromSession }) => {
               {products[4].desc}
             </p>
           </Card>
-          <Card gradient={products[5].gradient}>
+          <Card gradient={products[5].gradient} HandleClick={()=>HandleClick(products[5].title)} >
             <h3 className="text-lg font-semibold text-gray-200 group-hover:text-blue-300">
               {products[5].title}
             </h3>
@@ -228,7 +193,7 @@ const Dashboard = ({ setGetDataFromSession }) => {
               {products[5].desc}
             </p>
           </Card>
-          <Card gradient={products[6].gradient}>
+          <Card gradient={products[6].gradient} HandleClick={()=>HandleClick(products[6].title)} >
             <h3 className="text-lg font-semibold text-gray-200 group-hover:text-blue-300">
               {products[6].title}
             </h3>
@@ -236,7 +201,7 @@ const Dashboard = ({ setGetDataFromSession }) => {
               {products[6].desc}
             </p>
           </Card>
-          <Card gradient={products[7].gradient}>
+          <Card gradient={products[7].gradient} HandleClick={()=>HandleClick(products[7].title)} >
             <h3 className="text-lg font-semibold text-gray-200 group-hover:text-blue-300">
               {products[7].title}
             </h3>
