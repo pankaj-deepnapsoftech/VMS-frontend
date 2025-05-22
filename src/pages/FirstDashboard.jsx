@@ -7,19 +7,21 @@ import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp } from "lucide-react";
 import { products } from "@/constants/static.data";
 
 // Card component with gradient border
-const Card = ({ children, gradient,HandleClick }) => {
+const Card = ({ children, gradient, HandleClick }) => {
   return (
-    <div onClick={HandleClick}
-      className={`p-[1px] rounded-xl bg-gradient-to-br ${gradient} transform transition duration-300 hover:scale-105 hover:shadow-xl cursor-pointer`}
+    <div
+      onClick={HandleClick}
+      className={`p-[1px] rounded-xl bg-gradient-to-br ${gradient} transform transition duration-300 hover:scale-105 hover:shadow-xl cursor-pointer max-w-sm w-full`}
     >
-      <div className="rounded-xl bg-[#1c1c1e] p-6 min-h-[180px] backdrop-blur-md bg-opacity-80 transition-colors duration-300">
+      <div className="rounded-xl text-center bg-[#1c1c1e] p-6 min-h-[80px] backdrop-blur-md bg-opacity-80 transition-colors duration-300">
         {children}
       </div>
     </div>
   );
 };
 
-// Function to get initials from full name
+
+// Function to get initials from full name 
 function getInitials(fullName) {
   return (
     fullName
@@ -31,16 +33,16 @@ function getInitials(fullName) {
 }
 
 const Dashboard = () => {
-  const { authenticate, Logout,setGetDataFromSession } = useAuthContext();
+  const { authenticate, Logout, setGetDataFromSession } = useAuthContext();
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
   const [loading, setLoading] = useState(false);
   const dropdownRef = useRef(null);
 
   const HandleClick = (item) => {
-    sessionStorage.setItem("VROC",item)
-    setGetDataFromSession(item)
-  }
+    sessionStorage.setItem("VROC", item);
+    setGetDataFromSession(item);
+  };
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -55,8 +57,6 @@ const Dashboard = () => {
     };
   }, []);
 
-
-
   return (
     <div className="container mx-auto p-4 md:p-8 bg-gradient-image h-screen">
       <div className="absolute top-4 right-6 z-20" ref={dropdownRef}>
@@ -69,7 +69,7 @@ const Dashboard = () => {
             {getInitials(authenticate?.full_name || "")}
           </button>
           {showDropdown && (
-            <div className="absolute right-0 mt-2 w-60 bg-[#1c1c1e] shadow-lg rounded-md py-2 z-30 border border-gray-800">
+            <div className="absolute right-0 mt-2 w-60 bg-[#1c1c1e] shadow-lg rounded-md py-2 z-30 border text-white border-gray-800">
               <button
                 onClick={() => navigate("/profile-update")}
                 className="block w-full hover:bg-gray-800 px-4 py-2 text-lg text-left"
@@ -98,6 +98,8 @@ const Dashboard = () => {
         </h2>
         <p className="mt-2 text-gray-400">Welcome to risk operations center</p>
       </div>
+
+
       <div className="flex flex-col items-center gap-8 pt-10">
         {/* Header */}
         <div className="rounded-md bg-[#191925] p-4 text-white text-center  h-24 flex items-center justify-center">
@@ -106,37 +108,40 @@ const Dashboard = () => {
 
         {/* Second Row */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-5xl">
-          <Card HandleClick={()=>HandleClick(products[0].title)} gradient={products[0].gradient}>
+          <Card
+            HandleClick={() => HandleClick(products[0].title)}
+            gradient={products[0].gradient}
+          >
             <h3 className="text-lg font-semibold text-gray-200 group-hover:text-blue-300">
               {products[0].title}
             </h3>
-            <p className="text-sm text-gray-400 mt-2 group-hover:text-gray-300">
-              {products[0].desc}
-            </p>
           </Card>
-          <Card HandleClick={()=>HandleClick(products[1].title)} gradient={products[1].gradient}>
+
+          <Card
+            HandleClick={() => HandleClick(products[1].title)}
+            gradient={products[1].gradient}
+          >
             <h3 className="text-lg font-semibold text-gray-200 group-hover:text-blue-300">
               {products[1].title}
             </h3>
-            <p className="text-sm text-gray-400 mt-2 group-hover:text-gray-300">
-              {products[1].desc}
-            </p>
           </Card>
-          <Card HandleClick={()=>HandleClick(products[2].title)} gradient={products[2].gradient}>
+
+          <Card
+            HandleClick={() => HandleClick(products[2].title)}
+            gradient={products[2].gradient}
+          >
             <h3 className="text-lg font-semibold text-gray-200 group-hover:text-blue-300">
               {products[2].title}
             </h3>
-            <p className="text-sm text-gray-400 mt-2 group-hover:text-gray-300">
-              {products[2].desc}
-            </p>
           </Card>
-          <Card gradient={products[3].gradient} HandleClick={()=>HandleClick(products[3].title)} >
+
+          <Card
+            gradient={products[3].gradient}
+            HandleClick={() => HandleClick(products[3].title)}
+          >
             <h3 className="text-lg font-semibold text-gray-200 group-hover:text-blue-300">
               {products[3].title}
             </h3>
-            <p className="text-sm text-gray-400 mt-2 group-hover:text-gray-300">
-              {products[3].desc}
-            </p>
           </Card>
         </div>
 
@@ -157,7 +162,7 @@ const Dashboard = () => {
             <div className="md:col-start-2 md:col-end-3 flex justify-center">
               <div
                 className={`p-[1px] rounded-md bg-gradient-to-br ${products[2].gradient} w-full max-w-xs transition-transform transform hover:scale-105`}
-              >                              
+              >
                 <div className="rounded-md bg-[#1c1c1e] p-4 text-white text-center h-24 flex items-center justify-center">
                   Vulnerability Intelligence
                 </div>
@@ -182,37 +187,40 @@ const Dashboard = () => {
 
         {/* Bottom Row */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-5xl">
-          <Card gradient={products[4].gradient} HandleClick={()=>HandleClick(products[4].title)} >
+          <Card
+            gradient={products[4].gradient}
+            HandleClick={() => HandleClick(products[4].title)}
+          >
             <h3 className="text-lg font-semibold text-gray-200 group-hover:text-blue-300">
               {products[4].title}
             </h3>
-            <p className="text-sm text-gray-400 mt-2 group-hover:text-gray-300">
-              {products[4].desc}
-            </p>
           </Card>
-          <Card gradient={products[5].gradient} HandleClick={()=>HandleClick(products[5].title)} >
+
+          <Card
+            gradient={products[5].gradient}
+            HandleClick={() => HandleClick(products[5].title)}
+          >
             <h3 className="text-lg font-semibold text-gray-200 group-hover:text-blue-300">
               {products[5].title}
             </h3>
-            <p className="text-sm text-gray-400 mt-2 group-hover:text-gray-300">
-              {products[5].desc}
-            </p>
           </Card>
-          <Card gradient={products[6].gradient} HandleClick={()=>HandleClick(products[6].title)} >
+
+          <Card
+            gradient={products[6].gradient}
+            HandleClick={() => HandleClick(products[6].title)}
+          >
             <h3 className="text-lg font-semibold text-gray-200 group-hover:text-blue-300">
               {products[6].title}
             </h3>
-            <p className="text-sm text-gray-400 mt-2 group-hover:text-gray-300">
-              {products[6].desc}
-            </p>
           </Card>
-          <Card gradient={products[7].gradient} HandleClick={()=>HandleClick(products[7].title)} >
+
+          <Card
+            gradient={products[7].gradient}
+            HandleClick={() => HandleClick(products[7].title)}
+          >
             <h3 className="text-lg font-semibold text-gray-200 group-hover:text-blue-300">
               {products[7].title}
             </h3>
-            <p className="text-sm text-gray-400 mt-2 group-hover:text-gray-300">
-              {products[7].desc}
-            </p>
           </Card>
         </div>
 
@@ -233,3 +241,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
