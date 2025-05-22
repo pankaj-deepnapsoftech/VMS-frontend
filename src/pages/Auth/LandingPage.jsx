@@ -249,8 +249,8 @@ const LandingPage = () => {
           <h1 className="text-white text-center text-[40px] font-bold pt-4">
             Business aligned & AI Powered Risk Management
           </h1>
-          <section class="text-center ">
-            <img src="section.png" alt="section" class="inline-block" />
+          <section className="text-center ">
+            <img src="section.png" alt="section" className="inline-block" />
           </section>
 
           {/* <div className="flex flex-col sm:flex-row sm:flex-wrap gap-8 justify-between items-center h-auto w-full px-4 sm:px-8 py-10">
