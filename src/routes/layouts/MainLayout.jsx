@@ -13,11 +13,12 @@ import ChangePasswordModal from "@/modals/ChangePasswordModal";
 import useChangePassword from "@/hooks/changePassword";
 import FirstDashboard from "@/pages/FirstDashboard";
 import Loader from "@/components/Loader/Loader";
+import Sidebar from "@/components/sidebar/Sidebar";
 
 const MainLayout = () => {
   const { notificationData, NotificationsViewed } =
     useVulnerabililtyDataContext();
-  const { authenticate, getDataFromSession } = useAuthContext();
+  const { authenticate, getDataFromSession, OpenSideBar,setOpenSideBar,showUserMenu,setShowUserMenu } = useAuthContext();
 
   const { isOpen, openModal, closeModal } = useChangePassword();
 
@@ -26,7 +27,6 @@ const MainLayout = () => {
   const location = useLocation();
   const [showMenu, setShowMenu] = useState(false);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [showUserMenu, setShowUserMenu] = useState(false);
 
 
   let notificationcount = notificationData?.filter((notification) => !notification.view).length || 0;
@@ -64,7 +64,7 @@ const MainLayout = () => {
       (
         <Suspense fallback={<Loader />}>
 
-
+          {OpenSideBar && <Sidebar />}
           <aside
             className={`${showMenu ? "left-0" : "-left-full"
               } fixed z-10 w-[65%] flex flex-col justify-between 
@@ -110,7 +110,7 @@ transition duration-300 sm:w-[40%] md:w-[30%] lg:w-[25%] xl:w-[20%] 2xl:w-[15%] 
 
                     <div className="relative ml-4 flex text-white items-center gap-3 ">
                       <button
-                        onClick={() => setShowUserMenu(!showUserMenu)}
+                        onClick={() => {setOpenSideBar(true)}}
                         className="bg-blue-400 text-white rounded-full w-10 h-10 flex items-center justify-center"
                       >
                         {getInitials(authenticate?.full_name)}

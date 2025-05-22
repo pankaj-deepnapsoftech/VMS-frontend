@@ -13,6 +13,8 @@ const AuthContextProvider = ({ children }) => {
 
 
   const [token, setToken] = useState(Cookies.get("token"));
+  
+  const [showUserMenu, setShowUserMenu] = useState(false);
   const [loading, setLoading] = useState(false);
   const [userLoading, setUserLoading] = useState(false);
   const [runner,setRunner] = useState(1);
@@ -20,6 +22,8 @@ const AuthContextProvider = ({ children }) => {
     const [getDataFromSession, setGetDataFromSession] = useState(() => {
     return sessionStorage.getItem("VROC");
   })
+
+  const [OpenSideBar,setOpenSideBar] = useState(false)
 
   
 
@@ -248,7 +252,11 @@ const AuthContextProvider = ({ children }) => {
       ChangeStatus,
       runner,
       getDataFromSession,
-      setGetDataFromSession
+      setGetDataFromSession,
+      OpenSideBar,
+      setOpenSideBar,
+      showUserMenu,
+      setShowUserMenu
     }}>
       {children}
     </authContext.Provider>

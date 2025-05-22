@@ -84,15 +84,21 @@ export const products = [
         gradient: "from-[#00c6ff] to-[#0072ff]",
         allowedPath: []
     },
+   
+   
     {
-        title: "Remediation Factory",
-        desc: "Automated remediation of vulnerabilities or security issues across an organization.",
-        gradient: "from-[#6a11cb] to-[#2575fc]",
-        allowedPath: [
-            { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
-        ]
+        title: "AI-VA",
+        desc: "Governance, Risk, and Compliance",
+        gradient: "from-[#ee9ca7] to-[#ffdde1]",
+        allowedPath: []
     },
     {
+        title: "Vulnerability Intelligence",
+        desc: "Governance, Risk, and Compliance",
+        gradient: "from-[#ff7e5f] to-[#feb47b]",
+        allowedPath: []
+    },
+     {
         title: "GRC",
         desc: "Governance, Risk, and Compliance",
         gradient: "from-[#f7971e] to-[#ffd200]",
@@ -103,6 +109,14 @@ export const products = [
         desc: "Third-Party Risk Management",
         gradient: "from-[#43cea2] to-[#185a9d]",
         allowedPath: []
+    },
+     {
+        title: "Remediation Factory",
+        desc: "Automated remediation of vulnerabilities or security issues across an organization.",
+        gradient: "from-[#6a11cb] to-[#2575fc]",
+        allowedPath: [
+            { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
+        ]
     },
     {
         title: "Reports",
