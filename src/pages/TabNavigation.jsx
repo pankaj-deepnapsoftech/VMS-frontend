@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const TabNavigation = () => {
+const  TabNavigation = () => {
   const [activeTab, setActiveTab] = useState("For You");
 
   const tabs = [
