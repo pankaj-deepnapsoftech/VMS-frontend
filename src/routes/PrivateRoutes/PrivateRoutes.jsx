@@ -1,6 +1,6 @@
 import Exceptions from "@/pages/Exceptions";
 import Remedition from "@/pages/Remedition";
-import Home from '@/pages/Home';
+import Home from "@/pages/Home";
 import AllCustomer from "@/pages/AllCustomer";
 import { VulnerabilityData } from "@/pages/VulnerablityData";
 import ApplicationVulnerability from "@/pages/ApplicationVulnerability";
@@ -14,72 +14,76 @@ import ChatPage from "@/pages/ChatPage";
 import { AssertInventory } from "@/pages/AssertInventory";
 import ChangePassword from "@/pages/ChangePassword";
 import AdminBookDemo from "@/pages/AdminBookDemo";
-
+import ApplicationSoftwareInventory from "@/pages/ApplicationSoftwareInventory";
 
 export const PrivateRoutes = [
-    {
-        path: "",
-        element: <Home />
-    },
-    {
-        path: "/scheduling-assesment",
-        element: <SchedulingAssessmentPage />
-    },
-    {
-        path: "/vulnerability-data",
-        element: <VulnerabilityData />
-    },
-    {
-        path: "/jira-data",
-        element: <JiraDataTable />
-    },
-    {
-        path: "/third-party-config",
-        element: <ThirdPartyConfig />
-    },
-    {
-        path: "/all-customer",
-        element: <AllCustomer />
-    },
-    {
-        path: "/all-employee",
-        element: <AllEmployee />
-    },
+  {
+    path: "",
+    element: <Home />,
+  },
+  {
+    path: "/scheduling-assesment",
+    element: <SchedulingAssessmentPage />,
+  },
+  {
+    path: "/vulnerability-data",
+    element: <VulnerabilityData />,
+  },
+  {
+    path: "/jira-data",
+    element: <JiraDataTable />,
+  },
+  {
+    path: "/third-party-config",
+    element: <ThirdPartyConfig />,
+  },
+  {
+    path: "/all-customer",
+    element: <AllCustomer />,
+  },
+  {
+    path: "/all-employee",
+    element: <AllEmployee />,
+  },
 
-    {
-        path: "/application-vulnerability",
-        element: <ApplicationVulnerability />
-    },
-    {
-        path: "/infrastructure-vulnerability",
-        element: <InfraStructureVulnerability />
-    },
-    {
-        path: "/exceptions",
-        element: <Exceptions />
-    },
-    {
-        path: "/remedition",
-        element: <Remedition />
-    },
-    {
-        path: "/reports",
-        element: <Reports />
-    },
-    {
-        path: "/chat/:chatId",
-        element: <ChatPage />
-    },
-    {
-        path: "/assert-inventory",
-        element: <AssertInventory />
-    },
-    {
-        path: "/change-password",
-        element: <ChangePassword />
-    },
-    {
-        path: "/book-demo",
-        element:<AdminBookDemo/>
-    }
-]
+  {
+    path: "/application-vulnerability",
+    element: <ApplicationVulnerability />,
+  },
+  {
+    path: "/infrastructure-vulnerability",
+    element: <InfraStructureVulnerability />,
+  },
+  {
+    path: "/exceptions",
+    element: <Exceptions />,
+  },
+  {
+    path: "/remedition",
+    element: <Remedition />,
+  },
+  {
+    path: "/reports",
+    element: <Reports />,
+  },
+  {
+    path: "/chat/:chatId",
+    element: <ChatPage />,
+  },
+  {
+    path: "/assert-inventory",
+    element: <AssertInventory />,
+  },
+  {
+    path: "/change-password",
+    element: <ChangePassword />,
+  },
+  {
+    path: "/book-demo",
+    element: <AdminBookDemo />,
+  },
+  {
+    path: "/application",
+    element: <ApplicationSoftwareInventory />,
+  },
+];

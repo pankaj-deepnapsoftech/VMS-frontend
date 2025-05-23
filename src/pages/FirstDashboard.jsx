@@ -61,8 +61,9 @@ const Dashboard = () => {
               <button
                 onClick={() => navigate("/profile-update")}
                 className="block w-full hover:bg-gray-800 px-4 py-2 text-sm md:text-base text-left"
-              >
+              > 
                 Profile Update
+                
               </button>
               <button
                 onClick={Logout}
