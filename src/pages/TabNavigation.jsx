@@ -14,7 +14,7 @@ const TabNavigation = () => {
     },
     {
       title: "Software & Applications",
-      path: "software-aplication"
+      path: "software-application"
     },
     {
       title: "Data",
@@ -31,7 +31,7 @@ const TabNavigation = () => {
   ];
 
   useEffect(() => {
-    setActiveTab(location.pathname)
+    setActiveTab(location.pathname);
   }, [location.pathname])
 
   return (

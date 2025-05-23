@@ -66,7 +66,13 @@ const AppRoutes = () => {
       {isAuthenticated && (
         <Route element={<MainLayout />}>
           {getRoleBasedRoutes().map((item, index) => (
-            <Route key={index} path={item.path} element={item.element} />
+            <Route key={index} path={item.path} element={item.element} >
+              {item.children &&
+                item.children.map((child, i) => (
+                  <Route key={i} path={child.path} element={child.element} />
+                ))}
+            </Route>
+
           ))}
         </Route>
       )}
