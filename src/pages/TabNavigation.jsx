@@ -1,26 +1,28 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const TabNavigation = () => {
   const [activeTab, setActiveTab] = useState("Devices");
   const location = useLocation();
+  const navigate = useNavigate();
 
   const tabs = [
     {
       title: "Devices",
-      path: "/"
+      path: ""
+      
     },
     {
       title: "Software & Applications",
-      path: "/"
+      path: "software-aplication"
     },
     {
       title: "Data",
-      path: "/"
+      path: "data-table"
     },
     {
       title: "Risk Rating",
-      path: "/"
+      path: "risk-rating-table"
     },
     {
       title: "Risk Rating Guide",
@@ -38,7 +40,7 @@ const TabNavigation = () => {
         {tabs.map((tab,index) => (
           <button
             key={index}
-            onClick={() => setActiveTab(tab.path)}
+            onClick={() => { navigate(tab.path)}}
             className={`px-5 py-2 rounded-lg text-sm font-medium transition-all text-white duration-200
               ${activeTab === tab.path
                 ? "bg-blue-600 text-white shadow-md"
