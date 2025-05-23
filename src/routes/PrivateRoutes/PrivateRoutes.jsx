@@ -15,11 +15,10 @@ import { AssertInventory } from "@/pages/AssertInventory";
 import ChangePassword from "@/pages/ChangePassword";
 import AdminBookDemo from "@/pages/AdminBookDemo";
 import ApplicationSoftwareInventory from "@/pages/ApplicationSoftwareInventory";
-import AssetRoutes from "../AssetRoutes";
-import Devices from "@/pages/DevicesData";
 import SoftwareAndApplication from "@/pages/assert/SoftwareAndApplication";
 import DataTable from "@/pages/DataTable";
 import RiskRatingTable from "@/pages/RiskRatingTable";
+import Devices from "@/pages/DevicesTable";
 
 export const PrivateRoutes = [
   {
