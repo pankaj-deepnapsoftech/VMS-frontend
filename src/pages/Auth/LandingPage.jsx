@@ -80,7 +80,7 @@ const LandingPage = () => {
   return (
     <Suspense fallback={<Loader />}>
       <Header openModal={openModal} />
-      <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-[#d7e1ec] py-10">
+      <section className="bg-[url('/background.png')] bg-cover bg-center bg-background bg-no-repeat from-[#1a1c1e] to-[#2a2c2f] text-[#d7e1ec] py-10">
         <div className="max-w-screen-xl mx-auto px-4">
           {slides.map((slide, index) => (
             <div
