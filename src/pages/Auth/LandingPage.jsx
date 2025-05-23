@@ -80,7 +80,7 @@ const LandingPage = () => {
   return (
     <Suspense fallback={<Loader />}>
       <Header openModal={openModal} />
-      <section className="bg-[url('/background.png')] bg-cover bg-center bg-background bg-no-repeat from-[#1a1c1e] to-[#2a2c2f] text-[#d7e1ec] py-10">
+      <section className="bg-[url('/background.png')]  bg-cover bg-center bg-[#343537] bg-no-repeat text-[#d7e1ec] py-12 h-400">
         <div className="max-w-screen-xl mx-auto px-4">
           {slides.map((slide, index) => (
             <div
@@ -89,11 +89,11 @@ const LandingPage = () => {
             >
               <div className="w-full md:w-1/2 text-center md:text-left flex flex-col items-center md:items-start">
                 {/* Title */}
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 mt-16">
+                <h2 className="text-3xl  sm:text-4xl md:text-5xl font-bold mb-4 mt-10">
                   {slide.title}
                 </h2>
 
-                <div className="md:hidden mb-4">
+                <div className="md:hidden mt-30 mb-4">
                   <img
                     src={slide.image}
                     alt={slide.title}
@@ -122,7 +122,7 @@ const LandingPage = () => {
                   onload ? "scale-100" : "scale-0"
                 } transition-all duration-1000`}
               >
-                <img
+                {/* <img
                   src={slide.image}
                   alt={slide.title}
                   className={`drop-shadow-lg bg-gradient-to-t from-gray-100 to-blue-500 ${
@@ -140,7 +140,7 @@ const LandingPage = () => {
                     maskPosition: "center",
                     maskSize: "contain",
                   }}
-                />
+                /> */}
               </div>
             </div>
           ))}
