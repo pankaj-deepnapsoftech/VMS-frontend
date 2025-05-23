@@ -19,6 +19,7 @@ import SoftwareAndApplication from "@/pages/assert/SoftwareAndApplication";
 import DataTable from "@/pages/DataTable";
 import RiskRatingTable from "@/pages/RiskRatingTable";
 import Devices from "@/pages/DevicesTable";
+import ApplicationSoftwareInventoryTable from "@/pages/ApplicationSoftwareTable";
 
 export const PrivateRoutes = [
   {
@@ -79,7 +80,7 @@ export const PrivateRoutes = [
     element: <AssertInventory />,
     children: [
       { path: "", element: <Devices /> }, // default
-      { path: "software-application", element: <SoftwareAndApplication /> },
+      { path: "software-application", element: <ApplicationSoftwareInventoryTable /> },
       { path: "data-table", element: <DataTable /> },
       { path: "risk-rating-table", element: <RiskRatingTable /> },
     ],

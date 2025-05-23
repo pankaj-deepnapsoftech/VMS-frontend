@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
+import ApplicationSoftwareInventory from "./ApplicationSoftwareInventory";
 
 const ApplicationSoftwareInventoryTable = () => {
   const [applications, setApplications] = useState([]);
   const [showModal, setShowModal] = useState(false);
-
+  
   useEffect(() => {
     // Replace with actual API call
     fetch("/api/applications")
       .then((res) => res.json())
       .then((data) => setApplications(data));
   }, []);
-
+ 
   return (
     <div className="p-4">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold">Application Inventory Table</h2>
+        <h2 className="text-xl font-semibold text-white">Application Inventory Table</h2>
         <button
           onClick={() => setShowModal(true)}
           className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700"
@@ -73,6 +74,7 @@ const ApplicationSoftwareInventoryTable = () => {
           </div>
         </div>
       )}
+      <ApplicationSoftwareInventory showModal={showModal} setShowModal={setShowModal}/>
     </div>
   );
 };

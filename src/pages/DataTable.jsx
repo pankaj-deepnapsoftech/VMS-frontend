@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import Data from "./DataForm";
 
 const DataTable = () => {
+
+  const [ShowModal,setShowModal] = useState(false)
   const dataAssets = [
     {
       asset: "Customer DB",
@@ -31,7 +34,15 @@ const DataTable = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-xl font-semibold mb-4">Data Asset Inventory</h1>
+    <div className="flex justify-between">
+        <h1 className="text-xl font-semibold mb-4">Data Asset Inventory</h1>
+        <button
+          onClick={() => setShowModal(!ShowModal)}
+          className="mb-2 bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded shadow-md transition duration-300 ease-in-out"
+        >
+          Add Data Asset
+        </button>
+    </div>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700">
           <thead className="bg-gray-100 dark:bg-gray-800 text-sm text-gray-700 dark:text-gray-300">
@@ -69,6 +80,7 @@ const DataTable = () => {
           </tbody>
         </table>
       </div>
+      <Data ShowModal={ShowModal} setShowModal={setShowModal}/>
     </div>
   );
 };
