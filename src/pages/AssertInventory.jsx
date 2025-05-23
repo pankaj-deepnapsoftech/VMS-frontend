@@ -21,6 +21,7 @@ import InputField from "@/components/InputField";
 import { Modal } from "@/components/modal/FileUploadModal";
 import NoDataFound from "@/components/NoDataFound";
 import { excelDateToJSDate } from "@/utils/utils";
+import TabNavigation from "./TabNavigation";
 
 export function AssertInventory() {
   const [page, setPage] = useState(1);
@@ -206,6 +207,8 @@ export function AssertInventory() {
         <Loader />
       ) : (
         <div className="p-4 md:p-6 max-w-[100%] mx-auto min-h-screen bg-[#2a2c2f] ">
+            <TabNavigation/>
+
           {/* top 5 Vulnerability */}
 
           {/* <div className="py-10 ">
@@ -461,7 +464,7 @@ export function AssertInventory() {
 
           {isOpen && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-              <div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
+              <div className="bg-table rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
                 {/* Header */}
                 <div className="flex justify-between items-center border-b p-4 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] ">
                   <h2 className="text-lg font-semibold text-gray-200">
@@ -477,14 +480,14 @@ export function AssertInventory() {
                 <div className="p-10">
                   <label
                     htmlFor="employees"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-sm font-medium text-white dark:text-white"
                   >
                     Select an Employee
                   </label>
                   <select
                     onChange={(e) => setEmpName(e.target.value)}
                     id="employees"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                    className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                   >
                     <option selected disabled>
                       Select a Employee
