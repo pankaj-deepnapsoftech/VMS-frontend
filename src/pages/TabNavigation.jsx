@@ -22,7 +22,7 @@ const TabNavigation = () => {
               ${
                 activeTab === tab
                   ? "bg-blue-600 text-white shadow-md"
-                  : "bg-table dark:bg-gray-800 text-gray-700 dark:text-gray-300  dark:hover:bg-gray-700"
+                  : "bg-table dark:bg-gray-800 text-x gray-700 dark:text-gray-300  dark:hover:bg-gray-700"
               }
             `}
           >
