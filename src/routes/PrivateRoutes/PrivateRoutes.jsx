@@ -15,6 +15,7 @@ import { AssertInventory } from "@/pages/AssertInventory";
 import ChangePassword from "@/pages/ChangePassword";
 import AdminBookDemo from "@/pages/AdminBookDemo";
 import ApplicationSoftwareInventory from "@/pages/ApplicationSoftwareInventory";
+import AssetRoutes from "../AssetRoutes";
 
 export const PrivateRoutes = [
   {
@@ -72,7 +73,7 @@ export const PrivateRoutes = [
   },
   {
     path: "/assert-inventory",
-    element: <AssertInventory />,
+    element: <AssetRoutes />,
   },
   {
     path: "/change-password",
