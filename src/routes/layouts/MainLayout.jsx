@@ -3,7 +3,7 @@ import { Header } from "@/constants/Components-lazy-loading/components.Lazy";
 import { Suspense, useEffect, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { FaBell } from "react-icons/fa";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { NotificationSidebar } from "@components/modal/NotificationSideBar";
 
 import { useAuthContext, useVulnerabililtyDataContext } from "@/context";
@@ -14,10 +14,10 @@ import useChangePassword from "@/hooks/changePassword";
 import FirstDashboard from "@/pages/FirstDashboard";
 import Loader from "@/components/Loader/Loader";
 import Sidebar from "@/components/sidebar/Sidebar";
+import { products } from "@/constants/static.data";
 
 const MainLayout = () => {
-  const { notificationData, NotificationsViewed } =
-    useVulnerabililtyDataContext();
+  const { notificationData, NotificationsViewed } =  useVulnerabililtyDataContext();
   const { authenticate, getDataFromSession, OpenSideBar,setOpenSideBar,showUserMenu,setShowUserMenu } = useAuthContext();
 
   const { isOpen, openModal, closeModal } = useChangePassword();
@@ -27,6 +27,7 @@ const MainLayout = () => {
   const location = useLocation();
   const [showMenu, setShowMenu] = useState(false);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const navigate = useNavigate();
 
 
   let notificationcount = notificationData?.filter((notification) => !notification.view).length || 0;
@@ -51,6 +52,16 @@ const MainLayout = () => {
     console.log(name[1]);
   }, [location.pathname]);
 
+
+  useEffect(()=>{
+    if(getDataFromSession){
+      for(let item of products){
+        if(item.title === getDataFromSession){
+          navigate(item.allowedPath[0]?.route)
+        }
+      }
+    }
+  },[getDataFromSession])
 
 
   useEffect(() => {
