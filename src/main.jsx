@@ -22,6 +22,9 @@ import {
   SchedulingAssesmentContextProvider,
   VulnerabililtyDataContextProvider
 } from "./context";
+import AppSoftContextProvider from "./context/ApplicationSoftwareInventoryContext/ApplicationSoftwareInventoryContext";
+import DeviceProvider from "./context/DevicesContext/DevicesContext";
+import AssetDataProvider from "./context/Asset Data Context/AssetDataContex";
 
 createRoot(document.getElementById("root")).render(
 
@@ -37,11 +40,13 @@ createRoot(document.getElementById("root")).render(
                     <RemeditionContextProvider>
                       <ExceptionContextProvider>
                         <InfrastructureVulnerabilityContextProvider>
-                          
-
-                          <App />
-
-
+                          <AppSoftContextProvider>
+                            <DeviceProvider>
+                              <AssetDataProvider>
+                                <App />
+                              </AssetDataProvider>
+                            </DeviceProvider>
+                          </AppSoftContextProvider>
                         </InfrastructureVulnerabilityContextProvider>
                       </ExceptionContextProvider>
                     </RemeditionContextProvider>

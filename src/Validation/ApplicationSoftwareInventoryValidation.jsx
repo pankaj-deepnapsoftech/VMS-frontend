@@ -1,76 +1,29 @@
 import * as Yup from "yup";
 
 export const ApplicationSoftwareSchema = Yup.object({
-    unit_id: Yup.string()
-        .required("Unit ID is required"),
+    Unit_ID: Yup.string().required('Unit ID is required'),
+    Custodian_name: Yup.string().required('Custodian name is required'),
+    Custodian_Contact_info: Yup.string().required('Contact info is required'),
+    Application_Name: Yup.string().required('Application name is required'),
+    Application_Type: Yup.string().required('Application type is required'),
+    Version: Yup.string().required('Version is required'),
+    URL_if_appl: Yup.string().url('Invalid URL').nullable(),
+    Publisher: Yup.string().required('Publisher is required'),
+    Install_Use_Date: Yup.date().required('Install/Use date is required'),
+    Business_Purpose: Yup.string().required('Business purpose is required'),
+    End_Of_Life_date: Yup.date().nullable(),
+    LIcense_info: Yup.string().required('License info is required'),
+    Ownership: Yup.string().required('Ownership is required'),
+    Users: Yup.string().required('Users info is required'),
+    Risk_Data: Yup.string().required('Risk data is required'),
+    Security_description: Yup.string().required('Security description is required'),
 
-    custodian_name: Yup.string()
-        .required("Custodian name is required"),
-
-    contact_info: Yup.string()
-        .required("Contact info is required")
-        .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$|^\+?[0-9]{7,15}$/, "Enter a valid email or phone number"),
-
-    application_name: Yup.string()
-        .required("Application name is required"),
-
-    application_type: Yup.string()
-        .oneOf(["Web", "Mobile", "API", "Thick Client"], "Invalid application type")
-        .required("Application type is required"),
-
-    version: Yup.string()
-        .required("Version is required"),
-
-    url: Yup.string()
-        .url("Must be a valid URL")
-        .nullable(),
-
-    publisher: Yup.string()
-        .required("Publisher is required"),
-
-    install_date: Yup.date()
-        .required("Install/use date is required"),
-
-    business_purpose: Yup.string()
-        .required("Business purpose is required"),
-
-    eol_date: Yup.date()
-        .nullable(),
-
-    license_info: Yup.string()
-        .required("License info is required"),
-
-    ownership: Yup.string()
-        .oneOf(["Unit", "Enterprise FSU", "External"], "Invalid ownership value")
-        .required("Ownership is required"),
-
-    users: Yup.string()
-        .required("Users field is required"),
-
-    risk_data: Yup.string()
-        .required("Risk data is required"),
-
-    security_desc: Yup.string()
-        .required("Security description is required"),
-
-    pii_ssn: Yup.string()
-        .required("PII-SSN info is required"),
-
-    ferpa: Yup.string()
-        .required("FERPA info is required"),
-
-    nist_800_171: Yup.string()
-        .required("800-171 info is required"),
-
-    hipaa: Yup.string()
-        .required("HIPAA info is required"),
-
-    pci: Yup.string()
-        .required("PCI info is required"),
-
-    glba: Yup.string()
-        .required("GLBA info is required"),
-
-    gdpr: Yup.string()
-        .required("GDPR info is required"),
+    Pll_SSN: Yup.string().required('Required'),
+    FERPA: Yup.string().required('Required'),
+    "800_171": Yup.string().required('Required'),
+    HIPAA: Yup.string().required('Required'),
+    PCI: Yup.string().required('Required'),
+    GLBA: Yup.string().required('Required'),
+    GDPR: Yup.string().required('Required'),
+    CUI: Yup.string().required('Required'),
 });
