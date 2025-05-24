@@ -64,7 +64,8 @@ export const products = [
         title: "Asset Inventory",
         desc: "Centralized asset visibility and management",
         gradient: "from-[#ee9ca7] to-[#ffdde1]",
-        allowedPath: [{ title: "Asset Inventory", route: "/assert-inventory", icon: MdInventory2 },]
+        allowedPath: [{ title: "Asset Inventory", route: "/assert-inventory", icon: MdInventory2 },],
+        allowedCISO:[]
     },
     {
         title: "TVM",
@@ -76,13 +77,15 @@ export const products = [
             { title: "Application Vulnerability", route: "/application-vulnerability", icon: MdOutlineMiscellaneousServices },
             { title: "Infrastructure Vulnerability ", route: "/infrastructure-vulnerability", icon: GrVulnerability },
             { title: "Exceptions", route: "/exceptions", icon: AiOutlineException },
-        ]
+        ],
+        allowedCISO:[]
     },
     {
         title: "ASM",
         desc: "Attack Surface Monitoring for real-time visibility",
         gradient: "from-[#00c6ff] to-[#0072ff]",
-        allowedPath: []
+        allowedPath: [],
+        allowedCISO:[]
     },
    
    
@@ -90,25 +93,29 @@ export const products = [
         title: "AI-VA",
         desc: "Governance, Risk, and Compliance",
         gradient: "from-[#ee9ca7] to-[#ffdde1]",
-        allowedPath: []
+        allowedPath: [],
+        allowedCISO:[]
     },
     {
         title: "Vulnerability Intelligence",
         desc: "Governance, Risk, and Compliance",
         gradient: "from-[#ff7e5f] to-[#feb47b]",
-        allowedPath: []
+        allowedPath: [],
+        allowedCISO:[]
     },
      {
         title: "GRC",
         desc: "Governance, Risk, and Compliance",
         gradient: "from-[#f7971e] to-[#ffd200]",
-        allowedPath: []
+        allowedPath: [],
+        allowedCISO:[]
     },
     {
         title: "TPRM",
         desc: "Third-Party Risk Management",
         gradient: "from-[#43cea2] to-[#185a9d]",
-        allowedPath: []
+        allowedPath: [],
+        allowedCISO:[]
     },
      {
         title: "Remediation Factory",
@@ -116,13 +123,15 @@ export const products = [
         gradient: "from-[#6a11cb] to-[#2575fc]",
         allowedPath: [
             { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
-        ]
+        ],
+        allowedCISO:[]
     },
     {
         title: "Reports",
         desc: "Generate reports & dashboards automatically",
         gradient: "from-[#a1c4fd] to-[#c2e9fb]",
-        allowedPath: [{ title: "Reports", route: "/reports", icon: TbReport },]
+        allowedPath: [{ title: "Reports", route: "/reports", icon: TbReport },],
+        allowedCISO:[]
     },
     {
         title: "Administration",
@@ -134,7 +143,8 @@ export const products = [
             { title: "Jira Data Table", route: "/jira-data", icon: Table },
             { title: "Third Party Config", route: "/third-party-config", icon: Settings },
             {title:"Change Password",route:"/change-password", icon:TbLockPassword }
-        ]
+        ],
+        allowedCISO:[]
     },
 ];
 
