@@ -1,4 +1,5 @@
 import { Suspense, useEffect, useState } from "react";
+import { FaFacebookF, FaTwitter, FaYoutube, FaPlay } from "react-icons/fa";
 import "/public/Font/LexendDeca.ttf";
 import {
   FaBullseye,
@@ -80,20 +81,21 @@ const LandingPage = () => {
   return (
     <Suspense fallback={<Loader />}>
       <Header openModal={openModal} />
-      <section className="bg-[url('/background.png')] bg-cover bg-center bg-background bg-no-repeat from-[#1a1c1e] to-[#2a2c2f] text-[#d7e1ec] py-10">
+      <section className="bg-[#323233] bg-no-repeat text-[#d7e1ec] py-12 min-h-[600px]">
         <div className="max-w-screen-xl mx-auto px-4">
           {slides.map((slide, index) => (
             <div
               key={index}
-              className="flex flex-col md:flex-row items-center justify-between gap-12 py-12 px-10 2xl:px-0"
+              className="flex flex-col md:flex-row items-center justify-between gap-12 py-12 px-4 sm:px-6 lg:px-8 2xl:px-0"
             >
-              <div className="w-full md:w-1/2 text-center md:text-left flex flex-col items-center md:items-start">
-                {/* Title */}
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 mt-16">
+              {/* Text Content */}
+              <div className="w-full md:w-[60%] text-center md:text-left flex flex-col items-center md:items-start">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 mt-10">
                   {slide.title}
                 </h2>
 
-                <div className="md:hidden mb-4">
+                {/* Image for small screens */}
+                <div className="md:hidden mt-8 mb-4 w-full">
                   <img
                     src={slide.image}
                     alt={slide.title}
@@ -103,44 +105,27 @@ const LandingPage = () => {
                   />
                 </div>
 
-                {/* Text */}
-                <p className="text-gray-400 mb-6 text-lg sm:text-xl">
+                <p className="text-gray-400 mb-6 text-lg sm:text-xl px-2 sm:px-0">
                   {slide.text}
                 </p>
-
-                {/* Button */}
-                {/* <div className="flex justify-center md:justify-start">
-                  <button className="bg-gradient-to-tr from-[#383b40] text-md md:text-lg h-16 w-48 rounded-lg relative overflow-hidden text-gray-300 shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 mt-4 hover:text-white hover:before:h-64 hover:before:-translate-y-32">
-                    <span className="relative z-10">{slide.buttonText}</span>
-                  </button>
-                </div> */}
               </div>
 
-              {/* Image only visible on desktop */}
-              <div
-                className={`hidden md:flex w-full md:w-1/2 items-center h-full justify-end ${
-                  onload ? "scale-100" : "scale-0"
-                } transition-all duration-1000`}
-              >
-                <img
-                  src={slide.image}
-                  alt={slide.title}
-                  className={`drop-shadow-lg bg-gradient-to-t from-gray-100 to-blue-500 ${
-                    index === 2
-                      ? "max-w-xs sm:max-w-sm"
-                      : "max-w-sm sm:max-w-md"
-                  } w-[70%] h-auto`}
-                  style={{
-                    WebkitMaskImage: "url('/logo.png')",
-                    WebkitMaskRepeat: "no-repeat",
-                    WebkitMaskPosition: "center",
-                    WebkitMaskSize: "contain",
-                    maskImage: "url('/logo.png')",
-                    maskRepeat: "no-repeat",
-                    maskPosition: "center",
-                    maskSize: "contain",
-                  }}
-                />
+              {/* Video for medium and above */}
+              <div className="hidden md:flex w-full md:w-[50%] relative justify-end items-end">
+                <div className="relative w-full h-[300px] sm:h-[400px] md:h-[450px] mt-10 rounded-xl overflow-hidden">
+                  <video
+                    src="/bgvideo.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover transition duration-500"
+                    onLoadedMetadata={(e) => {
+                      e.currentTarget.playbackRate = 2;
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#323233] via-transparent to-[#323233] pointer-events-none" />
+                </div>
               </div>
             </div>
           ))}
@@ -149,28 +134,34 @@ const LandingPage = () => {
 
       <section className="bg-gradient-to-b from-[#343537] to-[#26282a] text-white py-16 px-4 md:px-20">
         <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row items-center gap-12">
+          {/* Image Section */}
           <div className="w-full md:w-1/3 flex justify-center">
-            <img src="/image-04.png" alt="Illustration" className="max-w-sm" />
+            <img
+              src="/image-04.png"
+              alt="Illustration"
+              className="max-w-xs sm:max-w-sm md:max-w-sm w-full h-auto object-contain"
+            />
           </div>
 
-          <div className="w-full md:w-2/3 ">
-            <h2 className="text-4xl font-bold mb-2">Features</h2>
-            <p className="text-gray-400 mb-8">
+          {/* Text & Features Section */}
+          <div className="w-full md:w-2/3">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-2">Features</h2>
+            <p className="text-gray-400 mb-8 text-sm sm:text-base">
               SECURE& tools will offer key features that set them apart from
               competitors, providing unique solutions to address real-time
               challenges faced by enterprises of all sizes, from small
               businesses to large corporations.
             </p>
 
-            <div className="flex gap-4 w-full overflow-x-scroll custom-scrollbar ">
+            <div className="flex gap-4 w-full overflow-x-auto sm:overflow-x-scroll custom-scrollbar scroll-smooth">
               {features.map((item, index) => (
                 <div
                   key={index}
-                  className="bg-gradient-to-bl from-[#414244] to-[#36393b] rounded-xl p-6 shadow-slate-100 hover:shadow-2xl transition min-w-72 "
+                  className="bg-gradient-to-bl from-[#414244] to-[#36393b] rounded-xl p-6 shadow-slate-100 hover:shadow-2xl transition min-w-[260px] max-w-[280px] flex-shrink-0"
                 >
-                  <div className="bg-[#26272b] w-12 h-12 flex items-center justify-center rounded-xl mb-4 shadow-inner shadow-slate-950 ">
+                  <div className="bg-[#26272b] w-12 h-12 flex items-center justify-center rounded-xl mb-4 shadow-inner shadow-slate-950">
                     {item.icon && (
-                      <item.icon className="text-[#ff6d6d] " size={25} />
+                      <item.icon className="text-[#ff6d6d]" size={25} />
                     )}
                   </div>
                   <h4 className="text-lg font-semibold mb-2">{item.title}</h4>
@@ -249,11 +240,11 @@ const LandingPage = () => {
           <h1 className="text-white text-center text-[40px] font-bold pt-4">
             Business aligned & AI Powered Risk Management
           </h1>
-          <section className="text-center ">
+          {/* <section className="text-center ">
             <img src="section.png" alt="section" className="inline-block" />
-          </section>
+          </section> */}
 
-          {/* <div className="flex flex-col sm:flex-row sm:flex-wrap gap-8 justify-between items-center h-auto w-full px-4 sm:px-8 py-10">
+          <div className="flex flex-col sm:flex-row sm:flex-wrap gap-8 justify-between items-center h-auto w-full px-4 sm:px-8 py-10">
             <div className=" w-full sm:w-[30%]">
               <div className="mb-10 mt-10">
                 <div className="flex justify-end max-[800px]:justify-start gap-4">
@@ -286,7 +277,7 @@ const LandingPage = () => {
               </div>
             </div>
 
-            <div className="w-full sm:w-[30%] h-full flex items-center justify-center mt-10 sm:mt-0">
+            {/* <div className="w-full sm:w-[30%] h-full flex items-center justify-center mt-10 sm:mt-0">
               <div className="border border-[#918f8f86] shadow-2xl flex justify-center items-center rounded-[50%] w-[300px] sm:w-[400px] h-[300px] sm:h-[380px] relative overflow-hidden group">
                 <img
                   className="h-full w-[90%] object-contain rounded-[50%] absolute opacity-100 group-hover:opacity-0 transition-opacity duration-1000"
@@ -297,6 +288,20 @@ const LandingPage = () => {
                   className="h-full w-full object-cover rounded-[50%] absolute opacity-0 group-hover:opacity-100 transition-opacity duration-1000"
                   src="./landing-2.png"
                   alt=""
+                />
+              </div>
+            </div> */}
+
+            <div className="relative flex items-center justify-center w-80 h-80 rounded-full bg-gradient-to-br from-[#3e4141] to-[#1d1d1f] shadow-inner group">
+              {/* Outer Glow Ring */}
+              <div className="absolute w-full h-full rounded-full animate-pulse bg-gradient-to-br from-[#1a1b1b] to-[#33333d] opacity-20 group-hover:opacity-30 transition-opacity duration-300"></div>
+
+              {/* Circular Image */}
+              <div className="relative w-60 h-60 rounded-full overflow-hidden z-10">
+                <img
+                  src="welcome.jpg"
+                  alt="Video Preview"
+                  className="object-cover mb-10 w-full h-full"
                 />
               </div>
             </div>
@@ -333,16 +338,107 @@ const LandingPage = () => {
                 </p>
               </div>
             </div>
-          </div> */}
+          </div>
         </div>
       </section>
       <section
         id="book-demo"
         className="w-full bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] flex items-center justify-center text-white py-20 px-6 md:px-20"
       >
-        <div className="gap-12 items-center">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Left Form Section */}
+          <div className="w-full">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-200 mb-4">
+              Get in Touch 
+            </h2>
+            <p className="text-gray-400 mb-6">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor
+              sit amet, consectetur adipiscing.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <input
+                className="bg-[#525253] border bg-gradient-to-t from-[#343636] to-[#242527] border-gray-600 rounded-md p-4 focus:outline-none"
+                placeholder="Your name *"
+              />
+              <input
+                className="bg-[#525253] border bg-gradient-to-t from-[#343636] to-[#242527] border-gray-600 rounded-md p-4 focus:outline-none"
+                placeholder="Your e-mail address *"
+              />
+            </div>
+            <textarea
+              className="bg-[#525253] border bg-gradient-to-t from-[#343636] to-[#242527] border-gray-600 rounded-md p-4 focus:outline-none w-full h-32 mt-4"
+              placeholder="Your question"
+            ></textarea>
+            <div className="mt-4 flex items-center gap-2 flex-wrap">
+              <a className="flex items-center justify-center gap-3 px-4 py-3 mt-auto bg-gradient-to-t from-[#2e2f31] to-[#343636] text-base md:text-xl rounded-full relative overflow-hidden text-white shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 hover:before:h-64 hover:before:-translate-y-32 before:z-0">
+                <span className="z-10">Subscribe</span>
+              </a>
+            </div>
+          </div>
+
+          {/* Right Contact Info Section */}
+          <div className="bg-white bg-gradient-to-t from-[#333335] to-[#3a3a3b] h-auto md:h-[500px] bg-opacity-10 backdrop-blur-md p-6 rounded-xl w-full shadow-xl">
+            <div className="mb-6">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+                Get The App:
+              </h3>
+              <div className="space-y-5"></div>
+            </div>
+
+            <div className="mb-6">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold mb-2">
+                Contacts:
+              </h3>
+              <p className="text-sm text-gray-300 mb-1">
+                Ph. <span className="text-white">1-800-901-234</span>
+              </p>
+              <p className="text-sm text-gray-300 mb-1">
+                Mail. <span className="text-white">info@demolink.org</span>
+              </p>
+              <p className="text-sm text-gray-300">
+                Office.{" "}
+                <span className="text-white block">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </span>
+              </p>
+            </div>
+
+            <div className="flex text-2xl mt-10 sm:mt-20 gap-4 flex-wrap">
+              {[
+                { icon: <FaFacebookF />, color: "from-[#2e2f31] to-[#343636]" },
+                { icon: <FaTwitter />, color: "from-[#2e2f31] to-[#343636]" },
+                { icon: <FaYoutube />, color: "from-[#2e2f31] to-[#343636]" },
+              ].map((item, index) => (
+                <div
+                  key={index}
+                  className={`w-12 h-12 rounded-full bg-[#343636] flex items-center justify-center text-gray-300 
+              shadow-[0_0_10px_rgba(0,0,0,0.6)] 
+              hover:text-white transition-all duration-300 
+              hover:bg-gradient-to-br ${item.color}`}
+                >
+                  {item.icon}
+                </div>
+              ))}
+            </div>
+
+            <p className="text-xs text-gray-500 mt-6">
+              © 2025. Secure&.{" "}
+              <a href="#" className="underline">
+                Privacy Policy
+              </a>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* <section
+        id="book-demo"
+        className="w-full bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] flex items-center justify-center text-white py-20 px-6 md:px-20"
+      >
+        {/* <div className="gap-12 items-center">
           {/* Left Column - Contact Form */}
-          <div className="space-y-8">
+      {/* <div className="space-y-8">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Get in Touch
             </h2>
@@ -351,8 +447,8 @@ const LandingPage = () => {
               touch.
             </p>
 
-            <form className="space-y-6">
-              <div className="flex flex-col md:flex-row gap-4">
+            <form className="space-y-6">  */}
+      {/* <div className="flex flex-col md:flex-row gap-4">
                 <input
                   type="text"
                   placeholder="Your name*"
@@ -374,24 +470,20 @@ const LandingPage = () => {
                 <span className="relative z-10">Submit</span>
               </button>
             </form>
-          </div>
+          </div> */}
 
-          {/* Right Column - Contact Info */}
-        </div>
-      </section>
+      {/* Right Column - Contact Info */}
+      {/* </div> */}
+      {/* </section> */}
 
-      {/* <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-white py-16">
+      <section className="bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-white py-16">
         <div className="max-w-7xl mx-auto px-4 pt-8 text-white">
-      
           <div className="text-center mb-12 ">
             <div className="flex flex-col md:flex-row items-center justify-center  md:gap-10">
               <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 md:mb-0">
                 How it works
               </h2>
               <div className="w-2 h-4  text-white"></div>
-              <p className="text-gray-400 text-lg sm:text-xl mt-2 md:mt-5 md:ml-6 text-center md:text-left">
-                Quick and Intuitive Profile Configuration
-              </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 pt-8 md:pt-16 gap-6">
               <div className=" relative group bg-gradient-to-br from-[#393d40] to-[#25282a] rounded-xl p-6 min-h-[300px] transition-transform duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl">
@@ -448,7 +540,7 @@ const LandingPage = () => {
             </div>
           </div>
         </div>
-      </section> */}
+      </section>
       <Footer />
       <BookDemo closeModal={closeModal} isOpen={isOpen} />
     </Suspense>
