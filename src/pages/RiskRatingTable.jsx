@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import RiskRating from "./RiskRating";
+
 
 const RiskRatingTable = () => {
+  const [showModal, setShowModal] = useState(false)
   const riskRatings = [
     {
       asset: "Customer DB",
@@ -20,12 +23,20 @@ const RiskRatingTable = () => {
       category: "Medium",
       rating: "Moderate",
     },
-    // Add more entries here
+
   ];
 
   return (
     <div className="p-4">
-      <h1 className="text-xl font-semibold mb-4">Data Asset Inventory Risk Ratings</h1>
+      <div className="flex justify-between">
+        <h1 className="text-xl font-semibold mb-4 text-white">Risk Ratings</h1>
+        <button 
+          onClick={() => setShowModal(!showModal)}
+          className="bg-sky-600 mb-2 text-white font-semibold py-2 px-5 rounded-lg shadow hover:bg-sky-700 focus:outline-none transition duration-300"
+        >
+          Add Data
+        </button>
+      </div>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700">
           <thead className="bg-gray-100 dark:bg-gray-800 text-sm text-gray-700 dark:text-gray-300">
@@ -57,6 +68,7 @@ const RiskRatingTable = () => {
           </tbody>
         </table>
       </div>
+      <RiskRating setShowModal={setShowModal} showModal={showModal}/>
     </div>
   );
 };

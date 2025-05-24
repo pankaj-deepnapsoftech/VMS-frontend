@@ -1,55 +1,64 @@
 /* eslint-disable react/prop-types */
+
+import { ApplicationSoftwareInventoryContext } from "@/context/ApplicationSoftwareInventoryContext/ApplicationSoftwareInventoryContext";
 import { ApplicationSoftwareSchema } from "@/Validation/ApplicationSoftwareInventoryValidation";
 import { useFormik } from "formik";
-import React from "react";
+import React, { useContext } from "react";
 import { IoClose } from "react-icons/io5";
 
 const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
+  const { AppSoftSendData, AppSoftGetData } = useContext(ApplicationSoftwareInventoryContext)
+  
   const {
     handleBlur,
     handleSubmit,
     handleChange,
+    resetForm,
     touched,
     errors,
     values,
   } = useFormik({
     initialValues: {
-      unit_id: "",
-      custodian_name: "",
-      contact_info: "",
-      application_name: "",
-      application_type: "",
-      version: "",
-      url: "",
-      publisher: "",
-      install_date: "",
-      business_purpose: "",
-      eol_date: "",
-      license_info: "",
-      ownership: "",
-      users: "",
-      risk_data: "",
-      security_desc: "",
-      pii_ssn: "",
-      ferpa: "",
-      nist_800_171: "",
-      hipaa: "",
-      pci: "",
-      glba: "",
-      gdpr: "",
+      Unit_ID: "",
+      Custodian_name: "",
+      Custodian_Contact_info: "",
+      Application_Name: "",
+      Application_Type: "",
+      Version: "",
+      URL_if_appl: "",
+      Publisher: "",
+      Install_Use_Date: "",
+      Business_Purpose: "",
+      End_Of_Life_date: "",
+      LIcense_info: "",
+      Ownership: "",
+      Users: "",
+      Risk_Data: "",
+      Security_description: "",
+      Pll_SSN: "",
+      FERPA: "",
+      "800_171": "",
+      HIPAA: "",
+      PCI: "",
+      GLBA: "",
+      GDPR: "",
+      CUI:""
     },
     validationSchema: ApplicationSoftwareSchema,
     onSubmit: (values) => {
-      console.log(values);
+       AppSoftSendData(values)
+       console.log("hello")
+       resetForm()
+       setShowModal(false)
     },
   });
 
   return (
     <>
-      <section className={`transition-opacity duration-300 ease-in-out ${showModal ? "opacity-100 visible" : "opacity-0 invisible"} fixed top-0 left-0 h-screen w-full bg-black/40  flex items-center justify-center z-50 `}>
+      <section className={`transition-opacity duration-300 ease-in-out ${showModal ? "opacity-100 visible" : "opacity-0 invisible"} fixed top-0 left-0 h-screen w-full bg-black/40 backdrop-blur-sm  flex items-center justify-center z-50 `}>
         <div className="bg-white rounded-lg shadow-xl w-full max-w-5xl p-8 overflow-y-auto max-h-[90vh]">
           <button
-            onClick={()=> setShowModal(!showModal)}
+            onClick={() => setShowModal(!showModal)}
             className=" text-black text-2xl flex justify-end w-full rounded hover:text-red-500 transition duration-300"
           >
             <IoClose />
@@ -65,15 +74,15 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
               <label className="block text-sm font-medium">Unit ID</label>
               <input
                 type="text"
-                name="unit_id"
+                name="Unit_ID"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.unit_id}
+                value={values.Unit_ID}
                 className="mt-1 w-full p-2 border rounded"
               />
               {
-                touched.unit_id && errors.unit_id && (
-                  <p className="text-red-500 text-sm">{errors.unit_id}</p>
+                touched.Unit_ID && errors.Unit_ID && (
+                  <p className="text-red-500 text-sm">{errors.Unit_ID}</p>
                 )
               }
             </div>
@@ -82,15 +91,15 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
               <label className="block text-sm font-medium">Custodian Name</label>
               <input
                 type="text"
-                name="custodian_name"
+                name="Custodian_name"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.custodian_name}
+                value={values.Custodian_name}
                 className="mt-1 w-full p-2 border rounded"
               />
               {
-                touched.custodian_name && errors.custodian_name && (
-                  <p className="text-red-500 text-sm">{errors.custodian_name}</p>
+                touched.Custodian_name && errors.Custodian_name && (
+                  <p className="text-red-500 text-sm">{errors.Custodian_name}</p>
                 )
               }
             </div>
@@ -101,15 +110,15 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
               </label>
               <input
                 type="text"
-                name="contact_info"
+                name="Custodian_Contact_info"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.contact_info}
+                value={values.Custodian_Contact_info}
                 className="mt-1 w-full p-2 border rounded"
               />
               {
-                touched.contact_info && errors.contact_info && (
-                  <p className="text-red-500 text-sm">{errors.contact_info}</p>
+                touched.Custodian_Contact_info && errors.Custodian_Contact_info && (
+                  <p className="text-red-500 text-sm">{errors.Custodian_Contact_info}</p>
                 )
               }
             </div>
@@ -118,15 +127,15 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
               <label className="block text-sm font-medium">Application Name</label>
               <input
                 type="text"
-                name="application_name"
+                name="Application_Name"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.application_name}
+                value={values.Application_Name}
                 className="mt-1 w-full p-2 border rounded"
               />
               {
-                touched.application_name && errors.application_name && (
-                  <p className="text-red-500 text-sm">{errors.application_name}</p>
+                touched.Application_Name && errors.Application_Name && (
+                  <p className="text-red-500 text-sm">{errors.Application_Name}</p>
                 )
               }
             </div>
@@ -134,10 +143,10 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
             <div>
               <label className="block text-sm font-medium">Application Type</label>
               <select
-                name="application_type"
+                name="Application_Type"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.application_type}
+                value={values.Application_Type}
                 className="mt-1 w-full p-2 border rounded"
               >
                 <option value="">Select</option>
@@ -147,8 +156,8 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
                 <option>Thick Client</option>
               </select>
               {
-                touched.application_type && errors.application_type && (
-                  <p className="text-red-500 text-sm">{errors.application_type}</p>
+                touched.Application_Type && errors.Application_Type && (
+                  <p className="text-red-500 text-sm">{errors.Application_Type}</p>
                 )
               }
             </div>
@@ -157,15 +166,15 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
               <label className="block text-sm font-medium">Version</label>
               <input
                 type="text"
-                name="version"
+                name="Version"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.version}
+                value={values.Version}
                 className="mt-1 w-full p-2 border rounded"
               />
               {
-                touched.version && errors.version && (
-                  <p className="text-red-500 text-sm">{errors.version}</p>
+                touched.Version && errors.Version && (
+                  <p className="text-red-500 text-sm">{errors.Version}</p>
                 )
               }
             </div>
@@ -173,16 +182,16 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
             <div>
               <label className="block text-sm font-medium">URL (if applicable)</label>
               <input
-                type="url"
-                name="url"
+                type="URL_if_appl"
+                name="URL_if_appl"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.url}
+                value={values.URL_if_appl}
                 className="mt-1 w-full p-2 border rounded"
               />
               {
-                touched.url && errors.url && (
-                  <p className="text-red-500 text-sm">{errors.url}</p>
+                touched.URL_if_appl && errors.URL_if_appl && (
+                  <p className="text-red-500 text-sm">{errors.URL_if_appl}</p>
                 )
               }
             </div>
@@ -191,15 +200,15 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
               <label className="block text-sm font-medium">Publisher</label>
               <input
                 type="text"
-                name="publisher"
+                name="Publisher"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.publisher}
+                value={values.Publisher}
                 className="mt-1 w-full p-2 border rounded"
               />
               {
-                touched.publisher && errors.publisher && (
-                  <p className="text-red-500 text-sm">{errors.publisher}</p>
+                touched.Publisher && errors.Publisher && (
+                  <p className="text-red-500 text-sm">{errors.Publisher}</p>
                 )
               }
             </div>
@@ -208,15 +217,15 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
               <label className="block text-sm font-medium">Install/Use Date</label>
               <input
                 type="date"
-                name="install_date"
+                name="Install_Use_Date"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.install_date}
+                value={values.Install_Use_Date}
                 className="mt-1 w-full p-2 border rounded"
               />
               {
-                touched.install_date && errors.install_date && (
-                  <p className="text-red-500 text-sm">{errors.install_date}</p>
+                touched.Install_Use_Date && errors.Install_Use_Date && (
+                  <p className="text-red-500 text-sm">{errors.Install_Use_Date}</p>
                 )
               }
             </div>
@@ -225,15 +234,15 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
               <label className="block text-sm font-medium">Business Purpose</label>
               <input
                 type="text"
-                name="business_purpose"
+                name="Business_Purpose"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.business_purpose}
+                value={values.Business_Purpose}
                 className="mt-1 w-full p-2 border rounded"
               />
               {
-                touched.business_purpose && errors.business_purpose && (
-                  <p className="text-red-500 text-sm">{errors.business_purpose}</p>
+                touched.Business_Purpose && errors.Business_Purpose && (
+                  <p className="text-red-500 text-sm">{errors.Business_Purpose}</p>
                 )
               }
             </div>
@@ -242,15 +251,15 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
               <label className="block text-sm font-medium">End of Life Date (EOL)</label>
               <input
                 type="date"
-                name="eol_date"
+                name="End_Of_Life_date"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.eol_date}
+                value={values.End_Of_Life_date}
                 className="mt-1 w-full p-2 border rounded"
               />
               {
-                touched.eol_date && errors.eol_date && (
-                  <p className="text-red-500 text-sm">{errors.eol_date}</p>
+                touched.End_Of_Life_date && errors.End_Of_Life_date && (
+                  <p className="text-red-500 text-sm">{errors.End_Of_Life_date}</p>
                 )
               }
             </div>
@@ -259,15 +268,15 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
               <label className="block text-sm font-medium">License Info</label>
               <input
                 type="text"
-                name="license_info"
+                name="LIcense_info"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.license_info}
+                value={values.LIcense_info}
                 className="mt-1 w-full p-2 border rounded"
               />
               {
-                touched.license_info && errors.license_info && (
-                  <p className="text-red-500 text-sm">{errors.license_info}</p>
+                touched.LIcense_info && errors.LIcense_info && (
+                  <p className="text-red-500 text-sm">{errors.LIcense_info}</p>
                 )
               }
             </div>
@@ -275,20 +284,20 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
             <div>
               <label className="block text-sm font-medium">Ownership</label>
               <select
-                name="ownership"
+                name="Ownership"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.ownership}
+                value={values.Ownership}
                 className="mt-1 w-full p-2 border rounded"
               >
                 <option value="">Select</option>
                 <option>Unit</option>
                 <option>Enterprise FSU</option>
                 <option>External</option>
-              </select>\
+              </select>
               {
-                touched.ownership && errors.ownership && (
-                  <p className="text-red-500 text-sm">{errors.ownership}</p>
+                touched.Ownership && errors.Ownership && (
+                  <p className="text-red-500 text-sm">{errors.Ownership}</p>
                 )
               }
             </div>
@@ -297,15 +306,15 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
               <label className="block text-sm font-medium">Users</label>
               <input
                 type="text"
-                name="users"
+                name="Users"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.users}
+                value={values.Users}
                 className="mt-1 w-full p-2 border rounded"
               />
               {
-                touched.users && errors.users && (
-                  <p className="text-red-500 text-sm">{errors.users}</p>
+                touched.Users && errors.Users && (
+                  <p className="text-red-500 text-sm">{errors.Users}</p>
                 )
               }
             </div>
@@ -314,15 +323,15 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
               <label className="block text-sm font-medium">High/Mod Risk Data</label>
               <input
                 type="text"
-                name="risk_data"
+                name="Risk_Data"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.risk_data}
+                value={values.Risk_Data}
                 className="mt-1 w-full p-2 border rounded"
               />
               {
-                touched.risk_data && errors.risk_data && (
-                  <p className="text-red-500 text-sm">{errors.risk_data}</p>
+                touched.Risk_Data && errors.Risk_Data && (
+                  <p className="text-red-500 text-sm">{errors.Risk_Data}</p>
                 )
               }
             </div>
@@ -331,15 +340,15 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
               <label className="block text-sm font-medium">Security Description (MFA, etc)</label>
               <input
                 type="text"
-                name="security_desc"
+                name="Security_description"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.security_desc}
+                value={values.Security_description}
                 className="mt-1 w-full p-2 border rounded"
               />
               {
-                touched.security_desc && errors.security_desc && (
-                  <p className="text-red-500 text-sm">{errors.security_desc}</p>
+                touched.Security_description && errors.Security_description && (
+                  <p className="text-red-500 text-sm">{errors.Security_description}</p>
                 )
               }
             </div>
@@ -348,15 +357,15 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
               <label className="block text-sm font-medium">PII - SSN</label>
               <input
                 type="text"
-                name="pii_ssn"
+                name="Pll_SSN"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.pii_ssn}
+                value={values.Pll_SSN}
                 className="mt-1 w-full p-2 border rounded"
               />
               {
-                touched.pii_ssn && errors.pii_ssn && (
-                  <p className="text-red-500 text-sm">{errors.pii_ssn}</p>
+                touched.Pll_SSN && errors.Pll_SSN && (
+                  <p className="text-red-500 text-sm">{errors.Pll_SSN}</p>
                 )
               }
             </div>
@@ -365,14 +374,14 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
               <label className="block text-sm font-medium">FERPA</label>
               <input
                 type="text"
-                name="ferpa"
+                name="FERPA"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.ferpa}
+                value={values.FERPA}
                 className="mt-1 w-full p-2 border rounded"
               />
               {
-                touched.ferpa && errors.ferpa && (
+                touched.FERPA && errors.FERPA && (
                   <p className="text-red-500 text-sm">{errors.ferpa}</p>
                 )
               }
@@ -382,15 +391,15 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
               <label className="block text-sm font-medium">800-171</label>
               <input
                 type="text"
-                name="nist_800_171"
+                name="800_171"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.nist_800_171}
+                value={values["800_171"]}
                 className="mt-1 w-full p-2 border rounded"
               />
               {
-                touched.nist_800_171 && errors.nist_800_171 && (
-                  <p className="text-red-500 text-sm">{errors.nist_800_171}</p>
+                touched["800_171"] && errors["800_171"]&& (
+                  <p className="text-red-500 text-sm">{errors["800_171"]}</p>
                 )
               }
             </div>
@@ -399,15 +408,15 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
               <label className="block text-sm font-medium">HIPAA</label>
               <input
                 type="text"
-                name="hipaa"
+                name="HIPAA"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.hipaa}
+                value={values.HIPAA}
                 className="mt-1 w-full p-2 border rounded"
               />
               {
-                touched.hipaa && errors.hipaa && (
-                  <p className="text-red-500 text-sm">{errors.hipaa}</p>
+                touched.HIPAA && errors.HIPAA && (
+                  <p className="text-red-500 text-sm">{errors.HIPAA}</p>
                 )
               }
             </div>
@@ -416,15 +425,15 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
               <label className="block text-sm font-medium">PCI - Payment Card Industry</label>
               <input
                 type="text"
-                name="pci"
+                name="PCI"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.pci}
+                value={values.PCI}
                 className="mt-1 w-full p-2 border rounded"
               />
               {
-                touched.pci && errors.pci && (
-                  <p className="text-red-500 text-sm">{errors.pci}</p>
+                touched.PCI && errors.PCI && (
+                  <p className="text-red-500 text-sm">{errors.PCI}</p>
                 )
               }
             </div>
@@ -433,15 +442,15 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
               <label className="block text-sm font-medium">GLBA - Gramm-Leach-Bliley Act</label>
               <input
                 type="text"
-                name="glba"
+                name="GLBA"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.glba}
+                value={values.GLBA}
                 className="mt-1 w-full p-2 border rounded"
               />
               {
-                touched.glba && errors.glba && (
-                  <p className="text-red-500 text-sm">{errors.glba}</p>
+                touched.GLBA && errors.GLBA && (
+                  <p className="text-red-500 text-sm">{errors.GLBA}</p>
                 )
               }
             </div>
@@ -450,23 +459,41 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
               <label className="block text-sm font-medium">GDPR - General Data Protection Regulation</label>
               <input
                 type="text"
-                name="gdpr"
+                name="GDPR"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.gdpr}
+                value={values.GDPR}
                 className="mt-1 w-full p-2 border rounded"
               />
               {
-                touched.gdpr && errors.gdpr && (
-                  <p className="text-red-500 text-sm">{errors.gdpr}</p>
+                touched.GDPR && errors.GDPR && (
+                  <p className="text-red-500 text-sm">{errors.GDPR}</p>
+                )
+              }
+            </div>
+            <div>
+              <label className="block text-sm font-medium">Controlled Unclassified Information (CUI)
+              </label>
+              <input
+                type="text"
+                name="CUI"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.CUI}
+                className="mt-1 w-full p-2 border rounded"
+              />
+              {
+                touched.CUI && errors.CUI && (
+                  <p className="text-red-500 text-sm">{errors.CUI}</p>
                 )
               }
             </div>
 
             <div className="md:col-span-2">
               <button
+                onClick={AppSoftGetData}
                 type="submit"
-                className="bg-blue-600 text-white py-2 px-6 rounded hover:bg-blue-700"
+                className="bg-sky-600 text-white py-2 px-6 rounded hover:bg-sky-700"
               >
                 Submit
               </button>
