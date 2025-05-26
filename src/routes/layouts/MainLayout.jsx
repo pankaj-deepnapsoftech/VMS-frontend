@@ -64,7 +64,7 @@ const MainLayout = () => {
         else if (item.title === getDataFromSession && (authenticate.role === "ClientCISO" || authenticate.role === "ClientSME")) {
           navigate(item.allowedCISO[0]?.route);
         }
-        else if(authenticate.role === "Assessor") {
+        else if (authenticate.role === "Assessor") {
           navigate("/");
         }
 
