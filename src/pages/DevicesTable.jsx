@@ -8,11 +8,13 @@ import { MdDeleteForever } from "react-icons/md";
 const DevicesTable = () => {
   const [devices, setDevices] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const { data, DevicesDeleteData } = useContext(DeviceContext)
+  const { data, DevicesDeleteData,page,setPage } = useContext(DeviceContext)
   const [editableData,setEditableData] = useState(null)
- 
+  
   const handleDeleteBtn = (_id) => {
-    DevicesDeleteData(_id);
+    if (window.confirm("Are you sure you want to delete this element ?")){
+     DevicesDeleteData(_id);
+   }
   }
   return (
     <div className="p-6 ">
@@ -93,6 +95,28 @@ const DevicesTable = () => {
           </tbody>
 
         </table>
+            <div className="fixed  bottom-0 w-full flex justify-center gap-4 items-center my-16">
+              <button
+                className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white    border rounded-md ${
+                  page === 1 ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+                onClick={() => setPage(page - 1)}
+                disabled={page === 1}
+              >
+                Previous
+              </button>
+              <span className="text-white" >
+                Page {page}
+              
+              </span>
+              <button
+                className={`px-4 py-2 border rounded-md bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white  `}
+                disabled={data?.length < 10}
+                onClick={() => setPage(page + 1)}
+              >
+                Next
+              </button>
+            </div>
       </div>
 
       <DevicesData showModal={showModal} setShowModal={setShowModal} editableData={editableData} />

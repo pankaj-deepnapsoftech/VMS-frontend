@@ -11,9 +11,9 @@ import { IoClose } from "react-icons/io5";
 
 const DevicesData = ({ showModal, setShowModal, editableData }) => {
 
-  const { DevicesSendData } = useContext(DeviceContext)
+  const { DevicesSendData, DeviceUpdateData } = useContext(DeviceContext)
 
-  const { handleBlur, handleChange, handleSubmit, resetForm, touched, errors, values,setFieldValue } = useFormik({
+  const { handleBlur, handleChange, handleSubmit, resetForm, touched, errors, values } = useFormik({
     initialValues: editableData ||  {
       unit_id: "",
       asset_custodian_name: "",
@@ -33,14 +33,16 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
     },
     validationSchema: DevicesDataSchema,
     enableReinitialize:true,
-    onSubmit: (values) => {
+    
+    onSubmit: async(values) => {
+      console.log(values)
       if(editableData){
-        // call here edit api
+      await  DeviceUpdateData(values)
       }else{
-
-        DevicesSendData(values)
+       await DevicesSendData(values)
       }
-      resetForm()
+      setShowModal(false)
+      resetForm() 
     }
   })
 
@@ -335,6 +337,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
           <div className="md:col-span-2 flex justify-end">
             <button
               type="submit"
+             
               className="bg-sky-600 hover:bg-sky-700 text-white font-medium py-2 px-6 rounded transition"
             >
               Submit

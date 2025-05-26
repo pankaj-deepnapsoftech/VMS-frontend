@@ -5,8 +5,8 @@ import { useFormik } from "formik";
 import React, { useContext } from "react";
 import { IoClose } from "react-icons/io5";
 
-const Data = ({ ShowModal, setShowModal }) => {
-  const { AssetDataCreate } = useContext(AssetDataContext);
+const Data = ({ ShowModal, setShowModal, edittable }) => {
+  const { AssetDataCreate, AssetDataDelete, AssetDataUpdate } = useContext(AssetDataContext);
 
   const {
     handleBlur,
@@ -17,7 +17,7 @@ const Data = ({ ShowModal, setShowModal }) => {
     errors,
     values,
   } = useFormik({
-    initialValues: {
+    initialValues: edittable || {
       data_asset: "",
       contents: "",
       use: "",
@@ -30,8 +30,13 @@ const Data = ({ ShowModal, setShowModal }) => {
       last_inventory_update: "",
     },
     validationSchema: DataFormSchema,
+    enableReinitialize: true,
     onSubmit: (values) => {
-      AssetDataCreate(values);
+      if (edittable){
+        AssetDataUpdate(values)
+      }else{
+        AssetDataCreate(values);
+      }
       setShowModal(false);
       resetForm();
     },
@@ -52,8 +57,8 @@ const Data = ({ ShowModal, setShowModal }) => {
           <IoClose />
         </button>
 
-        <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800">
-          Data
+        <h2 className="text-2xl font-semibold mb-6 text-center text-gray-100">
+         {edittable ? "Edit Data" : "Data"}
         </h2>
 
         <form

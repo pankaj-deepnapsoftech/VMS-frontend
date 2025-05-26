@@ -11,13 +11,12 @@ export const DeviceContext = createContext()
 
 const DeviceProvider = ({ children }) => {
     const [data, setData] = useState([])
-   
+    const [page, setPage] = useState(1)
 
-    const DevicesGetData = async () => {
+    const DevicesGetData = async (page) => {
  
         try {
-           
-            const res = await AxiosHandler.get('/device/get');
+            const res = await AxiosHandler.get(`/device/get?page=${page}&limit=10`);
             setData(res.data.data)
         } catch (error) {
             console.log(error)
@@ -44,12 +43,22 @@ const DeviceProvider = ({ children }) => {
         }
     }
 
+    const DeviceUpdateData = async (UpdateValues)=>{
+        try {
+            const res = await AxiosHandler.put(`/device/update/${UpdateValues._id}`,UpdateValues)
+            console.log(res.status)
+            DevicesGetData();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     useEffect(() => {
-        DevicesGetData();
-    }, [])    
+        DevicesGetData(page);
+    }, [page])    
 
     return (
-        <DeviceContext.Provider value={{ DevicesSendData, data, DevicesDeleteData }}>
+        <DeviceContext.Provider value={{ DevicesSendData, data, DevicesDeleteData, DeviceUpdateData,page,setPage }}>
             {children}
         </DeviceContext.Provider>
 

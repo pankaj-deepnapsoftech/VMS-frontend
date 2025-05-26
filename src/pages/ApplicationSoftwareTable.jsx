@@ -7,20 +7,21 @@ import { MdDeleteForever } from "react-icons/md";
 const ApplicationSoftwareInventoryTable = () => {
   const [applications, setApplications] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const { data, AppSoftDeleteData } = useContext(ApplicationSoftwareInventoryContext)
+  const { data, AppSoftDeleteData, page, setPage } = useContext(ApplicationSoftwareInventoryContext)
+  const [editTableData, setEditTableData] = useState(null)
 
-
-  // const handleDeleteBtn = (_id) => {
-  //   console.log(_id)
-  //   AppSoftDeleteData(_id);
-  // };
+  const handleDeleteBtn = (_id) => {
+    if (window.confirm("Are you sure you want to delete this element ?")) {
+      AppSoftDeleteData(_id);
+    }
+  };
 
   return (
     <div className="p-4">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold text-white">Software & Application</h2>
         <button
-          onClick={() => setShowModal(true)}
+          onClick={() => { setShowModal(true); setEditTableData(null) }}
           className="bg-sky-600 text-white py-2 px-4 rounded hover:bg-sky-700"
         >
           Add Application
@@ -91,6 +92,7 @@ const ApplicationSoftwareInventoryTable = () => {
                   <td className="p-2 border">{app.GDPR}</td>
                   <td className="p-2 flex items-center justify-center relative top-2 gap-2">
                     <button
+                      onClick={() => { setShowModal(true); setEditTableData(app) }}
                       aria-label="Edit"
                       className="text-blue-500 hover:text-blue-700"
                       type="button"
@@ -98,7 +100,7 @@ const ApplicationSoftwareInventoryTable = () => {
                       <FaEdit size={18} />
                     </button>
                     <button
-                    // onClick={()=> handleDeleteBtn(app._id)}
+                      onClick={() => handleDeleteBtn(app._id)}
                       aria-label="Delete"
                       className="text-red-500 hover:text-red-700"
                       type="button"
@@ -119,6 +121,27 @@ const ApplicationSoftwareInventoryTable = () => {
           </tbody>
         </table>
       </div>
+      <div className="fixed  bottom-0 w-full flex justify-center gap-4 items-center my-16">
+        <button
+          className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white    border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+          disabled={page === 1}
+          onClick={() => setPage(page - 1)}
+        >
+          Previous
+        </button>
+        <span className="text-white" >
+          Page {page}
+
+        </span>
+        <button
+          className={`px-4 py-2 border rounded-md bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white  `}
+          disabled={data?.length < 10}
+          onClick={() => setPage(page + 1)}
+        >
+          Next
+        </button>
+      </div>
 
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center">
@@ -130,7 +153,7 @@ const ApplicationSoftwareInventoryTable = () => {
           </div>
         </div>
       )}
-      <ApplicationSoftwareInventory showModal={showModal} setShowModal={setShowModal} />
+      <ApplicationSoftwareInventory showModal={showModal} setShowModal={setShowModal} editTableData={editTableData} />
     </div>
   );
 };

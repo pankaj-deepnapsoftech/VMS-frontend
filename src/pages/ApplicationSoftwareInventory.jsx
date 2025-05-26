@@ -6,8 +6,8 @@ import { useFormik } from "formik";
 import React, { useContext } from "react";
 import { IoClose } from "react-icons/io5";
 
-const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
-  const { AppSoftSendData, AppSoftGetData } = useContext(ApplicationSoftwareInventoryContext)
+const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }) => {
+  const { AppSoftSendData, AppSoftGetData, AppSoftUpdate } = useContext(ApplicationSoftwareInventoryContext)
   
   const {
     handleBlur,
@@ -18,7 +18,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
     errors,
     values,
   } = useFormik({
-    initialValues: {
+    initialValues: editTableData || {
       Unit_ID: "",
       Custodian_name: "",
       Custodian_Contact_info: "",
@@ -45,11 +45,15 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
       CUI:""
     },
     validationSchema: ApplicationSoftwareSchema,
+    enableReinitialize:true,
     onSubmit: (values) => {
-       AppSoftSendData(values)
-       console.log("hello")
-       resetForm()
-       setShowModal(false)
+      if(editTableData){
+        AppSoftUpdate(values)
+      }else{
+        AppSoftSendData(values)
+      }
+      resetForm()
+      setShowModal(false)
     },
   });
 
@@ -64,7 +68,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
             <IoClose />
           </button>
 
-          <h1 className="text-3xl font-semibold text-gray-800 mb-6 border-b pb-2">Application & Software Inventory</h1>
+          <h1 className="text-3xl font-semibold text-gray-800 mb-6 border-b pb-2">{editTableData ? "Edit Application & Software Inventory" : "Application & Software Inventory"}</h1>
 
           <form onSubmit={handleSubmit}
 
