@@ -5,7 +5,6 @@ import {
   ClientCisoList,
   ClientSmeList,
   EmployeeList,
-  list,
 } from "@/constants/constants.data";
 import { useAuthContext } from "@/context";
 import { IoIosLogOut } from "react-icons/io";
@@ -31,7 +30,7 @@ function Header({ setShowMenu }) {
     case "ClientCISO":
       navList = ClientCisoList.filter((item) =>
         authenticate.allowed_paths.some((ite) => item.route === ite.value)
-      ); // Define if ClientCTO has a specific list
+      ); 
       break;
     case "Assessor":
       navList = EmployeeList;

@@ -29,6 +29,8 @@ const MainLayout = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
 
+  console.log(authenticate.role)
+
 
   let notificationcount = notificationData?.filter((notification) => !notification.view).length || 0;
 
@@ -56,13 +58,19 @@ const MainLayout = () => {
   useEffect(() => {
     if (getDataFromSession) {
       for (let item of products) {
-        if (item.title === getDataFromSession ) {
-          navigate(item.allowedPath[0]?.route)
+        if (item.title === getDataFromSession && authenticate.role === "Admin") {
+          navigate(item.allowedPath[0]?.route);
         }
-        
+        else if (item.title === getDataFromSession && (authenticate.role === "ClientCISO" || authenticate.role === "ClientSME")) {
+          navigate(item.allowedCISO[0]?.route);
+        }
+        else if(authenticate.role === "Assessor") {
+          navigate("/");
+        }
+
       }
     }
-  }, [getDataFromSession])
+  }, [getDataFromSession, authenticate])
 
   const AllowedPath = (link) => {
     const paths = ["assert-inventory"]
