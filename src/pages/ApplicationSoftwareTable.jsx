@@ -136,7 +136,7 @@ const ApplicationSoftwareInventoryTable = () => {
         </span>
         <button
           className={`px-4 py-2 border rounded-md bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white  `}
-          disabled={data?.length < 10}
+          disabled={data?.length <= 10}
           onClick={() => setPage(page + 1)}
         >
           Next

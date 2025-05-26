@@ -25,10 +25,12 @@ import {
 import AppSoftContextProvider from "./context/ApplicationSoftwareInventoryContext/ApplicationSoftwareInventoryContext";
 import DeviceProvider from "./context/DevicesContext/DevicesContext";
 import AssetDataProvider from "./context/Asset Data Context/AssetDataContex";
+import RiskRatingProvider from "./context/RiskRating/RiskRatingContext";
 
 createRoot(document.getElementById("root")).render(
 
   <BrowserRouter>
+
     <AuthContextProvider>
       <DataContextProvider>
         <AllEmployeeContextProvider>
@@ -43,7 +45,9 @@ createRoot(document.getElementById("root")).render(
                           <AppSoftContextProvider>
                             <DeviceProvider>
                               <AssetDataProvider>
-                                <App />
+                                <RiskRatingProvider>
+                                  <App />
+                                </RiskRatingProvider>
                               </AssetDataProvider>
                             </DeviceProvider>
                           </AppSoftContextProvider>

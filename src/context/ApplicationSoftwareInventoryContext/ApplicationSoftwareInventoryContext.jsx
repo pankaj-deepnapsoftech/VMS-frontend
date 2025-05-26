@@ -2,6 +2,7 @@
 // AppSoftContext.js
 import { createContext, useEffect, useState } from "react";
 import { AxiosHandler } from "@/config/AxiosConfig";
+import toast from "react-hot-toast";
 
 
 export const ApplicationSoftwareInventoryContext = createContext();
@@ -23,29 +24,36 @@ const AppSoftContextProvider = ({ children }) => {
     const AppSoftSendData = async (FormValues) => {
         try {
             const res = await AxiosHandler.post("/assert/create-one", FormValues);
-            AppSoftGetData()
+          if(res.status === 201){
+              AppSoftGetData()
+              toast.success(res?.data?.message)
+          } 
         } catch (error) {
-            console.error("Failed to send data:", error);
+            toast.error( error);
         }
     };
     const AppSoftDeleteData = async (_id) => {
 
         try {
             const res = await AxiosHandler.delete(`/assert/delete/${_id}`)
-            AppSoftGetData()
+            if (res.status === 200) {
+                AppSoftGetData()
+                toast.success(res?.data?.message)
+            }
         } catch (error) {
-            console.log(error)
+           toast.error(error)
         }
     }
 
     const AppSoftUpdate = async (UpdateValues) => {
         try {
             const res = await AxiosHandler.put(`/assert/update-data/${UpdateValues._id}`, UpdateValues) 
-            AppSoftGetData()
-            console.log(res.status)
-            
+            if (res.status === 200) {
+                AppSoftGetData()
+                toast.success(res?.data?.message)
+            }
         } catch (error) {
-            console.log(error)
+            toast.error(error)
         }
     }
 

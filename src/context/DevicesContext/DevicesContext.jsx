@@ -1,6 +1,7 @@
 import { AxiosHandler } from "@/config/AxiosConfig";
 import { useState } from "react";
 import { createContext, useEffect } from "react";
+import toast from "react-hot-toast";
 
 /* eslint-disable react/prop-types */
 
@@ -14,21 +15,28 @@ const DeviceProvider = ({ children }) => {
     const [page, setPage] = useState(1)
 
     const DevicesGetData = async (page) => {
- 
+
         try {
             const res = await AxiosHandler.get(`/device/get?page=${page}&limit=10`);
-            setData(res.data.data)
+            setData(res.data.data);
+            
         } catch (error) {
-            console.log(error)
+           
+            toast.error(error)
         }
     }
 
     const DevicesSendData = async (FormValues) => {
         try {
             const res = await AxiosHandler.post('/device/create', FormValues);
-            DevicesGetData()
+            if (res.status === 201) {
+                DevicesGetData()
+                toast.success(res.data.message)
+            }
+          
         } catch (error) {
-            console.log(error)
+            toast.error(error)
+
         }
     }
 
@@ -36,29 +44,33 @@ const DeviceProvider = ({ children }) => {
     const DevicesDeleteData = async (_id) => {
         try {
             const res = await AxiosHandler.delete(`/device/delete/${_id}`);
-            console.log(res)
-            DevicesGetData()
+            if (res.status === 200) {
+                DevicesGetData()
+                toast.success(res.data.message)
+            }
         } catch (error) {
-            console.log(error)
+           toast.error(error)
         }
     }
 
-    const DeviceUpdateData = async (UpdateValues)=>{
+    const DeviceUpdateData = async (UpdateValues) => {
         try {
-            const res = await AxiosHandler.put(`/device/update/${UpdateValues._id}`,UpdateValues)
-            console.log(res.status)
-            DevicesGetData();
+            const res = await AxiosHandler.put(`/device/update/${UpdateValues._id}`, UpdateValues)
+            if (res.status === 200) {
+                DevicesGetData()
+                toast.success(res.data.message)
+            }
         } catch (error) {
-            console.log(error)
+            toast.error(error)
         }
     }
 
     useEffect(() => {
         DevicesGetData(page);
-    }, [page])    
+    }, [page])
 
     return (
-        <DeviceContext.Provider value={{ DevicesSendData, data, DevicesDeleteData, DeviceUpdateData,page,setPage }}>
+        <DeviceContext.Provider value={{ DevicesSendData, data, DevicesDeleteData, DeviceUpdateData, page, setPage }}>
             {children}
         </DeviceContext.Provider>
 

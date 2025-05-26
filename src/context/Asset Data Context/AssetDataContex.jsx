@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { AxiosHandler } from "@/config/AxiosConfig";
 import { createContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 
 
@@ -11,12 +12,16 @@ const AssetDataProvider = ({ children }) => {
 
     const [data, setData] = useState([])
     const [page, setPage] = useState(1)
+
     const AssetDataCreate = async (FormValue) => {
         try {
             const res = await AxiosHandler.post('/asset-data/create', FormValue);
-            AssetDataGet()
+           if( res.status === 201){
+               AssetDataGet()
+               toast.success(res?.data?.message)
+           }
         } catch (error) {
-            console.log(error)
+            toast.error(error)
         }
 
     }
@@ -34,11 +39,14 @@ const AssetDataProvider = ({ children }) => {
     const AssetDataDelete = async(_id) => {
         try {
             const res = await AxiosHandler.delete(`/asset-data/delete/${_id}`)
-            console.log(res.status)
-            AssetDataGet()
+            if (res.status === 200) {
+                AssetDataGet()
+                toast.success(res?.data?.message)
+            }
         } catch (error) {
-            console.log(error)
+            toast.error(error)
         }
+ 
     }
 
     const AssetDataUpdate = async (UpdateValues) => {
@@ -47,10 +55,12 @@ const AssetDataProvider = ({ children }) => {
             console.log(res)
             if (res.status === 200) {
                 AssetDataGet()
+                toast.success(res?.data?.message)
             }
         } catch (error) {
-            console.log(error)
+            toast.error(error)
         }
+ 
     }
 
     useEffect(() => {

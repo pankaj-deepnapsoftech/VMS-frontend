@@ -17,7 +17,7 @@ const DevicesTable = () => {
    }
   }
   return (
-    <div className="p-6 ">
+    <div className="p-6 h-full ">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-xl font-bold text-white">Devices</h1>
         <button
@@ -97,7 +97,8 @@ const DevicesTable = () => {
             ))}
           </tbody>
         </table>
-            <div className="fixed  bottom-0 w-full flex justify-center gap-4 items-center my-16">
+      </div>
+            <div className=" w-full flex justify-center gap-4 items-center my-16">
               <button
                 className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white    border rounded-md ${
                   page === 1 ? "opacity-50 cursor-not-allowed" : ""
@@ -113,13 +114,12 @@ const DevicesTable = () => {
               </span>
               <button
                 className={`px-4 py-2 border rounded-md bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white  `}
-                disabled={data?.length < 10}
+                disabled={data?.length <= 10}
                 onClick={() => setPage(page + 1)}
               >
                 Next
               </button>
             </div>
-      </div>
 
       <DevicesData showModal={showModal} setShowModal={setShowModal} editableData={editableData} />
     </div>
