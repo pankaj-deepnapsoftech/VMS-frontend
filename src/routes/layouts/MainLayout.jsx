@@ -17,8 +17,8 @@ import Sidebar from "@/components/sidebar/Sidebar";
 import { products } from "@/constants/static.data";
 
 const MainLayout = () => {
-  const { notificationData, NotificationsViewed } =  useVulnerabililtyDataContext();
-  const { authenticate, getDataFromSession, setOpenSideBar,showUserMenu,setShowUserMenu } = useAuthContext();
+  const { notificationData, NotificationsViewed } = useVulnerabililtyDataContext();
+  const { authenticate, getDataFromSession, setOpenSideBar, showUserMenu, setShowUserMenu } = useAuthContext();
 
   const { isOpen, openModal, closeModal } = useChangePassword();
 
@@ -53,21 +53,16 @@ const MainLayout = () => {
   }, [location.pathname]);
 
 
-  useEffect(()=>{
-    if(getDataFromSession){
-      for(let item of products){
-        if(item.title === getDataFromSession && authenticate.role === "Admin"){
+  useEffect(() => {
+    if (getDataFromSession) {
+      for (let item of products) {
+        if (item.title === getDataFromSession ) {
           navigate(item.allowedPath[0]?.route)
         }
-        // eslint-disable-next-line no-constant-binary-expression
-        else if (item.title === getDataFromSession && authenticate.role === ("ClientCISO" || "ClientSME") ){
-          navigate(item.allowedCISO[0]?.route)
-        }else{
-          navigate("/")
-        }
+        
       }
     }
-  },[getDataFromSession])
+  }, [getDataFromSession])
 
   const AllowedPath = (link) => {
     const paths = ["assert-inventory"]
@@ -86,7 +81,7 @@ const MainLayout = () => {
         <Suspense fallback={<Loader />}>
 
           <Sidebar />
-         {!AllowedPath(location.pathname.split("/")[1]) && <aside
+          {!AllowedPath(location.pathname.split("/")[1]) && <aside
             className={`${showMenu ? "left-0" : "-left-full"
               } fixed z-10 w-[65%] flex flex-col justify-between 
 h-screen  bg-gradient-to-t from-[#151515] to-[#212224] 
@@ -131,7 +126,7 @@ transition duration-300 sm:w-[40%] md:w-[30%] lg:w-[25%] xl:w-[20%] 2xl:w-[15%] 
 
                     <div className="relative ml-4 flex text-white items-center gap-3 ">
                       <button
-                        onClick={() => {setOpenSideBar(true)}}
+                        onClick={() => { setOpenSideBar(true) }}
                         className="bg-blue-400 text-white rounded-full w-10 h-10 flex items-center justify-center"
                       >
                         {getInitials(authenticate?.full_name)}
