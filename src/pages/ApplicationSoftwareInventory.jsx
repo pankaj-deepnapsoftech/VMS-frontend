@@ -6,8 +6,8 @@ import { useFormik } from "formik";
 import React, { useContext } from "react";
 import { IoClose } from "react-icons/io5";
 
-const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
-  const { AppSoftSendData, AppSoftGetData } = useContext(ApplicationSoftwareInventoryContext)
+const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }) => {
+  const { AppSoftSendData, AppSoftGetData, AppSoftUpdate } = useContext(ApplicationSoftwareInventoryContext)
   
   const {
     handleBlur,
@@ -18,7 +18,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
     errors,
     values,
   } = useFormik({
-    initialValues: {
+    initialValues: editTableData || {
       Unit_ID: "",
       Custodian_name: "",
       Custodian_Contact_info: "",
@@ -45,40 +45,44 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
       CUI:""
     },
     validationSchema: ApplicationSoftwareSchema,
+    enableReinitialize:true,
     onSubmit: (values) => {
-       AppSoftSendData(values)
-       console.log("hello")
-       resetForm()
-       setShowModal(false)
+      if(editTableData){
+        AppSoftUpdate(values)
+      }else{
+        AppSoftSendData(values)
+      }
+      resetForm()
+      setShowModal(false)
     },
   });
 
   return (
     <>
       <section className={`transition-opacity duration-300 ease-in-out ${showModal ? "opacity-100 visible" : "opacity-0 invisible"} fixed top-0 left-0 h-screen w-full bg-black/40 backdrop-blur-sm  flex items-center justify-center z-50 `}>
-        <div className="bg-white rounded-lg shadow-xl w-full max-w-5xl p-8 overflow-y-auto max-h-[90vh]">
+        <div className="bg-background rounded-lg shadow-xl w-full max-w-5xl p-8 overflow-y-auto max-h-[90vh]">
           <button
             onClick={() => setShowModal(!showModal)}
-            className=" text-black text-2xl flex justify-end w-full rounded hover:text-red-500 transition duration-300"
+            className=" text-white text-2xl flex justify-end w-full rounded hover:text-gray-700 transition duration-300"
           >
             <IoClose />
           </button>
 
-          <h1 className="text-3xl font-semibold text-gray-800 mb-6 border-b pb-2">Application & Software Inventory</h1>
+          <h1 className="text-3xl font-semibold text-gray-800 mb-6 border-b pb-2">{editTableData ? "Edit Application & Software Inventory" : "Application & Software Inventory"}</h1>
 
           <form onSubmit={handleSubmit}
 
             className="grid grid-cols-1 md:grid-cols-2 gap-4"
           >
             <div>
-              <label className="block text-sm font-medium">Unit ID</label>
+              <label className="block text-sm text-white font-medium">Unit ID</label>
               <input
                 type="text"
                 name="Unit_ID"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Unit_ID}
-                className="mt-1 w-full p-2 border rounded"
+                className="mt-1 w-full p-2 border bg-input rounded" 
               />
               {
                 touched.Unit_ID && errors.Unit_ID && (
@@ -88,14 +92,14 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium">Custodian Name</label>
+              <label className="block text-sm text-white font-medium">Custodian Name</label>
               <input
                 type="text"
                 name="Custodian_name"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Custodian_name}
-                className="mt-1 w-full p-2 border rounded"
+                className="mt-1 w-full p-2 border bg-input rounded"
               />
               {
                 touched.Custodian_name && errors.Custodian_name && (
@@ -105,7 +109,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium">
+              <label className="block text-sm text-white font-medium">
                 Custodian Contact Info
               </label>
               <input
@@ -114,7 +118,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Custodian_Contact_info}
-                className="mt-1 w-full p-2 border rounded"
+                className="mt-1 w-full p-2 border bg-input rounded"
               />
               {
                 touched.Custodian_Contact_info && errors.Custodian_Contact_info && (
@@ -124,14 +128,14 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium">Application Name</label>
+              <label className="block text-sm text-white font-medium">Application Name</label>
               <input
                 type="text"
                 name="Application_Name"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Application_Name}
-                className="mt-1 w-full p-2 border rounded"
+                className="mt-1 w-full p-2 border bg-input rounded"
               />
               {
                 touched.Application_Name && errors.Application_Name && (
@@ -141,13 +145,13 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium">Application Type</label>
+              <label className="block text-sm text-white font-medium">Application Type</label>
               <select
                 name="Application_Type"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Application_Type}
-                className="mt-1 w-full p-2 border rounded"
+                className="mt-1 w-full p-2 border bg-input rounded"
               >
                 <option value="">Select</option>
                 <option>Web</option>
@@ -163,14 +167,14 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium">Version</label>
+              <label className="block text-sm text-white font-medium">Version</label>
               <input
                 type="text"
                 name="Version"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Version}
-                className="mt-1 w-full p-2 border rounded"
+                className="mt-1 w-full p-2 border bg-input rounded"
               />
               {
                 touched.Version && errors.Version && (
@@ -180,14 +184,14 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium">URL (if applicable)</label>
+              <label className="block text-sm text-white font-medium">URL (if applicable)</label>
               <input
                 type="URL_if_appl"
                 name="URL_if_appl"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.URL_if_appl}
-                className="mt-1 w-full p-2 border rounded"
+                className="mt-1 w-full p-2 border bg-input rounded"
               />
               {
                 touched.URL_if_appl && errors.URL_if_appl && (
@@ -197,14 +201,14 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium">Publisher</label>
+              <label className="block text-sm text-white font-medium">Publisher</label>
               <input
                 type="text"
                 name="Publisher"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Publisher}
-                className="mt-1 w-full p-2 border rounded"
+                className="mt-1 w-full p-2 border bg-input rounded"
               />
               {
                 touched.Publisher && errors.Publisher && (
@@ -214,14 +218,14 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium">Install/Use Date</label>
+              <label className="block text-sm text-white font-medium">Install/Use Date</label>
               <input
                 type="date"
                 name="Install_Use_Date"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Install_Use_Date}
-                className="mt-1 w-full p-2 border rounded"
+                className="mt-1 w-full p-2 border bg-input rounded"
               />
               {
                 touched.Install_Use_Date && errors.Install_Use_Date && (
@@ -231,14 +235,14 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium">Business Purpose</label>
+              <label className="block text-sm text-white font-medium">Business Purpose</label>
               <input
                 type="text"
                 name="Business_Purpose"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Business_Purpose}
-                className="mt-1 w-full p-2 border rounded"
+                className="mt-1 w-full p-2 border bg-input rounded"
               />
               {
                 touched.Business_Purpose && errors.Business_Purpose && (
@@ -248,14 +252,14 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium">End of Life Date (EOL)</label>
+              <label className="block text-sm text-white font-medium">End of Life Date (EOL)</label>
               <input
                 type="date"
                 name="End_Of_Life_date"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.End_Of_Life_date}
-                className="mt-1 w-full p-2 border rounded"
+                className="mt-1 w-full p-2 border bg-input rounded"
               />
               {
                 touched.End_Of_Life_date && errors.End_Of_Life_date && (
@@ -265,14 +269,14 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium">License Info</label>
+              <label className="block text-sm text-white font-medium">License Info</label>
               <input
                 type="text"
                 name="LIcense_info"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.LIcense_info}
-                className="mt-1 w-full p-2 border rounded"
+                className="mt-1 w-full p-2 border bg-input rounded"
               />
               {
                 touched.LIcense_info && errors.LIcense_info && (
@@ -282,13 +286,13 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium">Ownership</label>
+              <label className="block text-sm text-white font-medium">Ownership</label>
               <select
                 name="Ownership"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Ownership}
-                className="mt-1 w-full p-2 border rounded"
+                className="mt-1 w-full p-2 border bg-input rounded"
               >
                 <option value="">Select</option>
                 <option>Unit</option>
@@ -303,14 +307,14 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium">Users</label>
+              <label className="block text-sm text-white font-medium">Users</label>
               <input
                 type="text"
                 name="Users"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Users}
-                className="mt-1 w-full p-2 border rounded"
+                className="mt-1 w-full p-2 border bg-input rounded"
               />
               {
                 touched.Users && errors.Users && (
@@ -320,14 +324,14 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium">High/Mod Risk Data</label>
+              <label className="block text-sm text-white font-medium">High/Mod Risk Data</label>
               <input
                 type="text"
                 name="Risk_Data"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Risk_Data}
-                className="mt-1 w-full p-2 border rounded"
+                className="mt-1 w-full p-2 border bg-input rounded"
               />
               {
                 touched.Risk_Data && errors.Risk_Data && (
@@ -337,14 +341,14 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium">Security Description (MFA, etc)</label>
+              <label className="block text-sm text-white font-medium">Security Description (MFA, etc)</label>
               <input
                 type="text"
                 name="Security_description"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Security_description}
-                className="mt-1 w-full p-2 border rounded"
+                className="mt-1 w-full p-2 border bg-input rounded"
               />
               {
                 touched.Security_description && errors.Security_description && (
@@ -354,14 +358,14 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium">PII - SSN</label>
+              <label className="block text-sm text-white font-medium">PII - SSN</label>
               <input
                 type="text"
                 name="Pll_SSN"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Pll_SSN}
-                className="mt-1 w-full p-2 border rounded"
+                className="mt-1 w-full p-2 border bg-input rounded"
               />
               {
                 touched.Pll_SSN && errors.Pll_SSN && (
@@ -371,14 +375,14 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium">FERPA</label>
+              <label className="block text-sm text-white font-medium">FERPA</label>
               <input
                 type="text"
                 name="FERPA"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.FERPA}
-                className="mt-1 w-full p-2 border rounded"
+                className="mt-1 w-full p-2 border bg-input rounded"
               />
               {
                 touched.FERPA && errors.FERPA && (
@@ -388,14 +392,14 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium">800-171</label>
+              <label className="block text-sm text-white font-medium">800-171</label>
               <input
                 type="text"
                 name="800_171"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values["800_171"]}
-                className="mt-1 w-full p-2 border rounded"
+                className="mt-1 w-full p-2 border bg-input rounded"
               />
               {
                 touched["800_171"] && errors["800_171"]&& (
@@ -405,14 +409,14 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium">HIPAA</label>
+              <label className="block text-sm text-white font-medium">HIPAA</label>
               <input
                 type="text"
                 name="HIPAA"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.HIPAA}
-                className="mt-1 w-full p-2 border rounded"
+                className="mt-1 w-full p-2 border bg-input rounded"
               />
               {
                 touched.HIPAA && errors.HIPAA && (
@@ -422,14 +426,14 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium">PCI - Payment Card Industry</label>
+              <label className="block text-sm text-white font-medium">PCI - Payment Card Industry</label>
               <input
                 type="text"
                 name="PCI"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.PCI}
-                className="mt-1 w-full p-2 border rounded"
+                className="mt-1 w-full p-2 border bg-input rounded"
               />
               {
                 touched.PCI && errors.PCI && (
@@ -439,14 +443,14 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium">GLBA - Gramm-Leach-Bliley Act</label>
+              <label className="block text-sm text-white font-medium">GLBA - Gramm-Leach-Bliley Act</label>
               <input
                 type="text"
                 name="GLBA"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.GLBA}
-                className="mt-1 w-full p-2 border rounded"
+                className="mt-1 w-full p-2 border bg-input rounded"
               />
               {
                 touched.GLBA && errors.GLBA && (
@@ -456,14 +460,14 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium">GDPR - General Data Protection Regulation</label>
+              <label className="block text-sm text-white font-medium">GDPR - General Data Protection Regulation</label>
               <input
                 type="text"
                 name="GDPR"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.GDPR}
-                className="mt-1 w-full p-2 border rounded"
+                className="mt-1 w-full p-2 border bg-input rounded"
               />
               {
                 touched.GDPR && errors.GDPR && (
@@ -472,7 +476,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
               }
             </div>
             <div>
-              <label className="block text-sm font-medium">Controlled Unclassified Information (CUI)
+              <label className="block text-sm text-white font-medium">Controlled Unclassified Information (CUI)
               </label>
               <input
                 type="text"
@@ -480,7 +484,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal }) => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.CUI}
-                className="mt-1 w-full p-2 border rounded"
+                className="mt-1 w-full p-2 border bg-input rounded"
               />
               {
                 touched.CUI && errors.CUI && (

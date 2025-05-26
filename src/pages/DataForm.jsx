@@ -5,8 +5,8 @@ import { useFormik } from "formik";
 import React, { useContext } from "react";
 import { IoClose } from "react-icons/io5";
 
-const Data = ({ ShowModal, setShowModal }) => {
-  const { AssetDataCreate } = useContext(AssetDataContext);
+const Data = ({ ShowModal, setShowModal, edittable }) => {
+  const { AssetDataCreate, AssetDataDelete, AssetDataUpdate } = useContext(AssetDataContext);
 
   const {
     handleBlur,
@@ -17,7 +17,7 @@ const Data = ({ ShowModal, setShowModal }) => {
     errors,
     values,
   } = useFormik({
-    initialValues: {
+    initialValues: edittable || {
       data_asset: "",
       contents: "",
       use: "",
@@ -30,8 +30,13 @@ const Data = ({ ShowModal, setShowModal }) => {
       last_inventory_update: "",
     },
     validationSchema: DataFormSchema,
+    enableReinitialize: true,
     onSubmit: (values) => {
-      AssetDataCreate(values);
+      if (edittable){
+        AssetDataUpdate(values)
+      }else{
+        AssetDataCreate(values);
+      }
       setShowModal(false);
       resetForm();
     },
@@ -43,7 +48,7 @@ const Data = ({ ShowModal, setShowModal }) => {
         ShowModal ? "opacity-100 visible" : "opacity-0 invisible"
       } fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center transition-opacity duration-300`}
     >
-      <div className="bg-background w-full max-w-3xl mx-4 p-6 rounded-lg shadow-lg relative">
+      <div className="bg-background text-white w-full max-w-3xl mx-4 p-6 rounded-lg shadow-lg relative">
         <button
           onClick={() => setShowModal(false)}
           className="absolute top-4 right-4 text-2xl text-gray-500 hover:text-red-600 transition"
@@ -52,8 +57,8 @@ const Data = ({ ShowModal, setShowModal }) => {
           <IoClose />
         </button>
 
-        <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800">
-          Data
+        <h2 className="text-2xl font-semibold mb-6 text-center text-gray-100">
+         {edittable ? "Edit Data" : "Data"}
         </h2>
 
         <form
@@ -61,7 +66,7 @@ const Data = ({ ShowModal, setShowModal }) => {
           className="grid grid-cols-1 md:grid-cols-2 gap-4"
         >
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-white">
               Data Asset
             </label>
             <input
@@ -70,7 +75,7 @@ const Data = ({ ShowModal, setShowModal }) => {
               value={values.data_asset}
               onChange={handleChange}
               onBlur={handleBlur}
-              className="mt-1 w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
             {touched.data_asset && errors.data_asset && (
               <p className="text-red-500 text-sm ">{errors.data_asset}</p>
@@ -78,7 +83,7 @@ const Data = ({ ShowModal, setShowModal }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-white">
               Contents
             </label>
             <input
@@ -87,7 +92,7 @@ const Data = ({ ShowModal, setShowModal }) => {
               value={values.contents}
               onChange={handleChange}
               onBlur={handleBlur}
-              className="mt-1 w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
             {touched.contents && errors.contents && (
               <p className="text-red-500 text-sm ">{errors.contents}</p>
@@ -95,7 +100,7 @@ const Data = ({ ShowModal, setShowModal }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-white">
               Use
             </label>
             <input
@@ -104,7 +109,7 @@ const Data = ({ ShowModal, setShowModal }) => {
               value={values.use}
               onChange={handleChange}
               onBlur={handleBlur}
-              className="mt-1 w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
             {touched.use && errors.use && (
               <p className="text-red-500 text-sm ">{errors.use}</p>
@@ -112,7 +117,7 @@ const Data = ({ ShowModal, setShowModal }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-white">
               Data Steward/Owner
             </label>
             <input
@@ -121,7 +126,7 @@ const Data = ({ ShowModal, setShowModal }) => {
               value={values.data_owner}
               onChange={handleChange}
               onBlur={handleBlur}
-              className="mt-1 w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
             {touched.data_owner && errors.data_owner && (
               <p className="text-red-500 text-sm ">{errors.data_owner}</p>
@@ -129,7 +134,7 @@ const Data = ({ ShowModal, setShowModal }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-white">
               Format
             </label>
             <input
@@ -138,7 +143,7 @@ const Data = ({ ShowModal, setShowModal }) => {
               value={values.format}
               onChange={handleChange}
               onBlur={handleBlur}
-              className="mt-1 w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
             {touched.format && errors.format && (
               <p className="text-red-500 text-sm ">{errors.format}</p>
@@ -146,7 +151,7 @@ const Data = ({ ShowModal, setShowModal }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-white">
               Location
             </label>
             <input
@@ -155,7 +160,7 @@ const Data = ({ ShowModal, setShowModal }) => {
               value={values.location}
               onChange={handleChange}
               onBlur={handleBlur}
-              className="mt-1 w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
             {touched.location && errors.location && (
               <p className="text-red-500 text-sm ">{errors.location}</p>
@@ -163,7 +168,7 @@ const Data = ({ ShowModal, setShowModal }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-white">
               Timeframe
             </label>
             <input
@@ -172,7 +177,7 @@ const Data = ({ ShowModal, setShowModal }) => {
               value={values.timeframe}
               onChange={handleChange}
               onBlur={handleBlur}
-              className="mt-1 w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
             {touched.timeframe && errors.timeframe && (
               <p className="text-red-500 text-sm ">{errors.timeframe}</p>
@@ -180,7 +185,7 @@ const Data = ({ ShowModal, setShowModal }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-white">
               Size on Disk
             </label>
             <input
@@ -189,7 +194,7 @@ const Data = ({ ShowModal, setShowModal }) => {
               value={values.size_on_disk}
               onChange={handleChange}
               onBlur={handleBlur}
-              className="mt-1 w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
             {touched.size_on_disk && errors.size_on_disk && (
               <p className="text-red-500 text-sm ">{errors.size_on_disk}</p>
@@ -197,7 +202,7 @@ const Data = ({ ShowModal, setShowModal }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-white">
               # of Records
             </label>
             <input
@@ -206,7 +211,7 @@ const Data = ({ ShowModal, setShowModal }) => {
               value={values.records}
               onChange={handleChange}
               onBlur={handleBlur}
-              className="mt-1 w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
             {touched.records && errors.records && (
               <p className="text-red-500 text-sm ">{errors.records}</p>
@@ -214,7 +219,7 @@ const Data = ({ ShowModal, setShowModal }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-white">
               Last Inventory Update
             </label>
             <input
@@ -223,7 +228,7 @@ const Data = ({ ShowModal, setShowModal }) => {
               value={values.last_inventory_update}
               onChange={handleChange}
               onBlur={handleBlur}
-              className="mt-1 w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
             {touched.last_inventory_update && errors.last_inventory_update && (
               <p className="text-red-500 text-sm ">
