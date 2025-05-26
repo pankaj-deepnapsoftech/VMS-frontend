@@ -81,7 +81,7 @@ const LandingPage = () => {
   return (
     <Suspense fallback={<Loader />}>
       <Header openModal={openModal} />
-      <section className="bg-[#323233] bg-no-repeat text-[#d7e1ec] py-12 min-h-[600px]">
+      <section className="bg-[#323233] bg-[url('/background.png')] bg-cover bg-center bg-no-repeat text-[#d7e1ec] py-12 min-h-[600px]">
         <div className="max-w-screen-xl mx-auto px-4">
           {slides.map((slide, index) => (
             <div
@@ -111,7 +111,7 @@ const LandingPage = () => {
               </div>
 
               {/* Video for medium and above */}
-              <div className="hidden md:flex w-full md:w-[50%] relative justify-end items-end">
+              {/* <div className="hidden md:flex w-full md:w-[50%] relative justify-end items-end">
                 <div className="relative w-full h-[300px] sm:h-[400px] md:h-[450px] mt-10 rounded-xl overflow-hidden">
                   <video
                     src="/bgvideo.mp4"
@@ -126,7 +126,7 @@ const LandingPage = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-[#323233] via-transparent to-[#323233] pointer-events-none" />
                 </div>
-              </div>
+              </div> */}
             </div>
           ))}
         </div>
@@ -167,7 +167,7 @@ const LandingPage = () => {
                   <h4 className="text-lg font-semibold mb-2">{item.title}</h4>
                   <p className="text-[#d7e1ec] text-sm">{item.description}</p>
                 </div>
-              ))}
+              ))}  
             </div>
           </div>
         </div>

@@ -27,8 +27,8 @@ const ApplicationSoftwareInventoryTable = () => {
         </button>
       </div>
       <div className="overflow-x-auto shadow-md rounded-lg">
-        <table className=" bg-white border border-gray-300 text-sm text-left">
-          <thead className=" w-full bg-gray-100 text-xs text-gray-700 uppercase">
+        <table className=" bg-table border border-gray-300 text-sm text-left">
+          <thead className=" w-full bg-background text-xs text-white uppercase">
             <tr>
               <th className="p-2 border">Unit ID</th>
               <th className="p-2 border">Application Name</th>
@@ -128,7 +128,7 @@ const ApplicationSoftwareInventoryTable = () => {
               <button onClick={() => setShowModal(false)}>❌</button>
             </div>
           </div>
-        </div>
+        </div> 
       )}
       <ApplicationSoftwareInventory showModal={showModal} setShowModal={setShowModal} />
     </div>

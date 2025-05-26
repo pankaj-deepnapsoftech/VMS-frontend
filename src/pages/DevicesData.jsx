@@ -48,10 +48,10 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
 
   return (
     <section className={`transition-opacity duration-300 ease-in-out ${showModal ? "opacity-100 visible" : "opacity-0 invisible"} fixed top-0 left-0 h-screen w-full bg-black/40 backdrop-blur-sm  flex items-center justify-center z-50 `}>
-      <div className="max-w-6xl mx-auto bg-table dark:bg-gray-900 rounded-lg shadow-lg p-6  overflow-y-auto max-h-[90vh] relative">
+      <div className="max-w-6xl mx-auto bg-background dark:bg-gray-900 rounded-lg shadow-lg p-6  overflow-y-auto max-h-[90vh] relative">
         <button
           onClick={() => setShowModal(!showModal)}
-          className=" text-white text-2xl flex justify-end w-full rounded hover:text-red-500 transition duration-300"
+          className=" text-white text-2xl flex justify-end w-full rounded hover:text-gray-500 transition duration-300"
         >
           <IoClose />
         </button>
@@ -88,7 +88,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
               type="text"
               name="asset_custodian_name"
               value={values.asset_custodian_name}
-              className="mt-1 w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+              className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
             />
             {touched.asset_custodian_name && errors.asset_custodian_name && (
               <p className="text-red-500 text-sm">{errors.asset_custodian_name}</p>
@@ -97,7 +97,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
 
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="block text-sm font-medium text-white dark:text-gray-300">
               IT Asset Custodian Contact Info
             </label>
             <input
@@ -106,7 +106,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
               type="text"
               name="asset_custodian_contact"
               value={values.asset_custodian_contact}
-              className="mt-1 w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+              className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
             />
             {touched.asset_custodian_contact && errors.asset_custodian_contact && (
               <p className="text-red-500 text-sm">{errors.asset_custodian_contact}</p>
@@ -115,7 +115,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
 
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="block text-sm font-medium text-white dark:text-gray-300">
               Asset Name
             </label>
             <input
@@ -124,7 +124,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
               type="text"
               name="asset_name"
               value={values.asset_name}
-              className="mt-1 w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+              className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
             />
             {touched.asset_name && errors.asset_name && (
               <p className="text-red-500 text-sm">{errors.asset_name}</p>
@@ -133,7 +133,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
 
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="block text-sm font-medium text-white dark:text-gray-300">
               Asset Type
             </label>
             <input
@@ -142,7 +142,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
               type="text"
               name="asset_type"
               value={values.asset_type}
-              className="mt-1 w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+              className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
             />
             {touched.asset_type && errors.asset_type && (
               <p className="text-red-500 text-sm">{errors.asset_type}</p>
@@ -151,7 +151,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
 
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="block text-sm font-medium text-white dark:text-gray-300">
               Description
             </label>
             <input
@@ -160,7 +160,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
               type="text"
               name="description"
               value={values.description}
-              className="mt-1 w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+              className="mt-1 w-full p-2 border rounded-md bg-input  dark:bg-gray-800 dark:border-gray-700 dark:text-white"
 
             />
             {touched.description && errors.description && (
@@ -170,7 +170,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
 
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="block text-sm font-medium text-white dark:text-gray-300">
               Physical Location
             </label>
             <input
@@ -179,7 +179,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
               type="text"
               name="physical_location"
               value={values.physical_location}
-              className="mt-1 w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+              className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
 
             />
             {touched.physical_location && errors.physical_location && (
@@ -189,7 +189,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
 
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="block text-sm font-medium text-white dark:text-gray-300">
               If Cloud, which Cloud Service Provider?
             </label>
             <input
@@ -198,7 +198,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
               type="text"
               name="cloud_service_provider"
               value={values.cloud_service_provider}
-              className="mt-1 w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+              className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
             />
             {touched.cloud_service_provider && errors.cloud_service_provider && (
               <p className="text-red-500 text-sm">{errors.cloud_service_provider}</p>
@@ -207,7 +207,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
 
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="block text-sm font-medium text-white dark:text-gray-300">
               Approved to Connect to Network?
             </label>
             <input
@@ -216,7 +216,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
               type="date"
               name="approved_connect"
               value={values.approved_connect}
-              className="mt-1 w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+              className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
             />
             {touched.approved_connect && errors.approved_connect && (
               <p className="text-red-500 text-sm">{errors.approved_connect}</p>
@@ -225,7 +225,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
 
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="block text-sm font-medium text-white dark:text-gray-300">
               How is this hardware secured?
             </label>
             <input
@@ -234,7 +234,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
               type="text"
               name="hardware_securend"
               value={values.hardware_securend}
-              className="mt-1 w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+              className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
 
             />
             {touched.hardware_securend && errors.hardware_securend && (
@@ -244,7 +244,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
 
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="block text-sm font-medium text-white dark:text-gray-300">
               Asset Components
             </label>
             <input
@@ -253,7 +253,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
               type="text"
               name="asset_components"
               value={values.asset_components}
-              className="mt-1 w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+              className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
             />
             {touched.asset_components && errors.asset_components && (
               <p className="text-red-500 text-sm">{errors.asset_components}</p>
@@ -262,7 +262,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
 
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="block text-sm font-medium text-white dark:text-gray-300">
               Machine Name
             </label>
             <input
@@ -271,7 +271,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
               type="text"
               name="machine_name"
               value={values.machine_name}
-              className="mt-1 w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+              className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
             />
             {touched.machine_name && errors.machine_name && (
               <p className="text-red-500 text-sm">{errors.machine_name}</p>
@@ -280,7 +280,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
 
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="block text-sm font-medium text-white dark:text-gray-300">
               Hardware Address
             </label>
             <input
@@ -289,7 +289,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
               type="text"
               name="hardware_address"
               value={values.hardware_address}
-              className="mt-1 w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+              className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
 
             />
             {touched.hardware_address && errors.hardware_address && (
@@ -299,7 +299,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
 
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="block text-sm font-medium text-white dark:text-gray-300">
               Supplier
             </label>
             <input
@@ -308,14 +308,14 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
               type="text"
               name="supplier"
               value={values.supplier}
-              className="mt-1 w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+              className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
             />
             {touched.supplier && errors.supplier && (
               <p className="text-red-500 text-sm">{errors.supplier}</p>
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="block text-sm font-medium text-white  dark:text-gray-300">
               Network Address
             </label>
             <input
@@ -324,7 +324,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
               type="text"
               name="network_address"
               value={values.network_address}
-              className="mt-1 w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+              className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
             />
             {touched.network_address && errors.network_address && (
               <p className="text-red-500 text-sm">{errors.network_address}</p>

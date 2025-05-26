@@ -28,8 +28,8 @@ const DataTable = () => {
         </button>
       </div>
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white  border border-gray-300 dark:border-gray-700">
-          <thead className="bg-gray-100 dark:bg-gray-800 text-sm text-gray-700 dark:text-gray-300">
+        <table className="min-w-full bg-background  border border-gray-300 dark:border-gray-700">
+          <thead className="bg-background dark:bg-gray-800 text-sm text-white dark:text-gray-300">
             <tr>
               <th className="px-4 py-2 text-left">Data Asset</th>
               <th className="px-4 py-2 text-left">Contents</th>

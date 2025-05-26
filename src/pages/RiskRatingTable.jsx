@@ -38,8 +38,8 @@ const RiskRatingTable = () => {
         </button>
       </div>
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700">
-          <thead className="bg-gray-100 dark:bg-gray-800 text-sm text-gray-700 dark:text-gray-300">
+        <table className="min-w-full bg-background dark:bg-gray-900 border border-gray-300 dark:border-gray-700">
+          <thead className="bg-background  text-white dark:bg-gray-800 text-sm  dark:text-gray-300">
             <tr>
               <th className="px-4 py-2 text-left">Data Asset</th>
               <th className="px-4 py-2 text-left">Users Affected</th>
@@ -54,7 +54,7 @@ const RiskRatingTable = () => {
             {riskRatings.map((item, index) => (
               <tr
                 key={index}
-                className="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800"
+                className="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-500 dark:hover:bg-gray-800"
               >
                 <td className="px-4 py-2">{item.asset}</td>
                 <td className="px-4 py-2">{item.usersAffected}</td>

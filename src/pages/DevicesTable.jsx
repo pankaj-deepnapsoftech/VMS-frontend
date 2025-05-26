@@ -28,7 +28,7 @@ const DevicesTable = () => {
 
       <div className="overflow-x-auto rounded-lg shadow-md border border-gray-200">
         <table className="min-w-full text-sm text-left text-white bg-gray-500">
-          <thead className="bg-table text-xs uppercase text-white sticky top-0 z-10">
+          <thead className="bg-background text-xs uppercase text-white sticky top-0 z-10">
             <tr>
               <th className="px-4 py-3 border">Unit ID</th>
               <th className="px-4 py-3 border">Custodian</th>
