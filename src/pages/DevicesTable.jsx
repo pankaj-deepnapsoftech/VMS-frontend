@@ -8,13 +8,11 @@ import { MdDeleteForever } from "react-icons/md";
 const DevicesTable = () => {
   const [devices, setDevices] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const { data, DevicesDeleteData } = useContext(DeviceContext)
+  const { data, DevicesDeleteData } = useContext(DeviceContext);
 
- 
   const handleDeleteBtn = (_id) => {
-
-    DevicesDeleteData(_id)
-  }
+    DevicesDeleteData(_id);
+  };
   return (
     <div className="p-6 ">
       <div className="flex justify-between items-center mb-4">
@@ -28,8 +26,8 @@ const DevicesTable = () => {
       </div>
 
       <div className="overflow-x-auto rounded-lg shadow-md border border-gray-200">
-        <table className="min-w-full text-sm text-left text-gray-700 bg-white">
-          <thead className="bg-gray-100 text-xs uppercase text-gray-600 sticky top-0 z-10">
+        <table className="min-w-full text-sm text-left text-white bg-gray-500">
+          <thead className="bg-table text-xs uppercase text-white sticky top-0 z-10">
             <tr>
               <th className="px-4 py-3 border">Unit ID</th>
               <th className="px-4 py-3 border">Custodian</th>
@@ -37,8 +35,12 @@ const DevicesTable = () => {
               <th className="px-4 py-3 border">Asset Type</th>
               <th className="px-4 py-3 border">Description</th>
               <th className="px-4 py-3 border">Physical Location</th>
-              <th className="px-4 py-3 border">If Cloud, which Cloud Service Provide</th>
-              <th className="px-4 py-3 border">Approved to connect to network?</th>
+              <th className="px-4 py-3 border">
+                If Cloud, which Cloud Service Provide
+              </th>
+              <th className="px-4 py-3 border">
+                Approved to connect to network?
+              </th>
               <th className="px-4 py-3 border"> Hardware secured?</th>
               <th className="px-4 py-3 border">Asset Components</th>
               <th className="px-4 py-3 border">Machine Name</th>
@@ -63,7 +65,7 @@ const DevicesTable = () => {
                 <td className="px-4 py-2">{ele.asset_custodian_name}</td>
                 <td className="px-4 py-2">{ele.asset_custodian_contact}</td>
                 <td className="px-4 py-2">{ele.asset_components}</td>
-                <td className="px-4 py-2">{ele.approved_connect || 'N/A'}</td>
+                <td className="px-4 py-2">{ele.approved_connect || "N/A"}</td>
                 <td className="px-4 py-2">{ele.cloud_service_provider}</td>
                 <td className="px-4 py-2">{ele.hardware_address}</td>
                 <td className="px-4 py-2">{ele.hardware_securend}</td>
@@ -87,11 +89,9 @@ const DevicesTable = () => {
                     <MdDeleteForever size={20} />
                   </button>
                 </td>
-
               </tr>
             ))}
           </tbody>
-
         </table>
       </div>
 
