@@ -4,17 +4,17 @@
 import { DeviceContext } from "@/context/DevicesContext/DevicesContext";
 import { DevicesDataSchema } from "@/Validation/DevicesDataValidations";
 import { useFormik } from "formik";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { IoClose } from "react-icons/io5";
 
 
 
-const DevicesData = ({ showModal, setShowModal,editableData }) => {
+const DevicesData = ({ showModal, setShowModal, editableData }) => {
 
   const { DevicesSendData } = useContext(DeviceContext)
 
-  const { handleBlur, handleChange, handleSubmit, resetForm, touched, errors, values } = useFormik({
-    initialValues: {
+  const { handleBlur, handleChange, handleSubmit, resetForm, touched, errors, values,setFieldValue } = useFormik({
+    initialValues: editableData ||  {
       unit_id: "",
       asset_custodian_name: "",
       asset_custodian_contact: "",
@@ -28,12 +28,18 @@ const DevicesData = ({ showModal, setShowModal,editableData }) => {
       asset_components: "",
       machine_name: "",
       hardware_address: "",
-      network_address:"",
+      network_address: "",
       supplier: "",
     },
     validationSchema: DevicesDataSchema,
+    enableReinitialize:true,
     onSubmit: (values) => {
-      DevicesSendData(values)
+      if(editableData){
+        // call here edit api
+      }else{
+
+        DevicesSendData(values)
+      }
       resetForm()
     }
   })
@@ -50,11 +56,11 @@ const DevicesData = ({ showModal, setShowModal,editableData }) => {
           <IoClose />
         </button>
         <h1 className="text-2xl font-semibold text-white dark:text-white mb-6">
-          Asset Inventory Devices
+          {editableData ? "Edit Asset Inventory Devices" : "Asset Inventory Devices"}
         </h1>
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-          <div> 
+          <div>
             <label className="block text-sm font-medium text-white dark:text-gray-300">
               Unit ID
             </label>
@@ -65,7 +71,7 @@ const DevicesData = ({ showModal, setShowModal,editableData }) => {
               name="unit_id"
               value={values.unit_id}
               className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-200 dark:border-gray-300 dark:text-white"
-               />
+            />
             {touched.unit_id && errors.unit_id && (
               <p className="text-red-500 text-sm">{errors.unit_id}</p>
             )}
@@ -83,7 +89,7 @@ const DevicesData = ({ showModal, setShowModal,editableData }) => {
               name="asset_custodian_name"
               value={values.asset_custodian_name}
               className="mt-1 w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                      />
+            />
             {touched.asset_custodian_name && errors.asset_custodian_name && (
               <p className="text-red-500 text-sm">{errors.asset_custodian_name}</p>
             )}
@@ -101,7 +107,7 @@ const DevicesData = ({ showModal, setShowModal,editableData }) => {
               name="asset_custodian_contact"
               value={values.asset_custodian_contact}
               className="mt-1 w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                      />
+            />
             {touched.asset_custodian_contact && errors.asset_custodian_contact && (
               <p className="text-red-500 text-sm">{errors.asset_custodian_contact}</p>
             )}
@@ -119,7 +125,7 @@ const DevicesData = ({ showModal, setShowModal,editableData }) => {
               name="asset_name"
               value={values.asset_name}
               className="mt-1 w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                  />
+            />
             {touched.asset_name && errors.asset_name && (
               <p className="text-red-500 text-sm">{errors.asset_name}</p>
             )}
@@ -137,7 +143,7 @@ const DevicesData = ({ showModal, setShowModal,editableData }) => {
               name="asset_type"
               value={values.asset_type}
               className="mt-1 w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                         />
+            />
             {touched.asset_type && errors.asset_type && (
               <p className="text-red-500 text-sm">{errors.asset_type}</p>
             )}
@@ -155,7 +161,7 @@ const DevicesData = ({ showModal, setShowModal,editableData }) => {
               name="description"
               value={values.description}
               className="mt-1 w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-              
+
             />
             {touched.description && errors.description && (
               <p className="text-red-500 text-sm">{errors.description}</p>
@@ -174,7 +180,7 @@ const DevicesData = ({ showModal, setShowModal,editableData }) => {
               name="physical_location"
               value={values.physical_location}
               className="mt-1 w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-              
+
             />
             {touched.physical_location && errors.physical_location && (
               <p className="text-red-500 text-sm">{errors.physical_location}</p>
@@ -193,7 +199,7 @@ const DevicesData = ({ showModal, setShowModal,editableData }) => {
               name="cloud_service_provider"
               value={values.cloud_service_provider}
               className="mt-1 w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                 />
+            />
             {touched.cloud_service_provider && errors.cloud_service_provider && (
               <p className="text-red-500 text-sm">{errors.cloud_service_provider}</p>
             )}
@@ -229,7 +235,7 @@ const DevicesData = ({ showModal, setShowModal,editableData }) => {
               name="hardware_securend"
               value={values.hardware_securend}
               className="mt-1 w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-             
+
             />
             {touched.hardware_securend && errors.hardware_securend && (
               <p className="text-red-500 text-sm">{errors.hardware_securend}</p>
@@ -248,7 +254,7 @@ const DevicesData = ({ showModal, setShowModal,editableData }) => {
               name="asset_components"
               value={values.asset_components}
               className="mt-1 w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                     />
+            />
             {touched.asset_components && errors.asset_components && (
               <p className="text-red-500 text-sm">{errors.asset_components}</p>
             )}
@@ -266,7 +272,7 @@ const DevicesData = ({ showModal, setShowModal,editableData }) => {
               name="machine_name"
               value={values.machine_name}
               className="mt-1 w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                    />
+            />
             {touched.machine_name && errors.machine_name && (
               <p className="text-red-500 text-sm">{errors.machine_name}</p>
             )}
@@ -284,7 +290,7 @@ const DevicesData = ({ showModal, setShowModal,editableData }) => {
               name="hardware_address"
               value={values.hardware_address}
               className="mt-1 w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-         
+
             />
             {touched.hardware_address && errors.hardware_address && (
               <p className="text-red-500 text-sm">{errors.hardware_address}</p>
@@ -303,7 +309,7 @@ const DevicesData = ({ showModal, setShowModal,editableData }) => {
               name="supplier"
               value={values.supplier}
               className="mt-1 w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                        />
+            />
             {touched.supplier && errors.supplier && (
               <p className="text-red-500 text-sm">{errors.supplier}</p>
             )}

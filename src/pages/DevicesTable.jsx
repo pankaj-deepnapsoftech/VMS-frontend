@@ -21,7 +21,7 @@ const DevicesTable = () => {
         <h1 className="text-xl font-bold text-white">Devices</h1>
         <button
           className="bg-sky-600 text-white px-4 py-2 rounded"
-          onClick={() => setShowModal(true)}
+          onClick={() => {setShowModal(true);setEditableData(null)}}
         >
           Add Devices
         </button>
