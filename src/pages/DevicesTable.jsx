@@ -8,8 +8,9 @@ import { MdDeleteForever } from "react-icons/md";
 const DevicesTable = () => {
   const [devices, setDevices] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const { data, DevicesDeleteData } = useContext(DeviceContext);
-
+  const { data, DevicesDeleteData } = useContext(DeviceContext)
+  const [editableData,setEditableData] = useState(null)
+ 
   const handleDeleteBtn = (_id) => {
     DevicesDeleteData(_id);
   };
@@ -19,7 +20,7 @@ const DevicesTable = () => {
         <h1 className="text-xl font-bold text-white">Devices</h1>
         <button
           className="bg-sky-600 text-white px-4 py-2 rounded"
-          onClick={() => setShowModal(true)}
+          onClick={() => {setShowModal(true);setEditableData(null)}}
         >
           Add Devices
         </button>
@@ -77,6 +78,7 @@ const DevicesTable = () => {
                     aria-label="Edit"
                     className="text-blue-500 hover:text-blue-700"
                     type="button"
+                    onClick={()=>{setEditableData(ele);setShowModal(true)}}
                   >
                     <FaEdit size={18} />
                   </button>
@@ -95,7 +97,7 @@ const DevicesTable = () => {
         </table>
       </div>
 
-      <DevicesData showModal={showModal} setShowModal={setShowModal} />
+      <DevicesData showModal={showModal} setShowModal={setShowModal} editableData={editableData} />
     </div>
   );
 };
