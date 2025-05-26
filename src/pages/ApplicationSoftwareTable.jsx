@@ -61,7 +61,7 @@ const ApplicationSoftwareInventoryTable = () => {
           <tbody>
             {Array.isArray(data) && data.length > 0 ? (
               data.map((app, index) => (
-                <tr key={index} className="border-t hover:bg-gray-50">
+                <tr key={index} className="border-t hover:bg-gray-500 text-white">
                   <td className="p-2 border">{app.Unit_ID}</td>
                   <td className="p-2 border">{app.Application_Name}</td>
                   <td className="p-2 border">{app.Application_Type}</td>
@@ -121,7 +121,7 @@ const ApplicationSoftwareInventoryTable = () => {
           </tbody>
         </table>
       </div>
-      <div className="fixed  bottom-0 w-full flex justify-center gap-4 items-center my-16">
+      <div className="fixed bottom-0 w-full flex justify-center gap-4 items-center my-16">
         <button
           className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white    border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""
             }`}

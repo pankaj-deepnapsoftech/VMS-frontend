@@ -26,7 +26,7 @@ const TabNavigation = () => {
     },
     {
       title: "Risk Rating Guide",
-      path: "/"
+      path: "risk-rating-guide"
     },
   ];
 

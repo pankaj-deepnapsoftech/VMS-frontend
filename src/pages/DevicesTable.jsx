@@ -58,7 +58,7 @@ const DevicesTable = () => {
             {data.map((ele, i) => (
               <tr
                 key={i}
-                className="hover:bg-gray-50 bg-table text-white transition-colors duration-200"
+                className="hover:bg-gray-500 bg-table text-white transition-colors duration-200"
               >
                 <td className="px-4 py-2">{ele.unit_id}</td>
                 <td className="px-4 py-2">{ele.supplier}</td>

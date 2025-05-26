@@ -51,7 +51,7 @@ const DataTable = () => {
             {data.map((item, index) => (
               <tr
                 key={index}
-                className="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800"
+                className="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-500 dark:hover:bg-gray-800 text-white"
               >
                 <td className="px-4 py-2">{item.data_asset}</td>
                 <td className="px-4 py-2">{item.contents}</td>

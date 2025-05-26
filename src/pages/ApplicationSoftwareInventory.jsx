@@ -68,7 +68,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
             <IoClose />
           </button>
 
-          <h1 className="text-3xl font-semibold text-gray-800 mb-6 border-b pb-2">{editTableData ? "Edit Application & Software Inventory" : "Application & Software Inventory"}</h1>
+          <h1 className="text-3xl font-semibold text-white mb-6 border-b pb-2">{editTableData ? "Edit Application & Software Inventory" : "Application & Software Inventory"}</h1>
 
           <form onSubmit={handleSubmit}
 

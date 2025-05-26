@@ -20,6 +20,7 @@ import DataTable from "@/pages/DataTable";
 import RiskRatingTable from "@/pages/RiskRatingTable";
 import Devices from "@/pages/DevicesTable";
 import ApplicationSoftwareInventoryTable from "@/pages/ApplicationSoftwareTable";
+import RiskRatingGuide from "@/pages/RiskRatingGuide";
 
 export const PrivateRoutes = [
   {
@@ -83,6 +84,7 @@ export const PrivateRoutes = [
       { path: "software-application", element: <ApplicationSoftwareInventoryTable /> },
       { path: "data-table", element: <DataTable /> },
       { path: "risk-rating-table", element: <RiskRatingTable /> },
+       { path: "risk-rating-guide", element: <RiskRatingGuide /> },
     ],
   },
   {
