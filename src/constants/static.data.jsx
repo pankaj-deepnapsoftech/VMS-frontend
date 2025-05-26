@@ -1,6 +1,7 @@
 import { CalendarClock, Settings, Table, UserCircle, Users } from "lucide-react";
 import { AiOutlineException } from "react-icons/ai";
 import { BiSolidDashboard } from "react-icons/bi";
+import { FaPerson } from "react-icons/fa6";
 import { GrVulnerability } from "react-icons/gr";
 import { MdInventory2, MdOutlineMiscellaneousServices } from "react-icons/md";
 import { SiWikimediafoundation } from "react-icons/si";
@@ -65,7 +66,7 @@ export const products = [
         desc: "Centralized asset visibility and management",
         gradient: "from-[#ee9ca7] to-[#ffdde1]",
         allowedPath: [{ title: "Asset Inventory", route: "/assert-inventory", icon: MdInventory2 },],
-        allowedCISO:[]
+        allowedCISO: []
     },
     {
         title: "TVM",
@@ -78,60 +79,68 @@ export const products = [
             { title: "Infrastructure Vulnerability ", route: "/infrastructure-vulnerability", icon: GrVulnerability },
             { title: "Exceptions", route: "/exceptions", icon: AiOutlineException },
         ],
-        allowedCISO:[]
+        allowedCISO: [
+            { title: "Dashboard", route: "/", icon: BiSolidDashboard },
+            { title: "Scheduling Assesment", route: "/scheduling-assesment", icon: BiSolidDashboard },
+            { title: "Application Vulnerability", route: "/application-vulnerability", icon: MdOutlineMiscellaneousServices },
+            { title: "Infrastructure Vulnerability ", route: "/infrastructure-vulnerability", icon: GrVulnerability },
+            { title: "Exceptions", route: "/exceptions", icon: AiOutlineException },
+        ]
     },
     {
         title: "ASM",
         desc: "Attack Surface Monitoring for real-time visibility",
         gradient: "from-[#00c6ff] to-[#0072ff]",
         allowedPath: [],
-        allowedCISO:[]
+        allowedCISO: []
     },
-   
-   
+
+
     {
         title: "AI-VA",
         desc: "Governance, Risk, and Compliance",
         gradient: "from-[#ee9ca7] to-[#ffdde1]",
         allowedPath: [],
-        allowedCISO:[]
+        allowedCISO: []
     },
     {
         title: "Vulnerability Intelligence",
         desc: "Governance, Risk, and Compliance",
         gradient: "from-[#ff7e5f] to-[#feb47b]",
         allowedPath: [],
-        allowedCISO:[]
+        allowedCISO: []
     },
-     {
+    {
         title: "GRC",
         desc: "Governance, Risk, and Compliance",
         gradient: "from-[#f7971e] to-[#ffd200]",
         allowedPath: [],
-        allowedCISO:[]
+        allowedCISO: []
     },
     {
         title: "TPRM",
         desc: "Third-Party Risk Management",
         gradient: "from-[#43cea2] to-[#185a9d]",
         allowedPath: [],
-        allowedCISO:[]
+        allowedCISO: []
     },
-     {
+    {
         title: "Remediation Factory",
         desc: "Automated remediation of vulnerabilities or security issues across an organization.",
         gradient: "from-[#6a11cb] to-[#2575fc]",
         allowedPath: [
             { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
         ],
-        allowedCISO:[]
+        allowedCISO: [
+            { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
+        ]
     },
     {
         title: "Reports",
         desc: "Generate reports & dashboards automatically",
         gradient: "from-[#a1c4fd] to-[#c2e9fb]",
         allowedPath: [{ title: "Reports", route: "/reports", icon: TbReport },],
-        allowedCISO:[]
+        allowedCISO: [{ title: "Reports", route: "/reports", icon: TbReport },]
     },
     {
         title: "Administration",
@@ -142,9 +151,10 @@ export const products = [
             { title: "Customers", route: "/all-customer", icon: UserCircle },
             { title: "Jira Data Table", route: "/jira-data", icon: Table },
             { title: "Third Party Config", route: "/third-party-config", icon: Settings },
-            {title:"Change Password",route:"/change-password", icon:TbLockPassword }
         ],
-        allowedCISO:[]
+        allowedCISO: [
+            { title: "All Employee", route: "/all-employee", icon: FaPerson },
+        ]
     },
 ];
 

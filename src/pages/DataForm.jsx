@@ -51,7 +51,7 @@ const Data = ({ ShowModal, setShowModal, edittable }) => {
       <div className="bg-background text-white w-full max-w-3xl mx-4 p-6 rounded-lg shadow-lg relative">
         <button
           onClick={() => setShowModal(false)}
-          className="absolute top-4 right-4 text-2xl text-gray-500 hover:text-red-600 transition"
+          className="absolute top-4 right-4 text-2xl text-white hover:text-gray-600 transition"
           aria-label="Close Modal"
         >
           <IoClose />

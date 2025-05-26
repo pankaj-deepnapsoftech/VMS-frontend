@@ -2,10 +2,8 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import {
-  ClientCisoList,
   ClientSmeList,
   EmployeeList,
-  list,
 } from "@/constants/constants.data";
 import { useAuthContext } from "@/context";
 import { IoIosLogOut } from "react-icons/io";
@@ -29,9 +27,11 @@ function Header({ setShowMenu }) {
 
   switch (authenticate?.role) {
     case "ClientCISO":
-      navList = ClientCisoList.filter((item) =>
-        authenticate.allowed_paths.some((ite) => item.route === ite.value)
-      ); // Define if ClientCTO has a specific list
+      products.map((item)=>{
+        if(getDataFromSession === item.title){
+         navList = item.allowedCISO.filter((item)=> authenticate.allowed_paths.some((ite)=> ite.value === item.route))
+        }
+      });
       break;
     case "Assessor":
       navList = EmployeeList;
@@ -44,9 +44,11 @@ function Header({ setShowMenu }) {
       });
       break;
     case "ClientSME":
-      navList = ClientSmeList.filter((item) =>
-        authenticate.allowed_paths.some((ite) => item.route === ite.value)
-      );
+      products.map((item)=>{
+        if(getDataFromSession === item.title){
+         navList = item.allowedCISO.filter((item)=> authenticate.allowed_paths.some((ite)=> ite.value === item.route))
+        }
+      });
       break;
     default:
       // console.log("Invalid Role: Access Denied");

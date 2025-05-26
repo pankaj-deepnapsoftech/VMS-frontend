@@ -47,7 +47,7 @@ const RiskRatingTable = () => {
             {data.map((item, index) => (
               <tr
                 key={index}
-                className="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-500 dark:hover:bg-gray-800"
+                className="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-500 text-white dark:hover:bg-gray-800"
               >
                 <td className="px-4 py-2">{item.data_asset}</td>
                 <td className="px-4 py-2">{item.users_affected}</td>
