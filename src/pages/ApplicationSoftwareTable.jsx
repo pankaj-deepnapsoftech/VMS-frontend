@@ -23,7 +23,7 @@ const ApplicationSoftwareInventoryTable = () => {
           onClick={() => setShowModal(true)}
           className="bg-sky-600 text-white py-2 px-4 rounded hover:bg-sky-700"
         >
-          + Add Application
+          Add Application
         </button>
       </div>
       <div className="overflow-x-auto shadow-md rounded-lg">

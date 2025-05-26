@@ -1,8 +1,10 @@
 import React from 'react';
 import { IoHomeOutline } from 'react-icons/io5';
 import { BiErrorAlt } from 'react-icons/bi';
+import { useNavigate } from 'react-router-dom';
 
 function PageNotFound() {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
       {/* Background Shapes - Responsive sizes */}
@@ -27,7 +29,7 @@ function PageNotFound() {
           Oops! The page you are looking for does not exist. It might have been moved or deleted.
         </p>
         <button
-          onClick={() => window.location.href = '/'}
+          onClick={() => navigate('/')}
           className="inline-flex items-center px-4 md:px-6 py-2 md:py-3 border-2 border-gray-900 text-gray-900 text-sm md:text-base font-medium rounded-lg hover:bg-gray-900 hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
         >
           <IoHomeOutline className="w-4 h-4 md:w-5 md:h-5 mr-2" />

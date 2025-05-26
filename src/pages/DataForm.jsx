@@ -6,12 +6,17 @@ import React, { useContext } from "react";
 import { IoClose } from "react-icons/io5";
 
 const Data = ({ ShowModal, setShowModal }) => {
+  const { AssetDataCreate } = useContext(AssetDataContext);
 
-
-  const { AssetDataCreate } = useContext(AssetDataContext)
-
-
-  const {handleBlur,handleSubmit, handleChange,resetForm,touched,errors,values} = useFormik({
+  const {
+    handleBlur,
+    handleSubmit,
+    handleChange,
+    resetForm,
+    touched,
+    errors,
+    values,
+  } = useFormik({
     initialValues: {
       data_asset: "",
       contents: "",
@@ -25,19 +30,20 @@ const Data = ({ ShowModal, setShowModal }) => {
       last_inventory_update: "",
     },
     validationSchema: DataFormSchema,
-    onSubmit: values => {
-      AssetDataCreate(values)
-      setShowModal(false); 
-      resetForm()
-    }
+    onSubmit: (values) => {
+      AssetDataCreate(values);
+      setShowModal(false);
+      resetForm();
+    },
   });
 
   return (
     <section
-      className={`${ShowModal ? "opacity-100 visible" : "opacity-0 invisible"
-        } fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center transition-opacity duration-300`}
+      className={`${
+        ShowModal ? "opacity-100 visible" : "opacity-0 invisible"
+      } fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center transition-opacity duration-300`}
     >
-      <div className="bg-white w-full max-w-3xl mx-4 p-6 rounded-lg shadow-lg relative">
+      <div className="bg-background w-full max-w-3xl mx-4 p-6 rounded-lg shadow-lg relative">
         <button
           onClick={() => setShowModal(false)}
           className="absolute top-4 right-4 text-2xl text-gray-500 hover:text-red-600 transition"
@@ -50,9 +56,14 @@ const Data = ({ ShowModal, setShowModal }) => {
           Data
         </h2>
 
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <form
+          onSubmit={handleSubmit}
+          className="grid grid-cols-1 md:grid-cols-2 gap-4"
+        >
           <div>
-            <label className="block text-sm font-medium text-gray-700">Data Asset</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Data Asset
+            </label>
             <input
               type="text"
               name="data_asset"
@@ -67,7 +78,9 @@ const Data = ({ ShowModal, setShowModal }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Contents</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Contents
+            </label>
             <input
               type="text"
               name="contents"
@@ -82,7 +95,9 @@ const Data = ({ ShowModal, setShowModal }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Use</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Use
+            </label>
             <input
               type="text"
               name="use"
@@ -97,7 +112,9 @@ const Data = ({ ShowModal, setShowModal }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Data Steward/Owner</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Data Steward/Owner
+            </label>
             <input
               type="text"
               name="data_owner"
@@ -112,7 +129,9 @@ const Data = ({ ShowModal, setShowModal }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Format</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Format
+            </label>
             <input
               type="text"
               name="format"
@@ -127,7 +146,9 @@ const Data = ({ ShowModal, setShowModal }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Location</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Location
+            </label>
             <input
               type="text"
               name="location"
@@ -142,7 +163,9 @@ const Data = ({ ShowModal, setShowModal }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Timeframe</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Timeframe
+            </label>
             <input
               type="text"
               name="timeframe"
@@ -157,7 +180,9 @@ const Data = ({ ShowModal, setShowModal }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Size on Disk</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Size on Disk
+            </label>
             <input
               type="text"
               name="size_on_disk"
@@ -172,7 +197,9 @@ const Data = ({ ShowModal, setShowModal }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700"># of Records</label>
+            <label className="block text-sm font-medium text-gray-700">
+              # of Records
+            </label>
             <input
               type="text"
               name="records"
@@ -187,7 +214,9 @@ const Data = ({ ShowModal, setShowModal }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Last Inventory Update</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Last Inventory Update
+            </label>
             <input
               type="date"
               name="last_inventory_update"
@@ -197,7 +226,9 @@ const Data = ({ ShowModal, setShowModal }) => {
               className="mt-1 w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
             {touched.last_inventory_update && errors.last_inventory_update && (
-              <p className="text-red-500 text-sm ">{errors.last_inventory_update}</p>
+              <p className="text-red-500 text-sm ">
+                {errors.last_inventory_update}
+              </p>
             )}
           </div>
 
