@@ -5,16 +5,18 @@ import { createContext, useEffect } from "react";
 /* eslint-disable react/prop-types */
 
 
- 
 
- export const DeviceContext = createContext()
 
-const DeviceProvider = ({children}) => {
-  const [data, setData] = useState([])
+export const DeviceContext = createContext()
 
+const DeviceProvider = ({ children }) => {
+    const [data, setData] = useState([])
+   
 
     const DevicesGetData = async () => {
+ 
         try {
+           
             const res = await AxiosHandler.get('/device/get');
             setData(res.data.data)
         } catch (error) {
@@ -22,14 +24,14 @@ const DeviceProvider = ({children}) => {
         }
     }
 
-   const DevicesSendData = async(FormValues) => {
-    try {
-        const res = await AxiosHandler.post('/device/create',FormValues);
-        DevicesGetData()
-    } catch (error) {
-        console.log(error)
+    const DevicesSendData = async (FormValues) => {
+        try {
+            const res = await AxiosHandler.post('/device/create', FormValues);
+            DevicesGetData()
+        } catch (error) {
+            console.log(error)
+        }
     }
-   } 
 
 
     const DevicesDeleteData = async (_id) => {
@@ -40,18 +42,18 @@ const DeviceProvider = ({children}) => {
         } catch (error) {
             console.log(error)
         }
-    } 
+    }
 
-   useEffect(()=>{
-       DevicesGetData()
-   },[])
+    useEffect(() => {
+        DevicesGetData();
+    }, [])    
 
     return (
         <DeviceContext.Provider value={{ DevicesSendData, data, DevicesDeleteData }}>
-    {children}
-   </DeviceContext.Provider>
+            {children}
+        </DeviceContext.Provider>
 
     )
 }
 
-export default DeviceProvider ;
+export default DeviceProvider;

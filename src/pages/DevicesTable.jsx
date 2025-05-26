@@ -12,8 +12,7 @@ const DevicesTable = () => {
 
  
   const handleDeleteBtn = (_id) => {
-
-    DevicesDeleteData(_id)
+    DevicesDeleteData(_id);
   }
   return (
     <div className="p-6">
@@ -29,17 +28,17 @@ const DevicesTable = () => {
 
       <div className="overflow-x-auto rounded-lg shadow-md border border-gray-200">
         <table className="min-w-full text-sm text-left text-gray-700 bg-white">
-          <thead className="bg-gray-100 text-xs uppercase text-gray-600 sticky top-0 z-10">
+          <thead className=" bg-background text-xs uppercase text-white sticky top-0 z-10">
             <tr>
-              <th className="px-4 py-3 border">Unit ID</th>
+              <th className="px-4 py-3 border">Unit ID</th> 
               <th className="px-4 py-3 border">Custodian</th>
               <th className="px-4 py-3 border">Asset Name</th>
               <th className="px-4 py-3 border">Asset Type</th>
               <th className="px-4 py-3 border">Description</th>
               <th className="px-4 py-3 border">Physical Location</th>
-              <th className="px-4 py-3 border">If Cloud, which Cloud Service Provide</th>
-              <th className="px-4 py-3 border">Approved to connect to network?</th>
-              <th className="px-4 py-3 border"> Hardware secured?</th>
+              <th className="px-4 py-3 border"> Cloud Service Provide</th>
+              <th className="px-4 py-3 border">Approved to connect</th>
+              <th className="px-4 py-3 border"> Hardware secured</th>
               <th className="px-4 py-3 border">Asset Components</th>
               <th className="px-4 py-3 border">Machine Name</th>
               <th className="px-4 py-3 border">Hardware Address</th>
@@ -53,7 +52,7 @@ const DevicesTable = () => {
             {data.map((ele, i) => (
               <tr
                 key={i}
-                className="hover:bg-gray-50 transition-colors duration-200"
+                className="hover:bg-gray-50 bg-table text-white transition-colors duration-200"
               >
                 <td className="px-4 py-2">{ele.unit_id}</td>
                 <td className="px-4 py-2">{ele.supplier}</td>
