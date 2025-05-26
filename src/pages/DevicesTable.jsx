@@ -8,12 +8,14 @@ import { MdDeleteForever } from "react-icons/md";
 const DevicesTable = () => {
   const [devices, setDevices] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const { data, DevicesDeleteData } = useContext(DeviceContext)
+  const { data, DevicesDeleteData,page,setPage } = useContext(DeviceContext)
   const [editableData,setEditableData] = useState(null)
- 
+  
   const handleDeleteBtn = (_id) => {
-    DevicesDeleteData(_id);
-  };
+    if (window.confirm("Are you sure you want to delete this element ?")){
+     DevicesDeleteData(_id);
+   }
+  }
   return (
     <div className="p-6 ">
       <div className="flex justify-between items-center mb-4">
@@ -30,7 +32,7 @@ const DevicesTable = () => {
         <table className="min-w-full text-sm text-left text-white bg-gray-500">
           <thead className="bg-background text-xs uppercase text-white sticky top-0 z-10">
             <tr>
-              <th className="px-4 py-3 border">Unit ID</th>
+              <th className="px-4 py-3 border">Unit ID</th> 
               <th className="px-4 py-3 border">Custodian</th>
               <th className="px-4 py-3 border">Asset Name</th>
               <th className="px-4 py-3 border">Asset Type</th>
@@ -56,7 +58,7 @@ const DevicesTable = () => {
             {data.map((ele, i) => (
               <tr
                 key={i}
-                className="hover:bg-gray-50 transition-colors duration-200"
+                className="hover:bg-gray-50 bg-table text-white transition-colors duration-200"
               >
                 <td className="px-4 py-2">{ele.unit_id}</td>
                 <td className="px-4 py-2">{ele.supplier}</td>
@@ -95,6 +97,28 @@ const DevicesTable = () => {
             ))}
           </tbody>
         </table>
+            <div className="fixed  bottom-0 w-full flex justify-center gap-4 items-center my-16">
+              <button
+                className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white    border rounded-md ${
+                  page === 1 ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+                onClick={() => setPage(page - 1)}
+                disabled={page === 1}
+              >
+                Previous
+              </button>
+              <span className="text-white" >
+                Page {page}
+              
+              </span>
+              <button
+                className={`px-4 py-2 border rounded-md bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white  `}
+                disabled={data?.length < 10}
+                onClick={() => setPage(page + 1)}
+              >
+                Next
+              </button>
+            </div>
       </div>
 
       <DevicesData showModal={showModal} setShowModal={setShowModal} editableData={editableData} />
