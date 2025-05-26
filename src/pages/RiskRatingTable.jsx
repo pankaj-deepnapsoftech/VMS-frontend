@@ -34,7 +34,7 @@ const RiskRatingTable = () => {
           onClick={() => setShowModal(!showModal)}
           className="bg-sky-600 mb-2 text-white font-semibold py-2 px-5 rounded-lg shadow hover:bg-sky-700 focus:outline-none transition duration-300"
         >
-          Add Data
+          Add Risk Rating
         </button>
       </div>
       <div className="overflow-x-auto">
