@@ -9,7 +9,7 @@ import { IoClose } from "react-icons/io5";
 
 
 
-const DevicesData = ({ showModal, setShowModal }) => {
+const DevicesData = ({ showModal, setShowModal,editableData }) => {
 
   const { DevicesSendData } = useContext(DeviceContext)
 

@@ -9,7 +9,7 @@ const DevicesTable = () => {
   const [devices, setDevices] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const { data, DevicesDeleteData } = useContext(DeviceContext)
-
+  const [editableData,setEditableData] = useState(null)
  
   const handleDeleteBtn = (_id) => {
 
@@ -75,6 +75,7 @@ const DevicesTable = () => {
                     aria-label="Edit"
                     className="text-blue-500 hover:text-blue-700"
                     type="button"
+                    onClick={()=>{setEditableData(ele);setShowModal(true)}}
                   >
                     <FaEdit size={18} />
                   </button>
@@ -95,7 +96,7 @@ const DevicesTable = () => {
         </table>
       </div>
 
-      <DevicesData showModal={showModal} setShowModal={setShowModal} />
+      <DevicesData showModal={showModal} setShowModal={setShowModal} editableData={editableData} />
     </div>
   );
 };
