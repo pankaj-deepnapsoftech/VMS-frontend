@@ -42,20 +42,20 @@ const DevicesData = ({ showModal, setShowModal }) => {
 
   return (
     <section className={`transition-opacity duration-300 ease-in-out ${showModal ? "opacity-100 visible" : "opacity-0 invisible"} fixed top-0 left-0 h-screen w-full bg-black/40 backdrop-blur-sm  flex items-center justify-center z-50 `}>
-      <div className="max-w-6xl mx-auto bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6  overflow-y-auto max-h-[90vh] relative">
+      <div className="max-w-6xl mx-auto bg-table dark:bg-gray-900 rounded-lg shadow-lg p-6  overflow-y-auto max-h-[90vh] relative">
         <button
           onClick={() => setShowModal(!showModal)}
-          className=" text-black text-2xl flex justify-end w-full rounded hover:text-red-500 transition duration-300"
+          className=" text-white text-2xl flex justify-end w-full rounded hover:text-red-500 transition duration-300"
         >
           <IoClose />
         </button>
-        <h1 className="text-2xl font-semibold text-gray-800 dark:text-white mb-6">
-          Asset Inventory
+        <h1 className="text-2xl font-semibold text-white dark:text-white mb-6">
+          Asset Inventory Devices
         </h1>
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          <div> 
+            <label className="block text-sm font-medium text-white dark:text-gray-300">
               Unit ID
             </label>
             <input
@@ -64,7 +64,7 @@ const DevicesData = ({ showModal, setShowModal }) => {
               type="text"
               name="unit_id"
               value={values.unit_id}
-              className="mt-1 w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+              className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-200 dark:border-gray-300 dark:text-white"
                />
             {touched.unit_id && errors.unit_id && (
               <p className="text-red-500 text-sm">{errors.unit_id}</p>
@@ -73,7 +73,7 @@ const DevicesData = ({ showModal, setShowModal }) => {
 
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="block text-sm font-medium text-white dark:text-gray-300">
               IT Asset Custodian Name
             </label>
             <input

@@ -16,14 +16,14 @@ const DevicesTable = () => {
     DevicesDeleteData(_id)
   }
   return (
-    <div className="p-6">
+    <div className="p-6 ">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-xl font-bold text-white">Devices</h1>
         <button
           className="bg-sky-600 text-white px-4 py-2 rounded"
           onClick={() => setShowModal(true)}
         >
-          Add Asset
+          Add Devices
         </button>
       </div>
 
