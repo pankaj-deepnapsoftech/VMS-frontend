@@ -17,7 +17,7 @@ const ApplicationSoftwareInventoryTable = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 h-full">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold text-white">Software & Application</h2>
         <button
@@ -27,7 +27,7 @@ const ApplicationSoftwareInventoryTable = () => {
           Add Application
         </button>
       </div>
-      <div className="overflow-x-auto shadow-md rounded-lg">
+      <div className="overflow-x-auto shadow-md rounded-lg h-full">
         <table className=" bg-table border border-gray-300 text-sm text-left">
           <thead className=" w-full bg-background text-xs text-white uppercase">
             <tr>
@@ -121,7 +121,7 @@ const ApplicationSoftwareInventoryTable = () => {
           </tbody>
         </table>
       </div>
-      <div className="fixed bottom-0 w-full flex justify-center gap-4 items-center my-16">
+      <div className=" w-full flex justify-center gap-4 items-center my-16">
         <button
           className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white    border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""
             }`}

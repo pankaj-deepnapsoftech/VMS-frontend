@@ -59,7 +59,7 @@ const AllEmployeeContextProvider = ({ children }) => {
 		try {
 			const res = await AxiosHandler.get(`employee/get-employee-task?page=${taskPage}&limit=10`);
 			setEmployeeTasksData(res.data.data);
-
+        
 		} catch (error) {
 			console.log(error)
 

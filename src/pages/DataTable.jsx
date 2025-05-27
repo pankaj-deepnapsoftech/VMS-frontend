@@ -20,7 +20,7 @@ const DataTable = () => {
   }
 
   return (
-    <div className="p-4">
+    <div className="p-4 h-full">
       <div className="flex justify-between">
         <h1 className="text-xl font-semibold mb-4 text-white">Data Asset Inventory</h1>
         <button
@@ -86,7 +86,7 @@ const DataTable = () => {
           </tbody>
         </table>
       </div>
-      <div className="fixed  bottom-0 w-full flex justify-center gap-4 items-center my-16">
+      <div className=" w-full flex justify-center gap-4 items-center my-16">
         <button
           className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white    border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""
             }`}
