@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const TabNavigation = () => {
-  const [activeTab, setActiveTab] = useState("Devices");
+  const [activeTab, setActiveTab] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -38,18 +39,18 @@ const TabNavigation = () => {
     <div className="w-full bg-background dark:bg-gray-900 px-4 py-4 border-b  dark:border-gray-700">
       <div className="flex flex-wrap gap-3">
         {tabs.map((tab,index) => (
-          <button
+          <NavLink
             key={index}
-            onClick={() => { navigate(tab.path)}}
-            className={`px-5 py-2 rounded-lg text-sm font-medium transition-all text-white duration-200
-              ${activeTab === tab.path
-                ? "bg-blue-600 text-white shadow-md"
-                : "bg-table dark:bg-gray-800 text-gray-700 dark:text-gray-300  dark:hover:bg-gray-700"
-              }
-            `}
+            to={tab.path}
+            className={({ isActive }) =>
+              `px-5 py-2 rounded-lg text-sm font-medium transition-all text-white duration-200 ${isActive
+                ? "bg-sky-600 text-white shadow-md"
+                : "bg-table dark:bg-gray-800 text-gray-700 dark:text-gray-300 dark:hover:bg-gray-700"
+              }`
+            }
           >
             {tab.title}
-          </button>
+          </NavLink>
         ))}
       </div>
     </div>
