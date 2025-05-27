@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 
+import Loader from "@/components/Loader/Loader";
 import { ApplicationSoftwareInventoryContext } from "@/context/ApplicationSoftwareInventoryContext/ApplicationSoftwareInventoryContext";
 import { ApplicationSoftwareSchema } from "@/Validation/ApplicationSoftwareInventoryValidation";
 import { useFormik } from "formik";
@@ -7,8 +8,8 @@ import React, { useContext } from "react";
 import { IoClose } from "react-icons/io5";
 
 const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }) => {
-  const { AppSoftSendData, AppSoftGetData, AppSoftUpdate } = useContext(ApplicationSoftwareInventoryContext)
-  
+  const { AppSoftSendData, AppSoftGetData, AppSoftUpdate, loading } = useContext(ApplicationSoftwareInventoryContext)
+
   const {
     handleBlur,
     handleSubmit,
@@ -42,24 +43,24 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
       PCI: "",
       GLBA: "",
       GDPR: "",
-      CUI:""
+      CUI: ""
     },
     validationSchema: ApplicationSoftwareSchema,
-    enableReinitialize:true,
+    enableReinitialize: true,
     onSubmit: (values) => {
-      if(editTableData){
+      if (editTableData) {
         AppSoftUpdate(values)
-      }else{
+      } else {
         AppSoftSendData(values)
       }
       resetForm()
-      setShowModal(false)
+      setShowModal(false);
     },
   });
 
   return (
     <>
-      <section className={`transition-opacity duration-300 ease-in-out ${showModal ? "opacity-100 visible" : "opacity-0 invisible"} fixed top-0 left-0 h-screen w-full bg-black/40 backdrop-blur-sm  flex items-center justify-center z-50 `}>
+      {loading ? <Loader /> : <section className={`transition-opacity duration-300 ease-in-out ${showModal ? "opacity-100 visible" : "opacity-0 invisible"} fixed top-0 left-0 h-screen w-full bg-black/40 backdrop-blur-sm  flex items-center justify-center z-50 `}>
         <div className="bg-background rounded-lg shadow-xl w-full max-w-5xl p-8 overflow-y-auto max-h-[90vh]">
           <button
             onClick={() => setShowModal(!showModal)}
@@ -67,8 +68,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
           >
             <IoClose />
           </button>
-
-          <h1 className="text-3xl font-semibold text-white mb-6 border-b pb-2">{editTableData ? "Edit Application & Software Inventory" : "Application & Software Inventory"}</h1>
+          <h1 className="text-2xl font-semibold text-white mb-6 border-b pb-2">{editTableData ? "Edit Application & Software Inventory" : "Application & Software Inventory"}</h1>
 
           <form onSubmit={handleSubmit}
 
@@ -82,7 +82,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Unit_ID}
-                className="mt-1 w-full p-2 border bg-input rounded" 
+                className="mt-1 w-full p-2 border bg-input rounded"
               />
               {
                 touched.Unit_ID && errors.Unit_ID && (
@@ -402,7 +402,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
                 className="mt-1 w-full p-2 border bg-input rounded"
               />
               {
-                touched["800_171"] && errors["800_171"]&& (
+                touched["800_171"] && errors["800_171"] && (
                   <p className="text-red-500 text-sm">{errors["800_171"]}</p>
                 )
               }
@@ -495,7 +495,6 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
 
             <div className="md:col-span-2">
               <button
-                onClick={AppSoftGetData}
                 type="submit"
                 className="bg-sky-600 text-white py-2 px-6 rounded hover:bg-sky-700"
               >
@@ -504,7 +503,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
             </div>
           </form>
         </div>
-      </section>
+      </section>}
     </>
   );
 };

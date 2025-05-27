@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 
 
 const token = Cookies.get('token');
+
 export const AxiosHandler  =  axios.create({
     
     baseURL:import.meta.env.VITE_BACKEND_BASE_URL,
@@ -11,5 +12,6 @@ export const AxiosHandler  =  axios.create({
     headers:{
         Authorization:`Bearer ${token}`
     }
+
 })
 
