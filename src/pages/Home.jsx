@@ -42,7 +42,6 @@ function Home() {
   } = useDataContext();
 
   const { authenticate } = useAuthContext();
-  console.log(authenticate)
   const [showUserMenu, setShowUserMenu] = useState(false);
 
   const user = {
@@ -170,13 +169,12 @@ function Home() {
                   label
                 >
                   {data.map((entry, index) => (
-                    <>
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={COLORS[index % COLORS.length]}
-                      />
-                    </>
+                    <Cell
+                      key={`cell-${entry.name}-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
                   ))}
+
                 </Pie>
                 <Tooltip />
                 <Legend />
@@ -341,10 +339,11 @@ function Home() {
                 >
                   {data1.map((entry, index) => (
                     <Cell
-                      key={`cell-${index}`}
+                      key={`cell-inventory-${entry.name}-${index}`}
                       fill={COLORS[index % COLORS.length]}
                     />
                   ))}
+
                 </Pie>
                 <Tooltip />
                 <Legend />
@@ -491,11 +490,11 @@ function Home() {
             </BarChart>
           </ResponsiveContainer>
         </div>
-        
+
         <div className="mt-6"></div>
-       
+
       </div>
-     
+
     </>
   );
 }

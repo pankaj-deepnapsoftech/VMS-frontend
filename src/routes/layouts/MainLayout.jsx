@@ -29,7 +29,6 @@ const MainLayout = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
 
-  console.log(authenticate.role)
 
 
   let notificationcount = notificationData?.filter((notification) => !notification.view).length || 0;

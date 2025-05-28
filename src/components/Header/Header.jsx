@@ -17,10 +17,10 @@ function Header({ setShowMenu }) {
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
-  const handleLogout = (id) => {
+  const handleLogout = () => {
     if (window.confirm("Are you sure you want to log out?")) {
       Logout();
-    }
+    };
   };
 
   let navList = [];
@@ -47,11 +47,10 @@ function Header({ setShowMenu }) {
       products.map((item)=>{
         if(getDataFromSession === item.title){
          navList = item.allowedCISO.filter((item)=> authenticate.allowed_paths.some((ite)=> ite.value === item.route))
-        }
+        };
       });
       break;
     default:
-      // console.log("Invalid Role: Access Denied");
       toast.error("Invalid Role: Access Denied");
   }
 

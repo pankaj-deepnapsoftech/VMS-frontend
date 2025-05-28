@@ -33,40 +33,27 @@ const slides = [
 const features = [
   {
     icon: FaSearch,
-    title: "Intelligent API Discovery",
-    description: `Automatically detects and classifies APIs and high-value endpoints to identify security risks.
-Continuously monitors exposed APIs for misconfigurations, unauthorized access, and potential threats.`,
+    title: "Unified Asset Inventory",
+    description: `Consolidation and contextualization of all your assets within your organization to provide a single of attack surface.`,
   },
   {
     icon: FaEye,
-    title: "Observability",
+    title: "Aggregated Findings ",
     description:
-      "Continuously monitors and detects deviations in security posture for proactive risk management.",
+      "Normalization, correlation and enrichment of vulnerabilities across all the technologies to provide actionable insights. ",
   },
   {
     icon: FaProjectDiagram,
-    title: "Workflow Management",
-    description: `Offers customizable dashboards, exception workflows, and ageing tracking for efficient vulnerability lifecycle management.
-Automates risk-based prioritization, escalations, and team collaboration to accelerate remediation efforts.`,
+    title: "Risk Orchestration",
+    description: `Customized Risk Scoring, Prioritization, Risk Workflows & Reporting to help the CIOs & CFOs with Risk Quantification metrics and bridge the gap from CISOs lens. `,
   },
   {
     icon: FaTools,
-    title: "Workflow-Driven Vulnerability Remediation",
+    title: "Remediation Factory",
     description:
-      "Automates and streamlines remediation processes, ensuring efficient and structured vulnerability resolution.",
+      "AI-Driven Vulnerability Insights, Recommendations and Human Consulted mitigation to achieve resiliency across organization infrastructure. ",
   },
-  {
-    icon: FaClone,
-    title: "Duplicate Detection",
-    description:
-      "Identifies and eliminates redundant vulnerabilities, reducing noise and improving remediation efficiency.",
-  },
-  {
-    icon: FaBullseye,
-    title: "Campaign Management",
-    description: `Organizes and prioritizes security fixes into structured campaigns for systematic risk mitigation.
-Applies mass vulnerability fixes based on predefined categories, accelerating threat resolution.`,
-  },
+
 ];
 
 const LandingPage = () => {
@@ -99,9 +86,8 @@ const LandingPage = () => {
                   <img
                     src={slide.image}
                     alt={slide.title}
-                    className={`drop-shadow-lg mx-auto ${
-                      index === 2 ? "max-w-xs" : "max-w-sm"
-                    } w-full h-auto`}
+                    className={`drop-shadow-lg mx-auto ${index === 2 ? "max-w-xs" : "max-w-sm"
+                      } w-full h-auto`}
                   />
                 </div>
 
@@ -147,10 +133,7 @@ const LandingPage = () => {
           <div className="w-full md:w-2/3">
             <h2 className="text-3xl sm:text-4xl font-bold mb-2">Features</h2>
             <p className="text-gray-400 mb-8 text-sm sm:text-base">
-              SECURE& tools will offer key features that set them apart from
-              competitors, providing unique solutions to address real-time
-              challenges faced by enterprises of all sizes, from small
-              businesses to large corporations.
+              SECURE& platform offers key features that set them apart from competitors, providing unique solutions to address real-time challenges faced by enterprises of all sizes, from small businesses to large corporations.
             </p>
 
             <div className="flex gap-4 w-full overflow-x-auto sm:overflow-x-scroll custom-scrollbar scroll-smooth">
@@ -167,7 +150,7 @@ const LandingPage = () => {
                   <h4 className="text-lg font-semibold mb-2">{item.title}</h4>
                   <p className="text-[#d7e1ec] text-sm">{item.description}</p>
                 </div>
-              ))}  
+              ))}
             </div>
           </div>
         </div>
@@ -238,7 +221,7 @@ const LandingPage = () => {
       <section>
         <div className="h-full w-full pt-12 bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f]">
           <h1 className="text-white text-center text-[40px] font-bold pt-4">
-            Business aligned & AI Powered Risk Management
+            Secure& alignment for CIO & CFO from CISO’s lens
           </h1>
           {/* <section className="text-center ">
             <img src="section.png" alt="section" className="inline-block" />
@@ -249,14 +232,14 @@ const LandingPage = () => {
               <div className="mb-10 mt-10">
                 <div className="flex justify-end max-[800px]:justify-start gap-4">
                   <h2 className="text-[#D7E1E0] text-xl font-bold">
-                    Stakeholder Driven Dashboard
+                    Security Posture
                   </h2>
                   <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
                     <FaMessage className="text-3xl text-[#a1a4ab]" />
                   </div>
                 </div>
                 <p className="text-[#A0A1AC]">
-                  Comprehensive visibility and reporting for all stakeholders
+                  Centrally aggregated security posture data (vulnerabilities & misconfigurations) from various technologies
                 </p>
               </div>
               <div className="flex justify-end max-[800px]:justify-start  items-start">
@@ -265,14 +248,14 @@ const LandingPage = () => {
               <div className="h-[30vh] pt-24 md:pt-16">
                 <div className="flex justify-end max-[800px]:justify-start gap-4">
                   <h2 className="text-[#D7E1E0] text-xl font-bold">
-                    AI Penetration Test Platform
+                    Threat Intelligence
                   </h2>
                   <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
                     <FaArrowPointer className="text-3xl text-[#a1a4ab]" />
                   </div>
                 </div>
                 <p className="text-[#A0A1AC]">
-                  Advanced AI-powered security testing with high accuracy
+                  Vulnerability & Threat Intelligence for accelerated decision making and prioritization at scale.
                 </p>
               </div>
             </div>
@@ -313,12 +296,11 @@ const LandingPage = () => {
                     <GiPerspectiveDiceSixFacesFour className="text-5xl text-[#a1a4ab]" />
                   </div>
                   <h2 className="text-[#D7E1E0] text-xl font-bold">
-                    Asset/API Discovery & Inventory
+                    Business Context
                   </h2>
                 </div>
                 <p className="text-[#A0A1AC]">
-                  Complete mapping of all assets and APIs across your
-                  infrastructure
+                  Contextualization with asset criticality, and business impact metrics along with attribution of asset and risk ownership enable automated workflows. 
                 </p>
               </div>
               <div className="flex items-start">
@@ -349,7 +331,7 @@ const LandingPage = () => {
           {/* Left Form Section */}
           <div className="w-full">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-200 mb-4">
-              Get in Touch 
+              Get in Touch
             </h2>
             <p className="text-gray-400 mb-6">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
