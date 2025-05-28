@@ -42,15 +42,15 @@ createRoot(document.getElementById("root")).render(
                     <RemeditionContextProvider>
                       <ExceptionContextProvider>
                         <InfrastructureVulnerabilityContextProvider>
-                          <AppSoftContextProvider>
+                          {/* <AppSoftContextProvider>
                             <DeviceProvider>
                               <AssetDataProvider>
-                                <RiskRatingProvider>
+                                <RiskRatingProvider> */}
                                   <App />
-                                </RiskRatingProvider>
+                                {/* </RiskRatingProvider>
                               </AssetDataProvider>
                             </DeviceProvider>
-                          </AppSoftContextProvider>
+                          </AppSoftContextProvider> */}
                         </InfrastructureVulnerabilityContextProvider>
                       </ExceptionContextProvider>
                     </RemeditionContextProvider>
