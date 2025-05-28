@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 
 
 
-const token = Cookies.get('token');
+const token = Cookies.get('token'); 
 
 export const AxiosHandler  =  axios.create({
     
