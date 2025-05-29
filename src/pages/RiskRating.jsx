@@ -67,7 +67,7 @@ const RiskRating = ({ showModal, setShowModal, editTable }) => {
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.data_asset}
-                  className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  className="mt-1 w-full p-2 border bg-input text-white border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
                 {touched.data_asset && errors.data_asset && (
                   <p className="text-sm text-red-500 ">{errors.data_asset}</p>
@@ -82,7 +82,7 @@ const RiskRating = ({ showModal, setShowModal, editTable }) => {
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.users_affected}
-                  className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  className="mt-1 w-full p-2 border bg-input border-gray-300 text-white rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
                 {touched.users_affected && errors.users_affected && (
                   <p className="text-sm text-red-500 ">{errors.users_affected}</p>
@@ -97,7 +97,7 @@ const RiskRating = ({ showModal, setShowModal, editTable }) => {
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.PII}
-                  className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  className="mt-1 w-full p-2 border bg-input text-white border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
                 {touched.PII && errors.PII && (
                   <p className="text-sm text-red-500 ">{errors.PII}</p>
@@ -112,7 +112,7 @@ const RiskRating = ({ showModal, setShowModal, editTable }) => {
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.business_sensitive}
-                  className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  className="mt-1 w-full p-2 border bg-input text-white border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
                 {touched.business_sensitive && errors.business_sensitive && (
                   <p className="text-sm text-red-500 ">{errors.business_sensitive}</p>
@@ -127,7 +127,7 @@ const RiskRating = ({ showModal, setShowModal, editTable }) => {
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.regulation}
-                  className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  className="mt-1 w-full p-2 border bg-input text-white border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
                 {touched.regulation && errors.regulation && (
                   <p className="text-sm text-red-500 ">{errors.regulation}</p>
@@ -142,7 +142,7 @@ const RiskRating = ({ showModal, setShowModal, editTable }) => {
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.security_confidentiality}
-                  className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  className="mt-1 w-full p-2 border bg-input text-white border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
                 {touched.security_confidentiality && errors.security_confidentiality && (
                   <p className="text-sm text-red-500 ">{errors.security_confidentiality}</p>
@@ -157,7 +157,7 @@ const RiskRating = ({ showModal, setShowModal, editTable }) => {
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.security_integrity}
-                  className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  className="mt-1 w-full p-2 border bg-input text-white border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
                 {touched.security_integrity && errors.security_integrity && (
                   <p className="text-sm text-red-500 ">{errors.security_integrity}</p>
@@ -172,7 +172,7 @@ const RiskRating = ({ showModal, setShowModal, editTable }) => {
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.security_availability}
-                  className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  className="mt-1 w-full p-2 border bg-input text-white border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
                 {touched.security_availability && errors.security_availability && (
                   <p className="text-sm text-red-500 ">{errors.security_availability}</p>
@@ -187,7 +187,7 @@ const RiskRating = ({ showModal, setShowModal, editTable }) => {
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.overall_risk_rating}
-                  className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  className="mt-1 w-full p-2 border bg-input text-white border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
                 {touched.overall_risk_rating && errors.overall_risk_rating && (
                   <p className="text-sm text-red-500 ">{errors.overall_risk_rating}</p>
