@@ -6,7 +6,7 @@ import { SignUpValidation } from '@/Validation/AuthValidation';
 import { useEffect, useState } from 'react';
 
 
-function SignIn() {
+function SignUp() {
   const { Signup, loading } = useAuthContext()
   const { GetOrgnization, getOrgnizationData } = useScheduleAssessmentContext();
   console.log("getOrgnizationData", getOrgnizationData)
@@ -53,12 +53,6 @@ function SignIn() {
 
         {/* Login Form */}
         <form className="my-auto w-full max-w-md py-16" onSubmit={handleSubmit} >
-         
-
-          {/* Metamask Button */}
-
-
-
 
           {/* Email Input */}
           <div className="mb-4">
@@ -181,7 +175,7 @@ function SignIn() {
           </button>
 
           {/* Sign Up Link */}
-          <p className="text-gray-400 text-sm mt-6">
+          <p className="text-gray-700 text-sm mt-6">
             Already have an account{' '}
             <Link to="/sign-in" className="text-white hover:text-blue-400 transition-colors">
               Back to login
@@ -192,7 +186,7 @@ function SignIn() {
       </div>
 
       {/* Right Panel - Particle Globe Background */}
-      <div className="hidden md:block flex-1 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop')] bg-cover bg-center">
+      <div className="hidden md:block flex-1">
         <div className="w-full h-full bg-[#0a192f]/80 backdrop-blur-sm flex items-center justify-center">
           <div className="text-center px-4 mb-32">
           <h1 className="text-3xl font-bold text-white mb-2">Create New Account</h1>
@@ -207,4 +201,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default SignUp;

@@ -87,22 +87,16 @@ html {
   transform: 32 scale(1.1);
 }
 
-
-
-
 .swiper-horizontal>.swiper-pagination-bullets,
 .swiper-pagination-bullets.swiper-pagination-horizontal {
   position: absolute;
-  top: 50%;
   align-items: end;
   align-items: end;
   display: flex;
   flex-direction: column;
   padding: 0 20px;
   gap: 20px;
-
 }
-
 
 .swiper-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet,
 .swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet {

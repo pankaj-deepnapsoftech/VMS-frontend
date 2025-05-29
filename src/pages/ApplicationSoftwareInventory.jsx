@@ -82,7 +82,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Unit_ID}
-                className="mt-1 w-full p-2 border bg-input rounded"
+                className="mt-1 w-full p-2 border text-white bg-input rounded"
               />
               {
                 touched.Unit_ID && errors.Unit_ID && (
@@ -99,7 +99,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Custodian_name}
-                className="mt-1 w-full p-2 border bg-input rounded"
+                className="mt-1 w-full p-2 border bg-input text-white rounded"
               />
               {
                 touched.Custodian_name && errors.Custodian_name && (
@@ -118,7 +118,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Custodian_Contact_info}
-                className="mt-1 w-full p-2 border bg-input rounded"
+                className="mt-1 w-full p-2 border bg-input text-white rounded"
               />
               {
                 touched.Custodian_Contact_info && errors.Custodian_Contact_info && (
@@ -135,7 +135,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Application_Name}
-                className="mt-1 w-full p-2 border bg-input rounded"
+                className="mt-1 w-full p-2 border bg-input text-white rounded"
               />
               {
                 touched.Application_Name && errors.Application_Name && (
@@ -151,7 +151,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Application_Type}
-                className="mt-1 w-full p-2 border bg-input rounded"
+                className="mt-1 w-full p-2 border bg-input text-white rounded"
               >
                 <option value="">Select</option>
                 <option>Web</option>
@@ -174,7 +174,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Version}
-                className="mt-1 w-full p-2 border bg-input rounded"
+                className="mt-1 w-full p-2 border bg-input text-white rounded"
               />
               {
                 touched.Version && errors.Version && (
@@ -191,7 +191,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.URL_if_appl}
-                className="mt-1 w-full p-2 border bg-input rounded"
+                className="mt-1 w-full p-2 border bg-input text-white rounded"
               />
               {
                 touched.URL_if_appl && errors.URL_if_appl && (
@@ -208,7 +208,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Publisher}
-                className="mt-1 w-full p-2 border bg-input rounded"
+                className="mt-1 w-full p-2 border bg-input text-white rounded"
               />
               {
                 touched.Publisher && errors.Publisher && (
@@ -225,7 +225,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Install_Use_Date}
-                className="mt-1 w-full p-2 border bg-input rounded"
+                className="mt-1 w-full p-2 border bg-input text-white rounded"
               />
               {
                 touched.Install_Use_Date && errors.Install_Use_Date && (
@@ -242,7 +242,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Business_Purpose}
-                className="mt-1 w-full p-2 border bg-input rounded"
+                className="mt-1 w-full p-2 border bg-input text-white rounded"
               />
               {
                 touched.Business_Purpose && errors.Business_Purpose && (
@@ -259,7 +259,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.End_Of_Life_date}
-                className="mt-1 w-full p-2 border bg-input rounded"
+                className="mt-1 w-full p-2 border bg-input text-white rounded"
               />
               {
                 touched.End_Of_Life_date && errors.End_Of_Life_date && (
@@ -276,7 +276,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.LIcense_info}
-                className="mt-1 w-full p-2 border bg-input rounded"
+                className="mt-1 w-full p-2 border bg-input text-white rounded"
               />
               {
                 touched.LIcense_info && errors.LIcense_info && (
@@ -292,7 +292,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Ownership}
-                className="mt-1 w-full p-2 border bg-input rounded"
+                className="mt-1 w-full p-2 border bg-input text-white rounded"
               >
                 <option value="">Select</option>
                 <option>Unit</option>
@@ -314,7 +314,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Users}
-                className="mt-1 w-full p-2 border bg-input rounded"
+                className="mt-1 w-full p-2 border bg-input text-white rounded"
               />
               {
                 touched.Users && errors.Users && (
@@ -331,7 +331,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Risk_Data}
-                className="mt-1 w-full p-2 border bg-input rounded"
+                className="mt-1 w-full p-2 border bg-input text-white rounded"
               />
               {
                 touched.Risk_Data && errors.Risk_Data && (
@@ -348,7 +348,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Security_description}
-                className="mt-1 w-full p-2 border bg-input rounded"
+                className="mt-1 w-full p-2 border bg-input text-white rounded"
               />
               {
                 touched.Security_description && errors.Security_description && (
@@ -365,7 +365,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.Pll_SSN}
-                className="mt-1 w-full p-2 border bg-input rounded"
+                className="mt-1 w-full p-2 border bg-input text-white rounded"
               />
               {
                 touched.Pll_SSN && errors.Pll_SSN && (
@@ -382,7 +382,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.FERPA}
-                className="mt-1 w-full p-2 border bg-input rounded"
+                className="mt-1 w-full p-2 border bg-input text-white rounded"
               />
               {
                 touched.FERPA && errors.FERPA && (
@@ -399,7 +399,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values["800_171"]}
-                className="mt-1 w-full p-2 border bg-input rounded"
+                className="mt-1 w-full p-2 border bg-input text-white rounded"
               />
               {
                 touched["800_171"] && errors["800_171"] && (
@@ -416,7 +416,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.HIPAA}
-                className="mt-1 w-full p-2 border bg-input rounded"
+                className="mt-1 w-full p-2 border bg-input text-white rounded"
               />
               {
                 touched.HIPAA && errors.HIPAA && (
@@ -433,7 +433,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.PCI}
-                className="mt-1 w-full p-2 border bg-input rounded"
+                className="mt-1 w-full p-2 border bg-input text-white rounded"
               />
               {
                 touched.PCI && errors.PCI && (
@@ -450,7 +450,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.GLBA}
-                className="mt-1 w-full p-2 border bg-input rounded"
+                className="mt-1 w-full p-2 border bg-input text-white rounded"
               />
               {
                 touched.GLBA && errors.GLBA && (
@@ -467,7 +467,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.GDPR}
-                className="mt-1 w-full p-2 border bg-input rounded"
+                className="mt-1 w-full p-2 border bg-input text-white rounded"
               />
               {
                 touched.GDPR && errors.GDPR && (
@@ -484,7 +484,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.CUI}
-                className="mt-1 w-full p-2 border bg-input rounded"
+                className="mt-1 w-full p-2 border bg-input text-white rounded"
               />
               {
                 touched.CUI && errors.CUI && (

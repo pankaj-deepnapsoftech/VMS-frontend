@@ -74,7 +74,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
                 type="text"
                 name="unit_id"
                 value={values.unit_id}
-                className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-200 dark:border-gray-300 dark:text-white"
+                className="mt-1 w-full p-2 border rounded-md bg-input text-white dark:bg-gray-200 dark:border-gray-300 dark:text-white"
               />
               {touched.unit_id && errors.unit_id && (
                 <p className="text-red-500 text-sm">{errors.unit_id}</p>
@@ -92,7 +92,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
                 type="text"
                 name="asset_custodian_name"
                 value={values.asset_custodian_name}
-                className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 text-white dark:text-white"
               />
               {touched.asset_custodian_name && errors.asset_custodian_name && (
                 <p className="text-red-500 text-sm">{errors.asset_custodian_name}</p>
@@ -110,7 +110,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
                 type="text"
                 name="asset_custodian_contact"
                 value={values.asset_custodian_contact}
-                className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                className="mt-1 w-full p-2 border rounded-md bg-input text-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
               />
               {touched.asset_custodian_contact && errors.asset_custodian_contact && (
                 <p className="text-red-500 text-sm">{errors.asset_custodian_contact}</p>
@@ -128,7 +128,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
                 type="text"
                 name="asset_name"
                 value={values.asset_name}
-                className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                className="mt-1 w-full p-2 border rounded-md bg-input text-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
               />
               {touched.asset_name && errors.asset_name && (
                 <p className="text-red-500 text-sm">{errors.asset_name}</p>
@@ -146,7 +146,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
                 type="text"
                 name="asset_type"
                 value={values.asset_type}
-                className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                className="mt-1 w-full p-2 border rounded-md bg-input text-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
               />
               {touched.asset_type && errors.asset_type && (
                 <p className="text-red-500 text-sm">{errors.asset_type}</p>
@@ -164,7 +164,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
                 type="text"
                 name="description"
                 value={values.description}
-                className="mt-1 w-full p-2 border rounded-md bg-input  dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                className="mt-1 w-full p-2 border rounded-md bg-input  dark:bg-gray-800 dark:border-gray-700 text-white dark:text-white"
 
               />
               {touched.description && errors.description && (
@@ -183,7 +183,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
                 type="text"
                 name="physical_location"
                 value={values.physical_location}
-                className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 text-white dark:text-white"
 
               />
               {touched.physical_location && errors.physical_location && (
@@ -202,7 +202,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
                 type="text"
                 name="cloud_service_provider"
                 value={values.cloud_service_provider}
-                className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 text-white dark:text-white"
               />
               {touched.cloud_service_provider && errors.cloud_service_provider && (
                 <p className="text-red-500 text-sm">{errors.cloud_service_provider}</p>
@@ -220,7 +220,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
                 type="date"
                 name="approved_connect"
                 value={values.approved_connect}
-                className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 text-white dark:border-gray-700 dark:text-white"
               />
               {touched.approved_connect && errors.approved_connect && (
                 <p className="text-red-500 text-sm">{errors.approved_connect}</p>
@@ -238,7 +238,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
                 type="text"
                 name="hardware_securend"
                 value={values.hardware_securend}
-                className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                className="mt-1 w-full p-2 border rounded-md bg-input text-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
 
               />
               {touched.hardware_securend && errors.hardware_securend && (
@@ -257,7 +257,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
                 type="text"
                 name="asset_components"
                 value={values.asset_components}
-                className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 text-white dark:text-white"
               />
               {touched.asset_components && errors.asset_components && (
                 <p className="text-red-500 text-sm">{errors.asset_components}</p>
@@ -275,7 +275,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
                 type="text"
                 name="machine_name"
                 value={values.machine_name}
-                className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                className="mt-1 w-full p-2 border rounded-md bg-input text-white  dark:bg-gray-800 dark:border-gray-700 dark:text-white"
               />
               {touched.machine_name && errors.machine_name && (
                 <p className="text-red-500 text-sm">{errors.machine_name}</p>
@@ -293,7 +293,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
                 type="text"
                 name="hardware_address"
                 value={values.hardware_address}
-                className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                className="mt-1 w-full p-2 border rounded-md bg-input text-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
 
               />
               {touched.hardware_address && errors.hardware_address && (
@@ -312,7 +312,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
                 type="text"
                 name="supplier"
                 value={values.supplier}
-                className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                className="mt-1 w-full p-2 border rounded-md bg-input text-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
               />
               {touched.supplier && errors.supplier && (
                 <p className="text-red-500 text-sm">{errors.supplier}</p>
@@ -328,7 +328,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
                 type="text"
                 name="network_address"
                 value={values.network_address}
-                className="mt-1 w-full p-2 border rounded-md bg-input dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                className="mt-1 w-full p-2 border rounded-md bg-input text-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
               />
               {touched.network_address && errors.network_address && (
                 <p className="text-red-500 text-sm">{errors.network_address}</p>

@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { Eye, EyeOff, Wallet2 } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { SignInValidation } from "@/Validation/AuthValidation";
 import { useAuthContext } from "@/context";
 import { Link } from "react-router-dom";
@@ -9,7 +9,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 function SignIn() {
   const { Signin, loading } = useAuthContext();
   const [showPassword, setShowPassword] = useState(false);
-  const [disabled,setDisabled] = useState(true)
+  const [disabled, setDisabled] = useState(true);
 
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
     useFormik({
@@ -20,132 +20,111 @@ function SignIn() {
       },
     });
 
-    const handleOnChnage = (val) => {
-      setDisabled(false)
-    }
+  const handleOnChange = () => {
+    setDisabled(false);
+  };
 
   return (
-    <div className="min-h-screen w-full flex bg-[#0a192f]">
-      {/* Left Panel - Login Form */}
-      <div className="w-full md:w-[480px] p-8 flex flex-col justify-between">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 px-4">
+      {/* Sign In Heading - OUTSIDE Card */}
+      <h1 className="text-4xl font-extrabold text-white mb-2">Welcome</h1>
+      <p className="text-blue-300 text-sm">
+        Login to the Virtual Risk Operation Center (VROC)
+      </p>
 
-        {/* Logo and Language Section */}
-        <div className="flex justify-between items-center">
-          {/* <Link to="/" className="flex items-center">
-            <img
-              src="/logo.png"
-              alt="Scalable Image"
-              style={{ width: "30%", height: "auto" }}
-            />
-          </Link> */}
+      {/* Card Box */}
+      <div className="w-full max-w-md bg-gray-800 rounded-2xl shadow-lg p-8">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-blue-400 mb-6">Sign in</h1>
         </div>
 
-        {/* Login Form */}
-        <form className="my-auto w-full max-w-md" onSubmit={handleSubmit}>
-          {/* Email Input */}
-          <span className="text-3xl font-bold block pb-10 bg-blue-300 text-transparent bg-clip-text">
-            Sign In
-          </span>
-          <div className="mb-4 ">
-            <label className="block text-gray-400 text-sm mb-2">Email</label>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Email Field */}
+          <div>
+            <label className="block text-sm text-gray-400 mb-1">Email</label>
             <input
               type="email"
               value={values.email}
               onChange={handleChange}
               onBlur={handleBlur}
               name="email"
-              className="w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-colors"
-              placeholder="Enter email"
+              placeholder="Enter your email"
+              className="w-full bg-gray-900 text-white rounded-lg px-4 py-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.email && touched.email && (
-              <p className="text-red-400 p-2">{errors.email}</p>
+              <p className="text-sm text-red-400 mt-1">{errors.email}</p>
             )}
           </div>
 
-          {/* Password Input */}
-          <div className="mb-6 ">
+          {/* Password Field */}
+          <div>
+            <label className="block text-sm text-gray-400 mb-1">Password</label>
             <div className="relative">
-              <label className="block text-gray-400 text-sm mb-2">
-                Password
-              </label>
               <input
                 type={showPassword ? "text" : "password"}
                 value={values.password}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 name="password"
-                placeholder="Enter password"
-                className="w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-colors"
+                placeholder="Enter your password"
+                className="w-full bg-gray-900 text-white rounded-lg px-4 py-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <div
-                className="absolute top-[40%] right-2 text-white p-2 cursor-pointer "
+              <button
+                type="button"
                 onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white"
               >
-                {!showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
-              </div>
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
             </div>
             {errors.password && touched.password && (
-              <p className="text-red-400 p-2">{errors.password}</p>
+              <p className="text-sm text-red-400 mt-1">{errors.password}</p>
             )}
           </div>
 
-          {/* Remember Me & Forgot Password */}
-          <div className="flex items-center  justify-between mb-6">
-           
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="checkbox"
-                className="w-4 h-4 rounded border-gray-700 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-0 bg-[#1a2942]"
-              />
-              <span className="text-gray-400 text-sm">Remember me?</span>
+          {/* Checkbox + Forgot Password */}
+          <div className="flex items-center justify-between text-sm text-gray-400">
+            <label className="flex items-center gap-2">
+              <input type="checkbox" className="accent-blue-500" />
+              Remember me
             </label>
             <Link
-              to={"/forgot-password"}
-              className="text-white text-sm hover:text-blue-400 transition-colors"
+              to="/forgot-password"
+              className="text-blue-400 hover:underline"
             >
               Forgot password?
             </Link>
           </div>
-          <div>
-          <ReCAPTCHA
+
+          {/* reCAPTCHA */}
+          <div className="pt-1">
+            <ReCAPTCHA
               sitekey={import.meta.env.VITE_HUMAN_VERIFICATION}
-              onChange={handleOnChnage}
-            />,
+              onChange={handleOnChange}
+            />
           </div>
 
-          {/* Login Button */}
+          {/* Submit Button */}
           <button
-            disabled={loading || disabled}
             type="submit"
-            className="w-full bg-gradient-to-t from-[#0371c0] to-blue-400 text-white rounded-lg p-3 font-medium hover:"
+            disabled={loading || disabled}
+            className={`w-full py-3 px-4 rounded-lg text-white font-medium transition-all duration-300 ${
+              loading || disabled
+                ? "bg-gray-600 cursor-not-allowed"
+                : "bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600"
+            }`}
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
 
           {/* Sign Up Link */}
-          <p className="text-gray-400 text-sm mt-6">
+          <p className="text-center text-sm text-gray-400 mt-4">
             Not registered yet?{" "}
-            <Link
-              to="/sign-up"
-              className="text-white hover:text-blue-400 transition-colors"
-            >
+            <Link to="/sign-up" className="text-blue-400 hover:underline">
               Create an account
             </Link>
           </p>
         </form>
-      </div>
-
-      {/* Right Panel - Particle Globe Background */}
-      <div className="hidden md:block flex-1 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop')] bg-cover bg-center">
-        <div className="w-full h-full bg-[#0a192f]/80 backdrop-blur-sm flex items-center justify-center">
-          <div className="text-center px-4 mt-24">
-            <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
-            <p className="text-blue-200">
-              Step into the world of digital assets and decentralized systems.
-            </p>
-            <img src="/logo.png" />
-          </div>
-        </div>
       </div>
     </div>
   );

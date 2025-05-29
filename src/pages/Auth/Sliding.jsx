@@ -9,30 +9,34 @@ const slides = [
     subtitle:
       "Risk Operations Centre: Aggregation, integrated & Orchestrated risk management across all domains, providing a cohesive strategy to navigate this uncertainty. Know More >",
     cta: "Start Using for Free",
+    image: "/img-1.png",
   },
   {
     title: "Threat & Vulnerability Management (TVM)",
     subtitle:
       "Threat & Vulnerability Management (TVM): Discover, assess, prioritize, and patch critical vulnerabilities and reduce cybersecurity risk in real time across your global hybrid Cloud, IT, OT, and IoT landscape — all from a single platform. Know More >",
     cta: "Start Using for Free",
+    image: "/img-2.png",
   },
   {
     title: "Attack Surface Management",
-    subtitle: 
+    subtitle:
       "Attack Surface Management: Enhance & mature your organization's security posture by discovering and protecting the Attack Surface of your organization by leveraging open-source intelligence and our proprietary algorithms. Know More >",
     cta: "Start Using for Free",
+    image: "/img-3.png",
   },
   {
     title: "Risk & Compliance",
     subtitle:
       "Risk & Compliance: Surface and manage more risk: Gain a comprehensive understanding of risks across all areas of your business. Know More >",
     cta: "Start Using for Free",
+    image: "/img-4.png",
   },
-];                                                                              
+];
 
 const SlidingComponent = () => {
   return (
-    <div className="h-[800px] bg-[url('/background.png')] bg-cover bg-center bg-no-repeat w-full flex items-center justify-center bg-background text-white">
+    <div className="h-[800px] w-full flex items-center justify-center bg-background text-white">
       <Swiper
         direction="horizontal"
         autoplay={{ delay: 2000, disableOnInteraction: false }}
