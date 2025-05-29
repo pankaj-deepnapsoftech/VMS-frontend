@@ -346,9 +346,10 @@ const LandingPage = () => {
               Get in Touch
             </h2>
             <p className="text-gray-400 mb-6">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor
-              sit amet, consectetur adipiscing.
+              We’d love to hear from you! Whether you have a question about our
+              services, need assistance, or just want to give feedback — our
+              team is ready to answer all your questions. Fill out the form
+              below and we’ll get back to you as soon as possible.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <input
@@ -385,15 +386,16 @@ const LandingPage = () => {
                 Contacts:
               </h3>
               <p className="text-sm text-gray-300 mb-1">
-                Ph. <span className="text-white">1-800-901-234</span>
+                Ph. <span className="text-white">+91 9205404075</span>
               </p>
               <p className="text-sm text-gray-300 mb-1">
-                Mail. <span className="text-white">info@demolink.org</span>
+                Mail. <span className="text-white">enquiry@securend.ai</span>
               </p>
               <p className="text-sm text-gray-300">
                 Office.{" "}
                 <span className="text-white block">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  121 B, 2nd floor sector-31 HSIIDC Industrial Area Faridabad ,
+                  121003 Landmark- nearest sector-28 metro station
                 </span>
               </p>
             </div>
