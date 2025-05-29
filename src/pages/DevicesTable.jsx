@@ -4,6 +4,7 @@ import { MdDeleteForever } from "react-icons/md";
 import DevicesData from "./DevicesData";
 import { DeviceContext } from "@/context/DevicesContext/DevicesContext";
 
+
 const DevicesTable = () => {
   const [showModal, setShowModal] = useState(false);
   const [editableData, setEditableData] = useState(null);
@@ -53,7 +54,7 @@ const DevicesTable = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {data.map((ele, i) => (
+            {data?.map((ele, i) => (
               <tr
                 key={i}
                 className="hover:bg-gray-500  bg-table text-white transition-colors duration-200"

@@ -20,7 +20,7 @@ import {
   JiraContextProvider,
   RemeditionContextProvider,
   SchedulingAssesmentContextProvider,
-  VulnerabililtyDataContextProvider
+  VulnerabililtyDataContextProvider,
 } from "./context";
 import AppSoftContextProvider from "./context/ApplicationSoftwareInventoryContext/ApplicationSoftwareInventoryContext";
 import DeviceProvider from "./context/DevicesContext/DevicesContext";
@@ -28,9 +28,7 @@ import AssetDataProvider from "./context/Asset Data Context/AssetDataContex";
 import RiskRatingProvider from "./context/RiskRating/RiskRatingContext";
 
 createRoot(document.getElementById("root")).render(
-
   <BrowserRouter>
-
     <AuthContextProvider>
       <DataContextProvider>
         <AllEmployeeContextProvider>
@@ -42,15 +40,15 @@ createRoot(document.getElementById("root")).render(
                     <RemeditionContextProvider>
                       <ExceptionContextProvider>
                         <InfrastructureVulnerabilityContextProvider>
-                          {/* <AppSoftContextProvider>
+                          <AppSoftContextProvider>
                             <DeviceProvider>
                               <AssetDataProvider>
-                                <RiskRatingProvider> */}
+                                <RiskRatingProvider>
                                   <App />
-                                {/* </RiskRatingProvider>
+                                </RiskRatingProvider>
                               </AssetDataProvider>
                             </DeviceProvider>
-                          </AppSoftContextProvider> */}
+                          </AppSoftContextProvider>
                         </InfrastructureVulnerabilityContextProvider>
                       </ExceptionContextProvider>
                     </RemeditionContextProvider>
@@ -63,5 +61,4 @@ createRoot(document.getElementById("root")).render(
       </DataContextProvider>
     </AuthContextProvider>
   </BrowserRouter>
-
 );

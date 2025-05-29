@@ -1,9 +1,12 @@
+/* eslint-disable unused-imports/no-unused-vars */
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { AxiosHandler } from "@/config/AxiosConfig";
 import { createContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useAuthContext } from "..";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const AssetDataContext = createContext();
 
 const AssetDataProvider = ({ children }) => {
@@ -73,6 +76,7 @@ const AssetDataProvider = ({ children }) => {
         if (token) {
             AssetDataGet();
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page, token]);
 
     return (

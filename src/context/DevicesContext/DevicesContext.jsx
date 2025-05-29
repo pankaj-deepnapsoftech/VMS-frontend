@@ -11,6 +11,7 @@ const DeviceProvider = ({ children }) => {
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false); 
     const { token } = useAuthContext();
+    
 
     const DevicesGetData = async (pageNum = page) => {
         setLoading(true); 
