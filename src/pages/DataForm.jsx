@@ -77,7 +77,7 @@ const Data = ({ ShowModal, setShowModal, edittable }) => {
                   value={values.data_asset}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  className="mt-1 w-full p-2 border bg-input text-white border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
                 {touched.data_asset && errors.data_asset && (
                   <p className="text-red-500 text-sm ">{errors.data_asset}</p>
@@ -94,7 +94,7 @@ const Data = ({ ShowModal, setShowModal, edittable }) => {
                   value={values.contents}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  className="mt-1 w-full p-2 border bg-input text-white border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
                 {touched.contents && errors.contents && (
                   <p className="text-red-500 text-sm ">{errors.contents}</p>
@@ -111,7 +111,7 @@ const Data = ({ ShowModal, setShowModal, edittable }) => {
                   value={values.use}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  className="mt-1 w-full p-2 border bg-input text-white border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
                 {touched.use && errors.use && (
                   <p className="text-red-500 text-sm ">{errors.use}</p>
@@ -128,7 +128,7 @@ const Data = ({ ShowModal, setShowModal, edittable }) => {
                   value={values.data_owner}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  className="mt-1 w-full p-2 border bg-input text-white border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
                 {touched.data_owner && errors.data_owner && (
                   <p className="text-red-500 text-sm ">{errors.data_owner}</p>
@@ -145,7 +145,7 @@ const Data = ({ ShowModal, setShowModal, edittable }) => {
                   value={values.format}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  className="mt-1 w-full p-2 border bg-input text-white border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
                 {touched.format && errors.format && (
                   <p className="text-red-500 text-sm ">{errors.format}</p>
@@ -162,7 +162,7 @@ const Data = ({ ShowModal, setShowModal, edittable }) => {
                   value={values.location}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  className="mt-1 w-full p-2 border bg-input text-white border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
                 {touched.location && errors.location && (
                   <p className="text-red-500 text-sm ">{errors.location}</p>
@@ -196,7 +196,7 @@ const Data = ({ ShowModal, setShowModal, edittable }) => {
                   value={values.size_on_disk}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  className="mt-1 w-full p-2 border bg-input text-white border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
                 {touched.size_on_disk && errors.size_on_disk && (
                   <p className="text-red-500 text-sm ">{errors.size_on_disk}</p>
@@ -213,7 +213,7 @@ const Data = ({ ShowModal, setShowModal, edittable }) => {
                   value={values.records}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  className="mt-1 w-full p-2 border bg-input text-white border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
                 {touched.records && errors.records && (
                   <p className="text-red-500 text-sm ">{errors.records}</p>
@@ -230,7 +230,7 @@ const Data = ({ ShowModal, setShowModal, edittable }) => {
                   value={values.last_inventory_update}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  className="mt-1 w-full p-2 border bg-input text-white border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
                 {touched.last_inventory_update && errors.last_inventory_update && (
                   <p className="text-red-500 text-sm ">
