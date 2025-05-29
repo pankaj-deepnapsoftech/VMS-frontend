@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
 
-    const { setOpenSideBar, showUserMenu, setShowUserMenu, setGetDataFromSession, Logout, OpenSideBar } = useAuthContext();
+    const { setOpenSideBar, showUserMenu, setShowUserMenu, setGetDataFromSession, Logout, OpenSideBar,setUpdateProfileModal } = useAuthContext();
     const navigate = useNavigate();
 
     return (
@@ -12,6 +12,9 @@ const Sidebar = () => {
             <h2 className="text-lg font-semibold flex w-full items-center justify-between">Menu <button><IoClose /></button></h2>
             <button className="w-full text-left px-4 py-2 rounded hover:bg-gray-800 transition" onClick={() => setShowUserMenu(!showUserMenu)}>
                 View Profile
+            </button>
+            <button className="w-full text-left px-4 py-2 rounded hover:bg-gray-800 transition" onClick={()=>setUpdateProfileModal(true)}>
+                Update Profile
             </button>
             <button className="w-full text-left px-4 py-2 rounded hover:bg-gray-800 transition" onClick={() => { setGetDataFromSession(null), sessionStorage.clear() }}>
                 Back to Module
