@@ -5,25 +5,25 @@ import "swiper/css/pagination";
 
 const slides = [
   {
-    title: "#1 Everyday Application",
+    title: "Risk Operations Centre",
     subtitle:
       "Risk Operations Centre: Aggregation, integrated & Orchestrated risk management across all domains, providing a cohesive strategy to navigate this uncertainty. Know More >",
     cta: "Start Using for Free",
   },
   {
-    title: "Boost Productivity",
+    title: "Threat & Vulnerability Management (TVM)",
     subtitle:
       "Threat & Vulnerability Management (TVM): Discover, assess, prioritize, and patch critical vulnerabilities and reduce cybersecurity risk in real time across your global hybrid Cloud, IT, OT, and IoT landscape — all from a single platform. Know More >",
     cta: "Start Using for Free",
   },
   {
-    title: "Smart Analytics",
+    title: "Attack Surface Management",
     subtitle: 
       "Attack Surface Management: Enhance & mature your organization's security posture by discovering and protecting the Attack Surface of your organization by leveraging open-source intelligence and our proprietary algorithms. Know More >",
     cta: "Start Using for Free",
   },
   {
-    title: "Cloud Sync",
+    title: "Risk & Compliance",
     subtitle:
       "Risk & Compliance: Surface and manage more risk: Gain a comprehensive understanding of risks across all areas of your business. Know More >",
     cta: "Start Using for Free",
