@@ -21,6 +21,7 @@ import Footer from "./component/Footer";
 import useBookDemo from "@/hooks/BookDemo";
 import BookDemo from "@/modals/BookDemo";
 import Loader from "@/components/Loader/Loader";
+import SlidingComponent from "./Sliding";
 
 const slides = [
   {
@@ -53,7 +54,6 @@ const features = [
     description:
       "AI-Driven Vulnerability Insights, Recommendations and Human Consulted mitigation to achieve resiliency across organization infrastructure. ",
   },
-
 ];
 
 const LandingPage = () => {
@@ -68,7 +68,7 @@ const LandingPage = () => {
   return (
     <Suspense fallback={<Loader />}>
       <Header openModal={openModal} />
-      <section className="bg-[#323233] bg-[url('/background.png')] bg-cover bg-center bg-no-repeat text-[#d7e1ec] py-12 min-h-[600px]">
+      <section className="bg-[#323233] text-[#d7e1ec] py-12 min-h-[600px]">
         <div className="max-w-screen-xl mx-auto px-4">
           {slides.map((slide, index) => (
             <div
@@ -86,8 +86,9 @@ const LandingPage = () => {
                   <img
                     src={slide.image}
                     alt={slide.title}
-                    className={`drop-shadow-lg mx-auto ${index === 2 ? "max-w-xs" : "max-w-sm"
-                      } w-full h-auto`}
+                    className={`drop-shadow-lg mx-auto ${
+                      index === 2 ? "max-w-xs" : "max-w-sm"
+                    } w-full h-auto`}
                   />
                 </div>
 
@@ -118,6 +119,10 @@ const LandingPage = () => {
         </div>
       </section>
 
+      <section>
+        <SlidingComponent />
+      </section>
+
       <section className="bg-gradient-to-b from-[#343537] to-[#26282a] text-white py-16 px-4 md:px-20">
         <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row items-center gap-12">
           {/* Image Section */}
@@ -133,7 +138,10 @@ const LandingPage = () => {
           <div className="w-full md:w-2/3">
             <h2 className="text-3xl sm:text-4xl font-bold mb-2">Features</h2>
             <p className="text-gray-400 mb-8 text-sm sm:text-base">
-              SECURE& platform offers key features that set them apart from competitors, providing unique solutions to address real-time challenges faced by enterprises of all sizes, from small businesses to large corporations.
+              SECURE& platform offers key features that set them apart from
+              competitors, providing unique solutions to address real-time
+              challenges faced by enterprises of all sizes, from small
+              businesses to large corporations.
             </p>
 
             <div className="flex gap-4 w-full overflow-x-auto sm:overflow-x-scroll custom-scrollbar scroll-smooth">
@@ -144,7 +152,7 @@ const LandingPage = () => {
                 >
                   <div className="bg-[#26272b] w-12 h-12 flex items-center justify-center rounded-xl mb-4 shadow-inner shadow-slate-950">
                     {item.icon && (
-                      <item.icon className="text-[#ff6d6d]" size={25} />
+                      <item.icon className="text-[#803e3e]" size={25} />
                     )}
                   </div>
                   <h4 className="text-lg font-semibold mb-2">{item.title}</h4>
@@ -239,7 +247,8 @@ const LandingPage = () => {
                   </div>
                 </div>
                 <p className="text-[#A0A1AC]">
-                  Centrally aggregated security posture data (vulnerabilities & misconfigurations) from various technologies
+                  Centrally aggregated security posture data (vulnerabilities &
+                  misconfigurations) from various technologies
                 </p>
               </div>
               <div className="flex justify-end max-[800px]:justify-start  items-start">
@@ -255,7 +264,8 @@ const LandingPage = () => {
                   </div>
                 </div>
                 <p className="text-[#A0A1AC]">
-                  Vulnerability & Threat Intelligence for accelerated decision making and prioritization at scale.
+                  Vulnerability & Threat Intelligence for accelerated decision
+                  making and prioritization at scale.
                 </p>
               </div>
             </div>
@@ -300,7 +310,9 @@ const LandingPage = () => {
                   </h2>
                 </div>
                 <p className="text-[#A0A1AC]">
-                  Contextualization with asset criticality, and business impact metrics along with attribution of asset and risk ownership enable automated workflows. 
+                  Contextualization with asset criticality, and business impact
+                  metrics along with attribution of asset and risk ownership
+                  enable automated workflows.
                 </p>
               </div>
               <div className="flex items-start">

@@ -80,7 +80,8 @@ export const PrivateRoutes = [
     path: "/assert-inventory",
     element: <AssertInventory />,
     children: [
-      { path: "", element: <Devices /> }, // default
+      { index: true, element: <Devices /> }, 
+      { path: "devices", element: <Devices /> }, // default
       { path: "software-application", element: <ApplicationSoftwareInventoryTable /> },
       { path: "data-table", element: <DataTable /> },
       { path: "risk-rating-table", element: <RiskRatingTable /> },

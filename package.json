@@ -31,7 +31,7 @@
     "react-toastify": "^11.0.5",
     "recharts": "^2.15.0",
     "slick-carousel": "^1.8.1",
-    "swiper": "^11.2.6",
+    "swiper": "^11.2.8",
     "xlsx": "^0.18.5",
     "yup": "^1.6.1"
   },
