@@ -15,10 +15,11 @@ import FirstDashboard from "@/pages/FirstDashboard";
 import Loader from "@/components/Loader/Loader";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { products } from "@/constants/static.data";
+import UpdateProfileModal from "@/modals/UpdateProfile";
 
 const MainLayout = () => {
   const { notificationData, NotificationsViewed } = useVulnerabililtyDataContext();
-  const { authenticate, getDataFromSession, setOpenSideBar, showUserMenu, setShowUserMenu } = useAuthContext();
+  const { authenticate,updateProfileModal, getDataFromSession, setOpenSideBar, showUserMenu, setShowUserMenu } = useAuthContext();
 
   const { isOpen, openModal, closeModal } = useChangePassword();
 
@@ -194,6 +195,7 @@ transition duration-300 sm:w-[40%] md:w-[30%] lg:w-[25%] xl:w-[20%] 2xl:w-[15%] 
           <Footer />
           <UserProfile showUserMenu={showUserMenu} setShowMenu={setShowUserMenu} />
 
+          {updateProfileModal && <UpdateProfileModal /> }
 
           <ChangePasswordModal isOpen={isOpen} onClose={closeModal} />
         </Suspense>)

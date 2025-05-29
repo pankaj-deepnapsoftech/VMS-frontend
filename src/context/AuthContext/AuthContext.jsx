@@ -13,19 +13,20 @@ const AuthContextProvider = ({ children }) => {
 
 
   const [token, setToken] = useState(Cookies.get("token"));
-  
+
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [loading, setLoading] = useState(false);
   const [userLoading, setUserLoading] = useState(false);
-  const [runner,setRunner] = useState(1);
+  const [runner, setRunner] = useState(1);
   const [authenticate, setAuthenticate] = useState(null);
-    const [getDataFromSession, setGetDataFromSession] = useState(() => {
+  const [updateProfileModal,setUpdateProfileModal] = useState(false)
+  const [getDataFromSession, setGetDataFromSession] = useState(() => {
     return sessionStorage.getItem("VROC");
   })
 
-  const [OpenSideBar,setOpenSideBar] = useState(false)
+  const [OpenSideBar, setOpenSideBar] = useState(false)
 
-  
+
 
   const getLogedInUser = async () => {
     setUserLoading(true)
@@ -149,7 +150,7 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const Resetpassword = async (data,token) => {
+  const Resetpassword = async (data, token) => {
     const toastId = toast.loading("Loading...");
 
     setLoading(true);
@@ -207,7 +208,7 @@ const AuthContextProvider = ({ children }) => {
 
   const ChangePassword = async (data) => {
     try {
-      const res = await AxiosHandler.put("/auth/change-password",data);
+      const res = await AxiosHandler.put("/auth/change-password", data);
       toast.success(res.data.message);
       getLogedInUser();
     } catch (error) {
@@ -215,12 +216,24 @@ const AuthContextProvider = ({ children }) => {
     }
   }
 
-  const ChangeStatus = async(data,id) => {
+  const ChangeStatus = async (data, id) => {
     setLoading(true);
     try {
-      const res = await AxiosHandler.put(`/auth/deactivate/${id}`,data);
+      const res = await AxiosHandler.put(`/auth/deactivate/${id}`, data);
       toast.success(res.data.message);
       setRunner(prev => prev + 1)
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const UpdateProfile = async (data, id) => {
+    setLoading(true);
+    try {
+      const res = await AxiosHandler.put(`/auth/update/${id}`, data);
+      toast.success(res.data.message);
     } catch (error) {
       toast.error(error?.response?.data?.message);
     } finally {
@@ -256,7 +269,10 @@ const AuthContextProvider = ({ children }) => {
       OpenSideBar,
       setOpenSideBar,
       showUserMenu,
-      setShowUserMenu
+      setShowUserMenu,
+      UpdateProfile,
+      setUpdateProfileModal,
+      updateProfileModal
     }}>
       {children}
     </authContext.Provider>

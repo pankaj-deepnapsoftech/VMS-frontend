@@ -38,3 +38,24 @@ export const ForgotPasswordValidation = object({
 export const VerifyOtpValidation = object({
     otp: string().min(6).max(6).required("Otp is Required")
 })  
+
+
+
+export const EditProfileValidation = object({
+  full_name: string()
+    .required('Full name is required')
+    .min(2, 'Full name must be at least 2 characters long')
+    .max(50, 'Full name must be less than 50 characters'),
+
+  email: string()
+    .required('Email is required')
+    .email('Invalid email format'),
+
+  phone: string()
+    .required('Phone number is required')
+    .matches(
+      /^[0-9]{10}$/,
+      'Phone number must be exactly 10 digits'
+    ),
+});
+

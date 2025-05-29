@@ -1,4 +1,4 @@
-import { CalendarClock, Settings, Table, UserCircle, Users } from "lucide-react";
+import { Bug, CalendarClock, Settings, Table, UserCircle, Users } from "lucide-react";
 import { AiOutlineException } from "react-icons/ai";
 import { BiSolidDashboard } from "react-icons/bi";
 import { FaPerson } from "react-icons/fa6";
@@ -130,9 +130,11 @@ export const products = [
         gradient: "from-[#6a11cb] to-[#2575fc]",
         allowedPath: [
             { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
+            { title: "Vulnerability Data", route: "/vulnerability-data", icon: Bug },
         ],
         allowedCISO: [
             { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
+            { title: "Vulnerability Data", route: "/vulnerability-data", icon: Bug },
         ]
     },
     {
