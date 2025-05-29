@@ -64,9 +64,9 @@ const SlidingComponent = () => {
               </div>
               <div className="flex-1 flex justify-center items-center">
                 <img
-                  src="/sliding.png"
+                  src={slide.image}
                   alt={`Slide ${i + 1}`}
-                  className="w-[600px] h-[700px] object-contain rounded-xl"
+                  className="w-[600px] h-[300px] object-fill  p-3 rounded-xl"
                 />
               </div>
             </div>
