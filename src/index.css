@@ -4,21 +4,25 @@
 
 
 @font-face {
-  font-family:lexendDeca ;
+  font-family: lexendDeca;
   src: url("/Font/LexendDeca.ttf");
 }
 
 .hide-scrollbar::-webkit-scrollbar {
-	display: none; /* Hides scrollbar in Chrome, Safari */
-  }
-  
-  .hide-scrollbar {
-	-ms-overflow-style: none; /* Hides scrollbar in IE and Edge */
-	scrollbar-width: none; /* Hides scrollbar in Firefox */
-  }
+  display: none;
+  /* Hides scrollbar in Chrome, Safari */
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  /* Hides scrollbar in IE and Edge */
+  scrollbar-width: none;
+  /* Hides scrollbar in Firefox */
+}
 
 
-  body,html {
+body,
+html {
   @apply font-poppins;
   scroll-behavior: smooth;
   /* font-family: lexendDeca; */
@@ -30,6 +34,7 @@
     width: 0;
     transition: all 0.5s ease-in-out;
   }
+
   to {
     width: var(--width);
     transition: all 0.5s ease-in-out;
@@ -79,37 +84,29 @@
 .custom-swiper .swiper-pagination-bullet-active {
   opacity: 1;
   font-weight: bold;
-  transform:32 scale(1.1);
+  transform: 32 scale(1.1);
 }
 
-.swiper-pagination-fraction,
-.swiper-pagination-custom,
-.swiper-horizontal > .swiper-pagination-bullets,
+
+
+
+.swiper-horizontal>.swiper-pagination-bullets,
 .swiper-pagination-bullets.swiper-pagination-horizontal {
   position: absolute;
-  right: 10px;
-  top: 60%;  
-  transform: translateY(-50%);
+  top: 50%;
+  align-items: end;
+  align-items: end;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 12px;
+  padding: 0 20px;
+  gap: 20px;
+
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.swiper-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet,
+.swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet {
+  background: transparent;
+  height: 15px;
+  width: 20px;
+}
