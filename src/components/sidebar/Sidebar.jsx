@@ -20,7 +20,7 @@ const Sidebar = () => {
                 Back to Module
             </button>
             <button  className="w-full text-left px-4 py-2 rounded hover:bg-gray-800 transition" onClick={() => { navigate("/change-password")}}>
-                Chnage Password
+                Change Password
             </button>
             <button onClick={Logout} className="w-full text-left px-4 py-2 rounded hover:bg-gray-800 transition">
                 Logout
