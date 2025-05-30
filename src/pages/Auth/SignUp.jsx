@@ -1,201 +1,205 @@
-import { useFormik } from 'formik';
-import { Eye, EyeOff } from 'lucide-react';
-import { useAuthContext, useScheduleAssessmentContext } from '@/context';
-import { Link } from 'react-router-dom';
-import { SignUpValidation } from '@/Validation/AuthValidation';
-import { useEffect, useState } from 'react';
-
+import { useFormik } from "formik";
+import { Eye, EyeOff } from "lucide-react";
+import { useAuthContext, useScheduleAssessmentContext } from "@/context";
+import { Link } from "react-router-dom";
+import { SignUpValidation } from "@/Validation/AuthValidation";
+import { useEffect, useState } from "react";
+import SecurityQuestions from "./pages/Security";
 
 function SignUp() {
-  const { Signup, loading } = useAuthContext()
+  const { Signup, loading } = useAuthContext();
   const { GetOrgnization, getOrgnizationData } = useScheduleAssessmentContext();
-  console.log("getOrgnizationData", getOrgnizationData)
-
-
 
   useEffect(() => {
-
     GetOrgnization();
+  }, []);
 
-  }, [])
   const [showPassword, setShowPassword] = useState(false);
+  const [showSecurityPage, setShowSecurityPage] = useState(false);
 
-  const { values, errors, handleBlur, handleChange, handleSubmit, touched } = useFormik({
-    initialValues: { full_name: "", phone: "", email: "", password: "", role: "", Organization: "", owner: "" },
-    validationSchema: SignUpValidation,
-    onSubmit: (value) => {
-      console.log("value : ", value)
-      Signup(value)
-    }
+  const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
+    useFormik({
+      initialValues: {
+        full_name: "",
+        phone: "",
+        email: "",
+        password: "",
+        role: "",
+        Organization: "",
+        owner: "",
+      },
+      validationSchema: SignUpValidation,
+      onSubmit: async (value) => {
+        try {
+          await Signup(value);
+          setShowSecurityPage(true);
+        } catch (error) {
+          console.error("Signup failed", error);
+        }
+      },
+    });
 
-  })
+  if (showSecurityPage) {
+    return <SecurityQuestions />;
+  }
 
   return (
-    <div className="min-h-screen w-full flex bg-[#0a192f]">
-      {/* Left Panel - Login Form */}
-      <div className="w-full md:w-[480px] p-8 flex flex-col justify-between">
-        {/* Logo and Language Section */}
-        <div className="flex justify-between items-center">
-          {/* <Link to="/" className="flex items-center">
-            <img
-              src="/logo.png"
-              alt="Scalable Image"
-              style={{ width: "15%", height: "auto" }}
-            />
-            <span className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-blue-300 text-transparent bg-clip-text">
-              Secure&
-            </span>
-          </Link> */}
-           <span className="text-3xl font-bold  bg-blue-300 text-transparent bg-clip-text">
-             Sign Up
-            </span>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 px-4">
+      <h1 className="text-4xl font-extrabold text-white mb-2">Get Started</h1>
+      <p className="text-blue-300 text-sm">
+        Create your VROC account to access the platform
+      </p>
+
+      <div className="w-full max-w-md bg-gray-800 rounded-2xl shadow-lg p-8 mt-4">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-blue-400 mb-6">Sign Up</h1>
         </div>
 
-        {/* Login Form */}
-        <form className="my-auto w-full max-w-md py-16" onSubmit={handleSubmit} >
-
-          {/* Email Input */}
-          <div className="mb-4">
-            <label className="block text-gray-400 text-sm mb-2">Full Name</label>
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Full Name */}
+          <div>
+            <label className="block text-sm text-gray-400 mb-1">
+              Full Name
+            </label>
             <input
               type="text"
+              name="full_name"
               value={values.full_name}
               onChange={handleChange}
               onBlur={handleBlur}
-              name='full_name'
-              className="w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-colors"
-              placeholder="Enter Full Name"
+              placeholder="Enter full name"
+              className="w-full bg-gray-900 text-white rounded-lg px-4 py-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            {errors.full_name && touched.full_name && <p className='text-red-400 p-2'>{errors.full_name}</p>}
+            {errors.full_name && touched.full_name && (
+              <p className="text-sm text-red-400 mt-1">{errors.full_name}</p>
+            )}
           </div>
 
-          <div className="mb-4">
-            <label className="block text-gray-400 text-sm mb-2">Email</label>
+          {/* Email */}
+          <div>
+            <label className="block text-sm text-gray-400 mb-1">Email</label>
             <input
               type="email"
+              name="email"
               value={values.email}
               onChange={handleChange}
               onBlur={handleBlur}
-              name='email'
-              className="w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-colors"
               placeholder="mail@example.com"
+              className="w-full bg-gray-900 text-white rounded-lg px-4 py-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            {errors.email && touched.email && <p className='text-red-400 p-2'>{errors.email}</p>}
+            {errors.email && touched.email && (
+              <p className="text-sm text-red-400 mt-1">{errors.email}</p>
+            )}
           </div>
 
-          <div className="mb-4">
-            <label className="block text-gray-400 text-sm mb-2">Phone</label>
+          {/* Phone */}
+          <div>
+            <label className="block text-sm text-gray-400 mb-1">Phone</label>
             <input
               type="number"
+              name="phone"
               value={values.phone}
               onChange={handleChange}
               onBlur={handleBlur}
-              name='phone'
-              className="w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-colors"
-              placeholder="Enter Your Phone Number"
+              placeholder="Enter phone number"
+              className="w-full bg-gray-900 text-white rounded-lg px-4 py-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            {errors.phone && touched.phone && <p className='text-red-400 p-2'>{errors.phone}</p>}
+            {errors.phone && touched.phone && (
+              <p className="text-sm text-red-400 mt-1">{errors.phone}</p>
+            )}
           </div>
 
-
-          {/* Password Input */}
-          <div className="mb-6 ">
-            <div className='relative' >
-
-              <label className="block text-gray-400 text-sm mb-2">Password</label>
+          {/* Password */}
+          <div>
+            <label className="block text-sm text-gray-400 mb-1">Password</label>
+            <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
+                name="password"
                 value={values.password}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                name='password'
-                placeholder="Enter Password"
-                className="w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-colors"
+                placeholder="Enter password"
+                className="w-full bg-gray-900 text-white rounded-lg px-4 py-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <div className='absolute top-[40%] right-2 text-white p-2 cursor-pointer ' onClick={() => setShowPassword(!showPassword)} >
-                {!showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
-              </div>
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white"
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
             </div>
-            {errors.password && touched.password && <p className='text-red-400 p-2' >{errors.password}</p>}
+            {errors.password && touched.password && (
+              <p className="text-sm text-red-400 mt-1">{errors.password}</p>
+            )}
           </div>
 
-
-
-          <div className="mb-6">
-            <label className="block text-gray-400 text-sm mb-2">Role</label>
+          {/* Role */}
+          <div>
+            <label className="block text-sm text-gray-400 mb-1">Role</label>
             <select
+              name="role"
               value={values.role}
               onChange={handleChange}
-              className='w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-colors'
-              id="role">
-              <option value="" disabled>Select a role</option>
+              className="w-full bg-gray-900 text-white rounded-lg px-4 py-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="" disabled>
+                Select a role
+              </option>
               <option value="Assessor">Assessor</option>
               <option value="ClientCISO">Client CISO</option>
-              <option value="ClientSME">Client SME</option>
+              <option value="Client SME">Client SME</option>
             </select>
-
-            {errors.role && touched.role && <p className='text-red-400 p-2' >{errors.role}</p>}
+            {errors.role && touched.role && (
+              <p className="text-sm text-red-400 mt-1">{errors.role}</p>
+            )}
           </div>
 
-          {values.role === "ClientCISO" && <div className="mb-6">
-            <label className="block text-gray-400 text-sm mb-2">Organization</label>
-            <input
-              type="text"
-              value={values.Organization}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              name='Organization'
-              className="w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-colors"
-            />
-            {errors.Organization && touched.Organization && <p className='text-red-400 p-2' >{errors.Organization}</p>}
-          </div>}
+          {/* Organization Field (only for ClientCISO) */}
+          {values.role === "ClientCISO" && (
+            <div>
+              <label className="block text-sm text-gray-400 mb-1">
+                Organization
+              </label>
+              <input
+                type="text"
+                name="Organization"
+                value={values.Organization}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder="Enter organization name"
+                className="w-full bg-gray-900 text-white rounded-lg px-4 py-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              {errors.Organization && touched.Organization && (
+                <p className="text-sm text-red-400 mt-1">
+                  {errors.Organization}
+                </p>
+              )}
+            </div>
+          )}
 
-          {values.role === "Client SME" && <div>
-
-            <label
-              htmlFor="Select_Org"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Select Orgnization
-            </label>
-            <select
-              name='owner'
-              value={values.owner}
-              onChange={handleChange}
-              className='w-full bg-[#1a2942] rounded-lg p-3 text-white border border-gray-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-colors'
-              id="Select_Org">
-              <option value="" disabled> -- Select Orgnization -- </option>
-              {getOrgnizationData?.map((itm, idx) => (<option key={idx} value={itm._id}>{itm.Organization}</option>))}
-            </select>
-            {touched.owner && errors.owner && <p className='text-red-700 text-xs'> {errors.owner}</p>}</div>}
-
-          {/* Login Button */}
-          <button disabled={loading} type='submit' className="w-full bg-gradient-to-t from-[#0371c0] to-blue-400 text-white rounded-lg p-3 font-medium hover:bg-emerald-600 transition-colors my-10">
-            Sign Up
+          {/* Submit Button */}
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full py-3 px-4 rounded-lg text-white font-medium transition-all duration-300 ${
+              loading
+                ? "bg-gray-600 cursor-not-allowed"
+                : "bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600"
+            }`}
+          >
+            {loading ? "Creating account..." : "Sign Up"}
           </button>
 
-          {/* Sign Up Link */}
-          <p className="text-gray-700 text-sm mt-6">
-            Already have an account{' '}
-            <Link to="/sign-in" className="text-white hover:text-blue-400 transition-colors">
-              Back to login
+          {/* Login Link */}
+          <p className="text-center text-sm text-gray-400 mt-4">
+            Already have an account?{" "}
+            <Link to="/sign-in" className="text-blue-400 hover:underline">
+              Login here
             </Link>
           </p>
         </form>
-       
-      </div>
-
-      {/* Right Panel - Particle Globe Background */}
-      <div className="hidden md:block flex-1">
-        <div className="w-full h-full bg-[#0a192f]/80 backdrop-blur-sm flex items-center justify-center">
-          <div className="text-center px-4 mb-32">
-          <h1 className="text-3xl font-bold text-white mb-2">Create New Account</h1>
-          <p className="text-gray-400 mb-8">
-            Step into the world of digital assets and decentralized systems.
-          </p>
-            <img src="/logo.png" />
-          </div>
-        </div>
       </div>
     </div>
   );
