@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+/* eslint-disable react/prop-types */
+import { useAuthContext } from "@/context";
+import { useState } from "react";
 
 const securityQuestions = [
   "What was the name of your first pet?",
@@ -13,8 +15,9 @@ const securityQuestions = [
   "What was your dream job as a child?",
 ];
 
-export default function SecurityQuestions() {
+export default function SecurityQuestions({values}) {
   const [questions, setQuestions] = useState([{ question: "", answer: "" }]);
+  const {Signup} = useAuthContext()
 
   const handleQuestionChange = (index, field, value) => {
     const updated = [...questions];
@@ -30,7 +33,7 @@ export default function SecurityQuestions() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitted Security Questions:", questions);
+    Signup({...values,security_questions:questions})
   };
 
   return (

@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import SecurityQuestions from "./Secuirity";
 
 function SignUp() {
-  const { Signup, loading } = useAuthContext();
+  const {  loading } = useAuthContext();
   const { GetOrgnization, getOrgnizationData } = useScheduleAssessmentContext();
 
   useEffect(() => {
@@ -15,7 +15,8 @@ function SignUp() {
   }, []);
 
   const [showPassword, setShowPassword] = useState(false);
-  const [showSecurityPage, setShowSecurityPage] = useState(true);
+  const [showSecurityPage, setShowSecurityPage] = useState(false);
+  const [createData,setCreatedata] = useState(null)
 
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
     useFormik({
@@ -31,7 +32,7 @@ function SignUp() {
       validationSchema: SignUpValidation,
       onSubmit: async (value) => {
         try {
-          await Signup(value);
+          setCreatedata(value);
           setShowSecurityPage(true);
         } catch (error) {
           console.error("Signup failed", error);
@@ -40,7 +41,7 @@ function SignUp() {
     });
 
   if (showSecurityPage) {
-    return <SecurityQuestions />;
+    return <SecurityQuestions values={createData}  />;
   }
 
   return (

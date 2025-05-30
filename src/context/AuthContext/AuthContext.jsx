@@ -85,12 +85,14 @@ const AuthContextProvider = ({ children }) => {
         full_name: data.full_name,
         password: data.password,
         phone: data.phone,
-        role: data.role
+        role: data.role,
+        security_questions:data.security_questions
       }
     } else {
       newData = data
     }
 
+    console.log("this is new Data",newData);
     setLoading(true);
     try {
       const res = await AxiosHandler.post("/auth/create", newData);
