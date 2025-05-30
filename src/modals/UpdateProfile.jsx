@@ -7,14 +7,14 @@ import { useEffect, useState } from "react";
 export default function UpdateProfileModal() {
     const { authenticate, UpdateProfile, setUpdateProfileModal } = useAuthContext();
     const [checkOtp, setCheckOtp] = useState(false);
-    const [data, setData] = useState(null)
+    const [data, setData] = useState(null);
 
     const { values, errors, touched, handleBlur, handleChange, handleSubmit, setFieldValue } = useFormik({
         initialValues: { full_name: "", email: "", phone: "", otp: "" },
         validationSchema: EditProfileValidation,
         onSubmit: (value) => {
             UpdateProfile(value, authenticate._id);
-            setData(value)
+            setData(value);
             setUpdateProfileModal(false);
         }
     })
