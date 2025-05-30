@@ -5,30 +5,34 @@ import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 
 export default function UpdateProfileModal() {
-    const {authenticate,ResendOtp,UpdateProfile,setUpdateProfileModal} = useAuthContext();
-    const [checkOtp,setCheckOtp] = useState(false);
+    const { authenticate, UpdateProfile, setUpdateProfileModal } = useAuthContext();
+    const [checkOtp, setCheckOtp] = useState(false);
+    const [data, setData] = useState(null);
 
-    const { values, errors, touched, handleBlur, handleChange, handleSubmit,setFieldValue } = useFormik({
-        initialValues: { full_name: "", email: "", phone: "",otp:"" },
-        validationSchema:EditProfileValidation,
+    const { values, errors, touched, handleBlur, handleChange, handleSubmit, setFieldValue } = useFormik({
+        initialValues: { full_name: "", email: "", phone: "", otp: "" },
+        validationSchema: EditProfileValidation,
         onSubmit: (value) => {
-            UpdateProfile(value,authenticate._id);
+            UpdateProfile(value, authenticate._id);
+            setData(value);
             setUpdateProfileModal(false);
         }
     })
 
     const handleEmailVerification = () => {
-        setCheckOtp(true);
-        ResendOtp()
+        if (data) {
+            setCheckOtp(true);
+            UpdateProfile(data, authenticate._id)
+        }
     }
 
-    useEffect(()=>{
-        if(authenticate){
-            setFieldValue("full_name",authenticate.full_name);
-            setFieldValue("email",authenticate.email);
-            setFieldValue("phone",authenticate.phone);
+    useEffect(() => {
+        if (authenticate) {
+            setFieldValue("full_name", authenticate.full_name);
+            setFieldValue("email", authenticate.email);
+            setFieldValue("phone", authenticate.phone);
         }
-    },[])
+    }, [])
 
 
     return (
@@ -47,7 +51,7 @@ export default function UpdateProfileModal() {
                         {/* Header */}
                         <div className="flex items-center justify-between p-6 border-b border-gray-200">
                             <h2 className="text-xl font-semibold ">Update Profile</h2>
-                            <button className="text-gray-400 hover:text-gray-600 transition-colors" onClick={()=>setUpdateProfileModal(false)} >
+                            <button className="text-gray-400 hover:text-gray-600 transition-colors" onClick={() => setUpdateProfileModal(false)} >
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                 </svg>
@@ -121,7 +125,7 @@ export default function UpdateProfileModal() {
                                 {errors.phone && touched.phone && <p className="text-red-500" >{errors.phone}</p>}
                             </div>
 
-                          { checkOtp && <div>
+                            {checkOtp && <div>
                                 <label htmlFor="otp" className="block text-sm font-medium  mb-1">
                                     OTP
                                 </label>
@@ -136,30 +140,30 @@ export default function UpdateProfileModal() {
                                 />
                                 {errors.otp && touched.otp && <p className="text-red-500" >{errors.otp}</p>}
                             </div>
-}
+                            }
                             {/* Action Buttons */}
                             <div className="flex space-x-3 pt-4">
                                 <button
                                     type="button"
-                                    onClick={()=>setUpdateProfileModal(false)}
+                                    onClick={() => setUpdateProfileModal(false)}
                                     className="flex-1 px-4 py-2 border border-gray-300 text-gray-400 rounded-lg hover:bg-gray-50 transition-colors font-medium"
                                 >
                                     Cancel
                                 </button>
-                               { checkOtp ? 
-                                <button
-                                    type="submit"
-                                    className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
-                                >
-                                    Save Changes
-                                </button> : 
-                                 <button
-                                    type="button"
-                                    onClick={handleEmailVerification}
-                                    className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
-                                >
-                                    verify otp
-                                </button>}
+                                {checkOtp ?
+                                    <button
+                                        type="submit"
+                                        className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                                    >
+                                        Save Changes
+                                    </button> :
+                                    <button
+                                        type="button"
+                                        onClick={handleEmailVerification}
+                                        className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                                    >
+                                        verify otp
+                                    </button>}
                             </div>
                         </form>
                     </div>
