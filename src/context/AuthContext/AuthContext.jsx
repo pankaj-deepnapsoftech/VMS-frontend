@@ -19,7 +19,7 @@ const AuthContextProvider = ({ children }) => {
   const [userLoading, setUserLoading] = useState(false);
   const [runner, setRunner] = useState(1);
   const [authenticate, setAuthenticate] = useState(null);
-  const [updateProfileModal,setUpdateProfileModal] = useState(false)
+  const [updateProfileModal,setUpdateProfileModal] = useState(false);
   const [getDataFromSession, setGetDataFromSession] = useState(() => {
     return sessionStorage.getItem("VROC");
   })
@@ -170,15 +170,13 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const ResendOtp = async () => {
+  const ResendOtp = async (email) => {
     const toastId = toast.loading("Loading...");
-
     setLoading(true);
     try {
-      const res = await AxiosHandler.put("/auth/resend-otp");
+      const res = await AxiosHandler.put("/auth/resend-otp",{email});
       toast.dismiss(toastId);
       toast.success(res.data.message);
-
     } catch (error) {
       toast.dismiss(toastId);
       toast.error(error?.response?.data?.message);
