@@ -7,39 +7,39 @@ const slides = [
   {
     title: "Risk Operations Centre",
     subtitle:
-      "Risk Operations Centre: Aggregation, integrated & Orchestrated risk management across all domains, providing a cohesive strategy to navigate this uncertainty. Know More >",
-    cta: "Start Using for Free",
+      "Aggregation, integrated & Orchestrated risk management across all domains, providing a cohesive strategy to navigate this uncertainty.",
+    cta: "Know More",
     image: "/img-1.png",
   },
   {
     title: "Threat & Vulnerability Management (TVM)",
     subtitle:
-      "Threat & Vulnerability Management (TVM): Discover, assess, prioritize, and patch critical vulnerabilities and reduce cybersecurity risk in real time across your global hybrid Cloud, IT, OT, and IoT landscape — all from a single platform. Know More >",
-    cta: "Start Using for Free",
+      "Discover, assess, prioritize, and patch critical vulnerabilities and reduce cybersecurity risk in real time across your global hybrid Cloud, IT, OT, and IoT landscape — all from a single platform.",
+    cta: "Know More",
     image: "/img-2.png",
   },
   {
     title: "Attack Surface Management",
     subtitle:
-      "Attack Surface Management: Enhance & mature your organization's security posture by discovering and protecting the Attack Surface of your organization by leveraging open-source intelligence and our proprietary algorithms. Know More >",
-    cta: "Start Using for Free",
+      "Enhance & mature your organization's security posture by discovering and protecting the Attack Surface of your organization by leveraging open-source intelligence and our proprietary algorithms.",
+    cta: "Know More",
     image: "/img-3.png",
   },
   {
     title: "Risk & Compliance",
     subtitle:
-      "Risk & Compliance: Surface and manage more risk: Gain a comprehensive understanding of risks across all areas of your business. Know More >",
-    cta: "Start Using for Free",
+      "Gain a comprehensive understanding of risks across all areas of your business.",
+    cta: "Know More",
     image: "/img-4.png",
   },
 ];
 
 const SlidingComponent = () => {
   return (
-    <div className="h-[800px] w-full flex items-center justify-center bg-background text-white">
+    <div className="h-[700px] w-full flex items-center justify-center bg-background text-white">
       <Swiper
         direction="horizontal"
-        autoplay={{ delay: 2000, disableOnInteraction: false }}
+        autoplay={{ delay: 1000, disableOnInteraction: false }}
         pagination={{
           clickable: true,
           renderBullet: (index, className) => {
@@ -59,14 +59,14 @@ const SlidingComponent = () => {
                 </h1>
                 <p className="text-gray-300 mb-8 text-lg">{slide.subtitle}</p>
                 <button className="bg-[#313233] text-gray-400 px-6 py-3  rounded-md shadow-lg hover:bg-[#2d2f30] transition">
-                  {slide.cta}
+                  {slide.cta} 
                 </button>
               </div>
               <div className="flex-1 flex justify-center items-center">
                 <img
                   src={slide.image}
                   alt={`Slide ${i + 1}`}
-                  className="w-[600px] h-[300px] object-fill  p-3 rounded-xl"
+                  className="w-[600px] h-[300px] object-fill p-3 rounded-xl"
                 />
               </div>
             </div>
@@ -76,5 +76,5 @@ const SlidingComponent = () => {
     </div>
   );
 };
-
+                                                   
 export default SlidingComponent;

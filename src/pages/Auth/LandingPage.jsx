@@ -367,7 +367,7 @@ const LandingPage = () => {
             ></textarea>
             <div className="mt-4 flex items-center gap-2 flex-wrap">
               <a className="flex items-center justify-center gap-3 px-4 py-3 mt-auto bg-gradient-to-t from-[#2e2f31] to-[#343636] text-base md:text-xl rounded-full relative overflow-hidden text-white shadow-2xl transition-all before:absolute before:top-1/2 before:h-0 before:w-64 before:origin-center before:-translate-x-20 before:rotate-45 before:bg-[#1b1d1f] before:duration-300 hover:before:h-64 hover:before:-translate-y-32 before:z-0">
-                <span className="z-10">Subscribe</span>
+                <span className="z-10">Submit</span>
               </a>
             </div>
           </div>
@@ -479,7 +479,7 @@ const LandingPage = () => {
               <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 md:mb-0">
                 How it works
               </h2>
-              <div className="w-2 h-4  text-white"></div>
+              <div className="w-2 h-4 text-white"></div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 pt-8 md:pt-16 gap-6">
               <div className=" relative group bg-gradient-to-br from-[#393d40] to-[#25282a] rounded-xl p-6 min-h-[300px] transition-transform duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl">
@@ -495,7 +495,7 @@ const LandingPage = () => {
                 <div className="absolute left-6 right-6 bottom-0 h-[2px] bg-cyan-400 scale-x-0 group-hover:scale-x-100 origin-left  duration-300"></div>
               </div>
 
-              <div className=" relative group bg-gradient-to-br from-[#393d40] to-[#25282a] rounded-xl p-6 min-h-[300px] transition-transform duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl">
+              <div className="relative group bg-gradient-to-br from-[#393d40] to-[#25282a] rounded-xl p-6 min-h-[300px] transition-transform duration-300 transform hover:-translate-y-3 shadow-lg hover:shadow-2xl">
                 <div className="bg-[#282a2d] w-12 h-12 flex items-center justify-center shadow-inner shadow-slate-950 rounded-xl mb-4 ">
                   <span className=" text-cyan-400 text-2xl ">02</span>
                 </div>
@@ -525,7 +525,6 @@ const LandingPage = () => {
                 <div className="bg-[#282a2d] w-12 h-12 flex items-center justify-center shadow-inner shadow-slate-950 rounded-xl mb-4">
                   <span className=" text-cyan-400 text-2xl ">04</span>
                 </div>
-
                 <h4 className="text-2xl mb-3 pt-3 text-left">Easy Customize</h4>
                 <p className="text-gray-400 text-md leading-relaxed text-left">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed

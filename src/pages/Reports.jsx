@@ -56,7 +56,7 @@ const Reports = () => {
     }
   };
 
-  const fetchOrganization = async (search = "") => {
+  const fetchOrganization = async (_search = "") => {
     if (!token) return;
 
     setLoading(true);
@@ -78,7 +78,6 @@ const Reports = () => {
   // Filtering logic
   useEffect(() => {
     let filteredData = reportData;
-
     if (creatorFilter) {
       filteredData = filteredData.filter((report) =>
         report.creator?.full_name
@@ -272,7 +271,7 @@ const Reports = () => {
                   </td>
 
                   {/* Creator Name */}
-                  <td className="px-4 py-1 text-center whitespace-nowrap text-sm text-white">
+                  <td className="px-4 py-1 te-center whitespace-nowrap text-sm text-white">
                     {report.creator?.full_name || "-"}
                   </td>
 
@@ -280,18 +279,9 @@ const Reports = () => {
                   <td className="px-4 py-1 text-center whitespace-nowrap text-sm text-white">
                     {report.Organization?.Organization || "-"}
                   </td>
-
+xt
                   {/* View Report Button */}
                   <td className="px-4 py-1 text-center whitespace-nowrap text-sm text-gray-900">
-                    {/* <button
-                      onClick={() => {
-                        setFile(report?.file);
-                        setIsReportOpen(true);
-                      }}
-                      className="bg-blue-500 text-gray-50 px-4 rounded hover:bg-blue-600 py-1"
-                    >
-                      View Report
-                    </button> */}
                     <a href={report?.file} target="_blank" className="bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-gray-50 px-4 py-1 rounded  ">
                       Download Report
                     </a>
