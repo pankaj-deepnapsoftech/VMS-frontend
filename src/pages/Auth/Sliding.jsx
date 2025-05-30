@@ -59,7 +59,7 @@ const SlidingComponent = () => {
                 </h1>
                 <p className="text-gray-300 mb-8 text-lg">{slide.subtitle}</p>
                 <button className="bg-[#313233] text-gray-400 px-6 py-3  rounded-md shadow-lg hover:bg-[#2d2f30] transition">
-                  {slide.cta} 
+                  {slide.cta}
                 </button>
               </div>
               <div className="flex-1 flex justify-center items-center">
@@ -76,5 +76,5 @@ const SlidingComponent = () => {
     </div>
   );
 };
-                                                   
+
 export default SlidingComponent;
