@@ -4,7 +4,7 @@ import { useAuthContext, useScheduleAssessmentContext } from "@/context";
 import { Link } from "react-router-dom";
 import { SignUpValidation } from "@/Validation/AuthValidation";
 import { useEffect, useState } from "react";
-import SecurityQuestions from "./pages/Security";
+import SecurityQuestions from "./Secuirity";
 
 function SignUp() {
   const { Signup, loading } = useAuthContext();
@@ -15,7 +15,7 @@ function SignUp() {
   }, []);
 
   const [showPassword, setShowPassword] = useState(false);
-  const [showSecurityPage, setShowSecurityPage] = useState(false);
+  const [showSecurityPage, setShowSecurityPage] = useState(true);
 
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
     useFormik({
