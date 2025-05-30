@@ -15,25 +15,15 @@ const securityQuestions = [
   "What was your dream job as a child?",
 ];
 
-export default function SecurityQuestions({values}) {
-  const [questions, setQuestions] = useState([{ question: "", answer: "" }]);
-  const {Signup} = useAuthContext()
+export default function ResetSecurity({values}) {
+  const [questions, setQuestions] = useState({ question: "", answer: "" });
+  const {ResetWithQuestion} = useAuthContext()
 
-  const handleQuestionChange = (index, field, value) => {
-    const updated = [...questions];
-    updated[index][field] = value;
-    setQuestions(updated);
-  };
 
-  const addQuestion = () => {
-    if (questions.length < 3) {
-      setQuestions([...questions, { question: "", answer: "" }]);
-    }
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    Signup({...values,security_questions:questions})
+    ResetWithQuestion({...values,...questions});
   };
 
   return (
@@ -51,15 +41,15 @@ export default function SecurityQuestions({values}) {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {questions.map((q, index) => (
-            <div key={index}>
+          
+            <div >
               <label className="block text-sm text-gray-400 mb-1">
-                Security Question {index + 1}
+                Security Question 
               </label>
               <select
-                value={q.question}
+                value={questions.question}
                 onChange={(e) =>
-                  handleQuestionChange(index, "question", e.target.value)
+                  setQuestions({...questions,question:e.target.value})
                 }
                 className="w-full bg-gray-900 text-white rounded-lg px-4 py-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
@@ -75,25 +65,15 @@ export default function SecurityQuestions({values}) {
               <input
                 type="text"
                 placeholder="Your Answer"
-                value={q.answer}
-                onChange={(e) =>
-                  handleQuestionChange(index, "answer", e.target.value)
+                value={questions.answer}
+                 onChange={(e) =>
+                  setQuestions({...questions,answer:e.target.value})
                 }
                 required
                 className="mt-2 w-full bg-gray-900 text-white rounded-lg px-4 py-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
-          ))}
-
-          {questions.length < 3 && (
-            <button
-              type="button"
-              onClick={addQuestion}
-              className="text-blue-400 hover:underline text-sm"
-            >
-              + Add another question
-            </button>
-          )}
+          
 
           <button
             type="submit"

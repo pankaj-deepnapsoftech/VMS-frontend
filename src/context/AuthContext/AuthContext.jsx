@@ -241,6 +241,19 @@ const AuthContextProvider = ({ children }) => {
     }
   }
 
+    const ResetWithQuestion = async (data) => {
+    setLoading(true);
+    try {
+      const res = await AxiosHandler.put(`/auth/reset-password-question/${data.email}`, data);
+      toast.success(res.data.message);
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+      console.log(error)
+    } finally {
+      setLoading(false);
+    }
+  }
+
 
   useEffect(() => {
     if (token) {
@@ -272,7 +285,8 @@ const AuthContextProvider = ({ children }) => {
       setShowUserMenu,
       UpdateProfile,
       setUpdateProfileModal,
-      updateProfileModal
+      updateProfileModal,
+      ResetWithQuestion
     }}>
       {children}
     </authContext.Provider>
