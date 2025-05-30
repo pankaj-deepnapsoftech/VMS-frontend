@@ -19,10 +19,6 @@ function ForgotPassword() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 px-4">
-      {/* Logo */}
-      {/* <img src="/logo.png" alt="Logo" className=" h-24 mb-4" /> */}
-
-      {/* Heading */}
       <h1 className="text-4xl font-extrabold text-white mb-2">
         Forgot Password
       </h1>
@@ -66,7 +62,6 @@ function ForgotPassword() {
 
           <button
             type="button"
-            // eslint-disable-next-line no-undef
             onClick={() => navigate("/security-question")}
             className="w-full py-3 px-4 rounded-lg text-white font-medium transition-all duration-300 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600"
           >
