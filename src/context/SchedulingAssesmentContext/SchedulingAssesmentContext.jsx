@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 import { AxiosHandler } from "@/config/AxiosConfig";
 import { useAllEmployeeContext, useAuthContext } from "..";
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 import toast from "react-hot-toast";
 
 
@@ -60,7 +61,6 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 		setLoading(true);
 		try {
 			const res = await AxiosHandler.get(`/auth/all-orgs`);
-			console.log("res get org", res);
 			setGetOrgnizationData(res?.data?.data);
 
 		} catch (error) {

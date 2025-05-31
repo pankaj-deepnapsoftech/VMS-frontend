@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import SecurityQuestions from "./Secuirity";
 
 function SignUp() {
-  const {  loading } = useAuthContext();
+  const { loading } = useAuthContext();
   const { GetOrgnization, getOrgnizationData } = useScheduleAssessmentContext();
 
   useEffect(() => {
@@ -16,7 +16,7 @@ function SignUp() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showSecurityPage, setShowSecurityPage] = useState(false);
-  const [createData,setCreatedata] = useState(null)
+  const [createData, setCreatedata] = useState(null)
 
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
     useFormik({
@@ -41,7 +41,7 @@ function SignUp() {
     });
 
   if (showSecurityPage) {
-    return <SecurityQuestions values={createData}  />;
+    return <SecurityQuestions values={createData} />;
   }
 
   return (
@@ -150,7 +150,7 @@ function SignUp() {
               </option>
               <option value="Assessor">Assessor</option>
               <option value="ClientCISO">Client CISO</option>
-              <option value="Client SME">Client SME</option>
+              <option value="ClientSME">Client SME</option>
             </select>
             {errors.role && touched.role && (
               <p className="text-sm text-red-400 mt-1">{errors.role}</p>
@@ -180,15 +180,42 @@ function SignUp() {
             </div>
           )}
 
+          {values.role === "ClientSME" && (
+            <div>
+              <label className="block text-sm text-gray-400 mb-1">
+                Organization
+              </label>
+              <select type="text"
+                name="owner"
+                value={values.owner}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className="w-full bg-gray-900 text-white rounded-lg px-4 py-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  <option  selected value ="" >Select Organization</option>
+                  {getOrgnizationData.map((item,i)=>(<>
+                    <option key={i} value={item._id} >{item.Organization}</option>
+                  </>
+                  ))}
+
+              </select>
+
+
+              {errors.Organization && touched.Organization && (
+                <p className="text-sm text-red-400 mt-1">
+                  {errors.Organization}
+                </p>
+              )}
+            </div>
+          )}
+
           {/* Submit Button */}
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-3 px-4 rounded-lg text-white font-medium transition-all duration-300 ${
-              loading
+            className={`w-full py-3 px-4 rounded-lg text-white font-medium transition-all duration-300 ${loading
                 ? "bg-gray-600 cursor-not-allowed"
                 : "bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600"
-            }`}
+              }`}
           >
             {loading ? "Creating account..." : "Sign Up"}
           </button>
