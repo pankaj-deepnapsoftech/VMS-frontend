@@ -80,7 +80,6 @@ export default function AllEmployee() {
                 </button>
               </div>
             )}
-
             {isModalOpen && (
               <div className="fixed inset-0 bg-input bg-opacity-50 flex items-center justify-center p-4 z-10">
                 <div className="bg-background rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
