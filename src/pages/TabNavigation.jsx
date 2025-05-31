@@ -10,7 +10,7 @@ const TabNavigation = () => {
   const tabs = [
     {
       title: "Devices",
-      path: "devices"
+      path: ""
       
     },
     {
@@ -32,12 +32,14 @@ const TabNavigation = () => {
   ];
 
   useEffect(() => {
+
+    let paths = location.pathname.split("/");
+    paths = paths[paths.length -1]
     
-    if (location.pathname === "/assert-inventory") {
-      navigate("devices", { replace: true });
-    } else {
-      setActiveTab(location.pathname);
+    if(paths === "asset-inventory"){
+      paths = ""
     }
+      setActiveTab(paths);
   }, [location.pathname, navigate]);
   
 
@@ -48,8 +50,8 @@ const TabNavigation = () => {
           <NavLink 
             key={index}
             to={tab.path}  
-            className={({ isActive }) =>
-              `px-5 py-2 rounded-lg text-sm font-medium transition-all text-white duration-200 ${isActive
+            className={() =>
+              `px-5 py-2 rounded-lg text-sm font-medium transition-all text-white duration-200 ${activeTab === tab.path
                 ? "bg-sky-600 text-white shadow-md"
                 : "bg-table dark:bg-gray-800 text-gray-700 dark:text-gray-300 dark:hover:bg-gray-700"
               }`

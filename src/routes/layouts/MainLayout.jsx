@@ -19,7 +19,7 @@ import UpdateProfileModal from "@/modals/UpdateProfile";
 
 const MainLayout = () => {
   const { notificationData, NotificationsViewed } = useVulnerabililtyDataContext();
-  const { authenticate,updateProfileModal, getDataFromSession, setOpenSideBar, showUserMenu, setShowUserMenu } = useAuthContext();
+  const { authenticate, updateProfileModal, getDataFromSession, setOpenSideBar, showUserMenu, setShowUserMenu } = useAuthContext();
 
   const { isOpen, openModal, closeModal } = useChangePassword();
 
@@ -73,7 +73,7 @@ const MainLayout = () => {
   }, [getDataFromSession, authenticate])
 
   const AllowedPath = (link) => {
-    const paths = ["assert-inventory"]
+    const paths = ["asset-inventory",]
     return paths.find((item) => item === link)
   }
 
@@ -195,7 +195,7 @@ transition duration-300 sm:w-[40%] md:w-[30%] lg:w-[25%] xl:w-[20%] 2xl:w-[15%] 
           <Footer />
           <UserProfile showUserMenu={showUserMenu} setShowMenu={setShowUserMenu} />
 
-          {updateProfileModal && <UpdateProfileModal /> }
+          {updateProfileModal && <UpdateProfileModal />}
 
           <ChangePasswordModal isOpen={isOpen} onClose={closeModal} />
         </Suspense>)

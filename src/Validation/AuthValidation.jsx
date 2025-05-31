@@ -14,7 +14,13 @@ export const BaseValidationSchema = object({
     full_name: string().min(2).max(25).required('Full Name is Required'),
     email: string().email().required('E-mail is Required'),
     phone: string().min(10).max(12).required('Phone No. is Required'),
-    password: string().min(4).max(12).required('Password is Required'),
+    password: string()
+  .required('Password is required')
+  .min(8, 'Password must be at least 8 characters')
+  .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+  .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
+  .matches(/[0-9]/, 'Password must contain at least one number')
+  .matches(/[@$!%*?&]/, 'Password must contain at least one special character'),
     department: string().min(2).max(12).required('Department is Required'),
     role: string().oneOf(['ClientCISO', 'Assessor', 'Admin', 'ClientSME']).required('Role is Required'),
   });
