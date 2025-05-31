@@ -245,7 +245,7 @@ const AuthContextProvider = ({ children }) => {
     setLoading(true);
     try {
       const res = await AxiosHandler.put(`/auth/reset-password-question/${data.email}`, data);
-      toast.success(res.data.message);
+      window.location.href = res.data.resetLink
     } catch (error) {
       toast.error(error?.response?.data?.message);
       console.log(error)
