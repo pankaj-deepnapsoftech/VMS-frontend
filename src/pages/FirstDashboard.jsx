@@ -57,8 +57,13 @@ const Dashboard = () => {
             {getInitials(authenticate?.full_name || "")}
           </button>
           {showDropdown && (
-            <div className="absolute right-0 mt-2 w-52 md:w-60 bg-[#1c1c1e] shadow-lg rounded-md py-2 z-30 border text-white border-gray-800">
-                                                                                                                                  
+            <div className="absolute right-0 mt-2 w-40 bg-[#1c1c1e] shadow-lg rounded-md py-2 z-30 border text-white border-gray-800">
+              <button
+                onClick={Logout}
+                className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-800 transition"
+              >
+                Logout
+              </button>
             </div>
           )}
         </div>
@@ -68,7 +73,9 @@ const Dashboard = () => {
       <div className="pt-20 md:pt-24 text-center md:text-left">
         <h2 className="text-2xl md:text-4xl font-bold text-blue-400">
           Hello,{" "}
-          <span className="capitalize font-lexendDeca">{authenticate?.full_name}</span>
+          <span className="capitalize font-lexendDeca">
+            {authenticate?.full_name}
+          </span>
         </h2>
         <p className="mt-1 md:mt-2 text-sm md:text-base text-gray-400">
           Welcome to risk operations center

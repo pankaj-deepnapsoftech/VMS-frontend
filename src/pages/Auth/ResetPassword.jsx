@@ -27,6 +27,7 @@ function ResetPassword() {
     if (!queryParams.get("token") && !queryParams.get("testing")) {
       navigate("/sign-in");
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryParams]);
 
   return (
