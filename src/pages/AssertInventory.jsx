@@ -4,7 +4,7 @@ import Loader from "@/components/Loader/Loader";
 import TabNavigation from "./TabNavigation";
 import { Outlet } from "react-router-dom";
 
-export function AssertInventory() {
+export function AssetInventory() {
 
   const {loading  } = useVulnerabililtyDataContext();
 
