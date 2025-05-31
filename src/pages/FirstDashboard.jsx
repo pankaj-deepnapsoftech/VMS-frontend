@@ -58,14 +58,7 @@ const Dashboard = () => {
           </button>
           {showDropdown && (
             <div className="absolute right-0 mt-2 w-52 md:w-60 bg-[#1c1c1e] shadow-lg rounded-md py-2 z-30 border text-white border-gray-800">
-            
-              <button
-                onClick={Logout}
-                className="block w-full hover:bg-gray-800 px-4 py-2 text-sm md:text-base text-left"
-                disabled={loading}
-              >
-                {loading ? "Logging out..." : "Logout"}
-              </button>
+                                                                                                                                  
             </div>
           )}
         </div>
