@@ -65,7 +65,7 @@ export const products = [
         title: "Asset Inventory",
         desc: "Centralized asset visibility and management",
         gradient: "from-[#ee9ca7] to-[#ffdde1]",
-        allowedPath: [{ title: "Asset Inventory", route: "/assert-inventory", icon: MdInventory2 },],
+        allowedPath: [{ title: "Asset Inventory", route: "/asset-inventory", icon: MdInventory2 },],
         allowedCISO: []
     },
     {

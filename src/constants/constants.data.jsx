@@ -13,7 +13,7 @@ import { TbLockPassword } from "react-icons/tb";
 export const list = [
     { title: "Dashboard", route: "", icon: BiSolidDashboard },
     { title: "Scheduling Assesment", route: "/scheduling-assesment", icon: CalendarClock },
-    { title: "Asset Inventory", route: "/assert-inventory", icon: MdInventory2 },
+    { title: "Asset Inventory", route: "/asset-inventory", icon: MdInventory2 },
     { title: "Employees", route: "/all-employee", icon: Users },
     { title: "Customers", route: "/all-customer", icon: UserCircle },
     { title: "Vulnerability Data", route: "/vulnerability-data", icon: Bug },

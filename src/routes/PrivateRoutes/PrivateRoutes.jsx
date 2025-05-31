@@ -77,11 +77,10 @@ export const PrivateRoutes = [
     element: <ChatPage />,
   },
   {
-    path: "/assert-inventory",
+    path: "/asset-inventory",
     element: <AssertInventory />,
     children: [
-      { index: true, element: <Devices /> }, 
-      { path: "devices", element: <Devices /> }, // default
+      { path: "", element: <Devices /> }, // default
       { path: "software-application", element: <ApplicationSoftwareInventoryTable /> },
       { path: "data-table", element: <DataTable /> },
       { path: "risk-rating-table", element: <RiskRatingTable /> },
