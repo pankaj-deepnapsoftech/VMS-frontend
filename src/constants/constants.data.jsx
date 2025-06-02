@@ -17,7 +17,7 @@ export const list = [
     { title: "Employees", route: "/all-employee", icon: Users },
     { title: "Customers", route: "/all-customer", icon: UserCircle },
     { title: "Vulnerability Data", route: "/vulnerability-data", icon: Bug },
-    { title: "Jira Data Table", route: "/jira-data", icon: Table },
+    { title: "Third Party Data", route: "/jira-data", icon: Table },
     { title: "Third Party Config", route: "/third-party-config", icon: Settings },
     { title: "Application Vulnerability", route: "/application-vulnerability", icon: MdOutlineMiscellaneousServices },
     { title: "Infrastructure Vulnerability ", route: "/infrastructure-vulnerability", icon: GrVulnerability },

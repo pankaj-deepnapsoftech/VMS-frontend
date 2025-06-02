@@ -13,13 +13,9 @@ import { useEffect, useState } from "react";
 import { IoShieldCheckmarkSharp } from "react-icons/io5";
 import { MdClose } from "react-icons/md";
 import { BiPlus } from "react-icons/bi";
-import {
-  FaUser,
-  FaEnvelope,
-  FaPhone,
-  FaLock,
-  FaCompass,
-} from "react-icons/fa";
+import { RiDeleteBinFill } from "react-icons/ri";
+
+import { FaUser, FaEnvelope, FaPhone, FaLock, FaCompass } from "react-icons/fa";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
@@ -67,7 +63,9 @@ export default function AllCustomer() {
     email: Yup.string().email("Invalid email").required("Email is required"),
     department: Yup.string().required("Department is required"),
     phone: Yup.string().required("Phone is required"),
-    password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
+    password: Yup.string()
+      .min(6, "Password must be at least 6 characters")
+      .required("Password is required"),
   });
 
   const {
@@ -101,7 +99,8 @@ export default function AllCustomer() {
       ) : (
         <div className="m-6 p-2 bg-[#2a2c2f] shadow-lg rounded-lg">
           <div className="flex justify-between items-center">
-            {(authenticate?.role === "ClientCISO" || authenticate?.role === "Admin") && (
+            {(authenticate?.role === "ClientCISO" ||
+              authenticate?.role === "Admin") && (
               <div className="flex w-full justify-end py-4">
                 <button
                   onClick={() => setIsModalOpen(true)}
@@ -137,7 +136,9 @@ export default function AllCustomer() {
                         placeholder="Enter your Full Name"
                       />
                       {touched.full_name && errors.full_name && (
-                        <p className="text-red-400 text-sm">{errors.full_name}</p>
+                        <p className="text-red-400 text-sm">
+                          {errors.full_name}
+                        </p>
                       )}
 
                       <InputField
@@ -165,7 +166,9 @@ export default function AllCustomer() {
                         placeholder="Enter your department"
                       />
                       {touched.department && errors.department && (
-                        <p className="text-red-400 text-sm">{errors.department}</p>
+                        <p className="text-red-400 text-sm">
+                          {errors.department}
+                        </p>
                       )}
 
                       <InputField
@@ -194,7 +197,9 @@ export default function AllCustomer() {
                         showPassword={true}
                       />
                       {touched.password && errors.password && (
-                        <p className="text-red-400 text-sm">{errors.password}</p>
+                        <p className="text-red-400 text-sm">
+                          {errors.password}
+                        </p>
                       )}
                     </div>
                     <div className="flex justify-end gap-2 mt-4 border-t pt-4">
@@ -226,14 +231,31 @@ export default function AllCustomer() {
               <table className="table-auto w-full bg-[#2d333b] rounded-md">
                 <thead className="bg-gradient-to-bl from-[#333333] to-[#666666] text-white">
                   <tr>
-                    <th className="px-2 py-1 border text-left text-sm">S No.</th>
-                    <th className="px-2 py-1 border text-left text-sm">Full Name</th>
-                    <th className="px-2 py-1 border text-left text-sm">Email</th>
-                    <th className="px-2 py-1 border text-left text-sm">Phone</th>
-                    <th className="px-2 py-1 border text-left text-sm">Organization</th>
+                    <th className="px-2 py-1 border text-left text-sm">
+                      S No.
+                    </th>
+                    <th className="px-2 py-1 border text-left text-sm">
+                      Full Name
+                    </th>
+                    <th className="px-2 py-1 border text-left text-sm">
+                      Email
+                    </th>
+                    <th className="px-2 py-1 border text-left text-sm">
+                      Phone
+                    </th>
+                    <th className="px-2 py-1 border text-left text-sm">
+                      Organization
+                    </th>
                     <th className="px-2 py-1 border text-left text-sm">Role</th>
-                    <th className="px-2 py-1 border text-left text-sm">Approval Status</th>
-                    <th className="px-2 py-1 border text-left text-sm">Allowed Pages</th>
+                    <th className="px-2 py-1 border text-left text-sm">
+                      Approval Status
+                    </th>
+                    <th className="px-2 py-1 border text-left text-sm">
+                      Allowed Pages
+                    </th>
+                    <th className="px-4 py-1 text-sm  border text-left">
+                      Actions
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -271,6 +293,17 @@ export default function AllCustomer() {
                       >
                         <IoShieldCheckmarkSharp size={24} color="#0092ca" />
                       </td>
+                      <td className="px-4 py-3 border">
+                        <button
+                          onClick={() => {
+                            DeleteData(item.issueId);
+                          }}
+                          className="text-red-600 hover:text-red-800 transition-colors ml-5 duration-150"
+                          title="Delete"
+                        >
+                          <RiDeleteBinFill className="h-4 w-4" />
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -302,7 +335,11 @@ export default function AllCustomer() {
       )}
 
       {isChecked && (
-        <AllowedModal setIsChecked={setIsChecked} isChecked={isChecked} id={dataId} />
+        <AllowedModal
+          setIsChecked={setIsChecked}
+          isChecked={isChecked}
+          id={dataId}
+        />
       )}
     </>
   );

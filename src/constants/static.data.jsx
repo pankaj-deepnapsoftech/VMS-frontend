@@ -151,7 +151,7 @@ export const products = [
         allowedPath: [
             { title: "Employees", route: "/all-employee", icon: Users },
             { title: "Customers", route: "/all-customer", icon: UserCircle },
-            { title: "Jira Data Table", route: "/jira-data", icon: Table },
+            { title: "Third Party Data", route: "/jira-data", icon: Table },
             { title: "Third Party Config", route: "/third-party-config", icon: Settings },
         ],
         allowedCISO: [

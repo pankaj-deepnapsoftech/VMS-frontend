@@ -212,7 +212,7 @@ export const JiraDataTable = () => {
                           checked={selectedRows.length === paginatedData.length}
                           onChange={handleSelectAll}
                         />
-                   2   </th>
+                     </th>
                       {[
                         "ID",
                         "Issue ID",

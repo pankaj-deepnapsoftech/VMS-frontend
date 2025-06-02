@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable react/jsx-no-undef */
 import InputField from "@/components/InputField";
 import Loader from "@/components/Loader/Loader";
 import NoDataFound from "@/components/NoDataFound";
@@ -8,6 +10,10 @@ import { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { FaCompass, FaEnvelope, FaLock, FaPhone, FaUser } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
+import { RiDeleteBinFill } from "react-icons/ri";
+import { MdDelete } from "react-icons/md";
+
+
 
 export default function AllEmployee() {
   const {
@@ -17,6 +23,7 @@ export default function AllEmployee() {
     setPage,
     VerifyEmployee,
     AllEmployee,
+    DeleteData,
     AllClientSME,
   } = useAllEmployeeContext();
 
@@ -60,6 +67,11 @@ export default function AllEmployee() {
     }
   };
 
+  const deleteData = async () => {
+    console.log("ids", deleteList);
+    DeleteMultipleData(deleteList);
+  };
+
   return (
     <>
       {loading ? (
@@ -99,7 +111,7 @@ export default function AllEmployee() {
                     <div className=" flex  gap-6 mb-8   ">
                       <form
                         onSubmit={handleSubmit}
-                        className="space-y-5 w-full flex flex-col "
+                        className="space-y-5 w-full flex flex-col"
                       >
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                           <div>
@@ -253,7 +265,10 @@ export default function AllEmployee() {
                     <th className="px-4 py-1 text-sm  border text-left">
                       Status
                     </th>
-                    {/* <th className="px-4 py-3 border text-left">Action</th> */}
+
+                    <th className="px-4 py-1 text-sm  border text-left">
+                      Actions
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -269,7 +284,7 @@ export default function AllEmployee() {
                       <td className="px-2 py-1 border">{user.role}</td>
                       <td className="px-2 py-2 border">
                         {user?.employee_approve ? (
-                          <span className="px-3 py-1 text-sm font-semibold text-green-800 bg-green-100 rounded-full">
+                          <span className="px-3 py-1 text-sm font-semibold  text-green-800 bg-green-100 rounded-full">
                             Approved
                           </span>
                         ) : (
@@ -305,10 +320,17 @@ export default function AllEmployee() {
                           </button>
                         )}
                       </td>
-                      {/* <td className="px-4 py-3 border">
-									
-									)}
-								</td> */}
+                      <td className="px-4 py-3 border">
+                        <button
+                          onClick={() => {
+                            DeleteData(item.issueId);
+                          }}
+                          className="text-red-600 hover:text-red-800 transition-colors ml-5 duration-150"
+                          title="Delete"
+                        >
+                          <RiDeleteBinFill className="h-4 w-4" />
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
