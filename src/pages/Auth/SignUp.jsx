@@ -25,18 +25,24 @@ function SignUp() {
         phone: "",
         email: "",
         password: "",
+        confirm_password: "",
         role: "",
         Organization: "",
         owner: "",
       },
       validationSchema: SignUpValidation,
       onSubmit: async (value) => {
-        try {
-          setCreatedata(value);
-          setShowSecurityPage(true);
-        } catch (error) {
-          console.error("Signup failed", error);
+        if (value.password === value.confirm_password) {
+          try {
+            setCreatedata(value);
+            setShowSecurityPage(true);
+          } catch (error) {
+            console.error("Signup failed", error);
+          }
+        } else {
+          alert("password and confirm password is does not match");
         }
+
       },
     });
 
@@ -136,6 +142,32 @@ function SignUp() {
             )}
           </div>
 
+          {/* confirm Password */}
+          <div>
+            <label className="block text-sm text-gray-400 mb-1">Confirm Password</label>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="confirm_password"
+                value={values.confirm_password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder="Enter confirm password"
+                className="w-full bg-gray-900 text-white rounded-lg px-4 py-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white"
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
+            {errors.confirm_password && touched.confirm_password && (
+              <p className="text-sm text-red-400 mt-1">{errors.confirm_password}</p>
+            )}
+          </div>
+
           {/* Role */}
           <div>
             <label className="block text-sm text-gray-400 mb-1">Role</label>
@@ -192,11 +224,11 @@ function SignUp() {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 className="w-full bg-gray-900 text-white rounded-lg px-4 py-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                  <option  selected value ="" >Select Organization</option>
-                  {getOrgnizationData.map((item,i)=>(<>
-                    <option key={i} value={item._id} >{item.Organization}</option>
-                  </>
-                  ))}
+                <option selected value="" >Select Organization</option>
+                {getOrgnizationData.map((item, i) => (<>
+                  <option key={i} value={item._id} >{item.Organization}</option>
+                </>
+                ))}
 
               </select>
 
@@ -214,8 +246,8 @@ function SignUp() {
             type="submit"
             disabled={loading}
             className={`w-full py-3 px-4 rounded-lg text-white font-medium transition-all duration-300 ${loading
-                ? "bg-gray-600 cursor-not-allowed"
-                : "bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600"
+              ? "bg-gray-600 cursor-not-allowed"
+              : "bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600"
               }`}
           >
             {loading ? "Creating account..." : "Sign Up"}
