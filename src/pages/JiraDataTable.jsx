@@ -115,6 +115,7 @@ export const JiraDataTable = () => {
     );
   };
 
+  // eslint-disable-next-line no-unused-vars, unused-imports/no-unused-vars
   let [deleteList, setDeleteList] = useState([]);
 
   // Select or deselect all items on the current page
@@ -139,9 +140,10 @@ export const JiraDataTable = () => {
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues: { email: "", password: "" },
-      // validationSchema: SignInValidation,
+      // validationSchema: SignInValidation,       
       onSubmit: (value) => {
         console.log("UpdateData", value);
+        // eslint-disable-next-line no-undef
         UpdateData(id, value);
       },
     });
@@ -233,7 +235,7 @@ export const JiraDataTable = () => {
                           className="px-4 py-2 text-left text-xs font-medium uppercase tracking-wider"
                         >
                           {header}
-                        </th>
+                        </th>                                            
                       ))}
                     </tr>
                   </thead>
