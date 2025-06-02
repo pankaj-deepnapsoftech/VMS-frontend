@@ -19,7 +19,7 @@ const AuthContextProvider = ({ children }) => {
   const [userLoading, setUserLoading] = useState(false);
   const [runner, setRunner] = useState(1);
   const [authenticate, setAuthenticate] = useState(null);
-  const [updateProfileModal,setUpdateProfileModal] = useState(false);
+  const [updateProfileModal, setUpdateProfileModal] = useState(false);
   const [getDataFromSession, setGetDataFromSession] = useState(() => {
     return sessionStorage.getItem("VROC");
   })
@@ -71,10 +71,10 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const Signup = async (data) => {
+  const Signup = async (data, navigation) => {
     const toastId = toast.loading("Loading...");
 
-    console.log(data);
+    console.log("this is context data",data);
 
     let newData;
 
@@ -86,13 +86,15 @@ const AuthContextProvider = ({ children }) => {
         password: data.password,
         phone: data.phone,
         role: data.role,
-        security_questions:data.security_questions
+        security_questions: data.security_questions,
+        employee_approve: data.employee_approve,
+        email_verification: data.email_verification,
       }
     } else {
       newData = data
     }
 
-    console.log("this is new Data",newData);
+    console.log("this is new Data", newData);
     setLoading(true);
     try {
       const res = await AxiosHandler.post("/auth/create", newData);
@@ -101,10 +103,14 @@ const AuthContextProvider = ({ children }) => {
         navigate("/");
       }
       else {
-        AxiosHandler.defaults.headers.authorization = `Bearer ${res.data.token}`;
-        Cookies.set("token", res.data.token, { expires: 1 });
+        if (!navigation) {
+          AxiosHandler.defaults.headers.authorization = `Bearer ${res.data.token}`;
+          Cookies.set("token", res.data.token, { expires: 1 });
+        }
         setToken(res.data.token);
-        navigate("/verify-otp");
+        if (!navigation) {
+          navigate("/verify-otp");
+        }
       }
       toast.dismiss(toastId);
       toast.success(res.data.message);
@@ -174,7 +180,7 @@ const AuthContextProvider = ({ children }) => {
     const toastId = toast.loading("Loading...");
     setLoading(true);
     try {
-      const res = await AxiosHandler.put("/auth/resend-otp",{email});
+      const res = await AxiosHandler.put("/auth/resend-otp", { email });
       toast.dismiss(toastId);
       toast.success(res.data.message);
     } catch (error) {
@@ -241,7 +247,7 @@ const AuthContextProvider = ({ children }) => {
     }
   }
 
-    const ResetWithQuestion = async (data) => {
+  const ResetWithQuestion = async (data) => {
     setLoading(true);
     try {
       const res = await AxiosHandler.put(`/auth/reset-password-question/${data.email}`, data);

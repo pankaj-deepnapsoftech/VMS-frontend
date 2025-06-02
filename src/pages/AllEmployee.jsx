@@ -20,8 +20,7 @@ export default function AllEmployee() {
     AllClientSME,
   } = useAllEmployeeContext();
 
-  const { authenticate, token, Signup, ChangeStatus, runner } =
-    useAuthContext();
+  const { authenticate, token, Signup, ChangeStatus, runner } = useAuthContext();
 
   useEffect(() => {
     authenticate?.role === "ClientCISO" ? AllClientSME() : AllEmployee();
@@ -37,17 +36,19 @@ export default function AllEmployee() {
         email: "",
         password: "",
         department: "",
-        role: "ClientSME",
-        owner: authenticate?._id,
+        role: authenticate?.role === "Admin" ? "Assessor" : "ClientSME",
+        owner:authenticate?.role === "Admin" ? "" : authenticate?._id,
         employee_approve: true,
         email_verification: true,
       },
       validationSchema: BaseValidationSchema,
       onSubmit: (value) => {
-        Signup(value);
+        console.log("this is value",value)
+        Signup(value,true);
         setIsModalOpen(false);
       },
     });
+
 
   const handleChangeStatus = (type, id) => {
     switch (type) {
@@ -96,9 +97,8 @@ export default function AllEmployee() {
                     </button>
                   </div>
                   <div className="p-10 ">
-                    <div className=" flex  gap-6 mb-8   ">
-                      <form
-                        onSubmit={handleSubmit}
+                    <div className=" flex  gap-6 mb-8 ">
+                      <form onSubmit={handleSubmit}
                         className="space-y-5 w-full flex flex-col "
                       >
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -142,7 +142,7 @@ export default function AllEmployee() {
                             )}
                           </div>
 
-                          <div>
+                          { authenticate?.role !== "Admin" && <div>
                             <InputField
                               label={"Enter Your Department"}
                               type={"text"}
@@ -160,7 +160,7 @@ export default function AllEmployee() {
                                 {errors.department}
                               </p>
                             )}
-                          </div>
+                          </div>}
                           <div>
                             <InputField
                               label={"Phone Number"}
@@ -209,7 +209,7 @@ export default function AllEmployee() {
                             Cancel
                           </button>
                           <button
-                            onClick={handleSubmit}
+                          type="submit"
                             className="px-4 py-2 bg-[#015289] text-white rounded-md hover:bg-blue-700 transition"
                           >
                             Save

@@ -73,7 +73,7 @@ const MainLayout = () => {
   }, [getDataFromSession, authenticate])
 
   const AllowedPath = (link) => {
-    const paths = ["asset-inventory",]
+    const paths = ["asset-inventory","reports"]
     return paths.find((item) => item === link)
   }
 
