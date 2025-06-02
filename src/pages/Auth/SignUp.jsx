@@ -41,7 +41,7 @@ function SignUp() {
     });
 
   if (showSecurityPage) {
-    return <SecurityQuestions values={createData} />;
+    return <SecurityQuestions values={createData} setShowSecurityPage={setShowSecurityPage} />;
   }
 
   return (
@@ -180,6 +180,7 @@ function SignUp() {
             </div>
           )}
 
+          {/* Organization Field (only for ClientSME) */}
           {values.role === "ClientSME" && (
             <div>
               <label className="block text-sm text-gray-400 mb-1">

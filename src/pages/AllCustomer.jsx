@@ -17,7 +17,7 @@ import { RiDeleteBinFill } from "react-icons/ri";
 
 import { FaUser, FaEnvelope, FaPhone, FaLock, FaCompass } from "react-icons/fa";
 import { useFormik } from "formik";
-import * as Yup from "yup";
+import { BaseValidationSchema } from "@/Validation/AuthValidation";
 
 export default function AllCustomer() {
   const {
@@ -30,8 +30,7 @@ export default function AllCustomer() {
     dataCount,
   } = useAllCustomerContext();
 
-  const { authenticate, token, Signup, ChangeStatus, runner } =
-    useAuthContext();
+  const { authenticate, token, Signup, runner } = useAuthContext();
 
   const { VerifyEmployee } = useAllEmployeeContext();
 
@@ -58,15 +57,6 @@ export default function AllCustomer() {
     AllCustomers();
   }, [VerifyEmployee]);
 
-  const validationSchema = Yup.object({
-    full_name: Yup.string().required("Full name is required"),
-    email: Yup.string().email("Invalid email").required("Email is required"),
-    department: Yup.string().required("Department is required"),
-    phone: Yup.string().required("Phone is required"),
-    password: Yup.string()
-      .min(6, "Password must be at least 6 characters")
-      .required("Password is required"),
-  });
 
   const {
     values,
@@ -80,13 +70,16 @@ export default function AllCustomer() {
     initialValues: {
       full_name: "",
       email: "",
-      department: "",
       phone: "",
       password: "",
+      role: "ClientCISO",
+      Organization: "",
+      employee_approve: true,
+      email_verification: true,
     },
-    validationSchema,
+    validationSchema:BaseValidationSchema,
     onSubmit: (data) => {
-      Signup(data);
+      Signup(data,true);
       setIsModalOpen(false);
       resetForm();
     },
@@ -156,19 +149,17 @@ export default function AllCustomer() {
                       )}
 
                       <InputField
-                        label="Department"
+                        label="Organization"
                         type="text"
                         icon={FaCompass}
-                        name="department"
-                        value={values.department}
+                        name="Organization"
+                        value={values.Organization}
                         onBlur={handleBlur}
                         onChange={handleChange}
-                        placeholder="Enter your department"
+                        placeholder="Enter your Organization"
                       />
-                      {touched.department && errors.department && (
-                        <p className="text-red-400 text-sm">
-                          {errors.department}
-                        </p>
+                      {touched.Organization && errors.Organization && (
+                        <p className="text-red-400 text-sm">{errors.Organization}</p>
                       )}
 
                       <InputField
@@ -314,9 +305,8 @@ export default function AllCustomer() {
           {/* Pagination */}
           <div className="flex justify-between items-center my-6 px-5">
             <button
-              className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white rounded-md ${
-                page === 1 ? "opacity-50 cursor-not-allowed" : ""
-              }`}
+              className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               disabled={page === 1}
               onClick={() => setPage(page - 1)}
             >

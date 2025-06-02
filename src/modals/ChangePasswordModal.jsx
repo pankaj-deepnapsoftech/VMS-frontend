@@ -5,24 +5,24 @@ import { EyeIcon, EyeOffIcon, LockIcon } from "lucide-react"
 import { useAuthContext } from "@/context"
 
 
-const ChangePasswordModal = ({ isOpen, onClose }) => {
+const ChangePasswordModal = ({ isOpen }) => {
 
     const { ChangePassword } = useAuthContext();
 
-    const [showCurrentPassword, setShowCurrentPassword] = useState(false)
-    const [showNewPassword, setShowNewPassword] = useState(false)
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-    const [passwordStrength, setPasswordStrength] = useState(0)
-    const [passwordMatch, setPasswordMatch] = useState(true)
+    const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [passwordStrength, setPasswordStrength] = useState(0);
+    const [passwordMatch, setPasswordMatch] = useState(true);
     const [formData, setFormData] = useState({
         currentPassword: "",
         newPassword: "",
         confirmPassword: "",
-    })
+    });
 
     const handleInputChange = (e) => {
         const { name, value } = e.target
-        setFormData((prev) => ({ ...prev, [name]: value }))
+        setFormData((prev) => ({ ...prev, [name]: value }));
 
         if (name === "newPassword") {
             // Simple password strength calculation
@@ -44,12 +44,16 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
     }
 
     const handleSubmit = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         const data = {
             newPassword: formData.newPassword,
             oldPassword: formData.currentPassword
+        };
+        if(passwordStrength <= 4){
+            alert("password is week");
+        }else {
+            ChangePassword(data);
         }
-        ChangePassword(data)
     }
 
 

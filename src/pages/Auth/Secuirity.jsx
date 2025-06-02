@@ -15,7 +15,7 @@ const securityQuestions = [
   "What was your dream job as a child?",
 ];
 
-export default function SecurityQuestions({values}) {
+export default function SecurityQuestions({values,setShowSecurityPage}) {
   const [questions, setQuestions] = useState([{ question: "", answer: "" }]);
   const {Signup} = useAuthContext()
 
@@ -102,6 +102,7 @@ export default function SecurityQuestions({values}) {
             Save Security Questions
           </button>
         </form>
+        <p onClick={()=>setShowSecurityPage(false)} className="text-blue-400 my-3 cursor-pointer text-center" >Back to login</p>
       </div>
     </div>
   );

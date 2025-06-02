@@ -21,7 +21,7 @@ export const BaseValidationSchema = object({
   .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
   .matches(/[0-9]/, 'Password must contain at least one number')
   .matches(/[@$!%*?&]/, 'Password must contain at least one special character'),
-    department: string().min(2).max(12).required('Department is Required'),
+    // department: string().min(2).max(12).required('Department is Required'),
     role: string().oneOf(['ClientCISO', 'Assessor', 'Admin', 'ClientSME']).required('Role is Required'),
   });
 

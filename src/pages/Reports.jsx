@@ -13,7 +13,6 @@ import { MdClose } from "react-icons/md";
 import { RiDeleteBinFill } from "react-icons/ri";
 
 const Reports = () => {
-  const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -105,6 +104,7 @@ const Reports = () => {
   }, [creatorFilter, orgFilter, dateFilter, reportData]);
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+
     if (!values.Organization) {
       toast.error("Please select an organization.");
       return;
@@ -117,6 +117,7 @@ const Reports = () => {
 
     const formData = new FormData();
     formData.append("Organization", values.Organization);
+    formData.append("Type_Of_Assesment", values.Type_Of_Assesment);
     if (values.report) {
       formData.append("report", values.report);
     }
@@ -141,6 +142,7 @@ const Reports = () => {
       fetchReportData();
     } catch (error) {
       toast.error(`Failed to ${isEdit ? "update" : "upload"} the report. Please try again: ${error}`);
+      console.log(error)
     } finally {
       setLoading(false);
       setSubmitting(false);
@@ -150,7 +152,7 @@ const Reports = () => {
   const OrganizationDropdown = ({ orgData = [], setFieldValue, values }) => {
     return (
       <select
-        className="w-full p-2 border border-gray-300 rounded-lg"
+        className="w-full p-2 border border-gray-300 rounded-lg bg-input text-white"
         value={values.Organization}
         onChange={(e) => setFieldValue("Organization", e.target.value)}
       >
@@ -235,7 +237,7 @@ const Reports = () => {
       </div>
 
       {/* Table */}
-    { filterData.length<1?<NoDataFound/>: <div className="overflow-x-auto rounded-md">
+      {filterData.length < 1 ? <NoDataFound /> : <div className="overflow-x-auto rounded-md">
         <table className="min-w-full divide-y divide-gray-200 bg-[#2d333b]">
           <thead className="bg-gradient-to-bl from-[#333333] to-[#666666] rounded-e-lg text-white">
             <tr>
@@ -243,6 +245,7 @@ const Reports = () => {
                 "S NO.",
                 "Date",
                 "Creator",
+                "Type Of Assesment",
                 "Organization",
                 "Report",
                 "Actions",
@@ -275,18 +278,21 @@ const Reports = () => {
                     {report.creator?.full_name || "-"}
                   </td>
 
+                   <td className="px-4 py-1 te-center whitespace-nowrap text-sm text-white">
+                    {report.Type_Of_Assesment || "-"}
+                  </td>
+
                   {/* Organization */}
                   <td className="px-4 py-1 text-center whitespace-nowrap text-sm text-white">
                     {report.Organization?.Organization || "-"}
                   </td>
-xt
                   {/* View Report Button */}
                   <td className="px-4 py-1 text-center whitespace-nowrap text-sm text-gray-900">
                     <a href={report?.file} target="_blank" className="bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-gray-50 px-4 py-1 rounded  ">
                       Download Report
                     </a>
                   </td>
- 
+
                   {/* Actions */}
                   <td className="px-4 py-2 whitespace-nowrap text-center flex justify-center gap-2 items-start">
                     {authenticate.role === "Assessor" ? (
@@ -348,14 +354,15 @@ xt
               initialValues={{
                 Organization: isEdit ? editData?.Organization?._id : "",
                 report: "",
+                Type_Of_Assesment: isEdit ? editData.Type_Of_Assesment : "",
               }}
               onSubmit={handleSubmit}
             >
-              {({ setFieldValue, values }) => (
+              {({ setFieldValue, values,handleChange }) => (
                 <Form className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
                   {/* Organization Dropdown */}
                   <div className="col-span-1 md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label className="block text-sm font-medium text-gray-200">
                       Organization
                     </label>
                     <OrganizationDropdown
@@ -375,6 +382,64 @@ xt
                       setFieldValue("report", file);
                     }}
                   />
+
+
+                   <div className="col-span-1 md:col-span-2">
+                    <label className="block text-sm font-medium text-gray-200">
+                      type of assesment
+                    </label>
+                   <select
+                    name="Type_Of_Assesment"
+                    value={values.Type_Of_Assesment}
+                    onChange={handleChange}
+
+                    className="w-full px-4 py-3 rounded-md border text-gray-200 bg-input border-gray-500 focus:ring-2 focus:ring-gray-500 text-sm focus:border-transparent outline-none transition"
+                    id="Type_Of_Assesment"
+                  >
+                    <option value="" disabled>
+                      {" "}
+                      -- Select Type of Assesment --{" "}
+                    </option>
+
+                    <option value={"Secure Code Scan"}>
+                      Secure Code Scan
+                    </option>
+
+                    <option value={"Dynamic Application"}>
+                      Dynamic Application{" "}
+                    </option>
+
+                    <option value={"Web Application Penetration Testing"}>
+                      Web Application Penetration Testing
+                    </option>
+
+                    <option value={"Api Penetration Testing"}>
+                      Api Penetration Testing
+                    </option>
+
+                    <option value={"Infrastructure Vulnerability Scan"}>
+                      Infrastructure Vulnerability Scan
+                    </option>
+
+                    <option value={"Infrastructure Penetration Testing"}>
+                      Infrastructure Penetration Testing
+                    </option>
+                    <option value={"Mobile Application Penetration Test"}>
+                      Mobile Application Penetration Test
+                    </option>
+                    <option value={"Red Team exercise"}>
+                      Red Team exercise
+                    </option>
+                    <option value={"Attack Simulation Exercise"}>
+                      Attack Simulation Exercise
+                    </option>
+                    <option value={"Configuration Audits"}>
+                      Configuration Audits
+                    </option>
+                  </select>
+                  </div>
+
+                  
 
                   {/* Buttons */}
                   <div className="col-span-1 md:col-span-2 flex justify-end gap-2 mt-4 border-t pt-4">
