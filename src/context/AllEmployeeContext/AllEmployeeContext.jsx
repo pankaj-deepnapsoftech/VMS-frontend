@@ -32,7 +32,7 @@ const AllEmployeeContextProvider = ({ children }) => {
 
 		} catch (error) {
 			console.log(error)
-			
+
 
 		} finally {
 			setLoading(false);
@@ -59,7 +59,7 @@ const AllEmployeeContextProvider = ({ children }) => {
 		try {
 			const res = await AxiosHandler.get(`employee/get-employee-task?page=${taskPage}&limit=10`);
 			setEmployeeTasksData(res.data.data);
-        
+
 		} catch (error) {
 			console.log(error)
 
@@ -118,6 +118,18 @@ const AllEmployeeContextProvider = ({ children }) => {
 		}
 	}
 
+	const DeleteUser = async (id) => {
+		try {
+			const res = await AxiosHandler.delete(`/auth/delete-user/${id}`);
+			toast.success(res.data.message);
+			AllEmployee();
+			AllClientSME();
+			
+		} catch (error) {
+			toast.error(error.response.data.message)
+		}
+	}
+
 
 
 
@@ -129,7 +141,7 @@ const AllEmployeeContextProvider = ({ children }) => {
 		}
 	}, [token, page, taskPage, authenticate?.role])
 
-	
+
 	return (
 		<AllEmployeeContext.Provider value={{
 			loading,
@@ -147,7 +159,8 @@ const AllEmployeeContextProvider = ({ children }) => {
 			EmployeeData,
 			datafetchCount,
 			setdatafetchCount,
-			AllEmployee
+			AllEmployee,
+			DeleteUser
 
 		}}>
 			{children}

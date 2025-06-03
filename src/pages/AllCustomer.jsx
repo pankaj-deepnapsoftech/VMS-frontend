@@ -32,7 +32,7 @@ export default function AllCustomer() {
 
   const { authenticate, token, Signup, runner } = useAuthContext();
 
-  const { VerifyEmployee } = useAllEmployeeContext();
+  const { VerifyEmployee,DeleteUser } = useAllEmployeeContext();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
@@ -287,7 +287,7 @@ export default function AllCustomer() {
                       <td className="px-4 py-3 border">
                         <button
                           onClick={() => {
-                            DeleteData(item.issueId);
+                            DeleteUser(user._id);
                           }}
                           className="text-red-600 hover:text-red-800 transition-colors ml-5 duration-150"
                           title="Delete"
