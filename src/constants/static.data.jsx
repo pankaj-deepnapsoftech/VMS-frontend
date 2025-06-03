@@ -195,7 +195,7 @@ export const products = [
         route: "/third-party-config",
         icon: Settings,
       },
-      { title: "ClientCiso", route: "/ClientCiso", icon: TbReport },
+      { title: "Client SME", route: "/client-Sme", icon: TbReport },
        { title: "New User", route: "/newuser", icon: Users },
     ],
     allowedCISO: [

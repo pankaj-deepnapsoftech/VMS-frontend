@@ -31,7 +31,7 @@ export default function ClientCISO() {
   } = useAllCustomerContext();
 
   const { authenticate, token, Signup, runner } = useAuthContext();
-  const { VerifyEmployee } = useAllEmployeeContext();
+  const { clientSme,VerifyEmployee,DeleteUser } = useAllEmployeeContext();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
@@ -106,7 +106,7 @@ export default function ClientCISO() {
       ) : (
         <div className="m-6 p-2 bg-[#2a2c2f] shadow-lg rounded-lg">
           {/* Header */}
-          <div className="flex justify-between items-center">
+          {/* <div className="flex justify-between items-center">
             {(authenticate?.role === "ClientCISO" ||
               authenticate?.role === "Admin") && (
               <div className="flex w-full justify-end py-4">
@@ -120,7 +120,7 @@ export default function ClientCISO() {
               </div>
             )}
 
-            {/* Add Modal */}
+           
             {isModalOpen && (
               <div className="fixed inset-0 bg-input bg-opacity-50 flex items-center justify-center p-4 z-10">
                 <div className="bg-background rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
@@ -226,11 +226,11 @@ export default function ClientCISO() {
                 </div>
               </div>
             )}
-          </div>
+          </div> */}
 
           {/* Table Content */}
           <div className="overflow-x-auto rounded-lg">
-            {(AllCustomersData?.length < 1 && smeUsers?.length < 1) ? (
+            {(AllCustomersData?.length < 1 && clientSme?.length < 1) ? (
               <NoDataFound />
             ) : (
               <table className="table-auto w-full bg-[#2d333b] rounded-md">
@@ -242,47 +242,23 @@ export default function ClientCISO() {
                     <th className="px-2 py-1 border text-left text-sm">Phone</th>
                     <th className="px-2 py-1 border text-left text-sm">Organization</th>
                     <th className="px-2 py-1 border text-left text-sm">Role</th>
-                    <th className="px-2 py-1 border text-left text-sm">Approval Status</th>
-                    <th className="px-2 py-1 border text-left text-sm">Allowed Pages</th>
                     <th className="px-4 py-1 text-sm  border text-left">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {[...AllCustomersData, ...smeUsers].map((user, index) => (
+                  {[...clientSme].map((user, index) => (
                     <tr key={user._id} className="bg-[#2d333b] text-gray-200 hover:bg-[#53565c]">
                       <td className="px-2 py-1 border">{index + 1}</td>
                       <td className="px-2 py-1 border">{user?.full_name}</td>
                       <td className="px-2 py-1 border">{user?.email}</td>
                       <td className="px-2 py-1 border">{user?.phone}</td>
-                      <td className="px-2 py-1 border">{user?.Organization}</td>
+                      <td className="px-2 py-1 border">{user?.owner?.Organization}</td>
                       <td className="px-2 py-1 border">{user?.role}</td>
-                      <td className="px-2 py-1 border">
-                        {user?.employee_approve ? (
-                          <span className="px-3 py-1 text-sm font-semibold text-green-800 bg-green-100 rounded-full">
-                            Approved
-                          </span>
-                        ) : (
-                          <button
-                            onClick={() => VerifyEmployee(user?._id)}
-                            className="px-3 py-1 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700"
-                          >
-                            Verify
-                          </button>
-                        )}
-                      </td>
-                      <td
-                        onClick={() => {
-                          setIsChecked(true);
-                          setDataId(user._id);
-                        }}
-                        className="px-2 py-1 border cursor-pointer"
-                      >
-                        <IoShieldCheckmarkSharp size={24} color="#0092ca" />
-                      </td>
+                  
                       <td className="px-4 py-3 border">
                         <button
                           onClick={() => {
-                            DeleteData(user._id); 
+                            DeleteUser(user._id); 
                           }}
                           className="text-red-600 hover:text-red-800 transition-colors ml-5 duration-150"
                           title="Delete"

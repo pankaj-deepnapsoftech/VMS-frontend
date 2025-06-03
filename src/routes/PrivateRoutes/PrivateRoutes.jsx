@@ -104,7 +104,7 @@ export const PrivateRoutes = [
     element: <ApplicationSoftwareInventory />,
   },
   {
-    path: "/ClientCiso",
+    path: "/client-Sme",
     element: <ClientCISO />,
   },
   {

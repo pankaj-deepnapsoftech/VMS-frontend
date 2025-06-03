@@ -1,5 +1,5 @@
 
-import  React from "react"
+import React from "react"
 
 import { useState } from "react"
 import { EyeIcon, EyeOffIcon, LockIcon } from "lucide-react"
@@ -7,7 +7,7 @@ import { useAuthContext } from "@/context"
 
 export default function PasswordChange() {
 
-  const {ChangePassword} = useAuthContext();
+  const { ChangePassword } = useAuthContext();
 
   const [showCurrentPassword, setShowCurrentPassword] = useState(false)
   const [showNewPassword, setShowNewPassword] = useState(false)
@@ -46,10 +46,14 @@ export default function PasswordChange() {
   const handleSubmit = (e) => {
     e.preventDefault()
     const data = {
-      newPassword:formData.newPassword,
-      oldPassword:formData.currentPassword
+      newPassword: formData.newPassword,
+      oldPassword: formData.currentPassword
     }
-    ChangePassword(data)
+    if (passwordStrength <= 4) {
+      alert("password is week");
+    } else {
+      ChangePassword(data);
+    }
   }
 
   return (
@@ -125,8 +129,7 @@ export default function PasswordChange() {
                     {[...Array(4)].map((_, i) => (
                       <div
                         key={i}
-                        className={`h-1.5 flex-1 rounded-full ${
-                          i < passwordStrength
+                        className={`h-1.5 flex-1 rounded-full ${i < passwordStrength
                             ? passwordStrength === 1
                               ? "bg-red-500"
                               : passwordStrength === 2
@@ -135,7 +138,7 @@ export default function PasswordChange() {
                                   ? "bg-blue-500"
                                   : "bg-green-500"
                             : "bg-gray-200"
-                        }`}
+                          }`}
                       />
                     ))}
                   </div>
@@ -159,13 +162,12 @@ export default function PasswordChange() {
                   type={showConfirmPassword ? "text" : "password"}
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 rounded-md bg-input  transition-all outline-none ${
-                    formData.confirmPassword
+                  className={`w-full px-4 py-3 rounded-md bg-input  transition-all outline-none ${formData.confirmPassword
                       ? passwordMatch
                         ? ` focus:ring-2  focus:border-transparent`
                         : ` focus:ring-2 focus:border-transparent`
                       : ` focus:ring-2 focus:border-transparent`
-                  }`}
+                    }`}
                   placeholder="Confirm your new password"
                   required
                 />
@@ -190,7 +192,7 @@ export default function PasswordChange() {
             </button>
           </form>
 
-          
+
         </div>
       </div>
     </div>
