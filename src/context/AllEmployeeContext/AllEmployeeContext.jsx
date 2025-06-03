@@ -17,6 +17,8 @@ const AllEmployeeContextProvider = ({ children }) => {
 	const [allEmployeesData, SetAllEmployeesData] = useState([]);
 	const [employeeTasksData, setEmployeeTasksData] = useState([]);
 	const [employeeCardData, setEmployeeCardData] = useState([]);
+	const [newUser, setNewUser] = useState([])
+	const [clientSme,setClientSme] = useState([])
 
 
 	const [page, setPage] = useState(1)
@@ -43,7 +45,7 @@ const AllEmployeeContextProvider = ({ children }) => {
 		setLoading(true);
 		try {
 			const res = await AxiosHandler.get(`/auth/all-sme?page=${page}&limit=10`);
-			SetAllEmployeesData(res.data.data);
+			setClientSme(res.data.data);
 
 		} catch (error) {
 			console.log(error)
@@ -128,13 +130,25 @@ const AllEmployeeContextProvider = ({ children }) => {
 	}
 
 
+	const GetNewUsers = async () => {
+		try {
+			const res = await AxiosHandler.get("/auth/new-users");
+			setNewUser(res.data.data)
+		} catch (error) {
+			console.log("error in GetNewUser method", error)
+		}
+	}
+
+
 
 
 	useEffect(() => {
 		if (token) {
-			authenticate?.role === "ClientCISO" ? AllClientSME() : AllEmployee();
+			AllClientSME();
+			AllEmployee();
 			EmployeeTasks();
 			EmployeeData();
+			GetNewUsers();
 		}
 	}, [token, page, taskPage, authenticate?.role])
 
@@ -157,7 +171,9 @@ const AllEmployeeContextProvider = ({ children }) => {
 			datafetchCount,
 			setdatafetchCount,
 			AllEmployee,
-			DeleteUser
+			DeleteUser,
+			newUser,
+			clientSme
 
 		}}>
 			{children}

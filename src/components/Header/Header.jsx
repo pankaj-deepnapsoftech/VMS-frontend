@@ -58,7 +58,7 @@ function Header({ setShowMenu }) {
     // <div className="flex h-screen fixed  overflow-y-auto
     //  md:w-[28%] lg:w-[25%] xl:w-[25%] 2xl:w-[20%] ">
     <div className=" flex flex-col text-white  h-[100%] hide-scrollbar bg-[#1d1f22]  overflow-y-auto ">
-      <Link to="/" className="flex items-center my-2 ml-3">
+      <Link  className="flex items-center my-2 ml-3">
         <div className="flex gap-2 pt-2 items-center justify-center ml-14 ">
           <div
             className="w-[100px] h-[100px] bg-blue-500"
