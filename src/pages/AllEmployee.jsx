@@ -17,12 +17,10 @@ export default function AllEmployee() {
     loading,
     allEmployeesData,
     page,
-    setPage,
     VerifyEmployee,
     AllEmployee,
-    DeleteMultipleData,
-    DeleteData,
     AllClientSME,
+    DeleteUser
   } = useAllEmployeeContext();
 
   const { authenticate, token, Signup, ChangeStatus, runner } = useAuthContext();
@@ -47,8 +45,8 @@ export default function AllEmployee() {
       email: "",
       password: "",
       department: "",
-      role: "ClientSME",
-      owner: authenticate?._id,
+      role: authenticate?.role === "Admin" ? "Approved" : "ClientSME",
+      owner: authenticate?.role === "Admin" ? "" : authenticate?._id,
       employee_approve: true,
       email_verification: true,
     },
@@ -135,7 +133,7 @@ export default function AllEmployee() {
                           <p className="text-red-400 text-sm">{errors.email}</p>
                         )}
 
-                        <InputField
+                     { authenticate?.role !== "Admin" &&   <InputField
                           label="Department"
                           type="text"
                           showPassword={false}
@@ -145,7 +143,7 @@ export default function AllEmployee() {
                           onChange={handleChange}
                           placeholder="Enter your Department"
                           name="department"
-                        />
+                        />}
                         {touched.department && errors.department && (
                           <p className="text-red-400 text-sm">{errors.department}</p>
                         )}
@@ -266,7 +264,7 @@ export default function AllEmployee() {
                       <td className="px-4 py-3 border">
                         <button
                           onClick={() => {
-                            DeleteData(user._id);
+                            DeleteUser(user._id);
                           }}
                           className="text-red-600 hover:text-red-800 transition-colors duration-150"
                           title="Delete"
