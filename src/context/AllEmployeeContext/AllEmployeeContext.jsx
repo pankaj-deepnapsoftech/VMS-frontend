@@ -53,7 +53,6 @@ const AllEmployeeContextProvider = ({ children }) => {
 		}
 	}
 
-
 	const EmployeeTasks = async () => {
 		setLoading(true);
 		try {
@@ -83,7 +82,6 @@ const AllEmployeeContextProvider = ({ children }) => {
 		}
 	}
 
-
 	const VerifyEmployee = async (id) => {
 
 		const toastId = toast.loading("Loading...");
@@ -100,7 +98,6 @@ const AllEmployeeContextProvider = ({ children }) => {
 
 		}
 	}
-
 
 	const UploadDetailedReport = async (id, data) => {
 		//console.log(data, "pdf data")
@@ -124,7 +121,7 @@ const AllEmployeeContextProvider = ({ children }) => {
 			toast.success(res.data.message);
 			AllEmployee();
 			AllClientSME();
-			
+
 		} catch (error) {
 			toast.error(error.response.data.message)
 		}
