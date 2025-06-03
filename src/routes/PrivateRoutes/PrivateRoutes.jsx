@@ -21,6 +21,7 @@ import Devices from "@/pages/DevicesTable";
 import ApplicationSoftwareInventoryTable from "@/pages/ApplicationSoftwareTable";
 import RiskRatingGuide from "@/pages/RiskRatingGuide";
 import ClientCISO from "@/pages/ClientCiso";
+import NewUser from "@/pages/NewUser";
 
 export const PrivateRoutes = [
   {
@@ -80,11 +81,14 @@ export const PrivateRoutes = [
     path: "/asset-inventory",
     element: <AssertInventory />,
     children: [
-      { path: "", element: <Devices /> }, 
-      { path: "software-application", element: <ApplicationSoftwareInventoryTable /> },
+      { path: "", element: <Devices /> },
+      {
+        path: "software-application",
+        element: <ApplicationSoftwareInventoryTable />,
+      },
       { path: "data-table", element: <DataTable /> },
       { path: "risk-rating-table", element: <RiskRatingTable /> },
-       { path: "risk-rating-guide", element: <RiskRatingGuide /> },
+      { path: "risk-rating-guide", element: <RiskRatingGuide /> },
     ],
   },
   {
@@ -101,6 +105,10 @@ export const PrivateRoutes = [
   },
   {
     path: "/ClientCiso",
-    element:<ClientCISO/>,
-  }
+    element: <ClientCISO />,
+  },
+  {
+    path: "/newuser",
+    element: <NewUser />,
+  },
 ];

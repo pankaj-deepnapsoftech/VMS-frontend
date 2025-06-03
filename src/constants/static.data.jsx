@@ -196,6 +196,7 @@ export const products = [
         icon: Settings,
       },
       { title: "ClientCiso", route: "/ClientCiso", icon: TbReport },
+       { title: "New User", route: "/newuser", icon: Users },
     ],
     allowedCISO: [
       { title: "All Employee", route: "/all-employee", icon: FaPerson },
