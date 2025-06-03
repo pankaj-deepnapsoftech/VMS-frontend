@@ -1,18 +1,14 @@
 import { useFormik } from "formik";
 import { Eye, EyeOff } from "lucide-react";
-import { useAuthContext, useScheduleAssessmentContext } from "@/context";
+import { useAuthContext } from "@/context";
 import { Link } from "react-router-dom";
 import { SignUpValidation } from "@/Validation/AuthValidation";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import SecurityQuestions from "./Secuirity";
 
 function SignUp() {
   const { loading } = useAuthContext();
-  const { GetOrgnization, getOrgnizationData } = useScheduleAssessmentContext();
 
-  useEffect(() => {
-    GetOrgnization();
-  }, []);
 
   const [showPassword, setShowPassword] = useState(false);
   const [showSecurityPage, setShowSecurityPage] = useState(false);
@@ -190,7 +186,7 @@ function SignUp() {
           </div> */}
 
           {/* Organization Field (only for ClientCISO) */}
-          {values.role === "ClientCISO" && (
+          {/* {values.role === "ClientCISO" && (
             <div>
               <label className="block text-sm text-gray-400 mb-1">
                 Organization
@@ -210,10 +206,10 @@ function SignUp() {
                 </p>
               )}
             </div>
-          )}
+          )} */}
 
           {/* Organization Field (only for ClientSME) */}
-          {values.role === "ClientSME" && (
+          {/* {values.role === "ClientSME" && (
             <div>
               <label className="block text-sm text-gray-400 mb-1">
                 Organization
@@ -239,7 +235,7 @@ function SignUp() {
                 </p>
               )}
             </div>
-          )}
+          )} */}
 
           {/* Submit Button */}
           <button
