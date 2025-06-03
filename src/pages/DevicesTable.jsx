@@ -4,7 +4,6 @@ import { MdDeleteForever } from "react-icons/md";
 import DevicesData from "./DevicesData";
 import { DeviceContext } from "@/context/DevicesContext/DevicesContext";
 
-
 const DevicesTable = () => {
   const [showModal, setShowModal] = useState(false);
   const [editableData, setEditableData] = useState(null);
@@ -40,17 +39,33 @@ const DevicesTable = () => {
               <th className="px-4 py-3  whitespace-nowrap  ">Asset Name</th>
               <th className="px-4 py-3  whitespace-nowrap  ">Asset Type</th>
               <th className="px-4 py-3  whitespace-nowrap  ">Description</th>
-              <th className="px-4 py-3  whitespace-nowrap  ">Physical Location</th>
-              <th className="px-4 py-3  whitespace-nowrap  ">Cloud Service Provider</th>
-              <th className="px-4 py-3  whitespace-nowrap  ">Approved to connect to network?</th>
-              <th className="px-4 py-3  whitespace-nowrap  ">Hardware secured?</th>
-              <th className="px-4 py-3  whitespace-nowrap  ">Asset Components</th>
+              <th className="px-4 py-3  whitespace-nowrap  ">
+                Physical Location
+              </th>
+              <th className="px-4 py-3  whitespace-nowrap  ">
+                Cloud Service Provider
+              </th>
+              <th className="px-4 py-3  whitespace-nowrap  ">
+                Approved to connect to network?
+              </th>
+              <th className="px-4 py-3  whitespace-nowrap  ">
+                Hardware secured?
+              </th>
+              <th className="px-4 py-3  whitespace-nowrap  ">
+                Asset Components
+              </th>
               <th className="px-4 py-3  whitespace-nowrap  ">Machine Name</th>
-              <th className="px-4 py-3  whitespace-nowrap  ">Hardware Address</th>
-              <th className="px-4 py-3  whitespace-nowrap  ">Network Address</th>
+              <th className="px-4 py-3  whitespace-nowrap  ">
+                Hardware Address
+              </th>
+              <th className="px-4 py-3  whitespace-nowrap  ">
+                Network Address
+              </th>
               <th className="px-4 py-3  whitespace-nowrap  ">Supplier</th>
               <th className="px-4 py-3  whitespace-nowrap  ">Approved</th>
-              <th className="px-4 py-3  whitespace-nowrap   text-center">Action</th>
+              <th className="px-4 py-3  whitespace-nowrap   text-center">
+                Action
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
@@ -59,21 +74,51 @@ const DevicesTable = () => {
                 key={i}
                 className="hover:bg-gray-500  bg-table text-white transition-colors duration-200"
               >
-                <td className="px-4 py-3 text-[15px] whitespace-nowrap">{ele.unit_id}</td>
-                <td className="px-4 py-3 text-[15px] whitespace-nowrap">{ele.asset_custodian_name}</td>
-                <td className="px-4 py-3 text-[15px] whitespace-nowrap">{ele.asset_name}</td>
-                <td className="px-4 py-3 text-[15px] whitespace-nowrap">{ele.asset_type}</td>
-                <td className="px-4 py-3 text-[15px] whitespace-nowrap">{ele.description}</td>
-                <td className="px-4 py-3 text-[15px] whitespace-nowrap">{ele.physical_location}</td>
-                <td className="px-4 py-3 text-[15px] whitespace-nowrap">{ele.cloud_service_provider}</td>
-                <td className="px-4 py-3 text-[15px] whitespace-nowrap">{ele.approved_connect || "N/A"}</td>
-                <td className="px-4 py-3 text-[15px] whitespace-nowrap">{ele.hardware_securend}</td>
-                <td className="px-4 py-3 text-[15px] whitespace-nowrap">{ele.asset_components}</td>
-                <td className="px-4 py-3 text-[15px] whitespace-nowrap">{ele.machine_name}</td>
-                <td className="px-4 py-3 text-[15px] whitespace-nowrap">{ele.hardware_address}</td>
-                <td className="px-4 py-3 text-[15px] whitespace-nowrap">{ele.network_address}</td>
-                <td className="px-4 py-3 text-[15px] whitespace-nowrap">{ele.supplier}</td>
-                <td className="px-4 py-3 text-[15px] whitespace-nowrap">{ele.asset_custodian_contact}</td>
+                <td className="px-4 py-3 text-[15px] whitespace-nowrap">
+                  {ele.unit_id}
+                </td>
+                <td className="px-4 py-3 text-[15px] whitespace-nowrap">
+                  {ele.asset_custodian_name}
+                </td>
+                <td className="px-4 py-3 text-[15px] whitespace-nowrap">
+                  {ele.asset_name}
+                </td>
+                <td className="px-4 py-3 text-[15px] whitespace-nowrap">
+                  {ele.asset_type}
+                </td>
+                <td className="px-4 py-3 text-[15px] whitespace-nowrap">
+                  {ele.description}
+                </td>
+                <td className="px-4 py-3 text-[15px] whitespace-nowrap">
+                  {ele.physical_location}
+                </td>
+                <td className="px-4 py-3 text-[15px] whitespace-nowrap">
+                  {ele.cloud_service_provider}
+                </td>
+                <td className="px-4 py-3 text-[15px] whitespace-nowrap">
+                  {ele.approved_connect || "N/A"}
+                </td>
+                <td className="px-4 py-3 text-[15px] whitespace-nowrap">
+                  {ele.hardware_securend}
+                </td>
+                <td className="px-4 py-3 text-[15px] whitespace-nowrap">
+                  {ele.asset_components}
+                </td>
+                <td className="px-4 py-3 text-[15px] whitespace-nowrap">
+                  {ele.machine_name}
+                </td>
+                <td className="px-4 py-3 text-[15px] whitespace-nowrap">
+                  {ele.hardware_address}
+                </td>
+                <td className="px-4 py-3 text-[15px] whitespace-nowrap">
+                  {ele.network_address}
+                </td>
+                <td className="px-4 py-3 text-[15px] whitespace-nowrap">
+                  {ele.supplier}
+                </td>
+                <td className="px-4 py-3 text-[15px] whitespace-nowrap">
+                  {ele.asset_custodian_contact}
+                </td>
                 <td className="p-2 flex items-center justify-center relative top-2 gap-2">
                   <button
                     aria-label="Edit"
@@ -101,8 +146,9 @@ const DevicesTable = () => {
 
       <div className="w-full flex justify-center gap-4 items-center my-16">
         <button
-          className={`px-4 py-3 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""
-            }`}
+          className={`px-4 py-3 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white border rounded-md ${
+            page === 1 ? "opacity-50 cursor-not-allowed" : ""
+          }`}
           onClick={() => setPage(page - 1)}
           disabled={page === 1}
         >
