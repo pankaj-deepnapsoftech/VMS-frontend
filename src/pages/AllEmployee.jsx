@@ -20,6 +20,7 @@ export default function AllEmployee() {
     setPage,
     VerifyEmployee,
     AllEmployee,
+    DeleteMultipleData,
     DeleteData,
     AllClientSME,
   } = useAllEmployeeContext();
@@ -57,6 +58,11 @@ export default function AllEmployee() {
       setIsModalOpen(false);
     },
   });
+
+  const deleteData = async () => {
+    console.log("ids", deleteList);
+    DeleteMultipleData(deleteList);
+  };
 
   const handleChangeStatus = (type, id) => {
     switch (type) {

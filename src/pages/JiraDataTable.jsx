@@ -402,6 +402,6 @@ export const JiraDataTable = () => {
       )}
     </Suspense>
   );
-};
+}; 
 
 export default JiraDataTable;

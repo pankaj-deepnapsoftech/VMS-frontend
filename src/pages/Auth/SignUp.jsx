@@ -137,7 +137,7 @@ function SignUp() {
           </div>
 
           {/* Role */}
-          <div>
+          {/* <div>
             <label className="block text-sm text-gray-400 mb-1">Role</label>
             <select
               name="role"
@@ -155,7 +155,7 @@ function SignUp() {
             {errors.role && touched.role && (
               <p className="text-sm text-red-400 mt-1">{errors.role}</p>
             )}
-          </div>
+          </div> */}
 
           {/* Organization Field (only for ClientCISO) */}
           {values.role === "ClientCISO" && (

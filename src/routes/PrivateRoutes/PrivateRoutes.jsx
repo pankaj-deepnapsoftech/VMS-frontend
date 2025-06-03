@@ -20,6 +20,7 @@ import RiskRatingTable from "@/pages/RiskRatingTable";
 import Devices from "@/pages/DevicesTable";
 import ApplicationSoftwareInventoryTable from "@/pages/ApplicationSoftwareTable";
 import RiskRatingGuide from "@/pages/RiskRatingGuide";
+import ClientCISO from "@/pages/ClientCiso";
 
 export const PrivateRoutes = [
   {
@@ -98,4 +99,8 @@ export const PrivateRoutes = [
     path: "/application",
     element: <ApplicationSoftwareInventory />,
   },
+  {
+    path: "/ClientCiso",
+    element:<ClientCISO/>,
+  }
 ];
