@@ -25,40 +25,61 @@ function SignIn() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 px-4">
-      {/* Sign In Heading - OUTSIDE Card */}
-      <h1 className="text-4xl font-extrabold text-white mb-2">Welcome</h1>
-      <p className="text-blue-300 text-sm">
-        Login to the Virtual Risk Operation Center (VROC)
-      </p>
+    <div className="flex">
+      {/* left side */}
+      <div className="bg-gray-400 p-8 w-2/3">
+        <h2 className="text-white text-lg font-medium mb-5">GROUP-IB</h2>
+        <span className="text-white text-5xl font-bold block mb-1">Products</span>
+        <p className="text-sm">Group-IB's security ecosystem provides comprehensive protection for your IT infrastructure based on our unique cyber intelligence, in-depth attack analysis, and effective incident response.</p>
+        <div className="flex">
+          {/* left */}
+          <div className="w-1/2">
+            <div className="bg-gray-300 my-6 rounded-xl p-4">
+              <h3 className="text-black font-black text-xl">Threat Intelligence</h3>
+              <p className="mt-2.5 mb-2 text-xs">Attribution-based Threat intelligence for analysis and managing adversaries before they effect your business.</p>
+              <button className="bg-blue-600 text-white rounded-lg p-2 text-xs font-medium mt-2">Try demo</button>
+            </div>
+            <ul className="flex flex-col gap-5 text-white font-bold text-lg">
+              <li>Managed XDR</li>
+              <li>Fraud Protection</li>
+              <li>Digital Risk Protection</li>
+            </ul>
+          </div>
 
-      {/* Card Box */}
-      <div className="w-full max-w-md bg-gray-800 rounded-2xl shadow-lg p-8">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-blue-400 mb-6">Sign in</h1>
+          {/* right */}
+          <div className="w-1/2 relative">
+              <img src="\public\singInPhoto.png" alt="sign in photo image" className="absolute w-400"/>
+          </div>
         </div>
+      </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+      {/* right side */}
+      <div className="min-h-screen flex flex-col items-center justify-center w-1/3 bg-black px-4">
+        <div className="text-left mb-8">
+          <h1 className="text-4xl font-bold text-white mb-2">Sign in</h1>
+          <p className="text-gray-100 text-xs">
+            Please sing in using your organisation SSO credentials.
+          </p>
+        </div>
+        {/* Card Box */}
+        <form onSubmit={handleSubmit} className="space-y-2 text-sm">
           {/* Email Field */}
           <div>
-            <label className="block text-sm text-gray-400 mb-1">Email</label>
             <input
               type="email"
               value={values.email}
               onChange={handleChange}
               onBlur={handleBlur}
               name="email"
-              placeholder="Enter your email"
-              className="w-full bg-gray-900 text-white rounded-lg px-4 py-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Email"
+              className="w-full bg-gray-700 text-white rounded-lg p-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.email && touched.email && (
               <p className="text-sm text-red-400 mt-1">{errors.email}</p>
             )}
           </div>
-
           {/* Password Field */}
           <div>
-            <label className="block text-sm text-gray-400 mb-1">Password</label>
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
@@ -66,8 +87,8 @@ function SignIn() {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 name="password"
-                placeholder="Enter your password"
-                className="w-full bg-gray-900 text-white rounded-lg px-4 py-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Password"
+                className="w-full bg-gray-800 text-white rounded-lg p-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <button
                 type="button"
@@ -81,13 +102,8 @@ function SignIn() {
               <p className="text-sm text-red-400 mt-1">{errors.password}</p>
             )}
           </div>
-
           {/* Checkbox + Forgot Password */}
-          <div className="flex items-center justify-between text-sm text-gray-400">
-            <label className="flex items-center gap-2">
-              <input type="checkbox" className="accent-blue-500" />
-              Remember me
-            </label>
+          <div className="flex flex-row-reverse items-center justify-between text-sm text-gray-400">
             <Link
               to="/forgot-password"
               className="text-blue-400 hover:underline"
@@ -95,7 +111,6 @@ function SignIn() {
               Forgot password?
             </Link>
           </div>
-
           {/* reCAPTCHA */}
           <div className="pt-1">
             <ReCAPTCHA
@@ -103,20 +118,17 @@ function SignIn() {
               onChange={handleOnChange}
             />
           </div>
-
           {/* Submit Button */}
           <button
             type="submit"
             disabled={loading || disabled}
-            className={`w-full py-3 px-4 rounded-lg text-white font-medium transition-all duration-300 ${
-              loading || disabled
-                ? "bg-gray-600 cursor-not-allowed"
-                : "bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600"
-            }`}
+            className={`w-full p-3 rounded-lg text-white font-medium transition-all duration-300 ${loading || disabled
+              ? "bg-blue-600 cursor-not-allowed"
+              : "bg-gradient-to-r from-gray-200 to-gray-100 hover:from-gray-300 hover:to-gray-200"
+              }`}
           >
-            {loading ? "Logging in..." : "Login"}
+            {loading ? "Signing in..." : "Sign in"}
           </button>
-
           {/* Sign Up Link */}
           <p className="text-center text-sm text-gray-400 mt-4">
             Not registered yet?{" "}
