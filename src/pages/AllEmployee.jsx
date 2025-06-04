@@ -150,18 +150,21 @@ export default function AllEmployee() {
                           <p className="text-red-400 text-sm">{errors.department}</p>
                         )}
 
-                        {authenticate?.role !== "Admin" &&
+                        {authenticate?.role === "Admin" &&
                           <>
                             <label>Role</label>
                             <select
                               name="role"
                             >
-                              // option change logic has not ben implemented
+
+                              <option selected disabled value="" > Select role</option>
                               {
                                 options.map((option) => (
-                                  <option value={option}>
-                                    {option}
-                                  </option>
+                                  <>
+                                    <option key={option} value={option}>
+                                      {option}
+                                    </option>
+                                  </>
                                 ))
                               }
                             </select>
