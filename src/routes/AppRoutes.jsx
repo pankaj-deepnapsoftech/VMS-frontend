@@ -53,7 +53,7 @@ const AppRoutes = () => {
         <>
           <Route path="/" element={<LandingPage />} />
           <Route path="/sign-in" element={<SignIn />} />
-          <Route path="/sign-up" element={<SignUp />} />
+          {/* <Route path="/sign-up" element={<SignUp />} /> */}
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/verify-otp" element={<VerifyOtp />} />

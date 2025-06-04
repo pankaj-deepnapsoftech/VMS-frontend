@@ -188,7 +188,7 @@ export const products = [
     gradient: "from-[#fceabb] to-[#f8b500]",
     allowedPath: [
       { title: "Users", route: "/all-employee", icon: Users },
-      { title: "Customers", route: "/all-customer", icon: UserCircle },
+      { title: "Tenent", route: "/all-customer", icon: UserCircle },
       { title: "Third Party Data", route: "/jira-data", icon: Table },
       {
         title: "Third Party Config",

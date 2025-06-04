@@ -100,7 +100,7 @@ export default function AllCustomer() {
                   className="px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 flex items-center gap-2"
                 >
                   <BiPlus className="h-6 w-6" />
-                  Add Customer
+                  Add Tenent
                 </button>
               </div>
             )}
@@ -110,7 +110,7 @@ export default function AllCustomer() {
                 <div className="bg-background rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
                   <div className="flex justify-between items-center border-b p-4 bg-table">
                     <h2 className="text-lg font-semibold text-gray-200">
-                      Add Customer
+                      Add Tenent
                     </h2>
                     <button onClick={() => setIsModalOpen(false)}>
                       <MdClose className="h-6 w-6 text-gray-100" />
