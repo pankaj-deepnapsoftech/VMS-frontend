@@ -28,9 +28,9 @@ function SignIn() {
     <div className="flex">
       {/* left side */}
       <div className="bg-gray-400 p-8 w-2/3 relative overflow-x-hidden">
-        <h2 className="text-white text-lg font-medium mb-5">GROUP-IB</h2>
+        <h2 className="text-white text-lg font-medium mb-5">Secure&</h2>
         <span className="text-white text-5xl font-bold block mb-1">Products</span>
-        <p className="text-sm">Group-IB's security ecosystem provides comprehensive protection for your IT infrastructure based on our unique cyber intelligence, in-depth attack analysis, and effective incident response.</p>
+        <p className="text-sm">Secure& security ecosystem provides comprehensive protection for your IT infrastructure based on our unique cyber intelligence, in-depth attack analysis, and effective incident response.</p>
         <div className="flex">
           {/* left */}
           <div className="w-1/2">
