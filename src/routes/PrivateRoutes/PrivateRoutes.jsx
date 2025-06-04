@@ -111,4 +111,5 @@ export const PrivateRoutes = [
     path: "/newuser",
     element: <NewUser />,
   },
+  
 ];
