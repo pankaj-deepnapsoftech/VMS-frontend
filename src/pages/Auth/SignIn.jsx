@@ -27,7 +27,7 @@ function SignIn() {
   return (
     <div className="flex">
       {/* left side */}
-      <div className="bg-gray-400 p-8 w-2/3">
+      <div className="bg-gray-400 p-8 w-2/3 relative overflow-x-hidden">
         <h2 className="text-white text-lg font-medium mb-5">GROUP-IB</h2>
         <span className="text-white text-5xl font-bold block mb-1">Products</span>
         <p className="text-sm">Group-IB's security ecosystem provides comprehensive protection for your IT infrastructure based on our unique cyber intelligence, in-depth attack analysis, and effective incident response.</p>
@@ -47,8 +47,8 @@ function SignIn() {
           </div>
 
           {/* right */}
-          <div className="w-1/2 relative">
-              <img src="\public\singInPhoto.png" alt="sign in photo image" className="absolute w-400"/>
+          <div className="w-1/2  ">
+              <img src="\public\singInPhoto.png" alt="sign in photo image" className="absolute w-400 "/>
           </div>
         </div>
       </div>
@@ -64,7 +64,7 @@ function SignIn() {
         {/* Card Box */}
         <form onSubmit={handleSubmit} className="space-y-2 text-sm">
           {/* Email Field */}
-          <div>
+          <div >
             <input
               type="email"
               value={values.email}
@@ -72,7 +72,7 @@ function SignIn() {
               onBlur={handleBlur}
               name="email"
               placeholder="Email"
-              className="w-full bg-gray-700 text-white rounded-lg p-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-input text-white rounded-lg p-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.email && touched.email && (
               <p className="text-sm text-red-400 mt-1">{errors.email}</p>
@@ -88,7 +88,7 @@ function SignIn() {
                 onBlur={handleBlur}
                 name="password"
                 placeholder="Password"
-                className="w-full bg-gray-800 text-white rounded-lg p-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full bg-input text-white rounded-lg p-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <button
                 type="button"
