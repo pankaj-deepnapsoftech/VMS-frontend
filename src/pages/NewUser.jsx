@@ -18,6 +18,7 @@ import { RiDeleteBinFill } from "react-icons/ri";
 import { FaUser, FaEnvelope, FaPhone, FaLock, FaCompass } from "react-icons/fa";
 import { useFormik } from "formik";
 import { BaseValidationSchema } from "@/Validation/AuthValidation";
+import AssignTask from "@/modals/AssignTask";
 
 export default function NewUser() {
   const {
@@ -37,7 +38,7 @@ export default function NewUser() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [dataId, setDataId] = useState(null);
-
+ 
   useEffect(() => {
     if (authenticate?.role === "ClientCISO") {
       // Add your ClientCISO-specific function
@@ -183,6 +184,7 @@ export default function NewUser() {
           id={dataId}
         />
       )}
+      <AssignTask/>
     </>
   );
 }
