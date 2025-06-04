@@ -3,7 +3,7 @@
 import InputField from "@/components/InputField";
 import Loader from "@/components/Loader/Loader";
 import NoDataFound from "@/components/NoDataFound";
-import { useAllEmployeeContext, useAuthContext } from "@/context";
+import { useAllEmployeeContext, useAuthContext, useScheduleAssessmentContext } from "@/context";
 import { BaseValidationSchema } from "@/Validation/AuthValidation";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
@@ -24,6 +24,7 @@ export default function AllEmployee() {
     AllClientSME,
     DeleteUser
   } = useAllEmployeeContext();
+  const {getOrgnizationData} = useScheduleAssessmentContext()
 
   const { authenticate, token, Signup, ChangeStatus, runner } = useAuthContext();
 
@@ -47,14 +48,15 @@ export default function AllEmployee() {
       email: "",
       password: "",
       department: "",
-      role: authenticate?.role === "Admin" ? "Approved" : "ClientSME",
+      role: authenticate?.role === "Admin" ? "" : "ClientSME",
       owner: authenticate?.role === "Admin" ? "" : authenticate?._id,
       employee_approve: true,
       email_verification: true,
+      Organization: ""
     },
     validationSchema: BaseValidationSchema,
     onSubmit: (value) => {
-      Signup(value);
+      Signup(value,true);
       setIsModalOpen(false);
     },
   });
@@ -97,7 +99,7 @@ export default function AllEmployee() {
               <div className="fixed inset-0 bg-input bg-opacity-50 flex items-center justify-center p-4 z-10">
                 <div className="bg-background rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
                   <div className="flex justify-between items-center border-b p-4 bg-table">
-                    <h2 className="text-lg font-semibold text-gray-200">Add Employees</h2>
+                    <h2 className="text-lg font-semibold text-gray-200">Add User</h2>
                     <button onClick={() => setIsModalOpen(false)} className="text-gray-100 hover:text-gray-200">
                       <MdClose className="h-6 w-6" />
                     </button>
@@ -151,10 +153,14 @@ export default function AllEmployee() {
                         )}
 
                         {authenticate?.role === "Admin" &&
-                          <>
-                            <label>Role</label>
+                          <div className="w-full" >
+                            <label className="text-white " >Role</label>
                             <select
+                              className="w-full bg-input border py-2 rounded-lg text-white px-2 border-gray-600"
                               name="role"
+                              value={values.role}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
                             >
 
                               <option selected disabled value="" > Select role</option>
@@ -168,10 +174,35 @@ export default function AllEmployee() {
                                 ))
                               }
                             </select>
-                          </>}
-                        {touched.role && errors.role && (
-                          <p className="text-red-400 text-sm">{errors.role}</p>
-                        )}
+                            {touched.role && errors.role && <p className="text-red-500" >{errors.role}</p>}
+                          </div>}
+
+                        {values.role === "ClientSME" && <div>
+                          <label htmlFor="role" className="block text-sm text-white font-medium  mb-1">
+                            Select Organization
+                          </label>
+                          <select id='role' name='owner' value={values.owner} onBlur={handleBlur} onChange={handleChange} className='bg-input w-full py-2 rounded-lg px-3 text-white' >
+                            <option selected disabled value="" >Select Organization</option>
+                          {getOrgnizationData.map((item)=><option key={item._id} value={item._id}>
+                            {item?.Organization}
+                          </option>)}
+                          </select>
+                          {touched.owner && errors.owner && <p className='text-red-500' >{errors.owner}</p>}
+                        </div>}
+
+                        {values.role === "ClientCISO" && <div>
+                          <label htmlFor="role" className="block text-sm text-white font-medium  mb-1">
+                            Organization Name
+                          </label>
+                          <input
+                            className='bg-input w-full py-2 rounded-lg px-3'
+                            placeholder='Enter Organization Name'
+                            name="Organization"
+                            value={values.Organization} onBlur={handleBlur} onChange={handleChange}
+                          />
+                          {touched.Organization && errors.Organization && <p className='text-red-500' >{errors.Organization}</p>}
+                        </div>}
+
 
                         <InputField
                           label="Phone Number"
