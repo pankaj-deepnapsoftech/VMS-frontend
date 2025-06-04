@@ -118,7 +118,7 @@ export default function AllCustomer() {
                   </div>
                   <form onSubmit={handleSubmit} className="p-10 space-y-5">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <InputField
+                      {/* <InputField
                         label="Full Name"
                         type="text"
                         icon={FaUser}
@@ -146,7 +146,7 @@ export default function AllCustomer() {
                       />
                       {touched.email && errors.email && (
                         <p className="text-red-400 text-sm">{errors.email}</p>
-                      )}
+                      )} */}
 
                       <InputField
                         label="Organization"
@@ -162,7 +162,7 @@ export default function AllCustomer() {
                         <p className="text-red-400 text-sm">{errors.Organization}</p>
                       )}
 
-                      <InputField
+                      {/* <InputField
                         label="Phone Number"
                         type="text"
                         icon={FaPhone}
@@ -174,7 +174,7 @@ export default function AllCustomer() {
                       />
                       {touched.phone && errors.phone && (
                         <p className="text-red-400 text-sm">{errors.phone}</p>
-                      )}
+                      )} */}
 
                       <InputField
                         label="Password"

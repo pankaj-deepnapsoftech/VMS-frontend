@@ -12,6 +12,8 @@ import { FaCompass, FaEnvelope, FaLock, FaPhone, FaUser } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import { RiDeleteBinFill } from "react-icons/ri";
 
+const options = ['ClientCISO', 'Assessor', 'ClientSME'];
+
 export default function AllEmployee() {
   const {
     loading,
@@ -87,7 +89,7 @@ export default function AllEmployee() {
                   className="px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 flex flex-row"
                 >
                   <BiPlus className="h-6 w-6 mr-1" />
-                  Add Employee
+                  Add User
                 </button>
               </div>
             )}
@@ -133,7 +135,7 @@ export default function AllEmployee() {
                           <p className="text-red-400 text-sm">{errors.email}</p>
                         )}
 
-                     { authenticate?.role !== "Admin" &&   <InputField
+                        {authenticate?.role !== "Admin" && <InputField
                           label="Department"
                           type="text"
                           showPassword={false}
@@ -146,6 +148,26 @@ export default function AllEmployee() {
                         />}
                         {touched.department && errors.department && (
                           <p className="text-red-400 text-sm">{errors.department}</p>
+                        )}
+
+                        {authenticate?.role !== "Admin" &&
+                          <>
+                            <label>Role</label>
+                            <select
+                              name="role"
+                            >
+                              // option change logic has not ben implemented
+                              {
+                                options.map((option) => (
+                                  <option value={option}>
+                                    {option}
+                                  </option>
+                                ))
+                              }
+                            </select>
+                          </>}
+                        {touched.role && errors.role && (
+                          <p className="text-red-400 text-sm">{errors.role}</p>
                         )}
 
                         <InputField
