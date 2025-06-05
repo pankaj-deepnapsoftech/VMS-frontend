@@ -17,6 +17,7 @@ import { ClientCisoRoutes } from "./PrivateRoutes/ClientCisoRoutes";
 import Pricing from "@/pages/Auth/Pricing";
 import Solutions from "@/pages/Auth/Solutions";
 import LandingPage from "@/pages/Auth/LandingPage";
+import AddCompany from "@/pages/AddCompany";
 
 const AppRoutes = () => {
   const { authenticate, token } = useAuthContext();
@@ -77,6 +78,7 @@ const AppRoutes = () => {
         </Route>
       )}
 
+      <Route path="/add-company" element={<AddCompany />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
