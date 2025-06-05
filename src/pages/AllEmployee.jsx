@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { FaCompass, FaEnvelope, FaLock, FaPhone, FaUser } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
-import { RiDeleteBinFill } from "react-icons/ri";
+import { RiDeleteBinFill,RiEdit2Line  } from "react-icons/ri";
 
 const options = ['ClientCISO', 'Assessor', 'ClientSME'];
 
@@ -317,7 +317,7 @@ export default function AllEmployee() {
                           </button>
                         )}
                       </td>
-                      <td className="px-4 py-3 border">
+                      <td className="px-4 py-3 flex gap-2 border">
                         <button
                           onClick={() => {
                             DeleteUser(user._id);
@@ -326,6 +326,15 @@ export default function AllEmployee() {
                           title="Delete"
                         >
                           <RiDeleteBinFill className="h-4 w-4" />
+                        </button>
+                        <button
+                          onClick={() => {
+                            DeleteUser(user._id);
+                          }}
+                          className="text-blue-600 hover:text-blue-800 transition-colors duration-150"
+                          title="Delete"
+                        >
+                          <RiEdit2Line className="h-4 w-4" />
                         </button>
                       </td>
                     </tr>
