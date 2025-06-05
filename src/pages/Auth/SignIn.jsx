@@ -116,14 +116,6 @@ function SignIn() {
           >
             {loading ? "Logging in..." : "Login"}
           </button>
-
-          {/* Sign Up Link */}
-          <p className="text-center text-sm text-gray-400 mt-4">
-            Not registered yet?{" "}
-            <Link to="/sign-up" className="text-blue-400 hover:underline">
-              Create an account
-            </Link>
-          </p>
         </form>
       </div>
     </div>
