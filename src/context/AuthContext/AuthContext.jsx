@@ -74,7 +74,7 @@ const AuthContextProvider = ({ children }) => {
   const Signup = async (data, navigation) => {
     const toastId = toast.loading("Loading...");
 
-    console.log("this is context data",data);
+    console.log("this is context data", data);
 
     let newData;
 
@@ -94,24 +94,17 @@ const AuthContextProvider = ({ children }) => {
       newData = data
     }
 
-    console.log("this is new Data", newData);
     setLoading(true);
     try {
       const res = await AxiosHandler.post("/auth/create", newData);
 
-      if (authenticate?.role === "ClientCISO") {
+      if (!navigation) {
+        AxiosHandler.defaults.headers.authorization = `Bearer ${res.data.token}`;
+        Cookies.set("token", res.data.token, { expires: 1 });
+        setToken(res.data.token);
         navigate("/");
       }
-      else {
-        if (!navigation) {
-          AxiosHandler.defaults.headers.authorization = `Bearer ${res.data.token}`;
-          Cookies.set("token", res.data.token, { expires: 1 });
-        }
-        setToken(res.data.token);
-        if (!navigation) {
-          navigate("/verify-otp");
-        }
-      }
+
       toast.dismiss(toastId);
       toast.success(res.data.message);
 
@@ -260,7 +253,7 @@ const AuthContextProvider = ({ children }) => {
     }
   }
 
- 
+
 
 
   useEffect(() => {

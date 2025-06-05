@@ -3,7 +3,7 @@ import InputField from "@/components/InputField";
 import ReportModal from "@/components/modal/ReportModal";
 import NoDataFound from "@/components/NoDataFound";
 import { AxiosHandler } from "@/config/AxiosConfig";
-import { useAuthContext } from "@/context";
+import { useAuthContext, useScheduleAssessmentContext } from "@/context";
 import { Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -13,10 +13,11 @@ import { MdClose } from "react-icons/md";
 import { RiDeleteBinFill } from "react-icons/ri";
 
 const Reports = () => {
+
+  const {getOrgnizationData:orgData} = useScheduleAssessmentContext()
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [orgData, setOrgData] = useState([]);
   const [reportData, setReportData] = useState([]);
   const [filterData, setFilterData] = useState([]);
 
@@ -55,22 +56,9 @@ const Reports = () => {
     }
   };
 
-  const fetchOrganization = async (_search = "") => {
-    if (!token) return;
 
-    setLoading(true);
-    try {
-      const response = await AxiosHandler.get(`/auth/all-orgs`);
-      setOrgData(response.data.data);
-    } catch (error) {
-      console.error("Error fetching organizations:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   useEffect(() => {
-    fetchOrganization();
     fetchReportData();
   }, []);
 

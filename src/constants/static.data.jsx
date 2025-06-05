@@ -187,16 +187,14 @@ export const products = [
     desc: "Admin control panel for team and roles",
     gradient: "from-[#fceabb] to-[#f8b500]",
     allowedPath: [
-      { title: "Employees", route: "/all-employee", icon: Users },
-      { title: "Customers", route: "/all-customer", icon: UserCircle },
+      { title: "Users", route: "/all-employee", icon: Users },
+      { title: "Tenent", route: "/all-customer", icon: UserCircle },
       { title: "Third Party Data", route: "/jira-data", icon: Table },
       {
         title: "Third Party Config",
         route: "/third-party-config",
         icon: Settings,
       },
-      { title: "Client SME", route: "/client-Sme", icon: TbReport },
-       { title: "New User", route: "/newuser", icon: Users },
     ],
     allowedCISO: [
       { title: "All Employee", route: "/all-employee", icon: FaPerson },

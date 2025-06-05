@@ -18,6 +18,7 @@ import { RiDeleteBinFill } from "react-icons/ri";
 import { FaUser, FaEnvelope, FaPhone, FaLock, FaCompass } from "react-icons/fa";
 import { useFormik } from "formik";
 import { BaseValidationSchema } from "@/Validation/AuthValidation";
+import AssignTask from "@/modals/AssignTask";
 
 export default function NewUser() {
   const {
@@ -32,12 +33,12 @@ export default function NewUser() {
 
   const { authenticate, token, Signup, runner } = useAuthContext();
 
-  const { VerifyEmployee,newUser } = useAllEmployeeContext();
+  const { VerifyEmployee,newUser,DeleteUser } = useAllEmployeeContext();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [dataId, setDataId] = useState(null);
-
+ 
   useEffect(() => {
     if (authenticate?.role === "ClientCISO") {
       // Add your ClientCISO-specific function
@@ -139,7 +140,7 @@ export default function NewUser() {
                       <td className="px-4 py-3 border">
                         <button
                           onClick={() => {
-                            DeleteData(item.issueId);
+                            DeleteUser(user._id);
                           }}
                           className="text-red-600 hover:text-red-800 transition-colors ml-5 duration-150"
                           title="Delete"
@@ -183,6 +184,7 @@ export default function NewUser() {
           id={dataId}
         />
       )}
+      <AssignTask/>
     </>
   );
 }

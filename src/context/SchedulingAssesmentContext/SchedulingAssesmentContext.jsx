@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { AxiosHandler } from "@/config/AxiosConfig";
 import { useAllEmployeeContext, useAuthContext } from "..";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 
@@ -147,6 +147,10 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 			toast.error(error?.response?.data?.message);
 		}
 	};
+
+	useEffect(()=>{
+		GetOrgnization()
+	},[])
 
 	return (
 		<AssesmentContext.Provider value={{

@@ -100,7 +100,7 @@ export default function AllCustomer() {
                   className="px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 flex items-center gap-2"
                 >
                   <BiPlus className="h-6 w-6" />
-                  Add Customer
+                  Add Tenent
                 </button>
               </div>
             )}
@@ -110,7 +110,7 @@ export default function AllCustomer() {
                 <div className="bg-background rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
                   <div className="flex justify-between items-center border-b p-4 bg-table">
                     <h2 className="text-lg font-semibold text-gray-200">
-                      Add Customer
+                      Add Tenent
                     </h2>
                     <button onClick={() => setIsModalOpen(false)}>
                       <MdClose className="h-6 w-6 text-gray-100" />
@@ -118,7 +118,7 @@ export default function AllCustomer() {
                   </div>
                   <form onSubmit={handleSubmit} className="p-10 space-y-5">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <InputField
+                      {/* <InputField
                         label="Full Name"
                         type="text"
                         icon={FaUser}
@@ -146,7 +146,7 @@ export default function AllCustomer() {
                       />
                       {touched.email && errors.email && (
                         <p className="text-red-400 text-sm">{errors.email}</p>
-                      )}
+                      )} */}
 
                       <InputField
                         label="Organization"
@@ -162,7 +162,7 @@ export default function AllCustomer() {
                         <p className="text-red-400 text-sm">{errors.Organization}</p>
                       )}
 
-                      <InputField
+                      {/* <InputField
                         label="Phone Number"
                         type="text"
                         icon={FaPhone}
@@ -174,7 +174,7 @@ export default function AllCustomer() {
                       />
                       {touched.phone && errors.phone && (
                         <p className="text-red-400 text-sm">{errors.phone}</p>
-                      )}
+                      )} */}
 
                       <InputField
                         label="Password"
