@@ -101,7 +101,7 @@ const ExceptionContextProvider = ({ children }) => {
 			riskRating,
 			deferredVulnerableItems,
 			datafetchCount,
-			setdatafetchCount,
+			// setdatafetchCount,
 			ClientExcectionDataFiftyDays,
 			ClientDeferredVulnerableItems,
 			ClientRiskRating
