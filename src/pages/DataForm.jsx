@@ -182,7 +182,7 @@ const Data = ({ ShowModal, setShowModal, edittable }) => {
                   className="mt-1 w-full p-2 border bg-input border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
                 {touched.timeframe && errors.timeframe && (
-                  <p className="text-red-500 text-sm ">{errors.timeframe}</p>
+                  <p className="text-red-500 text-sm">{errors.timeframe}</p>
                 )}
               </div>
 
