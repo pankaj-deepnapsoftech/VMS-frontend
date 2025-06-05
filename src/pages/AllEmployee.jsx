@@ -33,6 +33,7 @@ export default function AllEmployee() {
   }, [token, page, runner]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editable,setEdiTable] = useState(null)
 
   const {
     values,
@@ -61,10 +62,7 @@ export default function AllEmployee() {
     },
   });
 
-  const deleteData = async () => {
-    console.log("ids", deleteList);
-    DeleteMultipleData(deleteList);
-  };
+
 
   const handleChangeStatus = (type, id) => {
     switch (type) {
@@ -99,7 +97,7 @@ export default function AllEmployee() {
               <div className="fixed inset-0 bg-input bg-opacity-50 flex items-center justify-center p-4 z-10">
                 <div className="bg-background rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
                   <div className="flex justify-between items-center border-b p-4 bg-table">
-                    <h2 className="text-lg font-semibold text-gray-200">Add User</h2>
+                    <h2 className="text-lg font-semibold text-gray-200">{"Add User"}</h2>
                     <button onClick={() => setIsModalOpen(false)} className="text-gray-100 hover:text-gray-200">
                       <MdClose className="h-6 w-6" />
                     </button>
@@ -329,7 +327,8 @@ export default function AllEmployee() {
                         </button>
                         <button
                           onClick={() => {
-                            DeleteUser(user._id); 
+                           setEdiTable(user);
+                           setIsModalOpen(true);
                           }}
                           className="text-blue-600 hover:text-blue-800 transition-colors duration-150"
                           title="Delete"
