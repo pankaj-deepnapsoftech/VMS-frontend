@@ -148,12 +148,12 @@ const DevicesTable = () => {
         <button
           className={`px-4 py-3 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white border rounded-md ${
             page === 1 ? "opacity-50 cursor-not-allowed" : ""
-          }`}
+          }`} 
           onClick={() => setPage(page - 1)}
           disabled={page === 1}
         >
           Previous
-        </button>
+        </button> 
         <span className="text-white">Page {page}</span>
         <button
           className="px-4 py-3 border rounded-md bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white"

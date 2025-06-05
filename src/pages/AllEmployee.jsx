@@ -215,7 +215,7 @@ export default function AllEmployee() {
                     <th className="px-4 py-1 text-sm border text-left">Approval Status</th>
                     <th className="px-4 py-1 text-sm border text-left">Status</th>
                     <th className="px-4 py-1 text-sm border text-left">Actions</th>
-                  </tr>
+                  </tr>  
                 </thead>
                 <tbody>
                   {allEmployeesData?.map((user, index) => (
