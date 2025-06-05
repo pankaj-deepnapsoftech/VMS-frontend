@@ -1,143 +1,133 @@
-import InputField from '@/components/InputField';
-import { useAuthContext, useJiraContext } from '@/context';
-import { JiraConfiigValidation } from '@/Validation/JiraConfigurationValidation';
-import { useFormik } from 'formik';
-import React, { useEffect, useState } from 'react';
-import { FaKey, FaGlobe, FaUser, FaCheckCircle } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+"use client"
 
-function ThirdPartyConfig() {
+import { useState } from "react"
 
-	const { JiraConfiguration,
-		ConfigData,
-		JiraConfigData,
-		datafetchCount,
-		setdatafetchCount,
-	} = useJiraContext()
+export default function Component() {
+  const [activeTab, setActiveTab] = useState("Platform")
+  const [searchQuery, setSearchQuery] = useState("")
+  const [filterValue, setFilterValue] = useState("ALL")
 
-
-	const { token } = useAuthContext()
-
-
-	useEffect(() => {
-		if (token && datafetchCount === 0) {
-
-			JiraConfigData()
-			setdatafetchCount(1)
-		}
-	}, [token])
-
-	const [isVerified, setIsVerified] = useState(false)
+  const integrations = [
+    {
+      id: 1,
+      name: "Jira",
+      icon: "🛡️",
+      installedOn: "24-Jan-2024",
+      category: "Open Source Jira",
+    },
+  
+  ]
 
 
 
-	const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
-		initialValues: { Domain: "", JIRA_USERNAME: "", JIRA_API_KEY: "" },
-		validationSchema: JiraConfiigValidation,
-		onSubmit: (value) => {
-			JiraConfiguration(value)
-		}
-	})
+  return (
+    <div className="min-h-screen bg-gray-800 text-white">
+      {/* Top Navigation */}
+  
 
+      <div className="flex">
+        {/* Sidebar */}
+       
 
-	return (
-		<div className="min-h-screen bg-[#2a2c2f] flex items-start pt-16 px-6 justify-center">
-			{(ConfigData === null || ConfigData?.length <= 0) ?
-				<div className="w-full md:w-1/2 p-8 md:p-12 shadow-xl rounded-2xl ">
-					<div className="mb-8">
-						<h1 className="text-3xl font-bold text-white mb-2">Jira Integration</h1>
-						<p className="text-gray-200">Welcome  Please enter your Jira details</p>
-					</div>
+        {/* Main Content */}
+        <main className="flex-1 p-6">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center space-x-4">
+              <h1 className="text-2xl font-semibold">Integrations</h1>
 
-					<form onSubmit={handleSubmit} className="space-y-6">
-						<InputField
-							label={"Domain"}
-							type={"text"}
-							showPassword={false}
-							icon={FaGlobe}
-							value={values.Domain}
-							onBlur={handleBlur}
-							onChange={handleChange}
-							placeholder="Enter your Domain Name"
-							name="Domain"
-						/>
-						{touched.Domain && errors.Domain && <p> {errors.Domain}</p>}
-						<InputField
-							type={"text"}
-							showPassword={false}
-							icon={FaUser}
-							value={values.JIRA_USERNAME}
-							onBlur={handleBlur}
-							onChange={handleChange}
-							placeholder="Enter your Jira Username"
-							name="JIRA_USERNAME"
-							label={"Jira Username"}
-						/>	
-						
-						{touched.JIRA_USERNAME && errors.JIRA_USERNAME && <p> {errors.JIRA_USERNAME}</p>}
-						<InputField
-							label={"Jira Api Key"}
-							type={"text"}
-							showPassword={false}
-							icon={FaKey}
-							value={values.JIRA_API_KEY}
-							onBlur={handleBlur}
-							onChange={handleChange}
-							placeholder="Enter your Jira Api Key"
-							name="JIRA_API_KEY"
-						/>
-						{touched.JIRA_API_KEY && errors.JIRA_API_KEY && <p> {errors.JIRA_API_KEY}</p>}
+              {/* Filter Dropdown */}
+              <div className="relative">
+                <select
+                  value={filterValue}
+                  onChange={(e) => setFilterValue(e.target.value)}
+                  className="bg-gray-600 text-white px-4 py-2 rounded-md border border-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none pr-8"
+                >
+                  <option value="ALL">ALL</option>
+                  <option value="Open Source Threat Intel">Open Source Threat Intel</option>
+                  <option value="Sandbox">Sandbox</option>
+                  <option value="Essentials">Essentials</option>
+                  <option value="IP Intel">IP Intel</option>
+                </select>
+                <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
+            </div>
 
-						<button
-							type="submit"
-							className="w-full bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white py-3 rounded-lg hover:bg-blue-700 transition duration-200"
-							// disabled={loading}
-							onSubmit={handleSubmit}
-						>
-							Submit
-						</button>
-					</form>
-				</div> :
-				<div className="w-full justify-center
-				 md:w-1/2 p-8 md:p-12 shadow-2xl rounded-2xl flex flex-wrap flex-col">
-					<div className="mb-8">
-						<div className='flex flex-row justify-start items-center'>
-							<FaCheckCircle className="text-green-500 text-2xl mr-4" />
-							<h1 className="text-3xl  font-bold text-gray-800 mb-2">Jira Integration</h1>
-						</div>
-						<hr className="py-2 text-black  " />
+            <div className="flex items-center space-x-4">
+              {/* Search */}
+              <div className="flex items-center bg-gray-600 rounded-md">
+                <div className="pl-3">
+                  <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  placeholder="Type to search"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="bg-transparent text-white placeholder-gray-400 px-3 py-2 focus:outline-none w-64"
+                />
+                <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-r-md transition-colors">
+                  Go
+                </button>
+              </div>
 
-						<p className="text-gray-600">Welcome  These are Your Jira details</p>
-					</div>
+              {/* New Integration Button */}
+              <button className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-md transition-colors flex items-center">
+                <span className="mr-2">+</span>
+                New Integration
+              </button>
+            </div>
+          </div>
 
+          {/* Integration Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {integrations
+              .filter((integration) => filterValue === "ALL" || integration.category === filterValue)
+              .filter((integration) => integration.name.toLowerCase().includes(searchQuery.toLowerCase()))
+              .map((integration) => (
+                <div key={integration.id} className="bg-gray-700 rounded-lg p-6 relative">
+                  {/* Three dots menu */}
+                  <button className="absolute top-4 right-4 text-gray-400 hover:text-white">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+                    </svg>
+                  </button>
 
-					<div className="flex flex-row items-center justify-start">
-						<FaGlobe className='text-blue-500 w-4 h-4 mr-2' />
-						<h2 className="text-lg font-bold   text-gray-600 ">
-							Domain
-						</h2>
-					</div>
-					<h3 className="text-base  font-medium text-gray-500 mb-2">{ConfigData?.Domain}</h3>
-					<div className="flex flex-row items-center justify-start">
-						<FaUser className='text-blue-500 w-4 h-4 mr-2' />
-						<h2 className="text-lg font-bold   text-gray-600 ">
-							Jira Username
-						</h2>
-					</div>
+                  {/* Integration Icon and Name */}
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mr-4 text-2xl">
+                      {integration.icon}
+                    </div>
+                    <h3 className="text-lg font-semibold">{integration.name}</h3>
+                  </div>
 
-					<h3 className="text-base   font-medium text-gray-500 mb-2">{ConfigData?.JIRA_USERNAME}</h3>
-					<div className="flex flex-row items-center justify-start">
-						<FaKey className='text-blue-500 w-4 h-4 mr-2' />
-						<h2 className="text-lg font-bold   text-gray-600 ">
-							Jira Api Key
-						</h2>
-					</div>
-
-					<h4 className=" text-sm font-medium text-gray-500 mb-2 break-words break-all whitespace-normal">{ConfigData?.JIRA_API_KEY}</h4>
-				</div>
-			}
-		</div>
-	);
+                  {/* Integration Details */}
+                  <div className="space-y-2">
+                    <div>
+                      <p className="text-gray-400 text-sm">Installed On</p>
+                      <p className="text-white">{integration.installedOn}</p>
+                    </div>
+                    <div>
+                      <p className="text-gray-400 text-sm">Category</p>
+                      <p className="text-white">{integration.category}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </div>
+        </main>
+      </div>
+    </div>
+  )
 }
-
-export default ThirdPartyConfig;
