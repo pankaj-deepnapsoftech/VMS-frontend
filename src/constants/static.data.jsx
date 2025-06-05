@@ -187,17 +187,32 @@ export const products = [
     desc: "Admin control panel for team and roles",
     gradient: "from-[#fceabb] to-[#f8b500]",
     allowedPath: [
-      { title: "Users", route: "/all-employee", icon: Users },
-      { title: "Tenent", route: "/all-customer", icon: UserCircle },
+      { title: "Users", route: "/all-users", icon: Users },
+      { title: "Tenant", route: "/all-tenant", icon: UserCircle },
       { title: "Third Party Data", route: "/jira-data", icon: Table },
       {
         title: "Third Party Config",
         route: "/third-party-config",
         icon: Settings,
       },
+      {
+         title: "Config Email",
+        route: "/config-email",
+        icon: Settings,
+      },
+      {
+         title: "Manage Users",
+        route: "/manage-users",
+        icon: Settings,
+      },
+      {
+         title: "Manage Tenants",
+        route: "/manage-tenants ",
+        icon: Settings,
+      }
     ],
     allowedCISO: [
-      { title: "All Employee", route: "/all-employee", icon: FaPerson },
+      { title: "All Users", route: "/all-users", icon: FaPerson },
     ],
   },
 ];

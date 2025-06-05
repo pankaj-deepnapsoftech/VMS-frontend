@@ -329,7 +329,7 @@ export default function AllEmployee() {
                         </button>
                         <button
                           onClick={() => {
-                            DeleteUser(user._id);
+                            DeleteUser(user._id); 
                           }}
                           className="text-blue-600 hover:text-blue-800 transition-colors duration-150"
                           title="Delete"

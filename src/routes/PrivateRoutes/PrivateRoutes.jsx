@@ -22,6 +22,9 @@ import ApplicationSoftwareInventoryTable from "@/pages/ApplicationSoftwareTable"
 import RiskRatingGuide from "@/pages/RiskRatingGuide";
 import ClientCISO from "@/pages/ClientCiso";
 import NewUser from "@/pages/NewUser";
+import EmailConfigPanel from "@/pages/Configure";
+import UserManagement from "@/pages/ManageUsers";
+import ManageTenants from "@/pages/ManageTenants";
 
 export const PrivateRoutes = [
   {
@@ -45,14 +48,25 @@ export const PrivateRoutes = [
     element: <ThirdPartyConfig />,
   },
   {
-    path: "/all-customer",
+    path: "/all-tenent",
     element: <AllCustomer />,
   },
   {
-    path: "/all-employee",
+    path: "/config-email",
+    element: <EmailConfigPanel />,
+  },
+  {
+    path: "/manage-users",
+    element: <UserManagement />,
+  },
+  {
+    path: "/manage-tenants",
+    element: <ManageTenants />,
+  },
+  {
+    path: "/all-users",
     element: <AllEmployee />,
   },
-
   {
     path: "/application-vulnerability",
     element: <ApplicationVulnerability />,
@@ -111,5 +125,4 @@ export const PrivateRoutes = [
     path: "/newuser",
     element: <NewUser />,
   },
-  
 ];
