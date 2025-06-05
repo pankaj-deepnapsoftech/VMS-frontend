@@ -7,7 +7,7 @@ import React, { useContext } from "react";
 import { IoClose } from "react-icons/io5";
 
 const Data = ({ ShowModal, setShowModal, edittable }) => {
-  const { AssetDataCreate, AssetDataDelete, AssetDataUpdate,loading } = useContext(AssetDataContext);
+  const { AssetDataCreate, AssetDataUpdate,loading } = useContext(AssetDataContext);
 
   const {
     handleBlur,

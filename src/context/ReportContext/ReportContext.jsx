@@ -12,10 +12,10 @@ const ReportContextProvider = ({ children }) => {
   const { token } = useAuthContext();
 
  
-
-  useEffect(() => {
-    fetchReportData(); // Fetch reports when component mounts
-  }, [fetchReportData]);
+// commented this code because the fetchReportData component not present
+  // useEffect(() => {
+  //   fetchReportData(); // Fetch reports when component mounts
+  // }, [fetchReportData]);
 
   return (
     <ReportContext.Provider value={{ loading, fetchReportData, page, setPage }}>
