@@ -26,18 +26,26 @@ function SignIn() {
 
   return (
     <div className="flex">
-      {/* left side */}
-      <div className="bg-gradient-to-b from-gray-400 to-gray-300 p-8 w-2/3 relative overflow-x-hidden">
-        <div className="w-40">
-          <img src="/logo.png" alt="secure& logo" className="w-full" />
+   
+      <div className="bg-gradient-to-br from-sky-200  to-[#0e0e0ec4] p-10 w-3/4 relative overflow-x-hidden shadow-md "
+      >
+        <div className="w-36 mb-6">
+          <img src="/logo.png" alt="Secure& logo" className="w-full" />
         </div>
-        <span className="text-white text-4xl font-bold block my-2">AI Powered & </span>
-        <span className="text-white text-4xl font-bold block my-2">Virtual Risk Operations Centre</span>
-        <span className="text-white text-4xl font-bold block my-2">(vROC)</span>
+        <span className="text-gray-800 text-3xl md:text-4xl font-semibold block mb-2">
+          AI Powered &
+        </span>
+        <span className="text-gray-800 text-3xl md:text-4xl font-semibold block mb-2">
+          Virtual Risk Operations Centre
+        </span>
+        <span className="text-blue-700 text-3xl md:text-4xl font-bold block mt-4">
+          (vROC)
+        </span>
       </div>
 
+
       {/* right side */}
-      <div className="min-h-screen flex flex-col items-center justify-center w-1/3 bg-black px-4">
+      <div className="min-h-screen flex flex-col items-center justify-center w-1/3 bg-zinc-800 px-4">
         <div className="text-left mb-8">
           <h1 className="text-4xl font-bold text-white mb-2">Sign in</h1>
           <p className="text-gray-100 text-xs">
@@ -78,7 +86,7 @@ function SignIn() {
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white"
               >
-                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
               </button>
             </div>
             {errors.password && touched.password && (
@@ -107,7 +115,7 @@ function SignIn() {
             disabled={loading || disabled}
             className={`w-full p-3 rounded-lg text-white font-medium transition-all duration-300 ${loading || disabled
               ? "bg-blue-600 cursor-not-allowed"
-              : "bg-gradient-to-r from-gray-200 to-gray-100 hover:from-gray-300 hover:to-gray-200"
+              : "bg-blue-600  hover:from-gray-300 hover:to-gray-200"
               }`}
           >
             {loading ? "Signing in..." : "Sign in"}
