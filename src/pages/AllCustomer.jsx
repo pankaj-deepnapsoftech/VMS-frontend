@@ -3,7 +3,7 @@
 import Loader from "@/components/Loader/Loader";
 import AllowedModal from "@/components/modal/AllowedModal";
 import NoDataFound from "@/components/NoDataFound";
-import InputField from "@/components/InputField"; // Make sure this path is correct
+import InputField from "@/components/InputField";
 import {
   useAllCustomerContext,
   useAllEmployeeContext,
@@ -14,49 +14,57 @@ import { IoShieldCheckmarkSharp } from "react-icons/io5";
 import { MdClose } from "react-icons/md";
 import { BiPlus } from "react-icons/bi";
 import { RiDeleteBinFill } from "react-icons/ri";
-
-import { FaUser, FaEnvelope, FaPhone, FaLock, FaCompass } from "react-icons/fa";
+import {
+  FaUser,
+  FaEnvelope,
+  FaPhone,
+  FaLock,
+  FaCompass,
+  FaEdit,
+  FaTrash,
+  FaGlobe,
+  FaBuilding,
+  FaUsers,
+  FaMapMarkedAlt,
+  FaCity,
+  FaIndustry,
+  FaExclamationTriangle,
+} from "react-icons/fa";
 import { useFormik } from "formik";
 import { BaseValidationSchema } from "@/Validation/AuthValidation";
 
 export default function AllCustomer() {
-  const {
-    loading,
-    AllCustomersData,
-    AllCustomers,
-    page,
-    setPage,
-    setDataCount,
-    dataCount,
-  } = useAllCustomerContext();
+  const { loading, page, setPage } = useAllCustomerContext();
 
-  const { authenticate, token, Signup, runner } = useAuthContext();
-
-  const { VerifyEmployee,DeleteUser } = useAllEmployeeContext();
+  const { authenticate, token } = useAuthContext();
+  const { VerifyEmployee } = useAllEmployeeContext();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [dataId, setDataId] = useState(null);
+  const [tenants, setTenants] = useState([]);
+
+  const getTenants = async () => {
+    try {
+      const response = await fetch("/tenant/get");
+      const data = await response.json();
+      setTenants(data?.tenants || []);
+    } catch (error) {
+      console.error("Failed to fetch tenants", error);
+    }
+  };
 
   useEffect(() => {
-    if (authenticate?.role === "ClientCISO") {
-      // Add your ClientCISO-specific function
-    } else {
-      // Add your Admin/employee-specific function
-    }
-  }, [token, page, runner]);
+    getTenants();
+  }, []);
 
   useEffect(() => {
-    if (token && dataCount === 0) {
-      AllCustomers();
-      setDataCount(1);
-    }
+    // Handle any role-based logic here if needed
   }, [token, page]);
 
   useEffect(() => {
-    AllCustomers();
+    getTenants(); // refresh on verify
   }, [VerifyEmployee]);
-
 
   const {
     values,
@@ -68,20 +76,31 @@ export default function AllCustomer() {
     resetForm,
   } = useFormik({
     initialValues: {
-      full_name: "",
-      email: "",
-      phone: "",
-      password: "",
-      role: "ClientCISO",
-      Organization: "",
-      employee_approve: true,
-      email_verification: true,
+      company_name: "",
+      Website_url: "",
+      Employee_count: "",
+      Country: "",
+      State: "",
+      City: "",
+      Industry: "",
+      Risk_Apetite: "",
     },
-    validationSchema:BaseValidationSchema,
-    onSubmit: (data) => {
-      Signup(data,true);
-      setIsModalOpen(false);
-      resetForm();
+    validationSchema: BaseValidationSchema,
+    onSubmit: async (values) => {
+      try {
+        await fetch("/tenant/create", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        });
+        setIsModalOpen(false);
+        resetForm();
+        getTenants(); // Refresh the table
+      } catch (error) {
+        console.error("Tenant creation failed", error);
+      }
     },
   });
 
@@ -100,7 +119,7 @@ export default function AllCustomer() {
                   className="px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 flex items-center gap-2"
                 >
                   <BiPlus className="h-6 w-6" />
-                  Add Tenent
+                  Add Tenant
                 </button>
               </div>
             )}
@@ -110,7 +129,7 @@ export default function AllCustomer() {
                 <div className="bg-background rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
                   <div className="flex justify-between items-center border-b p-4 bg-table">
                     <h2 className="text-lg font-semibold text-gray-200">
-                      Add Tenent
+                      Add Tenant
                     </h2>
                     <button onClick={() => setIsModalOpen(false)}>
                       <MdClose className="h-6 w-6 text-gray-100" />
@@ -118,78 +137,126 @@ export default function AllCustomer() {
                   </div>
                   <form onSubmit={handleSubmit} className="p-10 space-y-5">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      {/* <InputField
-                        label="Full Name"
+                      <InputField
+                        label="Company Name"
                         type="text"
-                        icon={FaUser}
-                        name="full_name"
-                        value={values.full_name}
+                        icon={FaBuilding}
+                        name="company_name"
+                        value={values.company_name}
                         onBlur={handleBlur}
                         onChange={handleChange}
-                        placeholder="Enter your Full Name"
+                        placeholder="Enter your company name"
                       />
-                      {touched.full_name && errors.full_name && (
+                      {touched.company_name && errors.company_name && (
                         <p className="text-red-400 text-sm">
-                          {errors.full_name}
+                          {errors.company_name}
                         </p>
                       )}
 
                       <InputField
-                        label="Email Address"
-                        type="email"
-                        icon={FaEnvelope}
-                        name="email"
-                        value={values.email}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        placeholder="Enter your Email Address"
-                      />
-                      {touched.email && errors.email && (
-                        <p className="text-red-400 text-sm">{errors.email}</p>
-                      )} */}
-
-                      <InputField
-                        label="Organization"
+                        label="Website URL"
                         type="text"
-                        icon={FaCompass}
-                        name="Organization"
-                        value={values.Organization}
+                        icon={FaGlobe}
+                        name="password"
+                        value={values.Website_url}
                         onBlur={handleBlur}
                         onChange={handleChange}
-                        placeholder="Enter your Organization"
+                        placeholder="Enter your website url"
+                        // showPassword={true}
                       />
-                      {touched.Organization && errors.Organization && (
-                        <p className="text-red-400 text-sm">{errors.Organization}</p>
+                      {touched.Website_url && errors.Website_url && (
+                        <p className="text-red-400 text-sm">
+                          {errors.Website_url}
+                        </p>
                       )}
 
-                      {/* <InputField
-                        label="Phone Number"
+                      <InputField
+                        label="Employee Count"
                         type="text"
-                        icon={FaPhone}
-                        name="phone"
-                        value={values.phone}
+                        icon={FaUsers}
+                        name="Employee_count"
+                        value={values.Employee_count}
                         onBlur={handleBlur}
                         onChange={handleChange}
-                        placeholder="Enter your Phone Number"
+                        placeholder="Enter Employee Count"
                       />
-                      {touched.phone && errors.phone && (
-                        <p className="text-red-400 text-sm">{errors.phone}</p>
-                      )} */}
+                      {touched.Employee_count && errors.Employee_count && (
+                        <p className="text-red-400 text-sm">
+                          {errors.Employee_count}
+                        </p>
+                      )}
+                      <InputField
+                        label="Country"
+                        type="text"
+                        icon={FaCompass}
+                        name="Country"
+                        value={values.Country}
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        placeholder="Enter Country"
+                      />
+                      {touched.Country && errors.Country && (
+                        <p className="text-red-400 text-sm">{errors.Country}</p>
+                      )}
 
                       <InputField
-                        label="Password"
-                        type="password"
-                        icon={FaLock}
-                        name="password"
-                        value={values.password}
+                        label="State"
+                        type="text"
+                        icon={FaMapMarkedAlt}
+                        name="State"
+                        value={values.State}
                         onBlur={handleBlur}
                         onChange={handleChange}
-                        placeholder="Enter your Password"
-                        showPassword={true}
+                        placeholder="Enter state"
                       />
-                      {touched.password && errors.password && (
+                      {touched.State && errors.State && (
+                        <p className="text-red-400 text-sm">{errors.State}</p>
+                      )}
+
+                      <InputField
+                        label="City"
+                        type="text"
+                        icon={FaCity}
+                        name="City"
+                        value={values.City}
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        placeholder="Enter city"
+                      />
+                      {touched.City && errors.City && (
+                        <p className="text-red-400 text-sm">{errors.City}</p>
+                      )}
+
+
+                      <InputField
+                        label="Industry"
+                        type="text"
+                        icon={FaIndustry}
+                        name="Industry"
+                        value={values.Industry}
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        placeholder="Enter industry"
+                      />
+                      {touched.Industry && errors.Industry && (
                         <p className="text-red-400 text-sm">
-                          {errors.password}
+                          {errors.Industry}
+                        </p>
+                      )}
+
+                      <InputField
+                        label="Risk Apetite"
+                        type="text"
+                        icon={FaExclamationTriangle}
+                        name="Risk_Apetite"
+                        value={values.Risk_Apetite}
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        placeholder="Enter risk apetite"
+                      />
+                      {touched.Risk_Apetite && errors.Risk_Apetite && (
+                        <p className="text-red-400 text-sm">
+                          {errors.Risk_Apetite}
                         </p>
                       )}
                     </div>
@@ -216,84 +283,48 @@ export default function AllCustomer() {
 
           {/* Table Content */}
           <div className="overflow-x-auto rounded-lg">
-            {AllCustomersData?.length < 1 ? (
+            {tenants?.length < 1 ? (
               <NoDataFound />
             ) : (
               <table className="table-auto w-full bg-[#2d333b] rounded-md">
-                <thead className="bg-gradient-to-bl from-[#333333] to-[#666666] text-white">
-                  <tr>
+                <thead>
+                  <tr className="bg-gradient-to-bl from-[#333333] to-[#666666] text-white">
                     <th className="px-2 py-1 border text-left text-sm">
-                      S No.
+                      Company Name
                     </th>
                     <th className="px-2 py-1 border text-left text-sm">
-                      Full Name
+                      Website URL
                     </th>
                     <th className="px-2 py-1 border text-left text-sm">
-                      Email
+                      Employee Count
                     </th>
                     <th className="px-2 py-1 border text-left text-sm">
-                      Phone
+                      Country
                     </th>
                     <th className="px-2 py-1 border text-left text-sm">
-                      Organization
+                      State
                     </th>
-                    <th className="px-2 py-1 border text-left text-sm">Role</th>
+                    <th className="px-2 py-1 border text-left text-sm">City</th>
                     <th className="px-2 py-1 border text-left text-sm">
-                      Approval Status
+                      Industry
                     </th>
                     <th className="px-2 py-1 border text-left text-sm">
-                      Allowed Pages
-                    </th>
-                    <th className="px-4 py-1 text-sm  border text-left">
-                      Actions
+                      Risk Apetite
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {AllCustomersData?.map((user, index) => (
-                    <tr
-                      key={user._id}
-                      className="bg-[#2d333b] text-gray-200 hover:bg-[#53565c]"
-                    >
-                      <td className="px-2 py-1 border">{index + 1}</td>
-                      <td className="px-2 py-1 border">{user?.full_name}</td>
-                      <td className="px-2 py-1 border">{user?.email}</td>
-                      <td className="px-2 py-1 border">{user?.phone}</td>
-                      <td className="px-2 py-1 border">{user?.Organization}</td>
-                      <td className="px-2 py-1 border">{user?.role}</td>
-                      <td className="px-2 py-1 border">
-                        {user?.employee_approve ? (
-                          <span className="px-3 py-1 text-sm font-semibold text-green-800 bg-green-100 rounded-full">
-                            Approved
-                          </span>
-                        ) : (
-                          <button
-                            onClick={() => VerifyEmployee(user?._id)}
-                            className="px-3 py-1 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700"
-                          >
-                            Verify
-                          </button>
-                        )}
-                      </td>
-                      <td
-                        onClick={() => {
-                          setIsChecked(true);
-                          setDataId(user._id);
-                        }}
-                        className="px-2 py-1 border cursor-pointer"
-                      >
-                        <IoShieldCheckmarkSharp size={24} color="#0092ca" />
-                      </td>
-                      <td className="px-4 py-3 border">
-                        <button
-                          onClick={() => {
-                            DeleteUser(user._id);
-                          }}
-                          className="text-red-600 hover:text-red-800 transition-colors ml-5 duration-150"
-                          title="Delete"
-                        >
-                          <RiDeleteBinFill className="h-4 w-4" />
-                        </button>
+                  {tenants.map((tenant, index) => (
+                    <tr key={index} className="text-gray-200 hover:bg-[#444]">
+                      <td className="px-2 py-1">{tenant.tenantCode}</td>
+                      <td className="px-2 py-1">{tenant.name}</td>
+                      <td className="px-2 py-1">{tenant.apiKey}</td>
+                      <td className="px-2 py-1">{tenant.createdOn}</td>
+                      <td className="px-2 py-1">{tenant.createdBy}</td>
+                      <td className="px-2 py-1">{tenant.safeDomain}</td>
+                      <td className="px-2 py-1 flex gap-2">
+                        <FaEdit className="cursor-pointer" />
+                        <FaTrash className="cursor-pointer" />
                       </td>
                     </tr>
                   ))}
@@ -305,8 +336,9 @@ export default function AllCustomer() {
           {/* Pagination */}
           <div className="flex justify-between items-center my-6 px-5">
             <button
-              className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""
-                }`}
+              className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white rounded-md ${
+                page === 1 ? "opacity-50 cursor-not-allowed" : ""
+              }`}
               disabled={page === 1}
               onClick={() => setPage(page - 1)}
             >
@@ -315,7 +347,7 @@ export default function AllCustomer() {
             <span className="text-white">Page {page}</span>
             <button
               className="px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white rounded-md"
-              disabled={AllCustomersData?.length < 10}
+              disabled={tenants?.length < 10}
               onClick={() => setPage(page + 1)}
             >
               Next

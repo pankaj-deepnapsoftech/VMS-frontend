@@ -48,7 +48,7 @@ export const PrivateRoutes = [
     element: <ThirdPartyConfig />,
   },
   {
-    path: "/all-tenent",
+    path: "/all-tenant",
     element: <AllCustomer />,
   },
   {

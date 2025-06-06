@@ -43,7 +43,7 @@ const AppRoutes = () => {
           ? ClientCisoRoutes
           : [{ path: "/", element: <UnauthorizedAccessPage /> }];
       default:
-        return [{ path: "/", element: <UnauthorizedAccessPage /> }];
+        return [{ path: "/", element: <UnauthorizedAccessPage /> }]; 
     }
   };
 
@@ -72,7 +72,7 @@ const AppRoutes = () => {
                 item.children.map((child, i) => (
                   <Route key={i} path={child.path} element={child.element} />
                 ))}
-            </Route>
+            </Route>            
 
           ))}
         </Route>
