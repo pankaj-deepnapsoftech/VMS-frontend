@@ -32,40 +32,36 @@ import {
 } from "react-icons/fa";
 import { useFormik } from "formik";
 import { BaseValidationSchema } from "@/Validation/AuthValidation";
+import axios from "axios";
+import { AxiosHandler } from "@/config/AxiosConfig";
+import { tenantValidator } from "@/Validation/TenantsValidations";
+
 
 export default function AllCustomer() {
-  const { loading, page, setPage } = useAllCustomerContext();
+  const { loading } = useAllCustomerContext();
 
   const { authenticate, token } = useAuthContext();
   const { VerifyEmployee } = useAllEmployeeContext();
-
+  const [page, setPage] = useState(1)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [dataId, setDataId] = useState(null);
   const [tenants, setTenants] = useState([]);
+  const [editTable, setEditTable] = useState(null)
 
+  // get api
   const getTenants = async () => {
     try {
-      const response = await fetch("/tenant/get");
-      const data = await response.json();
-      setTenants(data?.tenants || []);
+      const res = await AxiosHandler.get(`/tenant/get?page=${page}&limit=10`);
+      setTenants(res?.data.data);
+
     } catch (error) {
       console.error("Failed to fetch tenants", error);
     }
   };
 
-  useEffect(() => {
-    getTenants();
-  }, []);
 
-  useEffect(() => {
-    // Handle any role-based logic here if needed
-  }, [token, page]);
-
-  useEffect(() => {
-    getTenants(); // refresh on verify
-  }, [VerifyEmployee]);
-
+  // post
   const {
     values,
     handleChange,
@@ -75,7 +71,7 @@ export default function AllCustomer() {
     touched,
     resetForm,
   } = useFormik({
-    initialValues: {
+    initialValues: editTable || {
       company_name: "",
       Website_url: "",
       Employee_count: "",
@@ -85,24 +81,49 @@ export default function AllCustomer() {
       Industry: "",
       Risk_Apetite: "",
     },
-    validationSchema: BaseValidationSchema,
+    validationSchema: tenantValidator,
+    enableReinitialize:true,
     onSubmit: async (values) => {
       try {
-        await fetch("/tenant/create", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(values),
-        });
+       if(editTable){
+         const res = await AxiosHandler.put(`/tenant/update/${values._id}`, values)
+       }else{
+         const res = await AxiosHandler.post(`/tenant/create`, values, {
+         });
+       }
         setIsModalOpen(false);
         resetForm();
-        getTenants(); // Refresh the table
+        getTenants();
+        
       } catch (error) {
         console.error("Tenant creation failed", error);
       }
     },
+
   });
+
+  // delete 
+  const DeleteData = async (_id) => {
+    try {
+      if(window.confirm("are you sure you want to delete this element?")){
+        const res = await AxiosHandler.delete(`/tenant/delete/${_id}`)
+        getTenants();
+        setIsModalOpen(false);
+      }
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
+
+  useEffect(() => {
+    if (token) {
+      getTenants(page);
+    }
+  }, [token, page, VerifyEmployee]);
+
+
+
 
   return (
     <>
@@ -110,19 +131,19 @@ export default function AllCustomer() {
         <Loader />
       ) : (
         <div className="m-6 p-2 bg-[#2a2c2f] shadow-lg rounded-lg">
-          <div className="flex justify-between items-center">
+          <div>
             {(authenticate?.role === "ClientCISO" ||
               authenticate?.role === "Admin") && (
-              <div className="flex w-full justify-end py-4">
-                <button
-                  onClick={() => setIsModalOpen(true)}
-                  className="px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 flex items-center gap-2"
-                >
-                  <BiPlus className="h-6 w-6" />
-                  Add Tenant
-                </button>
-              </div>
-            )}
+                <div className="flex w-full justify-end py-4">
+                  <button
+                    onClick={() => {setIsModalOpen(true); setEditTable(null)}}
+                    className="px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 flex items-center gap-2"
+                  >
+                    <BiPlus className="h-6 w-6" />
+                    Add Tenant
+                  </button>
+                </div>
+              )}
 
             {isModalOpen && (
               <div className="fixed inset-0 bg-input bg-opacity-50 flex items-center justify-center p-4 z-10">
@@ -157,12 +178,12 @@ export default function AllCustomer() {
                         label="Website URL"
                         type="text"
                         icon={FaGlobe}
-                        name="password"
+                        name="Website_url"
                         value={values.Website_url}
                         onBlur={handleBlur}
                         onChange={handleChange}
                         placeholder="Enter your website url"
-                        // showPassword={true}
+                      // showPassword={true}
                       />
                       {touched.Website_url && errors.Website_url && (
                         <p className="text-red-400 text-sm">
@@ -281,64 +302,52 @@ export default function AllCustomer() {
             )}
           </div>
 
-          {/* Table Content */}
           <div className="overflow-x-auto rounded-lg">
             {tenants?.length < 1 ? (
               <NoDataFound />
             ) : (
-              <table className="table-auto w-full bg-[#2d333b] rounded-md">
-                <thead>
+              <table className="table-auto  w-full bg-[#2d333b] ">
+                <thead className="rounded-md  w-full">
                   <tr className="bg-gradient-to-bl from-[#333333] to-[#666666] text-white">
-                    <th className="px-2 py-1 border text-left text-sm">
-                      Company Name
-                    </th>
-                    <th className="px-2 py-1 border text-left text-sm">
-                      Website URL
-                    </th>
-                    <th className="px-2 py-1 border text-left text-sm">
-                      Employee Count
-                    </th>
-                    <th className="px-2 py-1 border text-left text-sm">
-                      Country
-                    </th>
-                    <th className="px-2 py-1 border text-left text-sm">
-                      State
-                    </th>
-                    <th className="px-2 py-1 border text-left text-sm">City</th>
-                    <th className="px-2 py-1 border text-left text-sm">
-                      Industry
-                    </th>
-                    <th className="px-2 py-1 border text-left text-sm">
-                      Risk Apetite
-                    </th>
+                    <th className="px-2 py-2 border whitespace-nowrap text-left text-sm">Company Name</th>
+                    <th className="px-2 py-2 border whitespace-nowrap text-left text-sm">Website URL</th>
+                    <th className="px-2 py-2 border whitespace-nowrap text-left text-sm">Employee Count</th>
+                    <th className="px-2 py-2 border whitespace-nowrap text-left text-sm">Country</th>
+                    <th className="px-2 py-2 border whitespace-nowrap text-left text-sm">State</th>
+                    <th className="px-2 py-2 border whitespace-nowrap text-left text-sm">City</th>
+                    <th className="px-2 py-2 border whitespace-nowrap text-left text-sm">Industry</th>
+                    <th className="px-2 py-2 border whitespace-nowrap text-left text-sm">Risk Appetite</th>
+                    <th className="px-2 py-2 border whitespace-nowrap text-left text-sm">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {tenants.map((tenant, index) => (
+                  {tenants?.map((tenant, index) => (
                     <tr key={index} className="text-gray-200 hover:bg-[#444]">
-                      <td className="px-2 py-1">{tenant.tenantCode}</td>
-                      <td className="px-2 py-1">{tenant.name}</td>
-                      <td className="px-2 py-1">{tenant.apiKey}</td>
-                      <td className="px-2 py-1">{tenant.createdOn}</td>
-                      <td className="px-2 py-1">{tenant.createdBy}</td>
-                      <td className="px-2 py-1">{tenant.safeDomain}</td>
-                      <td className="px-2 py-1 flex gap-2">
-                        <FaEdit className="cursor-pointer" />
-                        <FaTrash className="cursor-pointer" />
+                      <td className="px-2 py-2">{tenant.company_name}</td>
+                      <td className="px-2 py-2">{tenant.Website_url}</td>
+                      <td className="px-2 py-2">{tenant.Employee_count}</td>
+                      <td className="px-2 py-2">{tenant.Country}</td>
+                      <td className="px-2 py-2">{tenant.State}</td>
+                      <td className="px-2 py-2">{tenant.City}</td>
+                      <td className="px-2 py-2">{tenant.Industry}</td>
+                      <td className="px-2 py-2">{tenant.Risk_Apetite}</td>
+                      <td className="px-2 py-2 flex gap-2">
+                        <FaEdit onClick={()=>{ setEditTable(tenant); setIsModalOpen(true)} } className="cursor-pointer" />
+                        <FaTrash onClick={() => DeleteData(tenant?._id)} className="cursor-pointer" />
                       </td>
                     </tr>
                   ))}
                 </tbody>
+
               </table>
             )}
           </div>
 
-          {/* Pagination */}
+
           <div className="flex justify-between items-center my-6 px-5">
             <button
-              className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white rounded-md ${
-                page === 1 ? "opacity-50 cursor-not-allowed" : ""
-              }`}
+              className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               disabled={page === 1}
               onClick={() => setPage(page - 1)}
             >
