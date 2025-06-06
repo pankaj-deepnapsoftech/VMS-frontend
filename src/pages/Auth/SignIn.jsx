@@ -27,28 +27,13 @@ function SignIn() {
   return (
     <div className="flex">
       {/* left side */}
-      <div className="bg-gray-400 p-8 w-2/3 relative overflow-x-hidden">
-        <h2 className="text-white text-lg font-medium mb-5">Secure&</h2>
-        <span className="text-white text-5xl font-bold block mb-1">Products</span>
-        <p className="text-sm">Secure& security ecosystem provides comprehensive protection for your IT infrastructure based on our unique cyber intelligence, in-depth attack analysis, and effective incident response.</p>
-        <div className="flex">
-          {/* left */}
-          <div className="w-1/2">
-            <div className="bg-gray-300 my-6 rounded-xl p-4">
-              <h3 className="text-black font-black text-xl">Threat Intelligence</h3>
-              <p className="mt-2.5 mb-2 text-xs">Attribution-based Threat intelligence for analysis and managing adversaries before they effect your business.</p>
-              <button className="bg-blue-600 text-white rounded-lg p-2 text-xs font-medium mt-2">Try demo</button>
-            </div>
-            <ul className="flex flex-col gap-5 text-white font-bold text-lg">
-              <li>Managed XDR</li>
-              <li>Fraud Protection</li>
-              <li>Digital Risk Protection</li>
-            </ul>
-          </div>
-
-          {/* right */}
-         
+      <div className="bg-gradient-to-b from-gray-400 to-gray-300 p-8 w-2/3 relative overflow-x-hidden">
+        <div className="w-40">
+          <img src="/logo.png" alt="secure& logo" className="w-full" />
         </div>
+        <span className="text-white text-4xl font-bold block my-2">AI Powered & </span>
+        <span className="text-white text-4xl font-bold block my-2">Virtual Risk Operations Centre</span>
+        <span className="text-white text-4xl font-bold block my-2">(vROC)</span>
       </div>
 
       {/* right side */}
