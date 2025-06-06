@@ -2,10 +2,7 @@ import { useState } from "react";
 
 export default function EmailConfigPanel() {
   const [isEditing, setIsEditing] = useState(false);
-  const [emailConfig, setEmailConfig] = useState({
-
-    
-  });
+  const [emailConfig, setEmailConfig] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,7 +15,7 @@ export default function EmailConfigPanel() {
         <h2 className="text-lg font-semibold">Configure Email</h2>
         <button
           onClick={() => setIsEditing(!isEditing)}
-          className="bg-orange-600 hover:bg-orange-700 text-white font-medium px-4 py-1 rounded-md"
+          className="bg-orange-700 hover:bg-orange-800 text-white font-medium px-4 py-1 rounded-md"
         >
           {isEditing ? "Save" : "Edit"}
         </button>
@@ -47,7 +44,7 @@ export default function EmailConfigPanel() {
             type="text"
             value={emailConfig.port}
             onChange={handleChange}
-            className="mt-1 w-full bg-[#1f2124] border border-gray-700 text-sm px-3 py-2 rounded-md"
+            className="mt-1 w-full bg-[#000000] border border-gray-700 text-sm px-3 py-2 rounded-md"
           />
         </div>
 

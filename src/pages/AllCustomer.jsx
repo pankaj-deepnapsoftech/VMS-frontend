@@ -227,9 +227,8 @@ export default function AllCustomer() {
                         <p className="text-red-400 text-sm">{errors.City}</p>
                       )}
 
-
                       <InputField
-                        label="Industry"
+                        label="Industry"   
                         type="text"
                         icon={FaIndustry}
                         name="Industry"
@@ -270,7 +269,7 @@ export default function AllCustomer() {
                       </button>
                       <button
                         type="submit"
-                        className="px-4 py-2 bg-[#015289] text-white rounded-md hover:bg-blue-700"
+                        className="px-4 py-2 bg-[#123e5c] text-white rounded-md hover:bg-sky-800"
                       >
                         Save
                       </button>
@@ -304,7 +303,7 @@ export default function AllCustomer() {
                     <th className="px-2 py-1 border text-left text-sm">
                       State
                     </th>
-                    <th className="px-2 py-1 border text-left text-sm">City</th>
+                    <th className="px-2 py-1 border text-left 0 text-sm">City</th>
                     <th className="px-2 py-1 border text-left text-sm">
                       Industry
                     </th>

@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import { useState } from "react"
+import { useState } from "react";
 
 export default function Component() {
-  const [activeTab, setActiveTab] = useState("Platform")
-  const [searchQuery, setSearchQuery] = useState("")
-  const [filterValue, setFilterValue] = useState("ALL")
+  const [activeTab, setActiveTab] = useState("Platform");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterValue, setFilterValue] = useState("ALL");
 
   const integrations = [
     {
@@ -15,28 +15,16 @@ export default function Component() {
       installedOn: "24-Jan-2024",
       category: "Open Source Jira",
     },
-  
-  ]
-
-
+  ];
 
   return (
-    <div className="min-h-screen bg-gray-800 text-white">
-      {/* Top Navigation */}
-  
-
+    <div className="min-h-screen bg-background text-white">
       <div className="flex">
-        {/* Sidebar */}
-       
-
-        {/* Main Content */}
         <main className="flex-1 p-6">
-          {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center space-x-4">
               <h1 className="text-2xl font-semibold">Integrations</h1>
 
-              {/* Filter Dropdown */}
               <div className="relative">
                 <select
                   value={filterValue}
@@ -44,24 +32,40 @@ export default function Component() {
                   className="bg-gray-600 text-white px-4 py-2 rounded-md border border-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none pr-8"
                 >
                   <option value="ALL">ALL</option>
-                  <option value="Open Source Threat Intel">Open Source Threat Intel</option>
+                  <option value="Open Source Threat Intel">
+                    Open Source Threat Intel
+                  </option>
                   <option value="Sandbox">Sandbox</option>
                   <option value="Essentials">Essentials</option>
                   <option value="IP Intel">IP Intel</option>
                 </select>
                 <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  <svg
+                    className="w-4 h-4 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
                   </svg>
                 </div>
               </div>
             </div>
 
             <div className="flex items-center space-x-4">
-              {/* Search */}
               <div className="flex items-center bg-gray-600 rounded-md">
                 <div className="pl-3">
-                  <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="w-5 h-5 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -77,42 +81,54 @@ export default function Component() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="bg-transparent text-white placeholder-gray-400 px-3 py-2 focus:outline-none w-64"
                 />
-                <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-r-md transition-colors">
+                <button className="bg-sky-700 hover:bg-sky-800 text-white px-4 py-2 rounded-r-md transition-colors">
                   Go
                 </button>
               </div>
 
               {/* New Integration Button */}
-              <button className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-md transition-colors flex items-center">
+              <button className="bg-orange-800 hover:bg-orange-900 text-white px-4 py-2 rounded-md transition-colors flex items-center">
                 <span className="mr-2">+</span>
                 New Integration
               </button>
             </div>
           </div>
 
-          {/* Integration Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {integrations
-              .filter((integration) => filterValue === "ALL" || integration.category === filterValue)
-              .filter((integration) => integration.name.toLowerCase().includes(searchQuery.toLowerCase()))
+              .filter(
+                (integration) =>
+                  filterValue === "ALL" || integration.category === filterValue
+              )
+              .filter((integration) =>
+                integration.name
+                  .toLowerCase()
+                  .includes(searchQuery.toLowerCase())
+              )
               .map((integration) => (
-                <div key={integration.id} className="bg-gray-700 rounded-lg p-6 relative">
-                  {/* Three dots menu */}
+                <div
+                  key={integration.id}
+                  className="bg-input rounded-lg p-6 relative"
+                >
                   <button className="absolute top-4 right-4 text-gray-400 hover:text-white">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg
+                      className="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
                       <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
                     </svg>
                   </button>
 
-                  {/* Integration Icon and Name */}
                   <div className="flex items-center mb-4">
                     <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mr-4 text-2xl">
                       {integration.icon}
                     </div>
-                    <h3 className="text-lg font-semibold">{integration.name}</h3>
+                    <h3 className="text-lg font-semibold">
+                      {integration.name}
+                    </h3>
                   </div>
 
-                  {/* Integration Details */}
                   <div className="space-y-2">
                     <div>
                       <p className="text-gray-400 text-sm">Installed On</p>
@@ -129,5 +145,5 @@ export default function Component() {
         </main>
       </div>
     </div>
-  )
+  );
 }
