@@ -2,6 +2,15 @@ import { useState } from "react";
 
 export default function EmailConfigPanel() {
   const [isEditing, setIsEditing] = useState(false);
+  const [emailConfig, setEmailConfig] = useState({
+
+    
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEmailConfig((prev) => ({ ...prev, [name]: value }));
+  };
 
   return (
     <div className="bg-[#2a2c2f] text-white p-6 rounded-md shadow-md w-full max-w-4xl mx-auto">
@@ -17,21 +26,27 @@ export default function EmailConfigPanel() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="text-sm font-medium">Email Host<span className="text-red-500">*</span></label>
+          <label className="text-sm font-medium">
+            Email Host<span className="text-red-500">*</span>
+          </label>
           <input
-            disabled={!isEditing}
+            name="host"
             type="text"
-            defaultValue="smtp.azurecomm.net"
+            value={emailConfig.host}
+            onChange={handleChange}
             className="mt-1 w-full bg-[#1f2124] border border-gray-700 text-sm px-3 py-2 rounded-md"
           />
         </div>
 
         <div>
-          <label className="text-sm font-medium">Email Port<span className="text-red-500">*</span></label>
+          <label className="text-sm font-medium">
+            Email Port<span className="text-red-500">*</span>
+          </label>
           <input
-            disabled={!isEditing}
+            name="port"
             type="text"
-            defaultValue="587"
+            value={emailConfig.port}
+            onChange={handleChange}
             className="mt-1 w-full bg-[#1f2124] border border-gray-700 text-sm px-3 py-2 rounded-md"
           />
         </div>
@@ -39,9 +54,10 @@ export default function EmailConfigPanel() {
         <div>
           <label className="text-sm font-medium">Email Host User</label>
           <input
-            disabled={!isEditing}
+            name="user"
             type="text"
-            defaultValue="DCX-Comm-Service.f6b76537-b5fa-4c73-847d-d5efaa821373.3e0475..."
+            value={emailConfig.user}
+            onChange={handleChange}
             className="mt-1 w-full bg-[#1f2124] border border-gray-700 text-sm px-3 py-2 rounded-md truncate"
           />
         </div>
@@ -49,32 +65,39 @@ export default function EmailConfigPanel() {
         <div>
           <label className="text-sm font-medium">Email Host Password</label>
           <input
-            disabled={!isEditing}
+            name="password"
             type="password"
-            defaultValue="********"
+            value={emailConfig.password}
+            onChange={handleChange}
             className="mt-1 w-full bg-[#1f2124] border border-gray-700 text-sm px-3 py-2 rounded-md"
           />
         </div>
 
         <div>
-          <label className="text-sm font-medium">Sender Email<span className="text-red-500">*</span></label>
+          <label className="text-sm font-medium">
+            Sender Email<span className="text-red-500">*</span>
+          </label>
           <input
-            disabled={!isEditing}
+            name="sender"
             type="email"
-            defaultValue=""
+            value={emailConfig.sender}
+            onChange={handleChange}
             className="mt-1 w-full bg-[#1f2124] border border-gray-700 text-sm px-3 py-2 rounded-md"
           />
         </div>
 
         <div>
-          <label className="text-sm font-medium block mb-1">Encryption Protocol<span className="text-red-500">*</span></label>
+          <label className="text-sm font-medium block mb-1">
+            Encryption Protocol<span className="text-red-500">*</span>
+          </label>
           <div className="flex items-center gap-6 mt-1">
             <label className="inline-flex items-center">
               <input
                 type="radio"
                 name="encryption"
-                defaultChecked
-                disabled={!isEditing}
+                value="TLS"
+                checked={emailConfig.encryption === "TLS"}
+                onChange={handleChange}
                 className="form-radio text-orange-500"
               />
               <span className="ml-2 text-sm">TLS</span>
@@ -83,7 +106,9 @@ export default function EmailConfigPanel() {
               <input
                 type="radio"
                 name="encryption"
-                disabled={!isEditing}
+                value="SSL"
+                checked={emailConfig.encryption === "SSL"}
+                onChange={handleChange}
                 className="form-radio text-orange-500"
               />
               <span className="ml-2 text-sm">SSL</span>
@@ -94,4 +119,3 @@ export default function EmailConfigPanel() {
     </div>
   );
 }
-
