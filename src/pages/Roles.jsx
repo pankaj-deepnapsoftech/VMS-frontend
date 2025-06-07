@@ -10,7 +10,7 @@ import { FiEdit2, FiTrash2 } from 'react-icons/fi'
 const Roles = () => {
     const [showModal, setModal] = useState(false)
     const [rolesList, setRolesList] = useState([]) // For storing roles to show in table
- const { token } = useAuthContext();
+    const { token } = useAuthContext();
 
     const GetData = async () => {
 
@@ -50,21 +50,21 @@ const Roles = () => {
     }
 
 
-   const DeleteData =  async(_id)=>{
-     console.log(alert(_id))
-     try {
-         const res = await AxiosHandler.delete(`/role/delete/${_id}`)
-         GetData()
-        
-     } catch (error) {
-        console.log(error)
-     }
-   }
+    const DeleteData = async (_id) => {
+        console.log(alert(_id))
+        try {
+            const res = await AxiosHandler.delete(`/role/delete/${_id}`)
+            GetData()
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     useEffect(() => {
-      if(token){
-          GetData()
-      }
+        if (token) {
+            GetData()
+        }
     }, [token])
 
     return (
