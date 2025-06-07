@@ -6,7 +6,8 @@ export default {
       colors: {
         "background": "#2a2c2f",
         "input": "#333333",
-        "table": "#2d333b"
+        "table": "#2d333b",
+        "button": "#3533cc"
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
