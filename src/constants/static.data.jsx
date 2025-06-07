@@ -209,6 +209,11 @@ export const products = [
          title: "Manage Tenants",
         route: "/manage-tenants ",
         icon: Settings,
+      },
+      {
+        title: "Role",
+        route: "/roles ",
+        icon: Users,
       }
     ],
     allowedCISO: [

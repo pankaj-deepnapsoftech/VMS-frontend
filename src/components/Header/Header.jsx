@@ -24,7 +24,7 @@ function Header({ setShowMenu }) {
   };
 
   let navList = [];
-
+  console.log("authenticate?.role = ", authenticate?.role)
   switch (authenticate?.role) {
     case "ClientCISO":
       products.map((item)=>{

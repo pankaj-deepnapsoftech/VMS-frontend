@@ -25,6 +25,7 @@ import NewUser from "@/pages/NewUser";
 import EmailConfigPanel from "@/pages/Configure";
 import UserManagement from "@/pages/ManageUsers";
 import ManageTenants from "@/pages/ManageTenants";
+import Roles from "@/pages/Roles";
 
 export const PrivateRoutes = [
   {
@@ -62,6 +63,10 @@ export const PrivateRoutes = [
   {
     path: "/manage-tenants",
     element: <ManageTenants />,
+  },
+  {
+    path: "/roles",
+    element: <Roles />,
   },
   {
     path: "/all-users",
