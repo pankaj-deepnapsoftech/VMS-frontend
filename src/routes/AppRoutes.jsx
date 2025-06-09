@@ -26,22 +26,19 @@ const AppRoutes = () => {
   const isAuthenticated = token && authenticate?.email_verification;
 
   const getRoleBasedRoutes = () => {
-    if (!authenticate?.role)
-      return [{ path: "/", element: <UnauthorizedAccessPage /> }];
+    // if (!authenticate?.role)
+    //   return [{ path: "/", element: <UnauthorizedAccessPage /> }];
 
     switch (authenticate.role) {
       case "Admin":
         return PrivateRoutes;
       case "Assessor":
-        return authenticate.employee_approve
-          ? EmployeeRoutes
-          : [{ path: "/", element: <UnauthorizedAccessPage /> }];
+        return EmployeeRoutes
+          
       case "ClientSME":
         return ClientSmeRoutes;
       case "ClientCISO":
-        return authenticate.employee_approve
-          ? ClientCisoRoutes
-          : [{ path: "/", element: <UnauthorizedAccessPage /> }];
+        return  ClientCisoRoutes
       default:
         return [{ path: "/", element: <UnauthorizedAccessPage /> }]; 
     }
@@ -66,7 +63,7 @@ const AppRoutes = () => {
       {/* Protected routes */}
       {isAuthenticated && (
         <Route element={<MainLayout />}>
-          {getRoleBasedRoutes().map((item, index) => (
+          {PrivateRoutes.map((item, index) => (
             <Route key={index} path={item.path} element={item.element} >
               {item.children &&
                 item.children.map((child, i) => (
