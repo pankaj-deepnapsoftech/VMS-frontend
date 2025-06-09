@@ -6,7 +6,6 @@ import { VulnerabilityData } from "@/pages/VulnerablityData";
 import ApplicationVulnerability from "@/pages/ApplicationVulnerability";
 import InfraStructureVulnerability from "@/pages/InfrastructureVulnerability";
 import AllEmployee from "@/pages/AllEmployee";
-import { JiraDataTable } from "@/pages/JiraDataTable";
 import ThirdPartyConfig from "@/pages/thirdPartyConfiguration";
 import SchedulingAssessmentPage from "@/pages/SchedulingAssessment";
 import Reports from "@/pages/Reports";
@@ -26,6 +25,7 @@ import EmailConfigPanel from "@/pages/Configure";
 import UserManagement from "@/pages/ManageUsers";
 import ManageTenants from "@/pages/ManageTenants";
 import Roles from "@/pages/Roles";
+import JiraDataTable from "@/pages/JiraDataTable";
 
 export const PrivateRoutes = [
   {

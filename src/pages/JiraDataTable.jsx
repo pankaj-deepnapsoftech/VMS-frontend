@@ -26,6 +26,7 @@ import {
   FaClock,
   FaTimesCircle,
 } from "react-icons/fa";
+
 export const JiraDataTable = () => {
   const {
     loading,
@@ -62,7 +63,6 @@ export const JiraDataTable = () => {
     }
   }, [token, page]);
 
-  // Format Jira Data into a flat structure
   const formatData = (data) => {
     return data.map((item, index) => ({
       id: index + 1,
@@ -178,11 +178,9 @@ export const JiraDataTable = () => {
 
           <div className="grid grid-cols-4 gap-4 px-4 py-6 ">
             {/* Total Issues */}
-            <div className="bg-[#11c56] border text-white rounded-xl px-4  flex justify-between items-center shadow-md">
+            <div className="bg-[#101b54] border border-blue-900 text-white rounded-xl px-4  flex justify-between items-center shadow-md">
               <div>
-                <p className="text-sm  font-medium">
-                  Total Issues
-                </p>
+                <p className="text-sm  font-medium">Total Issues</p>
                 <p className="text-xl font-medium mt-1">6</p>
               </div>
               <div className="bg-blue-900 bg-opacity-30 p-2 rounded-lg">
@@ -191,40 +189,158 @@ export const JiraDataTable = () => {
             </div>
 
             {/* Closed */}
-            <div className="bg-[#0C2A1B] border  text-white rounded-xl p-4  flex justify-between items-center shadow-md">
+            <div className="bg-[#0c2330] border border-green-900  text-white rounded-xl p-4  flex justify-between items-center shadow-md">
               <div>
                 <p className="text-sm text-green-400 font-medium">Closed</p>
                 <p className="text-xl font-medium mt-1">2</p>
               </div>
-              
-               <div className="bg-green-900 bg-opacity-30 p-2 rounded-lg">
+              <div className="bg-green-900 bg-opacity-30 p-2 rounded-lg">
                 <img src="/icons/closed.png" alt="icon" />
               </div>
             </div>
 
             {/* In Progress */}
-            <div className="bg-[#2A1F0A] border text-white rounded-xl p-4  flex justify-between items-center shadow-md">
+            <div className="bg-[#22191a] border border-yellow-900 text-white rounded-xl p-4  flex justify-between items-center shadow-md">
               <div>
                 <p className="text-sm text-yellow-400 font-medium">
                   In Progress
                 </p>
                 <p className="text-xl font-medium mt-1">2</p>
               </div>
-              
-               <div className="bg-yellow-900 bg-opacity-30 p-2 rounded-lg">
+              <div className="bg-yellow-900 bg-opacity-30 p-2 rounded-lg">
                 <img src="/icons/in-progress.png" alt="icon" />
               </div>
             </div>
 
             {/* Critical */}
-            <div className="bg-[#2A0E13] border text-white rounded-xl p-4 flex justify-between items-center shadow-md">
+            <div className="bg-[#270f21] border border-red-900 text-white rounded-xl p-4 flex justify-between items-center shadow-md">
               <div>
                 <p className="text-sm text-red-400 font-medium">Critical</p>
                 <p className="text-xl font-medium mt-1">1</p>
               </div>
-              
-               <div className="bg-red-900 bg-opacity-30 p-2 rounded-lg">
+              <div className="bg-red-900 bg-opacity-30 p-2 rounded-lg">
                 <img src="/icons/cretical.png" alt="icon" />
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 bg-[#0c1120] border border-gray-700 rounded-xl overflow-x-auto text-sm text-white">
+            <table className="min-w-full divide-y divide-gray-700">
+              <thead className="bg-[#0c1120]">
+                <tr>
+                  <th className="px-4 py-3 text-left">ID</th>
+                  <th className="px-4 py-3 text-left">Issue ID</th>
+                  <th className="px-4 py-3 text-left">Type</th>
+                  <th className="px-4 py-3 text-left">Description</th>
+                  <th className="px-4 py-3 text-left">Project</th>
+                  <th className="px-4 py-3 text-left">Priority</th>
+                  <th className="px-4 py-3 text-left">Assignee</th>
+                  <th className="px-4 py-3 text-left">Status</th>
+                  <th className="px-4 py-3 text-left">Date</th>
+                  <th className="px-4 py-3 text-left">Creator</th>
+                  <th className="px-4 py-3 text-left">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="text-sm text-gray-300">
+                {paginatedData.map((item, index) => (
+                  <tr
+                    key={index}
+                    className="border-b border-gray-700 hover:bg-[#1e1e1e] transition"
+                  >
+                    <td className="p-3">
+                      <input
+                        type="checkbox"
+                        checked={selectedRows.includes(item)}
+                        onChange={() => handleSelectRow(item)}
+                      />
+                    </td>
+                    <td className="p-3">{item.id}</td>
+                    <td className="p-3">
+                      <span className="bg-purple-600 text-white px-2 py-1 rounded text-xs">
+                        {item.issueType}
+                      </span>
+                    </td>
+                    <td className="p-3">{item.issueDescription}</td>
+                    <td className="p-3 font-semibold">{item.projectName}</td>
+                    <td className="p-3">
+                      <span
+                        className={`px-2 py-1 text-xs rounded ${getPriorityBadge(
+                          item.priority
+                        )}`}
+                      >
+                        {item.priority}
+                      </span>
+                    </td>
+                    <td className="p-3">{item.assignee}</td>
+                    <td className="p-3">
+                      <span
+                        className={`px-2 py-1 text-xs rounded ${getStatusBadge(
+                          item.status
+                        )}`}
+                      >
+                        {item.status}
+                      </span>
+                    </td>
+                    <td className="p-3">{item.remediatedDate}</td>
+                    <td className="p-3">
+                      <div className="flex flex-col">
+                        <span className="text-white">{item.creatorName}</span>
+                        <span className="text-xs text-gray-400">
+                          {item.creatorEmail}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="p-3 flex gap-2">
+                      <BiEditAlt
+                        onClick={() => {
+                          setIsUpdateModalOpen(true);
+                          setSelectedItem(item);
+                        }}
+                        className="text-blue-400 cursor-pointer"
+                      />
+                      <RiDeleteBinFill
+                        onClick={() => DeleteData(item.issueId)}
+                        className="text-red-500 cursor-pointer"
+                      />
+                    </td>
+                  </tr>
+                ))}
+                {paginatedData.length === 0 && (
+                  <tr>
+                    <td colSpan="11" className="text-center py-4 text-gray-500">
+                      No matching records found.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+
+            <div className="flex justify-between items-center px-4 py-2 text-xs border-t border-gray-700">
+              <div>
+                Showing {paginatedData.length} of {filteredData.length} results
+              </div>
+              <div className="space-x-2">
+                <button
+                  className="px-2 py-1 bg-gray-700 rounded text-white"
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(prev - 1, 1))
+                  }
+                >
+                  Previous
+                </button>
+                <span className="px-3 py-1 bg-blue-600 rounded text-white">
+                  Page {currentPage}
+                </span>
+                <button
+                  className="px-2 py-1 bg-gray-700 rounded text-white"
+                  onClick={() =>
+                    setCurrentPage((prev) =>
+                      prev * rowsPerPage < filteredData.length ? prev + 1 : prev
+                    )
+                  }
+                >
+                  Next
+                </button>
               </div>
             </div>
           </div>
