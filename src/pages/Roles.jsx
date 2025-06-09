@@ -1,5 +1,6 @@
 import { AxiosHandler } from '@/config/AxiosConfig'
 import { AllowedPaths } from '@/constants/static.data'
+import { useAuthContext } from '@/context'
 import { useFormik } from 'formik'
 import Multiselect from 'multiselect-react-dropdown'
 import React, { useEffect, useState } from 'react'
@@ -9,7 +10,7 @@ import { FiEdit2, FiTrash2 } from 'react-icons/fi'
 const Roles = () => {
     const [showModal, setModal] = useState(false)
     const [rolesList, setRolesList] = useState([]) // For storing roles to show in table
-
+    const { token } = useAuthContext();
 
     const GetData = async () => {
 
@@ -49,20 +50,22 @@ const Roles = () => {
     }
 
 
-   const DeleteData =  async(_id)=>{
-     console.log(alert(_id))
-     try {
-         const res = await AxiosHandler.delete(`/role/delete/${_id}`)
-         GetData()
-        
-     } catch (error) {
-        console.log(error)
-     }
-   }
+    const DeleteData = async (_id) => {
+        console.log(alert(_id))
+        try {
+            const res = await AxiosHandler.delete(`/role/delete/${_id}`)
+            GetData()
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     useEffect(() => {
-        GetData()
-    }, [])
+        if (token) {
+            GetData()
+        }
+    }, [token])
 
     return (
         <section className="min-h-screen w-full px-6 md:px-10 py-8">
