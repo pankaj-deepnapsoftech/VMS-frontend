@@ -40,7 +40,7 @@ const SignIn = () => {
           <button className="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-md">
             Try Now
           </button>
-        </div>
+        </div>  
         <div className="flex flex-col font-semibold gap-5 ml-10">
           <div>Threat and Vulnerability Management (TVM)</div>
           <div>Attack Surface Management (ASM)</div>
