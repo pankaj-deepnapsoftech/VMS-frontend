@@ -176,52 +176,55 @@ export const JiraDataTable = () => {
             Monitor and manage your jira issues and project data
           </p>
 
-          <div className="flex gap-4 px-4 py-6 bg-[#0A0A23]">
+          <div className="grid grid-cols-4 gap-4 px-4 py-6 ">
             {/* Total Issues */}
-            <div className="bg-[#0B1E3C] text-white rounded-xl p-4 w-64 flex justify-between items-center shadow-md">
+            <div className="bg-[#11c56] border text-white rounded-xl px-4  flex justify-between items-center shadow-md">
               <div>
-                <p className="text-sm text-blue-400 font-medium">
+                <p className="text-sm  font-medium">
                   Total Issues
                 </p>
-                <p className="text-3xl font-semibold mt-1">6</p>
+                <p className="text-xl font-medium mt-1">6</p>
               </div>
-              <div className="bg-blue-900 bg-opacity-30 p-2 rounded-full">
-                <FaExclamationCircle className="text-blue-400 w-5 h-5" />
+              <div className="bg-blue-900 bg-opacity-30 p-2 rounded-lg">
+                <img src="/icons/total-issue.png" alt="icon" />
               </div>
             </div>
 
             {/* Closed */}
-            <div className="bg-[#0C2A1B] text-white rounded-xl p-4 w-64 flex justify-between items-center shadow-md">
+            <div className="bg-[#0C2A1B] border  text-white rounded-xl p-4  flex justify-between items-center shadow-md">
               <div>
                 <p className="text-sm text-green-400 font-medium">Closed</p>
-                <p className="text-3xl font-semibold mt-1">2</p>
+                <p className="text-xl font-medium mt-1">2</p>
               </div>
-              <div className="bg-green-900 bg-opacity-30 p-2 rounded-full">
-                <FaCheckCircle className="text-green-400 w-5 h-5" />
+              
+               <div className="bg-green-900 bg-opacity-30 p-2 rounded-lg">
+                <img src="/icons/closed.png" alt="icon" />
               </div>
             </div>
 
             {/* In Progress */}
-            <div className="bg-[#2A1F0A] text-white rounded-xl p-4 w-64 flex justify-between items-center shadow-md">
+            <div className="bg-[#2A1F0A] border text-white rounded-xl p-4  flex justify-between items-center shadow-md">
               <div>
                 <p className="text-sm text-yellow-400 font-medium">
                   In Progress
                 </p>
-                <p className="text-3xl font-semibold mt-1">2</p>
+                <p className="text-xl font-medium mt-1">2</p>
               </div>
-              <div className="bg-yellow-900 bg-opacity-30 p-2 rounded-full">
-                <FaClock className="text-yellow-400 w-5 h-5" />
+              
+               <div className="bg-yellow-900 bg-opacity-30 p-2 rounded-lg">
+                <img src="/icons/in-progress.png" alt="icon" />
               </div>
             </div>
 
             {/* Critical */}
-            <div className="bg-[#2A0E13] text-white rounded-xl p-4 w-64 flex justify-between items-center shadow-md">
+            <div className="bg-[#2A0E13] border text-white rounded-xl p-4 flex justify-between items-center shadow-md">
               <div>
                 <p className="text-sm text-red-400 font-medium">Critical</p>
-                <p className="text-3xl font-semibold mt-1">1</p>
+                <p className="text-xl font-medium mt-1">1</p>
               </div>
-              <div className="bg-red-900 bg-opacity-30 p-2 rounded-full">
-                <FaTimesCircle className="text-red-400 w-5 h-5" />
+              
+               <div className="bg-red-900 bg-opacity-30 p-2 rounded-lg">
+                <img src="/icons/cretical.png" alt="icon" />
               </div>
             </div>
           </div>
