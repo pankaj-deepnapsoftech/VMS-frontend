@@ -130,7 +130,7 @@ transition duration-300 sm:w-[40%] md:w-[30%] lg:w-[25%] xl:w-[20%] 2xl:w-[15%] 
                         onClick={() => { setOpenSideBar(true) }}
                         className="bg-blue-400 text-white rounded-full w-10 h-10 flex items-center justify-center"
                       >
-                        {getInitials(authenticate?.full_name)}
+                        {authenticate.fname}
                       </button>
                       {authenticate?.role}
 
