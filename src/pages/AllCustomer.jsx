@@ -41,6 +41,7 @@ export default function AllCustomer() {
   const { loading } = useAllCustomerContext();
 
   const { authenticate, token } = useAuthContext();
+ 
   const { VerifyEmployee } = useAllEmployeeContext();
   const [page, setPage] = useState(1)
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -61,7 +62,7 @@ export default function AllCustomer() {
   };
 
 
-  // post
+  // post  
   const {
     values,
     handleChange,
@@ -132,8 +133,7 @@ export default function AllCustomer() {
       ) : (
         <div className="m-6 p-2 bg-[#2a2c2f] shadow-lg rounded-lg">
           <div>
-            {(authenticate?.role === "ClientCISO" ||
-              authenticate?.role === "Admin") && (
+            
                 <div className="flex w-full justify-end py-4">
                   <button
                     onClick={() => {setIsModalOpen(true); setEditTable(null)}}
@@ -143,7 +143,7 @@ export default function AllCustomer() {
                     Add Tenant
                   </button>
                 </div>
-              )}
+              
 
             {isModalOpen && (
               <div className="fixed inset-0 bg-input bg-opacity-50 flex items-center justify-center p-4 z-10">
