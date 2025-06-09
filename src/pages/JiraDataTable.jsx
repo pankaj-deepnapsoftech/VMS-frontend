@@ -176,7 +176,7 @@ export const JiraDataTable = () => {
             Monitor and manage your jira issues and project data
           </p>
 
-          <div className="flex gap-4 px-4 py-6 bg-[#0A0A23]">
+          <div className="flex gap-4 px-4 py-6">
             {/* Total Issues */}
             <div className="bg-[#0B1E3C] text-white rounded-xl p-4 w-64 flex justify-between items-center shadow-md">
               <div>
@@ -202,7 +202,7 @@ export const JiraDataTable = () => {
             </div>
 
             {/* In Progress */}
-            <div className="bg-[#2A1F0A] text-white rounded-xl p-4 w-64 flex justify-between items-center shadow-md">
+            <div className="bg-[#2A1F0A] text-white rounded-xl p-4 w-64 flex justify-betwee  n items-center shadow-md">
               <div>
                 <p className="text-sm text-yellow-400 font-medium">
                   In Progress
