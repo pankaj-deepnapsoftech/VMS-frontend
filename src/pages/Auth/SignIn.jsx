@@ -1,10 +1,13 @@
 import { useAuthContext } from "@/context";
 import { useFormik } from "formik";
-import React from "react";
+import { Eye, EyeOff } from "lucide-react";
+import React, { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
+import { BsEyeSlash } from "react-icons/bs";
 
 const SignIn = () => {
   const {Signin} = useAuthContext();
+  const [togglePassword,setTogglePassword] = useState(false);
   const {values,handleBlur,handleChange,handleSubmit} = useFormik({
     initialValues:{email:"",password:""},
     onSubmit:(value) => {
@@ -83,7 +86,7 @@ const SignIn = () => {
               className=" bg-transparent h-12 2xl:h-[60px] 2xl:text-2xl w-full border border-gray-500 rounded px-3 "
             />
           </div>
-          <div className="flex flex-col  w-96 2xl:w-[600px]">
+          <div className="flex flex-col  w-96 2xl:w-[600px] relative">
             <label
               htmlFor="password"
               className="2xl:text-2xl text-gray-400 pb-2"
@@ -92,7 +95,7 @@ const SignIn = () => {
             </label>
             <input
               id="password"
-              type="password"
+              type={togglePassword ? "text" :"password"}
                name="password"
               onBlur={handleBlur}
               value={values.password}
@@ -100,6 +103,9 @@ const SignIn = () => {
               placeholder="Enter your password"
               className="bg-transparent h-12 2xl:h-[60px] 2xl:text-2xl w-full border border-gray-500 rounded px-3 "
             />
+            <div className="absolute top-[60%] right-5 -translate-y-[20%] " onClick={()=>setTogglePassword(!togglePassword)} >
+              {togglePassword ? <Eye/> : <EyeOff/>}
+            </div>
           </div>
           <div className="pt-1">
             <ReCAPTCHA
