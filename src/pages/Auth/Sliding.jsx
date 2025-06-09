@@ -36,10 +36,7 @@ const slides = [
 
 const SlidingComponent = () => {
   return (
-    <div
-      className="h-[700px] w-full flex items-center justify-center bg-[#2e2e2e] text-white bg-cover bg-center"
-      style={{ backgroundImage: "url('/background.png')" }}
-    >
+    <div className="h-[700px] w-full flex items-center justify-center bg-gradient-to-b from-[#343537] to-[#26282a] text-white">
       <Swiper
         direction="horizontal"
         autoplay={{ delay: 1000, disableOnInteraction: false }}

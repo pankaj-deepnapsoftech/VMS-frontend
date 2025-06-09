@@ -20,12 +20,6 @@ import Loader from "@/components/Loader/Loader";
 import NoDataFound from "@/components/NoDataFound";
 import InputField from "@/components/InputField";
 import { Modal } from "@/components/modal/FileUploadModal";
-import {
-  FaCheckCircle,
-  FaExclamationCircle,
-  FaClock,
-  FaTimesCircle,
-} from "react-icons/fa";
 
 export const JiraDataTable = () => {
   const {

@@ -28,8 +28,8 @@ export const AllowedPaths = [
     value: "/vulnerability-data",
   },
   {
-    name: "All Employee",
-    value: "/all-employee",
+    name: "Users",
+    value: "/all-user",
   },
   {
     name: "Application Vulnerability",
@@ -51,6 +51,19 @@ export const AllowedPaths = [
     name: "Remedition",
     value: "/remedition",
   },
+  {
+    name: "Asset Inventory",
+    value: "/asset-inventory",
+  },
+  {
+    name: "All Tenents",
+    value: "/all-tenent",
+  },
+  {
+    name: "All Tasks",
+    value: "/employee-tasks",
+  }, 
+
 ];
 
 export const ChartsColor = {
@@ -73,7 +86,6 @@ export const products = [
         icon: MdInventory2,
       },
     ],
-    allowedCISO: [],
   },
   {
     title: "TVM",
@@ -98,32 +110,12 @@ export const products = [
       },
       { title: "Exceptions", route: "/exceptions", icon: AiOutlineException },
     ],
-    allowedCISO: [
-      { title: "Dashboard", route: "/", icon: BiSolidDashboard },
-      {
-        title: "Scheduling Assesment",
-        route: "/scheduling-assesment",
-        icon: BiSolidDashboard,
-      },
-      {
-        title: "Application Vulnerability",
-        route: "/application-vulnerability",
-        icon: MdOutlineMiscellaneousServices,
-      },
-      {
-        title: "Infrastructure Vulnerability ",
-        route: "/infrastructure-vulnerability",
-        icon: GrVulnerability,
-      },
-      { title: "Exceptions", route: "/exceptions", icon: AiOutlineException },
-    ],
   },
   {
     title: "ASM",
     desc: "Attack Surface Monitoring for real-time visibility",
     gradient: "from-[#00c6ff] to-[#0072ff]",
     allowedPath: [],
-    allowedCISO: [],
   },
 
   {
@@ -131,28 +123,24 @@ export const products = [
     desc: "Governance, Risk, and Compliance",
     gradient: "from-[#ee9ca7] to-[#ffdde1]",
     allowedPath: [],
-    allowedCISO: [],
   },
   {
     title: "Vulnerability Intelligence",
     desc: "Governance, Risk, and Compliance",
     gradient: "from-[#ff7e5f] to-[#feb47b]",
     allowedPath: [],
-    allowedCISO: [],
   },
   {
     title: "GRC",
     desc: "Governance, Risk, and Compliance",
     gradient: "from-[#f7971e] to-[#ffd200]",
     allowedPath: [],
-    allowedCISO: [],
   },
   {
     title: "TPRM",
     desc: "Third-Party Risk Management",
     gradient: "from-[#43cea2] to-[#185a9d]",
     allowedPath: [],
-    allowedCISO: [],
   },
   {
     title: "Remediation Factory",
@@ -166,21 +154,13 @@ export const products = [
       },
       { title: "Vulnerability Data", route: "/vulnerability-data", icon: Bug },
     ],
-    allowedCISO: [
-      {
-        title: "Remedition",
-        route: "/remedition",
-        icon: SiWikimediafoundation,
-      },
-      { title: "Vulnerability Data", route: "/vulnerability-data", icon: Bug },
-    ],
+  
   },
   {
     title: "Reports",
     desc: "Generate reports & dashboards automatically",
     gradient: "from-[#a1c4fd] to-[#c2e9fb]",
     allowedPath: [{ title: "Reports", route: "/reports", icon: TbReport }],
-    allowedCISO: [{ title: "Reports", route: "/reports", icon: TbReport }],
   },
   {
     title: "Administration",
@@ -196,17 +176,17 @@ export const products = [
         icon: Settings,
       },
       {
-         title: "Config Email",
+        title: "Config Email",
         route: "/config-email",
         icon: Settings,
       },
       {
-         title: "Manage Users",
+        title: "Manage Users",
         route: "/manage-users",
         icon: Settings,
       },
       {
-         title: "Manage Tenants",
+        title: "Manage Tenants",
         route: "/manage-tenants ",
         icon: Settings,
       },
@@ -215,9 +195,6 @@ export const products = [
         route: "/roles ",
         icon: Users,
       }
-    ],
-    allowedCISO: [
-      { title: "All Users", route: "/all-users", icon: FaPerson },
     ],
   },
 ];

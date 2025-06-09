@@ -1,8 +1,8 @@
 import { AiOutlineException } from "react-icons/ai";
 import { BiSolidDashboard } from "react-icons/bi";
-import { FaPersonBooth, FaRegBookmark } from "react-icons/fa";
+import { FaRegBookmark } from "react-icons/fa";
 import { GrVulnerability } from "react-icons/gr";
-import { IoPerson, IoShield, IoShieldHalf } from "react-icons/io5";
+import { IoShield, IoShieldHalf } from "react-icons/io5";
 import { FaPerson } from "react-icons/fa6";
 import { MdInventory2, MdOutlineMiscellaneousServices } from "react-icons/md";
 import { SiWikimediafoundation } from "react-icons/si";
@@ -22,10 +22,10 @@ export const list = [
     { title: "Application Vulnerability", route: "/application-vulnerability", icon: MdOutlineMiscellaneousServices },
     { title: "Infrastructure Vulnerability ", route: "/infrastructure-vulnerability", icon: GrVulnerability },
     { title: "Exceptions", route: "/exceptions", icon: AiOutlineException },
-    {title: "Book Demo", route:"/book-demo",icon:FaRegBookmark },
-    // { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
+    { title: "Book Demo", route: "/book-demo", icon: FaRegBookmark },
+    { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
     { title: "Reports", route: "/reports", icon: TbReport },
-    {title:"Change Password",route:"/change-password", icon:TbLockPassword }
+    { title: "Change Password", route: "/change-password", icon: TbLockPassword }
 ];
 
 
@@ -33,7 +33,7 @@ export const EmployeeList = [
     { title: "Dashboard", route: "", icon: BiSolidDashboard },
     { title: "All Tasks", route: "/employee-tasks", icon: IoShieldHalf },
     { title: "Reports", route: "/reports", icon: TbReport },
-    {title:"Change Password",route:"/change-password", icon:TbLockPassword }
+    { title: "Change Password", route: "/change-password", icon: TbLockPassword }
 
 ]
 
@@ -46,7 +46,7 @@ export const ClientSmeList = [
     { title: "Exceptions", route: "/exceptions", icon: AiOutlineException },
     { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
     { title: "Reports", route: "/reports", icon: TbReport },
-    {title:"Change Password",route:"/change-password", icon:TbLockPassword }
+    { title: "Change Password", route: "/change-password", icon: TbLockPassword }
 ]
 
 
@@ -61,7 +61,7 @@ export const ClientCisoList = [
     { title: "Exceptions", route: "/exceptions", icon: AiOutlineException },
     { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
     { title: "Reports", route: "/reports", icon: TbReport },
-    {title:"Change Password",route:"/change-password", icon:TbLockPassword },
+    { title: "Change Password", route: "/change-password", icon: TbLockPassword },
 
 ]
 
