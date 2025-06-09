@@ -250,19 +250,7 @@ const Header = ({ openModal }) => {
       >
         <div className="w-full max-w-screen-xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <div
-              className="w-[100px] h-[100px] bg-blue-500"
-              style={{
-                WebkitMaskImage: "url('/logo.png')",
-                WebkitMaskRepeat: "no-repeat",
-                WebkitMaskPosition: "center",
-                WebkitMaskSize: "contain",
-                maskImage: "url('/logo.png')",
-                maskRepeat: "no-repeat",                         
-                maskPosition: "center",
-                maskSize: "contain",
-              }}
-            ></div>
+            <img src="/logo.png" alt="logo" className="h-8" />
           </div>
 
           <div className="hidden md:flex items-center space-x-12 text-gray-400 text-lg">
