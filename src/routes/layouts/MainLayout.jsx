@@ -58,16 +58,9 @@ const MainLayout = () => {
   useEffect(() => {
     if (getDataFromSession) {
       for (let item of products) {
-        if (item.title === getDataFromSession && authenticate.role === "Admin") {
+        if (item.title === getDataFromSession ) {
           navigate(item.allowedPath[0]?.route);
         }
-        else if (item.title === getDataFromSession && (authenticate.role === "ClientCISO" || authenticate.role === "ClientSME")) {
-          navigate(item.allowedCISO[0]?.route);
-        }
-        else if (authenticate.role === "Assessor") {
-          navigate("/");
-        }
-
       }
     }
   }, [getDataFromSession, authenticate])

@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 import { products } from "@/constants/static.data";
 
 function Header({ setShowMenu }) {
-  const { Logout, authenticate,getDataFromSession } = useAuthContext();
+  const { Logout, authenticate, getDataFromSession } = useAuthContext();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -24,41 +24,45 @@ function Header({ setShowMenu }) {
   };
 
   let navList = [];
-  console.log("authenticate?.role = ", authenticate?.role)
-  switch (authenticate?.role) {
-    case "ClientCISO":
-      products.map((item)=>{
-        if(getDataFromSession === item.title){
-         navList = item.allowedCISO.filter((item)=> authenticate.allowed_paths.some((ite)=> ite.value === item.route))
-        }
-      });
-      break;
-    case "Assessor":
-      navList = EmployeeList;
-      break;
-    case "Admin":
-       products.map((item)=>{
-        if(getDataFromSession === item.title){
-         navList = item.allowedPath
-        }
-      });
-      break;
-    case "ClientSME":
-      products.map((item)=>{
-        if(getDataFromSession === item.title){
-         navList = item.allowedCISO.filter((item)=> authenticate.allowed_paths.some((ite)=> ite.value === item.route))
-        };
-      });
-      break;
-    default:
-      toast.error("Invalid Role: Access Denied");
-  }
+  products.map((item) => {
+    if (getDataFromSession === item.title) {
+      navList = item.allowedPath
+    }
+  });
+  // switch (authenticate?.role) {
+  //   case "ClientCISO":
+  //     products.map((item)=>{
+  //       if(getDataFromSession === item.title){
+  //        navList = item.allowedCISO.filter((item)=> authenticate.allowed_paths.some((ite)=> ite.value === item.route))
+  //       }
+  //     });
+  //     break;
+  //   case "Assessor":
+  //     navList = EmployeeList;
+  //     break;
+  //   case "Admin":
+  //      products.map((item)=>{
+  //       if(getDataFromSession === item.title){
+  //        navList = item.allowedPath
+  //       }
+  //     });
+  //     break;
+  //   case "ClientSME":
+  //     products.map((item)=>{
+  //       if(getDataFromSession === item.title){
+  //        navList = item.allowedCISO.filter((item)=> authenticate.allowed_paths.some((ite)=> ite.value === item.route))
+  //       };
+  //     });
+  //     break;
+  //   default:
+  //     toast.error("Invalid Role: Access Denied");
+  // }
 
   return (
     // <div className="flex h-screen fixed  overflow-y-auto
     //  md:w-[28%] lg:w-[25%] xl:w-[25%] 2xl:w-[20%] ">
     <div className=" flex flex-col text-white  h-[100%] hide-scrollbar bg-[#1d1f22]  overflow-y-auto ">
-      <Link  className="flex items-center my-2 ml-3">
+      <Link className="flex items-center my-2 ml-3">
         <div className="flex gap-2 pt-2 items-center justify-center ml-14 ">
           <div
             className="w-[100px] h-[100px] bg-blue-500"
