@@ -29,7 +29,7 @@ export const Modal = ({ isOpen, onClose, title, method }) => {
           </button>
         </div>
         {/* Content */}
-        <div className="p-6 space-y-4 bg-background text-white">
+        <div className="p-6 space-y-4 bg-[#333333] text-white">
           <ul className=" text-sm space-y-2 ">
             <li className="flex items-start space-x-2">
               <span className="w-3 h-3 mt-1 bg-[#015289] rounded-full"></span>

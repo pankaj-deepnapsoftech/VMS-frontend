@@ -42,7 +42,7 @@ export default function EmailConfigPanel() {
           <input
             name="port"
             type="text"
-            value={emailConfig.port}
+            value={emailConfig.port} 
             onChange={handleChange}
             className="mt-1 w-full bg-[#000000] border border-gray-700 text-sm px-3 py-2 rounded-md"
           />
@@ -67,9 +67,9 @@ export default function EmailConfigPanel() {
             value={emailConfig.password}
             onChange={handleChange}
             className="mt-1 w-full bg-[#1f2124] border border-gray-700 text-sm px-3 py-2 rounded-md"
-          />
-        </div>
-
+          /> 
+        </div> 
+ 
         <div>
           <label className="text-sm font-medium">
             Sender Email<span className="text-red-500">*</span>

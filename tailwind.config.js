@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        "background": "#2a2c2f",
+        "background": "#0d1141",
         "input": "#333333",
         "table": "#2d333b",
         "button": "#3533cc"
@@ -14,7 +14,7 @@ export default {
         lexendDeca:["lexendDeca","sans-serif"]
       },
       backgroundImage: {
-        "gradient-color": "linear-gradient(to right, #333333, #666666)",
+        "gradient-color":  'linear-gradient(to bottom right, #0f172a, #111827, #000000)',
         "gradient-image": "url('/bg.jpg')"
       },
     },
