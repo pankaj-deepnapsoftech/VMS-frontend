@@ -14,7 +14,7 @@ export default {
         lexendDeca:["lexendDeca","sans-serif"]
       },
       backgroundImage: {
-        "gradient-color":  'linear-gradient(to bottom right, #0f172a, #111827, #000000)',
+        "gradient-color":  'linear-gradient(to bottom right, #0f172a, #111827), #000000)',
         "gradient-image": "url('/bg.jpg')"
       },
     },

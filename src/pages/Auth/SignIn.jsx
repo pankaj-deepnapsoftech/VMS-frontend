@@ -8,12 +8,18 @@ import { BsEyeSlash } from "react-icons/bs";
 const SignIn = () => {
   const {Signin} = useAuthContext();
   const [togglePassword,setTogglePassword] = useState(false);
+  const [disable,setDisable] = useState(true)
   const {values,handleBlur,handleChange,handleSubmit} = useFormik({
     initialValues:{email:"",password:""},
     onSubmit:(value) => {
       Signin(value)
     }
   })
+
+  const handleCaptcha = (e) => {
+    setDisable(false)
+  }
+
   return (
     <div className="flex h-screen">
       {/* left side */}
@@ -118,13 +124,13 @@ const SignIn = () => {
           <div className="pt-1">
             <ReCAPTCHA
               sitekey={import.meta.env.VITE_HUMAN_VERIFICATION}
-              onChange={() => {}}
+              onChange={handleCaptcha}
             />
           </div>
           <label className="flex gap-3 select-none">
             <input type="checkbox" className="" /> Remember Me
           </label>
-          <button type="submit" className="bg-button w-96 2xl:w-[600px] h-12 2xl:h-[60px] 2xl:text-2xl rounded my-5">
+          <button disabled={disable} type="submit" className="bg-button w-96 2xl:w-[600px] h-12 2xl:h-[60px] 2xl:text-2xl rounded my-5">
             Login
           </button>
         </form>

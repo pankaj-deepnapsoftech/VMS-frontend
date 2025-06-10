@@ -22,9 +22,7 @@ const Card = ({ children, gradient, HandleClick }) => {
 
 const Dashboard = () => {
   const { authenticate, Logout, setGetDataFromSession } = useAuthContext();
-  const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
-  const [loading, setLoading] = useState(false);
   const dropdownRef = useRef(null);
 
   const HandleClick = (item) => {
@@ -54,7 +52,7 @@ const Dashboard = () => {
             className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-blue-500 flex items-center justify-center text-white text-base md:text-lg font-semibold hover:brightness-110 transition"
             aria-label="User menu"
           >
-            {getInitials(authenticate?.full_name || "")}
+            {authenticate?.fname.split("")[0].toUpperCase()}
           </button>
           {showDropdown && (
             <div className="absolute right-0 mt-2 w-40 bg-[#1c1c1e] shadow-lg rounded-md py-2 z-30 border text-white border-gray-800">
@@ -74,7 +72,7 @@ const Dashboard = () => {
         <h2 className="text-2xl md:text-4xl font-bold text-blue-400">
           Hello,{" "}
           <span className="capitalize font-lexendDeca">
-            {authenticate?.full_name}
+            {authenticate?.fname}
           </span>
         </h2>
         <p className="mt-1 md:mt-2 text-sm md:text-base text-gray-400">

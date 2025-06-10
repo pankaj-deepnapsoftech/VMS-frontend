@@ -63,20 +63,8 @@ function Header({ setShowMenu }) {
     //  md:w-[28%] lg:w-[25%] xl:w-[25%] 2xl:w-[20%] ">
     <div className=" flex flex-col text-white  h-[100%] hide-scrollbar bg-[#1d1f22]  overflow-y-auto ">
       <Link className="flex items-center my-2 ml-3">
-        <div className="flex gap-2 pt-2 items-center justify-center ml-14 ">
-          <div
-            className="w-[100px] h-[100px] bg-blue-500"
-            style={{
-              WebkitMaskImage: "url('/logo.png')",
-              WebkitMaskRepeat: "no-repeat",
-              WebkitMaskPosition: "center",
-              WebkitMaskSize: "contain",
-              maskImage: "url('/logo.png')",
-              maskRepeat: "no-repeat",
-              maskPosition: "center",
-              maskSize: "contain",
-            }}
-          ></div>
+        <div className="flex gap-2 pt-2 items-center justify-center  h-20  ">
+         <img src="/logo.png" alt="" className=" h-7" />
         </div>
       </Link>
       <hr className="border-gray-100 mx-8" />
