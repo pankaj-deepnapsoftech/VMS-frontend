@@ -131,10 +131,8 @@ export default function AllCustomer() {
       {loading ? (
         <Loader />
       ) : (
-        <div className="m-6 p-2 bg-[#2a2c2f] shadow-lg rounded-lg">
-          <div>
-            
-                <div className="flex w-full justify-end py-4">
+        <div>
+           <div className="flex w-full justify-end py-4">
                   <button
                     onClick={() => {setIsModalOpen(true); setEditTable(null)}}
                     className="px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 flex items-center gap-2"
@@ -143,11 +141,15 @@ export default function AllCustomer() {
                     Add Tenant
                   </button>
                 </div>
+        <div className="m-6 p-2 bg-tablecolor shadow-lg rounded-lg">
+          <div>
+            
+               
               
 
             {isModalOpen && (
               <div className="fixed inset-0 bg-input bg-opacity-50 flex items-center justify-center p-4 z-10">
-                <div className="bg-background rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+                <div className="bg-gradient-custom rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
                   <div className="flex justify-between items-center border-b p-4 bg-table">
                     <h2 className="text-lg font-semibold text-gray-200">
                       Add Tenant
@@ -305,7 +307,7 @@ export default function AllCustomer() {
             {tenants?.length < 1 ? (
               <NoDataFound />
             ) : (
-              <table className="table-auto  w-full bg-[#2d333b] ">
+              <table className="table-auto  w-full bg-tablecolor">
                 <thead className="rounded-md  w-full">
                   <tr className="bg-gradient-to-bl from-[#333333] to-[#666666] text-white">
                     <th className="px-2 py-2 border whitespace-nowrap text-left text-sm">Company Name</th>
@@ -361,6 +363,7 @@ export default function AllCustomer() {
               Next
             </button>
           </div>
+        </div>
         </div>
       )}
 

@@ -18,7 +18,7 @@ export default function Component() {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-white">
+    <div className="min-h-screen bg-transparent text-white">
       <div className="flex">
         <main className="flex-1 p-6">
           <div className="flex items-center justify-between mb-6">
@@ -29,7 +29,7 @@ export default function Component() {
                 <select
                   value={filterValue}
                   onChange={(e) => setFilterValue(e.target.value)}
-                  className="bg-gray-600 text-white px-4 py-2 rounded-md border border-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none pr-8"
+                  className="bg-cards text-white px-4 py-2 rounded-md border border-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none pr-8"
                 >
                   <option value="ALL">ALL</option>
                   <option value="Open Source Threat Intel">
@@ -58,7 +58,7 @@ export default function Component() {
             </div>
 
             <div className="flex items-center space-x-4">
-              <div className="flex items-center bg-gray-600 rounded-md">
+              <div className="flex items-center bg-cards rounded-md">
                 <div className="pl-3">
                   <svg
                     className="w-5 h-5 text-gray-400"
@@ -108,7 +108,7 @@ export default function Component() {
               .map((integration) => (
                 <div
                   key={integration.id}
-                  className="bg-input rounded-lg p-6 relative"
+                  className="bg-cards rounded-lg p-6 relative"
                 >
                   <button className="absolute top-4 right-4 text-gray-400 hover:text-white">
                     <svg
