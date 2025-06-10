@@ -41,7 +41,7 @@ const SignIn = () => {
     },
   ];
 
-  const ANIMATION_DURATION = 6000; // 6 seconds
+  const ANIMATION_DURATION = 6000; 
 
   const [currentAnimatingCardIndex, setCurrentAnimatingCardIndex] = useState(0);
 
@@ -87,8 +87,9 @@ const SignIn = () => {
             return (
               <div
                 key={index}
-                className={`transition-all duration-500 ml-10 rounded-2xl text-white shadow-lg relative
-          ${isActive ? "max-w-md p-6 bg-gradient-to-br from-[#2b2f58] to-[#2a3250] " : "bg-transparent max-w-md py-3"}`}
+                className={`transition-all duration-500 ml-10 rounded-2xl text-white shadow-lg  relative py-3
+          ${isActive ? "max-w-md p-6 bg-gradient-to-br from-[#2b2f58] to-[#2a3250]  " : "bg-transparent max-w-md px-6"} 
+        `}
               >
                 {isActive && (
                   <div className="flex space-x-1 mb-4">
