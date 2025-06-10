@@ -124,8 +124,6 @@ export default function AllCustomer() {
   }, [token, page, VerifyEmployee]);
 
 
-
-
   return (
     <>
       {loading ? (

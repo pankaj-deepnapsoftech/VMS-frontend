@@ -35,7 +35,9 @@ const SignIn = () => {
           eos!
         </p>
         <img src="/bg5.png" className=" -z-[0] size-96 absolute top-[30%] right-0" />
-        <div className="max-w-md p-6 ml-10 rounded-2xl bg-gradient-to-br from-[#2b2f58] to-[#2a3250] border-s-4 text-white shadow-lg relative mb-20">
+
+
+        <div className="max-w-md p-6 ml-10  rounded-2xl bg-gradient-to-br from-[#2b2f58] to-[#2a3250] text-white shadow-lg relative mb-20">
           <div className="flex space-x-1 mb-4">
             <div className="w-2 h-2 rounded-full bg-gray-400" />
             <div className="w-2 h-2 rounded-full bg-gray-400" />
@@ -54,7 +56,13 @@ const SignIn = () => {
           <button className="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-md">
             Try Now
           </button>
+
+          <div className=" absolute bottom-[2px] left-0 bg-gray-400 h-2 rounded-xl w-full">
+
+          </div>
         </div>
+
+        
         <div className="flex flex-col font-semibold gap-5 ml-10 z-10 relative ">
           <div>Threat and Vulnerability Management (TVM)</div>
           <div>Attack Surface Management (ASM)</div>
