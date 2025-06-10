@@ -26,6 +26,7 @@ import UserManagement from "@/pages/ManageUsers";
 import ManageTenants from "@/pages/ManageTenants";
 import Roles from "@/pages/Roles";
 import JiraDataTable from "@/pages/JiraDataTable";
+import Partners from "@/pages/Partners";
 
 export const PrivateRoutes = [
   {
@@ -68,6 +69,10 @@ export const PrivateRoutes = [
     path: "/roles",
     element: <Roles />,
   },
+  // {
+  //   path: "/partners",
+  //   element: <Partners />,
+  // },
   {
     path: "/all-users",
     element: <AllEmployee />,
