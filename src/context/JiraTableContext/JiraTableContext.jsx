@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { createContext, useEffect, useState } from "react";
 import { useAuthContext } from "..";
 import { AxiosHandler } from "@/config/AxiosConfig";
@@ -25,6 +26,8 @@ const JiraContextProvider = ({ children }) => {
     try {
       const res = await AxiosHandler.get("/jira/issues?page=${page}&limit=10");
       setJiraData(res.data?.newData);
+
+
 
       console.log("jira data", res.data.newData);
     } catch (error) {

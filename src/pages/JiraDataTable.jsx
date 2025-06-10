@@ -39,6 +39,8 @@ export const JiraDataTable = () => {
     UpdateData,
   } = useJiraContext();
 
+  console.log("this is jira data",jiraData)
+
   const { token } = useAuthContext();
   const [selectedRows, setSelectedRows] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -97,6 +99,8 @@ export const JiraDataTable = () => {
       currentPage * rowsPerPage
     );
   }, [filteredData, currentPage]);
+
+
 
   const handleDownload = useCallback(() => {
     if (filteredData.length < 1) {

@@ -258,7 +258,7 @@ const LandingPage = () => {
                 <div className="flex justify-end max-[800px]:justify-start gap-4">
                   <h2 className="text-[#D7E1E0] text-xl font-bold">
                     Threat Intelligence
-                  </h2>
+                  </h2> 
                   <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
                     <FaArrowPointer className="text-3xl text-[#a1a4ab]" />
                   </div>
@@ -271,7 +271,7 @@ const LandingPage = () => {
             </div>
 
             {/* <div className="w-full sm:w-[30%] h-full flex items-center justify-center mt-10 sm:mt-0">
-              <div className="border border-[#918f8f86] shadow-2xl flex justify-center items-center rounded-[50%] w-[300px] sm:w-[400px] h-[300px] sm:h-[380px] relative overflow-hidden group">
+              <div className="border border-[#918f8f86] shadow-2xl flex justify-center items-center rounded-[50%] w-[300px] sm:w-[400px] h-[300px] sm:h-[380px] relative ove rflow-hidden group">
                 <img
                   className="h-full w-[90%] object-contain rounded-[50%] absolute opacity-100 group-hover:opacity-0 transition-opacity duration-1000"
                   src="./logo.png"
