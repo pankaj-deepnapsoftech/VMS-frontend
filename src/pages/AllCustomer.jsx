@@ -139,7 +139,7 @@ export default function AllCustomer() {
                 setIsModalOpen(true);
                 setEditTable(null);
               }}
-              className="px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 flex items-center gap-2"
+              className="px-4 py-2 bg-gradient-to-tr mr-5 from-[#1f1d1d] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 flex items-center gap-2"
             >
               <BiPlus className="h-6 w-6" />
               Add Tenant

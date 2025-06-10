@@ -74,7 +74,7 @@ const SignIn = () => {
           Welcome to Secure End
         </h2>
         <p className="text-lg 2xl:text-2xl text-gray-500 pb-5">
-          Logic to the Virtual Risk Operation Center(VROC)
+          Login to the Virtual Risk Operation Center(VROC)
         </p>
         <form onSubmit={handleSubmit} className="flex flex-col items-start  w-full gap-5 xl:py-10">
           <div className="flex flex-col  w-96 2xl:w-[600px]">

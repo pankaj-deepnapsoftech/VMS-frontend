@@ -11,7 +11,7 @@ const tenants = [
   },
   {
     code: "TC02",
-    name: "Two",
+    name: "Two", 
     apiKey: "************",
     createdOn: "20-May-2025 14:52:41",
     createdBy: "admin",

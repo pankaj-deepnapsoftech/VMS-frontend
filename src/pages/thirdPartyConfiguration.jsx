@@ -18,7 +18,7 @@ export default function Component() {
   ];
 
   return (
-    <div className="min-h-screen bg-transparent text-white">
+    <div className="min-h-[90%] bg-transparent text-white">
       <div className="flex">
         <main className="flex-1 p-6">
           <div className="flex items-center justify-between mb-6">
