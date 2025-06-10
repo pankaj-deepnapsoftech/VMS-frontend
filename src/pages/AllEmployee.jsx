@@ -3,6 +3,7 @@
 import InputField from "@/components/InputField";
 import Loader from "@/components/Loader/Loader";
 import NoDataFound from "@/components/NoDataFound";
+import { AxiosHandler } from "@/config/AxiosConfig";
 import {
   useAllEmployeeContext,
   useAuthContext,
@@ -16,9 +17,7 @@ import { FaCompass, FaEnvelope, FaLock, FaPhone, FaUser } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import { RiDeleteBinFill, RiEdit2Line } from "react-icons/ri";
 
-const options = ["ClientCISO", "Assessor", "ClientSME"];
-
-export default function AllEmployee() {
+const AllEmployee = () => {
   const {
     loading,
     allEmployeesData,
@@ -29,74 +28,128 @@ export default function AllEmployee() {
     DeleteUser,
   } = useAllEmployeeContext();
   const { getOrgnizationData } = useScheduleAssessmentContext();
-
   const { authenticate, token, Signup, ChangeStatus, runner } =
     useAuthContext();
 
-  useEffect(() => {
-    authenticate?.role === "ClientCISO" ? AllClientSME() : AllEmployee();
-  }, [token, page, runner]);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editable, setEdiTable] = useState(null);
-
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+  const [EmpData, setEmpData,] = useState([]);
+  const [TententData, setTententData] = useState([]);
+  const [RoleAllData, setRoleAllData] = useState([]);
+ 
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit,resetForm } =
     useFormik({
       initialValues: {
-        full_name: "",
+        fname: "",
+        lname: "",
         phone: "",
         email: "",
         password: "",
-        department: "",
-        role: authenticate?.role === "Admin" ? "" : "ClientSME",
-        owner: authenticate?.role === "Admin" ? "" : authenticate?._id,
-        employee_approve: true,
-        email_verification: true,
-        Organization: "",
+        tenant: "",
+        role: "",
+       
       },
       validationSchema: BaseValidationSchema,
-      onSubmit: (value) => {
-        Signup(value, true);
-        setIsModalOpen(false);
+      onSubmit: async (value) => {
+        try {
+          const res = await AxiosHandler.post(`/auth/create`, value);
+          console.log(value);
+          // Signup(value, true);
+          setIsModalOpen(false);
+          GetUsers()
+          resetForm()
+        } catch (error) {
+          console.error( error);
+        }
       },
     });
 
   const handleChangeStatus = (type, id) => {
-    switch (type) {
-      case "activate":
-        ChangeStatus({ deactivate: true }, id);
-        break;
-      case "deactivate":
-        ChangeStatus({ deactivate: false }, id);
-        break;
+    if (window.confirm("Are you sure you want to change this user's status? ")) {
+      switch (type) {
+        case "activate":
+          ChangeStatus({ deactivate: true }, id);
+          break;
+        case "deactivate":
+          ChangeStatus({ deactivate: false }, id);
+          break;
+        default:
+          console.warn("Unknown status change type:", type);
+      }
     }
   };
+
+  const GetUsers = async () => {
+    try {
+      const res = await AxiosHandler.get("/auth/all-users");
+      setEmpData(res?.data?.data);
+    
+    } catch (error) {
+      console.error( error);
+     
+    }
+  };
+
+  const GetAllTenentData = async () => {
+    try {
+      const res = await AxiosHandler.get("/tenant/get-all");
+      setTententData(res?.data.data);
+    
+    } catch (error) {
+      console.error(error);
+     
+    }
+  };
+
+  const GetAllRoleData = async () => {
+    try {
+      const res = await AxiosHandler.get("/role/get-all");
+      setRoleAllData(res?.data?.data);
+    
+    } catch (error) {
+      console.error("Error fetching roles:", error);
+      setApiError("Failed to fetch roles. Please try again.");
+    }
+  };
+ 
+  useEffect(() => {
+    if (token) {
+      GetAllTenentData();
+      GetAllRoleData();
+    }
+  }, [token]);
+
+  useEffect(() => {
+    if (token) {
+      GetUsers();
+    }
+  }, [token, page, runner]);
+
+
 
   return (
     <>
       {loading ? (
         <Loader />
       ) : (
-        <div className="m-6 p-2 bg-[#2a2c2f] shadow-lg rounded-lg">
+        <div className=" p-2 bg-[#2a2c2f] shadow-lg ">
           <div className="flex justify-between items-center">
-            {(authenticate?.role === "ClientCISO" ||
-              authenticate?.role === "Admin") && (
-              <div className="flex w-full justify-end py-4">
-                <button
-                  onClick={() => setIsModalOpen(true)}
-                  className="px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 flex flex-row"
-                >
-                  <BiPlus className="h-6 w-6 mr-1" />
-                  Add User
-                </button>
-              </div>
-            )}
+            <div className="flex w-full justify-end py-4">
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 flex flex-row"
+              >
+                <BiPlus className="h-6 w-6 mr-1" />
+                Add User
+              </button>
+            </div>
+
             {isModalOpen && (
               <div className="fixed inset-0 bg-input bg-opacity-50 flex items-center justify-center p-4 z-10">
                 <div className="bg-background rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
                   <div className="flex justify-between items-center border-b p-4 bg-table">
                     <h2 className="text-lg font-semibold text-gray-200">
-                      {"Add User"}
+                      {editable ? "Edit User" : "Add User"}
                     </h2>
                     <button
                       onClick={() => setIsModalOpen(false)}
@@ -106,28 +159,44 @@ export default function AllEmployee() {
                     </button>
                   </div>
                   <div className="p-10">
+                   
                     <form
                       onSubmit={handleSubmit}
                       className="space-y-5 w-full flex flex-col"
                     >
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <InputField
-                          label="Full Name"
+                          label="First Name"
                           type="text"
                           showPassword={false}
                           icon={FaUser}
-                          value={values.full_name}
+                          value={values.fname}
                           onBlur={handleBlur}
                           onChange={handleChange}
-                          placeholder="Enter your Full Name"
-                          name="full_name"
+                          placeholder="Enter your First Name"
+                          name="fname"
                         />
-                        {touched.full_name && errors.full_name && (
+                        {touched.fname && errors.fname && (
                           <p className="text-red-400 text-sm">
-                            {errors.full_name}
+                            {errors.fname}
                           </p>
                         )}
-
+                        <InputField
+                          label="Last Name"
+                          type="text"
+                          showPassword={false}
+                          icon={FaUser}
+                          value={values.lname}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          placeholder="Enter your Last Name"
+                          name="lname"
+                        />
+                        {touched.lname && errors.lname && (
+                          <p className="text-red-400 text-sm">
+                            {errors.lname}
+                          </p>
+                        )}
                         <InputField
                           label="Email Address"
                           type="email"
@@ -143,111 +212,63 @@ export default function AllEmployee() {
                           <p className="text-red-400 text-sm">{errors.email}</p>
                         )}
 
-                        {authenticate?.role !== "Admin" && (
-                          <InputField
-                            label="Department"
-                            type="text"
-                            showPassword={false}
-                            icon={FaCompass}
-                            value={values.department}
+                        <div className="w-full">
+                          <label className="text-white "> Role</label>
+                          <select
+                            className="w-full bg-input border py-2 rounded-lg text-white px-2 border-gray-600"
+                            name="role"
+                            value={values.role}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                          >
+                            <option selected disabled value="">
+                              {" "}
+                              Select role
+                            </option>
+                            {RoleAllData?.map((ele) => (
+                              <option key={ele._id} value={ele._id}>
+                                {ele?.role}
+                              </option>
+                            ))}
+                          </select>
+                          {touched.role && errors.role && (
+                            <p className="text-red-500">{errors.role}</p>
+                          )}
+                        </div>
+
+                        <div>
+                          <label
+                            htmlFor="tenant"
+                            className="block text-sm text-white font-medium mb-1"
+                          >
+                             Tenant
+                          </label>
+                          <select
+                            id="tenant"
+                            name="tenant"
+                            value={values.tenant}
                             onBlur={handleBlur}
                             onChange={handleChange}
-                            placeholder="Enter your Department"
-                            name="department"
-                          />
-                        )}
-                        {touched.department && errors.department && (
-                          <p className="text-red-400 text-sm">
-                            {errors.department}
-                          </p>
-                        )}
-
-                        {authenticate?.role === "Admin" && (
-                          <div className="w-full">
-                            <label className="text-white ">Role</label>
-                            <select
-                              className="w-full bg-input border py-2 rounded-lg text-white px-2 border-gray-600"
-                              name="role"
-                              value={values.role}
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                            >
-                              <option selected disabled value="">
-                                {" "}
-                                Select role
+                            className="bg-input w-full py-2 rounded-lg px-3 text-white"
+                          >
+                            <option selected disabled value="">
+                              {" "}
+                              Select tenant
+                            </option>
+                            {TententData?.map((item) => (
+                              <option key={item._id} value={item._id}>
+                                {item?.company_name}
                               </option>
-                              {options.map((option) => (
-                                <>
-                                  <option key={option} value={option}>
-                                    {option}
-                                  </option>
-                                </>
-                              ))}
-                            </select>
-                            {touched.role && errors.role && (
-                              <p className="text-red-500">{errors.role}</p>
-                            )}
-                          </div>
-                        )}
-
-                        {values.role === "ClientSME" && (
-                          <div>
-                            <label
-                              htmlFor="role"
-                              className="block text-sm text-white font-medium  mb-1"
-                            >
-                              Select Organization
-                            </label>
-                            <select
-                              id="role"
-                              name="owner"
-                              value={values.owner}
-                              onBlur={handleBlur}
-                              onChange={handleChange}
-                              className="bg-input w-full py-2 rounded-lg px-3 text-white"
-                            >
-                              <option selected disabled value="">
-                                Select Organization
-                              </option>
-                              {getOrgnizationData.map((item) => (
-                                <option key={item._id} value={item._id}>
-                                  {item?.Organization}
-                                </option>
-                              ))}
-                            </select>
-                            {touched.owner && errors.owner && (
-                              <p className="text-red-500">{errors.owner}</p>
-                            )}
-                          </div>
-                        )}
-
-                        {values.role === "ClientCISO" && (
-                          <div>
-                            <label
-                              htmlFor="role"
-                              className="block text-sm text-white font-medium  mb-1"
-                            >
-                              Organization Name
-                            </label>
-                            <input
-                              className="bg-input w-full py-2 rounded-lg px-3"
-                              placeholder="Enter Organization Name"
-                              name="Organization"
-                              value={values.Organization}
-                              onBlur={handleBlur}
-                              onChange={handleChange}
-                            />
-                            {touched.Organization && errors.Organization && (
-                              <p className="text-red-500">
-                                {errors.Organization}
-                              </p>
-                            )}
-                          </div>
-                        )}
+                            ))}
+                          </select>
+                          {touched.tenant && errors.tenant && (
+                            <p className="text-red-500">{errors.tenant}</p>
+                          )}
+                        </div>
 
                         <InputField
                           label="Phone Number"
-                          type="number"
+                          type="text"
                           showPassword={false}
                           icon={FaPhone}
                           value={values.phone}
@@ -299,48 +320,55 @@ export default function AllEmployee() {
             )}
           </div>
 
-          {allEmployeesData.length < 1 ? (
+          
+
+
+          {EmpData?.length < 1 ? (
             <NoDataFound />
           ) : (
             <div className="overflow-x-auto rounded-lg">
               <table className="table-auto w-full border-b bg-[#2d333b]">
                 <thead className="bg-gradient-to-bl from-[#333333] to-[#666666] text-white">
                   <tr>
-                    <th className="px-4 py-1 text-sm border text-left">
+                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
                       S No.
                     </th>
-                    <th className="px-4 py-1 text-sm border text-left">
+                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
                       Full Name
                     </th>
-                    <th className="px-4 py-1 text-sm border text-left">
+                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
+                      Last Name
+                    </th>
+                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
                       Email
                     </th>
-                    <th className="px-4 py-1 text-sm border text-left">
+                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
                       Phone
                     </th>
-                    <th className="px-4 py-1 text-sm border text-left">Role</th>
-                    <th className="px-4 py-1 text-sm border text-left">
+                    {/* <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">Role</th> */}
+                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
                       Approval Status
                     </th>
-                    <th className="px-4 py-1 text-sm border text-left">
+                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
                       Status
                     </th>
-                    <th className="px-4 py-1 text-sm border text-left">
+                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
                       Actions
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {allEmployeesData?.map((user, index) => (
+                  {EmpData?.map((user, index) => (
                     <tr
                       key={user._id}
                       className="bg-[#2d333b] text-gray-200 hover:bg-[#53565c] transition duration-200"
                     >
                       <td className="px-2 py-1 border">{index + 1}</td>
-                      <td className="px-2 py-1 border">{user.full_name}</td>
+                      <td className="px-2 py-1 border">{user.fname}</td>
+                      <td className="px-2 py-1 border">{user.lname}</td>
                       <td className="px-2 py-1 border">{user.email}</td>
                       <td className="px-2 py-1 border">{user.phone}</td>
-                      <td className="px-2 py-1 border">{user.role}</td>
+                      {/* <td className="px-2 py-1 border">{user.role}</td> */}
                       <td className="px-2 py-2 border">
                         {user?.employee_approve ? (
                           <span className="px-3 py-1 text-sm font-semibold text-green-800 bg-green-100 rounded-full">
@@ -348,7 +376,12 @@ export default function AllEmployee() {
                           </span>
                         ) : (
                           <button
-                            onClick={() => VerifyEmployee(user?._id)}
+                            onClick={() => {
+                              if (window.confirm("Are you sure you want to verify this employee?")) {
+                                VerifyEmployee(user?._id);
+                              }
+                            }}
+
                             className="px-3 py-1 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700"
                           >
                             Verify
@@ -381,7 +414,9 @@ export default function AllEmployee() {
                       <td className="px-4 py-3 flex gap-2 border">
                         <button
                           onClick={() => {
-                            DeleteUser(user._id);
+                           if(window.confirm("are you sure you want to delete this user?")){
+                             DeleteUser(user._id);
+                           }
                           }}
                           className="text-red-600 hover:text-red-800 transition-colors duration-150"
                           title="Delete"
@@ -410,3 +445,5 @@ export default function AllEmployee() {
     </>
   );
 }
+
+export default AllEmployee;
