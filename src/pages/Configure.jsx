@@ -10,12 +10,12 @@ export default function EmailConfigPanel() {
   };
 
   return (
-    <div className="bg-[#2a2c2f] text-white p-6 rounded-md shadow-md w-full max-w-4xl mx-auto">
+    <div className="bg-cards text-white p-6 rounded-md shadow-md w-full mt-10 max-w-4xl mx-auto">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold">Configure Email</h2>
         <button
           onClick={() => setIsEditing(!isEditing)}
-          className="bg-orange-700 hover:bg-orange-800 text-white font-medium px-4 py-1 rounded-md"
+          className="bg-orange-800 hover:bg-orange-900 text-white font-medium px-4 py-1 rounded-md"
         >
           {isEditing ? "Save" : "Edit"}
         </button>
@@ -31,7 +31,7 @@ export default function EmailConfigPanel() {
             type="text"
             value={emailConfig.host}
             onChange={handleChange}
-            className="mt-1 w-full bg-[#1f2124] border border-gray-700 text-sm px-3 py-2 rounded-md"
+            className="mt-1 w-full bg-input border border-gray-700 text-sm px-3 py-2 rounded-md"
           />
         </div>
 
@@ -44,7 +44,7 @@ export default function EmailConfigPanel() {
             type="text"
             value={emailConfig.port} 
             onChange={handleChange}
-            className="mt-1 w-full bg-[#000000] border border-gray-700 text-sm px-3 py-2 rounded-md"
+            className="mt-1 w-full bg-input border border-gray-700 text-sm px-3 py-2 rounded-md"
           />
         </div>
 
@@ -55,7 +55,7 @@ export default function EmailConfigPanel() {
             type="text"
             value={emailConfig.user}
             onChange={handleChange}
-            className="mt-1 w-full bg-[#1f2124] border border-gray-700 text-sm px-3 py-2 rounded-md truncate"
+            className="mt-1 w-full bg-input border border-gray-700 text-sm px-3 py-2 rounded-md truncate"
           />
         </div>
 
@@ -66,7 +66,7 @@ export default function EmailConfigPanel() {
             type="password"
             value={emailConfig.password}
             onChange={handleChange}
-            className="mt-1 w-full bg-[#1f2124] border border-gray-700 text-sm px-3 py-2 rounded-md"
+            className="mt-1 w-full bg-input border border-gray-700 text-sm px-3 py-2 rounded-md"
           /> 
         </div> 
  
@@ -79,12 +79,12 @@ export default function EmailConfigPanel() {
             type="email"
             value={emailConfig.sender}
             onChange={handleChange}
-            className="mt-1 w-full bg-[#1f2124] border border-gray-700 text-sm px-3 py-2 rounded-md"
+            className="mt-1 w-full bg-input border border-gray-700 text-sm px-3 py-2 rounded-md"
           />
         </div>
 
         <div>
-          <label className="text-sm font-medium block mb-1">
+          <label className="text-sm font-medium mt-5 block mb-1">
             Encryption Protocol<span className="text-red-500">*</span>
           </label>
           <div className="flex items-center gap-6 mt-1">

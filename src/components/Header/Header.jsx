@@ -1,10 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import {
-  ClientSmeList,
-  EmployeeList,
-} from "@/constants/constants.data";
+import { ClientSmeList, EmployeeList } from "@/constants/constants.data";
 import { useAuthContext } from "@/context";
 import { IoIosLogOut } from "react-icons/io";
 import toast from "react-hot-toast";
@@ -20,13 +17,13 @@ function Header({ setShowMenu }) {
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to log out?")) {
       Logout();
-    };
+    }
   };
 
   let navList = [];
   products.map((item) => {
     if (getDataFromSession === item.title) {
-      navList = item.allowedPath
+      navList = item.allowedPath;
     }
   });
   // switch (authenticate?.role) {
@@ -61,10 +58,10 @@ function Header({ setShowMenu }) {
   return (
     // <div className="flex h-screen fixed  overflow-y-auto
     //  md:w-[28%] lg:w-[25%] xl:w-[25%] 2xl:w-[20%] ">
-    <div className=" flex flex-col text-white  h-[100%] hide-scrollbar bg-[#1d1f22]  overflow-y-auto ">
+    <div className=" flex flex-col text-white  h-[100%] hide-scrollbar bg-[#1f2937]  overflow-y-auto ">
       <Link className="flex items-center my-2 ml-3">
         <div className="flex gap-2 pt-2 items-center justify-center  h-20  ">
-         <img src="/logo.png" alt="" className=" h-7" />
+          <img src="/logo.png" alt="" className=" h-7" />
         </div>
       </Link>
       <hr className="border-gray-100 mx-8" />
@@ -75,7 +72,11 @@ function Header({ setShowMenu }) {
             key={data.route}
             to={data.route}
             onClick={setShowMenu}
-            className="flex items-center px-2 py-2 space-x-2 rounded-lg   [&.active]:bg-gradient-to-tl from-[#8f5151] to-[#551919]  transition duration-200"
+            className={({ isActive }) =>
+              `flex items-center px-2 py-2 space-x-2 rounded-lg transition duration-200 ${
+                isActive ? "bg-[#3533cc]" : ""
+              }`
+            }
           >
             <data.icon className="text-white w-5 h-5" />
             <p className="text-sm font-semibold text-white">{data.title}</p>
@@ -97,7 +98,7 @@ function Header({ setShowMenu }) {
              transition
            bg-gradient-to-r 
            
-           from-[#d83b3b] to-[#c26d6d] 
+           from-[#3533cc] to-[#2d2aee] 
              rounded-lg  
              justify-center"
           >

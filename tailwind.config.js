@@ -4,18 +4,22 @@ export default {
   theme: {
     extend: {
       colors: {
-        "background": "#0d1141",
-        "input": "#333333",
-        "table": "#2d333b",
-        "button": "#3533cc"
+        background: "#0d1141",
+        input: "#1f2937",
+        table: "#050b20",
+        tablecolor : "#0c1120",
+        button: "#3533cc",
+        cards:"#0a0f39"
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
-        lexendDeca:["lexendDeca","sans-serif"]
+        lexendDeca: ["lexendDeca", "sans-serif"],
       },
       backgroundImage: {
-        "gradient-color":  'linear-gradient(to bottom right, #0f172a, #111827), #000000)',
-        "gradient-image": "url('/bg.jpg')"
+        "gradient-custom":
+          "linear-gradient(to top left, #0a0f39, #080d27, #050b20)",
+
+        "gradient-image": "url('/bg.jpg')",
       },
     },
   },
