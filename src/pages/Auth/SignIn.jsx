@@ -41,7 +41,7 @@ const SignIn = () => {
     },
   ];
 
-  const ANIMATION_DURATION = 6000; // 6 seconds
+  const ANIMATION_DURATION = 6000; 
 
   const [currentAnimatingCardIndex, setCurrentAnimatingCardIndex] = useState(0);
 
@@ -87,8 +87,9 @@ const SignIn = () => {
             return (
               <div
                 key={index}
-                className={`transition-all duration-500 ml-10 rounded-2xl text-white shadow-lg relative
-          ${isActive ? "max-w-md p-6 bg-gradient-to-br from-[#2b2f58] to-[#2a3250] " : "bg-transparent max-w-md py-3"}`}
+                className={`transition-all duration-500 ml-10 rounded-2xl text-white shadow-lg  relative py-3
+          ${isActive ? "max-w-md p-6 bg-gradient-to-br from-[#2b2f58] to-[#2a3250]  " : "bg-transparent max-w-md px-6"} 
+        `}
               >
                 {isActive && (
                   <div className="flex space-x-1 mb-4">
@@ -119,7 +120,7 @@ const SignIn = () => {
 
       {/* Right side */}
       <div
-        className="bg-black flex-[2] text-white flex flex-col justify-center border-l pl-20 bg-[url('/rightbg.png')] bg-right bg-cover bg-no-repeat"
+        className="bg-black flex-[2] text-white flex flex-col justify-center border-l pl-20"
         style={{ backgroundPosition: "right 0 1000px" }}
       >
         <h2 className="text-4xl 2xl:text-6xl font-medium py-3 ">

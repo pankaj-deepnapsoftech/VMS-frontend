@@ -39,7 +39,7 @@ const AllEmployee = () => {
  
   const { values, errors, touched, handleBlur, handleChange, handleSubmit,resetForm } =
     useFormik({
-      initialValues: {
+      initialValues: editable ||  {
         fname: "",
         lname: "",
         phone: "",
@@ -50,11 +50,13 @@ const AllEmployee = () => {
        
       },
       validationSchema: BaseValidationSchema,
+      enableReinitialize:true,
       onSubmit: async (value) => {
         try {
-          const res = await AxiosHandler.post(`/auth/create`, value);
-          console.log(value);
-          // Signup(value, true);
+         if(editable){
+           const res = await AxiosHandler.post(`/auth/create`, value);
+         }
+          
           setIsModalOpen(false);
           GetUsers()
           resetForm()
@@ -93,7 +95,7 @@ const AllEmployee = () => {
   const GetAllTenentData = async () => {
     try {
       const res = await AxiosHandler.get("/tenant/get-all");
-      setTententData(res?.data.data);
+      setTententData(res?.data?.data);
     
     } catch (error) {
       console.error(error);
@@ -132,11 +134,11 @@ const AllEmployee = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div className=" p-2 bg-[#2a2c2f] shadow-lg ">
+        <div className=" p-2 bg-[#2a2c2f] h-screen shadow-lg ">
           <div className="flex justify-between items-center">
             <div className="flex w-full justify-end py-4">
               <button
-                onClick={() => setIsModalOpen(true)}
+                  onClick={() => { setIsModalOpen(true); setEdiTable(null) }}
                 className="px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 flex flex-row"
               >
                 <BiPlus className="h-6 w-6 mr-1" />
@@ -149,7 +151,7 @@ const AllEmployee = () => {
                 <div className="bg-background rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
                   <div className="flex justify-between items-center border-b p-4 bg-table">
                     <h2 className="text-lg font-semibold text-gray-200">
-                      {editable ? "Edit User" : "Add User"}
+                      { editable ? "Edit User" : "Add User"}
                     </h2>
                     <button
                       onClick={() => setIsModalOpen(false)}
@@ -326,9 +328,9 @@ const AllEmployee = () => {
           {EmpData?.length < 1 ? (
             <NoDataFound />
           ) : (
-            <div className="overflow-x-auto rounded-lg">
-              <table className="table-auto w-full border-b bg-[#2d333b]">
-                <thead className="bg-gradient-to-bl from-[#333333] to-[#666666] text-white">
+                <div className="overflow-x-auto  rounded-lg w-full ">
+                  <table className="table-auto w-full    border-b bg-[#2d333b]">
+                <thead className="bg-gradient-to-bl from-[#333333] to-[#666666] text-white ">
                   <tr>
                     <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
                       S No.
@@ -411,14 +413,14 @@ const AllEmployee = () => {
                           </button>
                         )}
                       </td>
-                      <td className="px-4 py-3 flex gap-2 border">
+                      <td className="px-4 py-3 flex border  gap-2"> 
                         <button
                           onClick={() => {
-                           if(window.confirm("are you sure you want to delete this user?")){
-                             DeleteUser(user._id);
-                           }
+                            if (window.confirm("are you sure you want to delete this user?")) {
+                              DeleteUser(user._id);
+                            }
                           }}
-                          className="text-red-600 hover:text-red-800 transition-colors duration-150"
+                          className="text-red-600  hover:text-red-800 transition-colors duration-150 border-none" 
                           title="Delete"
                         >
                           <RiDeleteBinFill className="h-4 w-4" />
@@ -428,8 +430,8 @@ const AllEmployee = () => {
                             setEdiTable(user);
                             setIsModalOpen(true);
                           }}
-                          className="text-blue-600 hover:text-blue-800 transition-colors duration-150"
-                          title="Delete"
+                          className="text-blue-600 hover:text-blue-800 transition-colors duration-150 border-none" 
+                          title="Edit"
                         >
                           <RiEdit2Line className="h-4 w-4" />
                         </button>
