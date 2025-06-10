@@ -28,16 +28,16 @@ const SignIn = () => {
   const cards = [
     {
       title: "Threat & Vulnerability Management (TVM)",
-      desc: "Lorem Ipsum is simply dummy text...",
+      desc: "Proactively identify, assess, and mitigate security weaknesses across your infrastructure. Our TVM solutions empower you to stay ahead of potential breaches by continuously monitoring for threats and vulnerabilities, ensuring your digital assets remain secure.",
     },
 
     {
       title: "Attack Surface Management (ASM)",
-      desc: "Lorem Ipsum is simply dummy text...",
+      desc: "Understand and control your evolving attack surface. ASM provides a continuous, outside-in view of your organization's digital assets, revealing potential entry points for attackers and enabling you to proactively shrink your risk.",
     },
     {
       title: "Risk Quantification, Prioritisation & Remediation",
-      desc: "Lorem Ipsum is simply dummy text...",
+      desc: "Translate technical vulnerabilities into clear business risks. Our approach to risk quantification helps you understand the financial impact of potential cyber incidents, enabling data-driven prioritization of remediation efforts for maximum security ROI.",
     },
   ];
 
@@ -72,8 +72,7 @@ const SignIn = () => {
         <img src="/logo.png" className="h-10 my-10 px-10" />
         <h2 className="text-5xl font-bold ml-10">Products</h2>
         <p className="ml-10 pb-5 text-gray-500">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta, odit
-          eos!
+          Explore our powerful security products that simplify complex threats and protect what matters most.
         </p>
         <img
           src="/bg5.png"
