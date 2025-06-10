@@ -180,16 +180,16 @@ export const products = [
         route: "/config-email",
         icon: Settings,
       },
-      {
-        title: "Manage Users",
-        route: "/manage-users",
-        icon: Settings,
-      },
-      {
-        title: "Manage Tenants",
-        route: "/manage-tenants ",
-        icon: Settings,
-      },
+      // {
+      //   title: "Manage Users",
+      //   route: "/manage-users",
+      //   icon: Settings,
+      // },
+      // {
+      //   title: "Manage Tenants",
+      //   route: "/manage-tenants ",
+      //   icon: Settings,
+      // },
       {
         title: "Role",
         route: "/roles ",

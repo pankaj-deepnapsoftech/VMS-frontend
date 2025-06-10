@@ -56,14 +56,14 @@ export const PrivateRoutes = [
     path: "/config-email",
     element: <EmailConfigPanel />,
   },
-  {
-    path: "/manage-users",
-    element: <UserManagement />,
-  },
-  {
-    path: "/manage-tenants",
-    element: <ManageTenants />,
-  },
+  // {
+  //   path: "/manage-users",
+  //   element: <UserManagement />,
+  // },
+  // {
+  //   path: "/manage-tenants",
+  //   element: <ManageTenants />,
+  // },
   {
     path: "/roles",
     element: <Roles />,
