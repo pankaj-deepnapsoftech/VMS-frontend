@@ -51,7 +51,6 @@ const MainLayout = () => {
   useEffect(() => {
     const name = location.pathname.split("/");
     setTemp(name[1] ?? "Dashboard");
-    console.log(name[1]);
   }, [location.pathname]);
 
 
