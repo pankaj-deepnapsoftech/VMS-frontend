@@ -125,7 +125,7 @@ const AllEmployee = () => {
     if (token) {
       GetUsers(page);
     }
-  }, [token, page, runner]);
+  }, [token, page]);
 
 
   return (
