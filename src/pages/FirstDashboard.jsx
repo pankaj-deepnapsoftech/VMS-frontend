@@ -43,7 +43,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="container mx-auto px-4 md:px-8 bg-gradient-image min-h-screen">
+    <div className="px-4 md:px-8 bg-gradient-image min-h-screen">
       {/* Top-right profile dropdown */}
       <div className="absolute top-4 right-6 z-20" ref={dropdownRef}>
         <div className="relative">

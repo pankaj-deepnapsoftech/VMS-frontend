@@ -23,6 +23,7 @@ export const BaseValidationSchema = object({
   
 });
 
+export const EditUser = BaseValidationSchema.omit(['password']);
 
 export const SignUpValidation = BaseValidationSchema.omit(['department']);
 

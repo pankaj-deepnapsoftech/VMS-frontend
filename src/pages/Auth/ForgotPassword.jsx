@@ -71,7 +71,7 @@ function ForgotPassword() {
             onClick={() => {if(values.email.trim() ){
               setStateChange(true)
             } else{
-              alert("email is reaquired")
+              alert("email is required")
             }
            }}
             className="w-full py-3 px-4 rounded-lg text-white font-medium transition-all duration-300 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600"

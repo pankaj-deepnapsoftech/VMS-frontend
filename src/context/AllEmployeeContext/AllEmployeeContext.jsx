@@ -92,7 +92,7 @@ const AllEmployeeContextProvider = ({ children }) => {
 			toast.dismiss(toastId);
 			toast.success(res.data.message);
 			authenticate?.role === "ClientCISO" ? AllClientSME() : EmployeeData();
-
+            
 		} catch (error) {
 			//console.log(error)
 			toast.dismiss(toastId);

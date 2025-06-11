@@ -9,37 +9,35 @@ import {
   useAuthContext,
   useScheduleAssessmentContext,
 } from "@/context";
-import { BaseValidationSchema } from "@/Validation/AuthValidation";
+import { BaseValidationSchema, EditUser } from "@/Validation/AuthValidation";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
-import { FaCompass, FaEnvelope, FaLock, FaPhone, FaUser } from "react-icons/fa";
+import { FaEnvelope, FaLock, FaPhone, FaUser } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import { RiDeleteBinFill, RiEdit2Line } from "react-icons/ri";
+import Pagination from "./Pagination";
 
 const AllEmployee = () => {
   const {
-    loading,
-    allEmployeesData,
-    page,
     VerifyEmployee,
-    AllEmployee,
-    AllClientSME,
     DeleteUser,
+   
   } = useAllEmployeeContext();
-  const { getOrgnizationData } = useScheduleAssessmentContext();
-  const { authenticate, token, Signup, ChangeStatus, runner } =
+
+  const {  token  } =
     useAuthContext();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editable, setEdiTable] = useState(null);
   const [EmpData, setEmpData,] = useState([]);
-  const [TententData, setTententData] = useState([]);
+  const [TenantData, setTenantData] = useState([]);
   const [RoleAllData, setRoleAllData] = useState([]);
- 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit,resetForm } =
+  const [page, setPage] = useState(1)
+  const [isloading, setloading] = useState()
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit, resetForm } =
     useFormik({
-      initialValues: editable ||  {
+      initialValues: editable || {
         fname: "",
         lname: "",
         phone: "",
@@ -47,59 +45,61 @@ const AllEmployee = () => {
         password: "",
         tenant: "",
         role: "",
-       
+
       },
-      validationSchema: BaseValidationSchema,
-      enableReinitialize:true,
+      validationSchema: editable ? EditUser : BaseValidationSchema,
+      enableReinitialize: true,
       onSubmit: async (value) => {
+        setloading(true)
         try {
-         if(editable){
-           const res = await AxiosHandler.post(`/auth/create`, value);
-         }
-          
+          if (editable) {
+            const res = await AxiosHandler.put(`/auth/update-user/${value._id}`, value);
+          } else {
+            const res = await AxiosHandler.post(`/auth/create`, value);
+          }
           setIsModalOpen(false);
           GetUsers()
           resetForm()
         } catch (error) {
-          console.error( error);
+          console.error(error);
+        }finally{
+          setloading(false)
         }
       },
     });
 
   const handleChangeStatus = (type, id) => {
-    if (window.confirm("Are you sure you want to change this user's status? ")) {
-      switch (type) {
-        case "activate":
-          ChangeStatus({ deactivate: true }, id);
-          break;
-        case "deactivate":
-          ChangeStatus({ deactivate: false }, id);
-          break;
-        default:
-          console.warn("Unknown status change type:", type);
-      }
+    if (
+      window.confirm("Are you sure you want to change this user's status?")
+    ) {
+      const deactivate = type === "activate";
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useAuthContext().ChangeStatus({ deactivate }, id);
     }
   };
 
   const GetUsers = async () => {
+    setloading(true)
     try {
-      const res = await AxiosHandler.get("/auth/all-users");
-      setEmpData(res?.data?.data);
-    
+      const res = await AxiosHandler.get(`/auth/all-users?page=${page}&limit=2`);
+      setEmpData(res?.data.data);
+
     } catch (error) {
-      console.error( error);
-     
+      console.error(error);
+
+    }finally{
+      setloading(false)
     }
   };
 
   const GetAllTenentData = async () => {
     try {
       const res = await AxiosHandler.get("/tenant/get-all");
-      setTententData(res?.data?.data);
-    
+      setTenantData(res?.data?.data);
+
     } catch (error) {
       console.error(error);
-     
+
     }
   };
 
@@ -107,13 +107,13 @@ const AllEmployee = () => {
     try {
       const res = await AxiosHandler.get("/role/get-all");
       setRoleAllData(res?.data?.data);
-    
+
     } catch (error) {
       console.error("Error fetching roles:", error);
       setApiError("Failed to fetch roles. Please try again.");
     }
   };
- 
+
   useEffect(() => {
     if (token) {
       GetAllTenentData();
@@ -123,22 +123,21 @@ const AllEmployee = () => {
 
   useEffect(() => {
     if (token) {
-      GetUsers();
+      GetUsers(page);
     }
-  }, [token, page, runner]);
-
+  }, [token, page]);
 
 
   return (
     <>
-      {loading ? (
+      { isloading ? (
         <Loader />
       ) : (
         <div className=" p-2 bg-[#2a2c2f] h-screen shadow-lg ">
           <div className="flex justify-between items-center">
             <div className="flex w-full justify-end py-4">
               <button
-                  onClick={() => { setIsModalOpen(true); setEdiTable(null) }}
+                onClick={() => { setIsModalOpen(true); setEdiTable(null) }}
                 className="px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 flex flex-row"
               >
                 <BiPlus className="h-6 w-6 mr-1" />
@@ -151,7 +150,7 @@ const AllEmployee = () => {
                 <div className="bg-background rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
                   <div className="flex justify-between items-center border-b p-4 bg-table">
                     <h2 className="text-lg font-semibold text-gray-200">
-                      { editable ? "Edit User" : "Add User"}
+                      {editable ? "Edit User" : "Add User"}
                     </h2>
                     <button
                       onClick={() => setIsModalOpen(false)}
@@ -161,7 +160,7 @@ const AllEmployee = () => {
                     </button>
                   </div>
                   <div className="p-10">
-                   
+
                     <form
                       onSubmit={handleSubmit}
                       className="space-y-5 w-full flex flex-col"
@@ -243,7 +242,7 @@ const AllEmployee = () => {
                             htmlFor="tenant"
                             className="block text-sm text-white font-medium mb-1"
                           >
-                             Tenant
+                            Tenant
                           </label>
                           <select
                             id="tenant"
@@ -257,7 +256,7 @@ const AllEmployee = () => {
                               {" "}
                               Select tenant
                             </option>
-                            {TententData?.map((item) => (
+                            {TenantData?.map((item) => (
                               <option key={item._id} value={item._id}>
                                 {item?.company_name}
                               </option>
@@ -282,23 +281,25 @@ const AllEmployee = () => {
                         {touched.phone && errors.phone && (
                           <p className="text-red-400 text-sm">{errors.phone}</p>
                         )}
-
-                        <InputField
-                          label="Password"
-                          type="password"
-                          showPassword={true}
-                          icon={FaLock}
-                          value={values.password}
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          placeholder="Enter your Password"
-                          name="password"
-                        />
-                        {touched.password && errors.password && (
-                          <p className="text-red-400 text-sm">
-                            {errors.password}
-                          </p>
+                        {!editable && (
+                          <>
+                            <InputField
+                              label="Password"
+                              type="password"
+                              showPassword={true}
+                              icon={FaLock}
+                              value={values.password}
+                              onBlur={handleBlur}
+                              onChange={handleChange}
+                              placeholder="Enter your Password"
+                              name="password"
+                            />
+                            {touched.password && errors.password && (
+                              <p className="text-red-400 text-sm">{errors.password}</p>
+                            )}
+                          </>
                         )}
+
                       </div>
                       <div className="flex justify-end gap-2 border-t pt-4">
                         <button
@@ -322,14 +323,11 @@ const AllEmployee = () => {
             )}
           </div>
 
-          
-
-
           {EmpData?.length < 1 ? (
             <NoDataFound />
           ) : (
-                <div className="overflow-x-auto  rounded-lg w-full ">
-                  <table className="table-auto w-full    border-b bg-[#2d333b]">
+            <div className="overflow-x-auto  rounded-lg w-full ">
+              <table className="table-auto w-full    border-b bg-[#2d333b]">
                 <thead className="bg-gradient-to-bl from-[#333333] to-[#666666] text-white ">
                   <tr>
                     <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
@@ -347,7 +345,8 @@ const AllEmployee = () => {
                     <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
                       Phone
                     </th>
-                    {/* <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">Role</th> */}
+                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">Role</th>
+                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">Tenant</th>
                     <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
                       Approval Status
                     </th>
@@ -363,14 +362,15 @@ const AllEmployee = () => {
                   {EmpData?.map((user, index) => (
                     <tr
                       key={user._id}
-                      className="bg-[#2d333b] text-gray-200 hover:bg-[#53565c] transition duration-200"
+                      className="bg-[#2d333b] text-gray-200 whitespace-nowrap hover:bg-[#53565c] transition duration-200"
                     >
                       <td className="px-2 py-1 border">{index + 1}</td>
                       <td className="px-2 py-1 border">{user.fname}</td>
                       <td className="px-2 py-1 border">{user.lname}</td>
                       <td className="px-2 py-1 border">{user.email}</td>
                       <td className="px-2 py-1 border">{user.phone}</td>
-                      {/* <td className="px-2 py-1 border">{user.role}</td> */}
+                      <td className="px-2 py-1 border">{user.role.role}</td>
+                      <td className="px-2 py-1 border">{user.tenant.company_name}</td>
                       <td className="px-2 py-2 border">
                         {user?.employee_approve ? (
                           <span className="px-3 py-1 text-sm font-semibold text-green-800 bg-green-100 rounded-full">
@@ -379,73 +379,83 @@ const AllEmployee = () => {
                         ) : (
                           <button
                             onClick={() => {
-                              if (window.confirm("Are you sure you want to verify this employee?")) {
-                                VerifyEmployee(user?._id);
+                              if (
+                                window.confirm(
+                                  "Verify this employee?"
+                                )
+                              ) {
+                                VerifyEmployee(user._id);
                               }
                             }}
-
-                            className="px-3 py-1 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+                            className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs"
                           >
                             Verify
                           </button>
                         )}
                       </td>
-                      <td className="px-2 py-1 border">
-                        {user?.deactivate ? (
+                      <td className="px-6 py-3">
+                        {user.deactivate ? (
                           <button
                             onClick={() =>
                               handleChangeStatus("deactivate", user._id)
                             }
-                            type="button"
-                            className="bg-green-400 text-white px-3 py-1 rounded-2xl"
+                            className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs"
                           >
                             Activate
                           </button>
                         ) : (
                           <button
-                            type="button"
                             onClick={() =>
                               handleChangeStatus("activate", user._id)
                             }
-                            className="bg-red-400/60 text-white px-3 py-1 rounded-2xl"
+                            className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs"
                           >
                             Deactivate
                           </button>
                         )}
                       </td>
-                      <td className="px-4 py-3 flex border  gap-2"> 
+                      <td className="px-4 py-3 flex border  gap-2">
                         <button
                           onClick={() => {
-                            if (window.confirm("are you sure you want to delete this user?")) {
+                            if (
+                              window.confirm(
+                                "Delete this user?"
+                              )
+                            ) {
                               DeleteUser(user._id);
                             }
                           }}
-                          className="text-red-600  hover:text-red-800 transition-colors duration-150 border-none" 
+                          className="text-red-600  hover:text-red-800 transition-colors duration-150 border-none"
                           title="Delete"
+                        
                         >
-                          <RiDeleteBinFill className="h-4 w-4" />
+                          <RiDeleteBinFill className="h-5 w-5" />
                         </button>
                         <button
                           onClick={() => {
                             setEdiTable(user);
+
                             setIsModalOpen(true);
                           }}
-                          className="text-blue-600 hover:text-blue-800 transition-colors duration-150 border-none" 
+                          className="text-blue-600 hover:text-blue-800 transition-colors duration-150 border-none"
                           title="Edit"
+                      
                         >
-                          <RiEdit2Line className="h-4 w-4" />
+                          <RiEdit2Line className="h-5 w-5" />
                         </button>
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
+
             </div>
           )}
+          {/* <Pagination page={page} setPage={setPage} hasNextPage={EmpData?.length === 2} /> */}
         </div>
       )}
     </>
   );
-}
+};
 
 export default AllEmployee;

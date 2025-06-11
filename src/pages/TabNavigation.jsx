@@ -46,7 +46,7 @@ const TabNavigation = () => {
 
 
   return (
-    <div className="w-full bg-background dark:bg-gray-900 px-4 py-4 border-b  dark:border-gray-700">
+    <div className="w-full bg-[#080d27] dark:bg-gray-900 px-4 py-4  dark:border-gray-700">
       <nav className="bg-gray-900 border-b border-gray-700">
         <div className="flex">
           {tabs.map((tab) => (
@@ -54,7 +54,7 @@ const TabNavigation = () => {
               key={tab.path}
               className={`px-6 py-4 text-sm font-medium border-b-2 transition-colors ${activeTab === tab.path
                   ? "border-blue-500 text-white bg-gray-800"
-                  : "border-transparent text-gray-300 hover:text-white hover:bg-gray-800"
+                  : "border-transparent text-gray-300 hover:text-white"
                 }`}
             >
               {tab.title}
