@@ -57,7 +57,7 @@ const SignIn = () => {
 
 
   return (
-    <div className="flex h-90%">
+    <div className="flex min-h-screen">
       {/* Left side */}
       <div
         className="flex-[3] text-white relative"
