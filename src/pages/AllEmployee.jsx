@@ -13,7 +13,7 @@ import { BaseValidationSchema, EditUser } from "@/Validation/AuthValidation";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
-import { FaCompass, FaEnvelope, FaLock, FaPhone, FaUser } from "react-icons/fa";
+import { FaEnvelope, FaLock, FaPhone, FaUser } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import { RiDeleteBinFill, RiEdit2Line } from "react-icons/ri";
 import Pagination from "./Pagination";
@@ -22,9 +22,10 @@ const AllEmployee = () => {
   const {
     VerifyEmployee,
     DeleteUser,
+   
   } = useAllEmployeeContext();
 
-  const {  token, ChangeStatus, runner } =
+  const {  token  } =
     useAuthContext();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -68,17 +69,12 @@ const AllEmployee = () => {
     });
 
   const handleChangeStatus = (type, id) => {
-    if (window.confirm("Are you sure you want to change this user's status? ")) {
-      switch (type) {
-        case "activate":
-          ChangeStatus({ deactivate: true }, id);
-          break;
-        case "deactivate":
-          ChangeStatus({ deactivate: false }, id);
-          break;
-        default:
-          console.warn("Unknown status change type:", type);
-      }
+    if (
+      window.confirm("Are you sure you want to change this user's status?")
+    ) {
+      const deactivate = type === "activate";
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useAuthContext().ChangeStatus({ deactivate }, id);
     }
   };
 
@@ -383,35 +379,36 @@ const AllEmployee = () => {
                         ) : (
                           <button
                             onClick={() => {
-                              if (window.confirm("Are you sure you want to verify this employee?")) {
-                                VerifyEmployee(user?._id);
+                              if (
+                                window.confirm(
+                                  "Verify this employee?"
+                                )
+                              ) {
+                                VerifyEmployee(user._id);
                               }
                             }}
-
-                            className="px-3 py-1 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+                            className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs"
                           >
                             Verify
                           </button>
                         )}
                       </td>
-                      <td className="px-2 py-1 border">
-                        {user?.deactivate ? (
+                      <td className="px-6 py-3">
+                        {user.deactivate ? (
                           <button
                             onClick={() =>
                               handleChangeStatus("deactivate", user._id)
                             }
-                            type="button"
-                            className="bg-green-400 text-white px-3 py-1 rounded-2xl"
+                            className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs"
                           >
                             Activate
                           </button>
                         ) : (
                           <button
-                            type="button"
                             onClick={() =>
                               handleChangeStatus("activate", user._id)
                             }
-                            className="bg-red-400/60 text-white px-3 py-1 rounded-2xl"
+                            className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs"
                           >
                             Deactivate
                           </button>
@@ -420,14 +417,19 @@ const AllEmployee = () => {
                       <td className="px-4 py-3 flex border  gap-2">
                         <button
                           onClick={() => {
-                            if (window.confirm("are you sure you want to delete this user?")) {
+                            if (
+                              window.confirm(
+                                "Delete this user?"
+                              )
+                            ) {
                               DeleteUser(user._id);
                             }
                           }}
                           className="text-red-600  hover:text-red-800 transition-colors duration-150 border-none"
                           title="Delete"
+                        
                         >
-                          <RiDeleteBinFill className="h-4 w-4" />
+                          <RiDeleteBinFill className="h-5 w-5" />
                         </button>
                         <button
                           onClick={() => {
@@ -437,8 +439,9 @@ const AllEmployee = () => {
                           }}
                           className="text-blue-600 hover:text-blue-800 transition-colors duration-150 border-none"
                           title="Edit"
+                      
                         >
-                          <RiEdit2Line className="h-4 w-4" />
+                          <RiEdit2Line className="h-5 w-5" />
                         </button>
                       </td>
                     </tr>
@@ -453,6 +456,6 @@ const AllEmployee = () => {
       )}
     </>
   );
-}
+};
 
 export default AllEmployee;

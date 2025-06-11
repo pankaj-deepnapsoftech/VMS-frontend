@@ -182,7 +182,7 @@ export const JiraDataTable = () => {
                 <p className="text-xl font-medium mt-1">6</p>
               </div>
               <div className="bg-blue-900 bg-opacity-30 p-2 rounded-lg">
-                <img src="/icons/total-issue.png" alt="icon" />
+                <img src="/Icons/total-issue.png" alt="icon" />
               </div>
             </div>
 
@@ -193,7 +193,7 @@ export const JiraDataTable = () => {
                 <p className="text-xl font-medium mt-1">2</p>
               </div>
               <div className="bg-green-900 bg-opacity-30 p-2 rounded-lg">
-                <img src="/icons/closed.png" alt="icon" />
+                <img src="/Icons/closed.png" alt="icon" />
               </div>
             </div>
 
@@ -206,7 +206,7 @@ export const JiraDataTable = () => {
                 <p className="text-xl font-medium mt-1">2</p>
               </div>
               <div className="bg-yellow-900 bg-opacity-30 p-2 rounded-lg">
-                <img src="/icons/in-progress.png" alt="icon" />
+                <img src="/Icons/in-progress.png" alt="icon" />
               </div>
             </div>
 
@@ -217,12 +217,12 @@ export const JiraDataTable = () => {
                 <p className="text-xl font-medium mt-1">1</p>
               </div>
               <div className="bg-red-900 bg-opacity-30 p-2 rounded-lg">
-                <img src="/icons/cretical.png" alt="icon" />
+                <img src="/Icons/cretical.png" alt="icon" />
               </div>
             </div>
           </div>
 
-          <div className="mt-6 bg-[#0c1120] border border-gray-700 rounded-xl overflow-x-auto text-sm text-white">
+          <div className="mt-6 bg-[#0c1120] overflow-x-auto text-sm text-white">
             <table className="min-w-full divide-y divide-gray-700">
               <thead className="bg-[#0c1120]">
                 <tr>

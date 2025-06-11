@@ -13,7 +13,7 @@ export function AssertInventory() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       { (
-        <div className="p-4 md:p-6 max-w-[100%] mx-auto min-h-screen bg-[#2a2c2f] ">
+        <div className="p-4 md:p-6 max-w-[100%] mx-auto min-h-screen bg-gradient-custom ">
             <TabNavigation/>
 
           {/* top 5 Vulnerability */}

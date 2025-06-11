@@ -38,8 +38,8 @@ const SignIn = () => {
     {
       title: "Risk Quantification, Prioritisation & Remediation",
       desc: "Translate technical vulnerabilities into clear business risks. Our approach to risk quantification helps you understand the financial impact of potential cyber incidents, enabling data-driven prioritization of remediation efforts for maximum security ROI.",
-    },
-  ];
+    }, 
+  ]; 
 
   const ANIMATION_DURATION = 6000;
 
@@ -57,7 +57,7 @@ const SignIn = () => {
 
 
   return (
-    <div className="flex h-screen">
+    <div className="flex min-h-screen">
       {/* Left side */}
       <div
         className="flex-[3] text-white relative"
@@ -96,7 +96,7 @@ const SignIn = () => {
                     <div className="w-2 h-2 rounded-full bg-gray-400" />
                     <div className="w-2 h-2 rounded-full bg-gray-400" />
                     <div className="w-2 h-2 rounded-full bg-gray-300" />
-                  </div>
+                  </div>                       
                 )}
                 <h2 className={`text-lg font-semibold mb-2 ${isActive ? "" : "text-white"}`}>
                   {card.title}
@@ -120,7 +120,7 @@ const SignIn = () => {
 
       {/* Right side */}
       <div
-        className="bg-black flex-[2] text-white flex flex-col justify-center border-l pl-20 bg-[url('/rightbg.png')] bg-right bg-cover bg-no-repeat"
+        className="bg-black flex-[2] text-white flex flex-col justify-center border-l pl-20"
         style={{ backgroundPosition: "right 0 1000px" }}
       >
         <h2 className="text-4xl 2xl:text-6xl font-medium py-3 ">
