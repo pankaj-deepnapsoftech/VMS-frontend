@@ -69,10 +69,10 @@ export const PrivateRoutes = [
     path: "/roles",
     element: <Roles />,
   },
-  // {
-  //   path: "/partners",
-  //   element: <Partners />,
-  // },
+  {
+    path: "/partners",
+    element: <Partners />,
+  },
   {
     path: "/all-users",
     element: <AllEmployee />,

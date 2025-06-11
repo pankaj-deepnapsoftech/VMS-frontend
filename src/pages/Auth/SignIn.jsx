@@ -41,7 +41,7 @@ const SignIn = () => {
     },
   ];
 
-  const ANIMATION_DURATION = 6000; 
+  const ANIMATION_DURATION = 6000;
 
   const [currentAnimatingCardIndex, setCurrentAnimatingCardIndex] = useState(0);
 
@@ -91,7 +91,7 @@ const SignIn = () => {
           ${isActive ? "max-w-md p-6 bg-gradient-to-br from-[#2b2f58] to-[#2a3250]  " : "bg-transparent max-w-md px-6"} 
         `}
               >
-                {isActive && (
+                { isActive && (
                   <div className="flex space-x-1 mb-4">
                     <div className="w-2 h-2 rounded-full bg-gray-400" />
                     <div className="w-2 h-2 rounded-full bg-gray-400" />

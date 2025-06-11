@@ -194,6 +194,10 @@ export const products = [
         title: "Role",
         route: "/roles ",
         icon: Users,
+      }, {
+        title: "Partners",
+        route: "/partners ",
+        icon: Users,
       }
     ],
   },

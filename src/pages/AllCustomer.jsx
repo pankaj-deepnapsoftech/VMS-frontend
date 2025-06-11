@@ -35,6 +35,7 @@ import { BaseValidationSchema } from "@/Validation/AuthValidation";
 import axios from "axios";
 import { AxiosHandler } from "@/config/AxiosConfig";
 import { tenantValidator } from "@/Validation/TenantsValidations";
+import Pagination from "./Pagination";
 
 export default function AllCustomer() {
   const { loading } = useAllCustomerContext();
@@ -113,13 +114,9 @@ export default function AllCustomer() {
     }
   };
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPage = 10;
 
-  const paginatedTenants = useMemo(() => {
-    const start = (currentPage - 1) * rowsPerPage;
-    return tenants.slice(start, start + rowsPerPage);
-  }, [currentPage, tenants]);
+
+
 
   useEffect(() => {
     if (token) {
@@ -152,7 +149,7 @@ export default function AllCustomer() {
                   <div className="bg-gradient-custom rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
                     <div className="flex justify-between items-center border-b p-4 bg-table">
                       <h2 className="text-lg font-semibold text-gray-200">
-                        Add Tenant
+                        {editTable ? "Edit Tenant" : "Add Tenant"}
                       </h2>
                       <button onClick={() => setIsModalOpen(false)}>
                         <MdClose className="h-6 w-6 text-gray-100" />
@@ -185,7 +182,7 @@ export default function AllCustomer() {
                           onBlur={handleBlur}
                           onChange={handleChange}
                           placeholder="Enter your website url"
-                          // showPassword={true}
+                        // showPassword={true}
                         />
                         {touched.Website_url && errors.Website_url && (
                           <p className="text-red-400 text-sm">
@@ -327,7 +324,7 @@ export default function AllCustomer() {
                       </tr>
                     </thead>
                     <tbody className="text-sm text-gray-300">
-                      {paginatedTenants.map((tenant, index) => (
+                      {tenants?.map((tenant, index) => (
                         <tr
                           key={index}
                           className="border-b border-gray-700 hover:bg-[#1e1e1e] transition"
@@ -358,61 +355,12 @@ export default function AllCustomer() {
                     </tbody>
                   </table>
 
-                  {/* Pagination Controls */}
-                  <div className="flex justify-between items-center px-4 py-2 text-xs border-t border-gray-700">
-                    <div>
-                      Showing {paginatedTenants.length} of {tenants.length}{" "}
-                      results
-                    </div>
-                    <div className="space-x-2">
-                      <button
-                        className="px-2 py-1 bg-gray-700 rounded text-white"
-                        onClick={() =>
-                          setCurrentPage((prev) => Math.max(prev - 1, 1))
-                        }
-                      >
-                        Previous
-                      </button>
-                      <span className="px-3 py-1 bg-blue-600 rounded text-white">
-                        Page {currentPage}
-                      </span>
-                      <button
-                        className="px-2 py-1 bg-gray-700 rounded text-white"
-                        onClick={() =>
-                          setCurrentPage((prev) =>
-                            prev * rowsPerPage < tenants.length
-                              ? prev + 1
-                              : prev
-                          )
-                        }
-                      >
-                        Next
-                      </button>
-                    </div>
-                  </div>
+
                 </>
               )}
             </div>
 
-            <div className="flex justify-between items-center my-6 px-5">
-              <button
-                className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white rounded-md ${
-                  page === 1 ? "opacity-50 cursor-not-allowed" : ""
-                }`}
-                disabled={page === 1}
-                onClick={() => setPage(page - 1)}
-              >
-                Previous
-              </button>
-              <span className="text-white">Page {page}</span>
-              <button
-                className="px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white rounded-md"
-                disabled={tenants?.length < 10}
-                onClick={() => setPage(page + 1)}
-              >
-                Next
-              </button>
-            </div>
+              <Pagination page={page} setPage={setPage} hasNextPage={tenants.length === 10}/>
           </div>
         </div>
       )}
