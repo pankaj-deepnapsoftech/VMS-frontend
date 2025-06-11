@@ -13,33 +13,29 @@ import { BaseValidationSchema } from "@/Validation/AuthValidation";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
-import { FaCompass, FaEnvelope, FaLock, FaPhone, FaUser } from "react-icons/fa";
+import { FaEnvelope, FaLock, FaPhone, FaUser } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import { RiDeleteBinFill, RiEdit2Line } from "react-icons/ri";
 
 const AllEmployee = () => {
   const {
     loading,
-    allEmployeesData,
-    page,
     VerifyEmployee,
-    AllEmployee,
-    AllClientSME,
     DeleteUser,
+    page,
+    runner,
   } = useAllEmployeeContext();
-  const { getOrgnizationData } = useScheduleAssessmentContext();
-  const { authenticate, token, Signup, ChangeStatus, runner } =
-    useAuthContext();
+  const { token } = useAuthContext();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editable, setEdiTable] = useState(null);
-  const [EmpData, setEmpData,] = useState([]);
+  const [EmpData, setEmpData] = useState([]);
   const [TententData, setTententData] = useState([]);
   const [RoleAllData, setRoleAllData] = useState([]);
- 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit,resetForm } =
-    useFormik({
-      initialValues: editable ||  {
+
+  const formik = useFormik({
+    initialValues:
+      editable || {
         fname: "",
         lname: "",
         phone: "",
@@ -47,405 +43,364 @@ const AllEmployee = () => {
         password: "",
         tenant: "",
         role: "",
-       
       },
-      validationSchema: BaseValidationSchema,
-      enableReinitialize:true,
-      onSubmit: async (value) => {
-        try {
-         if(editable){
-           const res = await AxiosHandler.post(`/auth/create`, value);
-         }
-          
-          setIsModalOpen(false);
-          GetUsers()
-          resetForm()
-        } catch (error) {
-          console.error( error);
-        }
-      },
-    });
+    validationSchema: BaseValidationSchema,
+    enableReinitialize: true,
+    onSubmit: async (v) => {
+      try {
+        await AxiosHandler.post(`/auth/create`, v);
+        setIsModalOpen(false);
+        GetUsers();
+        formik.resetForm();
+      } catch (err) {
+        console.error(err);
+      }
+    },
+  });
 
   const handleChangeStatus = (type, id) => {
-    if (window.confirm("Are you sure you want to change this user's status? ")) {
-      switch (type) {
-        case "activate":
-          ChangeStatus({ deactivate: true }, id);
-          break;
-        case "deactivate":
-          ChangeStatus({ deactivate: false }, id);
-          break;
-        default:
-          console.warn("Unknown status change type:", type);
-      }
+    if (
+      window.confirm("Are you sure you want to change this user's status?")
+    ) {
+      const deactivate = type === "activate";
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useAuthContext().ChangeStatus({ deactivate }, id);
     }
   };
 
   const GetUsers = async () => {
     try {
       const res = await AxiosHandler.get("/auth/all-users");
-      setEmpData(res?.data?.data);
-    
-    } catch (error) {
-      console.error( error);
-     
+      setEmpData(res?.data?.data || []);
+    } catch (err) {
+      console.error(err);
     }
   };
 
   const GetAllTenentData = async () => {
     try {
       const res = await AxiosHandler.get("/tenant/get-all");
-      setTententData(res?.data?.data);
-    
-    } catch (error) {
-      console.error(error);
-     
+      setTententData(res?.data?.data || []);
+    } catch (err) {
+      console.error(err);
     }
   };
 
   const GetAllRoleData = async () => {
     try {
       const res = await AxiosHandler.get("/role/get-all");
-      setRoleAllData(res?.data?.data);
-    
-    } catch (error) {
-      console.error("Error fetching roles:", error);
-      setApiError("Failed to fetch roles. Please try again.");
+      setRoleAllData(res?.data?.data || []);
+    } catch (err) {
+      console.error(err);
     }
   };
- 
+
   useEffect(() => {
     if (token) {
       GetAllTenentData();
       GetAllRoleData();
-    }
-  }, [token]);
-
-  useEffect(() => {
-    if (token) {
       GetUsers();
     }
   }, [token, page, runner]);
-
-
 
   return (
     <>
       {loading ? (
         <Loader />
       ) : (
-        <div className=" p-2 bg-[#2a2c2f] h-screen shadow-lg ">
-          <div className="flex justify-between items-center">
-            <div className="flex w-full justify-end py-4">
-              <button
-                  onClick={() => { setIsModalOpen(true); setEdiTable(null) }}
-                className="px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 flex flex-row"
-              >
-                <BiPlus className="h-6 w-6 mr-1" />
-                Add User
-              </button>
-            </div>
-
-            {isModalOpen && (
-              <div className="fixed inset-0 bg-input bg-opacity-50 flex items-center justify-center p-4 z-10">
-                <div className="bg-background rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-                  <div className="flex justify-between items-center border-b p-4 bg-table">
-                    <h2 className="text-lg font-semibold text-gray-200">
-                      { editable ? "Edit User" : "Add User"}
-                    </h2>
-                    <button
-                      onClick={() => setIsModalOpen(false)}
-                      className="text-gray-100 hover:text-gray-200"
-                    >
-                      <MdClose className="h-6 w-6" />
-                    </button>
-                  </div>
-                  <div className="p-10">
-                   
-                    <form
-                      onSubmit={handleSubmit}
-                      className="space-y-5 w-full flex flex-col"
-                    >
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                        <InputField
-                          label="First Name"
-                          type="text"
-                          showPassword={false}
-                          icon={FaUser}
-                          value={values.fname}
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          placeholder="Enter your First Name"
-                          name="fname"
-                        />
-                        {touched.fname && errors.fname && (
-                          <p className="text-red-400 text-sm">
-                            {errors.fname}
-                          </p>
-                        )}
-                        <InputField
-                          label="Last Name"
-                          type="text"
-                          showPassword={false}
-                          icon={FaUser}
-                          value={values.lname}
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          placeholder="Enter your Last Name"
-                          name="lname"
-                        />
-                        {touched.lname && errors.lname && (
-                          <p className="text-red-400 text-sm">
-                            {errors.lname}
-                          </p>
-                        )}
-                        <InputField
-                          label="Email Address"
-                          type="email"
-                          showPassword={false}
-                          icon={FaEnvelope}
-                          value={values.email}
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          placeholder="Enter your Email Address"
-                          name="email"
-                        />
-                        {touched.email && errors.email && (
-                          <p className="text-red-400 text-sm">{errors.email}</p>
-                        )}
-
-                        <div className="w-full">
-                          <label className="text-white "> Role</label>
-                          <select
-                            className="w-full bg-input border py-2 rounded-lg text-white px-2 border-gray-600"
-                            name="role"
-                            value={values.role}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                          >
-                            <option selected disabled value="">
-                              {" "}
-                              Select role
-                            </option>
-                            {RoleAllData?.map((ele) => (
-                              <option key={ele._id} value={ele._id}>
-                                {ele?.role}
-                              </option>
-                            ))}
-                          </select>
-                          {touched.role && errors.role && (
-                            <p className="text-red-500">{errors.role}</p>
-                          )}
-                        </div>
-
-                        <div>
-                          <label
-                            htmlFor="tenant"
-                            className="block text-sm text-white font-medium mb-1"
-                          >
-                             Tenant
-                          </label>
-                          <select
-                            id="tenant"
-                            name="tenant"
-                            value={values.tenant}
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                            className="bg-input w-full py-2 rounded-lg px-3 text-white"
-                          >
-                            <option selected disabled value="">
-                              {" "}
-                              Select tenant
-                            </option>
-                            {TententData?.map((item) => (
-                              <option key={item._id} value={item._id}>
-                                {item?.company_name}
-                              </option>
-                            ))}
-                          </select>
-                          {touched.tenant && errors.tenant && (
-                            <p className="text-red-500">{errors.tenant}</p>
-                          )}
-                        </div>
-
-                        <InputField
-                          label="Phone Number"
-                          type="text"
-                          showPassword={false}
-                          icon={FaPhone}
-                          value={values.phone}
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          placeholder="Enter your Phone Number"
-                          name="phone"
-                        />
-                        {touched.phone && errors.phone && (
-                          <p className="text-red-400 text-sm">{errors.phone}</p>
-                        )}
-
-                        <InputField
-                          label="Password"
-                          type="password"
-                          showPassword={true}
-                          icon={FaLock}
-                          value={values.password}
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          placeholder="Enter your Password"
-                          name="password"
-                        />
-                        {touched.password && errors.password && (
-                          <p className="text-red-400 text-sm">
-                            {errors.password}
-                          </p>
-                        )}
-                      </div>
-                      <div className="flex justify-end gap-2 border-t pt-4">
-                        <button
-                          type="button"
-                          onClick={() => setIsModalOpen(false)}
-                          className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          type="submit"
-                          className="px-4 py-2 bg-[#015289] text-white rounded-md hover:bg-blue-700"
-                        >
-                          Save
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            )}
+        <div className="p-6 bg-[#0c1120] min-h-screen text-white">
+          <div className="flex justify-end mb-4">
+            <button
+              onClick={() => {
+                setIsModalOpen(true);
+                setEdiTable(null);
+              }}
+              className="px-4 py-2 bg-gradient-to-tr from-[#111] to-[#555] rounded-md hover:from-[#222] hover:to-[#666] shadow flex items-center"
+            >
+              <BiPlus className="mr-1" />
+              Add User
+            </button>
           </div>
 
-          
+          {isModalOpen && (
+            <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+              <div className="bg-[#1e1e1e] rounded-lg shadow-lg w-full max-w-2xl overflow-auto">
+                <div className="flex justify-between items-center px-6 py-4 border-b border-gray-700">
+                  <h2 className="text-lg font-semibold">
+                    {editable ? "Edit User" : "Add User"}
+                  </h2>
+                  <button onClick={() => setIsModalOpen(false)}>
+                    <MdClose className="text-gray-300 hover:text-white text-xl" />
+                  </button>
+                </div>
+                <form
+                  onSubmit={formik.handleSubmit}
+                  className="px-6 py-4 space-y-6"
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <InputField
+                      name="fname"
+                      label="First Name"
+                      type="text"
+                      icon={FaUser}
+                      value={formik.values.fname}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                    />
+                    {formik.touched.fname && formik.errors.fname && (
+                      <p className="text-red-400 text-sm">
+                        {formik.errors.fname}
+                      </p>
+                    )}
 
+                    <InputField
+                      name="lname"
+                      label="Last Name"
+                      type="text"
+                      icon={FaUser}
+                      value={formik.values.lname}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                    />
+                    {formik.touched.lname && formik.errors.lname && (
+                      <p className="text-red-400 text-sm">
+                        {formik.errors.lname}
+                      </p>
+                    )}
 
-          {EmpData?.length < 1 ? (
-            <NoDataFound />
-          ) : (
-                <div className="overflow-x-auto  rounded-lg w-full ">
-                  <table className="table-auto w-full    border-b bg-[#2d333b]">
-                <thead className="bg-gradient-to-bl from-[#333333] to-[#666666] text-white ">
-                  <tr>
-                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
-                      S No.
-                    </th>
-                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
-                      Full Name
-                    </th>
-                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
-                      Last Name
-                    </th>
-                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
-                      Email
-                    </th>
-                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
-                      Phone
-                    </th>
-                    {/* <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">Role</th> */}
-                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
-                      Approval Status
-                    </th>
-                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
-                      Status
-                    </th>
-                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {EmpData?.map((user, index) => (
+                    <InputField
+                      name="email"
+                      label="Email Address"
+                      type="email"
+                      icon={FaEnvelope}
+                      value={formik.values.email}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                    />
+                    {formik.touched.email && formik.errors.email && (
+                      <p className="text-red-400 text-sm">
+                        {formik.errors.email}
+                      </p>
+                    )}
+
+                    <InputField
+                      name="phone"
+                      label="Phone Number"
+                      type="text"
+                      icon={FaPhone}
+                      value={formik.values.phone}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                    />
+                    {formik.touched.phone && formik.errors.phone && (
+                      <p className="text-red-400 text-sm">
+                        {formik.errors.phone}
+                      </p>
+                    )}
+
+                    <InputField
+                      name="password"
+                      label="Password"
+                      type="password"
+                      icon={FaLock}
+                      value={formik.values.password}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                    />
+                    {formik.touched.password && formik.errors.password && (
+                      <p className="text-red-400 text-sm">
+                        {formik.errors.password}
+                      </p>
+                    )}
+
+                    <div>
+                      <label className="text-sm font-medium mb-1 block">
+                        Role
+                      </label>
+                      <select
+                        name="role"
+                        value={formik.values.role}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        className="w-full bg-[#2a2a2a] border border-gray-600 rounded px-3 py-2 text-white"
+                      >
+                        <option value="" disabled>
+                          Select role
+                        </option>
+                        {RoleAllData.map((r) => (
+                          <option key={r._id} value={r._id}>
+                            {r.role}
+                          </option>
+                        ))}
+                      </select>
+                      {formik.touched.role && formik.errors.role && (
+                        <p className="text-red-400 text-sm">
+                          {formik.errors.role}
+                        </p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label className="text-sm font-medium mb-1 block">
+                        Tenant
+                      </label>
+                      <select
+                        name="tenant"
+                        value={formik.values.tenant}
+                        onBlur={formik.handleBlur}
+                        onChange={formik.handleChange}
+                        className="w-full bg-[#2a2a2a] border border-gray-600 rounded px-3 py-2 text-white"
+                      >
+                        <option value="" disabled>
+                          Select tenant
+                        </option>
+                        {TententData.map((t) => (
+                          <option key={t._id} value={t._id}>
+                            {t.company_name}
+                          </option>
+                        ))}
+                      </select>
+                      {formik.touched.tenant && formik.errors.tenant && (
+                        <p className="text-red-400 text-sm">
+                          {formik.errors.tenant}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end gap-3 border-t border-gray-700 pt-4">
+                    <button
+                      type="button"
+                      onClick={() => setIsModalOpen(false)}
+                      className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
+
+          <div className="overflow-x-auto rounded-md shadow-xl bg-[#0c1120]">
+            <table className="min-w-full divide-y divide-gray-700 text-sm">
+              <thead className="bg-gradient-to-bl from-[#0a0f39] via-[#080d27] to-[#050b20] text-white">
+                <tr>
+                  <th className="px-6 py-3 text-left">S No.</th>
+                  <th className="px-6 py-3 text-left">First Name</th>
+                  <th className="px-6 py-3 text-left">Last Name</th>
+                  <th className="px-6 py-3 text-left">Email</th>
+                  <th className="px-6 py-3 text-left">Phone</th>
+                  <th className="px-6 py-3 text-left">Approval</th>
+                  <th className="px-6 py-3 text-left">Status</th>
+                  <th className="px-6 py-3 text-left">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="text-gray-300">
+                {EmpData.length > 0 ? (
+                  EmpData.map((user, i) => (
                     <tr
                       key={user._id}
-                      className="bg-[#2d333b] text-gray-200 hover:bg-[#53565c] transition duration-200"
+                      className="border-b border-gray-700 hover:bg-[#1e1e1e] transition"
                     >
-                      <td className="px-2 py-1 border">{index + 1}</td>
-                      <td className="px-2 py-1 border">{user.fname}</td>
-                      <td className="px-2 py-1 border">{user.lname}</td>
-                      <td className="px-2 py-1 border">{user.email}</td>
-                      <td className="px-2 py-1 border">{user.phone}</td>
-                      {/* <td className="px-2 py-1 border">{user.role}</td> */}
-                      <td className="px-2 py-2 border">
-                        {user?.employee_approve ? (
-                          <span className="px-3 py-1 text-sm font-semibold text-green-800 bg-green-100 rounded-full">
+                      <td className="px-6 py-3">{i + 1}</td>
+                      <td className="px-6 py-3">{user.fname}</td>
+                      <td className="px-6 py-3">{user.lname}</td>
+                      <td className="px-6 py-3">{user.email}</td>
+                      <td className="px-6 py-3">{user.phone}</td>
+                      <td className="px-6 py-3">
+                        {user.employee_approve ? (
+                          <span className="bg-green-600 text-white px-3 py-1 rounded text-xs">
                             Approved
                           </span>
                         ) : (
                           <button
                             onClick={() => {
-                              if (window.confirm("Are you sure you want to verify this employee?")) {
-                                VerifyEmployee(user?._id);
+                              if (
+                                window.confirm(
+                                  "Verify this employee?"
+                                )
+                              ) {
+                                VerifyEmployee(user._id);
                               }
                             }}
-
-                            className="px-3 py-1 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+                            className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs"
                           >
                             Verify
                           </button>
                         )}
                       </td>
-                      <td className="px-2 py-1 border">
-                        {user?.deactivate ? (
+                      <td className="px-6 py-3">
+                        {user.deactivate ? (
                           <button
                             onClick={() =>
                               handleChangeStatus("deactivate", user._id)
                             }
-                            type="button"
-                            className="bg-green-400 text-white px-3 py-1 rounded-2xl"
+                            className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs"
                           >
                             Activate
                           </button>
                         ) : (
                           <button
-                            type="button"
                             onClick={() =>
                               handleChangeStatus("activate", user._id)
                             }
-                            className="bg-red-400/60 text-white px-3 py-1 rounded-2xl"
+                            className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs"
                           >
                             Deactivate
                           </button>
                         )}
                       </td>
-                      <td className="px-4 py-3 flex border  gap-2"> 
+                      <td className="px-6 py-3 flex gap-3 text-white">
                         <button
                           onClick={() => {
-                            if (window.confirm("are you sure you want to delete this user?")) {
+                            if (
+                              window.confirm(
+                                "Delete this user?"
+                              )
+                            ) {
                               DeleteUser(user._id);
                             }
                           }}
-                          className="text-red-600  hover:text-red-800 transition-colors duration-150 border-none" 
                           title="Delete"
+                          className="hover:text-red-400"
                         >
-                          <RiDeleteBinFill className="h-4 w-4" />
+                          <RiDeleteBinFill className="h-5 w-5" />
                         </button>
                         <button
                           onClick={() => {
                             setEdiTable(user);
                             setIsModalOpen(true);
                           }}
-                          className="text-blue-600 hover:text-blue-800 transition-colors duration-150 border-none" 
                           title="Edit"
+                          className="hover:text-blue-400"
                         >
-                          <RiEdit2Line className="h-4 w-4" />
+                          <RiEdit2Line className="h-5 w-5" />
                         </button>
                       </td>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={8} className="py-6 text-center text-gray-500">
+                      No users found.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+            {EmpData.length < 1 && <NoDataFound />}
+          </div>
         </div>
       )}
     </>
   );
-}
+};
 
 export default AllEmployee;

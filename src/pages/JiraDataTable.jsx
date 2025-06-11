@@ -194,7 +194,7 @@ export const JiraDataTable = () => {
               </div>
               <div className="bg-green-900 bg-opacity-30 p-2 rounded-lg">
                 <img src="/icons/closed.png" alt="icon" />
-              </div>
+              </div> 
             </div>
 
             {/* In Progress */}
@@ -222,7 +222,7 @@ export const JiraDataTable = () => {
             </div>
           </div>
 
-          <div className="mt-6 bg-[#0c1120] border border-gray-700 rounded-xl overflow-x-auto text-sm text-white">
+          <div className="mt-6 bg-[#0c1120] overflow-x-auto text-sm text-white">
             <table className="min-w-full divide-y divide-gray-700">
               <thead className="bg-[#0c1120]">
                 <tr>
