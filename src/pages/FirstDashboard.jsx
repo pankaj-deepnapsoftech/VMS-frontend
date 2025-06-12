@@ -1,34 +1,73 @@
 /* eslint-disable react/prop-types */
 import { useAuthContext } from "@/context";
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import "./animation.css";
+import { FiDatabase } from "react-icons/fi";
 import { products } from "@/constants/static.data";
-import { getInitials } from "@/utils/profile";
+import "./animation.css";
 
 // Card component with gradient border
-const Card = ({ children, gradient, HandleClick }) => {
+const Card = ({ children, HandleClick, borderColor, bg, animate, title }) => {
+  const isRiskCard = title === "Risk and Compliances";
+
   return (
-    <div className="p-[1px] w-full">
-      <div
-        onClick={HandleClick}
-        className={`rounded-xl bg-gradient-to-br ${gradient}/40 transform transition duration-300 hover:scale-105 hover:shadow-xl cursor-pointer h-20 border-b flex items-center justify-center`}
-      >
+    <div
+      onClick={HandleClick}
+      className={`rounded-xl w-full h-full p-[2px] transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer bg-gradient-to-r ${bg} ${animate}`}
+      style={{
+        border: isRiskCard ? "none" : `1px solid ${borderColor}`,
+      }}
+    >
+      <div className="h-full w-full rounded-xl p-6">
         {children}
       </div>
     </div>
   );
 };
 
+
+
 const Dashboard = () => {
+
   const { authenticate, Logout, setGetDataFromSession } = useAuthContext();
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
+  const [showModal, setShowModal] = useState(false)
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
 
   const HandleClick = (item) => {
-    sessionStorage.setItem("VROC", item);
-    setGetDataFromSession(item);
-  };
+    // sessionStorage.setItem("VROC", item);
+    // setGetDataFromSession(item);
+
+
+    if (item === "Attack Surface Management (ASM)") {
+      const result = products.filter(
+        (item) =>
+          item.title.includes("AI-VA") ||
+          item.title.includes("Vulnerability Intelligence") ||
+          item.title.includes("Attack Surface Management (ASM)")
+      );
+      setFilteredProducts(result);
+      setShowModal((prev) => !prev);
+      return;
+    }
+
+
+    if (item === "Risk and Compliances") {
+      const result = products.filter(
+        (item) =>
+          item.title.includes("Risk and Compliances") ||
+          item.title.includes("GRC") ||
+          item.title.includes("TPRM")
+      );
+      setFilteredProducts(result);
+      setShowModal((prev) => !prev);
+      return;
+    }
+
+
+  }
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -37,93 +76,136 @@ const Dashboard = () => {
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
-    <div className="px-4 md:px-8 bg-gradient-image min-h-screen">
-      {/* Top-right profile dropdown */}
-      <div className="absolute top-4 right-6 z-20" ref={dropdownRef}>
-        <div className="relative">
-          <button
-            onClick={() => setShowDropdown(!showDropdown)}
-            className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-blue-500 flex items-center justify-center text-white text-base md:text-lg font-semibold hover:brightness-110 transition"
-            aria-label="User menu"
-          >
-            {authenticate?.fname.split("")[0].toUpperCase()}
-          </button>
-          {showDropdown && (
-            <div className="absolute right-0 mt-2 w-40 bg-[#1c1c1e] shadow-lg rounded-md py-2 z-30 border text-white border-gray-800">
-              <button
-                onClick={Logout}
-                className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-800 transition"
-              >
-                Logout
-              </button>
+    <div className="relative w-full min-h-screen bg-gradient-to-r from-[#1c192c] to-[#16161a] text-white overflow-hidden">
+
+
+      <div className="absolute inset-0 z-0 bg-[url('/bgleft.png')] bg-cover bg-no-repeat bg-center opacity-50" />
+
+      <div className="relative z-10 flex flex-col md:flex-row gap-8 w-full min-h-screen px-4 md:px-8 pt-12">
+
+
+        <div className="absolute top-4 right-6 z-30" ref={dropdownRef}>
+          <div className="relative">
+            <button
+              onClick={() => setShowDropdown(!showDropdown)}
+              className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white text-lg font-semibold hover:brightness-110 transition"
+              aria-label="User menu"
+            >
+              {authenticate?.fname?.charAt(0).toUpperCase()}
+            </button>
+            {showDropdown && (
+              <div className="absolute right-0 mt-2 w-40 bg-[#1c1c1e] border border-gray-800 shadow-lg rounded-md py-2 text-white">
+                <button
+                  onClick={Logout}
+                  className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-800 transition"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
+
+        <div className="w-full md:w-[40%] flex flex-col  gap-10">
+          <div className="text-center md:text-left">
+            <img src="/logo.png" alt="Logo" className="mx-auto md:mx-0 w-40 md:w-60" />
+          </div>
+
+          <div className="text-center md:text-left px-2">
+            <h2 className="text-4xl md:text-5xl font-bold">
+              Hello, <span className="capitalize font-lexendDeca">{authenticate?.fname}</span>
+            </h2>
+            <p className="mt-2 text-md md:text-lg text-gray-400">
+              Welcome to the Virtual Risk Operation Center
+            </p>
+          </div>
+
+          <div className="bg-gradient-to-r from-[#403d5783] to-[#242236a2] border border-gray-600 rounded-xl backdrop-blur-md p-10 h-[30%]">
+            <div className="flex space-x-1 mb-4">
+              <div className="w-2 h-2 rounded-full bg-gray-400" />
+              <div className="w-2 h-2 rounded-full bg-gray-400" />
+              <div className="w-2 h-2 rounded-full bg-gray-300" />
             </div>
-          )}
-        </div>
-      </div>
-
-      {/* Header */}
-      <div className="pt-20 md:pt-24 text-center md:text-left">
-        <h2 className="text-2xl md:text-4xl font-bold text-blue-400">
-          Hello,{" "}
-          <span className="capitalize font-lexendDeca">
-            {authenticate?.fname}
-          </span>
-        </h2>
-        <p className="mt-1 md:mt-2 text-sm md:text-base text-gray-400">
-          Welcome to risk operations center
-        </p>
-      </div>
-
-      <div className="flex flex-col md:flex-row gap-6 md:gap-4 items-center justify-between h-full mt-10">
-        {/* Left Side Label */}
-        <div className="w-full md:w-[35%] text-center md:text-left text-3xl md:text-5xl font-semibold text-white leading-tight">
-          <span className="text-blue-400">Secure&</span>
-          <br />
-          AI-Powered <br /> VROC
+            <h1 className="text-2xl md:text-3xl font-semibold mb-2">
+              Virtual Risk Operations Center (VROC)
+            </h1>
+            <p className="text-gray-300 text-sm pt-3">
+              Welcome to the Virtual Risk Operation Center
+            </p>
+          </div>
         </div>
 
-        {/* Right Content */}
-        <div className="w-full flex flex-col items-center gap-6">
-          {/* Top Row */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 w-full max-w-5xl">
-            {products.slice(0, 5).map((item, index) => (
-              <Card
-                key={index}
-                HandleClick={() => HandleClick(item?.title)}
-                gradient={item?.gradient}
-              >
-                <h3 className="text-xs sm:text-sm font-semibold text-gray-200 text-center">
-                  {item?.title}
-                </h3>
-              </Card>
-            ))}
+
+        <div className="w-full md:w-[60%] flex flex-col gap-6 pt-10 md:pt-0">
+
+
+          <div className="w-full md:w-[40%] h-[25%]   rounded-xl bg-gradient-to-r from-[#9b1c4d] to-[#df4156] px-6 py-6 shadow-md">
+            <div>
+              <div className="w-12 h-12 rounded-full bg-[#ffffff3d] flex items-center justify-center">
+                <FiDatabase size={22} color="white" />
+              </div>
+              <div className="pt-4">
+                <h2 className="text-white text-lg font-semibold">Asset Inventory</h2>
+                <p className="text-gray-300 text-xs">Monitor all active risk plans</p>
+              </div>
+            </div>
           </div>
 
-          {/* Middle VROC Box */}
-          <div className="rounded-md bg-[#191925] p-4 text-white text-center w-full max-w-5xl h-20 md:h-24 flex items-center justify-center text-base md:text-2xl">
-            Virtual Risk Operations Centre (VROC)
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {showModal
+              ? filteredProducts.map((item, index) => (
+                <Card
+                  key={index}
+                  HandleClick={() => HandleClick(item.title)}
+                  borderColor={item.borderColor}
+                  bg={item.bg}
+                  animate="animate-slideInX"
+                >
+                  <div className="flex flex-col items-start gap-3">
+                    <div className="w-10 h-10 bg-[#ffffff1c] rounded-full flex items-center justify-center text-white text-xl">
+                      {item.icon}
+                    </div>
+                    <h3 className="text-sm font-semibold text-white">{item.title}</h3>
+                  </div>
+                </Card>
+              ))
+              : products
+                .filter(
+                  (item) =>
+                    !(
+                      item.title.includes("AI-VA") ||
+                      item.title.includes("Vulnerability Intelligence") ||
+                      item.title.includes("GRC") ||
+                      item.title.includes("TPRM")
+                    )
+                )
+                .map((item, index) => (
+                  <Card
+                    key={index}
+                    HandleClick={() => HandleClick(item.title)}
+                    borderColor={item.borderColor}
+                    bg={item.bg}
+                    title={item.title} 
+                  >
+                    <div className="flex flex-col items-start gap-3">
+                      <div className="w-10 h-10 bg-[#ffffff1c] rounded-full flex items-center justify-center text-white text-xl">
+                        {item.icon}
+                      </div>
+                      <h3 className="text-sm font-semibold text-white">{item.title}</h3>
+                    </div>
+                  </Card>
+                ))}
           </div>
 
-          {/* Bottom Row */}    
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 w-full max-w-5xl">
-            {products.slice(5).map((item, index) => (
-              <Card
-                key={index}
-                HandleClick={() => HandleClick(item?.title)}
-                gradient={item?.gradient}
-              >
-                <h3 className="text-xs sm:text-sm font-semibold text-gray-200 text-center">
-                  {item?.title}
-                </h3>
-              </Card>
-            ))}
-          </div>
+
+
+
         </div>
       </div>
     </div>

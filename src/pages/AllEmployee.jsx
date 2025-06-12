@@ -7,7 +7,7 @@ import { AxiosHandler } from "@/config/AxiosConfig";
 import {
   useAllEmployeeContext,
   useAuthContext,
-  useScheduleAssessmentContext,
+
 } from "@/context";
 import { BaseValidationSchema, EditUser } from "@/Validation/AuthValidation";
 import { useFormik } from "formik";
@@ -34,7 +34,7 @@ const AllEmployee = () => {
   const [TenantData, setTenantData] = useState([]);
   const [RoleAllData, setRoleAllData] = useState([]);
   const [page, setPage] = useState(1)
-  const [isloading, setloading] = useState()
+  const [isloading, setloading] = useState(false)
   const { values, errors, touched, handleBlur, handleChange, handleSubmit, resetForm } =
     useFormik({
       initialValues: editable || {
@@ -53,9 +53,9 @@ const AllEmployee = () => {
         setloading(true)
         try {
           if (editable) {
-            const res = await AxiosHandler.put(`/auth/update-user/${value._id}`, value);
+             await AxiosHandler.put(`/auth/update-user/${value._id}`, value);
           } else {
-            const res = await AxiosHandler.post(`/auth/create`, value);
+             await AxiosHandler.post(`/auth/create`, value);
           }
           setIsModalOpen(false);
           GetUsers()
@@ -78,7 +78,7 @@ const AllEmployee = () => {
     }
   };
 
-  const GetUsers = async () => {
+  const GetUsers = async (page=1) => {
     setloading(true)
     try {
       const res = await AxiosHandler.get(`/auth/all-users?page=${page}&limit=2`);
@@ -114,16 +114,13 @@ const AllEmployee = () => {
     }
   };
 
-  useEffect(() => {
-    if (token) {
-      GetAllTenentData();
-      GetAllRoleData();
-    }
-  }, [token]);
+
 
   useEffect(() => {
     if (token) {
       GetUsers(page);
+      GetAllTenentData();
+      GetAllRoleData();
     }
   }, [token, page]);
 
@@ -326,132 +323,107 @@ const AllEmployee = () => {
           {EmpData?.length < 1 ? (
             <NoDataFound />
           ) : (
-            <div className="overflow-x-auto  rounded-lg w-full ">
-              <table className="table-auto w-full    border-b bg-[#2d333b]">
-                <thead className="bg-gradient-to-bl from-[#333333] to-[#666666] text-white ">
-                  <tr>
-                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
-                      S No.
-                    </th>
-                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
-                      Full Name
-                    </th>
-                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
-                      Last Name
-                    </th>
-                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
-                      Email
-                    </th>
-                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
-                      Phone
-                    </th>
-                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">Role</th>
-                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">Tenant</th>
-                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
-                      Approval Status
-                    </th>
-                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
-                      Status
-                    </th>
-                    <th className="px-4 whitespace-nowrap py-1 text-sm border text-left">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {EmpData?.map((user, index) => (
-                    <tr
-                      key={user._id}
-                      className="bg-[#2d333b] text-gray-200 whitespace-nowrap hover:bg-[#53565c] transition duration-200"
-                    >
-                      <td className="px-2 py-1 border">{index + 1}</td>
-                      <td className="px-2 py-1 border">{user.fname}</td>
-                      <td className="px-2 py-1 border">{user.lname}</td>
-                      <td className="px-2 py-1 border">{user.email}</td>
-                      <td className="px-2 py-1 border">{user.phone}</td>
-                      <td className="px-2 py-1 border">{user.role.role}</td>
-                      <td className="px-2 py-1 border">{user.tenant.company_name}</td>
-                      <td className="px-2 py-2 border">
-                        {user?.employee_approve ? (
-                          <span className="px-3 py-1 text-sm font-semibold text-green-800 bg-green-100 rounded-full">
-                            Approved
-                          </span>
-                        ) : (
-                          <button
-                            onClick={() => {
-                              if (
-                                window.confirm(
-                                  "Verify this employee?"
-                                )
-                              ) {
-                                VerifyEmployee(user._id);
+                <div className="overflow-x-auto rounded-lg shadow-lg border border-gray-700">
+                  <table className="min-w-full table-auto text-sm text-left text-gray-300">
+                    <thead className="bg-gradient-to-r from-[#1f2937] to-[#374151] text-white uppercase whitespace-nowrap tracking-wider">
+                      <tr>
+                        {[
+                          "S No.",
+                          "First Name",
+                          "Last Name",
+                          "Email",
+                          "Phone",
+                          "Role",
+                          "Tenant",
+                          "Approval Status",
+                          "Status",
+                          "Actions",
+                        ].map((header) => (
+                          <th
+                            key={header}
+                            className="px-4 py-3 border-b border-gray-600 font-medium"
+                          >
+                            {header}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody className="bg-[#1e1e1e] divide-y divide-gray-700">
+                      {EmpData?.map((user, index) => (
+                        <tr
+                          key={user._id}
+                          className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
+                        >
+                          <td className="px-4 py-3">{index + 1}</td>
+                          <td className="px-4 py-3 capitalize">{user.fname}</td>
+                          <td className="px-4 py-3 capitalize">{user.lname}</td>
+                          <td className="px-4 py-3">{user.email}</td>
+                          <td className="px-4 py-3">{user.phone}</td>
+                          <td className="px-4 py-3">{user.role?.role || "—"}</td>
+                          <td className="px-4 py-3">{user.tenant?.company_name || "—"}</td>
+                          <td className="px-4 py-3">
+                            {user.employee_approve ? (
+                              <span className="inline-block px-3 py-1 text-xs font-semibold text-green-500 bg-green-900/30 rounded-full">
+                                Approved
+                              </span>
+                            ) : (
+                              <button
+                                onClick={() =>
+                                  window.confirm("Verify this employee?") &&
+                                  VerifyEmployee(user._id)
+                                }
+                                className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs"
+                              >
+                                Verify
+                              </button>
+                            )}
+                          </td>
+                          <td className="px-4 py-3">
+                            {user.deactivate ? (
+                              <button
+                                onClick={() => handleChangeStatus("deactivate", user._id)}
+                                className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs"
+                              >
+                                Activate
+                              </button>
+                            ) : (
+                              <button
+                                onClick={() => handleChangeStatus("activate", user._id)}
+                                className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs"
+                              >
+                                Deactivate
+                              </button>
+                            )}
+                          </td>
+                          <td className="px-4 py-3 flex gap-2">
+                            <button
+                              onClick={() =>
+                                window.confirm("Delete this user?") && DeleteUser(user._id)
                               }
-                            }}
-                            className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs"
-                          >
-                            Verify
-                          </button>
-                        )}
-                      </td>
-                      <td className="px-6 py-3">
-                        {user.deactivate ? (
-                          <button
-                            onClick={() =>
-                              handleChangeStatus("deactivate", user._id)
-                            }
-                            className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs"
-                          >
-                            Activate
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() =>
-                              handleChangeStatus("activate", user._id)
-                            }
-                            className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs"
-                          >
-                            Deactivate
-                          </button>
-                        )}
-                      </td>
-                      <td className="px-4 py-3 flex border  gap-2">
-                        <button
-                          onClick={() => {
-                            if (
-                              window.confirm(
-                                "Delete this user?"
-                              )
-                            ) {
-                              DeleteUser(user._id);
-                            }
-                          }}
-                          className="text-red-600  hover:text-red-800 transition-colors duration-150 border-none"
-                          title="Delete"
-                        
-                        >
-                          <RiDeleteBinFill className="h-5 w-5" />
-                        </button>
-                        <button
-                          onClick={() => {
-                            setEdiTable(user);
-
-                            setIsModalOpen(true);
-                          }}
-                          className="text-blue-600 hover:text-blue-800 transition-colors duration-150 border-none"
-                          title="Edit"
-                      
-                        >
-                          <RiEdit2Line className="h-5 w-5" />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-
-            </div>
+                              title="Delete"
+                              className="text-red-500 hover:text-red-700"
+                            >
+                              <RiDeleteBinFill className="w-5 h-5" />
+                            </button>
+                            <button
+                              onClick={() => {
+                                setEdiTable(user);
+                                setIsModalOpen(true);
+                              }}
+                              title="Edit"
+                              className="text-blue-500 hover:text-blue-700"
+                            >
+                              <RiEdit2Line className="w-5 h-5" />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+          
           )}
-          {/* <Pagination page={page} setPage={setPage} hasNextPage={EmpData?.length === 2} /> */}
+          <Pagination page={page} setPage={setPage} hasNextPage={EmpData.length === 2} /> 
         </div>
       )}
     </>

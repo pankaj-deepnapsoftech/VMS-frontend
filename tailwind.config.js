@@ -19,7 +19,7 @@ export default {
         "gradient-custom":
           "linear-gradient(to top left, #0a0f39, #080d27, #050b20)",
 
-        "gradient-image": "url('/bg.jpg')",
+        "gradient-image": "url('/bgleft.png')",
       },
     },
   },
