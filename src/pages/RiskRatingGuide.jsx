@@ -35,7 +35,7 @@ const riskData = [
 
 const RiskRatingGuide = () => {
   return (
-    <div className="p-6 text-white bg-background min-h-screen">
+    <div className="p-6 text-white bg-gradient-custom min-h-screen">
     <h1 className="text-3xl text-center font-bold mb-6">Risk Rating Guide</h1>
       <div className="overflow-x-auto">
         <table className="w-full border border-gray-700 table-auto">

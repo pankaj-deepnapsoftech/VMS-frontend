@@ -27,9 +27,9 @@ const RiskRatingTable = () => {
           Add Risk Rating
         </button>
       </div>
-      <div className=" overflow-x-auto overflow-hidden rounded-lg shadow-md border border-gray-200">
-        <table className="min-w-full bg-background ">
-          <thead className="bg-background text-[15px]  text-white ">
+      <div className="bg-[#0c1120] overflow-x-auto overflow-hidden rounded-lg shadow-md">
+        <table className="min-w-full divide-y divide-gray-700 ">
+          <thead className="bg-[#0c1120] text-[15px]  text-white ">
             <tr>
               <th className="px-4 py-3 text-left whitespace-nowrap  truncate">Data Asset</th>
               <th className="px-4 py-3 text-left whitespace-nowrap  truncate">Users Affected</th>

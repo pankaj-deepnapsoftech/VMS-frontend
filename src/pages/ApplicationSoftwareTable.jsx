@@ -34,9 +34,9 @@ const ApplicationSoftwareInventoryTable = () => {
         </button>
       </div>
 
-      <div className="overflow-x-auto border border-gray-300  shadow-md rounded-lg h-full">
-        <table className="bg-table  text-sm text-left min-w-full rounded-lg ">
-          <thead className="bg-background text-[15px] text-white uppercase sticky top-0 z-10">
+      <div className="overflow-x-auto bg-[#0c1120] shadow-md h-full">
+        <table className="bg-table divide-y divide-gray-700  text-sm text-left min-w-full">
+          <thead className="bg-[#0c1120] text-[15px] text-white uppercase sticky top-0 z-10">
             <tr>
               <th className="py-4 pl-2 px-4   whitespace-nowrap  truncate ">
                 Unit ID

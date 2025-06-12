@@ -134,7 +134,7 @@ function SchedulingAssessmentPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] text-gray-black px-5 ">
+    <div className="min-h-screen bg-gradient-custom text-gray-black px-5 ">
       {/* Main Content */}
       {loading ? (
         <Loader />

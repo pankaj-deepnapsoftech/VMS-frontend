@@ -32,8 +32,8 @@ import { MdDeleteForever } from "react-icons/md";
         </button>
       </div>
 
-      <div className="overflow-x-auto rounded-xl shadow-lg bg-[#0c1120 ]">
-        <table className="min-w-full text-sm text-left text-white">
+      <div className="overflow-x-auto shadow-lg bg-[#0c1120] ]">
+        <table className="min-w-full text-sm text-left divide-y divide-gray-700 text-white">
           <thead className="bg-[#0c1120] text-[15px] uppercase sticky top-0 z-10">
             <tr>
               <th className="px-4 py-3 whitespace-nowrap truncate">
@@ -63,11 +63,11 @@ import { MdDeleteForever } from "react-icons/md";
               <th className="px-4 py-3 whitespace-nowrap truncate">Location</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-700 text-[15px]">
+          <tbody className=" text-[15px]">
             {data.map((item, index) => (
               <tr
                 key={index}
-                className="bg-[#1a1d2e] hover:bg-[#2c2f40] transition-colors duration-200"
+                className="bg-table hover:bg-[#2c2f40] transition-colors duration-200"
               >
                 <td className="px-4 py-3 whitespace-nowrap">
                   {item.data_asset}
