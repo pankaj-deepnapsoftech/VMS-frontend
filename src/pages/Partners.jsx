@@ -88,7 +88,7 @@ const Partners = () => {
             {isLoading ? (
                 <Loader />
             ) : (
-                <section className=" p-8 bg-[#2a2c2f] h-screen shadow-lg  ">
+                <section className=" p-8  h-screen shadow-lg  ">
                     <div className="w-full flex justify-end">
                         <button
                             onClick={() => { setModal(true); setEdittable(null) }}

@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react";
 const Header = ({ openModal }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenu,setmobileMenu] = useState(false)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -243,10 +244,57 @@ const Header = ({ openModal }) => {
     //   )}
     // </nav>
     <>
+
+      <div className={` ${mobileMenu ? "" : "hidden"} md:hidden absolute z-50 bg-[#1e1f22] text-white w-full min-h-52 top-0 left-0 pb-10 `}>
+        <p className="text-end p-5 " onClick={() => setmobileMenu(!mobileMenu)} > <X className=" z-10" size={24} /></p>
+        <div className=" flex flex-col gap-3 w-full items-center">
+          <Link
+            to="/"
+            className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left"
+          >
+            Home
+          </Link>
+
+          {/* <Link
+              to="/pricing"
+              className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left"
+            >
+              Pricing
+            </Link> */}
+
+          <Link
+            to="/solutions"
+            className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left"
+          >
+            Solutions
+          </Link>
+          <Link
+            onClick={() => pathModifier("#book-demo")}
+            className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left"
+          >
+            Contact us
+          </Link>
+          <Link
+            onClick={openModal}
+            className="relative hover:text-white after:block after:h-[2px] after:bg-[#0371c0] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left"
+          >
+            Book Demo{" "}
+          </Link>
+
+          <button
+            onClick={() => navigate("/sign-in")}
+            className="relative inline-flex h-12 w-20 overflow-hidden rounded-full p-[1px]  focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 "
+          >
+            <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+            <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+              SignIn
+            </span>
+          </button>
+        </div>
+      </div>
       <nav
-        className={`${
-          scrolled ? "bg-[#1e1f22]" : "bg-transparent"
-        } text-white py-2 px-6 md:px-12 fixed w-full h-24 top-0 z-50 transition-colors duration-100`}
+        className={`${scrolled ? "bg-[#1e1f22]" : "bg-transparent"
+          } text-white py-2 px-6 md:px-12 fixed w-full h-24 top-0 z-40 transition-colors duration-100`}
       >
         <div className="w-full max-w-screen-xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-2">
@@ -300,7 +348,7 @@ const Header = ({ openModal }) => {
           {/* Mobile menu button */}
           <button
             className="md:hidden text-white"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            onClick={() => setmobileMenu(!mobileMenu)}
           >
             {isMenuOpen ? (
               <X className=" z-10" size={24} />
