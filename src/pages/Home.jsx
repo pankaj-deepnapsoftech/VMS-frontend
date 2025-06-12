@@ -1,4 +1,3 @@
-
 import {
   MdBuild,
   MdOutlineErrorOutline,
@@ -38,7 +37,7 @@ function Home() {
     closevulnerableItems,
     criticalHighVulnerable,
     criticalHighVulnerableOverdue,
-    exploitability
+    exploitability,
   } = useDataContext();
 
   const { authenticate } = useAuthContext();
@@ -87,38 +86,38 @@ function Home() {
     {
       title: "Application",
       value: cardData?.Application,
-      color: "from-[#F24E1E] to-[#FF866B]", // Figma Red gradient
+      color: "from-[#253e5e] to-[#275691]", // Figma Red gradient
       icon: MdOutlineMiscellaneousServices,
       chartColor: "#FFF",
     },
     {
       title: "Infrastructure IPs",
       value: cardData?.Infrastructure,
-      color: "from-[#0D99FF] to-[#74C0FC]", // Figma Blue gradient
+      color: "from-[#0c3827] to-[#0b5c3d]", // Figma Blue gradient
       icon: FaNetworkWired,
       chartColor: "#FFF",
     },
     {
       title: "Total Vulnerability",
       value: cardData?.totalData,
-      color: "from-[#63A833] to-[#9EE999]", // Figma Cyan gradient
+      color: "from-[#5c1c2d] to-[#6b3141]", // Figma Cyan gradient
       icon: Bug,
       chartColor: "#FFF",
     },
     {
       title: "Remediation",
       value: cardData?.inProgress,
-      color: "from-[#A259FF] to-[#C79CFF]", // Figma Purple gradient
+      color: "from-[#163540] to-[#12495c]", // Figma Purple gradient
       icon: MdBuild,
       chartColor: "#FFF",
     },
     {
       title: "Exceptions",
       value: cardData?.Exceptions,
-      color: "from-[#F24E1E] to-[#FF866B]", // Figma Red gradient
+      color: "from-[#6f7015] to-[#888a03]", // Figma Red gradient
       icon: MdOutlineErrorOutline,
       chartColor: "#FFF",
-    }
+    },
   ];
 
   const monthNames = [
@@ -136,10 +135,9 @@ function Home() {
     "December",
   ];
 
-
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] px-6 py-6 ">
+      <div className="min-h-screen bg-gradient-custom px-6 py-6 ">
         {/* Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 py-3">
           {metrics.map((metric, index) => (
@@ -147,10 +145,8 @@ function Home() {
           ))}
         </div>
 
-
-
         <div className="w-full h-full  py-2  mt-5   transition rounded-lg flex lg:flex-row flex-col  gap-2">
-          <div className="bg-[#2a2c2f] lg:w-[30%] w-full h-96 py-2 transition rounded-lg flex flex-col ">
+          <div className="bg-cards lg:w-[30%] w-full h-96 py-2 transition rounded-lg flex flex-col ">
             <h3 className="text-lg p-2 font-semibold text-gray-200 ">
               Vulnerability Status
             </h3>
@@ -174,7 +170,6 @@ function Home() {
                       fill={COLORS[index % COLORS.length]}
                     />
                   ))}
-
                 </Pie>
                 <Tooltip />
                 <Legend />
@@ -182,7 +177,7 @@ function Home() {
             </ResponsiveContainer>
           </div>
           {/* Risk Rating Chart */}
-          <div className="bg-[#2a2c2f]  lg:w-[70%]  w-full py-2 px-2 transition rounded-lg">
+          <div className="bg-cards  lg:w-[70%]  w-full py-2 px-2 transition rounded-lg">
             <h3 className="text-lg p-1 font-semibold text-gray-200 mb-2">
               Vulnerable Items by Risk Rating
             </h3>
@@ -198,7 +193,11 @@ function Home() {
                       x2="0"
                       y2="1"
                     >
-                      <stop offset="0%" stopColor={ChartsColor.Critical} stopOpacity={0.8} />
+                      <stop
+                        offset="0%"
+                        stopColor={ChartsColor.Critical}
+                        stopOpacity={0.8}
+                      />
                       <stop
                         offset="100%"
                         stopColor={ChartsColor.Critical}
@@ -212,7 +211,11 @@ function Home() {
                       x2="0"
                       y2="1"
                     >
-                      <stop offset="0%" stopColor={ChartsColor.High} stopOpacity={0.8} />
+                      <stop
+                        offset="0%"
+                        stopColor={ChartsColor.High}
+                        stopOpacity={0.8}
+                      />
                       <stop
                         offset="100%"
                         stopColor={ChartsColor.High}
@@ -226,7 +229,11 @@ function Home() {
                       x2="0"
                       y2="1"
                     >
-                      <stop offset="0%" stopColor={ChartsColor.Medium} stopOpacity={0.8} />
+                      <stop
+                        offset="0%"
+                        stopColor={ChartsColor.Medium}
+                        stopOpacity={0.8}
+                      />
                       <stop
                         offset="100%"
                         stopColor={ChartsColor.Medium}
@@ -240,7 +247,11 @@ function Home() {
                       x2="0"
                       y2="1"
                     >
-                      <stop offset="0%" stopColor={ChartsColor.Low} stopOpacity={0.8} />
+                      <stop
+                        offset="0%"
+                        stopColor={ChartsColor.Low}
+                        stopOpacity={0.8}
+                      />
                       <stop
                         offset="100%"
                         stopColor={ChartsColor.Low}
@@ -254,7 +265,11 @@ function Home() {
                       x2="0"
                       y2="1"
                     >
-                      <stop offset="0%" stopColor={ChartsColor.Informational} stopOpacity={0.8} />
+                      <stop
+                        offset="0%"
+                        stopColor={ChartsColor.Informational}
+                        stopOpacity={0.8}
+                      />
                       <stop
                         offset="100%"
                         stopColor={ChartsColor.Informational}
@@ -273,28 +288,28 @@ function Home() {
                     type="monotone"
                     dataKey="Critical"
                     stackId="1"
-                    stroke={ChartsColor.Critical}  // Figma Red
+                    stroke={ChartsColor.Critical} // Figma Red
                     fill="url(#criticalGradient)"
                   />
                   <Area
                     type="monotone"
                     dataKey="High"
                     stackId="1"
-                    stroke={ChartsColor.High}  // Figma Purple
+                    stroke={ChartsColor.High} // Figma Purple
                     fill="url(#highGradient)"
                   />
                   <Area
                     type="monotone"
                     dataKey="Medium"
                     stackId="1"
-                    stroke={ChartsColor.Medium}  // Figma Coral
+                    stroke={ChartsColor.Medium} // Figma Coral
                     fill="url(#mediumGradient)"
                   />
                   <Area
                     type="monotone"
                     dataKey="Low"
                     stackId="1"
-                    stroke={ChartsColor.Low}  // Figma Blue
+                    stroke={ChartsColor.Low} // Figma Blue
                     fill="url(#lowGradient)"
                   />
                   <Area
@@ -311,15 +326,15 @@ function Home() {
         </div>
 
         {/* exploybality */}
-        <div className="flex gap-2" >
-          <div className="bg-[#2a2c2f] p-3  rounded-xl shadow-lg w-full lg:w-1/2 ">
+        <div className="flex gap-2">
+          <div className="bg-cards p-3  rounded-xl shadow-lg w-full lg:w-1/2 ">
             <h3 className="text-lg p-1 font-semibold text-gray-200 ">
               Exploitability
             </h3>
             <hr className="mb-4 " />
             <BarGraph data={exploitability} />
           </div>
-          <div className="bg-[#2a2c2f] lg:w-1/2 w-full h-96 py-1  transition rounded-lg flex flex-col">
+          <div className="bg-cards lg:w-1/2 w-full h-96 py-1  transition rounded-lg flex flex-col">
             <h3 className="text-lg p-2 font-semibold text-gray-200 ">
               Inventory Status
             </h3>
@@ -343,21 +358,18 @@ function Home() {
                       fill={COLORS[index % COLORS.length]}
                     />
                   ))}
-
                 </Pie>
                 <Tooltip />
                 <Legend />
               </PieChart>
             </ResponsiveContainer>
           </div>
-
         </div>
-
 
         {/* Charts Section */}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 pt-2 ">
-          <div className="bg-[#2a2c2f] px-2 py-2 col-span-2 rounded-lg">
+          <div className="bg-cards px-2 py-2 col-span-2 rounded-lg">
             <h3 className="text-gray-200 text-lg p-1 font-semibold mb-2">
               Closed Vulnerable Items by Remediation Target Status
             </h3>
@@ -385,7 +397,7 @@ function Home() {
             </ResponsiveContainer>
           </div>
 
-          <div className="bg-[#2a2c2f] p-4 rounded-lg shadow ">
+          <div className="bg-cards p-4 rounded-lg shadow ">
             <h3 className="text-gray-200 text-lg text-center font-semibold mb-2">
               Critical / High Vulnerable Items <br />{" "}
               <span className="text-sm">by Assignment Group</span>
@@ -405,7 +417,9 @@ function Home() {
                 {Object.entries(criticalHighVulnerable).map(([key, value]) => (
                   <tr key={key}>
                     <td className="px-4 py-2 text-gray-400 border-b">{key}</td>
-                    <td className="px-4 py-2 text-gray-400 border-b">{value}</td>
+                    <td className="px-4 py-2 text-gray-400 border-b">
+                      {value}
+                    </td>
                     <td className="px-4 py-2  border-b">
                       {value > 0 ? "⬆️" : "➖"}
                     </td>
@@ -417,7 +431,7 @@ function Home() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 my-2 ">
-          <div className="bg-[#2a2c2f] shadow rounded-lg p-6 ">
+          <div className="bg-cards shadow rounded-lg p-6 ">
             <h3 className="text-gray-200 text-sm text-center font-semibold mb-4">
               Overdue Critical / High Vulnerable Items <br />
               <span className="text-sm">by Assignment Group</span>
@@ -436,8 +450,12 @@ function Home() {
                 {Object.entries(criticalHighVulnerableOverdue).map(
                   ([key, value]) => (
                     <tr key={key}>
-                      <td className="px-4 py-2 text-gray-400 border-b">{key}</td>
-                      <td className="px-4 py-2 text-gray-400 border-b">{value}</td>
+                      <td className="px-4 py-2 text-gray-400 border-b">
+                        {key}
+                      </td>
+                      <td className="px-4 py-2 text-gray-400 border-b">
+                        {value}
+                      </td>
                       <td className="px-4 py-2 text-gray-400 border-b">
                         {value > 0 ? "⬆️" : "➖"}
                       </td>
@@ -449,7 +467,7 @@ function Home() {
           </div>
 
           {/* Age and Risk Rating Chart */}
-          <div className="bg-[#2a2c2f] p-4 col-span-2 rounded-lg">
+          <div className="bg-cards p-4 col-span-2 rounded-lg">
             <h3 className="text-lg text-gray-200 font-semibold mb-2">
               Vulnerable Items by Age
             </h3>
@@ -472,7 +490,7 @@ function Home() {
           </div>
         </div>
 
-        <div className="bg-[#2a2c2f] p-2 flex justify-center flex-col pb-14 rounded-lg">
+        <div className="bg-cards p-2 flex justify-center flex-col pb-14 rounded-lg">
           <h3 className="text-gray-200 p-2 text-lg font-semibold ">
             Open and Closed Vulnerable Items
           </h3>
@@ -492,9 +510,7 @@ function Home() {
         </div>
 
         <div className="mt-6"></div>
-
       </div>
-
     </>
   );
 }

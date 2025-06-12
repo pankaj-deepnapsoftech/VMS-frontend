@@ -30,9 +30,9 @@ const DevicesTable = () => {
         </button>
       </div>
 
-      <div className="overflow-x-auto overflow-hidden rounded-lg shadow-md border border-gray-200">
-        <table className="min-w-full  text-left text-white bg-gray-500">
-          <thead className="bg-background text-[15px] uppercase text-white sticky top-0 z-10">
+      <div className="overflow-x-auto bg-[#0c1120] overflow-hidden shadow-md">
+        <table className="min-w-full  text-left text-white divide-y divide-gray-700 bg-gray-500">
+          <thead className="bg-[#0c1120] text-[15px] uppercase text-white sticky top-0 z-10">
             <tr>
               <th className="px-4 py-3  whitespace-nowrap  ">Unit ID</th>
               <th className="px-4 py-3  whitespace-nowrap  ">Custodian</th>

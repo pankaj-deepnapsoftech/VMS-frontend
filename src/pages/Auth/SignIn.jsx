@@ -120,7 +120,7 @@ const SignIn = () => {
 
       {/* Right side */}
       <div
-        className="bg-black flex-[2] text-white flex flex-col justify-center border-l pl-20"
+        className="bg-black flex-[2] text-white flex flex-col justify-center border-l bg-[url('/bgright.png')] bg-no-repeat bg-cover pl-20"
         style={{ backgroundPosition: "right 0 1000px" }}
       >
         <h2 className="text-4xl 2xl:text-6xl font-medium py-3 ">

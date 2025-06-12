@@ -98,7 +98,7 @@ transition duration-300 sm:w-[40%] md:w-[30%] lg:w-[25%] xl:w-[20%] 2xl:w-[15%] 
               <div className="flex items-center justify-between px-2 sm:px-4 py-2 bg-[#1f2937]">
                 <div className="w-full flex items-center justify-between pr-5 ">
                   <button
-                    className="p-2 hover:bg-gray-100 rounded lg:hidden "
+                    className="p-2 text-white hover:bg-gray-600 rounded lg:hidden "
                     onClick={() => setShowMenu(!showMenu)}
                   >
                     <AiOutlineMenu className="w-5 h-5" />

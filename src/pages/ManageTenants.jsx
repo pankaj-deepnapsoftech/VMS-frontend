@@ -71,7 +71,7 @@ export default function ManageTenants() {
             placeholder="Type to search"
             className="px-3 py-2 rounded bg-[#1f2124] border border-gray-600 text-sm w-64"
           />
-          <button className="bg-sky-700 hover:bg-sky-800 text-white px-4 py-1 rounded">
+          <button className="bg-sky-700 hover:bg-sky-800 text-white px-4 py-1 rounded"> 
             Go
           </button>
           <button className="bg-orange-800 hover:bg-orange-900 text-white px-4 py-1 rounded">
