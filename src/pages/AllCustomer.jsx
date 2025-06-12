@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-undef */
 /* eslint-disable no-undef */
-import Loader from "@/components/Loader/Loader";
+
 import AllowedModal from "@/components/modal/AllowedModal";
 import NoDataFound from "@/components/NoDataFound";
 import InputField from "@/components/InputField";
@@ -33,9 +33,10 @@ import { useFormik } from "formik";
 import { AxiosHandler } from "@/config/AxiosConfig";
 import { tenantValidator } from "@/Validation/TenantsValidations";
 import Pagination from "./Pagination";
+import Loader from "@/components/Loader/Loader";
 
 export default function AllCustomer() {
-  const { loading } = useAllCustomerContext();
+
   const { token } = useAuthContext();
   const { VerifyEmployee } = useAllEmployeeContext();
 
@@ -45,7 +46,7 @@ export default function AllCustomer() {
   const [dataId, setDataId] = useState(null);
   const [tenants, setTenants] = useState([]);
   const [editTable, setEditTable] = useState(null);
-
+  const [isLoading, setLoading] = useState(false)
   const getTenants = async () => {
     try {
       const res = await AxiosHandler.get(`/tenant/get?page=${page}&limit=10`);
@@ -77,6 +78,7 @@ export default function AllCustomer() {
     validationSchema: tenantValidator,
     enableReinitialize: true,
     onSubmit: async (values) => {
+      setLoading(true)
       try {
         if (editTable) {
           await AxiosHandler.put(`/tenant/update/${values._id}`, values);
@@ -88,11 +90,14 @@ export default function AllCustomer() {
         getTenants();
       } catch (error) {
         console.error("Tenant creation failed", error);
+      }finally{
+        setLoading(false)
       }
     },
   });
 
   const DeleteData = async (_id) => {
+    setLoading(true)
     try {
       if (window.confirm("Are you sure you want to delete this element?")) {
         await AxiosHandler.delete(`/tenant/delete/${_id}`);
@@ -101,6 +106,8 @@ export default function AllCustomer() {
       }
     } catch (error) {
       console.log(error);
+    }finally{
+      setLoading(false)
     }
   };
 
@@ -116,8 +123,8 @@ export default function AllCustomer() {
 
   return (
     <>
-      {loading ? (
-        <Loader />
+      { isLoading ? (
+      <Loader/>
       ) : (
         <div>
           <div className="flex w-full justify-end py-4">
@@ -301,7 +308,7 @@ export default function AllCustomer() {
               ) : (
                 <>
                   <table className="min-w-full divide-y divide-gray-700">
-                    <thead className="bg-gradient-to-br from-[#0a0f39] via-[#080d27] to-[#050b20]">
+                    <thead className="bg-gradient-to-br from-[#0a0f39] via-[#080d27] to-[#050b20]  whitespace-nowrap">
                       <tr>
                         <th className="px-4 py-3 text-left">Company Name</th>
                         <th className="px-4 py-3 text-left">Website URL</th>

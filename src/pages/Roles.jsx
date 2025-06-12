@@ -8,19 +8,20 @@ import Multiselect from "multiselect-react-dropdown";
 import React, { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
+import Pagination from "./Pagination";
 
 const Roles = () => {
   const [showModal, setModal] = useState(false);
   const [rolesList, setRolesList] = useState([]);
   const [editable, setEditable] = useState(null);
   const [isLoading, setLoading] = useState(null);
-
+  const [page, setPage] = useState(1)
   const { token } = useAuthContext();
 
   const GetData = async () => {
     setLoading(true);
     try {
-      const res = await AxiosHandler.get("/role/get");
+      const res = await AxiosHandler.get(`/role/get?page=${page}&limit=10`);
       setRolesList(res?.data?.data || []);
     } catch (error) {
       console.error("Error fetching roles:", error);
@@ -83,9 +84,9 @@ const Roles = () => {
 
   useEffect(() => {
     if (token) {
-      GetData();
+      GetData(page);
     }
-  }, [token]);
+  }, [token,page]);
 
   return (
     <>
@@ -270,6 +271,8 @@ const Roles = () => {
                 </table>
               </div>
             )}
+
+            <Pagination  page={page} setPage={setPage} hasNextPage={rolesList?.length === 10} />
           </div>
         </section>
       )}

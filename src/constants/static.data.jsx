@@ -8,7 +8,9 @@ import {
 } from "lucide-react";
 import { AiOutlineException } from "react-icons/ai";
 import { BiSolidDashboard } from "react-icons/bi";
+import { FaShieldAlt } from "react-icons/fa";
 import { FaPerson } from "react-icons/fa6";
+import { FiDatabase } from "react-icons/fi";
 import { GrVulnerability } from "react-icons/gr";
 import { MdInventory2, MdOutlineMiscellaneousServices } from "react-icons/md";
 import { SiWikimediafoundation } from "react-icons/si";
@@ -74,11 +76,16 @@ export const ChartsColor = {
   Critical: "#E55050",
 };
 
+// products.js
+
+
+
 export const products = [
   {
     title: "Asset Inventory",
     desc: "Centralized asset visibility and management",
-    gradient: "from-[#ee9ca7] to-[#ffdde1]",
+    borderColor: "#9b1c4d",
+    icon: <FiDatabase />,
     allowedPath: [
       {
         title: "Asset Inventory",
@@ -88,117 +95,92 @@ export const products = [
     ],
   },
   {
-    title: "TVM",
+    title: "Threat & Vulnerability Management (TVM)",
     desc: "Threat and Vulnerability Management",
-    gradient: "from-[#ff7e5f] to-[#feb47b]",
+    borderColor: "#ff7e5f",
+    icon: <BiSolidDashboard />,
     allowedPath: [
       { title: "Dashboard", route: "", icon: BiSolidDashboard },
-      {
-        title: "Scheduling Assesment",
-        route: "/scheduling-assesment",
-        icon: CalendarClock,
-      },
-      {
-        title: "Application Vulnerability",
-        route: "/application-vulnerability",
-        icon: MdOutlineMiscellaneousServices,
-      },
-      {
-        title: "Infrastructure Vulnerability ",
-        route: "/infrastructure-vulnerability",
-        icon: GrVulnerability,
-      },
+      { title: "Scheduling Assesment", route: "/scheduling-assesment", icon: CalendarClock },
+      { title: "Application Vulnerability", route: "/application-vulnerability", icon: MdOutlineMiscellaneousServices },
+      { title: "Infrastructure Vulnerability", route: "/infrastructure-vulnerability", icon: GrVulnerability },
       { title: "Exceptions", route: "/exceptions", icon: AiOutlineException },
     ],
   },
   {
-    title: "ASM",
-    desc: "Attack Surface Monitoring for real-time visibility",
-    gradient: "from-[#00c6ff] to-[#0072ff]",
+    title: "Risk and Compliances",
+    desc: "Risk and Compliances",
+    bg:"from-[#9b1c4d] to-[#df4156]",
+    icon: <FaShieldAlt />,
     allowedPath: [],
   },
-
+  {
+    title: "Attack Surface Management (ASM)",
+    desc: "Attack Surface Monitoring",
+    borderColor: "#00c6ff",
+    icon: <GrVulnerability />,
+    allowedPath: [],
+  },
   {
     title: "AI-VA",
-    desc: "Governance, Risk, and Compliance",
-    gradient: "from-[#ee9ca7] to-[#ffdde1]",
+    desc: "AI Virtual Analyst",
+    borderColor: "#ee9ca7",
+    icon: <MdOutlineMiscellaneousServices />,
     allowedPath: [],
   },
   {
     title: "Vulnerability Intelligence",
-    desc: "Governance, Risk, and Compliance",
-    gradient: "from-[#ff7e5f] to-[#feb47b]",
+    desc: "Insights on vulnerabilities",
+    borderColor: "#feb47b",
+    icon: <Bug />,
     allowedPath: [],
   },
   {
     title: "GRC",
-    desc: "Governance, Risk, and Compliance",
-    gradient: "from-[#f7971e] to-[#ffd200]",
+    desc: "Governance, Risk & Compliance",
+    borderColor: "#f7971e",
+    icon: <Settings />,
     allowedPath: [],
   },
   {
     title: "TPRM",
     desc: "Third-Party Risk Management",
-    gradient: "from-[#43cea2] to-[#185a9d]",
+    borderColor: "#43cea2",
+    icon: <Users />,
     allowedPath: [],
   },
   {
     title: "Remediation Factory",
-    desc: "Automated remediation of vulnerabilities or security issues across an organization.",
-    gradient: "from-[#6a11cb] to-[#2575fc]",
+    desc: "Automated remediation of vulnerabilities",
+    borderColor: "#6a11cb",
+    icon: <SiWikimediafoundation />,
     allowedPath: [
-      {
-        title: "Remedition",
-        route: "/remedition",
-        icon: SiWikimediafoundation,
-      },
+      { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
       { title: "Vulnerability Data", route: "/vulnerability-data", icon: Bug },
     ],
-  
   },
   {
     title: "Reports",
-    desc: "Generate reports & dashboards automatically",
-    gradient: "from-[#a1c4fd] to-[#c2e9fb]",
+    desc: "Generate reports & dashboards",
+    borderColor: "#a1c4fd",
+    icon: <TbReport />,
     allowedPath: [{ title: "Reports", route: "/reports", icon: TbReport }],
   },
   {
     title: "Administration",
-    desc: "Admin control panel for team and roles",
-    gradient: "from-[#fceabb] to-[#f8b500]",
+    desc: "Admin control panel",
+    borderColor: "#f8b500",
+    icon: <UserCircle />,
     allowedPath: [
       { title: "Users", route: "/all-users", icon: Users },
       { title: "Tenant", route: "/all-tenant", icon: UserCircle },
       { title: "Third Party Data", route: "/third-party-data", icon: Table },
-      {
-        title: "Third Party Config",
-        route: "/third-party-config",
-        icon: Settings,
-      },
-      {
-        title: "Config Email",
-        route: "/config-email",
-        icon: Settings,
-      },
-      // {
-      //   title: "Manage Users",
-      //   route: "/manage-users",
-      //   icon: Settings,
-      // },
-      // {
-      //   title: "Manage Tenants",
-      //   route: "/manage-tenants ",
-      //   icon: Settings,
-      // },
-      {
-        title: "Role",
-        route: "/roles ",
-        icon: Users,
-      }, {
-        title: "Partners",
-        route: "/partners ",
-        icon: Users,
-      }
+      { title: "Third Party Config", route: "/third-party-config", icon: Settings },
+      { title: "Config Email", route: "/config-email", icon: Settings },
+      { title: "Role", route: "/roles", icon: Users },
+      { title: "Partners", route: "/partners", icon: Users },
     ],
   },
 ];
+
+

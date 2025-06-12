@@ -8,13 +8,14 @@ import React, { useEffect, useState } from 'react'
 import { BiPlus } from 'react-icons/bi';
 import { FaBuilding, FaCity, FaCompass, FaEdit, FaGlobe, FaMapMarkedAlt, FaTrash } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
+import Pagination from './Pagination';
 
 const Partners = () => {
     const [isLoading, setLoading] = useState(false)
     const [showModal, setModal] = useState(false)
     const [partnersData, setPartnersData] = useState([])
     const [editTable, setEdittable] = useState(false)
-
+    const [page, setPage] = useState(1)
 
     const { token } = useAuthContext();
     const { handleBlur, handleChange, handleSubmit, resetForm, touched, errors, values } = useFormik({
@@ -48,10 +49,10 @@ const Partners = () => {
         }
     })
 
-    const GetPartnerData = async () => {
+    const GetPartnerData = async (page = 1) => {
         setLoading(true)
         try {
-            const res = await AxiosHandler.get("/partner/get");
+            const res = await AxiosHandler.get(`/partner/get?page=${page}&limit=3`);
             setPartnersData(res?.data?.data)
         } catch (error) {
             console.log(error)
@@ -79,9 +80,9 @@ const Partners = () => {
 
     useEffect(() => {
         if (token) {
-            GetPartnerData()
+            GetPartnerData(page)
         }
-    }, [token])
+    }, [token,page])
 
     return (
         <>
@@ -274,6 +275,7 @@ const Partners = () => {
 
                             </>
                         )}
+                            <Pagination page={page} setPage={setPage} hasNextPage={partnersData.length === 3}  />
                     </div>
 
                 </section>

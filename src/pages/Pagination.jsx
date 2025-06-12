@@ -16,7 +16,7 @@ const Pagination = ({ page, setPage, hasNextPage }) => {
             <button
                 className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white rounded-md ${!hasNextPage ? "opacity-50 cursor-not-allowed" : ""
                     }`}
-                disabled={!hasNextPage}
+                disabled={!hasNextPage}  
                 onClick={() => setPage(page + 1)}
             >
                 Next 
