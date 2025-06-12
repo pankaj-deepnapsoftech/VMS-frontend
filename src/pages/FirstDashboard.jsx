@@ -36,8 +36,10 @@ const Dashboard = () => {
 
 
   const HandleClick = (item) => {
-    // sessionStorage.setItem("VROC", item);
-    // setGetDataFromSession(item);
+    if(item !== "Attack Surface Management (ASM)" && item !== "Risk and Compliances"){
+      sessionStorage.setItem("VROC", item);
+      setGetDataFromSession(item);
+    }
 
 
     if (item === "Attack Surface Management (ASM)") {
