@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-undef */
 /* eslint-disable no-undef */
-import Loader from "@/components/Loader/Loader";
+
 import AllowedModal from "@/components/modal/AllowedModal";
 import NoDataFound from "@/components/NoDataFound";
 import InputField from "@/components/InputField";
@@ -32,9 +32,11 @@ import {
 import { useFormik } from "formik";
 import { AxiosHandler } from "@/config/AxiosConfig";
 import { tenantValidator } from "@/Validation/TenantsValidations";
+import Pagination from "./Pagination";
+import Loader from "@/components/Loader/Loader";
 
 export default function AllCustomer() {
-  const { loading } = useAllCustomerContext();
+
   const { token } = useAuthContext();
   const { VerifyEmployee } = useAllEmployeeContext();
 
@@ -44,7 +46,7 @@ export default function AllCustomer() {
   const [dataId, setDataId] = useState(null);
   const [tenants, setTenants] = useState([]);
   const [editTable, setEditTable] = useState(null);
-
+  const [isLoading, setLoading] = useState(false)
   const getTenants = async () => {
     try {
       const res = await AxiosHandler.get(`/tenant/get?page=${page}&limit=10`);
@@ -76,6 +78,7 @@ export default function AllCustomer() {
     validationSchema: tenantValidator,
     enableReinitialize: true,
     onSubmit: async (values) => {
+      setLoading(true)
       try {
         if (editTable) {
           await AxiosHandler.put(`/tenant/update/${values._id}`, values);
@@ -87,11 +90,14 @@ export default function AllCustomer() {
         getTenants();
       } catch (error) {
         console.error("Tenant creation failed", error);
+      }finally{
+        setLoading(false)
       }
     },
   });
 
   const DeleteData = async (_id) => {
+    setLoading(true)
     try {
       if (window.confirm("Are you sure you want to delete this element?")) {
         await AxiosHandler.delete(`/tenant/delete/${_id}`);
@@ -100,8 +106,14 @@ export default function AllCustomer() {
       }
     } catch (error) {
       console.log(error);
+    }finally{
+      setLoading(false)
     }
   };
+
+
+
+
 
   useEffect(() => {
     if (token) {
@@ -111,8 +123,8 @@ export default function AllCustomer() {
 
   return (
     <>
-      {loading ? (
-        <Loader />
+      { isLoading ? (
+      <Loader/>
       ) : (
         <div>
           <div className="flex w-full justify-end py-4">
@@ -129,153 +141,163 @@ export default function AllCustomer() {
           </div>
 
           <div className="m-6 p-2 bg-tablecolor shadow-lg rounded-lg">
-            {isModalOpen && (
-              <div className="fixed inset-0 bg-input bg-opacity-50 flex items-center justify-center p-4 z-10">
-                <div className="bg-gradient-custom rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-                  <div className="flex justify-between items-center border-b p-4 bg-table">
-                    <h2 className="text-lg font-semibold text-gray-200">
-                      {editTable ? "Edit Tenant" : "Add Tenant"}
-                    </h2>
-                    <button onClick={() => setIsModalOpen(false)}>
-                      <MdClose className="h-6 w-6 text-gray-100" />
-                    </button>
+            <div>
+              {isModalOpen && (
+                <div className="fixed inset-0 bg-input bg-opacity-50 flex items-center justify-center p-4 z-10">
+                  <div className="bg-gradient-custom rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+                    <div className="flex justify-between items-center border-b p-4 bg-table">
+                      <h2 className="text-lg font-semibold text-gray-200">
+                        {editTable ? "Edit Tenant" : "Add Tenant"}
+                      </h2>
+                      <button onClick={() => setIsModalOpen(false)}>
+                        <MdClose className="h-6 w-6 text-gray-100" />
+                      </button>
+                    </div>
+                    <form onSubmit={handleSubmit} className="p-10 space-y-5">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <InputField
+                          label="Company Name"
+                          type="text"
+                          icon={FaBuilding}
+                          name="company_name"
+                          value={values.company_name}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          placeholder="Enter your company name"
+                        />
+                        {touched.company_name && errors.company_name && (
+                          <p className="text-red-400 text-sm">
+                            {errors.company_name}
+                          </p>
+                        )}
+
+                        <InputField
+                          label="Website URL"
+                          type="text"
+                          icon={FaGlobe}
+                          name="Website_url"
+                          value={values.Website_url}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          placeholder="Enter your website url"
+                        // showPassword={true}
+                        />
+                        {touched.Website_url && errors.Website_url && (
+                          <p className="text-red-400 text-sm">
+                            {errors.Website_url}
+                          </p>
+                        )}
+
+                        <InputField
+                          label="Employee Count"
+                          type="text"
+                          icon={FaUsers}
+                          name="Employee_count"
+                          value={values.Employee_count}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          placeholder="Enter Employee Count"
+                        />
+                        {touched.Employee_count && errors.Employee_count && (
+                          <p className="text-red-400 text-sm">
+                            {errors.Employee_count}
+                          </p>
+                        )}
+                        <InputField
+                          label="Country"
+                          type="text"
+                          icon={FaCompass}
+                          name="Country"
+                          value={values.Country}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          placeholder="Enter Country"
+                        />
+                        {touched.Country && errors.Country && (
+                          <p className="text-red-400 text-sm">
+                            {errors.Country}
+                          </p>
+                        )}
+
+                        <InputField
+                          label="State"
+                          type="text"
+                          icon={FaMapMarkedAlt}
+                          name="State"
+                          value={values.State}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          placeholder="Enter state"
+                        />
+                        {touched.State && errors.State && (
+                          <p className="text-red-400 text-sm">{errors.State}</p>
+                        )}
+
+                        <InputField
+                          label="City"
+                          type="text"
+                          icon={FaCity}
+                          name="City"
+                          value={values.City}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          placeholder="Enter city"
+                        />
+                        {touched.City && errors.City && (
+                          <p className="text-red-400 text-sm">{errors.City}</p>
+                        )}
+
+                        <InputField
+                          label="Industry"
+                          type="text"
+                          icon={FaIndustry}
+                          name="Industry"
+                          value={values.Industry}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          placeholder="Enter industry"
+                        />
+                        {touched.Industry && errors.Industry && (
+                          <p className="text-red-400 text-sm">
+                            {errors.Industry}
+                          </p>
+                        )}
+
+                        <InputField
+                          label="Risk Apetite"
+                          type="text"
+                          icon={FaExclamationTriangle}
+                          name="Risk_Apetite"
+                          value={values.Risk_Apetite}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          placeholder="Enter risk apetite"
+                        />
+                        {touched.Risk_Apetite && errors.Risk_Apetite && (
+                          <p className="text-red-400 text-sm">
+                            {errors.Risk_Apetite}
+                          </p>
+                        )}
+                      </div>
+                      <div className="flex justify-end gap-2 mt-4 border-t pt-4">
+                        <button
+                          onClick={() => setIsModalOpen(false)}
+                          type="button"
+                          className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          type="submit"
+                          className="px-4 py-2 bg-[#123e5c] text-white rounded-md hover:bg-sky-800"
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </form>
                   </div>
-                  <form onSubmit={handleSubmit} className="p-10 space-y-5">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <InputField
-                        label="Company Name"
-                        icon={FaBuilding}
-                        name="company_name"
-                        value={values.company_name}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        placeholder="Enter your company name"
-                      />
-                      {touched.company_name && errors.company_name && (
-                        <p className="text-red-400 text-sm">
-                          {errors.company_name}
-                        </p>
-                      )}
-
-                      <InputField
-                        label="Website URL"
-                        icon={FaGlobe}
-                        name="Website_url"
-                        value={values.Website_url}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        placeholder="Enter your website url"
-                      />
-                      {touched.Website_url && errors.Website_url && (
-                        <p className="text-red-400 text-sm">
-                          {errors.Website_url}
-                        </p>
-                      )}
-
-                      <InputField
-                        label="Employee Count"
-                        icon={FaUsers}
-                        name="Employee_count"
-                        value={values.Employee_count}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        placeholder="Enter Employee Count"
-                      />
-                      {touched.Employee_count && errors.Employee_count && (
-                        <p className="text-red-400 text-sm">
-                          {errors.Employee_count}
-                        </p>
-                      )}
-
-                      <InputField
-                        label="Country"
-                        icon={FaCompass}
-                        name="Country"
-                        value={values.Country}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        placeholder="Enter Country"
-                      />
-                      {touched.Country && errors.Country && (
-                        <p className="text-red-400 text-sm">
-                          {errors.Country}
-                        </p>
-                      )}
-
-                      <InputField
-                        label="State"
-                        icon={FaMapMarkedAlt}
-                        name="State"
-                        value={values.State}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        placeholder="Enter State"
-                      />
-                      {touched.State && errors.State && (
-                        <p className="text-red-400 text-sm">{errors.State}</p>
-                      )}
-
-                      <InputField
-                        label="City"
-                        icon={FaCity}
-                        name="City"
-                        value={values.City}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        placeholder="Enter City"
-                      />
-                      {touched.City && errors.City && (
-                        <p className="text-red-400 text-sm">{errors.City}</p>
-                      )}
-
-                      <InputField
-                        label="Industry"
-                        icon={FaIndustry}
-                        name="Industry"
-                        value={values.Industry}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        placeholder="Enter Industry"
-                      />
-                      {touched.Industry && errors.Industry && (
-                        <p className="text-red-400 text-sm">
-                          {errors.Industry}
-                        </p>
-                      )}
-
-                      <InputField
-                        label="Risk Appetite"
-                        icon={FaExclamationTriangle}
-                        name="Risk_Apetite"
-                        value={values.Risk_Apetite}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        placeholder="Enter Risk Appetite"
-                      />
-                      {touched.Risk_Apetite && errors.Risk_Apetite && (
-                        <p className="text-red-400 text-sm">
-                          {errors.Risk_Apetite}
-                        </p>
-                      )}
-                    </div>
-                    <div className="flex justify-end gap-2 mt-4 border-t pt-4">
-                      <button
-                        onClick={() => setIsModalOpen(false)}
-                        type="button"
-                        className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        type="submit"
-                        className="px-4 py-2 bg-[#123e5c] text-white rounded-md hover:bg-sky-800"
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </form>
                 </div>
-              </div>
+             
             )}
 
             <div className="mt-6 bg-[#0c1120] overflow-x-auto text-sm text-white">
@@ -286,7 +308,7 @@ export default function AllCustomer() {
               ) : (
                 <>
                   <table className="min-w-full divide-y divide-gray-700">
-                    <thead className="bg-gradient-to-br from-[#0a0f39] via-[#080d27] to-[#050b20]">
+                    <thead className="bg-gradient-to-br from-[#0a0f39] via-[#080d27] to-[#050b20]  whitespace-nowrap">
                       <tr>
                         <th className="px-4 py-3 text-left">Company Name</th>
                         <th className="px-4 py-3 text-left">Website URL</th>
@@ -300,7 +322,7 @@ export default function AllCustomer() {
                       </tr>
                     </thead>
                     <tbody className="text-sm text-gray-300">
-                      {tenants.map((tenant, index) => (
+                      {tenants?.map((tenant, index) => (
                         <tr
                           key={index}
                           className="border-b border-gray-700 hover:bg-[#1e1e1e] transition"
@@ -333,35 +355,14 @@ export default function AllCustomer() {
                     </tbody>
                   </table>
 
-                  {/* Pagination Controls */}
-                  <div className="flex justify-between items-center px-4 py-3 text-xs border-t border-gray-700">
-                    <div>
-                      Showing {tenants.length} results
-                    </div>
-                    <div className="space-x-2">
-                      <button
-                        className="px-2 py-1 bg-gray-700 rounded text-white hover:bg-gray-600"
-                        disabled={page === 1}
-                        onClick={() => setPage((p) => Math.max(p - 1, 1))}
-                      >
-                        Previous
-                      </button>
-                      <span className="px-3 py-1 bg-blue-600 rounded text-white">
-                        Page {page}
-                      </span>
-                      <button
-                        className="px-2 py-1 bg-gray-700 rounded text-white hover:bg-gray-600"
-                        disabled={tenants.length < 10}
-                        onClick={() => setPage((p) => p + 1)}
-                      >
-                        Next
-                      </button>
-                    </div>
-                  </div>
+
                 </>
               )}
             </div>
+
+              <Pagination page={page} setPage={setPage} hasNextPage={tenants.length === 10}/>
           </div>
+        </div>
         </div>
       )}
 

@@ -7,35 +7,37 @@ import { AxiosHandler } from "@/config/AxiosConfig";
 import {
   useAllEmployeeContext,
   useAuthContext,
-  useScheduleAssessmentContext,
+
 } from "@/context";
-import { BaseValidationSchema } from "@/Validation/AuthValidation";
+import { BaseValidationSchema, EditUser } from "@/Validation/AuthValidation";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { FaEnvelope, FaLock, FaPhone, FaUser } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import { RiDeleteBinFill, RiEdit2Line } from "react-icons/ri";
+import Pagination from "./Pagination";
 
 const AllEmployee = () => {
   const {
-    loading,
     VerifyEmployee,
     DeleteUser,
-    page,
-    runner,
+   
   } = useAllEmployeeContext();
-  const { token } = useAuthContext();
+
+  const {  token  } =
+    useAuthContext();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editable, setEdiTable] = useState(null);
-  const [EmpData, setEmpData] = useState([]);
-  const [TententData, setTententData] = useState([]);
+  const [EmpData, setEmpData,] = useState([]);
+  const [TenantData, setTenantData] = useState([]);
   const [RoleAllData, setRoleAllData] = useState([]);
-
-  const formik = useFormik({
-    initialValues:
-      editable || {
+  const [page, setPage] = useState(1)
+  const [isloading, setloading] = useState(false)
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit, resetForm } =
+    useFormik({
+      initialValues: editable || {
         fname: "",
         lname: "",
         phone: "",
@@ -43,20 +45,28 @@ const AllEmployee = () => {
         password: "",
         tenant: "",
         role: "",
+
       },
-    validationSchema: BaseValidationSchema,
-    enableReinitialize: true,
-    onSubmit: async (v) => {
-      try {
-        await AxiosHandler.post(`/auth/create`, v);
-        setIsModalOpen(false);
-        GetUsers();
-        formik.resetForm();
-      } catch (err) {
-        console.error(err);
-      }
-    },
-  });
+      validationSchema: editable ? EditUser : BaseValidationSchema,
+      enableReinitialize: true,
+      onSubmit: async (value) => {
+        setloading(true)
+        try {
+          if (editable) {
+             await AxiosHandler.put(`/auth/update-user/${value._id}`, value);
+          } else {
+             await AxiosHandler.post(`/auth/create`, value);
+          }
+          setIsModalOpen(false);
+          GetUsers()
+          resetForm()
+        } catch (error) {
+          console.error(error);
+        }finally{
+          setloading(false)
+        }
+      },
+    });
 
   const handleChangeStatus = (type, id) => {
     if (
@@ -68,335 +78,352 @@ const AllEmployee = () => {
     }
   };
 
-  const GetUsers = async () => {
+  const GetUsers = async (page=1) => {
+    setloading(true)
     try {
-      const res = await AxiosHandler.get("/auth/all-users");
-      setEmpData(res?.data?.data || []);
-    } catch (err) {
-      console.error(err);
+      const res = await AxiosHandler.get(`/auth/all-users?page=${page}&limit=2`);
+      setEmpData(res?.data.data);
+
+    } catch (error) {
+      console.error(error);
+
+    }finally{
+      setloading(false)
     }
   };
 
   const GetAllTenentData = async () => {
     try {
       const res = await AxiosHandler.get("/tenant/get-all");
-      setTententData(res?.data?.data || []);
-    } catch (err) {
-      console.error(err);
+      setTenantData(res?.data?.data);
+
+    } catch (error) {
+      console.error(error);
+
     }
   };
 
   const GetAllRoleData = async () => {
     try {
       const res = await AxiosHandler.get("/role/get-all");
-      setRoleAllData(res?.data?.data || []);
-    } catch (err) {
-      console.error(err);
+      setRoleAllData(res?.data?.data);
+
+    } catch (error) {
+      console.error("Error fetching roles:", error);
+      setApiError("Failed to fetch roles. Please try again.");
     }
   };
 
+
+
   useEffect(() => {
     if (token) {
+      GetUsers(page);
       GetAllTenentData();
       GetAllRoleData();
-      GetUsers();
     }
-  }, [token, page, runner]);
+  }, [token, page]);
+
 
   return (
     <>
-      {loading ? (
+      { isloading ? (
         <Loader />
       ) : (
-        <div className="p-6 bg-[#0c1120] min-h-screen text-white">
-          <div className="flex justify-end mb-4">
-            <button
-              onClick={() => {
-                setIsModalOpen(true);
-                setEdiTable(null);
-              }}
-              className="px-4 py-2 bg-gradient-to-tr from-[#111] to-[#555] rounded-md hover:from-[#222] hover:to-[#666] shadow flex items-center"
-            >
-              <BiPlus className="mr-1" />
-              Add User
-            </button>
-          </div>
-
-          {isModalOpen && (
-            <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-              <div className="bg-[#1e1e1e] rounded-lg shadow-lg w-full max-w-2xl overflow-auto">
-                <div className="flex justify-between items-center px-6 py-4 border-b border-gray-700">
-                  <h2 className="text-lg font-semibold">
-                    {editable ? "Edit User" : "Add User"}
-                  </h2>
-                  <button onClick={() => setIsModalOpen(false)}>
-                    <MdClose className="text-gray-300 hover:text-white text-xl" />
-                  </button>
-                </div>
-                <form
-                  onSubmit={formik.handleSubmit}
-                  className="px-6 py-4 space-y-6"
-                >
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <InputField
-                      name="fname"
-                      label="First Name"
-                      type="text"
-                      icon={FaUser}
-                      value={formik.values.fname}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                    />
-                    {formik.touched.fname && formik.errors.fname && (
-                      <p className="text-red-400 text-sm">
-                        {formik.errors.fname}
-                      </p>
-                    )}
-
-                    <InputField
-                      name="lname"
-                      label="Last Name"
-                      type="text"
-                      icon={FaUser}
-                      value={formik.values.lname}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                    />
-                    {formik.touched.lname && formik.errors.lname && (
-                      <p className="text-red-400 text-sm">
-                        {formik.errors.lname}
-                      </p>
-                    )}
-
-                    <InputField
-                      name="email"
-                      label="Email Address"
-                      type="email"
-                      icon={FaEnvelope}
-                      value={formik.values.email}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                    />
-                    {formik.touched.email && formik.errors.email && (
-                      <p className="text-red-400 text-sm">
-                        {formik.errors.email}
-                      </p>
-                    )}
-
-                    <InputField
-                      name="phone"
-                      label="Phone Number"
-                      type="text"
-                      icon={FaPhone}
-                      value={formik.values.phone}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                    />
-                    {formik.touched.phone && formik.errors.phone && (
-                      <p className="text-red-400 text-sm">
-                        {formik.errors.phone}
-                      </p>
-                    )}
-
-                    <InputField
-                      name="password"
-                      label="Password"
-                      type="password"
-                      icon={FaLock}
-                      value={formik.values.password}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                    />
-                    {formik.touched.password && formik.errors.password && (
-                      <p className="text-red-400 text-sm">
-                        {formik.errors.password}
-                      </p>
-                    )}
-
-                    <div>
-                      <label className="text-sm font-medium mb-1 block">
-                        Role
-                      </label>
-                      <select
-                        name="role"
-                        value={formik.values.role}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        className="w-full bg-[#2a2a2a] border border-gray-600 rounded px-3 py-2 text-white"
-                      >
-                        <option value="" disabled>
-                          Select role
-                        </option>
-                        {RoleAllData.map((r) => (
-                          <option key={r._id} value={r._id}>
-                            {r.role}
-                          </option>
-                        ))}
-                      </select>
-                      {formik.touched.role && formik.errors.role && (
-                        <p className="text-red-400 text-sm">
-                          {formik.errors.role}
-                        </p>
-                      )}
-                    </div>
-
-                    <div>
-                      <label className="text-sm font-medium mb-1 block">
-                        Tenant
-                      </label>
-                      <select
-                        name="tenant"
-                        value={formik.values.tenant}
-                        onBlur={formik.handleBlur}
-                        onChange={formik.handleChange}
-                        className="w-full bg-[#2a2a2a] border border-gray-600 rounded px-3 py-2 text-white"
-                      >
-                        <option value="" disabled>
-                          Select tenant
-                        </option>
-                        {TententData.map((t) => (
-                          <option key={t._id} value={t._id}>
-                            {t.company_name}
-                          </option>
-                        ))}
-                      </select>
-                      {formik.touched.tenant && formik.errors.tenant && (
-                        <p className="text-red-400 text-sm">
-                          {formik.errors.tenant}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="flex justify-end gap-3 border-t border-gray-700 pt-4">
-                    <button
-                      type="button"
-                      onClick={() => setIsModalOpen(false)}
-                      className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded"
-                    >
-                      Save
-                    </button>
-                  </div>
-                </form>
-              </div>
+        <div className=" p-2 bg-[#2a2c2f] h-screen shadow-lg ">
+          <div className="flex justify-between items-center">
+            <div className="flex w-full justify-end py-4">
+              <button
+                onClick={() => { setIsModalOpen(true); setEdiTable(null) }}
+                className="px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 flex flex-row"
+              >
+                <BiPlus className="h-6 w-6 mr-1" />
+                Add User
+              </button>
             </div>
-          )}
 
-          <div className="overflow-x-auto rounded-md shadow-xl bg-[#0c1120]">
-            <table className="min-w-full divide-y divide-gray-700 text-sm">
-              <thead className="bg-gradient-to-bl from-[#0a0f39] via-[#080d27] to-[#050b20] text-white">
-                <tr>
-                  <th className="px-6 py-3 text-left">S No.</th>
-                  <th className="px-6 py-3 text-left">First Name</th>
-                  <th className="px-6 py-3 text-left">Last Name</th>
-                  <th className="px-6 py-3 text-left">Email</th>
-                  <th className="px-6 py-3 text-left">Phone</th>
-                  <th className="px-6 py-3 text-left">Approval</th>
-                  <th className="px-6 py-3 text-left">Status</th>
-                  <th className="px-6 py-3 text-left">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="text-gray-300">
-                {EmpData.length > 0 ? (
-                  EmpData.map((user, i) => (
-                    <tr
-                      key={user._id}
-                      className="border-b border-gray-700 hover:bg-[#1e1e1e] transition"
+            {isModalOpen && (
+              <div className="fixed inset-0 bg-input bg-opacity-50 flex items-center justify-center p-4 z-10">
+                <div className="bg-background rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+                  <div className="flex justify-between items-center border-b p-4 bg-table">
+                    <h2 className="text-lg font-semibold text-gray-200">
+                      {editable ? "Edit User" : "Add User"}
+                    </h2>
+                    <button
+                      onClick={() => setIsModalOpen(false)}
+                      className="text-gray-100 hover:text-gray-200"
                     >
-                      <td className="px-6 py-3">{i + 1}</td>
-                      <td className="px-6 py-3">{user.fname}</td>
-                      <td className="px-6 py-3">{user.lname}</td>
-                      <td className="px-6 py-3">{user.email}</td>
-                      <td className="px-6 py-3">{user.phone}</td>
-                      <td className="px-6 py-3">
-                        {user.employee_approve ? (
-                          <span className="bg-green-600 text-white px-3 py-1 rounded text-xs">
-                            Approved
-                          </span>
-                        ) : (
-                          <button
-                            onClick={() => {
-                              if (
-                                window.confirm(
-                                  "Verify this employee?"
-                                )
-                              ) {
-                                VerifyEmployee(user._id);
-                              }
-                            }}
-                            className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs"
-                          >
-                            Verify
-                          </button>
+                      <MdClose className="h-6 w-6" />
+                    </button>
+                  </div>
+                  <div className="p-10">
+
+                    <form
+                      onSubmit={handleSubmit}
+                      className="space-y-5 w-full flex flex-col"
+                    >
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <InputField
+                          label="First Name"
+                          type="text"
+                          showPassword={false}
+                          icon={FaUser}
+                          value={values.fname}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          placeholder="Enter your First Name"
+                          name="fname"
+                        />
+                        {touched.fname && errors.fname && (
+                          <p className="text-red-400 text-sm">
+                            {errors.fname}
+                          </p>
                         )}
-                      </td>
-                      <td className="px-6 py-3">
-                        {user.deactivate ? (
-                          <button
-                            onClick={() =>
-                              handleChangeStatus("deactivate", user._id)
-                            }
-                            className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs"
-                          >
-                            Activate
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() =>
-                              handleChangeStatus("activate", user._id)
-                            }
-                            className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs"
-                          >
-                            Deactivate
-                          </button>
+                        <InputField
+                          label="Last Name"
+                          type="text"
+                          showPassword={false}
+                          icon={FaUser}
+                          value={values.lname}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          placeholder="Enter your Last Name"
+                          name="lname"
+                        />
+                        {touched.lname && errors.lname && (
+                          <p className="text-red-400 text-sm">
+                            {errors.lname}
+                          </p>
                         )}
-                      </td>
-                      <td className="px-6 py-3 flex gap-3 text-white">
+                        <InputField
+                          label="Email Address"
+                          type="email"
+                          showPassword={false}
+                          icon={FaEnvelope}
+                          value={values.email}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          placeholder="Enter your Email Address"
+                          name="email"
+                        />
+                        {touched.email && errors.email && (
+                          <p className="text-red-400 text-sm">{errors.email}</p>
+                        )}
+
+                        <div className="w-full">
+                          <label className="text-white "> Role</label>
+                          <select
+                            className="w-full bg-input border py-2 rounded-lg text-white px-2 border-gray-600"
+                            name="role"
+                            value={values.role}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                          >
+                            <option selected disabled value="">
+                              {" "}
+                              Select role
+                            </option>
+                            {RoleAllData?.map((ele) => (
+                              <option key={ele._id} value={ele._id}>
+                                {ele?.role}
+                              </option>
+                            ))}
+                          </select>
+                          {touched.role && errors.role && (
+                            <p className="text-red-500">{errors.role}</p>
+                          )}
+                        </div>
+
+                        <div>
+                          <label
+                            htmlFor="tenant"
+                            className="block text-sm text-white font-medium mb-1"
+                          >
+                            Tenant
+                          </label>
+                          <select
+                            id="tenant"
+                            name="tenant"
+                            value={values.tenant}
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            className="bg-input w-full py-2 rounded-lg px-3 text-white"
+                          >
+                            <option selected disabled value="">
+                              {" "}
+                              Select tenant
+                            </option>
+                            {TenantData?.map((item) => (
+                              <option key={item._id} value={item._id}>
+                                {item?.company_name}
+                              </option>
+                            ))}
+                          </select>
+                          {touched.tenant && errors.tenant && (
+                            <p className="text-red-500">{errors.tenant}</p>
+                          )}
+                        </div>
+
+                        <InputField
+                          label="Phone Number"
+                          type="text"
+                          showPassword={false}
+                          icon={FaPhone}
+                          value={values.phone}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          placeholder="Enter your Phone Number"
+                          name="phone"
+                        />
+                        {touched.phone && errors.phone && (
+                          <p className="text-red-400 text-sm">{errors.phone}</p>
+                        )}
+                        {!editable && (
+                          <>
+                            <InputField
+                              label="Password"
+                              type="password"
+                              showPassword={true}
+                              icon={FaLock}
+                              value={values.password}
+                              onBlur={handleBlur}
+                              onChange={handleChange}
+                              placeholder="Enter your Password"
+                              name="password"
+                            />
+                            {touched.password && errors.password && (
+                              <p className="text-red-400 text-sm">{errors.password}</p>
+                            )}
+                          </>
+                        )}
+
+                      </div>
+                      <div className="flex justify-end gap-2 border-t pt-4">
                         <button
-                          onClick={() => {
-                            if (
-                              window.confirm(
-                                "Delete this user?"
-                              )
-                            ) {
-                              DeleteUser(user._id);
-                            }
-                          }}
-                          title="Delete"
-                          className="hover:text-red-400"
+                          type="button"
+                          onClick={() => setIsModalOpen(false)}
+                          className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
                         >
-                          <RiDeleteBinFill className="h-5 w-5" />
+                          Cancel
                         </button>
                         <button
-                          onClick={() => {
-                            setEdiTable(user);
-                            setIsModalOpen(true);
-                          }}
-                          title="Edit"
-                          className="hover:text-blue-400"
+                          type="submit"
+                          className="px-4 py-2 bg-[#015289] text-white rounded-md hover:bg-blue-700"
                         >
-                          <RiEdit2Line className="h-5 w-5" />
+                          Save
                         </button>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan={8} className="py-6 text-center text-gray-500">
-                      No users found.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-            {EmpData.length < 1 && <NoDataFound />}
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
+
+          {EmpData?.length < 1 ? (
+            <NoDataFound />
+          ) : (
+                <div className="overflow-x-auto rounded-lg shadow-lg border border-gray-700">
+                  <table className="min-w-full table-auto text-sm text-left text-gray-300">
+                    <thead className="bg-gradient-to-r from-[#1f2937] to-[#374151] text-white uppercase whitespace-nowrap tracking-wider">
+                      <tr>
+                        {[
+                          "S No.",
+                          "First Name",
+                          "Last Name",
+                          "Email",
+                          "Phone",
+                          "Role",
+                          "Tenant",
+                          "Approval Status",
+                          "Status",
+                          "Actions",
+                        ].map((header) => (
+                          <th
+                            key={header}
+                            className="px-4 py-3 border-b border-gray-600 font-medium"
+                          >
+                            {header}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody className="bg-[#1e1e1e] divide-y divide-gray-700">
+                      {EmpData?.map((user, index) => (
+                        <tr
+                          key={user._id}
+                          className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
+                        >
+                          <td className="px-4 py-3">{index + 1}</td>
+                          <td className="px-4 py-3 capitalize">{user.fname}</td>
+                          <td className="px-4 py-3 capitalize">{user.lname}</td>
+                          <td className="px-4 py-3">{user.email}</td>
+                          <td className="px-4 py-3">{user.phone}</td>
+                          <td className="px-4 py-3">{user.role?.role || "—"}</td>
+                          <td className="px-4 py-3">{user.tenant?.company_name || "—"}</td>
+                          <td className="px-4 py-3">
+                            {user.employee_approve ? (
+                              <span className="inline-block px-3 py-1 text-xs font-semibold text-green-500 bg-green-900/30 rounded-full">
+                                Approved
+                              </span>
+                            ) : (
+                              <button
+                                onClick={() =>
+                                  window.confirm("Verify this employee?") &&
+                                  VerifyEmployee(user._id)
+                                }
+                                className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs"
+                              >
+                                Verify
+                              </button>
+                            )}
+                          </td>
+                          <td className="px-4 py-3">
+                            {user.deactivate ? (
+                              <button
+                                onClick={() => handleChangeStatus("deactivate", user._id)}
+                                className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs"
+                              >
+                                Activate
+                              </button>
+                            ) : (
+                              <button
+                                onClick={() => handleChangeStatus("activate", user._id)}
+                                className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs"
+                              >
+                                Deactivate
+                              </button>
+                            )}
+                          </td>
+                          <td className="px-4 py-3 flex gap-2">
+                            <button
+                              onClick={() =>
+                                window.confirm("Delete this user?") && DeleteUser(user._id)
+                              }
+                              title="Delete"
+                              className="text-red-500 hover:text-red-700"
+                            >
+                              <RiDeleteBinFill className="w-5 h-5" />
+                            </button>
+                            <button
+                              onClick={() => {
+                                setEdiTable(user);
+                                setIsModalOpen(true);
+                              }}
+                              title="Edit"
+                              className="text-blue-500 hover:text-blue-700"
+                            >
+                              <RiEdit2Line className="w-5 h-5" />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+          
+          )}
+          <Pagination page={page} setPage={setPage} hasNextPage={EmpData.length === 2} /> 
         </div>
       )}
     </>
