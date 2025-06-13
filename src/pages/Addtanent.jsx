@@ -285,7 +285,7 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                             </button>
                             <button
                                 type="submit"
-                                className="px-7 py-2 rounded-md bg-gradient-to-tr from-sky-400/50 to-sky-600/30 text-white hover:scale-105 transition duration-200"
+                                className="px-7 py-2 rounded-md bg-gradient-to-tr from-sky-400/20 to-sky-600/60 text-white hover:scale-105 transition duration-200"
                             >
                                 {editTable ? 'Update Tenant' : 'Submit'}
                             </button>
