@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
 import { IoClose } from 'react-icons/io5';
@@ -51,16 +52,16 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
 
 
     return (
-        <div className={`absolute top-0 left-0 z-50 min-h-screen bg-zinc-800 w-full text-white ${isModalOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}  transition-opacity duration-500 ease-in-out`}>
+        <div className={`absolute top-0 left-0 z-50 min-h-screen bg-gradient-custom w-full text-white ${isModalOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}  transition-opacity duration-500 ease-in-out`}>
             <div className="w-full flex justify-between items-center py-6 px-10">
                 <div className="text-2xl text-center w-full">Company Profile</div>
-                <button onClick={() => setIsModalOpen(false)} className="text-3xl hover:text-red-400 transition duration-300">
+                <button onClick={() => { setIsModalOpen(false); formik.resetForm(); }} className="text-3xl hover:text-red-400 transition duration-300">
                     <IoClose />
                 </button>
             </div>
 
             <div className="flex justify-center px-10 ">
-                <div className="flex-1 px-8 py-10 rounded-md shadow-md max-w-5xl bg-zinc-900">
+                <div className="flex-1 px-8 py-10 rounded-md shadow-md max-w-5xl bg-[#2b273380]">
                     <form onSubmit={formik.handleSubmit} className="space-y-12">
 
                         <div>
@@ -119,7 +120,7 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                                 <input
                                     id="Employee_count"
                                     name="Employee_count"
-                                    type="number"
+                                    type="text"
                                     value={formik.values.Employee_count}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
@@ -248,7 +249,7 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                                         setRiskScore(value);
                                         formik.setFieldValue('Risk_Apetite', value.toString());
                                     }}
-                                    className="w-full h-2 bg-gradient-to-r from-green-500 via-yellow-400 to-red-500 rounded-full appearance-none"
+                                    className="w-full h-2 bg-gradient-to-r from-green-500 via-yellow-400 to-red-500 rounded-full cursor-pointer appearance-none"
                                 />
 
                                 <div
@@ -277,14 +278,14 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                         <div className="flex justify-end space-x-4 pt-8">
                             <button
                                 type="button"
-                                onClick={() => setIsModalOpen(false)}
+                                onClick={() => { setIsModalOpen(false); formik.resetForm(); }}
                                 className="px-6 py-2 rounded-md border border-gray-500 text-white hover:bg-gray-700 transition duration-200"
                             >
                                 Cancel
                             </button>
                             <button
                                 type="submit"
-                                className="px-7 py-2 rounded-md bg-gradient-to-tr from-sky-400 to-sky-600 text-white hover:scale-105 transition duration-200"
+                                className="px-7 py-2 rounded-md bg-gradient-to-tr from-sky-400/50 to-sky-600/30 text-white hover:scale-105 transition duration-200"
                             >
                                 {editTable ? 'Update Tenant' : 'Submit'}
                             </button>
