@@ -7,10 +7,12 @@ import { IoIosLogOut } from "react-icons/io";
 import toast from "react-hot-toast";
 import { products } from "@/constants/static.data";
 
-function Header({ setShowMenu }) {
+function Header({ setShowMenu,showSidebar }) {
   const { Logout, authenticate, getDataFromSession } = useAuthContext();
 
   const [isOpen, setIsOpen] = useState(false);
+  
+
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -58,15 +60,15 @@ function Header({ setShowMenu }) {
   return (
     // <div className="flex h-screen fixed  overflow-y-auto
     //  md:w-[28%] lg:w-[25%] xl:w-[25%] 2xl:w-[20%] ">
-    <div className=" flex flex-col text-white  h-[100%] hide-scrollbar bg-[#1f2937]  overflow-y-auto ">
-      <Link className="flex items-center my-2 ml-3">
+    <div className=" flex flex-col text-white  h-[100%] hide-scrollbar bg-[#1f2937]  overflow-y-auto transition-all duration-500 ">
+      <Link className={` ${showSidebar  ? "" : "block lg:hidden"} flex items-center my-2 ml-3`}>
         <div className="flex gap-2 pt-2 items-center justify-center  h-20  ">
           <img src="/logo.png" alt="" className=" h-7" />
         </div>
       </Link>
       <hr className="border-gray-100 mx-8" />
 
-      <nav className="flex-1 mx-2 py-5 space-y-1">
+      <nav className={`flex-1 mx-2 ${showSidebar ? "py-5" : "py-14"} space-y-1`}>
         {navList?.map((data) => (
           <NavLink
             key={data.route}
@@ -79,13 +81,13 @@ function Header({ setShowMenu }) {
             }
           >
             <data.icon className="text-white w-5 h-5" />
-            <p className="text-sm font-semibold text-white">{data.title}</p>
+            {<p className={`text-sm font-semibold text-white ${showSidebar ? "" : "block lg:hidden"}`}>{data.title}</p>}
           </NavLink>
         ))}
       </nav>
       <hr className="border-gray-100 mx-8" />
-      <div className=" h-full p-2 flex justify-start items-end ">
-        <div className="relative p-5 flex ">
+      <div className={`h-full p-2 flex justify-start items-end  ${showSidebar  ? "" : "block lg:hidden"}`}>
+         <div className="relative p-5 flex ">
           <button
             onClick={handleLogout}
             className="flex 
