@@ -34,7 +34,7 @@ export default function UpdateProfileModal() {
 
 
     return (
-        <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <div className="min-h-screen flex items-center justify-center p-4">
             {/* Trigger Button */}
 
 
@@ -45,7 +45,7 @@ export default function UpdateProfileModal() {
 
                 {/* Modal Container */}
                 <div className="flex min-h-full items-center justify-center p-4">
-                    <div className="relative bg-background text-white rounded-xl shadow-xl w-full max-w-md transform transition-all">
+                    <div className="relative bg-gradient-custom text-white rounded-xl shadow-xl w-full max-w-md transform transition-all">
                         {/* Header */}
                         <div className="flex items-center justify-between p-6 border-b border-gray-200">
                             <h2 className="text-xl font-semibold ">Update Profile</h2>
@@ -144,7 +144,7 @@ export default function UpdateProfileModal() {
                                 <button
                                     type="button"
                                     onClick={()=>setUpdateProfileModal(false)}
-                                    className="flex-1 px-4 py-2 border border-gray-300 text-gray-400 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                                    className="flex-1 px-4 py-2 border border-gray-500 text-gray-400 rounded-lg hover:bg-gray-900 transition-colors font-medium"
                                 >
                                     Cancel
                                 </button>
@@ -152,14 +152,14 @@ export default function UpdateProfileModal() {
                                 <button
                                     type="button"
                                     onClick={handleSubmit}
-                                    className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                                    className="flex-1 px-4 py-2 bg-blue-800 text-white rounded-lg hover:bg-blue-900 transition-colors font-medium"
                                 >
                                     Save Changes
                                 </button> : 
                                  <button
                                     type="button"
                                     onClick={handleEmailVerification}
-                                    className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                                    className="flex-1 px-4 py-2 bg-blue-800 text-white rounded-lg hover:bg-blue-900 transition-colors font-medium"
                                 >
                                     verify otp
                                 </button>}
