@@ -9,7 +9,8 @@ export default {
         table: "#050b20",
         tablecolor : "#0c1120",
         button: "#3533cc",
-        cards:"#0a0f39"
+        cards:"#0a0f39",
+        light:"#4A4A4A"
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],

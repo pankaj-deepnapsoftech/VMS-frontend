@@ -93,7 +93,7 @@ transition duration-300 sm:w-[40%] md:w-[30%] lg:w-[25%] xl:w-[20%] 2xl:w-[15%] 
               }
             />
           </aside>}
-          <div className={`ml-auto mb-6  ${!AllowedPath(location.pathname.split("/")[1]) ? "lg:w-[75%] xl:w-[80%] 2xl:w-[85%]" : "w-full"}   h-screen bg-gradient-custom`}>
+          <div className={`ml-auto mb-6  ${!AllowedPath(location.pathname.split("/")[1]) ? "lg:w-[75%] xl:w-[80%] 2xl:w-[85%]" : "w-full"}   h-screen bg-gradient-custom rounded-lg`}>
             <div className="bg-gradient-to-t from-[#1a1c1e] to-[#212325]  border-gray-200">
               <div className="flex items-center justify-between px-2 sm:px-4 py-2 bg-[#1f2937]">
                 <div className="w-full flex items-center justify-between pr-5 ">
