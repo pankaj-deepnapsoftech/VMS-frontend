@@ -63,8 +63,8 @@ const SignIn = () => {
         className="flex-[3] text-white relative bg-[url('/bgleft.png')] bg-cover hidden lg:block"
        
       >
-        <img src="/logo.png" className="h-10 my-10 px-10" />
-        <h2 className="text-5xl font-bold ml-10">Products</h2>
+      <img src="/logo.png" className="h-10 my-10 px-10" />
+        <h2 className="text-5xl font-bold ml-10 pt-24">Products</h2>
         <p className="ml-10 pb-5 text-gray-500">
           Explore our powerful security products that simplify complex threats and protect what matters most.
         </p>
@@ -74,7 +74,7 @@ const SignIn = () => {
         />
 
 
-        <div className="relative space-y-10">
+        <div className="relative space-y-3 ">
           {cards.map((card, index) => {
             const isActive = currentAnimatingCardIndex === index;
 
