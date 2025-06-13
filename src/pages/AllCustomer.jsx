@@ -2,36 +2,17 @@
 /* eslint-disable no-undef */
 
 import AllowedModal from "@/components/modal/AllowedModal";
-import NoDataFound from "@/components/NoDataFound";
-import InputField from "@/components/InputField";
 import {
-  useAllCustomerContext,
   useAllEmployeeContext,
   useAuthContext,
 } from "@/context";
 import { useEffect, useState } from "react";
-import { IoShieldCheckmarkSharp } from "react-icons/io5";
-import { MdClose } from "react-icons/md";
 import { BiPlus } from "react-icons/bi";
 import {
-  FaUser,
-  FaEnvelope,
-  FaPhone,
-  FaLock,
-  FaCompass,
   FaEdit,
   FaTrash,
-  FaGlobe,
-  FaBuilding,
-  FaUsers,
-  FaMapMarkedAlt,
-  FaCity,
-  FaIndustry,
-  FaExclamationTriangle,
 } from "react-icons/fa";
-import { useFormik } from "formik";
 import { AxiosHandler } from "@/config/AxiosConfig";
-import { tenantValidator } from "@/Validation/TenantsValidations";
 import Pagination from "./Pagination";
 import Loader from "@/components/Loader/Loader";
 import Addtanent from "./Addtanent";

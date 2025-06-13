@@ -1,16 +1,18 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
 
 import { tenantValidator } from '@/Validation/TenantsValidations';
 import { AxiosHandler } from '@/config/AxiosConfig';
+import axios from 'axios';
 
 
 
 const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
     const [riskScore, setRiskScore] = useState(600);
+    const [countryData, setCountryData] = useState([]);
+
 
     const getRiskLevel = (score) => {
         if (score < 500) return 'Low';
@@ -49,9 +51,21 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
     });
 
 
+    const getCountryData = async () => {
+        try {
+            const res = await axios.get("https://countriesnow.space/api/v0.1/countries/states")
+            setCountryData(res.data.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        getCountryData()
+    }, [])
 
     return (
-        <div className={`absolute top-0 left-0 z-50 min-h-screen bg-zinc-800 w-full text-white ${isModalOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}  transition-opacity duration-500 ease-in-out`}>
+        <div className={`absolute top-0 left-0 z-50 min-h-screen bg-gradient-custom w-full text-white ${isModalOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}  transition-opacity duration-500 ease-in-out`}>
             <div className="w-full flex justify-between items-center py-6 px-10">
                 <div className="text-2xl text-center w-full">Company Profile</div>
                 <button onClick={() => setIsModalOpen(false)} className="text-3xl hover:text-red-400 transition duration-300">
@@ -84,7 +98,7 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                                     value={formik.values.company_name}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
-                                
+
                                     className="w-full bg-zinc-700 text-gray-200 placeholder-gray-500 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
                                 />
                                 {formik.touched.company_name && formik.errors.company_name && (
@@ -104,7 +118,7 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                                     value={formik.values.Website_url}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
-                                  
+
                                     className="w-full bg-zinc-700 text-gray-200 placeholder-gray-500 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
                                 />
                                 {formik.touched.Website_url && formik.errors.Website_url && (
@@ -123,7 +137,7 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                                     value={formik.values.Employee_count}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
-                                   
+
                                     className="w-full bg-zinc-700 text-gray-200 placeholder-gray-500 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
                                 />
                                 {formik.touched.Employee_count && formik.errors.Employee_count && (
@@ -142,7 +156,7 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                                     value={formik.values.Industry}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
-                                 
+
                                     className="w-full bg-zinc-700 text-gray-200 placeholder-gray-500 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
                                 />
                                 {formik.touched.Industry && formik.errors.Industry && (
@@ -155,7 +169,7 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                         <div className="pt-10">
                             <h2 className="text-xl font-semibold text-white mb-4">Headquarters</h2>
                             <p className="text-sm text-gray-400 mb-6">
-                                Choose your company's primary location. This helps us tailor regional threat models.
+                                Choose your company&apos;s primary location. This helps us tailor regional threat models.
                             </p>
 
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -164,16 +178,19 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                                     <label htmlFor="Country" className="block text-sm font-medium text-gray-300 mb-1">
                                         Country <span className="text-red-500">*</span>
                                     </label>
-                                    <input
-                                        id="Country"
-                                        name="Country"
+                                    <select name="Country"
                                         type="text"
                                         value={formik.values.Country}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
-                                       
+
                                         className="w-full bg-zinc-700 text-gray-200 placeholder-gray-500 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-                                    />
+                                    >
+                                        <option value="" selected disabled>select Country</option>
+                                        {countryData.map((item, index) => (
+                                            <option key={index} value={item.name} >{item.name}</option>
+                                        ))}
+                                    </select>
                                     {formik.touched.Country && formik.errors.Country && (
                                         <p className="text-red-500 text-xs mt-1">{formik.errors.Country}</p>
                                     )}
@@ -184,16 +201,21 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                                     <label htmlFor="State" className="block text-sm font-medium text-gray-300 mb-1">
                                         State <span className="text-red-500">*</span>
                                     </label>
-                                    <input
+                                    <select 
                                         id="State"
                                         name="State"
                                         type="text"
                                         value={formik.values.State}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
-                                       
+
                                         className="w-full bg-zinc-700 text-gray-200 placeholder-gray-500 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-                                    />
+                                    >
+                                        <option value="" selected disabled>select State</option>
+                                        {formik.values.Country && countryData.filter(item => item.name === formik.values.Country)[0].states.map((item, index) => (
+                                            <option key={index} value={item.name} >{item.name}</option>
+                                        ))}
+                                    </select>
                                     {formik.touched.State && formik.errors.State && (
                                         <p className="text-red-500 text-xs mt-1">{formik.errors.State}</p>
                                     )}
@@ -211,7 +233,7 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                                         value={formik.values.City}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
-                                      
+
                                         className="w-full bg-zinc-700 text-gray-200 placeholder-gray-500 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
                                     />
                                     {formik.touched.City && formik.errors.City && (
@@ -256,10 +278,10 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                                     style={{ left: `${(riskScore / 1000) * 100}%` }}
                                 >
                                     <p className="font-[500] whitespace-nowrap"> Risk Appetite for TruRisk </p>
-                                   <div className='flex gap-2 items-center'>
+                                    <div className='flex gap-2 items-center'>
                                         <p className="text-blue-600 text-lg font-bold">{riskScore}</p>
                                         <p>{getRiskLevel(riskScore)}</p>
-                                   </div>
+                                    </div>
                                 </div>
                             </div>
 
