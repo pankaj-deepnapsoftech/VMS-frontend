@@ -176,7 +176,7 @@ export const products = [
     allowedPath: [
       { title: "Users", route: "/all-users", icon: Users },
       { title: "Tenant", route: "/all-tenant", icon: UserCircle },
-      { title: "Third Party Config", route: "/third-party-config", icon: Settings },
+      { title: "Third Party Integrations", route: "/third-party-integrations", icon: Settings },
       { title: "Config Email", route: "/config-email", icon: Settings },
       { title: "Role", route: "/roles", icon: Users },
       { title: "Partners", route: "/partners", icon: Users },
