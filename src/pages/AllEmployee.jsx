@@ -130,12 +130,12 @@ const AllEmployee = () => {
       { isloading ? (
         <Loader />
       ) : (
-        <div className=" p-2 bg-[#2a2c2f] h-screen shadow-lg ">
+        <div className=" p-2 bg-gradient-custom h-screen shadow-lg ">
           <div className="flex justify-between items-center">
             <div className="flex w-full justify-end py-4">
               <button
                 onClick={() => { setIsModalOpen(true); setEdiTable(null) }}
-                className="px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white font-medium rounded-md hover:bg-blue-700 flex flex-row"
+                className="px-4 py-2 bg-[#101b3d] text-white font-medium rounded-md hover:bg-blue-900 flex flex-row"
               >
                 <BiPlus className="h-6 w-6 mr-1" />
                 Add User
@@ -144,7 +144,7 @@ const AllEmployee = () => {
 
             {isModalOpen && (
               <div className="fixed inset-0 bg-input bg-opacity-50 flex items-center justify-center p-4 z-10">
-                <div className="bg-background rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+                <div className="bg-gradient-custom rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
                   <div className="flex justify-between items-center border-b p-4 bg-table">
                     <h2 className="text-lg font-semibold text-gray-200">
                       {editable ? "Edit User" : "Add User"}
@@ -323,9 +323,9 @@ const AllEmployee = () => {
           {EmpData?.length < 1 ? (
             <NoDataFound />
           ) : (
-                <div className="overflow-x-auto rounded-lg shadow-lg border border-gray-700">
-                  <table className="min-w-full table-auto text-sm text-left text-gray-300">
-                    <thead className="bg-gradient-to-r from-[#1f2937] to-[#374151] text-white uppercase whitespace-nowrap tracking-wider">
+                <div className="overflow-x-auto shadow-lg bg-[#0c1120]">
+                  <table className="min-w-full table-auto text-sm text-left text-gray-300 divide-y divide-gray-700">
+                    <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider"> 
                       <tr>
                         {[
                           "S No.",
@@ -348,7 +348,7 @@ const AllEmployee = () => {
                         ))}
                       </tr>
                     </thead>
-                    <tbody className="bg-[#1e1e1e] divide-y divide-gray-700">
+                    <tbody className="divide-y divide-gray-700">
                       {EmpData?.map((user, index) => (
                         <tr
                           key={user._id}

@@ -100,7 +100,7 @@ const Roles = () => {
                 setModal(true);
                 setEditable(null);
               }}
-              className="px-5 py-2.5 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white font-semibold rounded-lg hover:bg-gray-800 transition-all duration-300 flex items-center gap-2 shadow-md"
+              className="px-5 py-2.5 bg-[#101b3d] text-white font-semibold rounded-lg hover:bg-blue-900 transition-all duration-300 flex items-center gap-2 shadow-md"
             >
               <BiPlus className="h-5 w-5" />
               Add Role
