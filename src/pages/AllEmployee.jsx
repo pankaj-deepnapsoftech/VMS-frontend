@@ -286,7 +286,7 @@ const AllEmployee = () => {
                               showPassword={true}
                               icon={FaLock}
                               value={values.password}
-                              onBlur={handleBlur}
+                              onBlur={handleBlur} 
                               onChange={handleChange}
                               placeholder="Enter your Password"
                               name="password"

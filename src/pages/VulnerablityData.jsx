@@ -385,7 +385,7 @@ export function VulnerabilityData() {
                           : header.replace(/_/g, " ")}
                       </th>
                     ))}
-                    <th className="px-3 py-2 text-left text-xs font-semibold uppercase">
+                    <th className="px-3 py-2 text-left text-xs font-semibold uppercase ">
                       Actions
                     </th>
                   </tr>
