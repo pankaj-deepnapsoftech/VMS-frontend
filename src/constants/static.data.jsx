@@ -85,7 +85,7 @@ export const products = [
     title: "Asset Inventory",
     desc: "Centralized asset visibility and management",
     borderColor: "#9b1c4d",
-    icon:"/icons/Component 1.png",
+    icon:"/Icons/Component 1.png",
     allowedPath: [
       {
         title: "Asset Inventory",
@@ -98,7 +98,7 @@ export const products = [
     title: "Threat & Vulnerability Management (TVM)",
     desc: "Threat and Vulnerability Management",
     borderColor: "#ff7e5f",
-    icon: "/icons/Vector.png",
+    icon: "/Icons/Vector.png",
     allowedPath: [
       { title: "Dashboard", route: "", icon: BiSolidDashboard },
       { title: "Scheduling Assesment", route: "/scheduling-assesment", icon: CalendarClock },
@@ -112,7 +112,7 @@ export const products = [
     desc: "Attack Surface Monitoring",
     borderColor: "#00c6ff",
     bg: "from-[#126d83] to-[#22D3EE]",
-    icon: "/icons/Component 2.png",
+    icon: "/Icons/Component 2.png",
     allowedPath: [],
   },
   {
@@ -120,7 +120,7 @@ export const products = [
     desc: "Risk and Compliances",
     bg:"from-[#9b1c4d] to-[#df4156]",
     borderColor: "#9b1c4d",
-    icon: "/icons/Component 3.png",
+    icon: "/Icons/Component 3.png",
     allowedPath: [],
   },
  
@@ -128,14 +128,14 @@ export const products = [
     title: "AI-VA",
     desc: "AI Virtual Analyst",
     borderColor: "#ee9ca7",
-    icon: " /icons/Vector.png",
+    icon: " /Icons/Vector.png",
     allowedPath: [],
   },
   {
     title: "Vulnerability Intelligence",
     desc: "Insights on vulnerabilities",
     borderColor: "#feb47b",
-    icon: "/icons/Component 3.png",
+    icon: "/Icons/Component 3.png",
     allowedPath: [],
   },
   {
@@ -156,7 +156,7 @@ export const products = [
     title: "Remediation Factory",
     desc: "Automated remediation of vulnerabilities",
     borderColor: "#6a11cb",
-    icon: "/icons/Component 4.png",
+    icon: "/Icons/Component 4.png",
     allowedPath: [
       { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
       { title: "Vulnerability Data", route: "/vulnerability-data", icon: Bug },
@@ -166,14 +166,14 @@ export const products = [
     title: "Reports",
     desc: "Generate reports & dashboards",
     borderColor: "#a1c4fd",
-    icon: "/icons/Component 5.png",
+    icon: "/Icons/Component 5.png",
     allowedPath: [{ title: "Reports", route: "/reports", icon: TbReport }],
   },
   {
     title: "Administration",
     desc: "Admin control panel",
     borderColor: "#f8b500",
-    icon:"/icons/Component 6.png",
+    icon:"/Icons/Component 6.png",
     allowedPath: [
       { title: "Users", route: "/all-users", icon: Users },
       { title: "Tenant", route: "/all-tenant", icon: UserCircle },
