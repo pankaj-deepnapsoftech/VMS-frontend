@@ -57,7 +57,7 @@ const MainLayout = () => {
   useEffect(() => {
     if (getDataFromSession) {
       for (let item of products) {
-        if (item.title === getDataFromSession ) {
+        if (item.title === getDataFromSession) {
           navigate(item.allowedPath[0]?.route);
         }
       }
@@ -65,7 +65,7 @@ const MainLayout = () => {
   }, [getDataFromSession, authenticate])
 
   const AllowedPath = (link) => {
-    const paths = ["asset-inventory","reports"]
+    const paths = ["asset-inventory", "reports"]
     return paths.find((item) => item === link)
   }
 

@@ -58,7 +58,7 @@ const AppRoutes = () => {
           <Route path="/verify-otp" element={<VerifyOtp />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/solutions" element={<Solutions />} />
-          <Route path="/add" element={<Addtanent />} />
+    
         </>
       )}
 
@@ -77,7 +77,6 @@ const AppRoutes = () => {
         </Route>
       )}
 
-     
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

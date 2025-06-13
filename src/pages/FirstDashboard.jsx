@@ -6,15 +6,15 @@ import { products } from "@/constants/static.data";
 import "./animation.css";
 
 // Card component with gradient border
-const Card = ({ children, HandleClick, borderColor, bg, animate, title }) => {
-  const isRiskCard = title === "Risk and Compliances";
+const Card = ({ children, HandleClick, borderColor, bg, animate, }) => {
+
 
   return (
     <div
       onClick={HandleClick}
       className={`rounded-xl w-full h-full p-[2px] transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer bg-gradient-to-r ${bg} ${animate}`}
       style={{
-        border: isRiskCard ? "none" : `1px solid ${borderColor}`,
+        border: `1px solid ${borderColor}`,
       }}
     >
       <div className="h-full w-full rounded-xl p-6">
@@ -33,6 +33,9 @@ const Dashboard = () => {
   const dropdownRef = useRef(null);
   const [showModal, setShowModal] = useState(false)
   const [filteredProducts, setFilteredProducts] = useState([]);
+
+
+  console.log("this is show modal",showModal)
 
 
   const HandleClick = (item) => {
@@ -166,7 +169,7 @@ const Dashboard = () => {
                   key={index}
                   HandleClick={() => HandleClick(item.title)}
                   borderColor={item.borderColor}
-                  bg={item.bg}
+                  bg={item.bg }
                   animate="animate-slideInX"
                 >
                   <div className="flex flex-col items-start gap-3">
@@ -192,7 +195,6 @@ const Dashboard = () => {
                     key={index}
                     HandleClick={() => HandleClick(item.title)}
                     borderColor={item.borderColor}
-                    bg={item.bg}
                     title={item.title} 
                   >
                     <div className="flex flex-col items-start gap-3">

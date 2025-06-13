@@ -111,6 +111,7 @@ export const products = [
     title: "Risk and Compliances",
     desc: "Risk and Compliances",
     bg:"from-[#9b1c4d] to-[#df4156]",
+    borderColor: "#9b1c4d",
     icon: <FaShieldAlt />,
     allowedPath: [],
   },
@@ -118,6 +119,7 @@ export const products = [
     title: "Attack Surface Management (ASM)",
     desc: "Attack Surface Monitoring",
     borderColor: "#00c6ff",
+    bg:"from-[#0891B2] to-[#22D3EE]",
     icon: <GrVulnerability />,
     allowedPath: [],
   },
@@ -174,7 +176,6 @@ export const products = [
     allowedPath: [
       { title: "Users", route: "/all-users", icon: Users },
       { title: "Tenant", route: "/all-tenant", icon: UserCircle },
-      { title: "Third Party Data", route: "/third-party-data", icon: Table },
       { title: "Third Party Config", route: "/third-party-config", icon: Settings },
       { title: "Config Email", route: "/config-email", icon: Settings },
       { title: "Role", route: "/roles", icon: Users },
