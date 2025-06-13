@@ -12,15 +12,16 @@ const Card = ({ children, HandleClick, borderColor, bg, animate, }) => {
   return (
     <div
       onClick={HandleClick}
-      className={`rounded-xl w-full h-full p-[2px] transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer bg-gradient-to-r ${bg} ${animate}`}
+      className={`rounded-xl w-full h-[200px] transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer bg-gradient-to-r ${bg} ${animate}`}
       style={{
         border: `1px solid ${borderColor}`,
       }}
     >
-      <div className="h-full w-full rounded-xl p-6">
+      <div className="h-full w-full rounded-xl p-6 flex flex-col ">
         {children}
       </div>
     </div>
+
   );
 };
 
@@ -33,9 +34,6 @@ const Dashboard = () => {
   const dropdownRef = useRef(null);
   const [showModal, setShowModal] = useState(false)
   const [filteredProducts, setFilteredProducts] = useState([]);
-
-
-  console.log("this is show modal",showModal)
 
 
   const HandleClick = (item) => {
@@ -143,26 +141,28 @@ const Dashboard = () => {
               Welcome to the Virtual Risk Operation Center
             </p>
           </div>
+
         </div>
 
 
         <div className="w-full md:w-[60%] flex flex-col gap-6 pt-10 md:pt-0">
 
 
-          <div className="w-full md:w-[40%] h-[25%]   rounded-xl bg-gradient-to-r from-[#9b1c4d] to-[#df4156] px-6 py-6 shadow-md">
+          <div className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 aspect-[4/3] rounded-xl bg-gradient-to-r from-[#9b1c4d] to-[#df4156] p-6 shadow-md flex flex-col justify-between">
             <div>
               <div className="w-12 h-12 rounded-full bg-[#ffffff3d] flex items-center justify-center">
-                <FiDatabase size={22} color="white" />
+                <FiDatabase size={24} color="white" />
               </div>
               <div className="pt-4">
                 <h2 className="text-white text-lg font-semibold">Asset Inventory</h2>
-                <p className="text-gray-300 text-xs">Monitor all active risk plans</p>
+                <p className="text-gray-300 text-sm mt-1">Monitor all active risk plans</p>
               </div>
             </div>
           </div>
 
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
             {showModal
               ? filteredProducts.map((item, index) => (
                 <Card
@@ -174,8 +174,13 @@ const Dashboard = () => {
                 >
                   <div className="flex flex-col items-start gap-3">
                     <div className="w-10 h-10 bg-[#ffffff1c] rounded-full flex items-center justify-center text-white text-xl">
-                      {item.icon}
+                      {typeof item.icon === "string" ? (
+                        <img src={item.icon} alt="icon" className="w-5 h-5" />
+                      ) : (
+                        item.icon
+                      )}
                     </div>
+
                     <h3 className="text-sm font-semibold text-white">{item.title}</h3>
                   </div>
                 </Card>
@@ -196,19 +201,17 @@ const Dashboard = () => {
                     HandleClick={() => HandleClick(item.title)}
                     borderColor={item.borderColor}
                     title={item.title} 
+                    
                   >
-                    <div className="flex flex-col items-start gap-3">
+                    <div className="flex flex-col items-start  gap-3">
                       <div className="w-10 h-10 bg-[#ffffff1c] rounded-full flex items-center justify-center text-white text-xl">
-                        {item.icon}
+                        <img src={item.icon} alt="icon" />
                       </div>
                       <h3 className="text-sm font-semibold text-white">{item.title}</h3>
                     </div>
                   </Card>
                 ))}
           </div>
-
-
-
 
         </div>
       </div>

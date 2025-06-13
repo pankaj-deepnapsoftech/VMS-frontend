@@ -61,7 +61,7 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
             </div>
 
             <div className="flex justify-center px-10 ">
-                <div className="flex-1 px-8 py-10 rounded-md shadow-md max-w-5xl bg-[#2b273380]">
+                <div className="flex-1 px-8 py-10 rounded-md shadow-md max-w-5xl bg-[#2a282e80]">
                     <form onSubmit={formik.handleSubmit} className="space-y-12">
 
                         <div>

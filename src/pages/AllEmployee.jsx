@@ -81,7 +81,7 @@ const AllEmployee = () => {
   const GetUsers = async (page=1) => {
     setloading(true)
     try {
-      const res = await AxiosHandler.get(`/auth/all-users?page=${page}&limit=2`);
+      const res = await AxiosHandler.get(`/auth/all-users?page=${page}&limit=10`);
       setEmpData(res?.data.data);
 
     } catch (error) {
@@ -423,7 +423,7 @@ const AllEmployee = () => {
                 </div>
           
           )}
-          <Pagination page={page} setPage={setPage} hasNextPage={EmpData.length === 2} /> 
+          <Pagination page={page} setPage={setPage} hasNextPage={EmpData.length === 10} /> 
         </div>
       )}
     </>
