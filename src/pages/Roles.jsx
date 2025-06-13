@@ -93,7 +93,7 @@ const Roles = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <section className="min-h-[90%] w-full px-6 md:px-10 py-8">
+        <section className="min-h-[90%] w-full px-6  py-8">
           <div className="w-full flex justify-end">
             <button
               onClick={() => {
@@ -185,7 +185,7 @@ const Roles = () => {
               </form>
             </div>
           )}
-          <div className="mt-10 max-w-4xl mx-auto">
+          <div className="mt-10 max-w-6xl mx-auto">
             {rolesList.length === 0 ? (
               <p className="text-center text-gray-400 text-sm">
                 No roles added yet.
