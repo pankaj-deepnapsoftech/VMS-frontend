@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-  const ThirdPartyIntegrations = () => {
+const ThirdPartyIntegrations = () => {
   const [activeTab, setActiveTab] = useState("Platform");
   const [searchQuery, setSearchQuery] = useState("");
   const [filterValue, setFilterValue] = useState("ALL");
@@ -22,9 +22,9 @@ import { useState } from "react";
       <div className="flex">
         <main className="flex-1 p-6">
           <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center space-x-4">
+            <div>
               <h1 className="text-2xl font-[500]">Third Party Integrations</h1>
-
+              <p className="text-gray-400 text-sm pt-2">Connect and manage your security tools and platforms</p>
               {/* <div className="relative">
                 <select
                   value={filterValue}
@@ -93,7 +93,7 @@ import { useState } from "react";
               </button>
             </div>
           </div>
-
+          {/* 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {integrations
               .filter(
@@ -141,10 +141,54 @@ import { useState } from "react";
                   </div>
                 </div>
               ))}
+          </div> */}
+
+          <div className="flex gap-4  ">
+
+            <div className="border border-[#6B72804D] rounded-md flex justify-between px-4 py-2 bg-[#6B728033] border-red h-30 w-1/3">
+             <div>
+                <p className="text-sky-400 text-sm">Disconnected</p>
+                <p className="text-xl">2</p>
+             </div>
+             <div className="w-8 h-8 rounded-md bg-[#ffffff17] flex justify-center items-center">
+              <img src="/icons/Component 7.png" alt="" />
+             </div>
+            </div>
+
+            <div className="border border-[#1665344D] rounded-md flex justify-between px-4 py-2 bg-gradient-to-t from-[#14532D4D] to-[#16653433] border-red h-30 w-1/3">
+              <div>
+                <p className="text-green-400 text-sm">Connected</p>
+                <p className="text-xl">4</p>
+              </div>
+              <div className="w-8 h-8 rounded-md bg-[#ffffff17] flex justify-center items-center">
+                <img src="/icons/closed.png" alt="" />
+              </div>
+            </div>
+
+            <div className="border border-[#1665344D] rounded-md flex justify-between px-4 py-2 bg-gradient-to-t from-[#713F124D] to-[#854D0E33] border-red h-30 w-1/3">
+              <div>
+                <p className="text-yellow-400 text-sm">Pending</p>
+                <p className="text-xl">1</p>
+              </div>
+              <div className="w-8 h-8 rounded-md bg-[#ffffff17] flex justify-center items-center">
+                <img src="/icons/Component 8.png" alt="" />
+              </div>
+            </div>
+
+            <div className="border border-[#991B1B4D] rounded-md flex justify-between px-4 py-2 bg-gradient-to-t from-[#7F1D1D4D] to-[#991B1B33] border-red h-30 w-1/3">
+              <div>
+                <p className="text-red-400 text-sm">Error</p>
+                <p className="text-xl">1</p>
+              </div>
+              <div className="w-8 h-8 rounded-md bg-[#ffffff17] flex justify-center items-center">
+                <img src="/icons/Component 9.png" alt="" />
+              </div>
+            </div>
           </div>
+
         </main>
       </div>
     </div>
   );
 }
-export default ThirdPartyIntegrations ;
+export default ThirdPartyIntegrations;

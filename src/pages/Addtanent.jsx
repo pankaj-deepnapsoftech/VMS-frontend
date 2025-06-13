@@ -56,6 +56,7 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
         try {
             const res = await axios.get("https://countriesnow.space/api/v0.1/countries/states")
             setCountryData(res.data.data)
+            console.log(res)
         } catch (error) {
             console.log(error)
         }
