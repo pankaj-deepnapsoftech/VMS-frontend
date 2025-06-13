@@ -255,7 +255,7 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                                     className="absolute -top-6 transform -translate-x-1/2 bg-white px-4 py-2 rounded shadow text-center text-xs border text-black"
                                     style={{ left: `${(riskScore / 1000) * 100}%` }}
                                 >
-                                    <p className="font-[500]"> Risk Appetite for TruRisk </p>
+                                    <p className="font-[500] whitespace-nowrap"> Risk Appetite for TruRisk </p>
                                    <div className='flex gap-2 items-center'>
                                         <p className="text-blue-600 text-lg font-bold">{riskScore}</p>
                                         <p>{getRiskLevel(riskScore)}</p>
