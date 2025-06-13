@@ -173,7 +173,7 @@ const Reports = () => {
   };
 
   return (
-    <div className="p-4 md:p-6   mx-auto  bg-[#2d333b]  shadow-lg">
+    <div className="p-4 md:p-6 mx-auto bg-gradient-custom shadow-lg">
       {/* Search Bar & Buttons */}
       <div className="mb-4 flex flex-col md:flex-row items-start md:items-center justify-between">
         {authenticate.role === "Assessor" ? (
@@ -194,12 +194,12 @@ const Reports = () => {
       </div>
 
       {/* Filter Inputs */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 ml-60 mb-4">
         {(authenticate.role === "Admin" || authenticate.role != "Assessor") ? (
           <input
             type="text"
             placeholder="Filter by Creator Name"
-            className="p-2 border border-gray-300 rounded-lg text-white bg-[#333333]"
+            className="p-2 border border-gray-300 rounded-lg text-white bg-cards"
             value={creatorFilter}
             onChange={(e) => setCreatorFilter(e.target.value)}
           />
@@ -209,7 +209,7 @@ const Reports = () => {
           <input
             type="text"
             placeholder="Filter by Organization Name"
-            className="p-2 border border-gray-300 text-white rounded-lg bg-[#333333]"
+            className="p-2 border border-gray-300 text-white rounded-lg bg-cards"
             value={orgFilter}
             onChange={(e) => setOrgFilter(e.target.value)}
           />
@@ -218,7 +218,7 @@ const Reports = () => {
         <input
           type="date"
           placeholder="Filter by Date"
-          className="p-2 border border-gray-300 text-white rounded-lg bg-[#333333]"
+          className="p-2 border border-gray-300 text-white rounded-lg bg-cards"
           value={dateFilter}
           onChange={(e) => setDateFilter(e.target.value)}
         />

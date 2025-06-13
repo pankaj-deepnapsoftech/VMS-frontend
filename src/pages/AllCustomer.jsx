@@ -79,7 +79,7 @@ export default function AllCustomer() {
               }}
               className="px-4 py-2 bg-gradient-to-tr mr-5 from-[#1f1d1d] to-[#666666] rounded-md text-white font-medium hover:bg-blue-700 flex items-center gap-2"
             >
-              <BiPlus className="h-6 w-6" />
+              <BiPlus className="h-6 w-6 mr-1" />
               Add Tenant
             </button>
           </div>

@@ -6,7 +6,7 @@ import { VulnerabilityData } from "@/pages/VulnerablityData";
 import ApplicationVulnerability from "@/pages/ApplicationVulnerability";
 import InfraStructureVulnerability from "@/pages/InfrastructureVulnerability";
 import AllEmployee from "@/pages/AllEmployee";
-import ThirdPartyConfig from "@/pages/thirdPartyConfiguration";
+
 import SchedulingAssessmentPage from "@/pages/SchedulingAssessment";
 import Reports from "@/pages/Reports";
 import ChatPage from "@/pages/ChatPage";
@@ -27,6 +27,7 @@ import ManageTenants from "@/pages/ManageTenants";
 import Roles from "@/pages/Roles";
 import JiraDataTable from "@/pages/JiraDataTable";
 import Partners from "@/pages/Partners";
+import ThirdPartyIntegrations from "@/pages/ThirdPartyIntegrations";
 
 export const PrivateRoutes = [
   {
@@ -46,8 +47,8 @@ export const PrivateRoutes = [
   //   element: <JiraDataTable />,
   // },
   {
-    path: "/third-party-config",
-    element: <ThirdPartyConfig />,
+    path: "/third-party-integrations",
+    element: <ThirdPartyIntegrations />,
   },
   {
     path: "/all-tenant",

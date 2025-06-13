@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-export default function Component() {
+  const ThirdPartyIntegrations = () => {
   const [activeTab, setActiveTab] = useState("Platform");
   const [searchQuery, setSearchQuery] = useState("");
   const [filterValue, setFilterValue] = useState("ALL");
@@ -23,9 +23,9 @@ export default function Component() {
         <main className="flex-1 p-6">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center space-x-4">
-              <h1 className="text-2xl font-semibold">Integrations</h1>
+              <h1 className="text-2xl font-[500]">Third Party Integrations</h1>
 
-              <div className="relative">
+              {/* <div className="relative">
                 <select
                   value={filterValue}
                   onChange={(e) => setFilterValue(e.target.value)}
@@ -54,11 +54,11 @@ export default function Component() {
                     />
                   </svg>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <div className="flex items-center space-x-4">
-              <div className="flex items-center bg-cards rounded-md">
+              {/* <div className="flex items-center bg-cards rounded-md">
                 <div className="pl-3">
                   <svg
                     className="w-5 h-5 text-gray-400"
@@ -84,12 +84,12 @@ export default function Component() {
                 <button className="bg-sky-700 hover:bg-sky-800 text-white px-4 py-2 rounded-r-md transition-colors">
                   Go
                 </button>
-              </div>
+              </div> */}
 
               {/* New Integration Button */}
-              <button className="bg-orange-800 hover:bg-orange-900 text-white px-4 py-2 rounded-md transition-colors flex items-center">
+              <button className="bg-blue-800 hover:bg-blue-900 text-white px-4 py-2 rounded-md transition-colors flex items-center">
                 <span className="mr-2">+</span>
-                New Integration
+                Add Integration
               </button>
             </div>
           </div>
@@ -147,3 +147,4 @@ export default function Component() {
     </div>
   );
 }
+export default ThirdPartyIntegrations ;

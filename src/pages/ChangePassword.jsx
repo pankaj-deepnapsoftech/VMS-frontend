@@ -57,9 +57,9 @@ export default function PasswordChange() {
   }
 
   return (
-    <div className="min-h-full py-20 bg-background flex items-center justify-center p-4">
+    <div className="min-h-full py-20 bg-gradient-custom flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <div className={`bg-white rounded-lg shadow-md overflow-hidden`}>
+        <div className={`bg-[#101831] rounded-lg shadow-md overflow-hidden`}>
           <div className={`bg-gradient-color p-6 text-white`}>
             <h1 className="text-2xl font-bold">Change Password</h1>
             <p className="mt-2 opacity-90">Update your password to keep your account secure</p>

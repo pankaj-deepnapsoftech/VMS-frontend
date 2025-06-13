@@ -8,7 +8,7 @@ const Sidebar = () => {
     const navigate = useNavigate();
 
     return (
-        <div className={`fixed top-0 ${OpenSideBar ? "right-0" : "-right-[300px]"} h-screen w-64 z-50 transition-all duration-500 bg-background text-white shadow-lg flex flex-col items-start p-6 space-y-4`} onClick={() => setOpenSideBar(false)}>
+        <div className={`fixed top-0 ${OpenSideBar ? "right-0" : "-right-[300px]"} h-screen w-64 z-50 transition-all duration-500 bg-gradient-custom text-white shadow-lg flex flex-col items-start p-6 space-y-4`} onClick={() => setOpenSideBar(false)}>
             <h2 className="text-lg font-semibold flex w-full items-center justify-between">Menu <button><IoClose /></button></h2>
             <button className="w-full text-left px-4 py-2 rounded hover:bg-gray-800 transition" onClick={() => setShowUserMenu(!showUserMenu)}>
                 View Profile
