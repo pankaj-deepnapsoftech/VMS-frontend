@@ -18,9 +18,9 @@ const ThirdPartyIntegrations = () => {
   ];
 
   return (
-    <div className="min-h-[90%] bg-transparent text-white">
-      <div className="flex">
-        <main className="flex-1 p-6">
+    <div className="min-h-[90%] w-full bg-transparent text-white">
+      <div className="flex w">
+        <main className="flex-1 p-6 w-full">
           <div className="flex items-center justify-between mb-6">
             <div>
               <h1 className="text-2xl font-[500]">Third Party Integrations</h1>
@@ -58,35 +58,7 @@ const ThirdPartyIntegrations = () => {
             </div>
 
             <div className="flex items-center space-x-4">
-              {/* <div className="flex items-center bg-cards rounded-md">
-                <div className="pl-3">
-                  <svg
-                    className="w-5 h-5 text-gray-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    />
-                  </svg>
-                </div>
-                <input
-                  type="text"
-                  placeholder="Type to search"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="bg-transparent text-white placeholder-gray-400 px-3 py-2 focus:outline-none w-64"
-                />
-                <button className="bg-sky-700 hover:bg-sky-800 text-white px-4 py-2 rounded-r-md transition-colors">
-                  Go
-                </button>
-              </div> */}
 
-              {/* New Integration Button */}
               <button className="bg-blue-800 hover:bg-blue-900 text-white px-4 py-2 rounded-md transition-colors flex items-center">
                 <span className="mr-2">+</span>
                 Add Integration
@@ -185,6 +157,36 @@ const ThirdPartyIntegrations = () => {
               </div>
             </div>
           </div>
+<div>
+            {/*<div className="flex items-center bg-cards rounded-md">
+                <div className="pl-3">
+                  <svg
+                    className="w-5 h-5 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  placeholder="Type to search"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="bg-transparent text-white placeholder-gray-400 px-3 py-2 focus:outline-none w-64"
+                />
+                <button className="bg-sky-700 hover:bg-sky-800 text-white px-4 py-2 rounded-r-md transition-colors">
+                  Go
+                </button>
+              </div>*/}
+</div>
+
 
         </main>
       </div>
