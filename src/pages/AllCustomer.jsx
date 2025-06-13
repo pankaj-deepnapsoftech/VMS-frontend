@@ -34,6 +34,7 @@ import { AxiosHandler } from "@/config/AxiosConfig";
 import { tenantValidator } from "@/Validation/TenantsValidations";
 import Pagination from "./Pagination";
 import Loader from "@/components/Loader/Loader";
+import Addtanent from "./Addtanent";
 
 export default function AllCustomer() {
 
@@ -56,45 +57,7 @@ export default function AllCustomer() {
     }
   };
 
-  const {
-    values,
-    handleChange,
-    handleSubmit,
-    handleBlur,
-    errors,
-    touched,
-    resetForm,
-  } = useFormik({
-    initialValues: editTable || {
-      company_name: "",
-      Website_url: "",
-      Employee_count: "",
-      Country: "",
-      State: "",
-      City: "",
-      Industry: "",
-      Risk_Apetite: "",
-    },
-    validationSchema: tenantValidator,
-    enableReinitialize: true,
-    onSubmit: async (values) => {
-      setLoading(true)
-      try {
-        if (editTable) {
-          await AxiosHandler.put(`/tenant/update/${values._id}`, values);
-        } else {
-          await AxiosHandler.post(`/tenant/create`, values);
-        }
-        setIsModalOpen(false);
-        resetForm();
-        getTenants();
-      } catch (error) {
-        console.error("Tenant creation failed", error);
-      }finally{
-        setLoading(false)
-      }
-    },
-  });
+
 
   const DeleteData = async (_id) => {
     setLoading(true)
@@ -127,13 +90,13 @@ export default function AllCustomer() {
       <Loader/>
       ) : (
         <div>
-          <div className="flex w-full justify-end py-4">
+          <div className="flex w-full h-full justify-end py-4">
             <button
               onClick={() => {
                 setIsModalOpen(true);
                 setEditTable(null);
               }}
-              className="px-4 py-2 bg-gradient-to-tr mr-5 from-[#1f1d1d] to-[#666666] text-white font-medium hover:bg-blue-700 flex items-center gap-2"
+              className="px-4 py-2 bg-gradient-to-tr mr-5 from-[#1f1d1d] to-[#666666] rounded-md text-white font-medium hover:bg-blue-700 flex items-center gap-2"
             >
               <BiPlus className="h-6 w-6" />
               Add Tenant
@@ -142,164 +105,6 @@ export default function AllCustomer() {
 
           <div className="m-6 p-2 bg-tablecolor shadow-lg rounded-lg">
             <div>
-              {isModalOpen && (
-                <div className="fixed inset-0 bg-input bg-opacity-50 flex items-center justify-center p-4 z-10">
-                  <div className="bg-gradient-custom rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-                    <div className="flex justify-between items-center border-b p-4 bg-table">
-                      <h2 className="text-lg font-semibold text-gray-200">
-                        {editTable ? "Edit Tenant" : "Add Tenant"}
-                      </h2>
-                      <button onClick={() => setIsModalOpen(false)}>
-                        <MdClose className="h-6 w-6 text-gray-100" />
-                      </button>
-                    </div>
-                    <form onSubmit={handleSubmit} className="p-10 space-y-5">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <InputField
-                          label="Company Name"
-                          type="text"
-                          icon={FaBuilding}
-                          name="company_name"
-                          value={values.company_name}
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          placeholder="Enter your company name"
-                        />
-                        {touched.company_name && errors.company_name && (
-                          <p className="text-red-400 text-sm">
-                            {errors.company_name}
-                          </p>
-                        )}
-
-                        <InputField
-                          label="Website URL"
-                          type="text"
-                          icon={FaGlobe}
-                          name="Website_url"
-                          value={values.Website_url}
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          placeholder="Enter your website url"
-                        // showPassword={true}
-                        />
-                        {touched.Website_url && errors.Website_url && (
-                          <p className="text-red-400 text-sm">
-                            {errors.Website_url}
-                          </p>
-                        )}
-
-                        <InputField
-                          label="Employee Count"
-                          type="text"
-                          icon={FaUsers}
-                          name="Employee_count"
-                          value={values.Employee_count}
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          placeholder="Enter Employee Count"
-                        />
-                        {touched.Employee_count && errors.Employee_count && (
-                          <p className="text-red-400 text-sm">
-                            {errors.Employee_count}
-                          </p>
-                        )}
-                        <InputField
-                          label="Country"
-                          type="text"
-                          icon={FaCompass}
-                          name="Country"
-                          value={values.Country}
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          placeholder="Enter Country"
-                        />
-                        {touched.Country && errors.Country && (
-                          <p className="text-red-400 text-sm">
-                            {errors.Country}
-                          </p>
-                        )}
-
-                        <InputField
-                          label="State"
-                          type="text"
-                          icon={FaMapMarkedAlt}
-                          name="State"
-                          value={values.State}
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          placeholder="Enter state"
-                        />
-                        {touched.State && errors.State && (
-                          <p className="text-red-400 text-sm">{errors.State}</p>
-                        )}
-
-                        <InputField
-                          label="City"
-                          type="text"
-                          icon={FaCity}
-                          name="City"
-                          value={values.City}
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          placeholder="Enter city"
-                        />
-                        {touched.City && errors.City && (
-                          <p className="text-red-400 text-sm">{errors.City}</p>
-                        )}
-
-                        <InputField
-                          label="Industry"
-                          type="text"
-                          icon={FaIndustry}
-                          name="Industry"
-                          value={values.Industry}
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          placeholder="Enter industry"
-                        />
-                        {touched.Industry && errors.Industry && (
-                          <p className="text-red-400 text-sm">
-                            {errors.Industry}
-                          </p>
-                        )}
-
-                        <InputField
-                          label="Risk Apetite"
-                          type="text"
-                          icon={FaExclamationTriangle}
-                          name="Risk_Apetite"
-                          value={values.Risk_Apetite}
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          placeholder="Enter risk apetite"
-                        />
-                        {touched.Risk_Apetite && errors.Risk_Apetite && (
-                          <p className="text-red-400 text-sm">
-                            {errors.Risk_Apetite}
-                          </p>
-                        )}
-                      </div>
-                      <div className="flex justify-end gap-2 mt-4 border-t pt-4">
-                        <button
-                          onClick={() => setIsModalOpen(false)}
-                          type="button"
-                          className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          type="submit"
-                          className="px-4 py-2 bg-[#123e5c] text-white rounded-md hover:bg-sky-800"
-                        >
-                          Save
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-             
-            )}
-
             <div className="mt-6 bg-[#0c1120] overflow-x-auto text-sm text-white">
               {tenants.length < 1 ? (
                 <div className="text-center py-6 text-gray-400">
@@ -325,7 +130,7 @@ export default function AllCustomer() {
                       {tenants?.map((tenant, index) => (
                         <tr
                           key={index}
-                          className="border-b border-gray-700 hover:bg-[#1e1e1e] transition"
+                          className="border-b border-gray-700 whitespace-nowrap hover:bg-[#1e1e1e] transition"
                         >
                           <td className="p-3">{tenant.company_name}</td>
                           <td className="p-3">{tenant.Website_url}</td>
@@ -373,6 +178,7 @@ export default function AllCustomer() {
           id={dataId}
         />
       )}
+      <Addtanent isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} isLoading={isLoading} setLoading={setLoading} getTenants={getTenants} editTable={editTable} />
     </>
   );
 }
