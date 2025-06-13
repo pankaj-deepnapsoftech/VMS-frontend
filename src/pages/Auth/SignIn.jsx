@@ -57,17 +57,11 @@ const SignIn = () => {
 
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen ">
       {/* Left side */}
       <div
-        className="flex-[3] text-white relative"
-        style={{
-          backgroundImage: "url('/bgleft.png')",
-          backgroundRepeat: "no-repeat, no-repeat",
-          backgroundPosition: "left center, right center",
-          backgroundSize: "auto, auto",
-          backgroundColor: "black",
-        }}
+        className="flex-[3] text-white relative bg-[url('/bgleft.png')] bg-cover hidden lg:block"
+       
       >
         <img src="/logo.png" className="h-10 my-10 px-10" />
         <h2 className="text-5xl font-bold ml-10">Products</h2>
@@ -76,7 +70,7 @@ const SignIn = () => {
         </p>
         <img
           src="/bg5.png"
-          className="-z-[0] size-96 absolute top-[30%] right-0"
+          className="-z-[0] size-96 2xl:size-[600px] absolute top-[30%] 2xl:top-[15%] right-0"
         />
 
 
@@ -120,22 +114,22 @@ const SignIn = () => {
 
       {/* Right side */}
       <div
-        className="bg-black flex-[2] text-white flex flex-col justify-center border-l bg-[url('/bgright.png')] bg-no-repeat bg-cover pl-20"
+        className="bg-black flex-[2] text-white flex flex-col items-center justify-center border-l bg-[url('/bgright.png')] bg-no-repeat bg-cover px-2 lg:pl-20"
         style={{ backgroundPosition: "right 0 1000px" }}
       >
-        <h2 className="text-4xl 2xl:text-6xl font-medium py-3 ">
+        <h2 className=" text-2xl xl:text-4xl 2xl:text-5xl font-medium py-3 ">
           Welcome to Secure End
         </h2>
-        <p className="text-lg 2xl:text-2xl text-gray-500 pb-5">
+        <p className=" text-sm lg:text-lg 2xl:text-xl text-gray-500 pb-5">
           Login to the Virtual Risk Operation Center(VROC)
         </p>
 
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col items-start w-full gap-5 xl:py-10"
+          className="flex flex-col items-start w-fit gap-5 xl:py-10"
         >
           <div className="flex flex-col w-96 2xl:w-[600px]">
-            <label htmlFor="email" className="2xl:text-2xl text-gray-400 pb-2">
+            <label htmlFor="email" className=" text-sm lg:test-base 2xl:text-xl text-gray-400 pb-2">
               Email Address
             </label>
             <input
@@ -146,14 +140,14 @@ const SignIn = () => {
               onBlur={handleBlur}
               onChange={handleChange}
               placeholder="Enter your email address"
-              className="bg-transparent h-12 2xl:h-[60px] 2xl:text-2xl w-full border border-gray-500 rounded px-3"
+              className="bg-transparent h-12 2xl:h-[60px] text-sm lg:test-base 2xl:text-xl w-full border border-gray-500 rounded px-3"
             />
           </div>
 
           <div className="flex flex-col w-96 2xl:w-[600px] relative">
             <label
               htmlFor="password"
-              className="2xl:text-2xl text-gray-400 pb-2"
+              className=" text-sm lg:test-base 2xl:text-xl text-gray-400 pb-2"
             >
               Password
             </label>
@@ -165,7 +159,7 @@ const SignIn = () => {
               onBlur={handleBlur}
               onChange={handleChange}
               placeholder="Enter your password"
-              className="bg-transparent h-12 2xl:h-[60px] 2xl:text-2xl w-full border border-gray-500 rounded px-3"
+              className="bg-transparent h-12 text-sm lg:test-base 2xl:h-[60px] 2xl:text-xl w-full border border-gray-500 rounded px-3"
             />
             <div
               className="absolute top-[60%] right-5 -translate-y-[20%] cursor-pointer"
@@ -189,7 +183,7 @@ const SignIn = () => {
           <button
             disabled={disable}
             type="submit"
-            className="bg-button w-96 2xl:w-[600px] h-12 2xl:h-[60px] 2xl:text-2xl rounded my-5"
+            className="bg-button w-96 text-sm lg:test-base 2xl:w-[600px] h-12 2xl:h-[60px] 2xl:text-xl rounded my-5"
           >
             Login
           </button>
