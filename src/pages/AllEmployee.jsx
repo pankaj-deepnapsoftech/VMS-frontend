@@ -130,7 +130,7 @@ const AllEmployee = () => {
       { isloading ? (
         <Loader />
       ) : (
-        <div className=" p-2 bg-[#2a2c2f] h-screen shadow-lg ">
+        <div className=" p-2  h-screen shadow-lg ">
           <div className="flex justify-between items-center">
             <div className="flex w-full justify-end py-4">
               <button
