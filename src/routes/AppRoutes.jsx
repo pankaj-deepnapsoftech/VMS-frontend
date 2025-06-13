@@ -77,7 +77,6 @@ const AppRoutes = () => {
         </Route>
       )}
 
-      <Route path="/add-company" element={<Addtanent />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
