@@ -70,8 +70,8 @@ export default function AllCustomer() {
       { isLoading ? (
       <Loader/>
       ) : (
-        <div>
-          <div className="flex w-full h-full justify-end py-4">
+        <div className="h-screen ">
+          <div className="flex w-full justify-end py-4">
             <button
               onClick={() => {
                 setIsModalOpen(true);
@@ -150,6 +150,7 @@ export default function AllCustomer() {
           </div>
         </div>
         </div>
+        
       )}
 
       {isChecked && (
@@ -159,7 +160,11 @@ export default function AllCustomer() {
           id={dataId}
         />
       )}
-      <Addtanent isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} isLoading={isLoading} setLoading={setLoading} getTenants={getTenants} editTable={editTable} />
+      {
+        isModalOpen && (
+          <Addtanent isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} isLoading={isLoading} setLoading={setLoading} getTenants={getTenants} editTable={editTable} />
+        )
+      }
     </>
   );
 }

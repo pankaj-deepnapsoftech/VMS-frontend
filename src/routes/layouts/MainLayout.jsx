@@ -86,8 +86,8 @@ const MainLayout = () => {
           {!AllowedPath(location.pathname.split("/")[1]) && <aside
             onMouseEnter={() => setShowSideBar(true)}
             onMouseLeave={() => setShowSideBar(false)}
-            className={`
-    fixed z-10 flex flex-col justify-between h-screen 
+            className={` 
+    fixed z-10 flex flex-col justify-between h-full 
     bg-gradient-to-t from-[#151515] to-[#212224] 
     transition-all duration-500 ease-in-out
     ${showSidebar ? "lg:w-[30%] xl:w-[25%] 2xl:w-[15%]" : "lg:w-[5%] xl:w-[4%] 2xl:w-[3%]"} 
@@ -106,7 +106,7 @@ const MainLayout = () => {
           </aside>}
          <div
   className={`ml-auto mb-6 transition-all duration-500 ease-in-out 
-    h-screen bg-gradient-custom rounded-lg 
+     bg-gradient-custom rounded-lg 
     ${
       AllowedPath(location.pathname.split("/")[1])
         ? "w-full"
