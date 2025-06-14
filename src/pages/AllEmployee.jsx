@@ -323,7 +323,7 @@ const AllEmployee = () => {
           {EmpData?.length < 1 ? (
             <NoDataFound />
           ) : (
-                <div className="overflow-x-auto w-[95%] rounded-xl mx-auto shadow-lg bg-[#0c1120]">
+                <div className="overflow-x-auto custom-scrollbar  w-[95%] rounded-xl mx-auto shadow-lg bg-[#0c1120]">
                   <table className="min-w-full table-auto text-sm text-left text-gray-300 divide-y divide-gray-700">
                     <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider"> 
                       <tr>

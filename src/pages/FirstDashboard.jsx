@@ -12,7 +12,7 @@ const Card = ({ children, HandleClick, borderColor, bg, animate, }) => {
   return (
     <div
       onClick={HandleClick}
-      className={`rounded-xl w-full h-[200px] transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer  ${bg ? "bg-gradient-to-r " + bg : ""} ${animate}`}
+      className={`rounded-xl w-full h-[200px] transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-xl cursor-pointer  ${bg ? "bg-gradient-to-r " + bg : ""} ${animate}`}
       style={{
         border: `1px solid ${borderColor}`,
       }}

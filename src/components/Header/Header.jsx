@@ -60,7 +60,7 @@ function Header({ setShowMenu,showSidebar }) {
   return (
     // <div className="flex h-screen fixed  overflow-y-auto
     //  md:w-[28%] lg:w-[25%] xl:w-[25%] 2xl:w-[20%] ">
-    <div className=" flex flex-col text-white  h-[100%] hide-scrollbar bg-[#1f2937]  overflow-y-auto transition-all duration-500 ">
+    <div className=" flex flex-col text-white  h-[100%] hide-scrollbar bg-[#1f2937]  overflow-y-auto transition-all duration-500 ease-in-out ">
       <Link className={` ${showSidebar  ? "" : "block lg:hidden"} flex items-center my-2 ml-3`}>
         <div className="flex gap-2 pt-2 items-center justify-center  h-20  ">
           <img src="/logo.png" alt="" className=" h-7" />
