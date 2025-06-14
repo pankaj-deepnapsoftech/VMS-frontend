@@ -222,7 +222,7 @@ const ThirdPartyIntegrations = () => {
             </div>
           </div>
 
-          <div className="w-full px-4 h-16 border-[#6B728033] flex items-center gap-4 rounded-md backdrop-blur-md bg-[#6B728033]">
+          <div className="w-full px-4  h-16 border-[#6B728033] flex items-center gap-4 rounded-md backdrop-blur-md bg-[#6B728033]">
             <input type="text" className="bg-[#23252750] backdrop-blur-md py-2 w-1/3 px-4 rounded-md "
               placeholder="Search integrations..."
             />
@@ -261,8 +261,8 @@ const ThirdPartyIntegrations = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4  text-white"
-          >
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 2xl:grid-cols-4 gap-4 p-4 text-white">
+
             {integrations.map((integration, idx) => (
               <div
                 key={idx}
@@ -273,12 +273,11 @@ const ThirdPartyIntegrations = () => {
                     <div className={`h-12 w-12 ${integration.iconBg} rounded-md  flex justify-center items-center `}>  <img className="h-[20px]" src={integration.icon} alt="" /></div>
                     <div>
                       <p className="font-semibold">{integration.name}</p>
-
                       <p className="text-xs text-gray-400">{integration.version}</p>
                     </div>
                   </div>
                   <div
-                    className={`flex items-center gap-1 px-4 py-1 rounded-xl  text-sm ${integration.bgColor} ${integration.textColor}   ${integration.border}`}
+                    className={`flex items-center gap-1 px-4 py-1 rounded-2xl  text-sm ${integration.bgColor} ${integration.textColor}   ${integration.border}`}
                   >
                     {statusIcons[integration.status]} {integration.status}
                   </div>
@@ -301,14 +300,14 @@ const ThirdPartyIntegrations = () => {
                     </span>
                   ))}
                 </div>
-                <div className="flex justify-between  items-center">
+                <div className="flex justify-between gap-2 items-center">
                   <button className="bg-[#3c4aff] flex justify-center gap-2 hover:bg-[#5b61ff] px-4 py-2 w-[80%] text-sm rounded-md">
                     <img className="object-cover" src={integration.icon4} alt="" />
                     Configure
                   </button>
                   <div className="flex gap-2 text-gray-400">
-                    <img src={integration.icon2} alt="" />
-                    <img src={integration.icon3} alt="" />
+                    <div className="w-9 h-9 rounded-md flex justify-center items-center bg-[#ffffff1e]"><img className="object-cover" src={integration.icon2} alt="" /></div>
+                    <div className="w-9 h-9 rounded-md flex justify-center items-center bg-[#ffffff1e]"><img className="object-cover" src={integration.icon3} alt="" /></div>
                   </div>
                 </div>
               </div>
