@@ -12,7 +12,7 @@ const Card = ({ children, HandleClick, borderColor, bg, animate, }) => {
   return (
     <div
       onClick={HandleClick}
-      className={`rounded-xl w-full h-[200px] transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer bg-gradient-to-r ${bg} ${animate}`}
+      className={`rounded-xl w-full h-[200px] transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer  ${bg ? "bg-gradient-to-r " + bg : ""} ${animate}`}
       style={{
         border: `1px solid ${borderColor}`,
       }}
@@ -83,12 +83,12 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="relative w-full min-h-screen bg-gradient-to-r from-[#1c192c] to-[#16161a] text-white overflow-hidden">
+    <div className="relative w-full min-h-screen bg-gradient-to-tr from-[#2b2973] via-transparent to-black bg-black text-white overflow-hidden">
 
 
-      <div className="absolute inset-0 z-0 bg-[url('/bgleft.png')] bg-cover bg-no-repeat bg-center opacity-50" />
+      <div className="absolute inset-0 z-0 bg-[url('/Svg/background.svg')] bg-no-repeat bg-cover bg-center   " />
 
-      <div className="relative z-10 flex flex-col md:flex-row gap-8 w-full min-h-screen px-4 md:px-8 pt-12">
+      <div className="relative z-10 flex flex-col md:flex-row gap-8 w-full min-h-screen px-4 md:px-8 pt-12 ">
 
 
         <div className="absolute top-4 right-6 z-30" ref={dropdownRef}>
