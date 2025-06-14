@@ -28,6 +28,7 @@ import Roles from "@/pages/Roles";
 import JiraDataTable from "@/pages/JiraDataTable";
 import Partners from "@/pages/Partners";
 import ThirdPartyIntegrations from "@/pages/ThirdPartyIntegrations";
+import UserProfile from "@/pages/UserDetails";
 
 export const PrivateRoutes = [
   {
@@ -119,6 +120,10 @@ export const PrivateRoutes = [
   {
     path: "/change-password",
     element: <ChangePassword />,
+  },
+  {
+    path: "/user-details",
+    element: <UserProfile />,
   },
   {
     path: "/book-demo",

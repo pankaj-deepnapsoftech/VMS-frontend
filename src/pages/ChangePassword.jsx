@@ -57,7 +57,7 @@ export default function PasswordChange() {
   }
 
   return (
-    <div className="min-h-full py-20 bg-gradient-custom flex items-center justify-center p-4">
+    <div className="min-h-screen py-20 bg-gradient-custom flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className={`bg-[#101831] rounded-lg shadow-md overflow-hidden`}>
           <div className={`bg-gradient-color p-6 text-white`}>
