@@ -57,10 +57,10 @@ const SignIn = () => {
 
 
   return (
-    <div className="flex min-h-screen ">
+    <div className="flex min-h-screen bg-[url('/Svg/background.svg')] bg-no-repeat bg-cover bg-black">
       {/* Left side */}
       <div
-        className="flex-[3] text-white relative bg-[url('/bgleft.png')] bg-cover hidden lg:block"
+        className="flex-[3] text-white relative  hidden lg:block bg-gradient-to-r from-black via-transparent to-black "
        
       >
       <img src="/logo.png" className="h-10 my-10 px-10" />
@@ -114,7 +114,7 @@ const SignIn = () => {
 
       {/* Right side */}
       <div
-        className="bg-black flex-[2] text-white flex flex-col items-center justify-center border-l border-light bg-[url('/bgright.png')] bg-no-repeat bg-cover px-2 lg:pl-20"
+        className=" flex-[2] text-white flex flex-col items-center justify-center border-l border-light  px-2 lg:pl-20 bg-black/90"
         style={{ backgroundPosition: "right 0 1000px" }}
       >
         <h2 className=" text-2xl xl:text-4xl 2xl:text-5xl font-medium py-3 ">
