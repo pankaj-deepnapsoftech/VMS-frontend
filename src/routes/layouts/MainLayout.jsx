@@ -91,7 +91,7 @@ const MainLayout = () => {
     bg-gradient-to-t from-[#151515] to-[#212224] 
     transition-all duration-500 ease-in-out
     ${showSidebar ? "lg:w-[30%] xl:w-[25%] 2xl:w-[15%]" : "lg:w-[5%] xl:w-[4%] 2xl:w-[3%]"} 
-    ${showMenu ? "left-0" : "-left-full"} 
+    ${showMenu ? `left-0` : "-left-full"} 
     whitespace-nowrap
   `}
           >
@@ -104,14 +104,17 @@ const MainLayout = () => {
               showSidebar={showSidebar}
             />
           </aside>}
-          <div
-            className={`ml-auto mb-6 h-full transition-all duration-500 ease-in-out 
-    bg-gradient-custom rounded-lg 
-    ${!AllowedPath(location.pathname.split("/")[1]) && showSidebar
-                ? "lg:w-[75%] xl:w-[80%] 2xl:w-[85%] "
-                : "w-full lg:w-[95%] xl:w-[96%] 2xl:w-[97%] "
-              }`}
-          >
+         <div
+  className={`ml-auto mb-6 transition-all duration-500 ease-in-out 
+     bg-gradient-custom rounded-lg 
+    ${
+      AllowedPath(location.pathname.split("/")[1])
+        ? "w-full"
+        : showSidebar
+        ? "w-full lg:w-[75%] xl:w-[80%] 2xl:w-[85%]"
+        : "w-full lg:w-[95%] xl:w-[96%] 2xl:w-[97%]"
+    }`}
+>
 
 
             <div className="bg-gradient-to-t from-[#1a1c1e] to-[#212325]  border-gray-200">
