@@ -96,37 +96,42 @@ function Home() {
     {
       title: "Application",
       value: cardData?.Application,
-      color: "from-[#253e5e] to-[#275691]", // Figma Red gradient
+      color: "from-[#253e5e40] to-[#253e5e8f]", // Figma Red gradient
       icon: MdOutlineMiscellaneousServices,
       chartColor: "#FFF",
+      border:"border border-[#275691b5]"
     },
     {
       title: "Infrastructure IPs",
       value: cardData?.Infrastructure,
-      color: "from-[#0c3827] to-[#0b5c3d]", // Figma Blue gradient
+      color: "from-[#37755d70] to-[#0b5c3d82]", // Figma Blue gradient
       icon: FaNetworkWired,
       chartColor: "#FFF",
+      border: "border border-[#37755d70]"
     },
     {
       title: "Total Vulnerability",
       value: cardData?.totalData,
-      color: "from-[#5c1c2d] to-[#6b3141]", // Figma Cyan gradient
+      color: "from-[#5c1c2dab] to-[#6b314173]", // Figma Cyan gradient
       icon: Bug,
       chartColor: "#FFF",
+      border: "border border-[#5c1c2d]"
     },
     {
       title: "Remediation",
       value: cardData?.inProgress,
-      color: "from-[#163540] to-[#12495c]", // Figma Purple gradient
+      color: "from-[#163540] to-[#12495c99]", // Figma Purple gradient
       icon: MdBuild,
       chartColor: "#FFF",
+      border: "border border-[#163540c4]"
     },
     {
       title: "Exceptions",
       value: cardData?.Exceptions,
-      color: "from-[#6f7015] to-[#888a03]", // Figma Red gradient
+      color: "from-[#6f701566] to-[#888a035e]", // Figma Red gradient
       icon: MdOutlineErrorOutline,
       chartColor: "#FFF",
+      border: "border border-[#888a03]"
     },
   ];
 
@@ -192,11 +197,11 @@ function Home() {
     <>
       <div className="min-h-screen bg-gradient-custom px-6 py-6 ">
 
-        <div className="flex flex-col md:flex-row items-stretch gap-4 bg-zinc-800/50 border border-gray-600 rounded-lg p-4 shadow-sm">
+        <div className="flex flex-col md:flex-row items-stretch gap-4 bg-[#6B728033] border border-[#6B728033]   rounded-lg p-4 shadow-sm">
           <input
             type="text"
             placeholder="Search..."
-            className=" bg-zinc-900 text-white placeholder-gray-400 border border-gray-600 rounded-md px-4 py-2 focus:outline-none transition duration-200"
+            className=" bg-[#6B728033] text-white placeholder-gray-400 border border-gray-600 rounded-md px-4 py-2 focus:outline-none transition duration-200"
           />
 
           <div className="relative w-full md:w-64" ref={dropdownRef}>
@@ -204,7 +209,7 @@ function Home() {
            <div className="relative">
               <div
                 onClick={() => setIsOpen(!isOpen)}
-                className="bg-zinc-900  text-white border border-gray-600 rounded-md px-4 py-2 cursor-pointer"
+                className="bg-[#6B728033]  text-white border border-gray-600 rounded-md px-4 py-2 cursor-pointer"
               >
                 {selected || 'Select Tenant'}
               </div>
@@ -212,14 +217,14 @@ function Home() {
            </div>
            
             {isOpen && (
-              <div className="absolute z-10 w-full bg-zinc-800 border border-gray-600 rounded-md mt-1 shadow-lg">
+              <div className="absolute z-10 w-full bg-[#313140] border border-gray-600 rounded-md mt-1 shadow-lg">
                 <input
                   type="text"
                   placeholder="Search..."
                   autoFocus
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className=" mx-2 px-4 py-2 bg-zinc-900 text-white border-b border-gray-700 outline-none mt-2 rounded-md"
+                  className=" mx-2 px-4 py-2 bg-[#1f1f21] text-white border-b border-gray-700 outline-none mt-2 rounded-md"
                 />
                
 

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 import { Area, AreaChart, ResponsiveContainer } from "recharts";
 
@@ -14,10 +15,10 @@ function Card({ data }) {
 
   return (
     <div
-      className={`p-2 pt-3 border bg-gradient-to-r ${data?.color} border-b hover:scale-95 transition ease-linear rounded-md shadow-sm flex items-center justify-between`}
+      className={`p-2 pt-3 border bg-gradient-to-r ${data?.color} ${data?.border} border-b hover:scale-95 transition ease-linear rounded-md shadow-sm flex items-center justify-between`}
     >
       {/* Left Side: Icon, Title & Value */}
-      <div className="flex flex-col w-full ">
+      <div className="flex h-12 items-center w-full ">
         {/* Icon & Title */}
         <div className="flex items-center gap-2 mb-0.5">
           {data?.icon && <data.icon className="h-5 w-5 text-white" />}
