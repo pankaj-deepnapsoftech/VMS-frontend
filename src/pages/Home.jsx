@@ -96,37 +96,42 @@ function Home() {
     {
       title: "Application",
       value: cardData?.Application,
-      color: "from-[#253e5e] to-[#275691]", // Figma Red gradient
+      color: "from-[#253e5e40] to-[#253e5e8f]", // Figma Red gradient
       icon: MdOutlineMiscellaneousServices,
       chartColor: "#FFF",
+      border:"border border-[#275691b5]"
     },
     {
       title: "Infrastructure IPs",
       value: cardData?.Infrastructure,
-      color: "from-[#0c3827] to-[#0b5c3d]", // Figma Blue gradient
+      color: "from-[#37755d70] to-[#0b5c3d82]", // Figma Blue gradient
       icon: FaNetworkWired,
       chartColor: "#FFF",
+      border: "border border-[#37755d70]"
     },
     {
       title: "Total Vulnerability",
       value: cardData?.totalData,
-      color: "from-[#5c1c2d] to-[#6b3141]", // Figma Cyan gradient
+      color: "from-[#5c1c2dab] to-[#6b314173]", // Figma Cyan gradient
       icon: Bug,
       chartColor: "#FFF",
+      border: "border border-[#5c1c2d]"
     },
     {
       title: "Remediation",
       value: cardData?.inProgress,
-      color: "from-[#163540] to-[#12495c]", // Figma Purple gradient
+      color: "from-[#163540] to-[#12495c99]", // Figma Purple gradient
       icon: MdBuild,
       chartColor: "#FFF",
+      border: "border border-[#163540c4]"
     },
     {
       title: "Exceptions",
       value: cardData?.Exceptions,
-      color: "from-[#6f7015] to-[#888a03]", // Figma Red gradient
+      color: "from-[#6f701566] to-[#888a035e]", // Figma Red gradient
       icon: MdOutlineErrorOutline,
       chartColor: "#FFF",
+      border: "border border-[#888a03]"
     },
   ];
 

@@ -83,7 +83,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="relative w-full min-h-screen bg-gradient-to-tr from-[#2b2973] via-transparent to-black bg-black text-white overflow-hidden">
+    <div className="relative w-full min-h-screen bg-gradient-to-tr from-[#2b2973] via-transparent to-black bg-black text-white">         
 
 
       <div className="absolute inset-0 z-0 bg-[url('/Svg/background.svg')] bg-no-repeat bg-cover bg-center   " />
