@@ -148,14 +148,14 @@ const Dashboard = () => {
         <div className="w-full md:w-[60%] flex flex-col gap-6 pt-10 md:pt-0">
 
 
-          <div className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 aspect-[4/3] rounded-xl bg-gradient-to-r from-[#9b1c4d] to-[#df4156] p-6 shadow-md flex flex-col justify-between">
+          <div className="w-full sm:w-1/2 lg:w-1/3 xl:w-[23%] aspect-[4/3] rounded-xl bg-gradient-to-r from-[#9b1c4d] to-[#df4156] p-6 shadow-md flex flex-col justify-between">
             <div>
               <div className="w-12 h-12 rounded-full bg-[#ffffff3d] flex items-center justify-center">
                 <FiDatabase size={24} color="white" />
               </div>
               <div className="pt-4">
                 <h2 className="text-white text-lg font-semibold">Asset Inventory</h2>
-                <p className="text-gray-300 text-sm mt-1">Monitor all active risk plans</p>
+                <p className="text-gray-200 text-sm mt-1">Active Plan.....</p>
               </div>
             </div>
           </div>
