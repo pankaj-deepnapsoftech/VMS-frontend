@@ -57,10 +57,10 @@ const SignIn = () => {
 
 
   return (
-    <div className="flex min-h-screen bg-[url('/Svg/background.svg')] bg-no-repeat bg-cover bg-black">
+    <div className="flex min-h-screen bg-[url('/Svg/background.svg')] bg-no-repeat bg-cover bg-center bg-black">
       {/* Left side */}
       <div
-        className="flex-[3] text-white relative  hidden lg:block bg-gradient-to-r from-black via-transparent to-black "
+        className="flex-[3] text-white relative  hidden lg:block bg-gradient-to-tr from-[#2b2973] via-transparent to-black "
        
       >
       <img src="/logo.png" className="h-10 my-10 px-10" />
@@ -82,7 +82,7 @@ const SignIn = () => {
               <div
                 key={index}
                 className={`transition-all duration-500 ml-10 rounded-2xl text-white shadow-lg  relative py-3
-          ${isActive ? "max-w-md p-6 bg-gradient-to-br from-[#2b2f58] to-[#2a3250]  " : "bg-transparent max-w-md px-6"} 
+          ${isActive ? "max-w-md p-6 bg-white/30 backdrop-blur-md" : "bg-transparent max-w-md px-6"} 
         `}
               >
                 { isActive && (
@@ -114,7 +114,7 @@ const SignIn = () => {
 
       {/* Right side */}
       <div
-        className=" flex-[2] text-white flex flex-col items-center justify-center border-l border-light  px-2 lg:pl-20 bg-black/90"
+        className=" flex-[2] text-white flex flex-col items-center justify-center border-l border-light  px-2 lg:pl-20 bg-gradient-custom"
         style={{ backgroundPosition: "right 0 1000px" }}
       >
         <h2 className=" text-2xl xl:text-4xl 2xl:text-5xl font-medium py-3 ">
