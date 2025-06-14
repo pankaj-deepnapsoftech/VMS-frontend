@@ -15,7 +15,7 @@ const Roles = () => {
   const [rolesList, setRolesList] = useState([]);
   const [editable, setEditable] = useState(null);
   const [isLoading, setLoading] = useState(null);
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(1);
   const { token } = useAuthContext();
 
   const GetData = async () => {
@@ -86,7 +86,7 @@ const Roles = () => {
     if (token) {
       GetData(page);
     }
-  }, [token,page]);
+  }, [token, page]);
 
   return (
     <>
@@ -95,6 +95,11 @@ const Roles = () => {
       ) : (
         <section className="h-screen w-full px-6  py-8">
           <div className="w-full flex justify-end">
+            <input
+              type="text"
+              placeholder="Search..."
+              className=" bg-zinc-900 text-white placeholder-gray-400 border border-gray-600 rounded-md px-4 py-2 focus:outline-none transition duration-200"
+            />
             <button
               onClick={() => {
                 setModal(true);
@@ -272,7 +277,11 @@ const Roles = () => {
               </div>
             )}
 
-            <Pagination  page={page} setPage={setPage} hasNextPage={rolesList?.length === 10} />
+            <Pagination
+              page={page}
+              setPage={setPage}
+              hasNextPage={rolesList?.length === 10}
+            />
           </div>
         </section>
       )}

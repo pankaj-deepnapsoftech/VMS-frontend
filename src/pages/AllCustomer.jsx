@@ -2,23 +2,16 @@
 /* eslint-disable no-undef */
 
 import AllowedModal from "@/components/modal/AllowedModal";
-import {
-  useAllEmployeeContext,
-  useAuthContext,
-} from "@/context";
+import { useAllEmployeeContext, useAuthContext } from "@/context";
 import { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
-import {
-  FaEdit,
-  FaTrash,
-} from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import { AxiosHandler } from "@/config/AxiosConfig";
 import Pagination from "./Pagination";
 import Loader from "@/components/Loader/Loader";
 import Addtanent from "./Addtanent";
 
 export default function AllCustomer() {
-
   const { token } = useAuthContext();
   const { VerifyEmployee } = useAllEmployeeContext();
 
@@ -28,7 +21,7 @@ export default function AllCustomer() {
   const [dataId, setDataId] = useState(null);
   const [tenants, setTenants] = useState([]);
   const [editTable, setEditTable] = useState(null);
-  const [isLoading, setLoading] = useState(false)
+  const [isLoading, setLoading] = useState(false);
   const getTenants = async () => {
     try {
       const res = await AxiosHandler.get(`/tenant/get?page=${page}&limit=10`);
@@ -38,10 +31,8 @@ export default function AllCustomer() {
     }
   };
 
-
-
   const DeleteData = async (_id) => {
-    setLoading(true)
+    setLoading(true);
     try {
       if (window.confirm("Are you sure you want to delete this element?")) {
         await AxiosHandler.delete(`/tenant/delete/${_id}`);
@@ -50,14 +41,10 @@ export default function AllCustomer() {
       }
     } catch (error) {
       console.log(error);
-    }finally{
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
   };
-
-
-
-
 
   useEffect(() => {
     if (token) {
@@ -67,10 +54,15 @@ export default function AllCustomer() {
 
   return (
     <>
-      { isLoading ? (
-      <Loader/>
+      {isLoading ? (
+        <Loader />
       ) : (
         <div className="h-screen ">
+          <input
+            type="text"
+            placeholder="Search..."
+            className=" bg-zinc-900 text-white placeholder-gray-400 border border-gray-600 rounded-md px-4 py-2 focus:outline-none transition duration-200"
+          />
           <div className="flex w-full justify-end py-4">
             <button
               onClick={() => {
@@ -86,71 +78,74 @@ export default function AllCustomer() {
 
           <div className="m-6 p-2 bg-tablecolor shadow-lg rounded-lg">
             <div>
-            <div className="mt-6 bg-[#0c1120] overflow-x-auto text-sm text-white">
-              {tenants.length < 1 ? (
-                <div className="text-center py-6 text-gray-400">
-                  No matching records found.
-                </div>
-              ) : (
-                <>
-                  <table className="min-w-full divide-y divide-gray-700">
-                    <thead className="bg-gradient-to-br from-[#0a0f39] via-[#080d27] to-[#050b20]  whitespace-nowrap">
-                      <tr>
-                        <th className="px-4 py-3 text-left">Company Name</th>
-                        <th className="px-4 py-3 text-left">Website URL</th>
-                        <th className="px-4 py-3 text-left">Employee Count</th>
-                        <th className="px-4 py-3 text-left">Country</th>
-                        <th className="px-4 py-3 text-left">State</th>
-                        <th className="px-4 py-3 text-left">City</th>
-                        <th className="px-4 py-3 text-left">Industry</th>
-                        <th className="px-4 py-3 text-left">Risk Appetite</th>
-                        <th className="px-4 py-3 text-left">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody className="text-sm text-gray-300">
-                      {tenants?.map((tenant, index) => (
-                        <tr
-                          key={index}
-                          className="border-b border-gray-700 whitespace-nowrap hover:bg-[#1e1e1e] transition"
-                        >
-                          <td className="p-3">{tenant.company_name}</td>
-                          <td className="p-3">{tenant.Website_url}</td>
-                          <td className="p-3">{tenant.Employee_count}</td>
-                          <td className="p-3">{tenant.Country}</td>
-                          <td className="p-3">{tenant.State}</td>
-                          <td className="p-3">{tenant.City}</td>
-                          <td className="p-3">{tenant.Industry}</td>
-                          <td className="p-3">{tenant.Risk_Apetite}</td>
-                          <td className="p-3 flex gap-2">
-                            <FaEdit
-                              title="Edit"
-                              onClick={() => {
-                                setEditTable(tenant);
-                                setIsModalOpen(true);
-                              }}
-                              className="text-blue-400 cursor-pointer"
-                            />
-                            <FaTrash
-                              title="Delete"
-                              onClick={() => DeleteData(tenant?._id)}
-                              className="text-red-500 cursor-pointer"
-                            />
-                          </td>
+              <div className="mt-6 bg-[#0c1120] overflow-x-auto custom-scrollbar text-sm text-white">
+                {tenants.length < 1 ? (
+                  <div className="text-center py-6 text-gray-400">
+                    No matching records found.
+                  </div>
+                ) : (
+                  <>
+                    <table className="min-w-full divide-y divide-gray-700">
+                      <thead className="bg-gradient-to-br from-[#0a0f39] via-[#080d27] to-[#050b20]  whitespace-nowrap">
+                        <tr>
+                          <th className="px-4 py-3 text-left">Company Name</th>
+                          <th className="px-4 py-3 text-left">Website URL</th>
+                          <th className="px-4 py-3 text-left">
+                            Employee Count
+                          </th>
+                          <th className="px-4 py-3 text-left">Country</th>
+                          <th className="px-4 py-3 text-left">State</th>
+                          <th className="px-4 py-3 text-left">City</th>
+                          <th className="px-4 py-3 text-left">Industry</th>
+                          <th className="px-4 py-3 text-left">Risk Appetite</th>
+                          <th className="px-4 py-3 text-left">Actions</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody className="text-sm text-gray-300">
+                        {tenants?.map((tenant, index) => (
+                          <tr
+                            key={index}
+                            className="border-b border-gray-700 whitespace-nowrap hover:bg-[#1e1e1e] transition"
+                          >
+                            <td className="p-3">{tenant.company_name}</td>
+                            <td className="p-3">{tenant.Website_url}</td>
+                            <td className="p-3">{tenant.Employee_count}</td>
+                            <td className="p-3">{tenant.Country}</td>
+                            <td className="p-3">{tenant.State}</td>
+                            <td className="p-3">{tenant.City}</td>
+                            <td className="p-3">{tenant.Industry}</td>
+                            <td className="p-3">{tenant.Risk_Apetite}</td>
+                            <td className="p-3 flex gap-2">
+                              <FaEdit
+                                title="Edit"
+                                onClick={() => {
+                                  setEditTable(tenant);
+                                  setIsModalOpen(true);
+                                }}
+                                className="text-blue-400 cursor-pointer"
+                              />
+                              <FaTrash
+                                title="Delete"
+                                onClick={() => DeleteData(tenant?._id)}
+                                className="text-red-500 cursor-pointer"
+                              />
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </>
+                )}
+              </div>
 
-
-                </>
-              )}
+              <Pagination
+                page={page}
+                setPage={setPage}
+                hasNextPage={tenants.length === 10}
+              />
             </div>
-
-              <Pagination page={page} setPage={setPage} hasNextPage={tenants.length === 10}/>
           </div>
         </div>
-        </div>
-        
       )}
 
       {isChecked && (
@@ -160,11 +155,16 @@ export default function AllCustomer() {
           id={dataId}
         />
       )}
-      {
-        isModalOpen && (
-          <Addtanent isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} isLoading={isLoading} setLoading={setLoading} getTenants={getTenants} editTable={editTable} />
-        )
-      }
+      {isModalOpen && (
+        <Addtanent
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          isLoading={isLoading}
+          setLoading={setLoading}
+          getTenants={getTenants}
+          editTable={editTable}
+        />
+      )}
     </>
   );
 }

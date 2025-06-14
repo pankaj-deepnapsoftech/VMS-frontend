@@ -10,8 +10,13 @@ export default function EmailConfigPanel() {
   };
 
   return (
-   <section className="h-screen">
+    <section className="h-screen">
       <div className="bg-cards text-white p-6  rounded-md shadow-md w-full mt-10 max-w-4xl mx-auto">
+        <input
+          type="text"
+          placeholder="Search..."
+          className=" bg-zinc-900 text-white placeholder-gray-400 border border-gray-600 rounded-md px-4 py-2 focus:outline-none transition duration-200"
+        />
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold">Configure Email</h2>
           <button
@@ -115,6 +120,6 @@ export default function EmailConfigPanel() {
           </div>
         </div>
       </div>
-   </section>
+    </section>
   );
 }

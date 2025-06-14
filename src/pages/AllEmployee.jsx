@@ -4,11 +4,7 @@ import InputField from "@/components/InputField";
 import Loader from "@/components/Loader/Loader";
 import NoDataFound from "@/components/NoDataFound";
 import { AxiosHandler } from "@/config/AxiosConfig";
-import {
-  useAllEmployeeContext,
-  useAuthContext,
-
-} from "@/context";
+import { useAllEmployeeContext, useAuthContext } from "@/context";
 import { BaseValidationSchema, EditUser } from "@/Validation/AuthValidation";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
@@ -19,76 +15,75 @@ import { RiDeleteBinFill, RiEdit2Line } from "react-icons/ri";
 import Pagination from "./Pagination";
 
 const AllEmployee = () => {
-  const {
-    VerifyEmployee,
-    DeleteUser,
-   
-  } = useAllEmployeeContext();
+  const { VerifyEmployee, DeleteUser } = useAllEmployeeContext();
 
-  const {  token  } =
-    useAuthContext();
+  const { token } = useAuthContext();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editable, setEdiTable] = useState(null);
-  const [EmpData, setEmpData,] = useState([]);
+  const [EmpData, setEmpData] = useState([]);
   const [TenantData, setTenantData] = useState([]);
   const [RoleAllData, setRoleAllData] = useState([]);
-  const [page, setPage] = useState(1)
-  const [isloading, setloading] = useState(false)
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit, resetForm } =
-    useFormik({
-      initialValues: editable || {
-        fname: "",
-        lname: "",
-        phone: "",
-        email: "",
-        password: "",
-        tenant: "",
-        role: "",
-
-      },
-      validationSchema: editable ? EditUser : BaseValidationSchema,
-      enableReinitialize: true,
-      onSubmit: async (value) => {
-        setloading(true)
-        try {
-          if (editable) {
-             await AxiosHandler.put(`/auth/update-user/${value._id}`, value);
-          } else {
-             await AxiosHandler.post(`/auth/create`, value);
-          }
-          setIsModalOpen(false);
-          GetUsers()
-          resetForm()
-        } catch (error) {
-          console.error(error);
-        }finally{
-          setloading(false)
+  const [page, setPage] = useState(1);
+  const [isloading, setloading] = useState(false);
+  const {
+    values,
+    errors,
+    touched,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    resetForm,
+  } = useFormik({
+    initialValues: editable || {
+      fname: "",
+      lname: "",
+      phone: "",
+      email: "",
+      password: "",
+      tenant: "",
+      role: "",
+    },
+    validationSchema: editable ? EditUser : BaseValidationSchema,
+    enableReinitialize: true,
+    onSubmit: async (value) => {
+      setloading(true);
+      try {
+        if (editable) {
+          await AxiosHandler.put(`/auth/update-user/${value._id}`, value);
+        } else {
+          await AxiosHandler.post(`/auth/create`, value);
         }
-      },
-    });
+        setIsModalOpen(false);
+        GetUsers();
+        resetForm();
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setloading(false);
+      }
+    },
+  });
 
   const handleChangeStatus = (type, id) => {
-    if (
-      window.confirm("Are you sure you want to change this user's status?")
-    ) {
+    if (window.confirm("Are you sure you want to change this user's status?")) {
       const deactivate = type === "activate";
       // eslint-disable-next-line react-hooks/rules-of-hooks
       useAuthContext().ChangeStatus({ deactivate }, id);
     }
   };
 
-  const GetUsers = async (page=1) => {
-    setloading(true)
+  const GetUsers = async (page = 1) => {
+    setloading(true);
     try {
-      const res = await AxiosHandler.get(`/auth/all-users?page=${page}&limit=10`);
+      const res = await AxiosHandler.get(
+        `/auth/all-users?page=${page}&limit=10`
+      );
       setEmpData(res?.data.data);
-
     } catch (error) {
       console.error(error);
-
-    }finally{
-      setloading(false)
+    } finally {
+      setloading(false);
     }
   };
 
@@ -96,10 +91,8 @@ const AllEmployee = () => {
     try {
       const res = await AxiosHandler.get("/tenant/get-all");
       setTenantData(res?.data?.data);
-
     } catch (error) {
       console.error(error);
-
     }
   };
 
@@ -107,14 +100,11 @@ const AllEmployee = () => {
     try {
       const res = await AxiosHandler.get("/role/get-all");
       setRoleAllData(res?.data?.data);
-
     } catch (error) {
       console.error("Error fetching roles:", error);
       setApiError("Failed to fetch roles. Please try again.");
     }
   };
-
-
 
   useEffect(() => {
     if (token) {
@@ -124,17 +114,24 @@ const AllEmployee = () => {
     }
   }, [token, page]);
 
-
   return (
     <>
-      { isloading ? (
+      {isloading ? (
         <Loader />
       ) : (
         <div className=" p-2  h-screen shadow-lg ">
+          <input
+            type="text"
+            placeholder="Search..."
+            className=" bg-zinc-900 text-white placeholder-gray-400 border border-gray-600 rounded-md px-4 py-2 focus:outline-none transition duration-200"
+          />
           <div className="flex justify-between items-center">
             <div className="flex w-full justify-end py-4">
               <button
-                onClick={() => { setIsModalOpen(true); setEdiTable(null) }}
+                onClick={() => {
+                  setIsModalOpen(true);
+                  setEdiTable(null);
+                }}
                 className="px-4 py-2 bg-[#101b3d] text-white font-medium rounded-md hover:bg-blue-900 flex flex-row"
               >
                 <BiPlus className="h-6 w-6 mr-1" />
@@ -157,7 +154,6 @@ const AllEmployee = () => {
                     </button>
                   </div>
                   <div className="p-10">
-
                     <form
                       onSubmit={handleSubmit}
                       className="space-y-5 w-full flex flex-col"
@@ -175,9 +171,7 @@ const AllEmployee = () => {
                           name="fname"
                         />
                         {touched.fname && errors.fname && (
-                          <p className="text-red-400 text-sm">
-                            {errors.fname}
-                          </p>
+                          <p className="text-red-400 text-sm">{errors.fname}</p>
                         )}
                         <InputField
                           label="Last Name"
@@ -191,9 +185,7 @@ const AllEmployee = () => {
                           name="lname"
                         />
                         {touched.lname && errors.lname && (
-                          <p className="text-red-400 text-sm">
-                            {errors.lname}
-                          </p>
+                          <p className="text-red-400 text-sm">{errors.lname}</p>
                         )}
                         <InputField
                           label="Email Address"
@@ -286,17 +278,18 @@ const AllEmployee = () => {
                               showPassword={true}
                               icon={FaLock}
                               value={values.password}
-                              onBlur={handleBlur} 
+                              onBlur={handleBlur}
                               onChange={handleChange}
                               placeholder="Enter your Password"
                               name="password"
                             />
                             {touched.password && errors.password && (
-                              <p className="text-red-400 text-sm">{errors.password}</p>
+                              <p className="text-red-400 text-sm">
+                                {errors.password}
+                              </p>
                             )}
                           </>
                         )}
-
                       </div>
                       <div className="flex justify-end gap-2 border-t pt-4">
                         <button
@@ -323,107 +316,117 @@ const AllEmployee = () => {
           {EmpData?.length < 1 ? (
             <NoDataFound />
           ) : (
-                <div className="overflow-x-auto w-[95%] rounded-xl mx-auto shadow-lg bg-[#0c1120]">
-                  <table className="min-w-full table-auto text-sm text-left text-gray-300 divide-y divide-gray-700">
-                    <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider"> 
-                      <tr>
-                        {[
-                          "S No.",
-                          "First Name",
-                          "Last Name",
-                          "Email",
-                          "Phone",
-                          "Role",
-                          "Tenant",
-                          "Approval Status",
-                          "Status",
-                          "Actions",
-                        ].map((header) => (
-                          <th
-                            key={header}
-                            className="px-4 py-3 border-b border-gray-600 font-medium"
+            <div className="overflow-x-auto w-[95%] rounded-xl mx-auto shadow-lg bg-[#0c1120]">
+              <table className="min-w-full table-auto text-sm text-left text-gray-300 divide-y divide-gray-700">
+                <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
+                  <tr>
+                    {[
+                      "S No.",
+                      "First Name",
+                      "Last Name",
+                      "Email",
+                      "Phone",
+                      "Role",
+                      "Tenant",
+                      "Approval Status",
+                      "Status",
+                      "Actions",
+                    ].map((header) => (
+                      <th
+                        key={header}
+                        className="px-4 py-3 border-b border-gray-600 font-medium"
+                      >
+                        {header}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-700">
+                  {EmpData?.map((user, index) => (
+                    <tr
+                      key={user._id}
+                      className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
+                    >
+                      <td className="px-4 py-3">{index + 1}</td>
+                      <td className="px-4 py-3 capitalize">{user.fname}</td>
+                      <td className="px-4 py-3 capitalize">{user.lname}</td>
+                      <td className="px-4 py-3">{user.email}</td>
+                      <td className="px-4 py-3">{user.phone}</td>
+                      <td className="px-4 py-3">{user.role?.role || "—"}</td>
+                      <td className="px-4 py-3">
+                        {user.tenant?.company_name || "—"}
+                      </td>
+                      <td className="px-4 py-3">
+                        {user.employee_approve ? (
+                          <span className="inline-block px-3 py-1 text-xs font-semibold text-green-500 bg-green-900/30 rounded-full">
+                            Approved
+                          </span>
+                        ) : (
+                          <button
+                            onClick={() =>
+                              window.confirm("Verify this employee?") &&
+                              VerifyEmployee(user._id)
+                            }
+                            className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs"
                           >
-                            {header}
-                          </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-700">
-                      {EmpData?.map((user, index) => (
-                        <tr
-                          key={user._id}
-                          className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
+                            Verify
+                          </button>
+                        )}
+                      </td>
+                      <td className="px-4 py-3">
+                        {user.deactivate ? (
+                          <button
+                            onClick={() =>
+                              handleChangeStatus("deactivate", user._id)
+                            }
+                            className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs"
+                          >
+                            Activate
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() =>
+                              handleChangeStatus("activate", user._id)
+                            }
+                            className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs"
+                          >
+                            Deactivate
+                          </button>
+                        )}
+                      </td>
+                      <td className="px-4 py-3 flex gap-2">
+                        <button
+                          onClick={() =>
+                            window.confirm("Delete this user?") &&
+                            DeleteUser(user._id)
+                          }
+                          title="Delete"
+                          className="text-red-500 hover:text-red-700"
                         >
-                          <td className="px-4 py-3">{index + 1}</td>
-                          <td className="px-4 py-3 capitalize">{user.fname}</td>
-                          <td className="px-4 py-3 capitalize">{user.lname}</td>
-                          <td className="px-4 py-3">{user.email}</td>
-                          <td className="px-4 py-3">{user.phone}</td>
-                          <td className="px-4 py-3">{user.role?.role || "—"}</td>
-                          <td className="px-4 py-3">{user.tenant?.company_name || "—"}</td>
-                          <td className="px-4 py-3">
-                            {user.employee_approve ? (
-                              <span className="inline-block px-3 py-1 text-xs font-semibold text-green-500 bg-green-900/30 rounded-full">
-                                Approved
-                              </span>
-                            ) : (
-                              <button
-                                onClick={() =>
-                                  window.confirm("Verify this employee?") &&
-                                  VerifyEmployee(user._id)
-                                }
-                                className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs"
-                              >
-                                Verify
-                              </button>
-                            )}
-                          </td>
-                          <td className="px-4 py-3">
-                            {user.deactivate ? (
-                              <button
-                                onClick={() => handleChangeStatus("deactivate", user._id)}
-                                className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs"
-                              >
-                                Activate
-                              </button>
-                            ) : (
-                              <button
-                                onClick={() => handleChangeStatus("activate", user._id)}
-                                className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs"
-                              >
-                                Deactivate
-                              </button>
-                            )}
-                          </td>
-                          <td className="px-4 py-3 flex gap-2">
-                            <button
-                              onClick={() =>
-                                window.confirm("Delete this user?") && DeleteUser(user._id)
-                              }
-                              title="Delete"
-                              className="text-red-500 hover:text-red-700"
-                            >
-                              <RiDeleteBinFill className="w-5 h-5" />
-                            </button>
-                            <button
-                              onClick={() => {
-                                setEdiTable(user);
-                                setIsModalOpen(true);
-                              }}
-                              title="Edit"
-                              className="text-blue-500 hover:text-blue-700"
-                            >
-                              <RiEdit2Line className="w-5 h-5" />
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-          
+                          <RiDeleteBinFill className="w-5 h-5" />
+                        </button>
+                        <button
+                          onClick={() => {
+                            setEdiTable(user);
+                            setIsModalOpen(true);
+                          }}
+                          title="Edit"
+                          className="text-blue-500 hover:text-blue-700"
+                        >
+                          <RiEdit2Line className="w-5 h-5" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
-          <Pagination page={page} setPage={setPage} hasNextPage={EmpData.length === 10} /> 
+          <Pagination
+            page={page}
+            setPage={setPage}
+            hasNextPage={EmpData.length === 10}
+          />
         </div>
       )}
     </>
