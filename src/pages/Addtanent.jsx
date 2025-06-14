@@ -214,9 +214,12 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                                         className="w-full bg-zinc-700 text-gray-200 placeholder-gray-500 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
                                     >
                                         <option value="" selected disabled>select State</option>
-                                        {formik.values.Country && countryData.filter(item => item.name === formik.values.Country)[0].states.map((item, index) => (
-                                            <option key={index} value={item.name} >{item.name}</option>
-                                        ))}
+                                        {formik.values.Country && (
+                                            countryData.find(item => item.name === formik.values.Country)?.states?.map((state, index) => (
+                                                <option key={index} value={state.name}>{state.name}</option>
+                                            ))
+                                        )}
+
                                     </select>
                                     {formik.touched.State && formik.errors.State && (
                                         <p className="text-red-500 text-xs mt-1">{formik.errors.State}</p>
@@ -255,7 +258,7 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                             <div className="mb-4">
                                 <p className="font-semibold text-white"> TruRisk</p>
                                 <p className="text-sm text-gray-400">
-                                    Qualys TruRisk Score for assets is calculated based on the Asset Criticality Score (ACS) and Qualys Detection Score (QDS) assigned to all findings (vulnerabilities and misconfigurations) from Qualys and third-party data sources.{" "}
+                                    Secure& TruRisk Score for assets is calculated based on the Asset Criticality Score (ACS) and Secure& Detection Score (QDS) assigned to all findings (vulnerabilities and misconfigurations) from Secure& and third-party data sources.{" "}
                                     <a href="#" className="text-blue-400 underline">Learn More</a>
                                 </p>
                             </div>
