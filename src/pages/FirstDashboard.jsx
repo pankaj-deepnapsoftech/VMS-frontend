@@ -148,7 +148,7 @@ const Dashboard = () => {
         <div className="w-full md:w-[60%] flex flex-col gap-6 pt-10 md:pt-0">
 
 
-          <div className="w-full sm:w-1/2 lg:w-1/3 xl:w-[23%] aspect-[4/3] rounded-xl bg-gradient-to-r from-[#9b1c4d] to-[#df4156] p-6 shadow-md flex flex-col justify-between">
+          <div className="w-full sm:w-1/2 lg:w-1/3 2xl:w-[23%] aspect-[4/3] rounded-xl bg-gradient-to-r from-[#9b1c4d] to-[#df4156] p-6 shadow-md flex flex-col justify-between">
             <div>
               <div className="w-12 h-12 rounded-full bg-[#ffffff3d] flex items-center justify-center">
                 <FiDatabase size={24} color="white" />
@@ -161,7 +161,7 @@ const Dashboard = () => {
           </div>
 
 
-          <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
 
             {showModal
               ? filteredProducts.map((item, index) => (
