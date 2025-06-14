@@ -52,7 +52,7 @@ const Partners = () => {
     const GetPartnerData = async (page = 1) => {
         setLoading(true)
         try {
-            const res = await AxiosHandler.get(`/partner/get?page=${page}&limit=3`);
+            const res = await AxiosHandler.get(`/partner/get?page=${page}&limit=10`);
             setPartnersData(res?.data?.data)
         } catch (error) {
             console.log(error)
@@ -275,7 +275,7 @@ const Partners = () => {
 
                             </>
                         )}
-                            <Pagination page={page} setPage={setPage} hasNextPage={partnersData.length === 3}  />
+                            <Pagination page={page} setPage={setPage} hasNextPage={partnersData.length === 10}  />
                     </div>
 
                 </section>

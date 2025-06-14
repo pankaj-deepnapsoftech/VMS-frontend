@@ -93,7 +93,7 @@ const Roles = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <section className="min-h-[90%] w-full px-6  py-8">
+        <section className="h-screen w-full px-6  py-8">
           <div className="w-full flex justify-end">
             <button
               onClick={() => {
