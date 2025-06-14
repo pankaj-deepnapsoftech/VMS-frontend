@@ -149,7 +149,7 @@ export const products = [
     title: "TPRM",
     desc: "Third-Party Risk Management",
     borderColor: "#43cea2",
-    icon: "<Users />",
+    icon: <Users />,
     allowedPath: [],
   },
   {
