@@ -255,7 +255,7 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                             <div className="mb-4">
                                 <p className="font-semibold text-white"> TruRisk</p>
                                 <p className="text-sm text-gray-400">
-                                    Qualys TruRisk Score for assets is calculated based on the Asset Criticality Score (ACS) and Qualys Detection Score (QDS) assigned to all findings (vulnerabilities and misconfigurations) from Qualys and third-party data sources.{" "}
+                                    Secure& TruRisk Score for assets is calculated based on the Asset Criticality Score (ACS) and Secure& Detection Score (QDS) assigned to all findings (vulnerabilities and misconfigurations) from Secure& and third-party data sources.{" "}
                                     <a href="#" className="text-blue-400 underline">Learn More</a>
                                 </p>
                             </div>
