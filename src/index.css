@@ -126,3 +126,14 @@ html {
   animation: slideInX 0.5s ease-out forwards;
 }
  
+
+@layer utilities {
+  .bg-gradient-custom {
+    background-image: linear-gradient(to bottom right, black 20%, transparent 80%, white 80%);
+  }
+}
+
+
+
+
+
