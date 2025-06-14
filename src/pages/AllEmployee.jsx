@@ -123,7 +123,7 @@ const AllEmployee = () => {
           <input
             type="text"
             placeholder="Search..."
-            className=" bg-zinc-900 text-white placeholder-gray-400 border border-gray-600 rounded-md px-4 py-2 focus:outline-none transition duration-200"
+            className=" bg-zinc-900 text-white placeholder-gray-400 border border-gray-600 rounded-md px-4 py-2 mt-5 ml-5 focus:outline-none transition duration-200"
           />
           <div className="flex justify-between items-center">
             <div className="flex w-full justify-end py-4">
