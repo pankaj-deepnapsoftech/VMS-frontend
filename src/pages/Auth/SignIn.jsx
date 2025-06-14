@@ -114,7 +114,7 @@ const SignIn = () => {
 
       {/* Right side */}
       <div
-        className=" flex-[2] text-white flex flex-col items-center justify-center border-l border-light  px-2 lg:pl-20 bg-gradient-custom"
+        className=" flex-[2] text-white flex flex-col items-center justify-center border-l border-light  px-2 lg:pl-20 "
         style={{ backgroundPosition: "right 0 1000px" }}
       >
         <h2 className=" text-2xl xl:text-4xl 2xl:text-5xl font-medium py-3 ">
