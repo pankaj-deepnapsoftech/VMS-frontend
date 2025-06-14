@@ -127,11 +127,11 @@ html {
 }
  
 
-@layer utilities {
+/* @layer utilities {
   .bg-gradient-custom {
     background-image: linear-gradient(to bottom right, black 20%, transparent 80%, white 80%);
   }
-}
+} */
 
 
 
