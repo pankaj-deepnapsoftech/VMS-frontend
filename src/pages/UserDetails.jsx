@@ -60,10 +60,18 @@ export default function UserDetailsForm() {
         {/* Form Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Upload Placeholder */}
-          <div className="border-2 border-dashed border-gray-500 bg-[#2e2e2e] h-40 flex flex-col items-center justify-center rounded-md text-sm text-gray-400">
-            <span className="text-2xl">+</span>
-            <p>Upload profile picture</p>
-            <p className="text-xs">jpeg, jpg, png (less than 2MB)</p>
+          <div className="flex items-center gap-4 text-gray-400">
+            {/* Circle Upload Box */}
+            <div className="w-20 h-20 flex items-center justify-center rounded-full border-2 border-dashed border-gray-500 bg-[#2e2e2e] cursor-pointer">
+              <span className="text-3xl">+</span>
+            </div>
+
+            {/* Text Info */}
+            <div className="text-sm">
+              <p className="text-white">Upload profile picture</p>
+              <p className="text-xs text-gray-400">.jpeg, .jpg, .png</p>
+              <p className="text-xs text-gray-400">Size less than 2MB</p>
+            </div>
           </div>
 
           {/* Name Fields */}
