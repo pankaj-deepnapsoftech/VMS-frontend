@@ -197,8 +197,8 @@ const Roles = () => {
               </p>
             ) : (
               <div className="overflow-x-auto bg-[#0c1120] rounded-md shadow-xl">
-                <table className="min-w-full divide-y divide-gray-700">
-                  <thead className="bg-gradient-to-bl from-[#0a0f39] via-[#080d27] to-[#050b20]">
+                <table className="min-w-full divide-y  divide-gray-700">
+                  <thead className="bg-gradient-to-bl from-[#0a0f39] via-[#080d27]  to-[#050b20]">
                     <tr>
                       <th className="px-6 py-3 text-left text-sm font-semibold text-white">
                         Role

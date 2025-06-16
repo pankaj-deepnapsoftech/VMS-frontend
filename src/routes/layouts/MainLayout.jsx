@@ -89,7 +89,7 @@ const MainLayout = () => {
             className={` 
     fixed z-10 flex flex-col justify-between h-full 
     bg-gradient-to-t from-[#151515] to-[#212224] 
-    transition-all duration-500 ease-in-out
+    transition-all duration-500 ease-in-out 
     ${showSidebar ? "lg:w-[30%] xl:w-[25%] 2xl:w-[15%]" : "lg:w-[5%] xl:w-[4%] 2xl:w-[3%]"} 
     ${showMenu ? `left-0` : "-left-full"} 
     whitespace-nowrap

@@ -138,179 +138,6 @@ const AllEmployee = () => {
                 Add User
               </button>
             </div>
-
-            {isModalOpen && (
-              <div className="fixed inset-0 bg-input bg-opacity-50 flex items-center justify-center p-4 z-10">
-                <div className="bg-gradient-custom rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-                  <div className="flex justify-between items-center border-b p-4 bg-table">
-                    <h2 className="text-lg font-semibold text-gray-200">
-                      {editable ? "Edit User" : "Add User"}
-                    </h2>
-                    <button
-                      onClick={() => setIsModalOpen(false)}
-                      className="text-gray-100 hover:text-gray-200"
-                    >
-                      <MdClose className="h-6 w-6" />
-                    </button>
-                  </div>
-                  <div className="p-10">
-                    <form
-                      onSubmit={handleSubmit}
-                      className="space-y-5 w-full flex flex-col"
-                    >
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                        <InputField
-                          label="First Name"
-                          type="text"
-                          showPassword={false}
-                          icon={FaUser}
-                          value={values.fname}
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          placeholder="Enter your First Name"
-                          name="fname"
-                        />
-                        {touched.fname && errors.fname && (
-                          <p className="text-red-400 text-sm">{errors.fname}</p>
-                        )}
-                        <InputField
-                          label="Last Name"
-                          type="text"
-                          showPassword={false}
-                          icon={FaUser}
-                          value={values.lname}
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          placeholder="Enter your Last Name"
-                          name="lname"
-                        />
-                        {touched.lname && errors.lname && (
-                          <p className="text-red-400 text-sm">{errors.lname}</p>
-                        )}
-                        <InputField
-                          label="Email Address"
-                          type="email"
-                          showPassword={false}
-                          icon={FaEnvelope}
-                          value={values.email}
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          placeholder="Enter your Email Address"
-                          name="email"
-                        />
-                        {touched.email && errors.email && (
-                          <p className="text-red-400 text-sm">{errors.email}</p>
-                        )}
-
-                        <div className="w-full">
-                          <label className="text-white "> Role</label>
-                          <select
-                            className="w-full bg-input border py-2 rounded-lg text-white px-2 border-gray-600"
-                            name="role"
-                            value={values.role}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                          >
-                            <option selected disabled value="">
-                              {" "}
-                              Select role
-                            </option>
-                            {RoleAllData?.map((ele) => (
-                              <option key={ele._id} value={ele._id}>
-                                {ele?.role}
-                              </option>
-                            ))}
-                          </select>
-                          {touched.role && errors.role && (
-                            <p className="text-red-500">{errors.role}</p>
-                          )}
-                        </div>
-
-                        <div>
-                          <label
-                            htmlFor="tenant"
-                            className="block text-sm text-white font-medium mb-1"
-                          >
-                            Tenant
-                          </label>
-                          <select
-                            id="tenant"
-                            name="tenant"
-                            value={values.tenant}
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                            className="bg-input w-full py-2 rounded-lg px-3 text-white"
-                          >
-                            <option selected disabled value="">
-                              {" "}
-                              Select tenant
-                            </option>
-                            {TenantData?.map((item) => (
-                              <option key={item._id} value={item._id}>
-                                {item?.company_name}
-                              </option>
-                            ))}
-                          </select>
-                          {touched.tenant && errors.tenant && (
-                            <p className="text-red-500">{errors.tenant}</p>
-                          )}
-                        </div>
-
-                        <InputField
-                          label="Phone Number"
-                          type="text"
-                          showPassword={false}
-                          icon={FaPhone}
-                          value={values.phone}
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          placeholder="Enter your Phone Number"
-                          name="phone"
-                        />
-                        {touched.phone && errors.phone && (
-                          <p className="text-red-400 text-sm">{errors.phone}</p>
-                        )}
-                        {!editable && (
-                          <>
-                            <InputField
-                              label="Password"
-                              type="password"
-                              showPassword={true}
-                              icon={FaLock}
-                              value={values.password}
-                              onBlur={handleBlur}
-                              onChange={handleChange}
-                              placeholder="Enter your Password"
-                              name="password"
-                            />
-                            {touched.password && errors.password && (
-                              <p className="text-red-400 text-sm">
-                                {errors.password}
-                              </p>
-                            )}
-                          </>
-                        )}
-                      </div>
-                      <div className="flex justify-end gap-2 border-t pt-4">
-                        <button
-                          type="button"
-                          onClick={() => setIsModalOpen(false)}
-                          className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          type="submit"
-                          className="px-4 py-2 bg-[#015289] text-white rounded-md hover:bg-blue-700"
-                        >
-                          Save
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
 
           {EmpData?.length < 1 ? (
@@ -423,6 +250,178 @@ const AllEmployee = () => {
           />
         </div>
       )}
+ 
+        <div className={`absolute top-0 left-0 flex justify-center items-center over z-50 h-screen bg-gradient-custom w-full text-white ${isModalOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}  transition-opacity duration-500 ease-in-out`}>
+        <div className="bg-gradient-custom rounded-lg shadow-lg border  border-[#222a39] w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center border-b p-4 bg-table">
+              <h2 className="text-lg font-semibold text-gray-200">
+                {editable ? "Edit User" : "Add User"}
+              </h2>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="text-gray-100 hover:text-gray-200"
+              >
+                <MdClose className="h-6 w-6" />
+              </button>
+            </div>
+            <div className="p-10">
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-5 w-full flex flex-col"
+              >
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                  <InputField
+                    label="First Name"
+                    type="text"
+                    showPassword={false}
+                    icon={FaUser}
+                    value={values.fname}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    placeholder="Enter your First Name"
+                    name="fname"
+                  />
+                  {touched.fname && errors.fname && (
+                    <p className="text-red-400 text-sm">{errors.fname}</p>
+                  )}
+                  <InputField
+                    label="Last Name"
+                    type="text"
+                    showPassword={false}
+                    icon={FaUser}
+                    value={values.lname}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    placeholder="Enter your Last Name"
+                    name="lname"
+                  />
+                  {touched.lname && errors.lname && (
+                    <p className="text-red-400 text-sm">{errors.lname}</p>
+                  )}
+                  <InputField
+                    label="Email Address"
+                    type="email"
+                    showPassword={false}
+                    icon={FaEnvelope}
+                    value={values.email}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    placeholder="Enter your Email Address"
+                    name="email"
+                  />
+                  {touched.email && errors.email && (
+                    <p className="text-red-400 text-sm">{errors.email}</p>
+                  )}
+
+                  <div className="w-full">
+                    <label className="text-white "> Role</label>
+                    <select
+                      className="w-full bg-input border py-2 rounded-lg text-white px-2 border-gray-600"
+                      name="role"
+                      value={values.role}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    >
+                      <option selected disabled value="">
+                        {" "}
+                        Select role
+                      </option>
+                      {RoleAllData?.map((ele) => (
+                        <option key={ele._id} value={ele._id}>
+                          {ele?.role}
+                        </option>
+                      ))}
+                    </select>
+                    {touched.role && errors.role && (
+                      <p className="text-red-500">{errors.role}</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="tenant"
+                      className="block text-sm text-white font-medium mb-1"
+                    >
+                      Tenant
+                    </label>
+                    <select
+                      id="tenant"
+                      name="tenant"
+                      value={values.tenant}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      className="bg-input w-full py-2 rounded-lg px-3 text-white"
+                    >
+                      <option selected disabled value="">
+                        {" "}
+                        Select tenant
+                      </option>
+                      {TenantData?.map((item) => (
+                        <option key={item._id} value={item._id}>
+                          {item?.company_name}
+                        </option>
+                      ))}
+                    </select>
+                    {touched.tenant && errors.tenant && (
+                      <p className="text-red-500">{errors.tenant}</p>
+                    )}
+                  </div>
+
+                  <InputField
+                    label="Phone Number"
+                    type="text"
+                    showPassword={false}
+                    icon={FaPhone}
+                    value={values.phone}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    placeholder="Enter your Phone Number"
+                    name="phone"
+                  />
+                  {touched.phone && errors.phone && (
+                    <p className="text-red-400 text-sm">{errors.phone}</p>
+                  )}
+                  {!editable && (
+                    <>
+                      <InputField
+                        label="Password"
+                        type="password"
+                        showPassword={true}
+                        icon={FaLock}
+                        value={values.password}
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        placeholder="Enter your Password"
+                        name="password"
+                      />
+                      {touched.password && errors.password && (
+                        <p className="text-red-400 text-sm">
+                          {errors.password}
+                        </p>
+                      )}
+                    </>
+                  )}
+                </div>
+                <div className="flex justify-end gap-2  pt-4">
+                  <button
+                    type="button"
+                    onClick={() => setIsModalOpen(false)}
+                    className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                  className="px-4 py-2 bg-gradient-to-tr from-sky-400/20 to-sky-600/60 text-white rounded-md hover:bg-sky-700 transition-all duration-300 ease-in-out"
+                  >
+                  {editable ? "Update" : " Save"}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      
     </>
   );
 };
