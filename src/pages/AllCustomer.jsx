@@ -58,12 +58,14 @@ export default function AllCustomer() {
         <Loader />
       ) : (
         <div className="h-screen ">
-          <input
-            type="text"
-            placeholder="Search..."
-            className=" bg-zinc-900 text-white placeholder-gray-400 border border-gray-600 rounded-md mt-5 ml-5 px-4 py-2 focus:outline-none transition duration-200"
-          />
-          <div className="flex w-full justify-end py-4">
+           <div className="max-w-screen px-4  h-16 border-[#6B728033] flex items-center gap-4 rounded-md backdrop-blur-md bg-[#6B728033] my-10 mx-5">
+            <input
+              type="text"
+              className="bg-[#23252750] backdrop-blur-md py-2 w-1/3 px-4 rounded-md "
+              placeholder="Search integrations..."
+            />
+          
+            <div className="flex w-full justify-end py-4">
             <button
               onClick={() => {
                 setIsModalOpen(true);
@@ -75,6 +77,8 @@ export default function AllCustomer() {
               Add Tenant
             </button>
           </div>
+          </div>
+          
 
           <div className="m-6 p-2 bg-tablecolor shadow-lg rounded-lg">
             <div>

@@ -1,6 +1,7 @@
 import {
   Bug,
   CalendarClock,
+  LucideShield,
   Settings,
   Table,
   UserCircle,
@@ -12,7 +13,7 @@ import { FaShieldAlt } from "react-icons/fa";
 import { FaPerson } from "react-icons/fa6";
 import { FiDatabase } from "react-icons/fi";
 import { GrVulnerability } from "react-icons/gr";
-import { MdInventory2, MdOutlineMiscellaneousServices } from "react-icons/md";
+import { MdInventory2, MdOutlineMiscellaneousServices, MdWifiTetheringErrorRounded } from "react-icons/md";
 import { SiWikimediafoundation } from "react-icons/si";
 import { TbLockPassword, TbReport } from "react-icons/tb";
 
@@ -177,9 +178,9 @@ export const products = [
     allowedPath: [
       { title: "Users", route: "/all-users", icon: Users },
       { title: "Tenant", route: "/all-tenant", icon: UserCircle },
-      { title: "Third Party Integrations", route: "/third-party-integrations", icon: Settings },
+      { title: "Third Party Integrations", route: "/third-party-integrations", icon: MdWifiTetheringErrorRounded  },
       { title: "Config Email", route: "/config-email", icon: Settings },
-      { title: "Role", route: "/roles", icon: Users },
+      { title: "Role", route: "/roles", icon: LucideShield  },
       { title: "Partners", route: "/partners", icon: Users },
     ],
   },

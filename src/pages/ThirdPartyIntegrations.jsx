@@ -3,12 +3,9 @@
 import { useState } from "react";
 import { FaCheckCircle, FaClock, FaPlug } from "react-icons/fa";
 import { MdError } from "react-icons/md";
-import { FaTimesCircle } from "react-icons/fa";
-import { PiLightningFill } from "react-icons/pi";
+
+
 const ThirdPartyIntegrations = () => {
-  const [activeTab, setActiveTab] = useState("Platform");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filterValue, setFilterValue] = useState("ALL");
 
   const integrations = [
     {

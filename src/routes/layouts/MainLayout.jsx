@@ -17,6 +17,7 @@ import Sidebar from "@/components/sidebar/Sidebar";
 import { products } from "@/constants/static.data";
 import UpdateProfileModal from "@/modals/UpdateProfile";
 import { Link } from "react-router-dom";
+import { MdOutlineNotificationsActive } from "react-icons/md";
 
 const MainLayout = () => {
   const { notificationData, NotificationsViewed } = useVulnerabililtyDataContext();
@@ -104,17 +105,16 @@ const MainLayout = () => {
               showSidebar={showSidebar}
             />
           </aside>}
-         <div
-  className={`ml-auto mb-6 transition-all duration-500 ease-in-out 
+          <div
+            className={`ml-auto mb-6 transition-all duration-500 ease-in-out 
      bg-gradient-custom rounded-lg 
-    ${
-      AllowedPath(location.pathname.split("/")[1])
-        ? "w-full"
-        : showSidebar
-        ? "w-full lg:w-[75%] xl:w-[80%] 2xl:w-[85%]"
-        : "w-full lg:w-[95%] xl:w-[96%] 2xl:w-[97%]"
-    }`}
->
+    ${AllowedPath(location.pathname.split("/")[1])
+                ? "w-full"
+                : showSidebar
+                  ? "w-full lg:w-[75%] xl:w-[80%] 2xl:w-[85%]"
+                  : "w-full lg:w-[95%] xl:w-[96%] 2xl:w-[97%]"
+              }`}
+          >
 
 
             <div className="bg-gradient-to-t from-[#1a1c1e] to-[#212325]  border-gray-200">
@@ -140,9 +140,9 @@ const MainLayout = () => {
                   <div className=" flex items-end justify-end">
                     <button
                       onClick={() => setSidebarOpen(true)}
-                      className="relative flex items-center gap-2 bg-gradient-to-bl from-[#333333] to-[#666666] text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                      className="relative flex items-center gap-2  text-white px-4 py-2 rounded-lg hover:bg-blue-600"
                     >
-                      <FaBell className="w-6 h-6" />
+                      <MdOutlineNotificationsActive  className="size-7" />
                       {notificationcount > 0 ? (
                         <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
                           {notificationcount}
@@ -155,9 +155,9 @@ const MainLayout = () => {
                     <div className="relative ml-4 flex text-white items-center gap-3 ">
                       <button
                         onClick={() => { setOpenSideBar(true) }}
-                        className="bg-blue-400 text-white rounded-full w-10 h-10 flex items-center justify-center"
+                        className="bg-blue-400 text-white rounded-full w-10 h-10 flex items-center justify-center border-2 "
                       >
-                        {authenticate.fname.split("")[0].toUpperCase()}
+                        {authenticate.fname[0].toUpperCase()}
                       </button>
                       {authenticate?.role}
 
