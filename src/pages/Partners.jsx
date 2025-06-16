@@ -2,7 +2,7 @@ import InputField from "@/components/InputField";
 import { AxiosHandler } from "@/config/AxiosConfig";
 import { useAuthContext } from "@/context";
 import { PartnersSchema } from "@/Validation/PartnerrValidations";
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import { Loader } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
@@ -24,8 +24,10 @@ const Partners = () => {
   const [partnersData, setPartnersData] = useState([]);
   const [editTable, setEdittable] = useState(false);
   const [page, setPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState(""); // 🔍 Search state
 
   const { token } = useAuthContext();
+
   const {
     handleBlur,
     handleChange,
@@ -48,12 +50,9 @@ const Partners = () => {
       setLoading(true);
       try {
         if (editTable) {
-          const res = await AxiosHandler.put(
-            `/partner/update/${values._id}`,
-            values
-          );
+          await AxiosHandler.put(`/partner/update/${values._id}`, values);
         } else {
-          const res = await AxiosHandler.post("/partner/create", values);
+          await AxiosHandler.post("/partner/create", values);
         }
         GetPartnerData();
         resetForm();
@@ -81,7 +80,7 @@ const Partners = () => {
   const DeletePartnersData = async (_id) => {
     setLoading(true);
     try {
-      if (window.confirm("are you sure you want to delete partner's data?")) {
+      if (window.confirm("Are you sure you want to delete partner's data?")) {
         await AxiosHandler.delete(`/partner/delete/${_id}`);
         GetPartnerData();
       }
@@ -103,25 +102,28 @@ const Partners = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <section className=" p-8  h-screen shadow-lg  ">
-          <div className="w-full flex justify-end">
+        <section className="p-8 h-screen shadow-lg">
+          <div className="max-w-screen px-4 h-16 border-[#6B728033] flex items-center gap-4 rounded-md backdrop-blur-md justify-between bg-[#6B728033] my-10 mx-5">
             <input
               type="text"
               placeholder="Search..."
-              className=" bg-zinc-900 text-white placeholder-gray-400 border border-gray-600 rounded-md px-4 py-2 mr-3 focus:outline-none transition duration-200"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="bg-zinc-900 text-white placeholder-gray-400 border border-gray-600 rounded-md px-4 py-2 mr-3 focus:outline-none transition duration-200"
             />
             <button
               onClick={() => {
                 setModal(true);
                 setEdittable(null);
               }}
-              className="px-5 py-2.5 bg-[#101b3d] text-white font-semibold rounded-lg hover:bg-blue-900 transition-all duration-300 flex items-center gap-2 shadow-md"
+              className="px-5 py-2.5 bg-blue-800 text-white font-semibold rounded-lg hover:bg-blue-900 transition-all duration-300 flex items-center gap-2 shadow-md"
             >
               <BiPlus className="h-5 w-5" />
               Add Partners
             </button>
           </div>
 
+          {/* Modal */}
           <div
             className={`${
               showModal ? "opacity-100 visible" : "opacity-0 invisible"
@@ -230,7 +232,9 @@ const Partners = () => {
                       placeholder="Enter city"
                     />
                     {touched.city && errors.city && (
-                      <p className="text-sm text-red-500 mt-1">{errors.city}</p>
+                      <p className="text-sm text-red-500 mt-1">
+                        {errors.city}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -257,28 +261,33 @@ const Partners = () => {
             </div>
           </div>
 
+          {/* Table */}
           <div className="mt-6 bg-[#0c1120] border border-gray-700 rounded-xl overflow-x-auto text-sm text-white">
             {partnersData?.length < 1 ? (
               <div className="text-center py-6 text-gray-400">
                 No matching records found.
               </div>
             ) : (
-              <>
-                <table className="min-w-full divide-y divide-gray-700">
-                  <thead className="bg-gradient-to-bl from-[#0a0f39] via-[#080d27] to-[#050b20]">
-                    <tr>
-                      <th className="px-4 py-3 text-left">Company Name</th>
-                      <th className="px-4 py-3 text-left">Website URL</th>
-
-                      <th className="px-4 py-3 text-left">Country</th>
-                      <th className="px-4 py-3 text-left">State</th>
-                      <th className="px-4 py-3 text-left">City</th>
-
-                      <th className="px-4 py-3 text-left">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-sm text-gray-300">
-                    {partnersData?.map((tenant, index) => (
+              <table className="min-w-full divide-y divide-gray-700">
+                <thead className="bg-gradient-to-bl from-[#0a0f39] via-[#080d27] to-[#050b20]">
+                  <tr>
+                    <th className="px-4 py-3 text-left">Company Name</th>
+                    <th className="px-4 py-3 text-left">Website URL</th>
+                    <th className="px-4 py-3 text-left">Country</th>
+                    <th className="px-4 py-3 text-left">State</th>
+                    <th className="px-4 py-3 text-left">City</th>
+                    <th className="px-4 py-3 text-left">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="text-sm text-gray-300">
+                  {partnersData
+                    .filter((partner) =>
+                      Object.values(partner)
+                        .join(" ")
+                        .toLowerCase()
+                        .includes(searchQuery.toLowerCase())
+                    )
+                    .map((tenant, index) => (
                       <tr
                         key={index}
                         className="border-b border-gray-700 hover:bg-[#1e1e1e] transition"
@@ -288,7 +297,6 @@ const Partners = () => {
                         <td className="p-3">{tenant.country}</td>
                         <td className="p-3">{tenant.state}</td>
                         <td className="p-3">{tenant.city}</td>
-
                         <td className="p-3 flex gap-2">
                           <FaEdit
                             onClick={() => {
@@ -304,9 +312,8 @@ const Partners = () => {
                         </td>
                       </tr>
                     ))}
-                  </tbody>
-                </table>
-              </>
+                </tbody>
+              </table>
             )}
             <Pagination
               page={page}

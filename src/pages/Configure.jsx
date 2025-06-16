@@ -17,7 +17,7 @@ export default function EmailConfigPanel() {
           <h2 className="text-lg font-semibold">Configure Email</h2>
           <button   
             onClick={() => setIsEditing(!isEditing)}
-            className="bg-blue-900 hover:bg-[#101b3d] text-white font-medium px-4 py-1 rounded-md"
+            className="bg-blue-800 hover:bg-blue-900 text-white font-medium px-4 py-1 rounded-md"
           >
             {isEditing ? "Save" : "Edit"}
           </button>

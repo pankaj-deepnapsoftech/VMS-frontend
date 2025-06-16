@@ -170,11 +170,6 @@ const ThirdPartyIntegrations = () => {
 
   return (
     <div className=" min-h-screen  w-full bg-transparent text-white">
-      <input
-        type="text"
-        placeholder="Search..."
-        className=" bg-zinc-900 text-white placeholder-gray-400 border border-gray-600 mt-5 ml-5 rounded-md px-4 py-2 focus:outline-none transition duration-200"
-      />
       <div className="flex w-full">
         <main className="flex-1 p-4 sm:p-6 w-full">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
@@ -184,11 +179,6 @@ const ThirdPartyIntegrations = () => {
                 Connect and manage your security tools and platforms
               </p>
             </div>
-            <div className="flex items-center">
-              <button className="bg-blue-800 hover:bg-blue-900 text-white px-4 py-2 rounded-md transition-colors flex items-center">
-                <span className="mr-2">+</span> Add Integration
-              </button>
-            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-6">
@@ -197,9 +187,9 @@ const ThirdPartyIntegrations = () => {
                 <p className="text-sky-400 text-sm">Disconnected</p>
                 <p className="text-xl">2</p>
               </div>
-              <div className="w-8 h-8 rounded-md bg-[#ffffff17] flex justify-center items-center">
+              <div className="w-8 h-8 rounded-md bg-[#ffffff17] flex justify-center items-center"> 
                 <img src="/Icons/Component 7.png" alt="Disconnected icon" />
-              </div>
+              </div>  
             </div>
 
             <div className="border border-[#1665344D] rounded-md flex justify-between px-4 py-3 bg-gradient-to-t from-[#14532D4D] to-[#16653433]">
@@ -233,7 +223,7 @@ const ThirdPartyIntegrations = () => {
             </div>
           </div>
 
-          <div className="w-full px-4  h-16 border-[#6B728033] flex items-center gap-4 rounded-md backdrop-blur-md bg-[#6B728033]">
+          <div className="w-full px-4  h-16 border-[#6B728033] flex items-center gap-4 rounded-md backdrop-blur-md bg-[#6B728033] justify-between">
             <input
               type="text"
               className="bg-[#23252750] backdrop-blur-md py-2 w-1/3 px-4 rounded-md "
@@ -257,7 +247,7 @@ const ThirdPartyIntegrations = () => {
                 <option value="siem">SIEM & Log Management</option>
                 <option value="access-control">Access Control</option>
               </select>
-
+      
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
                 <svg
                   className="w-4 h-4 text-gray-400"
@@ -274,6 +264,9 @@ const ThirdPartyIntegrations = () => {
                 </svg>
               </div>
             </div>
+            <button className="bg-blue-800 hover:bg-blue-900 text-white px-4 py-2 rounded-md transition-colors flex items-center">
+                <span className="mr-2">+</span> Add Integration
+              </button>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 2xl:grid-cols-4 gap-4 p-4 text-white">
