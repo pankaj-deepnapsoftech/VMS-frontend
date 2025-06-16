@@ -251,7 +251,7 @@ const AllEmployee = () => {
         </div>
       )}
  
-        <div className={`absolute top-0 left-0 flex justify-center items-center over z-50 h-screen bg-gradient-custom w-full text-white ${isModalOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}  transition-opacity duration-500 ease-in-out`}>
+        <div className={`fixed top-0 left-0 flex justify-center items-center over z-50 h-screen bg-gradient-custom w-full text-white ${isModalOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}  transition-opacity duration-500 ease-in-out`}>
         <div className="bg-gradient-custom rounded-lg shadow-lg border  border-[#222a39] w-full max-w-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center border-b p-4 bg-table">
               <h2 className="text-lg font-semibold text-gray-200">
