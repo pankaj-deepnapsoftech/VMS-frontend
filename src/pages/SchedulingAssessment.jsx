@@ -142,8 +142,7 @@ function SchedulingAssessmentPage() {
         <main className="container mx-auto px-4 py-8">
           <section className="mb-8">
             {/* Form Section */}
-            {(authenticate.role === "ClientSME" ||
-              authenticate.role === "Admin") && (
+            
               <div className=" flex  gap-6 mb-8 bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] p-4  rounded-lg ">
                 <form
                   onSubmit={handleSubmit}
@@ -320,7 +319,7 @@ function SchedulingAssessmentPage() {
                         </p>
                       )}
                     </div>
-                    {authenticate.role === "Admin" && (
+                    
                       <div>
                         <label
                           htmlFor="Select_Org"
@@ -352,7 +351,7 @@ function SchedulingAssessmentPage() {
                           </p>
                         )}
                       </div>
-                    )}
+                  
 
                     <div>
                       <InputField
@@ -400,7 +399,7 @@ function SchedulingAssessmentPage() {
                   </button>
                 </form>
               </div>
-            )}
+            
 
             {isOpen && (
               <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-40">

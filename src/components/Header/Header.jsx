@@ -1,20 +1,12 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { ClientSmeList, EmployeeList } from "@/constants/constants.data";
 import { useAuthContext } from "@/context";
 import { IoIosLogOut } from "react-icons/io";
-import toast from "react-hot-toast";
 import { products } from "@/constants/static.data";
 
 function Header({ setShowMenu,showSidebar }) {
-  const { Logout, authenticate, getDataFromSession } = useAuthContext();
-
-  const [isOpen, setIsOpen] = useState(false);
-  
-
-
-  const toggleDropdown = () => setIsOpen(!isOpen);
+  const { Logout, getDataFromSession } = useAuthContext();
 
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to log out?")) {
@@ -28,6 +20,8 @@ function Header({ setShowMenu,showSidebar }) {
       navList = item.allowedPath;
     }
   });
+
+  
   // switch (authenticate?.role) {
   //   case "ClientCISO":
   //     products.map((item)=>{

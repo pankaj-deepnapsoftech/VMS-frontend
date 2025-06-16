@@ -453,7 +453,7 @@ function Home() {
             <ResponsiveContainer width="100%" height="90%">
               <PieChart>
                 <Pie
-                  data={authenticate.role === "Admin" && data1}
+                  data={data1}
                   cx="50%"
                   cy="50%"
                   innerRadius={40}

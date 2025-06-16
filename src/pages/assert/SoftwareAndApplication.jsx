@@ -204,7 +204,7 @@ const SoftwareAndApplication = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            {authenticate.role === "Admin" ? (
+            
               <div className=" w-full flex  justify-end gap-2">
                 <select
                   name="Get Organization"
@@ -237,7 +237,7 @@ const SoftwareAndApplication = () => {
                   Clear Filter
                 </button>
               </div>
-            ) : null}
+            
           </div>
 
           {/* 📊 Table */}
