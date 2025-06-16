@@ -15,7 +15,7 @@ export default function EmailConfigPanel() {
         
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold">Configure Email</h2>
-          <button
+          <button   
             onClick={() => setIsEditing(!isEditing)}
             className="bg-blue-900 hover:bg-[#101b3d] text-white font-medium px-4 py-1 rounded-md"
           >
