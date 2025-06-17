@@ -26,24 +26,24 @@ const AppRoutes = () => {
   // Check if user is authenticated and verify their login and email
   const isAuthenticated = token && authenticate?.email_verification;
 
-  const getRoleBasedRoutes = () => {
-    // if (!authenticate?.role)
-    //   return [{ path: "/", element: <UnauthorizedAccessPage /> }];
+  // const getRoleBasedRoutes = () => {
+  //   // if (!authenticate?.role)
+  //   //   return [{ path: "/", element: <UnauthorizedAccessPage /> }];
 
-    switch (authenticate.role) {
-      case "Admin":
-        return PrivateRoutes;
-      case "Assessor":
-        return EmployeeRoutes
+  //   switch (authenticate.role) {
+  //     case "Admin":
+  //       return PrivateRoutes;
+  //     case "Assessor":
+  //       return EmployeeRoutes
           
-      case "ClientSME":
-        return ClientSmeRoutes;
-      case "ClientCISO":
-        return  ClientCisoRoutes
-      default:
-        return [{ path: "/", element: <UnauthorizedAccessPage /> }]; 
-    }
-  };
+  //     case "ClientSME":
+  //       return ClientSmeRoutes;
+  //     case "ClientCISO":
+  //       return  ClientCisoRoutes
+  //     default:
+  //       return [{ path: "/", element: <UnauthorizedAccessPage /> }]; 
+  //   }
+  // };
 
   return (
     <Routes>

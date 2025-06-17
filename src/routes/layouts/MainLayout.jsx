@@ -159,7 +159,7 @@ const MainLayout = () => {
                       >
                         {authenticate.fname[0].toUpperCase()}
                       </button>
-                      {authenticate?.role}
+                      {/* {authenticate?.role} */}
 
                       {/* {showUserMenu && (
                     <div className="absolute right-0 mt-2 w-64 bg-[#4f4f4f] rounded-lg shadow-lg z-50">

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useAuthContext } from "@/context";
 import { FaTimesCircle, FaCheckCircle, FaExclamationTriangle, FaBell } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -37,10 +38,10 @@ export function NotificationSidebar({ notifications, isOpen, onClose, notificati
 								key={index}
 								onClick={() => {
 									notificationsViewed(notification?._id);
-									if (authenticate.role === "Assessor") {
-										onClose()
-										navigate("/employee-tasks")
-									}
+									// if (authenticate?.role === "Assessor") {
+									// 	onClose()
+									// 	navigate("/employee-tasks")
+									// }
 
 								}}
 								className={`p-3 rounded-lg flex items-center gap-3 shadow-md cursor-pointer transition-all ${isViewed ? "bg-gray-200 text-gray-600" : "bg-blue-100 text-blue-900"

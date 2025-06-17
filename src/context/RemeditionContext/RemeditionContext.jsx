@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { createContext, useEffect, useState } from "react";
 import { useAuthContext } from "..";
 import { AxiosHandler } from "@/config/AxiosConfig";

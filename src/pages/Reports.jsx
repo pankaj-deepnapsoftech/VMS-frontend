@@ -36,13 +36,13 @@ const Reports = () => {
 
     let query = "";
 
-    if (authenticate.role === "Admin") {
-      query = "/report/get-report";
-    } else if (authenticate.role === "Assessor") {
-      query = "/report/get-report-assesor";
-    } else {
-      query = "/report/get-report-org";
-    }
+    // if (authenticate.role === "Admin") {
+    //   query = "/report/get-report";
+    // } else if (authenticate.role === "Assessor") {
+    //   query = "/report/get-report-assesor";
+    // } else {
+    //   query = "/report/get-report-org";
+    // }
 
     setLoading(true);
     try {
@@ -176,7 +176,7 @@ const Reports = () => {
     <div className="p-4 md:p-6 mx-auto bg-gradient-custom shadow-lg">
       {/* Search Bar & Buttons */}
       <div className="mb-4 flex flex-col md:flex-row items-start md:items-center justify-between">
-        {authenticate.role === "Assessor" ? (
+        
           <div className="flex w-full lg:justify-end items-center py-2 gap-2">
             <button
               onClick={(e) => {
@@ -190,12 +190,12 @@ const Reports = () => {
               Detailed Report
             </button>
           </div>
-        ) : null}
+        ) 
       </div>
 
       {/* Filter Inputs */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 ml-60 mb-4">
-        {(authenticate.role === "Admin" || authenticate.role != "Assessor") ? (
+        
           <input
             type="text"
             placeholder="Filter by Creator Name"
@@ -203,9 +203,9 @@ const Reports = () => {
             value={creatorFilter}
             onChange={(e) => setCreatorFilter(e.target.value)}
           />
-        ) : null}
+       
 
-        {(authenticate.role === "Admin" || authenticate.role === "Assessor") ? (
+        
           <input
             type="text"
             placeholder="Filter by Organization Name"
@@ -213,7 +213,7 @@ const Reports = () => {
             value={orgFilter}
             onChange={(e) => setOrgFilter(e.target.value)}
           />
-        ) : null}
+       
 
         <input
           type="date"
@@ -283,7 +283,7 @@ const Reports = () => {
 
                   {/* Actions */}
                   <td className="px-4 py-2 whitespace-nowrap text-center flex justify-center gap-2 items-start">
-                    {authenticate.role === "Assessor" ? (
+                    
                       <>
                         <button
                           onClick={() => handleEdit(report)} // Open modal in edit mode
@@ -300,9 +300,7 @@ const Reports = () => {
                           <RiDeleteBinFill className="h-5 w-5" />
                         </button>
                       </>
-                    ) : (
-                      "-"
-                    )}
+                  
                   </td>
                 </tr>
               ))

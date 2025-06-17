@@ -288,7 +288,7 @@ export function VulnerabilityData() {
                 Export Data
               </button>
 
-              {authenticate.role !== "ClientCISO" && (
+              
                 <button
                   onClick={() => setIsRUModalOpen(true)}
                   className="px-4 py-2 bg-[#101b3d] text-white font-medium rounded-md hover:bg-blue-900 transition-colors flex flex-row"
@@ -296,7 +296,7 @@ export function VulnerabilityData() {
                   <BiPlus className="h-6 w-6" />
                   Report Upload
                 </button>
-              )}
+            
 
               <Modal
                 isOpen={isRUModalOpen}
@@ -318,7 +318,7 @@ export function VulnerabilityData() {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            {authenticate.role === "Admin" ? (
+            
               <div className=" w-full flex  justify-end gap-2">
                 <select
                   name="Get Organization "
@@ -351,7 +351,7 @@ export function VulnerabilityData() {
                   Clear Filter
                 </button>
               </div>
-            ) : null}
+            
           </div>
 
           {/* 📊 Table */}

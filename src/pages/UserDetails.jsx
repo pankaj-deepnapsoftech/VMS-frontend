@@ -1,17 +1,21 @@
+import { useAuthContext } from "@/context";
+import { dateFormater } from "@/utils/dateFormate";
 import { useState } from "react";
 
 export default function UserDetailsForm() {
-  const [inputFocused, setInputFocused] = useState(false);
+  const { authenticate, UpdateProfile } = useAuthContext();
+
+  console.log(authenticate?.profile)
   const [isEditing, setIsEditing] = useState(false);
+  const [preview, setPreview] = useState("");
+
 
   // Form state
   const [form, setForm] = useState({
-    firstName: "John",
-    lastName: "Doe",
-    userName: "john_doe",
-    email: "john@example.com",
-    defaultTenant: "UAT",
-    idleTimeout: "1h",
+    fname: authenticate?.fname,
+    lname: authenticate?.lname,
+    email: authenticate?.email,
+    profile: authenticate?.profile
   });
 
   const handleChange = (e) => {
@@ -19,157 +23,161 @@ export default function UserDetailsForm() {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleEditToggle = () => {
-    setIsEditing((prev) => !prev);
+  const handleSave = () => {
+    const formData = new FormData;
+    formData.append("fname", form.fname);
+    formData.append("lname", form.lname);
+    formData.append("email", form.email);
+    formData.append("profile", form.profile);
+    UpdateProfile(formData, authenticate._id);
+    setIsEditing(false)
   };
 
-  const handleSave = () => {
-    console.log("Form Submitted:", form);
-    setIsEditing(false);
-  };
+
+  const imagePreview = (file) => {
+    setForm({ ...form, profile: file })
+    const preview = URL.createObjectURL(file);
+    setPreview(preview)
+  }
+
+
 
   return (
-    <div
-      className={`min-h-screen bg-gradient-custom w-full p-10 transition-all duration-500 ${
-        inputFocused
-          ? "bg-gradient-to-br from-[#0a0f39] via-[#080d27] to-[#050b20]"
-          : "bg-[#2e2e2e]"
-      }`}
-    >
-      <div className="max-w-6xl mx-auto bg-cards rounded-xl p-6 text-white shadow-lg">
+    <div className="min-h-screen bg-slate-900 p-6">
+      <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-semibold">User Details</h2>
-          {!isEditing ? (
-            <button
-              className="bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-md"
-              onClick={handleEditToggle}
-            >
-              Edit
-            </button>
-          ) : (
-            <button
-              className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md"
-              onClick={handleSave}
-            >
-              Save
-            </button>
-          )}
+        <div className="flex items-center justify-between mb-8">
+          <h1 className="text-2xl font-semibold text-white">User Details</h1>
+          {!isEditing && <button onClick={() => setIsEditing(!isEditing)} className="bg-blue-800 hover:bg-blue-600 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200">
+            Edit
+          </button>}
         </div>
 
-        {/* Form Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Upload Placeholder */}
-          <div className="flex items-center gap-4 text-gray-400">
-            {/* Circle Upload Box */}
-            <div className="w-20 h-20 flex items-center justify-center rounded-full border-2 border-dashed border-gray-500 bg-[#2e2e2e] cursor-pointer">
-              <span className="text-3xl">+</span>
-            </div>
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* Profile Image Section */}
+          <div className="lg:col-span-1">
+            <div className="bg-slate-800 rounded-xl p-6 border border-slate-700">
+              <div className="flex flex-col items-center space-y-4">
+                <div className="relative">
+                  <label id="profile" className="w-20 h-20 flex items-center justify-center rounded-full overflow-hidden object-cover  border-2 border-slate-600" >
+                    {form.profile ? (
+                      <img src={preview || authenticate?.profile || '/default-profile.png'} />
+                    ) : <span className="text-2xl text-white"  >+</span>}
+                    <input type="file" hidden id="profile" name="profile"
+                      onChange={(e) => imagePreview(e.target.files[0])}
+                      disabled={!isEditing} />
+                  </label>
 
-            {/* Text Info */}
-            <div className="text-sm">
-              <p className="text-white">Upload profile picture</p>
-              <p className="text-xs text-gray-400">.jpeg, .jpg, .png</p>
-              <p className="text-xs text-gray-400">Size less than 2MB</p>
-            </div>
-          </div>
-
-          {/* Name Fields */}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm mb-1">First Name *</label>
-              <input
-                name="firstName"
-                value={form.firstName}
-                onChange={handleChange}
-                disabled={!isEditing}
-                onFocus={() => setInputFocused(true)}
-                onBlur={() => setInputFocused(false)}
-                className={`w-full p-2 rounded-md bg-[#2e2e2e] border border-gray-700 outline-none focus:ring-2 focus:ring-blue-500 transition ${
-                  !isEditing ? "opacity-50 cursor-not-allowed" : ""
-                }`}
-              />
-            </div>
-            <div>
-              <label className="block text-sm mb-1">Last Name *</label>
-              <input
-                name="lastName"
-                value={form.lastName}
-                onChange={handleChange}
-                disabled={!isEditing}
-                onFocus={() => setInputFocused(true)}
-                onBlur={() => setInputFocused(false)}
-                className={`w-full p-2 rounded-md bg-[#2e2e2e] border border-gray-700 outline-none focus:ring-2 focus:ring-blue-500 transition ${
-                  !isEditing ? "opacity-50 cursor-not-allowed" : ""
-                }`}
-              />
+                  <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-400 rounded-full border-2 border-slate-800"></div>
+                </div>
+                <div className="text-center">
+                  <p className="text-white font-medium text-sm mb-1">{form.profile ? form.profile.name : "Profile Image"}</p>
+                  <p className="text-slate-400 text-xs mb-1">jpeg, jpg, png</p>
+                  <p className="text-slate-500 text-xs">Size less than 2MB</p>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Username and Email */}
-          <div>
-            <label className="block text-sm mb-1">User Name</label>
-            <input
-              name="userName"
-              value={form.userName}
-              onChange={handleChange}
-              disabled={!isEditing}
-              onFocus={() => setInputFocused(true)}
-              onBlur={() => setInputFocused(false)}
-              className={`w-full p-2 rounded-md bg-[#2e2e2e] border border-gray-700 outline-none focus:ring-2 focus:ring-blue-500 transition ${
-                !isEditing ? "opacity-50 cursor-not-allowed" : ""
-              }`}
-            />
-          </div>
-          <div>
-            <label className="block text-sm mb-1">Email</label>
-            <input
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              disabled={!isEditing}
-              onFocus={() => setInputFocused(true)}
-              onBlur={() => setInputFocused(false)}
-              className={`w-full p-2 rounded-md bg-[#2e2e2e] border border-gray-700 outline-none focus:ring-2 focus:ring-blue-500 transition ${
-                !isEditing ? "opacity-50 cursor-not-allowed" : ""
-              }`}
-            />
-          </div>
+          {/* Form Fields Section */}
+          <div className="lg:col-span-3">
+            <div className="bg-slate-800 rounded-xl p-6 border border-slate-700">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* First Name */}
+                <div className="space-y-2">
+                  <label className="block text-white text-sm font-medium">
+                    First Name <span className="text-red-400">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="fname"
+                    value={form.fname}
+                    onChange={handleChange}
+                    disabled={!isEditing}
+                    className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
+                  />
+                </div>
 
-          {/* Default Tenant */}
-          <div>
-            <label className="block text-sm mb-1">Default Tenant</label>
-            <select
-              name="defaultTenant"
-              value={form.defaultTenant}
-              onChange={handleChange}
-              disabled={!isEditing}
-              onFocus={() => setInputFocused(true)}
-              onBlur={() => setInputFocused(false)}
-              className={`w-full p-2 rounded-md bg-[#2e2e2e] border border-gray-700 outline-none focus:ring-2 focus:ring-blue-500 transition ${
-                !isEditing ? "opacity-50 cursor-not-allowed" : ""
-              }`}
-            >
-              <option>UAT</option>
-              <option>QAU</option>
-              <option>FMB</option>
-            </select>
-          </div>
+                {/* Last Name */}
+                <div className="space-y-2">
+                  <label className="block text-white text-sm font-medium">
+                    Last Name <span className="text-red-400">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="lname"
+                    value={form.lname}
+                    onChange={handleChange}
+                    disabled={!isEditing}
+                    className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
+                  />
+                </div>
 
-          {/* Idle Timeout */}
-          <div>
-            <label className="block text-sm mb-1">Idle Timeout</label>
-            <input
-              name="idleTimeout"
-              value={form.idleTimeout}
-              onChange={handleChange}
-              disabled={!isEditing}
-              onFocus={() => setInputFocused(true)}
-              onBlur={() => setInputFocused(false)}
-              className={`w-full p-2 rounded-md bg-[#2e2e2e] border border-gray-700 outline-none focus:ring-2 focus:ring-blue-500 transition ${
-                !isEditing ? "opacity-50 cursor-not-allowed" : ""
-              }`}
-            />
+                {/* Email */}
+                <div className="space-y-2">
+                  <label className="block text-white text-sm font-medium">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    disabled
+                    className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
+                  />
+                </div>
+
+                {/* Tenant */}
+                <div className="space-y-2">
+                  <label className="block text-white text-sm font-medium">Tenant</label>
+                  <input
+                    type="text"
+                    value={authenticate.tenant}
+                    className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
+                    disabled
+                  />
+                </div>
+
+                {/* Idle Timeout */}
+                <div className="space-y-2 md:col-span-2">
+                  <label className="block text-white text-sm font-medium">Role</label>
+                  <input
+                    type="text"
+                    value={authenticate?.role || "admin"}
+                    disabled
+                    className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
+                  />
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              {isEditing && <div className="flex justify-end space-x-4 mt-8 pt-6 border-t border-slate-700">
+                <button onClick={() => setIsEditing(!isEditing)} className="px-6 py-2 text-slate-300 hover:text-white border border-slate-600 hover:border-slate-500 rounded-lg transition-colors duration-200">
+                  Cancel
+                </button>
+                <button type="button" onClick={handleSave} className="px-6 py-2 bg-blue-800 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors duration-200">
+                  Save Changes
+                </button>
+              </div>}
+            </div>
+          </div>
+        </div>
+
+        {/* Additional Info Section */}
+        <div className="mt-8 bg-slate-800 rounded-xl p-6 border border-slate-700">
+          <h3 className="text-lg font-medium text-white mb-4">Account Information</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-1">
+              <p className="text-slate-400 text-sm">Account Status</p>
+              <div className="flex items-center space-x-2">
+                <div className={`w-2 h-2 ${authenticate.email_verification ? "bg-green-400" : "bg-red-400"} rounded-full`}></div>
+                <span className="text-white text-sm">{authenticate.email_verification ? "Verified" : "Not verified"}</span>
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <p className="text-slate-400 text-sm">Member Since</p>
+              <p className="text-white text-sm">{dateFormater(authenticate.createdAt)}</p>
+            </div>
           </div>
         </div>
       </div>
