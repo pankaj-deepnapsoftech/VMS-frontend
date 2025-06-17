@@ -17,7 +17,12 @@ export const BaseValidationSchema = object({
   phone: string().min(10).max(12).required('Phone No. is Required'),
   password: string()
     .required('Password is required')
-    .min(8, 'Password must be at least 8 characters')
+    .min(8, 'Minimum 8 characters required')
+    .max(20, 'Maximum 20 characters allowed')
+    .matches(/[A-Z]/, 'Must contain at least one uppercase letter')
+    .matches(/[a-z]/, 'Must contain at least one lowercase letter')
+    .matches(/[0-9]/, 'Must contain at least one number')
+    .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Must contain at least one special character'),
   ,
   // department: string().min(2).max(12).required('Department is Required'),
   
