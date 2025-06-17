@@ -61,7 +61,13 @@ const MainLayout = () => {
     if (getDataFromSession) {
       for (let item of products) {
         if (item.title === getDataFromSession) {
-          navigate(item.allowedPath[0]?.route);
+          if (!authenticate?.role) {
+            navigate(item.allowedPath[0]?.route);
+          } else if (authenticate.role) {
+            const navList = item.allowedPath.filter((pathItem) =>
+              authenticate?.allowed_path.some((authItem) => authItem.value === pathItem.route))
+            navigate(navList[0].route)
+          }
         }
       }
     }
@@ -142,7 +148,7 @@ const MainLayout = () => {
                       onClick={() => setSidebarOpen(true)}
                       className="relative flex items-center gap-2  text-white px-4 py-2 rounded-lg hover:bg-blue-600"
                     >
-                      <MdOutlineNotificationsActive  className="size-7" />
+                      <MdOutlineNotificationsActive className="size-7" />
                       {notificationcount > 0 ? (
                         <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
                           {notificationcount}

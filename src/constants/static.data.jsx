@@ -9,13 +9,10 @@ import {
 } from "lucide-react";
 import { AiOutlineException } from "react-icons/ai";
 import { BiSolidDashboard } from "react-icons/bi";
-import { FaShieldAlt } from "react-icons/fa";
-import { FaPerson } from "react-icons/fa6";
-import { FiDatabase } from "react-icons/fi";
 import { GrVulnerability } from "react-icons/gr";
 import { MdInventory2, MdOutlineMiscellaneousServices, MdWifiTetheringErrorRounded } from "react-icons/md";
 import { SiWikimediafoundation } from "react-icons/si";
-import { TbLockPassword, TbReport } from "react-icons/tb";
+import { TbReport } from "react-icons/tb";
 
 export const AllowedPaths = [
   {
@@ -32,7 +29,7 @@ export const AllowedPaths = [
   },
   {
     name: "Users",
-    value: "/all-user",
+    value: "/all-users",
   },
   {
     name: "Application Vulnerability",
@@ -60,11 +57,23 @@ export const AllowedPaths = [
   },
   {
     name: "All Tenents",
-    value: "/all-tenent",
+    value: "/all-tenant",
   },
   {
     name: "All Tasks",
     value: "/employee-tasks",
+  }, 
+  {
+    name: "Third Party Integrations",
+    value: "/third-party-integrations",
+  }, 
+  {
+    name: "Role",
+    value: "/roles",
+  }, 
+  {
+    name: "Partners",
+    value: "/partners",
   }, 
 
 ];
@@ -101,7 +110,7 @@ export const products = [
     borderColor: "#ff7e5f",
     icon: "/Icons/Vector.png",
     allowedPath: [
-      { title: "Dashboard", route: "", icon: BiSolidDashboard },
+      { title: "Dashboard", route: "/", icon: BiSolidDashboard },
       { title: "Scheduling Assesment", route: "/scheduling-assesment", icon: CalendarClock },
       { title: "Application Vulnerability", route: "/application-vulnerability", icon: MdOutlineMiscellaneousServices },
       { title: "Infrastructure Vulnerability", route: "/infrastructure-vulnerability", icon: GrVulnerability },

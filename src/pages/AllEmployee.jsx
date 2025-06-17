@@ -117,7 +117,7 @@ const AllEmployee = () => {
     }
   };
 
-  const handleChangeStatus = async(type, id) => {
+  const handleChangeStatus = async (type, id) => {
     if (window.confirm("Are you sure you want to change this user's status?")) {
       const deactivate = type === "activate";
       // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -249,7 +249,7 @@ const AllEmployee = () => {
                       <td className="px-4 py-3">
                         {user.tenant?.company_name || "—"}
                       </td>
-                    
+
                       <td className="px-4 py-3">
                         {user.deactivate ? (
                           <button

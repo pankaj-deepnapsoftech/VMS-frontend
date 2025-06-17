@@ -1,6 +1,5 @@
 import { Routes, Route } from "react-router-dom";
 import SignIn from "@/pages/Auth/SignIn";
-import SignUp from "@/pages/Auth/SignUp";
 import ForgotPassword from "@/pages/Auth/ForgotPassword";
 import MainLayout from "@/routes/layouts/MainLayout";
 import { PrivateRoutes } from "@/routes/PrivateRoutes/PrivateRoutes";
@@ -10,10 +9,7 @@ import {
   VerifyOtp,
 } from "@/constants/Components-lazy-loading/components.Lazy";
 import { useAuthContext } from "@/context";
-import { EmployeeRoutes } from "./PrivateRoutes/employeeRoutes";
-import { ClientSmeRoutes } from "./PrivateRoutes/clientSmeRoutes";
 import UnauthorizedAccessPage from "@/pages/UnauthorizedAccess";
-import { ClientCisoRoutes } from "./PrivateRoutes/ClientCisoRoutes";
 import Pricing from "@/pages/Auth/Pricing";
 import Solutions from "@/pages/Auth/Solutions";
 import LandingPage from "@/pages/Auth/LandingPage";
@@ -26,24 +22,15 @@ const AppRoutes = () => {
   // Check if user is authenticated and verify their login and email
   const isAuthenticated = token && authenticate?.email_verification;
 
-  // const getRoleBasedRoutes = () => {
-  //   // if (!authenticate?.role)
-  //   //   return [{ path: "/", element: <UnauthorizedAccessPage /> }];
+  const getRoleBasedRoutes = () => {
+    
+    if(isAuthenticated  && !authenticate?.role){
+      return PrivateRoutes
+    } else if (isAuthenticated && authenticate.role && authenticate.allowed_path) {
+      return PrivateRoutes.filter((item)=>authenticate?.allowed_path.map((ite)=> ite.value === item.path))
+    }
 
-  //   switch (authenticate.role) {
-  //     case "Admin":
-  //       return PrivateRoutes;
-  //     case "Assessor":
-  //       return EmployeeRoutes
-          
-  //     case "ClientSME":
-  //       return ClientSmeRoutes;
-  //     case "ClientCISO":
-  //       return  ClientCisoRoutes
-  //     default:
-  //       return [{ path: "/", element: <UnauthorizedAccessPage /> }]; 
-  //   }
-  // };
+  };
 
   return (
     <Routes>
@@ -65,7 +52,7 @@ const AppRoutes = () => {
       {/* Protected routes */}
       {isAuthenticated && (
         <Route element={<MainLayout />}>
-          {PrivateRoutes.map((item, index) => (
+          {getRoleBasedRoutes().map((item, index) => (
             <Route key={index} path={item.path} element={item.element} >
               {item.children &&
                 item.children.map((child, i) => (

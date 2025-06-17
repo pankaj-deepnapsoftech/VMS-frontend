@@ -5,8 +5,9 @@ import { useAuthContext } from "@/context";
 import { IoIosLogOut } from "react-icons/io";
 import { products } from "@/constants/static.data";
 
-function Header({ setShowMenu,showSidebar }) {
-  const { Logout, getDataFromSession } = useAuthContext();
+function Header({ setShowMenu, showSidebar }) {
+  const { Logout, getDataFromSession, authenticate } = useAuthContext();
+
 
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to log out?")) {
@@ -17,45 +18,22 @@ function Header({ setShowMenu,showSidebar }) {
   let navList = [];
   products.map((item) => {
     if (getDataFromSession === item.title) {
-      navList = item.allowedPath;
+      if (!authenticate?.role) {
+        navList = item.allowedPath;
+      } else if (authenticate.role) {
+        navList = item.allowedPath.filter((pathItem) =>
+          authenticate?.allowed_path.some((authItem) => authItem.value === pathItem.route)
+        );
+      }
     }
   });
 
-  
-  // switch (authenticate?.role) {
-  //   case "ClientCISO":
-  //     products.map((item)=>{
-  //       if(getDataFromSession === item.title){
-  //        navList = item.allowedCISO.filter((item)=> authenticate.allowed_paths.some((ite)=> ite.value === item.route))
-  //       }
-  //     });
-  //     break;
-  //   case "Assessor":
-  //     navList = EmployeeList;
-  //     break;
-  //   case "Admin":
-  //      products.map((item)=>{
-  //       if(getDataFromSession === item.title){
-  //        navList = item.allowedPath
-  //       }
-  //     });
-  //     break;
-  //   case "ClientSME":
-  //     products.map((item)=>{
-  //       if(getDataFromSession === item.title){
-  //        navList = item.allowedCISO.filter((item)=> authenticate.allowed_paths.some((ite)=> ite.value === item.route))
-  //       };
-  //     });
-  //     break;
-  //   default:
-  //     toast.error("Invalid Role: Access Denied");
-  // }
+
+
 
   return (
-    // <div className="flex h-screen fixed  overflow-y-auto
-    //  md:w-[28%] lg:w-[25%] xl:w-[25%] 2xl:w-[20%] ">
     <div className=" flex flex-col text-white  h-[100%] hide-scrollbar bg-[#1f2937]  overflow-y-auto transition-all duration-500 ease-in-out ">
-      <Link className={` ${showSidebar  ? "" : "block lg:hidden"} flex items-center my-2 ml-3`}>
+      <Link className={` ${showSidebar ? "" : "block lg:hidden"} flex items-center my-2 ml-3`}>
         <div className="flex gap-2 pt-2 items-center justify-center  h-20  ">
           <img src="/logo.png" alt="" className=" h-7" />
         </div>
@@ -69,8 +47,7 @@ function Header({ setShowMenu,showSidebar }) {
             to={data.route}
             onClick={setShowMenu}
             className={({ isActive }) =>
-              `flex items-center px-2 py-2 space-x-2 rounded-lg transition duration-200 ${
-                isActive ? "bg-[#3533cc]" : ""
+              `flex items-center px-2 py-2 space-x-2 rounded-lg transition duration-200 ${isActive ? "bg-[#3533cc]" : ""
               }`
             }
           >
@@ -80,8 +57,8 @@ function Header({ setShowMenu,showSidebar }) {
         ))}
       </nav>
       <hr className="border-gray-100 mx-8" />
-      <div className={`h-full p-2 flex justify-start items-end  ${showSidebar  ? "" : "block lg:hidden"}`}>
-         <div className="relative p-5 flex ">
+      <div className={`h-full p-2 flex justify-start items-end  ${showSidebar ? "" : "block lg:hidden"}`}>
+        <div className="relative p-5 flex ">
           <button
             onClick={handleLogout}
             className="flex 
@@ -105,7 +82,7 @@ function Header({ setShowMenu,showSidebar }) {
         </div>
       </div>
     </div>
-    // </div >
+
   );
 }
 
