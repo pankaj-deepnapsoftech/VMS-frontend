@@ -16,11 +16,11 @@ export function NotificationSidebar({ notifications, isOpen, onClose, notificati
 
 	return (
 		<div
-			className={`fixed top-0 right-0 h-full w-80 bg-white shadow-lg z-10 transform transition-transform duration-300 ${isOpen ? "translate-x-0" : "translate-x-full"
+			className={`fixed top-0 right-0 h-full w-80 bg-cards shadow-lg z-10 transform transition-transform duration-300 ${isOpen ? "translate-x-0" : "translate-x-full"
 				}`}
 		>
 			{/* Header */}
-			<div className="p-4 border-b flex justify-between items-center bg-gradient-to-bl from-[#333333] to-[#666666]">
+			<div className="p-4 border-b flex justify-between items-center bg-gradient-custom">
 				<FaBell className="w-6 h-6 text-white" />
 				<h2 className="text-lg font-semibold text-white">Notifications {notificationcount < 1 ? "" : `(${notificationcount})`}</h2>
 				<button onClick={onClose} className="text-white hover:text-red-400 transition">
@@ -32,17 +32,12 @@ export function NotificationSidebar({ notifications, isOpen, onClose, notificati
 			<div className="p-4 space-y-3 overflow-y-auto max-h-[80vh]">
 				{notifications?.length > 0 ? (
 					notifications.map((notification, index) => {
-						const isViewed = notification?.view; // Assuming 'viewed' property
+						const isViewed = notification?.view; 
 						return (
 							<div
 								key={index}
 								onClick={() => {
 									notificationsViewed(notification?._id);
-									// if (authenticate?.role === "Assessor") {
-									// 	onClose()
-									// 	navigate("/employee-tasks")
-									// }
-
 								}}
 								className={`p-3 rounded-lg flex items-center gap-3 shadow-md cursor-pointer transition-all ${isViewed ? "bg-gray-200 text-gray-600" : "bg-blue-100 text-blue-900"
 									} hover:bg-blue-200`}

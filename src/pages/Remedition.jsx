@@ -74,8 +74,8 @@ function Remedition() {
       <div className="p-2 sm:p-4 ">
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 ">
 
-          <div className="w-full max-w-4xl mx-auto h-72 p-8 bg-white    rounded-xl shadow-lg">
-            <h2 className="text-sm font-semibold mb-4 text-left text-gray-800">Vulnerability Groups by Assignment Group and State</h2>
+          <div className="w-full max-w-4xl mx-auto h-72 p-8 border-gray-600  bg-cards    rounded-xl shadow-lg">
+            <h2 className="text-sm font-semibold mb-4 text-left text-white">Vulnerability Groups by Assignment Group and State</h2>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={data} layout="horizontal" barCategoryGap="30%">
                 <XAxis type="category" dataKey="label" tick={{ fontSize: 10 }} height={50} />
@@ -90,8 +90,8 @@ function Remedition() {
             </ResponsiveContainer>
           </div>
 
-          <div className="w-full max-w-4xl h-72 p-8 bg-white rounded-2xl shadow-lg">
-            <h2 className="text-xs font-semibold mb-4 text-center text-gray-800">Vulnerability Groups by Risk Rating and Remediation Target Status</h2>
+          <div className="w-full max-w-4xl h-72 p-8 bg-cards border-gray-600  rounded-2xl shadow-lg">
+            <h2 className="text-xs font-semibold mb-4 text-center text-white">Vulnerability Groups by Risk Rating and Remediation Target Status</h2>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={data2} layout="horizontal" barCategoryGap="25%">
                 <XAxis type="category" dataKey="label" tick={{ fontSize: 8 }} height={50} interval={0} />
@@ -107,11 +107,11 @@ function Remedition() {
           </div>
 
           {/* Critical Vulnerabilities */}
-          <div className="bg-white border scale-95  border-gray-200 rounded-lg">
-            <div className="w-full  bg-white  rounded-2xl overflow-hidden">
-              <h2 className="text-sm p-4 font-semibold text-gray-900">Critical Vulnerability Groups by Assignment Group</h2>
+          <div className="bg-cards border scale-95  border-gray-600 rounded-lg">
+            <div className="w-full  bg-cards  rounded-2xl overflow-hidden">
+              <h2 className="text-sm p-4 font-semibold text-white">Critical Vulnerability Groups by Assignment Group</h2>
               <table className="w-full border-collapse">
-                <thead className="">
+                <thead className="text-white">
                   <tr>
                     <th className="px-5 text-left text-xs font-normal">Department Name</th>
                     <th className=" text-left text-xs font-normal">Count</th>
@@ -123,8 +123,8 @@ function Remedition() {
                       key={key}
                       className={index % 2 === 0 ? "bg-gray-50" : "bg-gray-100"}
                     >
-                      <td className="py-3 px-4 font-medium text-gray-700">{key}</td>
-                      <td className="py-3 px-4 text-gray-600">{value}</td>
+                      <td className="py-3 px-4 font-medium text-white">{key}</td>
+                      <td className="py-3 px-4 text-white">{value}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -133,13 +133,13 @@ function Remedition() {
           </div>
 
           {/* Unassigned Trend */}
-          <div className="bg-white border scale-95 border-gray-200 rounded-lg">
+          <div className="bg-cards border scale-95 border-gray-600 rounded-lg">
             <div className="p-1">
-              <h2 className="text-sm p-4 font-medium text-gray-900">Infrastructure & Application Vulnerability Groups</h2>
+              <h2 className="text-sm p-4 font-medium text-white">Infrastructure & Application Vulnerability Groups</h2>
               <div className="flex items-center justify-center h-64">
                 <div className="text-center">
-                  <span className="text-4xl font-bold text-gray-900">{size}</span>
-                  <p className="text-sm text-gray-500">Total :</p>
+                  <span className="text-4xl font-bold text-white">{size}</span>
+                  <p className="text-sm text-white">Total :</p>
                 </div>
               </div>
             </div>

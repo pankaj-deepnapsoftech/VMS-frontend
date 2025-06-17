@@ -61,15 +61,15 @@ const ChangePasswordModal = ({ isOpen }) => {
     return (
         <div className="min-h-full py-20 bg-black/50 flex items-center justify-center p-4 fixed top-0 left-0 z-10 w-full">
             <div className="w-full max-w-md">
-                <div className={`bg-white rounded-lg shadow-md overflow-hidden`}>
-                    <div className={`bg-gradient-color p-6 text-white`}>
+                <div className={`bg-gradient-custom rounded-lg shadow-md overflow-hidden`}>
+                    <div className={`bg-[#101831] p-6 text-white`}>
                         <h1 className="text-2xl font-bold flex items-center justify-between">Change Password
                             {/* <button className="p-2 hover:bg-[#3b3b3b] rounded-lg" onClick={onClose} ><IoClose size={24} /></button>   */}
                         </h1>
                         <p className="mt-2 opacity-90">Update your password to keep your account secure</p>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="p-6 space-y-6 text-white bg-gradient-color">
+                    <form onSubmit={handleSubmit} className="p-6 space-y-6 text-white bg-[#101831]">
                         <div className="space-y-2">
                             <label
                                 htmlFor="currentPassword"
