@@ -49,8 +49,6 @@ export const VerifyOtpValidation = object({
   otp: string().min(6).max(6).required("Otp is Required")
 })
 
-
-
 export const EditProfileValidation = object({
   full_name: string()
     .required('Full name is required')
