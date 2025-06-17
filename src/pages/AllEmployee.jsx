@@ -10,7 +10,6 @@ import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { FaEnvelope, FaLock, FaPhone, FaUser } from "react-icons/fa";
-import { MdClose } from "react-icons/md";
 import { RiDeleteBinFill, RiEdit2Line } from "react-icons/ri";
 import Pagination from "./Pagination";
 import { IoClose } from "react-icons/io5";
@@ -29,6 +28,11 @@ const AllEmployee = () => {
   const [isloading, setloading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [apiError, setApiError] = useState(null);
+  const [partners,setPartners] = useState([])
+  const [partOfPartner, setPartOfPartner] = useState(null);
+  const [partOfSecurend, setPartOfSecurend] = useState(null);
+
+
   const {
     values,
     errors,
@@ -46,6 +50,9 @@ const AllEmployee = () => {
       password: "",
       tenant: "",
       role: "",
+      partner:"",
+      email_verification: true,
+      part_securend: partOfSecurend === "yes" ? true : false,
     },
     validationSchema: editable ? EditUser : BaseValidationSchema,
     enableReinitialize: true,
@@ -109,6 +116,16 @@ const AllEmployee = () => {
     } 
   }; 
 
+  
+   const GetAllPartnerData = async () => {
+    try {
+      const res = await AxiosHandler.get("/partner/get-all");
+      setPartners(res?.data?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const GetAllTenentData = async () => {
     try {
       const res = await AxiosHandler.get("/tenant/get-all");
@@ -133,6 +150,7 @@ const AllEmployee = () => {
       GetUsers(page);
       GetAllTenentData();
       GetAllRoleData();
+      GetAllPartnerData()
     }
   }, [token, page]);
 
@@ -283,9 +301,8 @@ const AllEmployee = () => {
 
       {/* MODAL */}
       <div
-        className={`absolute top-0 left-0 z-50 min-h-screen bg-gradient-custom w-full text-white ${
-          isModalOpen ? "opacity-100 visible" : "opacity-0 invisible"
-        } transition-opacity duration-500 ease-in-out`}
+        className={`absolute top-0 left-0 z-50 min-h-screen bg-gradient-custom w-full text-white ${isModalOpen ? "opacity-100 visible" : "opacity-0 invisible"
+          } transition-opacity duration-500 ease-in-out`}
       >
         <div className="w-full flex justify-between items-center py-6 px-10">
           <div className="text-2xl text-center w-full">Add Users</div>
@@ -393,8 +410,34 @@ const AllEmployee = () => {
                   )}
                 </div>
 
-                {/* Tenant */}
                 <div>
+                  <h3>Part of Securend</h3>
+                  <div className="flex gap-4" >
+                    <label>
+                      <input type="radio" name="securend" value="yes" onChange={(e) => setPartOfSecurend(e.target.value)} /> Yes
+                    </label>
+                    <label>
+                      <input type="radio" name="securend" value="no" onChange={(e) => setPartOfSecurend(e.target.value)} /> No
+                    </label>
+                  </div>
+
+                </div>
+
+               {partOfSecurend === "no" && <div>
+                  <h3>Part of Partner</h3>
+                  <div className="flex gap-4" >
+                    <label>
+                      <input type="radio" name="Partner" value="yes" onChange={(e) => setPartOfPartner(e.target.value)} /> Yes
+                    </label>
+                    <label>
+                      <input type="radio" name="Partner" value="no" onChange={(e) => setPartOfPartner(e.target.value)} /> No
+                    </label>
+                  </div>
+
+                </div>}
+
+
+                {partOfPartner === "no" && <div>
                   <label className="block text-sm font-medium text-gray-300 mb-1">
                     Tenant <span className="text-red-500">*</span>
                   </label>
@@ -418,7 +461,37 @@ const AllEmployee = () => {
                   {touched.tenant && errors.tenant && (
                     <p className="text-red-400 text-sm">{errors.tenant}</p>
                   )}
-                </div>
+                </div>}
+
+
+              {partOfPartner === "yes" && <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
+                    Partners <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    id="tenant"
+                    name="partner"
+                    value={values.partner}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    className="w-full bg-zinc-700 text-gray-200 rounded-md px-3 py-2 border border-gray-600 focus:ring-2 focus:ring-sky-500 outline-none"
+                  >
+                    <option value="" disabled>
+                      Select Partners
+                    </option>
+                    {partners?.map((item) => (
+                      <option key={item._id} value={item._id}>
+                        {item?.company_name}
+                      </option>
+                    ))}
+                  </select>
+                  {touched.tenant && errors.tenant && (
+                    <p className="text-red-400 text-sm">{errors.tenant}</p>
+                  )}
+                </div>}
+
+                {/* Tenant */}
+
 
                 {/* Phone Number */}
                 <InputField
@@ -477,7 +550,7 @@ const AllEmployee = () => {
         </div>
       </div>
     </>
-  );
+  )
 };
 
 export default AllEmployee;
