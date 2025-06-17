@@ -262,7 +262,7 @@ const Partners = () => {
           </div>
 
           {/* Table */}
-          <div className="mt-6 bg-[#0c1120] border border-gray-700 rounded-xl overflow-x-auto text-sm text-white">
+          <div className="mt-6 bg-[#0c1120] overflow-x-auto text-sm text-white">
             {partnersData?.length < 1 ? (
               <div className="text-center py-6 text-gray-400">
                 No matching records found.
