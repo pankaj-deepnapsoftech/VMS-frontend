@@ -17,7 +17,7 @@ import { IoClose } from "react-icons/io5";
 const AllEmployee = () => {
   const { VerifyEmployee, DeleteUser } = useAllEmployeeContext();
 
-  const { token } = useAuthContext();
+  const { token, ChangeStatus } = useAuthContext();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editable, setEdiTable] = useState(null);
@@ -28,7 +28,7 @@ const AllEmployee = () => {
   const [isloading, setloading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [apiError, setApiError] = useState(null);
-  const [partners,setPartners] = useState([])
+  const [partners, setPartners] = useState([])
   const [partOfPartner, setPartOfPartner] = useState(null);
   const [partOfSecurend, setPartOfSecurend] = useState(null);
 
@@ -40,6 +40,7 @@ const AllEmployee = () => {
     handleBlur,
     handleChange,
     handleSubmit,
+    setFieldValue,
     resetForm,
   } = useFormik({
     initialValues: editable || {
@@ -50,9 +51,9 @@ const AllEmployee = () => {
       password: "",
       tenant: "",
       role: "",
-      partner:"",
+      partner: "",
       email_verification: true,
-      part_securend: partOfSecurend === "yes" ? true : false,
+      part_securend: null,
     },
     validationSchema: editable ? EditUser : BaseValidationSchema,
     enableReinitialize: true,
@@ -60,11 +61,17 @@ const AllEmployee = () => {
       setloading(true);
 
       setApiError(null); // Clear previous errors
+
+      const filteredData = Object.fromEntries(
+        Object.entries(value).filter(([key, value]) =>
+          value !== "" && value !== null && value !== undefined
+        )
+      );
       try {
         if (editable) {
-          await AxiosHandler.put(`/auth/update-user/${editable._id}`, value);
+          await AxiosHandler.put(`/auth/update-user/${editable._id}`, filteredData);
         } else {
-          await AxiosHandler.post(`/auth/create`, value);
+          await AxiosHandler.post(`/auth/create`, filteredData);
         }
         setIsModalOpen(false);
         GetUsers();
@@ -78,6 +85,8 @@ const AllEmployee = () => {
         console.error("API Error:", message);
       } finally {
         setloading(false);
+        setPartOfPartner(null);
+        setPartOfSecurend(null);
       }
     },
   });
@@ -94,14 +103,6 @@ const AllEmployee = () => {
     );
   });
 
-  const handleChangeStatus = (type, id) => {
-    if (window.confirm("Are you sure you want to change this user's status?")) {
-      const deactivate = type === "activate";
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      ChangeStatus({ deactivate }, id);
-    }
-  };
-
   const GetUsers = async (page = 1) => {
     setloading(true);
     try {
@@ -113,11 +114,20 @@ const AllEmployee = () => {
       console.error(error);
     } finally {
       setloading(false);
-    } 
-  }; 
+    }
+  };
 
-  
-   const GetAllPartnerData = async () => {
+  const handleChangeStatus = async(type, id) => {
+    if (window.confirm("Are you sure you want to change this user's status?")) {
+      const deactivate = type === "activate";
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      await ChangeStatus({ deactivate }, id);
+      GetUsers()
+    }
+  };
+
+
+  const GetAllPartnerData = async () => {
     try {
       const res = await AxiosHandler.get("/partner/get-all");
       setPartners(res?.data?.data);
@@ -134,6 +144,19 @@ const AllEmployee = () => {
       console.error(error);
     }
   };
+
+
+  const isPartOfSecurend = (e) => {
+    if (e.target.value === "no") {
+      setFieldValue("part_securend", false)
+      setPartOfSecurend("no")
+    } else if (e.target.value === "yes") {
+      setFieldValue("part_securend", true)
+      setPartOfSecurend("yes")
+
+
+    }
+  }
 
   const GetAllRoleData = async () => {
     try {
@@ -197,7 +220,7 @@ const AllEmployee = () => {
                       "Phone",
                       "Role",
                       "Tenant",
-                      "Approval Status",
+                      "Partner",
                       "Status",
                       "Actions",
                     ].map((header) => (
@@ -222,26 +245,11 @@ const AllEmployee = () => {
                       <td className="px-4 py-3">{user.email}</td>
                       <td className="px-4 py-3">{user.phone}</td>
                       <td className="px-4 py-3">{user.role?.role || "—"}</td>
+                      <td className="px-4 py-3">{user.partner?.company_name || "—"}</td>
                       <td className="px-4 py-3">
                         {user.tenant?.company_name || "—"}
                       </td>
-                      <td className="px-4 py-3">
-                        {user.employee_approve ? (
-                          <span className="inline-block px-3 py-1 text-xs font-semibold text-green-500 bg-green-900/30 rounded-full">
-                            Approved
-                          </span>
-                        ) : (
-                          <button
-                            onClick={() =>
-                              window.confirm("Verify this employee?") &&
-                              VerifyEmployee(user._id)
-                            }
-                            className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs"
-                          >
-                            Verify
-                          </button>
-                        )}
-                      </td>
+                    
                       <td className="px-4 py-3">
                         {user.deactivate ? (
                           <button
@@ -414,16 +422,16 @@ const AllEmployee = () => {
                   <h3>Part of Securend</h3>
                   <div className="flex gap-4" >
                     <label>
-                      <input type="radio" name="securend" value="yes" onChange={(e) => setPartOfSecurend(e.target.value)} /> Yes
+                      <input type="radio" name="securend" value="yes" onChange={isPartOfSecurend} /> Yes
                     </label>
                     <label>
-                      <input type="radio" name="securend" value="no" onChange={(e) => setPartOfSecurend(e.target.value)} /> No
+                      <input type="radio" name="securend" value="no" onChange={isPartOfSecurend} /> No
                     </label>
                   </div>
 
                 </div>
 
-               {partOfSecurend === "no" && <div>
+                {partOfSecurend === "no" && <div>
                   <h3>Part of Partner</h3>
                   <div className="flex gap-4" >
                     <label>
@@ -464,7 +472,7 @@ const AllEmployee = () => {
                 </div>}
 
 
-              {partOfPartner === "yes" && <div>
+                {partOfPartner === "yes" && <div>
                   <label className="block text-sm font-medium text-gray-300 mb-1">
                     Partners <span className="text-red-500">*</span>
                   </label>
