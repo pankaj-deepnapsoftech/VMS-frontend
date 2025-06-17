@@ -4,7 +4,8 @@ import { useState } from "react";
 
 export default function UserDetailsForm() {
   const { authenticate, UpdateProfile } = useAuthContext();
-  console.log(authenticate)
+
+  console.log(authenticate?.profile)
   const [isEditing, setIsEditing] = useState(false);
   const [preview, setPreview] = useState("");
 
@@ -29,6 +30,7 @@ export default function UserDetailsForm() {
     formData.append("email", form.email);
     formData.append("profile", form.profile);
     UpdateProfile(formData, authenticate._id);
+    setIsEditing(false)
   };
 
 
@@ -59,7 +61,7 @@ export default function UserDetailsForm() {
                 <div className="relative">
                   <label id="profile" className="w-20 h-20 flex items-center justify-center rounded-full overflow-hidden object-cover  border-2 border-slate-600" >
                     {form.profile ? (
-                      <img src={preview ? preview : authenticate?.profile} loading="lazy"/>
+                      <img src={preview || authenticate?.profile || '/default-profile.png'} />
                     ) : <span className="text-2xl text-white"  >+</span>}
                     <input type="file" hidden id="profile" name="profile"
                       onChange={(e) => imagePreview(e.target.files[0])}
@@ -119,7 +121,7 @@ export default function UserDetailsForm() {
                     name="email"
                     value={form.email}
                     onChange={handleChange}
-                    disabled={!isEditing}
+                    disabled
                     className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
                   />
                 </div>
@@ -140,7 +142,7 @@ export default function UserDetailsForm() {
                   <label className="block text-white text-sm font-medium">Role</label>
                   <input
                     type="text"
-                    value={authenticate.role}
+                    value={authenticate?.role || "admin"}
                     disabled
                     className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
                   />
