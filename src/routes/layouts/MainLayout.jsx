@@ -66,7 +66,7 @@ const MainLayout = () => {
           } else if (authenticate.role) {
             const navList = item.allowedPath.filter((pathItem) =>
               authenticate?.allowed_path.some((authItem) => authItem.value === pathItem.route))
-            navigate(navList[0].route)
+            navigate(navList[0]?.route)
           }
         }
       }

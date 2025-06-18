@@ -37,9 +37,21 @@ const Dashboard = () => {
 
 
   const HandleClick = (item) => {
-    if(item !== "Attack Surface Management (ASM)" && item !== "Risk and Compliances"){
-      sessionStorage.setItem("VROC", item);
-      setGetDataFromSession(item);
+    if (item !== "Attack Surface Management (ASM)" && item !== "Risk and Compliances") {
+      if (authenticate?.role) {
+        const data = products.filter((value) => value.title === item)[0].allowedPath.filter((pathItem) =>
+          authenticate?.allowed_path.some((authItem) => authItem.value === pathItem.route));
+        if (data?.length) {
+          sessionStorage.setItem("VROC", item);
+          setGetDataFromSession(item);
+        } else {
+          alert("You Dont Have An access This Module")
+        }
+      } else {
+        sessionStorage.setItem("VROC", item);
+        setGetDataFromSession(item);
+      }
+
     }
 
 
@@ -83,7 +95,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="relative w-full min-h-screen bg-gradient-to-tr from-[#2b2973] via-transparent to-black bg-black text-white">         
+    <div className="relative w-full min-h-screen bg-gradient-to-tr from-[#2b2973] via-transparent to-black bg-black text-white">
 
 
       <div className="absolute inset-0 z-0 bg-[url('/Svg/background.svg')] bg-no-repeat bg-cover bg-center   " />
@@ -169,7 +181,7 @@ const Dashboard = () => {
                   key={index}
                   HandleClick={() => HandleClick(item.title)}
                   borderColor={item.borderColor}
-                  bg={item.bg }
+                  bg={item.bg}
                   animate="animate-slideInX"
                 >
                   <div className="flex flex-col items-start gap-3">
@@ -200,8 +212,8 @@ const Dashboard = () => {
                     key={index}
                     HandleClick={() => HandleClick(item.title)}
                     borderColor={item.borderColor}
-                    title={item.title} 
-                    
+                    title={item.title}
+
                   >
                     <div className="flex flex-col items-start  gap-3">
                       <div className="w-10 h-10 bg-[#ffffff1c] rounded-full flex items-center justify-center text-white text-xl">
