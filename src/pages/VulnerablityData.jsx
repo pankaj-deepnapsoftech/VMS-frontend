@@ -28,7 +28,6 @@ export function VulnerabilityData() {
     UpdateData,
     AddData,
     AllVulnerablilty,
-    OrgAllVulnerablilty,
     allVulnerabilityData,
     topVulnerabliltyData,
     DeleteData,
@@ -57,7 +56,6 @@ export function VulnerabilityData() {
       // : OrgAllVulnerablilty(page);
     if (token && datafetchCount === 0) {
       TopVulnerablilty();
-      GetOrganization();
       Notifications();
       setdatafetchCount(1);
     }
