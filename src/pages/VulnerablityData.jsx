@@ -321,7 +321,7 @@ export function VulnerabilityData() {
             
               <div className=" w-full flex  justify-end gap-2">
                 <select
-                  name="Get Organization "
+                  name="Get Organization"
                   value={selected}
                   onChange={(e) => {
                     setSelected(e.target.value);
@@ -342,7 +342,7 @@ export function VulnerabilityData() {
                   ))}
                 </select>
                 <button
-                  className="p-1   bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white text-[10px] rounded-lg hover:bg-blue-700 transition"
+                  className="p-1 bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white text-[10px] rounded-lg hover:bg-blue-700 transition"
                   onClick={() => {
                     AllVulnerablilty();
                     setSelected("");
@@ -554,15 +554,15 @@ export function VulnerabilityData() {
           {/* 📝 Modal Form */}
           {isModalOpen && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-10">
-              <div className="bg-table rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
+              <div className="bg-[#101831] rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
                 {/* Header */}
-                <div className="flex justify-between items-center border-b p-4 bg-gradient-to-bl from-[#333333] to-[#666666]">
+                <div className="flex justify-between items-center border-b p-4 bg-gradient-custom">
                   <h2 className="text-lg font-semibold text-gray-200">
                     {editMode ? "Edit Vulnerability" : "Add Vulnerability"}
                   </h2>
                   <button
                     onClick={() => setIsModalOpen(false)}
-                    className="text-gray-100 hover:text-gray-200 transition"
+                    className="text-gray-100 hover:text-gray-500 transition"
                   >
                     <MdClose className="h-6 w-6" />
                   </button>
@@ -595,7 +595,7 @@ export function VulnerabilityData() {
                           field !== "creator" &&
                           field !== "Exception_time" && (
                             <div key={field} className="flex flex-col">
-                              <label className="text-sm font-medium text-gray-700">
+                              <label className="text-sm font-medium text-white">
                                 {field.replace(/_/g, " ")}
                               </label>
 
@@ -619,7 +619,7 @@ export function VulnerabilityData() {
                                 </select>
                               ) : field === "Severity" ? (
                                 <select
-                                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                                  className="w-full p-2 bg-input text-gray-300 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
                                   name="Severity"
                                   onChange={(e) =>
                                     setFieldValue("Severity", e.target.value)
@@ -637,7 +637,7 @@ export function VulnerabilityData() {
                                 </select>
                               ) : field === "Status" ? (
                                 <select
-                                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 bg-input text-gray-300 transition"
                                   name="Status"
                                   onChange={(e) =>
                                     setFieldValue("Status", e.target.value)
@@ -666,7 +666,7 @@ export function VulnerabilityData() {
                               ) : (
                                 <Field
                                   name={field}
-                                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                                  className="w-full p-2 border text-white rounded-md focus:ring-2 focus:ring-blue-500 transition bg-input"
                                 />
                               )}
                             </div>
@@ -694,7 +694,7 @@ export function VulnerabilityData() {
                         </button>
                         <button
                           type="submit"
-                          className="px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white rounded-md hover:bg-blue-700 transition"
+                          className="px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-blue-900 transition"
                         >
                           Save
                         </button>

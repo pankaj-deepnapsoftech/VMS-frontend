@@ -8,9 +8,18 @@ import React, { useContext } from "react";
 import { IoClose } from "react-icons/io5";
 
 const RiskRating = ({ showModal, setShowModal, editTable }) => {
-  const { RiskRatingCreate, RiskRatingUpdate, loading } = useContext(RiskRatingContext);
+  const { RiskRatingCreate, RiskRatingUpdate, loading } =
+    useContext(RiskRatingContext);
 
-  const { handleBlur, handleChange, handleSubmit, resetForm, touched, errors, values } = useFormik({
+  const {
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    resetForm,
+    touched,
+    errors,
+    values,
+  } = useFormik({
     initialValues: editTable || {
       data_asset: "",
       users_affected: "",
@@ -26,26 +35,26 @@ const RiskRating = ({ showModal, setShowModal, editTable }) => {
     enableReinitialize: true,
     onSubmit: (values) => {
       if (editTable) {
-        RiskRatingUpdate(values)
+        RiskRatingUpdate(values);
       } else {
-        RiskRatingCreate(values)
+        RiskRatingCreate(values);
       }
-      resetForm()
-      setShowModal(false)
-    }
-  })
-
+      resetForm();
+      setShowModal(false);
+    },
+  });
 
   return (
     <>
-      {
-        loading ? <Loader /> : <section
-          className={`${showModal ? "opacity-100 visible" : "opacity-0 invisible"
-            } fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center transition-opacity duration-300`}
+      {loading ? (
+        <Loader />
+      ) : (
+        <section
+          className={`${
+            showModal ? "opacity-100 visible" : "opacity-0 invisible"
+          } fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center transition-opacity duration-300`}
         >
-
-          <div className="bg-background text-white w-full max-w-3xl mx-4 p-6 rounded-lg shadow-lg relative">
-
+          <div className="bg-background dark:bg-gray-900 text-white w-full max-w-3xl mx-4 p-6 rounded-lg shadow-lg relative">
             <button
               onClick={() => setShowModal(!showModal)}
               className="absolute top-4 right-4 text-white hover:text-gray-600 text-xl font-bold transition"
@@ -55,12 +64,19 @@ const RiskRating = ({ showModal, setShowModal, editTable }) => {
             </button>
 
             <h2 className="text-2xl font-bold text-center text-white mb-6">
-              {Editable ? "Edit Data Asset Inventory – Risk Rating" : "  Data Asset Inventory – Risk Rating"}
+              {Editable
+                ? "Edit Data Asset Inventory – Risk Rating"
+                : "  Data Asset Inventory – Risk Rating"}
             </h2>
 
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <form
+              onSubmit={handleSubmit}
+              className="grid grid-cols-1 md:grid-cols-2 gap-4"
+            >
               <div>
-                <label className="block text-sm font-medium text-white">Data Asset</label>
+                <label className="block text-sm font-medium text-white">
+                  Data Asset
+                </label>
                 <input
                   name="data_asset"
                   type="text"
@@ -75,7 +91,9 @@ const RiskRating = ({ showModal, setShowModal, editTable }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-white">Users Affected</label>
+                <label className="block text-sm font-medium text-white">
+                  Users Affected
+                </label>
                 <input
                   name="users_affected"
                   type="text"
@@ -85,12 +103,16 @@ const RiskRating = ({ showModal, setShowModal, editTable }) => {
                   className="mt-1 w-full p-2 border bg-input border-gray-300 text-white rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
                 {touched.users_affected && errors.users_affected && (
-                  <p className="text-sm text-red-500 ">{errors.users_affected}</p>
+                  <p className="text-sm text-red-500 ">
+                    {errors.users_affected}
+                  </p>
                 )}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-white">Personally Identifiable Information (PII)</label>
+                <label className="block text-sm font-medium text-white">
+                  Personally Identifiable Information (PII)
+                </label>
                 <input
                   name="PII"
                   type="text"
@@ -105,7 +127,9 @@ const RiskRating = ({ showModal, setShowModal, editTable }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-white">Business Sensitive</label>
+                <label className="block text-sm font-medium text-white">
+                  Business Sensitive
+                </label>
                 <input
                   name="business_sensitive"
                   type="text"
@@ -115,12 +139,16 @@ const RiskRating = ({ showModal, setShowModal, editTable }) => {
                   className="mt-1 w-full p-2 border bg-input text-white border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
                 {touched.business_sensitive && errors.business_sensitive && (
-                  <p className="text-sm text-red-500 ">{errors.business_sensitive}</p>
+                  <p className="text-sm text-red-500 ">
+                    {errors.business_sensitive}
+                  </p>
                 )}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-white">Regulations (if known)</label>
+                <label className="block text-sm font-medium text-white">
+                  Regulations (if known)
+                </label>
                 <input
                   name="regulation"
                   type="text"
@@ -135,7 +163,9 @@ const RiskRating = ({ showModal, setShowModal, editTable }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-white">Security Confidentiality</label>
+                <label className="block text-sm font-medium text-white">
+                  Security Confidentiality
+                </label>
                 <input
                   name="security_confidentiality"
                   type="text"
@@ -144,13 +174,18 @@ const RiskRating = ({ showModal, setShowModal, editTable }) => {
                   value={values.security_confidentiality}
                   className="mt-1 w-full p-2 border bg-input text-white border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
-                {touched.security_confidentiality && errors.security_confidentiality && (
-                  <p className="text-sm text-red-500 ">{errors.security_confidentiality}</p>
-                )}
+                {touched.security_confidentiality &&
+                  errors.security_confidentiality && (
+                    <p className="text-sm text-red-500 ">
+                      {errors.security_confidentiality}
+                    </p>
+                  )}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-white">Security Integrity</label>
+                <label className="block text-sm font-medium text-white">
+                  Security Integrity
+                </label>
                 <input
                   name="security_integrity"
                   type="text"
@@ -160,12 +195,16 @@ const RiskRating = ({ showModal, setShowModal, editTable }) => {
                   className="mt-1 w-full p-2 border bg-input text-white border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
                 {touched.security_integrity && errors.security_integrity && (
-                  <p className="text-sm text-red-500 ">{errors.security_integrity}</p>
+                  <p className="text-sm text-red-500 ">
+                    {errors.security_integrity}
+                  </p>
                 )}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-white">Security Availability</label>
+                <label className="block text-sm font-medium text-white">
+                  Security Availability
+                </label>
                 <input
                   name="security_availability"
                   type="text"
@@ -174,13 +213,18 @@ const RiskRating = ({ showModal, setShowModal, editTable }) => {
                   value={values.security_availability}
                   className="mt-1 w-full p-2 border bg-input text-white border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
-                {touched.security_availability && errors.security_availability && (
-                  <p className="text-sm text-red-500 ">{errors.security_availability}</p>
-                )}
+                {touched.security_availability &&
+                  errors.security_availability && (
+                    <p className="text-sm text-red-500 ">
+                      {errors.security_availability}
+                    </p>
+                  )}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-white">Overall Risk Rating</label>
+                <label className="block text-sm font-medium text-white">
+                  Overall Risk Rating
+                </label>
                 <input
                   name="overall_risk_rating"
                   type="text"
@@ -190,7 +234,9 @@ const RiskRating = ({ showModal, setShowModal, editTable }) => {
                   className="mt-1 w-full p-2 border bg-input text-white border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
                 {touched.overall_risk_rating && errors.overall_risk_rating && (
-                  <p className="text-sm text-red-500 ">{errors.overall_risk_rating}</p>
+                  <p className="text-sm text-red-500 ">
+                    {errors.overall_risk_rating}
+                  </p>
                 )}
               </div>
 
@@ -203,9 +249,9 @@ const RiskRating = ({ showModal, setShowModal, editTable }) => {
                 </button>
               </div>
             </form>
-
           </div>
-        </section>}
+        </section>
+      )}
     </>
   );
 };

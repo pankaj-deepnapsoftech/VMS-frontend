@@ -74,7 +74,7 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
                 type="text"
                 name="unit_id"
                 value={values.unit_id}
-                className="mt-1 w-full p-2 border rounded-md bg-input text-white dark:bg-gray-200 dark:border-gray-300 dark:text-white"
+                className="mt-1 w-full p-2 border dark:border-gray-700 rounded-md bg-input text-white dark:text-white"
               />
               {touched.unit_id && errors.unit_id && (
                 <p className="text-red-500 text-sm">{errors.unit_id}</p>
