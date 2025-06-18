@@ -50,7 +50,7 @@ const Data = ({ ShowModal, setShowModal, edittable }) => {
           className={`${ShowModal ? "opacity-100 visible" : "opacity-0 invisible"
             } fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center transition-opacity duration-300`}
         >
-          <div className="bg-background text-white w-full max-w-3xl mx-4 p-6 rounded-lg shadow-lg relative">
+          <div className="bg-background dark:bg-gray-900  text-white w-full max-w-3xl mx-4 p-6 rounded-lg shadow-lg relative">
             <button
               onClick={() => setShowModal(false)}
               className="absolute top-4 right-4 text-2xl text-white hover:text-gray-600 transition"

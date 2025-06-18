@@ -61,7 +61,7 @@ const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }
   return (
     <>
       {loading ? <Loader /> : <section className={`transition-opacity duration-300 ease-in-out ${showModal ? "opacity-100 visible" : "opacity-0 invisible"} fixed top-0 left-0 h-screen w-full bg-black/40 backdrop-blur-sm  flex items-center justify-center z-50 `}>
-        <div className="bg-background rounded-lg shadow-xl w-full max-w-5xl p-8 overflow-y-auto max-h-[90vh]">
+        <div className="bg-background dark:bg-gray-900  rounded-lg shadow-xl w-full max-w-5xl p-8 overflow-y-auto max-h-[90vh]">
           <button
             onClick={() => setShowModal(!showModal)}
             className=" text-white text-2xl flex justify-end w-full rounded hover:text-gray-700 transition duration-300"
