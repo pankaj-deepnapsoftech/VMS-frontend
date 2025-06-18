@@ -43,10 +43,10 @@ function Home() {
     criticalHighVulnerable,
     criticalHighVulnerableOverdue,
     exploitability,
+    getHomeCardData
   } = useDataContext();
 
   const { authenticate, token } = useAuthContext();
-  const [showUserMenu, setShowUserMenu] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
@@ -99,7 +99,7 @@ function Home() {
       color: "from-[#253e5e40] to-[#253e5e8f]", // Figma Red gradient
       icon: MdOutlineMiscellaneousServices,
       chartColor: "#FFF",
-      border:"border border-[#275691b5]"
+      border: "border border-[#275691b5]"
     },
     {
       title: "Infrastructure IPs",
@@ -161,6 +161,8 @@ function Home() {
     }
   };
 
+ 
+
 
 
   useEffect(() => {
@@ -170,7 +172,7 @@ function Home() {
     setFilteredOptions(filtered);
   }, [searchTerm, TenantAllData]);
 
-  
+
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -181,10 +183,11 @@ function Home() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleSelect = (name) => {
+  const handleSelect = (name,id) => {
     setSelected(name);
     setIsOpen(false);
     setSearchTerm('');
+    getHomeCardData(id)
     // onSelect?.(name);
   };
 
@@ -193,20 +196,21 @@ function Home() {
       GetAllTenentData()
     }
   }, [])
+
+
+
+
+
   return (
     <>
       <div className="min-h-screen bg-gradient-custom px-6 py-6 ">
 
-        <div className="flex flex-col md:flex-row items-stretch gap-4 bg-[#6B728033] border border-[#6B728033]   rounded-lg p-4 shadow-sm">
-          <input
-            type="text"
-            placeholder="Search..."
-            className=" bg-[#6B728033] text-white placeholder-gray-400 border border-gray-600 rounded-md px-4 py-2 focus:outline-none transition duration-200"
-          />
+        {!authenticate?.role && <div className="flex flex-col md:flex-row items-stretch gap-4 bg-[#6B728033] border border-[#6B728033]   rounded-lg p-4 shadow-sm">
+
 
           <div className="relative w-full md:w-64" ref={dropdownRef}>
-          
-           <div className="relative">
+
+            <div className="relative">
               <div
                 onClick={() => setIsOpen(!isOpen)}
                 className="bg-[#6B728033]  text-white border border-gray-600 rounded-md px-4 py-2 cursor-pointer"
@@ -214,8 +218,8 @@ function Home() {
                 {selected || 'Select Tenant'}
               </div>
               <IoIosArrowDown className={` ${isOpen ? "rotate-180" : "rotate-0"} absolute text-white  right-4 top-3 `} />
-           </div>
-           
+            </div>
+
             {isOpen && (
               <div className="absolute z-10 w-full bg-[#313140] border border-gray-600 rounded-md mt-1 shadow-lg">
                 <input
@@ -223,17 +227,17 @@ function Home() {
                   placeholder="Search..."
                   autoFocus
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={(e)=>setSearchTerm(e.target.value)}
                   className=" mx-2 px-4 py-2 bg-[#1f1f21] text-white border-b border-gray-700 outline-none mt-2 rounded-md"
                 />
-               
+
 
                 <ul className="max-h-44 overflow-y-auto custom-scrollbar ">
                   {filteredOptions.length > 0 ? (
                     filteredOptions.map((tenant) => (
                       <li
                         key={tenant._id}
-                        onClick={() => handleSelect(tenant.company_name)}
+                        onClick={() => handleSelect(tenant.company_name,tenant._id)}
                         className="px-4 py-2 hover:bg-zinc-700 cursor-pointer text-white"
                       >
                         {tenant.company_name}
@@ -246,7 +250,7 @@ function Home() {
               </div>
             )}
           </div>
-        </div>
+        </div>}
 
 
         {/* Metrics Grid */}
@@ -294,7 +298,7 @@ function Home() {
             </h3>
             <hr className="mb-4" />
             <div className="h-72">
-              <ResponsiveContainer width="100%" height="100%">
+              {/* <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={newData}>
                   <defs>
                     <linearGradient
@@ -431,7 +435,7 @@ function Home() {
                     fill="url(#infoGradient)"
                   />
                 </AreaChart>
-              </ResponsiveContainer>
+              </ResponsiveContainer> */}
             </div>
           </div>
         </div>

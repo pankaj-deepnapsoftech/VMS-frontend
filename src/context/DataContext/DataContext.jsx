@@ -26,9 +26,9 @@ const DataContextProvider = ({ children }) => {
 
   const { token } = useAuthContext();
 
-  const getHomeCardData = async () => {
+  const getHomeCardData = async (creator_id) => {
     try {
-      const res = await AxiosHandler.get("/data/total-data-count");
+      const res = await AxiosHandler.get(`/data/total-data-count?creator_id=${creator_id ? creator_id : ""}`);
       setCardData(res.data);
     } catch (error) {
       console.log(error);
@@ -166,7 +166,8 @@ const DataContextProvider = ({ children }) => {
         closevulnerableItems,
         criticalHighVulnerable,
         criticalHighVulnerableOverdue,
-        exploitability
+        exploitability,
+        getHomeCardData
         
       }}
     >
