@@ -298,7 +298,7 @@ function Home() {
             </h3>
             <hr className="mb-4" />
             <div className="h-72">
-              {/* <ResponsiveContainer width="100%" height="100%">
+              <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={newData}>
                   <defs>
                     <linearGradient
@@ -435,7 +435,7 @@ function Home() {
                     fill="url(#infoGradient)"
                   />
                 </AreaChart>
-              </ResponsiveContainer> */}
+              </ResponsiveContainer>
             </div>
           </div>
         </div>
