@@ -274,7 +274,7 @@ const Roles = () => {
                                 setEditable(roleItem);
                                 setModal(true);
                               }}
-                              className="flex items-center gap-1 bg-gray-700 hover:bg-yellow-500 text-white text-sm px-3 py-1 rounded transition"
+                              className="flex items-center gap-1 bg-gray-700 hover:bg-blue-500 text-white text-sm px-3 py-1 rounded transition"
                             >
                               <FiEdit2 />
                               Edit
