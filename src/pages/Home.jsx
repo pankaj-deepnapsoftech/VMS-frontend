@@ -43,7 +43,11 @@ function Home() {
     criticalHighVulnerable,
     criticalHighVulnerableOverdue,
     exploitability,
-    getHomeCardData
+    getHomeCardData,
+    VulnerableItemsByRiskRating,
+    GetExploitability,
+    ClosevulnerableItems,
+    CriticalHighVulnerable
   } = useDataContext();
 
   const { authenticate, token } = useAuthContext();
@@ -53,10 +57,6 @@ function Home() {
   const [filteredOptions, setFilteredOptions] = useState(TenantAllData);
   const dropdownRef = useRef(null);
 
-  const user = {
-    name: "Dinki",
-    email: "dinki@gmail.com",
-  };
 
   const closevulnerableItemsData = [closevulnerableItems];
   const data = [
@@ -187,8 +187,11 @@ function Home() {
     setSelected(name);
     setIsOpen(false);
     setSearchTerm('');
-    getHomeCardData(id)
-    // onSelect?.(name);
+    getHomeCardData(id);
+    VulnerableItemsByRiskRating(id);
+    GetExploitability(id);
+    ClosevulnerableItems(id);
+    CriticalHighVulnerable(id)
   };
 
   useEffect(() => {

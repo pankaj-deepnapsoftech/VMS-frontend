@@ -25,11 +25,6 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 
 	const [page, setPage] = useState(1)
 
-	const { token } = useAuthContext()
-	// not being used here
-	// const { EmployeeTasks } = useAllEmployeeContext()
-
-
 
 
 	const TotalAssessments = async (page) => {
@@ -58,18 +53,7 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 		}
 	}
 
-	const GetOrgnization = async (page) => {
-		setLoading(true);
-		try {
-			const res = await AxiosHandler.get(`/auth/all-orgs`);
-			setGetOrgnizationData(res?.data?.data);
 
-		} catch (error) {
-			console.log(error)
-		} finally {
-			setLoading(false);
-		}
-	}
 
 	const TesterForAssessment = async () => {
 
@@ -149,9 +133,6 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 		}
 	};
 
-	useEffect(()=>{
-		GetOrgnization()
-	},[])
 
 	return (
 		<AssesmentContext.Provider value={{
@@ -167,7 +148,6 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 			dashboardData,
 			datafetchCount,
 			setdatafetchCount,
-			GetOrgnization,
 			TotalAssessments,
 			TesterForAssessment,
 			DashboardData,

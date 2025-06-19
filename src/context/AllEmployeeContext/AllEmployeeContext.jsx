@@ -14,11 +14,8 @@ const AllEmployeeContextProvider = ({ children }) => {
 	const [datafetchCount, setdatafetchCount] = useState(0)
 
 	const [loading, setLoading] = useState(false);
-	const [allEmployeesData, SetAllEmployeesData] = useState([]);
 	const [employeeTasksData, setEmployeeTasksData] = useState([]);
 	const [employeeCardData, setEmployeeCardData] = useState([]);
-	const [newUser, setNewUser] = useState([])
-	const [clientSme,setClientSme] = useState([])
 
 
 	const [page, setPage] = useState(1)
@@ -26,34 +23,7 @@ const AllEmployeeContextProvider = ({ children }) => {
 
 	const { token, authenticate } = useAuthContext()
 
-	const AllEmployee = async () => {
-		setLoading(true);
-		try {
-			const res = await AxiosHandler.get(`/auth/all-employee?page=${page}&limit=10`);
-			SetAllEmployeesData(res.data?.users);
 
-		} catch (error) {
-			console.log(error)
-
-
-		} finally {
-			setLoading(false);
-		}
-	}
-
-	const AllClientSME = async () => {
-		setLoading(true);
-		try {
-			const res = await AxiosHandler.get(`/auth/all-sme?page=${page}&limit=10`);
-			setClientSme(res.data.data);
-
-		} catch (error) {
-			console.log(error)
-
-		} finally {
-			setLoading(false);
-		}
-	}
 
 	const EmployeeTasks = async () => {
 		setLoading(true);
@@ -91,8 +61,8 @@ const AllEmployeeContextProvider = ({ children }) => {
 			const res = await AxiosHandler.patch(`/auth/verify-employee/${id}`);
 			toast.dismiss(toastId);
 			toast.success(res.data.message);
-			authenticate?.role === "ClientCISO" ? AllClientSME() : EmployeeData();
-            
+			EmployeeData();
+
 		} catch (error) {
 			//console.log(error)
 			toast.dismiss(toastId);
@@ -121,34 +91,16 @@ const AllEmployeeContextProvider = ({ children }) => {
 		try {
 			const res = await AxiosHandler.delete(`/auth/delete-user/${id}`);
 			toast.success(res.data.message);
-			AllEmployee();
-			AllClientSME();
 
 		} catch (error) {
 			toast.error(error.response.data.message)
 		}
 	}
 
-
-	const GetNewUsers = async () => {
-		try {
-			const res = await AxiosHandler.get("/auth/new-users");
-			setNewUser(res.data.data)
-		} catch (error) {
-			console.log("error in GetNewUser method", error)
-		}
-	}
-
-
-
-
 	useEffect(() => {
 		if (token) {
-			AllClientSME();
-			AllEmployee();
 			EmployeeTasks();
 			EmployeeData();
-			GetNewUsers();
 		}
 	}, [token, page, taskPage, authenticate?.role])
 
@@ -156,7 +108,6 @@ const AllEmployeeContextProvider = ({ children }) => {
 	return (
 		<AllEmployeeContext.Provider value={{
 			loading,
-			allEmployeesData,
 			employeeTasksData,
 			EmployeeTasks,
 			VerifyEmployee,
@@ -165,15 +116,11 @@ const AllEmployeeContextProvider = ({ children }) => {
 			setPage,
 			taskPage,
 			setTaskPage,
-			AllClientSME,
 			UploadDetailedReport,
 			EmployeeData,
 			datafetchCount,
 			setdatafetchCount,
-			AllEmployee,
 			DeleteUser,
-			newUser,
-			clientSme
 
 		}}>
 			{children}

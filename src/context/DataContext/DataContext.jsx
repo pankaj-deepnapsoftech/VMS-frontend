@@ -58,10 +58,12 @@ const DataContextProvider = ({ children }) => {
     }
   };
 
-  const VulnerableItemsByRiskRating = async () => {
+  const VulnerableItemsByRiskRating = async (creator_id) => {
+    console.log("this is creator id",creator_id)
     setLoading(true);
     try {
-      const res = await AxiosHandler.get("/data/vulnerableItems");
+      const res = await AxiosHandler.get(`/data/vulnerableItems?creator_id=${creator_id ? creator_id : ""}`);
+      console.log("this api is calling right now", res.data)
       setVulnerableItemsByRiskRatingData(res.data.newData);
     } catch (error) {
       console.log(error);
@@ -94,10 +96,10 @@ const DataContextProvider = ({ children }) => {
     }
   };
 
-  const ClosevulnerableItems = async () => {
+  const ClosevulnerableItems = async (creator_id) => {
     setLoading(true);
     try {
-      const res = await AxiosHandler.get("/data/ClosevulnerableItems");
+      const res = await AxiosHandler.get(`/data/ClosevulnerableItems?creator_id=${creator_id ? creator_id : ""}`);
       setClosevulnerableItems(res.data);
     } catch (error) {
       console.log(error);
@@ -106,10 +108,10 @@ const DataContextProvider = ({ children }) => {
     }
   };
 
-  const CriticalHighVulnerable = async () => {
+  const CriticalHighVulnerable = async (creator_id) => {
     setLoading(true);
     try {
-      const res = await AxiosHandler.get("/data/CriticalHighVulnerable");
+      const res = await AxiosHandler.get(`/data/CriticalHighVulnerable?creator_id=${creator_id ? creator_id : ""}`);
       setCriticalHighVulnerable(res.data);
     } catch (error) {
       console.log(error);
@@ -130,10 +132,10 @@ const DataContextProvider = ({ children }) => {
     }
   };
 
-  const GetExploitability = async () => {
+  const GetExploitability = async (creator_id) => {
     setLoading(true);
     try {
-      const res = await AxiosHandler.get("/data/TopExploitability");
+      const res = await AxiosHandler.get(`/data/TopExploitability?creator_id=${creator_id ? creator_id : ""}`);
       setExploitability(res.data.data);
     } catch (error) {
       console.log(error);
@@ -144,6 +146,8 @@ const DataContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (token) {
+
+      console.log("this is working ")
       getHomeCardData();
       VulnerableItemsByRiskRating();
       VulnerableItemsByAge();
@@ -167,7 +171,11 @@ const DataContextProvider = ({ children }) => {
         criticalHighVulnerable,
         criticalHighVulnerableOverdue,
         exploitability,
-        getHomeCardData
+        getHomeCardData,
+        VulnerableItemsByRiskRating,
+        GetExploitability,
+        ClosevulnerableItems,
+        CriticalHighVulnerable
         
       }}
     >
