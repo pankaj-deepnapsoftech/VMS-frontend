@@ -28,10 +28,9 @@ const AllEmployee = () => {
   const [isloading, setloading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [apiError, setApiError] = useState(null);
-  const [partners, setPartners] = useState([])
+  const [partners, setPartners] = useState([]);
   const [partOfPartner, setPartOfPartner] = useState(null);
   const [partOfSecurend, setPartOfSecurend] = useState(null);
-
 
   const {
     values,
@@ -63,13 +62,17 @@ const AllEmployee = () => {
       setApiError(null); // Clear previous errors
 
       const filteredData = Object.fromEntries(
-        Object.entries(value).filter(([key, value]) =>
-          value !== "" && value !== null && value !== undefined
+        Object.entries(value).filter(
+          ([key, value]) =>
+            value !== "" && value !== null && value !== undefined
         )
       );
       try {
         if (editable) {
-          await AxiosHandler.put(`/auth/update-user/${editable._id}`, filteredData);
+          await AxiosHandler.put(
+            `/auth/update-user/${editable._id}`,
+            filteredData
+          );
         } else {
           await AxiosHandler.post(`/auth/create`, filteredData);
         }
@@ -122,10 +125,9 @@ const AllEmployee = () => {
       const deactivate = type === "activate";
       // eslint-disable-next-line react-hooks/rules-of-hooks
       await ChangeStatus({ deactivate }, id);
-      GetUsers()
+      GetUsers();
     }
   };
-
 
   const GetAllPartnerData = async () => {
     try {
@@ -145,18 +147,15 @@ const AllEmployee = () => {
     }
   };
 
-
   const isPartOfSecurend = (e) => {
     if (e.target.value === "no") {
-      setFieldValue("part_securend", false)
-      setPartOfSecurend("no")
+      setFieldValue("part_securend", false);
+      setPartOfSecurend("no");
     } else if (e.target.value === "yes") {
-      setFieldValue("part_securend", true)
-      setPartOfSecurend("yes")
-
-
+      setFieldValue("part_securend", true);
+      setPartOfSecurend("yes");
     }
-  }
+  };
 
   const GetAllRoleData = async () => {
     try {
@@ -173,7 +172,7 @@ const AllEmployee = () => {
       GetUsers(page);
       GetAllTenentData();
       GetAllRoleData();
-      GetAllPartnerData()
+      GetAllPartnerData();
     }
   }, [token, page]);
 
@@ -197,7 +196,7 @@ const AllEmployee = () => {
                   setIsModalOpen(true);
                   setEdiTable(null);
                 }}
-                className="px-4 py-2 mr-5 bg-blue-800 hover:bg-blue-900 rounded-md text-white font-medium flex items-center gap-2"
+                className="px-4 py-2 mr-5 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center gap-2"
               >
                 <BiPlus className="h-6 w-6 mr-1" />
                 Add User
@@ -208,7 +207,7 @@ const AllEmployee = () => {
           {filteredData?.length < 1 ? (
             <NoDataFound />
           ) : (
-            <div className="overflow-x-auto w-[95%] rounded-xl mx-auto shadow-lg bg-[#0c1120]">
+            <div className="overflow-x-auto  custom-scrollbar w-[95%] rounded-xl mx-auto shadow-lg bg-[#0c1120]">
               <table className="min-w-full table-auto text-sm text-left text-gray-300 divide-y divide-gray-700">
                 <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
                   <tr>
@@ -233,7 +232,7 @@ const AllEmployee = () => {
                     ))}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-700">
+                <tbody className="divide-y  divide-gray-700">
                   {filteredData.map((user, index) => (
                     <tr
                       key={user._id}
@@ -245,7 +244,9 @@ const AllEmployee = () => {
                       <td className="px-4 py-3">{user.email}</td>
                       <td className="px-4 py-3">{user.phone}</td>
                       <td className="px-4 py-3">{user.role?.role || "—"}</td>
-                      <td className="px-4 py-3">{user.partner?.company_name || "—"}</td>
+                      <td className="px-4 py-3">
+                        {user.partner?.company_name || "—"}
+                      </td>
                       <td className="px-4 py-3">
                         {user.tenant?.company_name || "—"}
                       </td>
@@ -309,8 +310,9 @@ const AllEmployee = () => {
 
       {/* MODAL */}
       <div
-        className={`absolute top-0 left-0 z-50 min-h-screen bg-gradient-custom w-full text-white ${isModalOpen ? "opacity-100 visible" : "opacity-0 invisible"
-          } transition-opacity duration-500 ease-in-out`}
+        className={`absolute top-0 left-0 z-50 min-h-screen bg-gradient-custom w-full text-white ${
+          isModalOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        } transition-opacity duration-500 ease-in-out`}
       >
         <div className="w-full flex justify-between items-center py-6 px-10">
           <div className="text-2xl text-center w-full">Add Users</div>
@@ -327,7 +329,7 @@ const AllEmployee = () => {
         <div className="flex justify-center px-10 py-8">
           <div className="flex-1 px-8 py-10 rounded-md shadow-md max-w-5xl bg-[#2a282e80]">
             <form onSubmit={handleSubmit} className="space-y-12">
-              <div>
+              <div>                                                    
                 <h1 className="text-3xl font-semibold text-white mb-2">
                   {editable ? "Edit User Details" : "Add a New User"}
                 </h1>
@@ -355,10 +357,9 @@ const AllEmployee = () => {
                   onChange={handleChange}
                   placeholder="Enter your First Name"
                   name="fname"
+                  isError={touched.fname && errors.fname}
+                  error={errors.fname}
                 />
-                {touched.fname && errors.fname && (
-                  <p className="text-red-400 text-sm">{errors.fname}</p>
-                )}
 
                 {/* Last Name */}
                 <InputField
@@ -371,10 +372,9 @@ const AllEmployee = () => {
                   onChange={handleChange}
                   placeholder="Enter your Last Name"
                   name="lname"
+                  isError={touched.lname && errors.lname}
+                  error={errors.lname}
                 />
-                {touched.lname && errors.lname && (
-                  <p className="text-red-400 text-sm">{errors.lname}</p>
-                )}
 
                 {/* Email */}
                 <InputField
@@ -387,10 +387,9 @@ const AllEmployee = () => {
                   onChange={handleChange}
                   placeholder="Enter your Email Address"
                   name="email"
+                  isError={touched.email && errors.email}
+                  error={errors.email}
                 />
-                {touched.email && errors.email && (
-                  <p className="text-red-400 text-sm">{errors.email}</p>
-                )}
 
                 {/* Role */}
                 <div>
@@ -398,7 +397,7 @@ const AllEmployee = () => {
                     Role <span className="text-red-500">*</span>
                   </label>
                   <select
-                    className="w-full bg-zinc-700 text-gray-200 rounded-md px-3 py-2 border border-gray-600 focus:ring-2 focus:ring-sky-500 outline-none"
+                    className="w-full bg-input text-gray-400 rounded-md px-3 py-2 border border-gray-600 focus:ring-2 focus:ring-sky-500 outline-none"
                     name="role"
                     value={values.role}
                     onChange={handleChange}
@@ -420,86 +419,111 @@ const AllEmployee = () => {
 
                 <div>
                   <h3>Part of Securend</h3>
-                  <div className="flex gap-4" >
+                  <div className="flex gap-4">
                     <label>
-                      <input type="radio" name="securend" value="yes" onChange={isPartOfSecurend} /> Yes
+                      <input
+                        type="radio"
+                        name="securend"
+                        value="yes"
+                        onChange={isPartOfSecurend}
+                      />{" "}
+                      Yes
                     </label>
                     <label>
-                      <input type="radio" name="securend" value="no" onChange={isPartOfSecurend} /> No
+                      <input
+                        type="radio"
+                        name="securend"
+                        value="no"
+                        onChange={isPartOfSecurend}
+                      />{" "}
+                      No
                     </label>
                   </div>
-
                 </div>
 
-                {partOfSecurend === "no" && <div>
-                  <h3>Part of Partner</h3>
-                  <div className="flex gap-4" >
-                    <label>
-                      <input type="radio" name="Partner" value="yes" onChange={(e) => setPartOfPartner(e.target.value)} /> Yes
-                    </label>
-                    <label>
-                      <input type="radio" name="Partner" value="no" onChange={(e) => setPartOfPartner(e.target.value)} /> No
-                    </label>
+                {partOfSecurend === "no" && (
+                  <div>
+                    <h3>Part of Partner</h3>
+                    <div className="flex gap-4">
+                      <label>
+                        <input
+                          type="radio"
+                          name="Partner"
+                          value="yes"
+                          onChange={(e) => setPartOfPartner(e.target.value)}
+                        />{" "}
+                        Yes
+                      </label>
+                      <label>
+                        <input
+                          type="radio"
+                          name="Partner"
+                          value="no"
+                          onChange={(e) => setPartOfPartner(e.target.value)}
+                        />{" "}
+                        No
+                      </label>
+                    </div>
                   </div>
+                )}
 
-                </div>}
-
-
-                {partOfPartner === "no" && <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-1">
-                    Tenant <span className="text-red-500">*</span>
-                  </label>
-                  <select
-                    id="tenant"
-                    name="tenant"
-                    value={values.tenant}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    className="w-full bg-zinc-700 text-gray-200 rounded-md px-3 py-2 border border-gray-600 focus:ring-2 focus:ring-sky-500 outline-none"
-                  >
-                    <option value="" disabled>
-                      Select tenant
-                    </option>
-                    {TenantData?.map((item) => (
-                      <option key={item._id} value={item._id}>
-                        {item?.company_name}
+                {partOfPartner === "no" && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-1">
+                      Tenant <span className="text-red-500">*</span>
+                    </label>
+                    <select
+                      id="tenant"
+                      name="tenant"
+                      value={values.tenant}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      className="w-full bg-zinc-700 text-gray-200 rounded-md px-3 py-2 border border-gray-600 focus:ring-2 focus:ring-sky-500 outline-none"
+                    >
+                      <option value="" disabled>
+                        Select tenant
                       </option>
-                    ))}
-                  </select>
-                  {touched.tenant && errors.tenant && (
-                    <p className="text-red-400 text-sm">{errors.tenant}</p>
-                  )}
-                </div>}
+                      {TenantData?.map((item) => (
+                        <option key={item._id} value={item._id}>
+                          {item?.company_name}
+                        </option>
+                      ))}
+                    </select>
+                    {touched.tenant && errors.tenant && (
+                      <p className="text-red-400 text-sm">{errors.tenant}</p>
+                    )}
+                  </div>
+                )}
 
-
-                {partOfPartner === "yes" && <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-1">
-                    Partners <span className="text-red-500">*</span>
-                  </label>
-                  <select
-                    id="tenant"
-                    name="partner"
-                    value={values.partner}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    className="w-full bg-zinc-700 text-gray-200 rounded-md px-3 py-2 border border-gray-600 focus:ring-2 focus:ring-sky-500 outline-none"
-                  >
-                    <option value="" disabled>
-                      Select Partners
-                    </option>
-                    {partners?.map((item) => (
-                      <option key={item._id} value={item._id}>
-                        {item?.company_name}
+                {partOfPartner === "yes" && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-1">
+                      Partners <span className="text-red-500">*</span>
+                    </label>
+                    <select
+                      id="tenant"
+                      name="partner"
+                      value={values.partner}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      className="w-full bg-zinc-700 text-gray-200 rounded-md px-3 py-2 border border-gray-600 focus:ring-2 focus:ring-sky-500 outline-none"
+                    >
+                      <option value="" disabled>
+                        Select Partners
                       </option>
-                    ))}
-                  </select>
-                  {touched.tenant && errors.tenant && (
-                    <p className="text-red-400 text-sm">{errors.tenant}</p>
-                  )}
-                </div>}
+                      {partners?.map((item) => (
+                        <option key={item._id} value={item._id}>
+                          {item?.company_name}
+                        </option>
+                      ))}
+                    </select>
+                    {touched.tenant && errors.tenant && (
+                      <p className="text-red-400 text-sm">{errors.tenant}</p>
+                    )}
+                  </div>
+                )}
 
                 {/* Tenant */}
-
 
                 {/* Phone Number */}
                 <InputField
@@ -512,10 +536,9 @@ const AllEmployee = () => {
                   onChange={handleChange}
                   placeholder="Enter your Phone Number"
                   name="phone"
+                  isError={touched.phone && errors.phone}
+                  error={errors.phone}
                 />
-                {touched.phone && errors.phone && (
-                  <p className="text-red-400 text-sm">{errors.phone}</p>
-                )}
 
                 {/* Password - Only if not editing */}
                 {!editable && (
@@ -530,10 +553,9 @@ const AllEmployee = () => {
                       onChange={handleChange}
                       placeholder="Enter your Password"
                       name="password"
+                      isError={touched.password && errors.password}
+                      error={errors.password}
                     />
-                    {touched.password && errors.password && (
-                      <p className="text-red-400 text-sm">{errors.password}</p>
-                    )}
                   </>
                 )}
               </div>
@@ -548,7 +570,7 @@ const AllEmployee = () => {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-gradient-to-tr from-sky-500 to-sky-700 text-white rounded-md hover:shadow-lg transition-all duration-300"
+                  className="px-5 py-2 bg-button text-white rounded-md hover:shadow-lg hover:scale-105 transition duration-200"
                 >
                   {editable ? "Update" : "Save"}
                 </button>
@@ -558,7 +580,7 @@ const AllEmployee = () => {
         </div>
       </div>
     </>
-  )
+  );
 };
 
 export default AllEmployee;

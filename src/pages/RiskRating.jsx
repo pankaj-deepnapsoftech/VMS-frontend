@@ -243,7 +243,7 @@ const RiskRating = ({ showModal, setShowModal, editTable }) => {
               <div className="md:col-span-2 flex justify-end pt-4">
                 <button
                   type="submit"
-                  className="bg-blue-600 text-white font-semibold py-2 px-6 rounded hover:bg-blue-700 transition"
+                  className="bg-button text-white font-semibold py-2 px-6 rounded hover:scale-105 transition duration-200"
                 >
                   Submit
                 </button>

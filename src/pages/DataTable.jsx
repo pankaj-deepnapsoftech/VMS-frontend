@@ -26,13 +26,13 @@ import { MdDeleteForever } from "react-icons/md";
             setShowModal(true);
             seteditTable(null);
           }}
-          className="mb-2 bg-sky-600 hover:bg-sky-700 text-white font-[500] py-2 px-4 rounded shadow-md transition duration-300 ease-in-out"
+          className="mb-2 bg-button hover:bg-hoverbutton text-white font-[500] py-2 px-4 rounded shadow-md transition duration-300 ease-in-out"
         >
           Add Data Asset
         </button>
       </div>
 
-      <div className="overflow-x-auto shadow-lg bg-[#0c1120] ]">
+      <div className="overflow-x-auto custom-scrollbar shadow-lg bg-[#0c1120] ]">
         <table className="min-w-full text-sm text-left divide-y divide-gray-700 text-white">
           <thead className="bg-[#0c1120] text-[15px] uppercase sticky top-0 z-10">
             <tr>

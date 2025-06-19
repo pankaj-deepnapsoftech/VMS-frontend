@@ -116,7 +116,7 @@ const Partners = () => {
                 setModal(true);
                 setEdittable(null);
               }}
-              className="px-5 py-2.5 bg-blue-800 text-white font-semibold rounded-lg hover:bg-blue-900 transition-all duration-300 flex items-center gap-2 shadow-md"
+              className="px-5 py-2.5 bg-button text-white font-semibold rounded-lg transition-all duration-300 flex items-center gap-2 shadow-md"
             >
               <BiPlus className="h-5 w-5" />
               Add Partners
@@ -252,7 +252,7 @@ const Partners = () => {
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 bg-[#123e5c] text-white rounded-md hover:bg-sky-800 transition"
+                    className="px-5 py-2 bg-button hover:scale-105 transition duration-200 text-white rounded-md"
                   >
                     Save
                   </button>

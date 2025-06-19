@@ -28,13 +28,13 @@ const ApplicationSoftwareInventoryTable = () => {
             setShowModal(true);
             setEditTableData(null);
           }}
-          className="bg-sky-600 text-white py-2 px-4 rounded hover:bg-sky-700"
+          className="bg-button text-white py-2 px-4 rounded hover:bg-hoverbutton"
         >
           Add Application
         </button>
       </div>
 
-      <div className="overflow-x-auto bg-[#0c1120] shadow-md h-full">
+      <div className="overflow-x-auto custom-scrollbar bg-[#0c1120] shadow-md h-full">
         <table className="bg-table divide-y divide-gray-700  text-sm text-left min-w-full">
           <thead className="bg-[#0c1120] text-[15px] text-white uppercase sticky top-0 z-10">
             <tr>

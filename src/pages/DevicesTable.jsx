@@ -20,7 +20,7 @@ const DevicesTable = () => {
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-xl font-bold text-white">Devices</h1>
         <button
-          className="bg-sky-600 text-white px-4 py-2 rounded"
+          className="bg-button hover:bg-hoverbutton text-white px-4 py-2 rounded"
           onClick={() => {
             setShowModal(true);
             setEditableData(null);
@@ -30,7 +30,7 @@ const DevicesTable = () => {
         </button>
       </div>
 
-      <div className="overflow-x-auto bg-[#0c1120] overflow-hidden shadow-md">
+      <div className="overflow-x-auto custom-scrollbar bg-[#0c1120] overflow-hidden shadow-md">
         <table className="min-w-full  text-left text-white divide-y divide-gray-700 bg-gray-500">
           <thead className="bg-[#0c1120] text-[15px] uppercase text-white sticky top-0 z-10">
             <tr>

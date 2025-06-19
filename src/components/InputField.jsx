@@ -12,6 +12,8 @@ function InputField({
   onBlur,
   placeholder = "",
   name = "",
+  isError,
+  error
 }) {
   const [toggle, setToggle] = useState(false);
 
@@ -65,6 +67,7 @@ function InputField({
           </button>
         )}
       </div>
+    {isError && <p className="text-red-500 text-sm px-2">{error}</p>}
     </div>
   );
 }

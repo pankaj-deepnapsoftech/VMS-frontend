@@ -43,10 +43,10 @@ export const PrivateRoutes = [
     path: "/vulnerability-data",
     element: <VulnerabilityData />,
   },
-  // {
-  //   path: "/third-party-data",
-  //   element: <JiraDataTable />,
-  // },
+  {
+    path: "/third-party-data",
+    element: <JiraDataTable />,
+  },
   {
     path: "/third-party-integrations",
     element: <ThirdPartyIntegrations />,

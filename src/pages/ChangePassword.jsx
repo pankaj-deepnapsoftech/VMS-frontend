@@ -1,60 +1,58 @@
+import React from "react";
 
-import React from "react"
-
-import { useState } from "react"
-import { EyeIcon, EyeOffIcon, LockIcon } from "lucide-react"
-import { useAuthContext } from "@/context"
+import { useState } from "react";
+import { EyeIcon, EyeOffIcon, LockIcon } from "lucide-react";
+import { useAuthContext } from "@/context";
 
 export default function PasswordChange() {
-
   const { ChangePassword } = useAuthContext();
 
-  const [showCurrentPassword, setShowCurrentPassword] = useState(false)
-  const [showNewPassword, setShowNewPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [passwordStrength, setPasswordStrength] = useState(0)
-  const [passwordMatch, setPasswordMatch] = useState(true)
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [passwordStrength, setPasswordStrength] = useState(0);
+  const [passwordMatch, setPasswordMatch] = useState(true);
   const [formData, setFormData] = useState({
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
-  })
+  });
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
 
     if (name === "newPassword") {
       // Simple password strength calculation
-      let strength = 0
-      if (value.length >= 8) strength += 1
-      if (/[A-Z]/.test(value)) strength += 1
-      if (/[0-9]/.test(value)) strength += 1
-      if (/[^A-Za-z0-9]/.test(value)) strength += 1
-      setPasswordStrength(strength)
+      let strength = 0;
+      if (value.length >= 8) strength += 1;
+      if (/[A-Z]/.test(value)) strength += 1;
+      if (/[0-9]/.test(value)) strength += 1;
+      if (/[^A-Za-z0-9]/.test(value)) strength += 1;
+      setPasswordStrength(strength);
     }
 
     if (name === "confirmPassword" || name === "newPassword") {
       if (name === "confirmPassword") {
-        setPasswordMatch(value === formData.newPassword)
+        setPasswordMatch(value === formData.newPassword);
       } else {
-        setPasswordMatch(value === formData.confirmPassword)
+        setPasswordMatch(value === formData.confirmPassword);
       }
     }
-  }
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const data = {
       newPassword: formData.newPassword,
-      oldPassword: formData.currentPassword
-    }
+      oldPassword: formData.currentPassword,
+    };
     if (passwordStrength <= 4) {
       alert("password is week");
     } else {
       ChangePassword(data);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen py-20 bg-gradient-custom flex items-center justify-center p-4">
@@ -62,10 +60,15 @@ export default function PasswordChange() {
         <div className={`bg-[#101831] rounded-lg shadow-md overflow-hidden`}>
           <div className={`bg-gradient-color p-6 text-white`}>
             <h1 className="text-2xl font-bold">Change Password</h1>
-            <p className="mt-2 opacity-90">Update your password to keep your account secure</p>
+            <p className="mt-2 opacity-90">
+              Update your password to keep your account secure
+            </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="p-6 space-y-6 bg-gradient-color  text-white">
+          <form
+            onSubmit={handleSubmit}
+            className="p-6 space-y-6  bg-gradient-color  text-white"
+          >
             <div className="space-y-2">
               <label
                 htmlFor="currentPassword"
@@ -90,7 +93,11 @@ export default function PasswordChange() {
                   onClick={() => setShowCurrentPassword(!showCurrentPassword)}
                   className={`absolute right-3 top-1/2 -translate-y-1/2 `}
                 >
-                  {showCurrentPassword ? <EyeOffIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" />}
+                  {showCurrentPassword ? (
+                    <EyeOffIcon className="w-5 h-5" />
+                  ) : (
+                    <EyeIcon className="w-5 h-5" />
+                  )}
                 </button>
               </div>
             </div>
@@ -119,7 +126,11 @@ export default function PasswordChange() {
                   onClick={() => setShowNewPassword(!showNewPassword)}
                   className={`absolute right-3 top-1/2 -translate-y-1/2  `}
                 >
-                  {showNewPassword ? <EyeOffIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" />}
+                  {showNewPassword ? (
+                    <EyeOffIcon className="w-5 h-5" />
+                  ) : (
+                    <EyeIcon className="w-5 h-5" />
+                  )}
                 </button>
               </div>
 
@@ -129,20 +140,23 @@ export default function PasswordChange() {
                     {[...Array(4)].map((_, i) => (
                       <div
                         key={i}
-                        className={`h-1.5 flex-1 rounded-full ${i < passwordStrength
+                        className={`h-1.5 flex-1 rounded-full ${
+                          i < passwordStrength
                             ? passwordStrength === 1
-                              ? "bg-red-500"
+                              ? "bg-red-500" 
                               : passwordStrength === 2
-                                ? "bg-yellow-500"
-                                : passwordStrength === 3
-                                  ? "bg-blue-500"
-                                  : "bg-green-500"
+                              ? "bg-yellow-500"
+                              : passwordStrength === 3
+                              ? "bg-blue-500"
+                              : "bg-green-500"
                             : "bg-gray-200"
-                          }`}
+                        }`}
                       />
                     ))}
                   </div>
-                  <p className={`text-xs `}>Password must be at least 8 characters long</p>
+                  <p className={`text-xs `}>
+                    Password must be at least 8 characters long
+                  </p>
                 </div>
               )}
             </div>
@@ -162,12 +176,13 @@ export default function PasswordChange() {
                   type={showConfirmPassword ? "text" : "password"}
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 rounded-md bg-input  transition-all outline-none ${formData.confirmPassword
+                  className={`w-full px-4 py-3 rounded-md bg-input  transition-all outline-none ${
+                    formData.confirmPassword
                       ? passwordMatch
                         ? ` focus:ring-2  focus:border-transparent`
                         : ` focus:ring-2 focus:border-transparent`
                       : ` focus:ring-2 focus:border-transparent`
-                    }`}
+                  }`}
                   placeholder="Confirm your new password"
                   required
                 />
@@ -176,7 +191,11 @@ export default function PasswordChange() {
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   className={`absolute right-3 top-1/2 -translate-y-1/2  `}
                 >
-                  {showConfirmPassword ? <EyeOffIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" />}
+                  {showConfirmPassword ? (
+                    <EyeOffIcon className="w-5 h-5" />
+                  ) : (
+                    <EyeIcon className="w-5 h-5" />
+                  )}
                 </button>
               </div>
 
@@ -187,14 +206,13 @@ export default function PasswordChange() {
 
             <button
               type="submit"
-              className={`w-full bg-background shadow-lg  text-white py-3 rounded-md font-medium  hover:shadow transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 `}>
+              className={`w-full bg-background shadow-lg  text-white py-3 rounded-md font-medium  hover:shadow transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 `}
+            >
               Change Password
             </button>
           </form>
-
-
         </div>
       </div>
     </div>
-  )
+  );
 }

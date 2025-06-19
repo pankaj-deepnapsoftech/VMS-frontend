@@ -3,10 +3,19 @@
 import { useState } from "react";
 import { FaCheckCircle, FaClock, FaPlug } from "react-icons/fa";
 import { MdError } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+
 
 const ThirdPartyIntegrations = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+
+  const navigate = useNavigate();
+
+const handleClick = () => {
+  navigate("/third-party-data");
+}
+
 
   const integrations = [
     {
@@ -234,7 +243,7 @@ const ThirdPartyIntegrations = () => {
                 </svg>
               </div>
             </div>
-            <button className="bg-blue-800 hover:bg-blue-900 text-white px-4 py-2 rounded-md transition-colors flex items-center">
+            <button className="bg-button hover:bg-hoverbutton text-white px-4 py-2 rounded-md transition-colors flex items-center">
               <span className="mr-2">+</span> Add Integration
             </button>
           </div>
@@ -295,7 +304,7 @@ const ThirdPartyIntegrations = () => {
                     Configure
                   </button>
                   <div className="flex gap-2 text-gray-400">
-                    <div className="w-9 h-9 rounded-md flex justify-center items-center bg-[#ffffff1e]">
+                    <div  onClick={handleClick} className="w-9 h-9 rounded-md flex justify-center items-center bg-[#ffffff1e]">
                       <img
                         className="object-cover"
                         src={integration.icon2}

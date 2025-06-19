@@ -8,9 +8,11 @@ export default {
         input: "#1f2937",
         table: "#050b20",
         tablecolor : "#0c1120",
-        button: "#3533cc",
+        button: "#3533CC",
+        hoverbutton:"#2322b5",
         cards:"#0a0f39",
-        light:"#4A4A4A"
+        light:"#4A4A4A",
+       
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],

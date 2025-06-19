@@ -3,7 +3,7 @@ import Loader from "@/components/Loader/Loader";
 import { AssetDataContext } from "@/context/Asset Data Context/AssetDataContex";
 import DataFormSchema from "@/Validation/DataFormValidation";
 import { useFormik } from "formik";
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { IoClose } from "react-icons/io5";
 
 const Data = ({ ShowModal, setShowModal, edittable }) => {
@@ -128,7 +128,7 @@ const Data = ({ ShowModal, setShowModal, edittable }) => {
                   value={values.data_owner}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="mt-1 w-full p-2 border bg-input text-white border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  className="mt-1 w-full p-2 border bg-input text-white border-gray-300 rounded focus:ring-2  focus:ring-blue-500 focus:outline-none"
                 />
                 {touched.data_owner && errors.data_owner && (
                   <p className="text-red-500 text-sm ">{errors.data_owner}</p>
@@ -242,7 +242,7 @@ const Data = ({ ShowModal, setShowModal, edittable }) => {
               <div className="md:col-span-2 flex justify-end pt-4">
                 <button
                   type="submit"
-                  className="bg-blue-600 text-white font-semibold py-2 px-6 rounded hover:bg-blue-700 transition"
+                  className="bg-button text-white font-semibold py-2 px-6 rounded hover:scale-105 transition duration-200"
                 >
                   Submit
                 </button>

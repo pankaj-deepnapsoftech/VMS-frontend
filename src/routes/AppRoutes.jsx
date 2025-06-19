@@ -14,6 +14,7 @@ import Pricing from "@/pages/Auth/Pricing";
 import Solutions from "@/pages/Auth/Solutions";
 import LandingPage from "@/pages/Auth/LandingPage";
 import Addtanent from "@/pages/Addtanent";
+import JiraDataTable from "@/pages/JiraDataTable";
 
 
 const AppRoutes = () => {
@@ -45,6 +46,8 @@ const AppRoutes = () => {
           <Route path="/verify-otp" element={<VerifyOtp />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/solutions" element={<Solutions />} />
+          <Route path="/JiraDataTable" element={<JiraDataTable />} />
+
     
         </>
       )}

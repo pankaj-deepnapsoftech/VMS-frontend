@@ -166,7 +166,7 @@ export const JiraDataTable = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div className="pl-10">
+        <div className="pl-10 h-screen w-full">
           <h1 className="text-white font-semibold text-3xl mt-10 ">
             Third Party Data
           </h1>
@@ -178,15 +178,14 @@ export const JiraDataTable = () => {
             {/* Total Issues */}
             <div className="bg-[#101b54] border border-blue-900 text-white rounded-xl px-4  flex justify-between items-center shadow-md">
               <div>
-                <p className="text-sm  font-medium">Total Issues</p>
+                <p className="text-sm font-medium">Total Issues</p>
                 <p className="text-xl font-medium mt-1">6</p>
               </div>
               <div className="bg-blue-900 bg-opacity-30 p-2 rounded-lg">
                 <img src="/Icons/total-issue.png" alt="icon" />
               </div>
             </div>
-
-            {/* Closed */}
+          {/* Closed */}
             <div className="bg-[#0c2330] border border-green-900  text-white rounded-xl p-4  flex justify-between items-center shadow-md">
               <div>
                 <p className="text-sm text-green-400 font-medium">Closed</p>
@@ -221,7 +220,6 @@ export const JiraDataTable = () => {
               </div>
             </div>
           </div>
-
           <div className="mt-6 bg-[#0c1120] overflow-x-auto text-sm text-white">
             <table className="min-w-full divide-y divide-gray-700">
               <thead className="bg-[#0c1120]">
@@ -246,7 +244,7 @@ export const JiraDataTable = () => {
                     className="border-b border-gray-700 hover:bg-[#1e1e1e] transition"
                   >
                     <td className="p-3">
-                      <input
+                      <input 
                         type="checkbox"
                         checked={selectedRows.includes(item)}
                         onChange={() => handleSelectRow(item)}

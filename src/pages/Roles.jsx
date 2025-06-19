@@ -121,7 +121,7 @@ const Roles = () => {
                 setModal(true);
                 setEditable(null);
               }}
-              className="px-4 py-2 bg-blue-800 hover:bg-blue-900 mr-5 rounded-md text-white font-medium flex items-center gap-2"
+              className="px-4 py-2 bg-button hover:bg-hoverbutton mr-5 rounded-md text-white font-medium flex items-center gap-2"
             >
               <BiPlus className="h-5 w-5" />
               Add Role
@@ -208,7 +208,7 @@ const Roles = () => {
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+                      className="px-4 py-2 bg-button hover:scale-105 transition duration-200 text-white rounded-md"
                     >
                       Save
                     </button>
