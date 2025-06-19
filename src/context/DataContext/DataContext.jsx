@@ -58,10 +58,10 @@ const DataContextProvider = ({ children }) => {
     }
   };
 
-  const VulnerableItemsByRiskRating = async () => {
+  const VulnerableItemsByRiskRating = async (creator_id) => {
     setLoading(true);
     try {
-      const res = await AxiosHandler.get("/data/vulnerableItems");
+      const res = await AxiosHandler.get("/data/vulnerableItems?creator_id="+ creator_id);
       setVulnerableItemsByRiskRatingData(res.data.newData);
     } catch (error) {
       console.log(error);
@@ -167,7 +167,8 @@ const DataContextProvider = ({ children }) => {
         criticalHighVulnerable,
         criticalHighVulnerableOverdue,
         exploitability,
-        getHomeCardData
+        getHomeCardData,
+        VulnerableItemsByRiskRating
         
       }}
     >

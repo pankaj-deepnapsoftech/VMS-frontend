@@ -43,7 +43,8 @@ function Home() {
     criticalHighVulnerable,
     criticalHighVulnerableOverdue,
     exploitability,
-    getHomeCardData
+    getHomeCardData,
+    VulnerableItemsByRiskRating,
   } = useDataContext();
 
   const { authenticate, token } = useAuthContext();
@@ -188,6 +189,7 @@ function Home() {
     setIsOpen(false);
     setSearchTerm('');
     getHomeCardData(id)
+    VulnerableItemsByRiskRating(id)
     // onSelect?.(name);
   };
 
