@@ -173,3 +173,9 @@ html {
 .react-select__placeholder {
   color: white !important;
 }
+
+
+/* This targets the calendar icon inside the native date input */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: brightness(0) invert(1); /* Makes black icon look white */
+}
