@@ -217,7 +217,7 @@ export function VulnerabilityData() {
       {loading ? (
         <Loader />
       ) : (
-        <div className="p-4 md:p-6 max-w-[100%] mx-auto bg-gradient-custom ">
+        <div className="p-4 md:p-6 max-w-[100%] mx-auto bg-gradient-custom min-h-screen">
           {/* top 5 Vulnerability */}
 
             <div className="overflow-x-auto">

@@ -10,6 +10,7 @@ import { AxiosHandler } from "@/config/AxiosConfig";
 import Pagination from "./Pagination";
 import Loader from "@/components/Loader/Loader";
 import Addtanent from "./Addtanent";
+import { MdAssignmentAdd } from "react-icons/md";
 
 export default function AllCustomer() {
   const { token } = useAuthContext();
@@ -74,8 +75,8 @@ export default function AllCustomer() {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="h-screen">
-          <div className="max-w-screen px-4 h-16 border-[#6B728033] flex items-center gap-4 rounded-md backdrop-blur-md bg-[#6B728033] my-10 mx-5">
+        <div className="min-h-screen py-10">
+          <div className="max-w-screen px-4 h-fit border-[#6B728033] flex items-center gap-4 backdrop-blur-md bg-[#6B728033]  rounded-lg mx-5">
             <input
               type="text"
               className="bg-[#23252750] backdrop-blur-md py-2 w-1/3 text-white px-4 rounded-md"
@@ -148,6 +149,7 @@ export default function AllCustomer() {
                               onClick={() => DeleteData(tenant?._id)}
                               className="text-red-500 cursor-pointer"
                             />
+                            <MdAssignmentAdd title="Assign Partner" className="text-green-500 cursor-pointer" />
                           </td>
                         </tr>
                       ))}

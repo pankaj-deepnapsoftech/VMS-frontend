@@ -13,6 +13,7 @@ import { FaEnvelope, FaLock, FaPhone, FaUser } from "react-icons/fa";
 import { RiDeleteBinFill, RiEdit2Line } from "react-icons/ri";
 import Pagination from "./Pagination";
 import { IoClose } from "react-icons/io5";
+import { MdAssignmentAdd } from "react-icons/md";
 
 const AllEmployee = () => {
   const { VerifyEmployee, DeleteUser } = useAllEmployeeContext();
@@ -181,8 +182,8 @@ const AllEmployee = () => {
       {isloading ? (
         <Loader />
       ) : (
-        <div className="h-screen shadow-lg ">
-          <div className="max-w-screen px-4 h-16 border-[#6B728033] flex items-center gap-4 rounded-md backdrop-blur-md bg-[#6B728033] my-10 mx-5">
+        <div className="min-h-screen shadow-lg py-10">
+          <div className="max-w-screen px-4  border-[#6B728033] flex items-center gap-4backdrop-blur-md bg-[#6B728033] rounded-lg mx-5 ">
             <input
               type="text"
               placeholder="Search users..."
@@ -207,7 +208,7 @@ const AllEmployee = () => {
           {filteredData?.length < 1 ? (
             <NoDataFound />
           ) : (
-            <div className="overflow-x-auto  custom-scrollbar w-[95%] rounded-xl mx-auto shadow-lg bg-[#0c1120]">
+            <div className="overflow-x-auto  custom-scrollbar w-[95%] rounded-xl mx-auto shadow-lg bg-[#0c1120] my-10">
               <table className="min-w-full table-auto text-sm text-left text-gray-300 divide-y divide-gray-700">
                 <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
                   <tr>
@@ -293,6 +294,7 @@ const AllEmployee = () => {
                         >
                           <RiEdit2Line className="w-5 h-5" />
                         </button>
+                         
                       </td>
                     </tr>
                   ))}

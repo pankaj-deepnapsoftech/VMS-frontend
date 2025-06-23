@@ -119,7 +119,7 @@ const MainLayout = () => {
 
           <Sidebar />
 
-          <div className="bg-gradient-to-t from-[#1a1c1e] to-[#212325]  border-gray-200 w-full">
+          <div className="bg-gradient-to-t from-[#1a1c1e] to-[#212325]  border-gray-200 w-full sticky top-0 z-50">
             <div className="flex items-center justify-between px-2 sm:px-4 py-2 bg-[#1f2937]">
               <div className="w-full flex items-center justify-between pr-5 ">
 
@@ -252,7 +252,7 @@ const MainLayout = () => {
           </aside>}
           <div
             className={`ml-auto mb-6 transition-all duration-500 ease-in-out 
-     bg-gradient-custom rounded-lg 
+     bg-gradient-custom bg-black rounded-lg 
     ${AllowedPath(location.pathname.split("/")[1])
                 ? "w-full"
                 : showSidebar
