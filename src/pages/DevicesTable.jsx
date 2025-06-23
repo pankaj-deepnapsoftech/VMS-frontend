@@ -32,7 +32,7 @@ const DevicesTable = () => {
 
       <div className="overflow-x-auto custom-scrollbar bg-[#0c1120] overflow-hidden shadow-md">
         <table className="min-w-full  text-left text-white divide-y divide-gray-700 bg-gray-500">
-          <thead className="bg-[#0c1120] text-[15px] uppercase text-white sticky top-0 z-10">
+          <thead className="bg-[#0c1120] text-[15px] uppercase text-white sticky top-0 z-0">
             <tr>
               <th className="px-4 py-3  whitespace-nowrap  ">Unit ID</th>
               <th className="px-4 py-3  whitespace-nowrap  ">Custodian</th>

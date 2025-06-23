@@ -28,11 +28,11 @@ import { useEffect, useRef, useState } from "react";
 
 import { ChartsColor } from "@/constants/static.data";
 import { AxiosHandler } from "@/config/AxiosConfig";
-import { IoIosArrowDown } from "react-icons/io";
+
 
 function Home() {
 
-  const [TenantAllData, setTenantAllData] = useState([])
+
 
   const {
     cardData,
@@ -43,11 +43,8 @@ function Home() {
     criticalHighVulnerable,
     criticalHighVulnerableOverdue,
     exploitability,
-    getHomeCardData,
-    VulnerableItemsByRiskRating,
-    GetExploitability,
-    ClosevulnerableItems,
-    CriticalHighVulnerable
+    TenantAllData,
+
   } = useDataContext();
 
   const { authenticate, token } = useAuthContext();
@@ -150,64 +147,11 @@ function Home() {
     "December",
   ];
 
-  const GetAllTenentData = async () => {
-    try {
-      const res = await AxiosHandler.get("/tenant/get-all");
-      setTenantAllData(res?.data?.data);
-
-    } catch (error) {
-      console.error(error);
-
-    }
-  };
-
- 
-
-
-
-  useEffect(() => {
-    const filtered = TenantAllData.filter(tenant =>
-      tenant.company_name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredOptions(filtered);
-  }, [searchTerm, TenantAllData]);
-
-
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  const handleSelect = (name,id) => {
-    setSelected(name);
-    setIsOpen(false);
-    setSearchTerm('');
-    getHomeCardData(id);
-    VulnerableItemsByRiskRating(id);
-    GetExploitability(id);
-    ClosevulnerableItems(id);
-    CriticalHighVulnerable(id)
-  };
-
-  useEffect(() => {
-    if (token) {
-      GetAllTenentData()
-    }
-  }, [])
-
-
-
-
 
   return (
     <>
       <div className="min-h-screen bg-gradient-custom px-6 py-6 ">
-
+        {/* 
         {!authenticate?.role && <div className="flex flex-col md:flex-row items-stretch gap-4 bg-[#6B728033] border border-[#6B728033]   rounded-lg p-4 shadow-sm">
 
 
@@ -230,7 +174,7 @@ function Home() {
                   placeholder="Search..."
                   autoFocus
                   value={searchTerm}
-                  onChange={(e)=>setSearchTerm(e.target.value)}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                   className=" mx-2 px-4 py-2 bg-[#1f1f21] text-white border-b border-gray-700 outline-none mt-2 rounded-md"
                 />
 
@@ -240,7 +184,7 @@ function Home() {
                     filteredOptions.map((tenant) => (
                       <li
                         key={tenant._id}
-                        onClick={() => handleSelect(tenant.company_name,tenant._id)}
+                        onClick={() => handleSelect(tenant.company_name, tenant._id)}
                         className="px-4 py-2 hover:bg-zinc-700 cursor-pointer text-white"
                       >
                         {tenant.company_name}
@@ -253,7 +197,8 @@ function Home() {
               </div>
             )}
           </div>
-        </div>}
+        
+        </div>} */}
 
 
         {/* Metrics Grid */}

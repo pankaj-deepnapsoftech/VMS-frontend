@@ -36,7 +36,7 @@ const ApplicationSoftwareInventoryTable = () => {
 
       <div className="overflow-x-auto custom-scrollbar bg-[#0c1120] shadow-md h-full">
         <table className="bg-table divide-y divide-gray-700  text-sm text-left min-w-full">
-          <thead className="bg-[#0c1120] text-[15px] text-white uppercase sticky top-0 z-10">
+          <thead className="bg-[#0c1120] text-[15px] text-white uppercase sticky top-0 z-0">
             <tr>
               <th className="py-4 pl-2 px-4   whitespace-nowrap  truncate ">
                 Unit ID

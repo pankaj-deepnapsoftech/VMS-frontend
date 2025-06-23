@@ -32,15 +32,15 @@ function Header({ setShowMenu, showSidebar }) {
 
 
   return (
-    <div className=" flex flex-col text-white  h-[100%] hide-scrollbar bg-[#1f2937]  overflow-y-auto transition-all duration-500 ease-in-out ">
-      <Link className={` ${showSidebar ? "" : "block lg:hidden"} flex items-center my-2 ml-3`}>
+    <div className=" flex flex-col text-white  h-[100%] hide-scrollbar bg-[#1f2937]   overflow-y-auto transition-all duration-500 ease-in-out ">
+      {/* <Link className={` ${showSidebar ? "" : "block lg:hidden"} flex items-center my-2 ml-3`}>
         <div className="flex gap-2 pt-2 items-center justify-center  h-20  ">
           <img src="/logo.png" alt="" className=" h-7" />
         </div>
-      </Link>
+      </Link> */}
       <hr className="border-gray-100 mx-8" />
 
-      <nav className={`flex-1 mx-2 ${showSidebar ? "py-5" : "py-14"} space-y-1`}>
+      <nav className={`flex-1 mx-2 py-5 space-y-1`}>
         {navList?.map((data) => (
           <NavLink
             key={data.route}
@@ -64,7 +64,7 @@ function Header({ setShowMenu, showSidebar }) {
             className="flex 
               w-full
               px-10
-              my-10
+              my-24
               items-center  
             text-indigo-600
               hover:scale-95 

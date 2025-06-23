@@ -9,6 +9,7 @@ export const DataContext = createContext();
 
 const DataContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
+    const [TenantAllData, setTenantAllData] = useState([])
 
   const [cardData, setCardData] = useState(null);
   const [vulnerableItemsByRiskRatingData, setVulnerableItemsByRiskRatingData] =
@@ -59,11 +60,9 @@ const DataContextProvider = ({ children }) => {
   };
 
   const VulnerableItemsByRiskRating = async (creator_id) => {
-    console.log("this is creator id",creator_id)
     setLoading(true);
     try {
       const res = await AxiosHandler.get(`/data/vulnerableItems?creator_id=${creator_id ? creator_id : ""}`);
-      console.log("this api is calling right now", res.data)
       setVulnerableItemsByRiskRatingData(res.data.newData);
     } catch (error) {
       console.log(error);
@@ -72,10 +71,10 @@ const DataContextProvider = ({ children }) => {
     }
   };
 
-  const VulnerableItemsByAge = async () => {
+  const VulnerableItemsByAge = async (creator_id) => {
     setLoading(true);
     try {
-      const res = await AxiosHandler.get("/data/VulnerableRiskRating");
+      const res = await AxiosHandler.get(`/data/VulnerableRiskRating?creator_id=${creator_id ? creator_id : ""}`);
       setVulnerableItemsByAgeData(res.data);
     } catch (error) {
       console.log(error);
@@ -84,10 +83,10 @@ const DataContextProvider = ({ children }) => {
     }
   };
 
-  const NewAndCloseVulnerable = async () => {
+  const NewAndCloseVulnerable = async (creator_id) => {
     setLoading(true);
     try {
-      const res = await AxiosHandler.get("/data/NewAndCloseVulnerable");
+      const res = await AxiosHandler.get(`/data/NewAndCloseVulnerable?creator_id=${creator_id ? creator_id : ""}`);
       setNewAndCloseVulnerableData(res.data.newData);
     } catch (error) {
       console.log(error);
@@ -120,10 +119,10 @@ const DataContextProvider = ({ children }) => {
     }
   };
 
-  const CriticalHighVulnerableOverdue = async () => {
+  const CriticalHighVulnerableOverdue = async (creator_id) => {
     setLoading(true);
     try {
-      const res = await AxiosHandler.get("/data/CriticalHighVulnerableOverdue");
+      const res = await AxiosHandler.get(`/data/CriticalHighVulnerableOverdue?creator_id=${creator_id ? creator_id : ""}`);
       setCriticalHighVulnerableOverdue(res.data);
     } catch (error) {
       console.log(error);
@@ -144,6 +143,23 @@ const DataContextProvider = ({ children }) => {
     }
   }
 
+    const GetAllTenentData = async () => {
+    try {
+      const res = await AxiosHandler.get("/tenant/get-all");
+      const apiData = res?.data?.data || [];
+        const transformedData = apiData.map((item) => ({
+      value: item._id,
+      label: item.company_name,
+    }));
+      setTenantAllData([{value:"",label:"All"},...transformedData]);
+
+    } catch (error) {
+      console.error(error);
+
+    }
+  };
+
+
   useEffect(() => {
     if (token) {
 
@@ -155,7 +171,8 @@ const DataContextProvider = ({ children }) => {
       ClosevulnerableItems();
       CriticalHighVulnerable();
       CriticalHighVulnerableOverdue();
-      GetExploitability()
+      GetExploitability();
+      GetAllTenentData();
     }
   }, [token]);
   return (
@@ -175,8 +192,11 @@ const DataContextProvider = ({ children }) => {
         VulnerableItemsByRiskRating,
         GetExploitability,
         ClosevulnerableItems,
-        CriticalHighVulnerable
-        
+        CriticalHighVulnerable,
+        CriticalHighVulnerableOverdue,
+        VulnerableItemsByAge,
+        NewAndCloseVulnerable,
+        TenantAllData
       }}
     >
       {children}

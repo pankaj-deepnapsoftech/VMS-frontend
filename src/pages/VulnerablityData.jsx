@@ -40,10 +40,11 @@ export function VulnerabilityData() {
     datafetchCount,
     setdatafetchCount,
     TopVulnerablilty,
-    GetOrganization,
     Notifications,
     BulkDataDelete
   } = useVulnerabililtyDataContext();
+
+  const {TenantAllData} = useDataContext()
   
 
   const { authenticate, token } = useAuthContext();
@@ -81,17 +82,15 @@ export function VulnerabilityData() {
     Severity: "",
     Priority: "",
     Status: "",
+    creator_id:""
   }
 
   // Extract headers dynamically for table display
-  const tableHeaders =
-    allVulnerabilityData.length > 0
-      ? Object.keys(allVulnerabilityData[0]).filter(
-          (key) => key !== "_id" && key !== "__v" && key !== "updatedAt"
-        )
-      :   Object.keys(vulnerabilitiesItems).filter(
+  const tableHeaders = Object.keys(vulnerabilitiesItems).filter(
         (key) => key !== "_id" && key !== "__v" && key !== "updatedAt"
       ) ;
+
+      console.log(tableHeaders);
 
   // Headers for the Add form (show all fields)
   const addFormHeaders = tableHeaders.filter(
@@ -590,6 +589,8 @@ export function VulnerabilityData() {
                     <Form className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
                       {(editMode ? editFormHeaders : addFormHeaders).map(
                         (field) =>
+
+                        
                           field !== "creator" &&
                           field !== "Exception_time" && (
                             <div key={field} className="flex flex-col">
@@ -615,7 +616,25 @@ export function VulnerabilityData() {
                                     </option>
                                   ))}
                                 </select>
-                              ) : field === "Severity" ? (
+                              ) :field === "creator_id" ? 
+                              (<select
+                                  className="w-full p-2 bg-input text-white border rounded-md focus:ring-2 focus:ring-blue-500 transition"
+                                  name="creator_id"
+                                  onChange={(e) =>
+                                    setFieldValue("creator_id", e.target.value)
+                                  }
+                                  defaultValue=""
+                                >
+                                  <option disabled value="">
+                                    --- Select a Tenant ---
+                                  </option>
+                                  {TenantAllData?.map((item, idx) => (
+                                    <option key={idx} value={item.value}>
+                                      {item.label}
+                                    </option>
+                                  ))}
+                                </select>)
+                               : field === "Severity" ? (
                                 <select
                                   className="w-full p-2 bg-input text-gray-300 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
                                   name="Severity"

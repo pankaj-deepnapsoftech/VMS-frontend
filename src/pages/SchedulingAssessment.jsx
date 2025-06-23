@@ -1,25 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { FiAlertCircle, FiRefreshCcw } from "react-icons/fi";
 import InputField from "@/components/InputField";
 import { SchedulingAssessmentValidation } from "@/Validation/SchedulingAssessmentValidation";
 import { useFormik } from "formik";
-import { BiEditAlt, BiFilter, BiShield } from "react-icons/bi";
-import {
-  FaGlobe,
-  FaLink,
-  FaFolderOpen,
-  FaUser,
-  FaCalendar,
-} from "react-icons/fa";
-import { FaDatabase, FaFingerprint } from "react-icons/fa6";
-import { RiDeleteBinFill, RiShieldCheckFill } from "react-icons/ri";
-import { IoMdAirplane } from "react-icons/io";
-import { MdClose, MdSchedule } from "react-icons/md";
-import {
-  useAuthContext,
-  useScheduleAssessmentContext,
-  useVulnerabililtyDataContext,
-} from "@/context";
+import { BiEditAlt } from "react-icons/bi";
+import { FaLink } from "react-icons/fa";
+import { RiDeleteBinFill } from "react-icons/ri";
+import { MdClose } from "react-icons/md";
+import { useAuthContext, useDataContext, useScheduleAssessmentContext } from "@/context";
 import Loader from "@/components/Loader/Loader";
 import NoDataFound from "@/components/NoDataFound";
 
@@ -30,13 +17,10 @@ function SchedulingAssessmentPage() {
     allAssesmentData,
     DeleteAssesment,
     UpdateAssesment,
-    testerData,
     page,
     setPage,
-    getOrgnizationData,
     datafetchCount,
     setdatafetchCount,
-    GetOrgnization,
     TotalAssessments,
     TesterForAssessment,
     DashboardData,
@@ -45,6 +29,9 @@ function SchedulingAssessmentPage() {
   } = useScheduleAssessmentContext();
 
   const { authenticate, token } = useAuthContext();
+
+  const { TenantAllData } = useDataContext();
+
 
   useEffect(() => {
     TotalAssessments(page);
@@ -55,18 +42,14 @@ function SchedulingAssessmentPage() {
     }
   }, [token, page]);
 
-  useEffect(() => {
-    if (token && authenticate?.role === "Admin") {
-      GetOrgnization();
-    }
-  }, [token, authenticate]);
+
 
   // Extract headers dynamically for table display
   const tableHeaders =
     allAssesmentData?.length > 0
       ? Object.keys(allAssesmentData[0]).filter(
-          (key) => key !== "_id" && key !== "__v" && key !== "updatedAt"
-        )
+        (key) => key !== "_id" && key !== "__v" && key !== "updatedAt"
+      )
       : [];
 
   // Headers for the Add form (show all fields)
@@ -95,12 +78,11 @@ function SchedulingAssessmentPage() {
     setValues,
   } = useFormik({
     initialValues: {
-      Orgenization_id:
-        authenticate?.role === "ClientSME" ? authenticate?.owner : "",
+      Tenant_id: "",
       Type_Of_Assesment: "",
       Application_URL: "",
       Data_Classification: "",
-      Select_Tester: "",
+      // Select_Tester: "",
       MFA_Enabled: "",
       code_Upload: "",
       task_start: "",
@@ -117,12 +99,13 @@ function SchedulingAssessmentPage() {
         setSelectedAssessment(null);
         setIsUpdateModalOpen(false);
       } else {
+        // CreateNotifications(
+        //   value.Select_Tester,
+        //   `Scheduling assesment assign to you`
+        // );
         SchedulingAssesment(formData);
       }
-      CreateNotifications(
-        value.Select_Tester,
-        `Scheduling assesment assign to you`
-      );
+
       resetForm();
     },
   });
@@ -142,264 +125,264 @@ function SchedulingAssessmentPage() {
         <main className="container mx-auto px-4 py-8">
           <section className="mb-8">
             {/* Form Section */}
-            
-              <div className=" flex  gap-6 mb-8 bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] p-4  rounded-lg ">
-                <form
-                  onSubmit={handleSubmit}
-                  className="space-y-5 w-full flex flex-col "
-                >
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div>
-                      <label
-                        htmlFor="Type_Of_Assesment"
-                        className="block text-sm font-medium text-gray-100 mb-2"
-                      >
-                        Type of Assesment
-                      </label>
-                      <select
-                        name="Type_Of_Assesment"
-                        value={values.Type_Of_Assesment}
-                        onChange={(e) => {
-                          handleChange(e);
-                          if (e.target.value === "Secure Code Scan") {
-                            setIsModalOpen(true);
-                          }
 
-                          if (
-                            e.target.value === "Dynamic Application" ||
-                            e.target.value ===
-                              "Web Application Penetration Testing"
-                          ) {
-                            setIsOpen(true);
-                          }
-                        }}
-                        className="w-full px-4 py-3 rounded-md border text-gray-300 bg-gray-600 border-gray-500 focus:ring-2 focus:ring-gray-500 text-sm focus:border-transparent outline-none transition"
-                        id="Type_Of_Assesment"
-                      >
-                        <option value="" disabled>
-                          {" "}
-                          -- Select Type of Assesment --{" "}
-                        </option>
+            <div className=" flex  gap-6 mb-8 bg-gradient-to-tl from-[#1a1c1e] to-[#2a2c2f] p-4  rounded-lg ">
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-5 w-full flex flex-col "
+              >
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                  <div>
+                    <label
+                      htmlFor="Type_Of_Assesment"
+                      className="block text-sm font-medium text-gray-100 mb-2"
+                    >
+                      Type of Assesment
+                    </label>
+                    <select
+                      name="Type_Of_Assesment"
+                      value={values.Type_Of_Assesment}
+                      onChange={(e) => {
+                        handleChange(e);
+                        if (e.target.value === "Secure Code Scan") {
+                          setIsModalOpen(true);
+                        }
 
-                        <option value={"Secure Code Scan"}>
-                          Secure Code Scan
-                        </option>
+                        if (
+                          e.target.value === "Dynamic Application" ||
+                          e.target.value ===
+                          "Web Application Penetration Testing"
+                        ) {
+                          setIsOpen(true);
+                        }
+                      }}
+                      className="w-full px-4 py-3 rounded-md border text-gray-300 bg-gray-600 border-gray-500 focus:ring-2 focus:ring-gray-500 text-sm focus:border-transparent outline-none transition"
+                      id="Type_Of_Assesment"
+                    >
+                      <option value="" disabled>
+                        {" "}
+                        -- Select Type of Assesment --{" "}
+                      </option>
 
-                        <option value={"Dynamic Application"}>
-                          Dynamic Application{" "}
-                        </option>
+                      <option value={"Secure Code Scan"}>
+                        Secure Code Scan
+                      </option>
 
-                        <option value={"Web Application Penetration Testing"}>
-                          Web Application Penetration Testing
-                        </option>
+                      <option value={"Dynamic Application"}>
+                        Dynamic Application{" "}
+                      </option>
 
-                        <option value={"Api Penetration Testing"}>
-                          Api Penetration Testing
-                        </option>
+                      <option value={"Web Application Penetration Testing"}>
+                        Web Application Penetration Testing
+                      </option>
 
-                        <option value={"Infrastructure Vulnerability Scan"}>
-                          Infrastructure Vulnerability Scan
-                        </option>
+                      <option value={"Api Penetration Testing"}>
+                        Api Penetration Testing
+                      </option>
 
-                        <option value={"Infrastructure Penetration Testing"}>
-                          Infrastructure Penetration Testing
-                        </option>
-                        <option value={"Mobile Application Penetration Test"}>
-                          Mobile Application Penetration Test
-                        </option>
-                        <option value={"Red Team exercise"}>
-                          Red Team exercise
-                        </option>
-                        <option value={"Attack Simulation Exercise"}>
-                          Attack Simulation Exercise
-                        </option>
-                        <option value={"Configuration Audits"}>
-                          Configuration Audits
-                        </option>
-                      </select>
-                      {touched.Type_Of_Assesment &&
-                        errors.Type_Of_Assesment && (
-                          <p className="text-red-700 text-xs">
-                            {" "}
-                            {errors.Type_Of_Assesment}
-                          </p>
-                        )}
-                    </div>
+                      <option value={"Infrastructure Vulnerability Scan"}>
+                        Infrastructure Vulnerability Scan
+                      </option>
 
-                    <div>
-                      <label
-                        htmlFor="Data_Classification"
-                        className="block text-sm font-medium text-gray-200 mb-2"
-                      >
-                        Data Classification
-                      </label>
-                      <select
-                        name="Data_Classification"
-                        value={values.Data_Classification}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-md border text-gray-300 bg-gray-600 border-gray-500 focus:ring-2 focus:ring-gray-500 text-sm focus:border-transparent outline-none transition"
-                        id="Data_Classification"
-                      >
-                        <option value="" disabled>
-                          {" "}
-                          -- Select Data Classification --{" "}
-                        </option>
-                        <option value={"Restricted"}>Restricted</option>
-                        <option value={"Confidential"}>Confidential</option>
-                        <option value={"Internal"}>Internal</option>
-                        <option value={"Public"}>Public</option>
-                      </select>
-                      {touched.Data_Classification &&
-                        errors.Data_Classification && (
-                          <p className="text-red-700 text-xs">
-                            {" "}
-                            {errors.Data_Classification}
-                          </p>
-                        )}
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="MFA_Enabled"
-                        className="block text-sm font-medium text-gray-200 mb-2"
-                      >
-                        MFA Enabled
-                      </label>
-                      <select
-                        name="MFA_Enabled"
-                        value={values.MFA_Enabled}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-md border text-gray-300 bg-gray-600 border-gray-500 focus:ring-2 focus:ring-gray-500 text-sm focus:border-transparent outline-none transition"
-                        id="MFA_Enabled"
-                      >
-                        <option value="" disabled>
-                          {" "}
-                          -- Select MFA --{" "}
-                        </option>
-                        <option value={true}>Yes</option>
-                        <option value={false}>No</option>
-                      </select>
-                      {touched.MFA_Enabled && errors.MFA_Enabled && (
+                      <option value={"Infrastructure Penetration Testing"}>
+                        Infrastructure Penetration Testing
+                      </option>
+                      <option value={"Mobile Application Penetration Test"}>
+                        Mobile Application Penetration Test
+                      </option>
+                      <option value={"Red Team exercise"}>
+                        Red Team exercise
+                      </option>
+                      <option value={"Attack Simulation Exercise"}>
+                        Attack Simulation Exercise
+                      </option>
+                      <option value={"Configuration Audits"}>
+                        Configuration Audits
+                      </option>
+                    </select>
+                    {touched.Type_Of_Assesment &&
+                      errors.Type_Of_Assesment && (
                         <p className="text-red-700 text-xs">
                           {" "}
-                          {errors.MFA_Enabled}
+                          {errors.Type_Of_Assesment}
                         </p>
                       )}
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="Select_Tester"
-                        className="block text-sm font-medium text-gray-200 mb-2"
-                      >
-                        Select Tester
-                      </label>
-                      <select
-                        name="Select_Tester"
-                        value={values.Select_Tester}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-md border text-gray-300 bg-gray-600 border-gray-500 focus:ring-2 focus:ring-gray-500 text-sm focus:border-transparent outline-none transition"
-                        id="Select_Tester"
-                      >
-                        <option value="" disabled>
-                          {" "}
-                          -- Select Tester --{" "}
-                        </option>
-
-                        {testerData
-                          ?.filter((itm) => itm.deactivate)
-                          .map((itm, idx) => (
-                            <option key={idx} value={itm._id}>
-                              {itm.full_name}
-                            </option>
-                          ))}
-                      </select>
-                      {touched.Select_Tester && errors.Select_Tester && (
-                        <p className="text-red-700 text-xs">
-                          {" "}
-                          {errors.Select_Tester}
-                        </p>
-                      )}
-                    </div>
-                    
-                      <div>
-                        <label
-                          htmlFor="Select_Org"
-                          className="block text-sm font-medium text-gray-200 mb-2"
-                        >
-                          Select Orgnization
-                        </label>
-                        <select
-                          name="Orgenization_id"
-                          value={values.Orgenization_id}
-                          onChange={handleChange}
-                          className="w-full px-4 py-3 rounded-md border text-gray-300 bg-gray-600 border-gray-500 focus:ring-2 focus:ring-gray-500 text-sm focus:border-transparent outline-none transition"
-                          id="Select_Org"
-                        >
-                          <option value="" disabled>
-                            {" "}
-                            -- Select Orgnization --{" "}
-                          </option>
-                          {getOrgnizationData?.map((itm, idx) => (
-                            <option key={idx} value={itm._id}>
-                              {itm.Organization}
-                            </option>
-                          ))}
-                        </select>
-                        {touched.Orgenization_id && errors.Orgenization_id && (
-                          <p className="text-red-700 text-xs">
-                            {" "}
-                            {errors.Orgenization_id}
-                          </p>
-                        )}
-                      </div>
-                  
-
-                    <div>
-                      <InputField
-                        label={"Prefred Task Start Date"}
-                        type={"date"}
-                        showPassword={false}
-                        value={values.task_start}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        placeholder="Enter your Application URL"
-                        name="task_start"
-                      />
-                      {touched.task_start && errors.task_start && (
-                        <p className="text-red-700 text-xs">
-                          {" "}
-                          {errors.task_start}
-                        </p>
-                      )}
-                    </div>
-                    <div>
-                      <InputField
-                        label={"Prefred Task End Date"}
-                        type={"date"}
-                        showPassword={false}
-                        value={values.task_end}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        placeholder="Enter your Application URL"
-                        name="task_end"
-                      />
-                      {touched.task_end && errors.task_end && (
-                        <p className="text-red-700 text-xs">
-                          {" "}
-                          {errors.task_end}
-                        </p>
-                      )}
-                    </div>
                   </div>
-                  <button
-                    type="submit"
-                    className="lg:w-[20%] bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white   py-2  rounded-lg hover:bg-blue-500 transition duration-200"
-                    onClick={handleSubmit}
-                  >
-                    Submit
-                  </button>
-                </form>
-              </div>
-            
+
+                  <div>
+                    <label
+                      htmlFor="Data_Classification"
+                      className="block text-sm font-medium text-gray-200 mb-2"
+                    >
+                      Data Classification
+                    </label>
+                    <select
+                      name="Data_Classification"
+                      value={values.Data_Classification}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 rounded-md border text-gray-300 bg-gray-600 border-gray-500 focus:ring-2 focus:ring-gray-500 text-sm focus:border-transparent outline-none transition"
+                      id="Data_Classification"
+                    >
+                      <option value="" disabled>
+                        {" "}
+                        -- Select Data Classification --{" "}
+                      </option>
+                      <option value={"Restricted"}>Restricted</option>
+                      <option value={"Confidential"}>Confidential</option>
+                      <option value={"Internal"}>Internal</option>
+                      <option value={"Public"}>Public</option>
+                    </select>
+                    {touched.Data_Classification &&
+                      errors.Data_Classification && (
+                        <p className="text-red-700 text-xs">
+                          {" "}
+                          {errors.Data_Classification}
+                        </p>
+                      )}
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="MFA_Enabled"
+                      className="block text-sm font-medium text-gray-200 mb-2"
+                    >
+                      MFA Enabled
+                    </label>
+                    <select
+                      name="MFA_Enabled"
+                      value={values.MFA_Enabled}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 rounded-md border text-gray-300 bg-gray-600 border-gray-500 focus:ring-2 focus:ring-gray-500 text-sm focus:border-transparent outline-none transition"
+                      id="MFA_Enabled"
+                    >
+                      <option value="" disabled>
+                        {" "}
+                        -- Select MFA --{" "}
+                      </option>
+                      <option value={true}>Yes</option>
+                      <option value={false}>No</option>
+                    </select>
+                    {touched.MFA_Enabled && errors.MFA_Enabled && (
+                      <p className="text-red-700 text-xs">
+                        {" "}
+                        {errors.MFA_Enabled}
+                      </p>
+                    )}
+                  </div>
+                  {/* <div>
+                    <label
+                      htmlFor="Select_Tester"
+                      className="block text-sm font-medium text-gray-200 mb-2"
+                    >
+                      Select Tester
+                    </label>
+                    <select
+                      name="Select_Tester"
+                      value={values.Select_Tester}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 rounded-md border text-gray-300 bg-gray-600 border-gray-500 focus:ring-2 focus:ring-gray-500 text-sm focus:border-transparent outline-none transition"
+                      id="Select_Tester"
+                    >
+                      <option value="" disabled>
+                        {" "}
+                        -- Select Tester --{" "}
+                      </option>
+
+                      {testerData
+                        ?.filter((itm) => itm.deactivate)
+                        .map((itm, idx) => (
+                          <option key={idx} value={itm._id}>
+                            {itm.full_name}
+                          </option>
+                        ))}
+                    </select>
+                    {touched.Select_Tester && errors.Select_Tester && (
+                      <p className="text-red-700 text-xs">
+                        {" "}
+                        {errors.Select_Tester}
+                      </p>
+                    )}
+                  </div> */}
+
+                  <div>
+                    <label
+                      htmlFor="Select_Org"
+                      className="block text-sm font-medium text-gray-200 mb-2"
+                    >
+                      Select Tenant
+                    </label>
+                    <select
+                      name="Tenant_id"
+                      value={values.Tenant_id}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 rounded-md border text-gray-300 bg-gray-600 border-gray-500 focus:ring-2 focus:ring-gray-500 text-sm focus:border-transparent outline-none transition"
+                      id="Select_Org"
+                    >
+                      <option value="" disabled>
+                        {" "}
+                        -- Select Tenant --{" "}
+                      </option>
+                      {TenantAllData?.map((itm, idx) => (
+                        <option key={idx} value={itm._id}>
+                          {itm.company_name}
+                        </option>
+                      ))}
+                    </select>
+                    {touched.Orgenization_id && errors.Orgenization_id && (
+                      <p className="text-red-700 text-xs">
+                        {" "}
+                        {errors.Orgenization_id}
+                      </p>
+                    )}
+                  </div>
+
+
+                  <div>
+                    <InputField
+                      label={"Prefred Task Start Date"}
+                      type={"date"}
+                      showPassword={false}
+                      value={values.task_start}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      placeholder="Enter your Application URL"
+                      name="task_start"
+                    />
+                    {touched.task_start && errors.task_start && (
+                      <p className="text-red-700 text-xs">
+                        {" "}
+                        {errors.task_start}
+                      </p>
+                    )}
+                  </div>
+                  <div>
+                    <InputField
+                      label={"Prefred Task End Date"}
+                      type={"date"}
+                      showPassword={false}
+                      value={values.task_end}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      placeholder="Enter your Application URL"
+                      name="task_end"
+                    />
+                    {touched.task_end && errors.task_end && (
+                      <p className="text-red-700 text-xs">
+                        {" "}
+                        {errors.task_end}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <button
+                  type="submit"
+                  className="lg:w-[20%] bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white   py-2  rounded-lg hover:bg-blue-500 transition duration-200"
+                  onClick={handleSubmit}
+                >
+                  Submit
+                </button>
+              </form>
+            </div>
+
 
             {isOpen && (
               <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-40">
@@ -439,9 +422,9 @@ function SchedulingAssessmentPage() {
 
                     <div className="col-span-1 md:col-span-2 flex justify-end gap-2 mt-4 border-t pt-4">
                       <button
-                          type="button"
-						  onClick={() => setIsUpdateModalOpen(false)}
-						  className="px-4 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-300 transition"
+                        type="button"
+                        onClick={() => setIsUpdateModalOpen(false)}
+                        className="px-4 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-300 transition"
                       >
                         Cancel
                       </button>
@@ -560,7 +543,7 @@ function SchedulingAssessmentPage() {
                                 if (
                                   e.target.value === "Dynamic Application" ||
                                   e.target.value ===
-                                    "Web Application Penetration Testing"
+                                  "Web Application Penetration Testing"
                                 ) {
                                   setIsOpen(true);
                                 }
@@ -807,9 +790,8 @@ function SchedulingAssessmentPage() {
             )}
             <div className="flex justify-between items-center my-16">
               <button
-                className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white    border rounded-md ${
-                  page === 1 ? "opacity-50 cursor-not-allowed" : ""
-                }`}
+                className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white    border rounded-md ${page === 1 ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
                 disabled={page === 1}
                 onClick={() => setPage(page - 1)}
               >

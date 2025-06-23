@@ -28,10 +28,10 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 
 
 	const TotalAssessments = async (page) => {
-		console.log("page", page)
 		setLoading(true);
 		try {
 			const res = await AxiosHandler.get(`/assessment/get?page=${page}&limit=10`);
+			console.log(res.data.data)
 			setAllAssesmentData(res.data?.data);
 
 		} catch (error) {

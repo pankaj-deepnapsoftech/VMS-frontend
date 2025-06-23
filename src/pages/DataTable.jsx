@@ -34,7 +34,7 @@ import { MdDeleteForever } from "react-icons/md";
 
       <div className="overflow-x-auto custom-scrollbar shadow-lg bg-[#0c1120] ]">
         <table className="min-w-full text-sm text-left divide-y divide-gray-700 text-white">
-          <thead className="bg-[#0c1120] text-[15px] uppercase sticky top-0 z-10">
+          <thead className="bg-[#0c1120] text-[15px] uppercase sticky top-0 z-0">
             <tr>
               <th className="px-4 py-3 whitespace-nowrap truncate">
                 Data Asset
