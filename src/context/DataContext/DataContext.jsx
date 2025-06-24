@@ -24,6 +24,7 @@ const DataContextProvider = ({ children }) => {
     useState([]);
 
     const [exploitability,setExploitability] = useState([]);
+      const [partners, setPartners] = useState([]);
 
   const { token } = useAuthContext();
 
@@ -159,6 +160,15 @@ const DataContextProvider = ({ children }) => {
     }
   };
 
+   const GetAllPartnerData = async () => {
+    try {
+      const res = await AxiosHandler.get("/partner/get-all");
+      setPartners(res?.data?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
 
   useEffect(() => {
     if (token) {
@@ -173,6 +183,7 @@ const DataContextProvider = ({ children }) => {
       CriticalHighVulnerableOverdue();
       GetExploitability();
       GetAllTenentData();
+      GetAllPartnerData()
     }
   }, [token]);
   return (
@@ -196,7 +207,8 @@ const DataContextProvider = ({ children }) => {
         CriticalHighVulnerableOverdue,
         VulnerableItemsByAge,
         NewAndCloseVulnerable,
-        TenantAllData
+        TenantAllData,
+        partners
       }}
     >
       {children}

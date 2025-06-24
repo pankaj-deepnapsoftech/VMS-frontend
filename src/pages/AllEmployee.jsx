@@ -4,7 +4,7 @@ import InputField from "@/components/InputField";
 import Loader from "@/components/Loader/Loader";
 import NoDataFound from "@/components/NoDataFound";
 import { AxiosHandler } from "@/config/AxiosConfig";
-import { useAllEmployeeContext, useAuthContext } from "@/context";
+import { useAllEmployeeContext, useAuthContext, useDataContext } from "@/context";
 import { BaseValidationSchema, EditUser } from "@/Validation/AuthValidation";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
@@ -13,10 +13,10 @@ import { FaEnvelope, FaLock, FaPhone, FaUser } from "react-icons/fa";
 import { RiDeleteBinFill, RiEdit2Line } from "react-icons/ri";
 import Pagination from "./Pagination";
 import { IoClose } from "react-icons/io5";
-import { MdAssignmentAdd } from "react-icons/md";
 
 const AllEmployee = () => {
-  const { VerifyEmployee, DeleteUser } = useAllEmployeeContext();
+  const {  DeleteUser } = useAllEmployeeContext();
+  const {partners} = useDataContext()
 
   const { token, ChangeStatus } = useAuthContext();
 
@@ -29,7 +29,7 @@ const AllEmployee = () => {
   const [isloading, setloading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [apiError, setApiError] = useState(null);
-  const [partners, setPartners] = useState([]);
+
   const [partOfPartner, setPartOfPartner] = useState(null);
   const [partOfSecurend, setPartOfSecurend] = useState(null);
 
@@ -130,14 +130,7 @@ const AllEmployee = () => {
     }
   };
 
-  const GetAllPartnerData = async () => {
-    try {
-      const res = await AxiosHandler.get("/partner/get-all");
-      setPartners(res?.data?.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+ 
 
   const GetAllTenentData = async () => {
     try {
@@ -173,7 +166,6 @@ const AllEmployee = () => {
       GetUsers(page);
       GetAllTenentData();
       GetAllRoleData();
-      GetAllPartnerData();
     }
   }, [token, page]);
 

@@ -3,14 +3,14 @@ import {
   CalendarClock,
   LucideShield,
   Settings,
-  Table,
   UserCircle,
   Users,
 } from "lucide-react";
 import { AiOutlineException } from "react-icons/ai";
 import { BiSolidDashboard } from "react-icons/bi";
 import { GrVulnerability } from "react-icons/gr";
-import { MdInventory2, MdOutlineMiscellaneousServices, MdWifiTetheringErrorRounded } from "react-icons/md";
+import { IoIosInformationCircleOutline } from "react-icons/io";
+import { MdInventory2, MdOutlineMiscellaneousServices, MdOutlinePendingActions, MdSettingsApplications, MdWifiTetheringErrorRounded } from "react-icons/md";
 import { SiWikimediafoundation } from "react-icons/si";
 import { TbReport } from "react-icons/tb";
 
@@ -24,8 +24,20 @@ export const AllowedPaths = [
     value: "/scheduling-assesment",
   },
   {
+    name: "Pending Assesment",
+    value: "/pending-assesment",
+  },
+  {
     name: "Vulnerability Data",
     value: "/vulnerability-data",
+  },
+  {
+    name: "Application Data",
+    value: "/application-data",
+  },
+  {
+    name: "Infrastructure Data",
+    value: "/infrastructure-data",
   },
   {
     name: "Users",
@@ -112,6 +124,7 @@ export const products = [
     allowedPath: [
       { title: "Dashboard", route: "/", icon: BiSolidDashboard },
       { title: "Scheduling Assesment", route: "/scheduling-assesment", icon: CalendarClock },
+      { title: "Pending Assesment", route: "/pending-assesment", icon: MdOutlinePendingActions  },
       { title: "Application Vulnerability", route: "/application-vulnerability", icon: MdOutlineMiscellaneousServices },
       { title: "Infrastructure Vulnerability", route: "/infrastructure-vulnerability", icon: GrVulnerability },
       { title: "Exceptions", route: "/exceptions", icon: AiOutlineException },
@@ -170,6 +183,8 @@ export const products = [
     allowedPath: [
       { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
       { title: "Vulnerability Data", route: "/vulnerability-data", icon: Bug },
+      { title: "Application Data", route: "/application-data", icon: MdSettingsApplications  },
+      { title: "Infrastructure Data", route: "/infrastructure-data", icon: IoIosInformationCircleOutline   },
     ],
   },
   {

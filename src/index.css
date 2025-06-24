@@ -179,3 +179,31 @@ html {
 input[type="date"]::-webkit-calendar-picker-indicator {
   filter: brightness(0) invert(1); /* Makes black icon look white */
 }
+
+
+/* Override multiselect-react-dropdown for dark mode */
+.multiselect-container {
+  background-color: #1f2937 !important; /* Tailwind: bg-gray-800 */
+  color: #f9fafb !important;           /* Tailwind: text-gray-100 */
+  border: 1px solid #374151 !important;
+}
+
+.multiselect-container .searchBox {
+  background-color: #1f2937 !important; /* Tailwind: bg-gray-700 */
+  color: #f9fafb !important;
+  border: none !important;
+}
+
+.multiselect-container .chip {
+  background-color: #3533CC !important; /* Tailwind: bg-gray-600 */
+  color: white !important;
+}
+
+.multiselect-container .option {
+  background-color: #1f2937 !important;
+  color: #f9fafb !important;
+}
+
+.multiselect-container .option:hover {
+  background-color: #374151 !important;
+}

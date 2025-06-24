@@ -29,6 +29,9 @@ import JiraDataTable from "@/pages/JiraDataTable";
 import Partners from "@/pages/Partners";
 import ThirdPartyIntegrations from "@/pages/ThirdPartyIntegrations";
 import UserProfile from "@/pages/UserDetails";
+import PendingAssessment from "@/pages/PendingAssessment";
+import { ApplicationData } from "@/pages/ApplicationData";
+import { InfrastructureData } from "@/pages/InfrastructureData";
 
 export const PrivateRoutes = [
   {
@@ -40,8 +43,20 @@ export const PrivateRoutes = [
     element: <SchedulingAssessmentPage />,
   },
   {
+    path: "/pending-assesment",
+    element: <PendingAssessment />,
+  },
+  {
     path: "/vulnerability-data",
     element: <VulnerabilityData />,
+  },
+  {
+    path: "/application-data",
+    element: <ApplicationData />,
+  },
+  {
+    path: "/infrastructure-data",
+    element: <InfrastructureData />,
   },
   {
     path: "/third-party-data",

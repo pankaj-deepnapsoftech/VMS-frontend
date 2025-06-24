@@ -46,14 +46,10 @@ export const useAllCustomerContext = () => useContext(AllCustomerContext);
 export const useAllEmployeeContext = () => useContext(AllEmployeeContext);
 export const useJiraContext = () => useContext(JiraContext);
 export const useApplicationVulnerabilityContext = () => useContext(ApplicationVulnerabilityContext);
-export const useScheduleAssessmentContext = () =>
-	useContext(AssesmentContext)
-export const useRemeditionContext = () =>
-	useContext(RemeditionContext)
-export const useExceptionContext = () =>
-	useContext(ExceptionContext)
-export const useInfrastructureVulnerabilityContext = () =>
-	useContext(InfrastructureVulnerabilityContext)
+export const useScheduleAssessmentContext = () =>useContext(AssesmentContext)
+export const useRemeditionContext = () =>	useContext(RemeditionContext)
+export const useExceptionContext = () =>	useContext(ExceptionContext)
+export const useInfrastructureVulnerabilityContext = () =>	useContext(InfrastructureVulnerabilityContext)
 
 
 

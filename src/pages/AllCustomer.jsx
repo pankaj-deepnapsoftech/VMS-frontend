@@ -11,6 +11,8 @@ import Pagination from "./Pagination";
 import Loader from "@/components/Loader/Loader";
 import Addtanent from "./Addtanent";
 import { MdAssignmentAdd } from "react-icons/md";
+import AccessPartner from "@/modals/AccessPartner";
+import useAccessPartner from "@/hooks/AccessPartner";
 
 export default function AllCustomer() {
   const { token } = useAuthContext();
@@ -24,6 +26,12 @@ export default function AllCustomer() {
   const [editTable, setEditTable] = useState(null);
   const [isLoading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const { isOpen, closeModal, openModal } = useAccessPartner();
+  const [tenantId,setTenantId] = useState(null)
+  const [partnersData,setPartnersData] = useState([])
+
+
+
 
   const getTenants = async () => {
     try {
@@ -149,7 +157,7 @@ export default function AllCustomer() {
                               onClick={() => DeleteData(tenant?._id)}
                               className="text-red-500 cursor-pointer"
                             />
-                            <MdAssignmentAdd title="Assign Partner" className="text-green-500 cursor-pointer" />
+                            <MdAssignmentAdd onClick={() => { openModal();setTenantId(tenant?._id);setPartnersData(tenant.Partner) }} title="Assign Partner" className="text-green-500 cursor-pointer" />
                           </td>
                         </tr>
                       ))}
@@ -185,6 +193,7 @@ export default function AllCustomer() {
           editTable={editTable}
         />
       )}
+      {isOpen && <AccessPartner id={tenantId} closeModal={closeModal} preSet={partnersData} />}
     </>
   );
 }
