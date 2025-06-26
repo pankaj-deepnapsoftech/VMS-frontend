@@ -12,7 +12,7 @@ import { RemeditionContext } from "./RemeditionContext/RemeditionContext";
 import { ExceptionContext } from "./ExceptionContext/ExceptionContext";
 import { ReportContext } from "./ReportContext/ReportContext";
 import { InfrastructureVulnerabilityContext } from "./InfrastructureVulnerabilityContext/InfrastructureVulnerabilityContext";
-
+import { InfraAssetContext } from "./InfraAssetContext/InfraAssetContext"; 
 
 
 
@@ -32,6 +32,7 @@ export { default as RemeditionContextProvider } from "./RemeditionContext/Remedi
 export { default as ExceptionContextProvider } from "./ExceptionContext/ExceptionContext";
 
 export { default as InfrastructureVulnerabilityContextProvider } from "./InfrastructureVulnerabilityContext/InfrastructureVulnerabilityContext"
+export {default as InfraAssetContextProvider} from "./InfraAssetContext/InfraAssetContext"
 
 
 
@@ -50,7 +51,7 @@ export const useScheduleAssessmentContext = () =>useContext(AssesmentContext)
 export const useRemeditionContext = () =>	useContext(RemeditionContext)
 export const useExceptionContext = () =>	useContext(ExceptionContext)
 export const useInfrastructureVulnerabilityContext = () =>	useContext(InfrastructureVulnerabilityContext)
-
+export const useInfraAssetContext = () => useContext(InfraAssetContext)
 
 
 

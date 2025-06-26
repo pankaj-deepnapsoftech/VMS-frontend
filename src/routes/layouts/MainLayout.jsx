@@ -2,13 +2,11 @@ import Footer from "@/components/Footer/Footer";
 import { Header } from "@/constants/Components-lazy-loading/components.Lazy";
 import { Suspense, useEffect, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
-import { FaBell } from "react-icons/fa";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { NotificationSidebar } from "@components/modal/NotificationSideBar";
 
 import { useAuthContext, useDataContext, useVulnerabililtyDataContext } from "@/context";
 import UserProfile from "@/pages/UserProfile";
-import { getInitials } from "@/utils/profile";
 import ChangePasswordModal from "@/modals/ChangePasswordModal";
 import useChangePassword from "@/hooks/changePassword";
 import FirstDashboard from "@/pages/FirstDashboard";
@@ -100,7 +98,7 @@ const MainLayout = () => {
   }, [getDataFromSession, authenticate])
 
   const AllowedPath = (link) => {
-    const paths = ["asset-inventory", "reports"]
+    const paths = [ "reports"]
     return paths.find((item) => item === link)
   }
 

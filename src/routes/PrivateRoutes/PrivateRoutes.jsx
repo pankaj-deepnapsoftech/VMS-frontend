@@ -10,20 +10,13 @@ import AllEmployee from "@/pages/AllEmployee";
 import SchedulingAssessmentPage from "@/pages/SchedulingAssessment";
 import Reports from "@/pages/Reports";
 import ChatPage from "@/pages/ChatPage";
-import { AssertInventory } from "@/pages/AssertInventory";
+import  AssertInventory  from "@/pages/AssertInventory";
 import ChangePassword from "@/pages/ChangePassword";
 import AdminBookDemo from "@/pages/AdminBookDemo";
 import ApplicationSoftwareInventory from "@/pages/ApplicationSoftwareInventory";
-import DataTable from "@/pages/DataTable";
-import RiskRatingTable from "@/pages/RiskRatingTable";
-import Devices from "@/pages/DevicesTable";
-import ApplicationSoftwareInventoryTable from "@/pages/ApplicationSoftwareTable";
-import RiskRatingGuide from "@/pages/RiskRatingGuide";
 import ClientCISO from "@/pages/ClientCiso";
 import NewUser from "@/pages/NewUser";
 import EmailConfigPanel from "@/pages/Configure";
-import UserManagement from "@/pages/ManageUsers";
-import ManageTenants from "@/pages/ManageTenants";
 import Roles from "@/pages/Roles";
 import JiraDataTable from "@/pages/JiraDataTable";
 import Partners from "@/pages/Partners";
@@ -32,6 +25,7 @@ import UserProfile from "@/pages/UserDetails";
 import PendingAssessment from "@/pages/PendingAssessment";
 import { ApplicationData } from "@/pages/ApplicationData";
 import { InfrastructureData } from "@/pages/InfrastructureData";
+import BusinessApplications from "@/pages/BusinessApplications";
 
 export const PrivateRoutes = [
   {
@@ -119,18 +113,9 @@ export const PrivateRoutes = [
     element: <ChatPage />,
   },
   {
-    path: "/asset-inventory",
+    path: "/infraStructure-asset",
     element: <AssertInventory />,
-    children: [
-      { path: "", element: <Devices /> },
-      {
-        path: "software-application",
-        element: <ApplicationSoftwareInventoryTable />,
-      },
-      { path: "data-table", element: <DataTable /> },
-      { path: "risk-rating-table", element: <RiskRatingTable /> },
-      { path: "risk-rating-guide", element: <RiskRatingGuide /> },
-    ],
+    
   },
   {
     path: "/change-password",
@@ -155,5 +140,9 @@ export const PrivateRoutes = [
   {
     path: "/newuser",
     element: <NewUser />,
+  },
+  {
+    path: "/business-applications",
+    element: <BusinessApplications />,
   },
 ];

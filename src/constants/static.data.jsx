@@ -64,8 +64,12 @@ export const AllowedPaths = [
     value: "/remedition",
   },
   {
-    name: "Asset Inventory",
-    value: "/asset-inventory",
+    name: "InfraStructure Asset",
+    value: "/infraStructure-asset",
+  },
+  {
+    name: "Business Applications",
+    value: "/business_applications",
   },
   {
     name: "All Tenents",
@@ -110,8 +114,13 @@ export const products = [
     icon:"/Icons/Component 1.png",
     allowedPath: [
       {
-        title: "Asset Inventory",
-        route: "/asset-inventory",
+        title: "InfraStructure Asset",
+        route: "/infraStructure-asset",
+        icon: MdInventory2,
+      },
+      {
+        title: "Business Applications",
+        route: "/business-applications",
         icon: MdInventory2,
       },
     ],

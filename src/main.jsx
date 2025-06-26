@@ -3,10 +3,6 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import {
   BrowserRouter,
-  Route,
-  RouterProvider,
-  createBrowserRouter,
-  createRoutesFromElements,
 } from "react-router-dom";
 import App from "./App";
 import {
@@ -16,6 +12,7 @@ import {
   AuthContextProvider,
   DataContextProvider,
   ExceptionContextProvider,
+  InfraAssetContextProvider,
   InfrastructureVulnerabilityContextProvider,
   JiraContextProvider,
   RemeditionContextProvider,
@@ -23,9 +20,6 @@ import {
   VulnerabililtyDataContextProvider,
 } from "./context";
 import AppSoftContextProvider from "./context/ApplicationSoftwareInventoryContext/ApplicationSoftwareInventoryContext";
-import DeviceProvider from "./context/DevicesContext/DevicesContext";
-import AssetDataProvider from "./context/Asset Data Context/AssetDataContex";
-import RiskRatingProvider from "./context/RiskRating/RiskRatingContext";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -41,13 +35,9 @@ createRoot(document.getElementById("root")).render(
                       <ExceptionContextProvider>
                         <InfrastructureVulnerabilityContextProvider>
                           <AppSoftContextProvider>
-                            <DeviceProvider>
-                              <AssetDataProvider>
-                                <RiskRatingProvider>
+                            <InfraAssetContextProvider>
                                   <App />
-                                </RiskRatingProvider>
-                              </AssetDataProvider>
-                            </DeviceProvider>
+                            </InfraAssetContextProvider>
                           </AppSoftContextProvider>
                         </InfrastructureVulnerabilityContextProvider>
                       </ExceptionContextProvider>
