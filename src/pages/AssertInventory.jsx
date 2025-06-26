@@ -1,64 +1,94 @@
-import { useEffect, useState } from "react"
-import { ExternalLink, Trash2, Edit, X, Boxes } from "lucide-react"
-import { BiPlus } from "react-icons/bi"
-import { useFormik } from "formik"
-import { InfraAssetvalidation } from "@/Validation/InfrastructureAssetvalidation"
-import { useAuthContext, useInfraAssetContext } from "@/context"
-
-
+import { useEffect, useState } from "react";
+import { ExternalLink, Trash2, Edit, X, Boxes } from "lucide-react";
+import { BiPlus } from "react-icons/bi";
+import { useFormik } from "formik";
+import { InfraAssetvalidation } from "@/Validation/InfrastructureAssetvalidation";
+import { useAuthContext, useInfraAssetContext } from "@/context";
 
 export default function TenantDashboard() {
-  const [searchTerm, setSearchTerm] = useState("")
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState(null);
 
   const [model, setmodel] = useState(false);
   const { token } = useAuthContext();
-  const { CreateInfraAsset, GetInfraAsset, infraAssetdata, DeleteInfraAsset, UpdateInfraAsset } = useInfraAssetContext();
-  const [editable, setEditable] = useState(null)
-
+  const {
+    CreateInfraAsset,
+    GetInfraAsset,
+    infraAssetdata,
+    DeleteInfraAsset,
+    UpdateInfraAsset,
+  } = useInfraAssetContext();
+  const [editable, setEditable] = useState(null);
 
   const filteredTenants = infraAssetdata.filter((tenant) =>
-    tenant.asset_hostname.toLowerCase().includes(searchTerm.toLowerCase()),
-  )
+    tenant.asset_hostname.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
-    initialValues: editable || { asset_hostname: "", modify_criticality: "", asset_ip: "" },
-    validationSchema: InfraAssetvalidation,
-    enableReinitialize: true,
-    onSubmit: (value) => {
-      if (editable) {
-        UpdateInfraAsset(editable._id, value);
-      } else {
-        CreateInfraAsset(value);
-      }
-      setmodel(false)
-    }
-  })
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: editable || {
+        asset_hostname: "",
+        modify_criticality: "",
+        asset_ip: "",
+      },
+      validationSchema: InfraAssetvalidation,
+      enableReinitialize: true,
+      onSubmit: (value) => {
+        if (editable) {
+          UpdateInfraAsset(editable._id, value);
+        } else {
+          CreateInfraAsset(value);
+        }
+        setmodel(false);
+      },
+    });
+  const handleFileChange = (e) => {
+    setSelectedFiles(e.target.files);
+  };
 
   useEffect(() => {
     if (token) {
-      GetInfraAsset()
+      GetInfraAsset();
     }
-  }, [])
+  }, []);
 
   return (
     <>
       <div className="min-h-screen bg-gradient-custom text-white p-6">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="max-w-screen px-4  border-[#6B728033] flex items-center gap-4backdrop-blur-md bg-[#6B728033] rounded-lg  my-5 ">
+          <div className="max-w-screen px-4 border-[#6B728033] flex items-center justify-between backdrop-blur-md bg-[#435b8a33] rounded-lg my-5 h-[70px]">
+            {/* Search Input */}
             <input
               type="text"
               placeholder="Search users..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="bg-[#13141450] border backdrop-blur-md py-2 w-1/3 text-white px-4 rounded-md "
+              className="bg-[#13141450] border border-gray-500 backdrop-blur-md py-2 w-1/3 text-white px-4 rounded-md"
             />
-            <div className="flex w-full justify-end py-4">
+
+            {/* Buttons */}
+            <div className="flex items-center gap-2">
               <button
-                onClick={() => { setmodel(!model); setEditable(null) }}
-                className="px-4 py-2 mr-5 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center gap-2"
+                onClick={() => {
+                  // eslint-disable-next-line no-undef
+                  setIsModalOpen(true);
+                }}
+                className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center gap-2"
               >
-                <BiPlus className="h-6 w-6 mr-1" />
+                <BiPlus className="h-6 w-6" />
+                Bulk Upload
+              </button>
+
+              <button
+                onClick={() => {
+                  setmodel(true);
+                  setEditable(null);
+                }}
+                className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center gap-2"
+              >
+                <BiPlus className="h-6 w-6" />
                 Infrastructure Asset
               </button>
             </div>
@@ -70,28 +100,53 @@ export default function TenantDashboard() {
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-slate-700">
-                    <th className="text-left py-4 px-6 font-medium text-gray-300">Asset Hostname</th>
-                    <th className="text-left py-4 px-6 font-medium text-gray-300">Asset IP</th>
-                    <th className="text-left py-4 px-6 font-medium text-gray-300">Modify Criticality</th>
-                    <th className="text-left py-4 px-6 font-medium text-gray-300">Actions</th>
+                    <th className="text-left py-4 px-6 font-medium text-gray-300">
+                      Asset Hostname
+                    </th>
+                    <th className="text-left py-4 px-6 font-medium text-gray-300">
+                      Asset IP
+                    </th>
+                    <th className="text-left py-4 px-6 font-medium text-gray-300">
+                      Modify Criticality
+                    </th>
+                    <th className="text-left py-4 px-6 font-medium text-gray-300">
+                      Actions
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {filteredTenants.map((tenant) => (
-                    <tr key={tenant.id} className="border-b border-slate-700 hover:bg-slate-750">
-
-                      <td className="py-4 px-6 text-white">{tenant.asset_hostname}</td>
-                      <td className="py-4 px-6 text-white">{tenant.asset_ip}</td>
-                      <td className="py-4 px-6 text-white">{tenant.modify_criticality}</td>
+                    <tr
+                      key={tenant.id}
+                      className="border-b border-slate-700 hover:bg-slate-750"
+                    >
+                      <td className="py-4 px-6 text-white">
+                        {tenant.asset_hostname}
+                      </td>
+                      <td className="py-4 px-6 text-white">
+                        {tenant.asset_ip}
+                      </td>
+                      <td className="py-4 px-6 text-white">
+                        {tenant.modify_criticality}
+                      </td>
                       <td className="py-4 px-6">
                         <div className="flex space-x-2">
                           <button className="p-1 text-blue-400 hover:text-blue-300">
                             <ExternalLink className="w-4 h-4" />
                           </button>
-                          <button onClick={() => DeleteInfraAsset(tenant._id)} className="p-1 text-red-400 hover:text-red-300">
+                          <button
+                            onClick={() => DeleteInfraAsset(tenant._id)}
+                            className="p-1 text-red-400 hover:text-red-300"
+                          >
                             <Trash2 className="w-4 h-4" />
                           </button>
-                          <button onClick={() => { setEditable(tenant); setmodel(!model) }} className="p-1 text-green-400 hover:text-green-300">
+                          <button
+                            onClick={() => {
+                              setEditable(tenant);
+                              setmodel(!model);
+                            }}
+                            className="p-1 text-green-400 hover:text-green-300"
+                          >
                             <Edit className="w-4 h-4" />
                           </button>
                         </div>
@@ -122,11 +177,73 @@ export default function TenantDashboard() {
         </div> */}
         </div>
       </div>
-      {model && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
 
-        >
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-slate-900 rounded-2xl shadow-2xl p-6 w-full max-w-lg animate-fade-in">
+            {/* Modal Header */}
+            <div className="flex justify-between items-center mb-4 border-b border-slate-700 pb-2">
+              <h2 className="text-xl font-semibold text-white">
+                📥 Bulk Upload Files
+              </h2>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="text-slate-400 hover:text-white transition"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* File Input */}
+            <div className="space-y-3">
+              <label className="block text-sm text-slate-300">
+                Select multiple files:
+              </label>
+              <input
+                type="file"
+                multiple
+                onChange={handleFileChange}
+                className="block w-full text-sm text-gray-300 bg-slate-800 border border-slate-700 rounded-lg cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 transition"
+              />
+            </div>
+
+            {/* Selected Files Preview */}
+            {selectedFiles && (
+              <div className="max-h-40 overflow-y-auto mt-3 rounded border border-slate-700 p-2 bg-slate-800 text-sm text-slate-300">
+                <ul className="space-y-1">
+                  {Array.from(selectedFiles).map((file, index) => (
+                    <li key={index} className="truncate">
+                      {file.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Modal Footer Buttons */}
+            <div className="flex justify-end gap-3 mt-6">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="px-4 py-2 rounded-md text-sm bg-slate-700 text-gray-300 hover:bg-slate-600 transition"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  console.log("Selected files:", selectedFiles);
+                  setIsModalOpen(false);
+                }}
+                className="px-4 py-2 rounded-md text-sm bg-blue-600 text-white hover:bg-blue-700 transition font-medium"
+              >
+                Upload
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {model && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-slate-900 rounded-xl shadow-2xl w-full max-w-md mx-auto">
             <div className="p-6">
               {/* Header */}
@@ -136,8 +253,7 @@ export default function TenantDashboard() {
                     <Boxes className="w-4 h-4 text-white" />
                   </div>
                 </div>
-                <span className="text-2xl font-medium text-white" >
-
+                <span className="text-2xl font-medium text-white">
                   Infrastructure Asset
                 </span>
                 <button
@@ -152,7 +268,9 @@ export default function TenantDashboard() {
               <div className="space-y-6">
                 {/* Integration Type */}
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-slate-300">Asset IP</label>
+                  <label className="block text-sm font-medium text-slate-300">
+                    Asset IP
+                  </label>
                   <input
                     type="text"
                     placeholder="What is your Asset IP?"
@@ -162,12 +280,16 @@ export default function TenantDashboard() {
                     onBlur={handleBlur}
                     onChange={handleChange}
                   />
-                  {errors.asset_ip && touched.asset_ip && <p className="text-red-400" >{errors.asset_ip}</p>}
+                  {errors.asset_ip && touched.asset_ip && (
+                    <p className="text-red-400">{errors.asset_ip}</p>
+                  )}
                 </div>
 
                 {/* API Key */}
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-slate-300">Asset Hostname</label>
+                  <label className="block text-sm font-medium text-slate-300">
+                    Asset Hostname
+                  </label>
                   <input
                     type="text"
                     placeholder="What is your title?"
@@ -177,11 +299,15 @@ export default function TenantDashboard() {
                     onBlur={handleBlur}
                     onChange={handleChange}
                   />
-                  {errors.asset_hostname && touched.asset_hostname && <p className="text-red-400" >{errors.asset_hostname}</p>}
+                  {errors.asset_hostname && touched.asset_hostname && (
+                    <p className="text-red-400">{errors.asset_hostname}</p>
+                  )}
                 </div>
 
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-slate-300">Modify Criticality</label>
+                  <label className="block text-sm font-medium text-slate-300">
+                    Modify Criticality
+                  </label>
                   <select
                     type="text"
                     placeholder="What is your title?"
@@ -191,18 +317,18 @@ export default function TenantDashboard() {
                     onBlur={handleBlur}
                     onChange={handleChange}
                   >
-                    <option value={"select value"} selected >select value</option>
-                    <option value={"Critical"}  >Critical</option>
-                    <option value={"High"} >High</option>
-                    <option value={"Medium"} >Medium</option>
-                    <option value={"Low"} >Low</option>
+                    <option value={"select value"} selected>
+                      select value
+                    </option>
+                    <option value={"Critical"}>Critical</option>
+                    <option value={"High"}>High</option>
+                    <option value={"Medium"}>Medium</option>
+                    <option value={"Low"}>Low</option>
                   </select>
-                  {errors.modify_criticality && touched.modify_criticality && <p className="text-red-400" >{errors.modify_criticality}</p>}
+                  {errors.modify_criticality && touched.modify_criticality && (
+                    <p className="text-red-400">{errors.modify_criticality}</p>
+                  )}
                 </div>
-
-
-
-
 
                 {/* <div className="space-y-2">
                   <label className="block text-sm font-medium text-slate-300">Description*</label>
@@ -233,5 +359,5 @@ export default function TenantDashboard() {
         </div>
       )}
     </>
-  )
+  );
 }
