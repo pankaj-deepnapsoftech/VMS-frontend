@@ -10,8 +10,8 @@ export default function EmailConfigPanel() {
   };
 
   return (
-    <section className="h-screen">
-      <div className="bg-cards text-white p-6  rounded-md shadow-md w-full mt-10 max-w-4xl mx-auto">
+    <section className="h-screen pt-20">
+      <div className="bg-cards text-white p-6 rounded-md shadow-md w-full max-w-4xl mx-auto">
         
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold">Configure Email</h2>
