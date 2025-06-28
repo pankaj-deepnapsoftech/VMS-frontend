@@ -19,10 +19,21 @@ const InfraAssetContextProvider = ({ children }) => {
             console.log(error);
         }
     }
+    
 
     const CreateInfraAsset = async (data) => {
         try {
             const res = await AxiosHandler.post("/infraStructureAsset/create", data);
+            toast.success(res.data.message);
+            GetInfraAsset()
+        } catch (error) {
+            toast.error(error.response.data.message)
+        }
+    }
+
+    const CreateBulkInfraAsset = async (data) => {
+        try {
+            const res = await AxiosHandler.post("/infraStructureAsset/bulk-create", data);
             toast.success(res.data.message);
             GetInfraAsset()
         } catch (error) {
@@ -105,7 +116,8 @@ const InfraAssetContextProvider = ({ children }) => {
             GetBussinerssApplcation,
             businessApplication,
             DeleteBussinerssApplcation,
-            UpdateBussinerssApplcation
+            UpdateBussinerssApplcation,
+            CreateBulkInfraAsset
         }} >
             {children}
         </InfraAssetContext.Provider>

@@ -18,6 +18,7 @@ export default function TenantDashboard() {
     infraAssetdata,
     DeleteInfraAsset,
     UpdateInfraAsset,
+    CreateBulkInfraAsset,
   } = useInfraAssetContext();
   const [editable, setEditable] = useState(null);
 
@@ -44,7 +45,7 @@ export default function TenantDashboard() {
       },
     });
   const handleFileChange = (e) => {
-    setSelectedFiles(e.target.files);
+    setSelectedFiles(e.target.files[0]);
   };
 
   useEffect(() => {
@@ -201,24 +202,12 @@ export default function TenantDashboard() {
               </label>
               <input
                 type="file"
-                multiple
                 onChange={handleFileChange}
                 className="block w-full text-sm text-gray-300 bg-slate-800 border border-slate-700 rounded-lg cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 transition"
               />
             </div>
 
-            {/* Selected Files Preview */}
-            {selectedFiles && (
-              <div className="max-h-40 overflow-y-auto mt-3 rounded border border-slate-700 p-2 bg-slate-800 text-sm text-slate-300">
-                <ul className="space-y-1">
-                  {Array.from(selectedFiles).map((file, index) => (
-                    <li key={index} className="truncate">
-                      {file.name}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+           
 
             {/* Modal Footer Buttons */}
             <div className="flex justify-end gap-3 mt-6">
@@ -230,7 +219,10 @@ export default function TenantDashboard() {
               </button>
               <button
                 onClick={() => {
-                  console.log("Selected files:", selectedFiles);
+                  const formData = new FormData();
+                  console.log(selectedFiles)
+                  formData.append("excel", selectedFiles);
+                  CreateBulkInfraAsset(formData);
                   setIsModalOpen(false);
                 }}
                 className="px-4 py-2 rounded-md text-sm bg-blue-600 text-white hover:bg-blue-700 transition font-medium"
