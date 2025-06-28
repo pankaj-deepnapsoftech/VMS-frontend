@@ -6,6 +6,7 @@ import {
   UserCircle,
   Users,
 } from "lucide-react";
+import { FaBug } from "react-icons/fa";
 import { AiOutlineException } from "react-icons/ai";
 import { BiSolidDashboard } from "react-icons/bi";
 import { GrVulnerability } from "react-icons/gr";
@@ -192,6 +193,11 @@ export const products = [
     allowedPath: [
       { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
       { title: "Vulnerability Data", route: "/vulnerability-data", icon: Bug },
+      {
+        title:"Add Vulnerability Data",
+        route:"/add-vulnerability-data",
+        icon: FaBug,
+      },
       { title: "Application Data", route: "/application-data", icon: MdSettingsApplications  },
       { title: "Infrastructure Data", route: "/infrastructure-data", icon: IoIosInformationCircleOutline   },
     ],

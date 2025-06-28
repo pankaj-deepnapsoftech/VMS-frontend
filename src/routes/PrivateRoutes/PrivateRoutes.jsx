@@ -26,6 +26,7 @@ import PendingAssessment from "@/pages/PendingAssessment";
 import { ApplicationData } from "@/pages/ApplicationData";
 import { InfrastructureData } from "@/pages/InfrastructureData";
 import BusinessApplications from "@/pages/BusinessApplications";
+import VulnerabilityForm from "@/pages/AddVulnerabilityData";
 
 export const PrivateRoutes = [
   {
@@ -145,4 +146,8 @@ export const PrivateRoutes = [
     path: "/business-applications",
     element: <BusinessApplications />,
   },
+  {
+    path:"/add-vulnerability-data",
+    element:<VulnerabilityForm/>,
+  }
 ];
