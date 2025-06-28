@@ -4,11 +4,16 @@ import { BiPlus } from "react-icons/bi";
 import { useFormik } from "formik";
 import { InfraAssetvalidation } from "@/Validation/InfrastructureAssetvalidation";
 import { useAuthContext, useInfraAssetContext } from "@/context";
+import * as XLSX from "xlsx";
+import { useLocation } from "react-router-dom";
 
 export default function TenantDashboard() {
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [tenant, setTenant] = useState('');
+  const location = useLocation();
 
   const [model, setmodel] = useState(false);
   const { token } = useAuthContext();
@@ -26,6 +31,8 @@ export default function TenantDashboard() {
     tenant.asset_hostname.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+
+
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues: editable || {
@@ -36,10 +43,13 @@ export default function TenantDashboard() {
       validationSchema: InfraAssetvalidation,
       enableReinitialize: true,
       onSubmit: (value) => {
+        if (!tenant) {
+          return alert("Please select a tenant");
+        }
         if (editable) {
           UpdateInfraAsset(editable._id, value);
         } else {
-          CreateInfraAsset(value);
+          CreateInfraAsset({ ...value, creator: tenant });
         }
         setmodel(false);
       },
@@ -48,11 +58,29 @@ export default function TenantDashboard() {
     setSelectedFiles(e.target.files[0]);
   };
 
+  const handleDownload = () => {
+    const data = [{
+      asset_hostname: "",
+      modify_criticality: "",
+      asset_ip: "",
+    }]
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Vulnerabilities");
+    XLSX.writeFile(workbook, "infraStructure-asset.xlsx");
+  };
+
   useEffect(() => {
     if (token) {
-      GetInfraAsset();
+      GetInfraAsset(currentPage, tenant);
     }
-  }, []);
+  }, [currentPage, tenant]);
+
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setTenant(params.get('tenant') || '');
+  }, [location.search]);
 
   return (
     <>
@@ -160,22 +188,23 @@ export default function TenantDashboard() {
           </div>
 
           {/* Pagination */}
-          {/* <div className="flex justify-between items-center mt-6">
-          <Button
-            variant="outline"
-            className="bg-slate-800 border-slate-700 text-gray-400 hover:bg-slate-700 hover:text-white"
-            disabled={currentPage === 1}
-          >
-            Previous
-          </Button>
-          <span className="text-gray-300">Page {currentPage}</span>
-          <Button
-            variant="outline"
-            className="bg-slate-800 border-slate-700 text-gray-400 hover:bg-slate-700 hover:text-white"
-          >
-            Next
-          </Button>
-        </div> */}
+          <div className="flex justify-between items-center mt-6">
+            <button
+              className="bg-slate-800 border-slate-700 text-gray-400 hover:bg-slate-700 hover:text-white px-4 py-2 rounded-lg"
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage(currentPage - 1)}
+            >
+              Previous
+            </button>
+            <span className="text-gray-300">Page {currentPage}</span>
+            <button
+              onClick={() => setCurrentPage((prev) => prev + 1)}
+              disabled={filteredTenants.length !== 10}
+              className="bg-slate-800 border-slate-700 text-gray-400 hover:bg-slate-700 hover:text-white px-4 py-2 rounded-lg"
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
 
@@ -195,6 +224,12 @@ export default function TenantDashboard() {
               </button>
             </div>
 
+            <div className="text-white flex justify-between py-3" >
+
+              <h3>Get sample excel file </h3>
+              <span onClick={handleDownload} className="font-normal text-blue-400 cursor-pointer" >Download Sample File</span>
+            </div>
+
             {/* File Input */}
             <div className="space-y-3">
               <label className="block text-sm text-slate-300">
@@ -207,7 +242,7 @@ export default function TenantDashboard() {
               />
             </div>
 
-           
+
 
             {/* Modal Footer Buttons */}
             <div className="flex justify-end gap-3 mt-6">
@@ -219,9 +254,13 @@ export default function TenantDashboard() {
               </button>
               <button
                 onClick={() => {
+                  if (!tenant) {
+                    return alert("Please select a tenant");
+                  }
                   const formData = new FormData();
                   console.log(selectedFiles)
                   formData.append("excel", selectedFiles);
+                  formData.append("creator", tenant);
                   CreateBulkInfraAsset(formData);
                   setIsModalOpen(false);
                 }}

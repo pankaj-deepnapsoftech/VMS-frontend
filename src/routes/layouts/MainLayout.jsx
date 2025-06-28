@@ -2,7 +2,7 @@ import Footer from "@/components/Footer/Footer";
 import { Header } from "@/constants/Components-lazy-loading/components.Lazy";
 import { Suspense, useEffect, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { NotificationSidebar } from "@components/modal/NotificationSideBar";
 
 import { useAuthContext, useDataContext, useVulnerabililtyDataContext } from "@/context";
@@ -43,13 +43,13 @@ const MainLayout = () => {
   const navigate = useNavigate();
 
   const [tenant, setTenant] = useState("Select Value")
-
-
-
+  const [tenantId, setTenantId] = useState("")
+  const [searchParams] = useSearchParams();
 
   let notificationcount = notificationData?.filter((notification) => !notification.view).length || 0;
 
   const handleSelect = ({ value, label }) => {
+    setTenantId(value)
     setTenant(label)
     getHomeCardData(value);
     VulnerableItemsByRiskRating(value);
@@ -75,10 +75,18 @@ const MainLayout = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [width]);
 
+
+
   useEffect(() => {
     const name = location.pathname.split("/");
     setTemp(name[1] ?? "Dashboard");
-  }, [location.pathname]);
+    const params = new URLSearchParams(searchParams);
+    params.set("tenant", tenantId);
+    navigate({
+      pathname: location.pathname,
+      search: params.toString(),
+    }, { replace: true });
+  }, [location.pathname, tenantId]);
 
 
   useEffect(() => {
@@ -98,7 +106,7 @@ const MainLayout = () => {
   }, [getDataFromSession, authenticate])
 
   const AllowedPath = (link) => {
-    const paths = [ "reports"]
+    const paths = ["reports"]
     return paths.find((item) => item === link)
   }
 
@@ -129,7 +137,7 @@ const MainLayout = () => {
                 </button>
 
                 <div className="flex gap-3 w-full">
-                   <Link className="flex items-center ">
+                  <Link className="flex items-center ">
                     <div className="flex gap-2 items-center justify-center  h-7  ">
                       <img
                         src="/logo.png"
@@ -138,7 +146,7 @@ const MainLayout = () => {
                       />
 
                     </div>
-                  </Link> 
+                  </Link>
 
                   {!authenticate?.role
                     && (<Select

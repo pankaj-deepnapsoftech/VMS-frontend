@@ -4,18 +4,23 @@ import { BiPlus } from "react-icons/bi"
 import { useFormik } from "formik"
 import { useAuthContext, useInfraAssetContext } from "@/context"
 import { BusinessApplicationValidation } from "@/Validation/BusinessApp.validation"
-import axios from "axios"
+import axios from "axios";
+import * as XLSX from "xlsx";
 
 
 
 export default function BusinessApplications() {
     const [searchTerm, setSearchTerm] = useState("")
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const [model, setmodel] = useState(false);
     const { token } = useAuthContext();
-    const { CreateBussinerssApplcation, GetBussinerssApplcation, businessApplication, DeleteBussinerssApplcation, UpdateBussinerssApplcation } = useInfraAssetContext();
+    const { CreateBussinerssApplcation, GetBussinerssApplcation, businessApplication, DeleteBussinerssApplcation, UpdateBussinerssApplcation, CreateBulkBussinerssApplcation } = useInfraAssetContext();
     const [editable, setEditable] = useState(null)
-    const [countryData,setcountryData] = useState([])
+    const [countryData, setcountryData] = useState([])
+    const [selectedFiles, setSelectedFiles] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [tenant, setTenant] = useState('');
 
 
 
@@ -28,19 +33,32 @@ export default function BusinessApplications() {
         validationSchema: BusinessApplicationValidation,
         enableReinitialize: true,
         onSubmit: (value) => {
+            if (!tenant) {
+                return alert("Please select a tenant");
+            }
             console.log(value)
             if (editable) {
                 UpdateBussinerssApplcation(editable._id, value);
             } else {
-                CreateBussinerssApplcation(value);
+                CreateBussinerssApplcation({ ...value, creator: tenant });
             }
             setmodel(false)
         }
     });
 
+    const handleDownload = () => {
+        const data = [{
+            name: "", description: "", country: "", state: "", city: "", type: "", applicationUrl: "", modifyCriticality: ""
+        }]
+        const worksheet = XLSX.utils.json_to_sheet(data);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Vulnerabilities");
+        XLSX.writeFile(workbook, "business-applications.xlsx");
+    };
 
 
-    const GetCountryData  = async() => {
+
+    const GetCountryData = async () => {
         try {
             const res = await axios.get("https://countriesnow.space/api/v0.1/countries/states");
             setcountryData(res.data.data)
@@ -49,12 +67,21 @@ export default function BusinessApplications() {
         }
     }
 
+    const handleFileChange = (e) => {
+        setSelectedFiles(e.target.files[0]);
+    };
+
     useEffect(() => {
         if (token) {
-            GetBussinerssApplcation()
+            GetBussinerssApplcation(currentPage, tenant)
             GetCountryData()
         }
-    }, [])
+    }, [currentPage, tenant])
+
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        setTenant(params.get('tenant') || '');
+    }, [location.search]);
 
     return (
         <>
@@ -69,7 +96,19 @@ export default function BusinessApplications() {
                             onChange={(e) => setSearchTerm(e.target.value)}
                             className="bg-[#13141450] border backdrop-blur-md py-2 w-1/3 text-white px-4 rounded-md "
                         />
-                        <div className="flex w-full justify-end py-4">
+
+                        <div className="flex w-full justify-end py-4 gap-5">
+                            <button
+                                onClick={() => {
+                                    // eslint-disable-next-line no-undef
+                                    setIsModalOpen(true);
+                                }}
+                                className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center gap-2"
+                            >
+                                <BiPlus className="h-6 w-6" />
+                                Bulk Upload
+                            </button>
+
                             <button
                                 onClick={() => { setmodel(!model); setEditable(null) }}
                                 className="px-4 py-2 mr-5 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center gap-2"
@@ -129,9 +168,95 @@ export default function BusinessApplications() {
                         </div>
                     </div>
 
+                    <div className="flex justify-between items-center mt-6">
+                        <button
+                            className="bg-slate-800 border-slate-700 text-gray-400 hover:bg-slate-700 hover:text-white px-4 py-2 rounded-lg"
+                            disabled={currentPage === 1}
+                            onClick={() => setCurrentPage(currentPage - 1)}
+                        >
+                            Previous
+                        </button>
+                        <span className="text-gray-300">Page {currentPage}</span>
+                        <button
+                            onClick={() => setCurrentPage((prev) => prev + 1)}
+                            disabled={filteredTenants.length !== 10}
+                            className="bg-slate-800 border-slate-700 text-gray-400 hover:bg-slate-700 hover:text-white px-4 py-2 rounded-lg"
+                        >
+                            Next
+                        </button>
+                    </div>
+
 
                 </div>
             </div>
+
+
+            {isModalOpen && (
+                <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-50">
+                    <div className="bg-slate-900 rounded-2xl shadow-2xl p-6 w-full max-w-lg animate-fade-in">
+                        {/* Modal Header */}
+                        <div className="flex justify-between items-center mb-4 border-b border-slate-700 pb-2">
+                            <h2 className="text-xl font-semibold text-white">
+                                📥 Bulk Upload Files
+                            </h2>
+                            <button
+                                onClick={() => setIsModalOpen(false)}
+                                className="text-slate-400 hover:text-white transition"
+                            >
+                                <X className="w-6 h-6" />
+                            </button>
+                        </div>
+
+                        <div className="text-white flex justify-between py-3" >
+
+                            <h3>Get sample excel file </h3>
+                            <span onClick={handleDownload} className="font-normal text-blue-400 cursor-pointer" >Download Sample File</span>
+                        </div>
+
+                        {/* File Input */}
+                        <div className="space-y-3">
+                            <label className="block text-sm text-slate-300">
+                                Select multiple files:
+                            </label>
+                            <input
+                                type="file"
+                                onChange={handleFileChange}
+                                className="block w-full text-sm text-gray-300 bg-slate-800 border border-slate-700 rounded-lg cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 transition"
+                            />
+                        </div>
+
+
+
+                        {/* Modal Footer Buttons */}
+                        <div className="flex justify-end gap-3 mt-6">
+                            <button
+                                onClick={() => setIsModalOpen(false)}
+                                className="px-4 py-2 rounded-md text-sm bg-slate-700 text-gray-300 hover:bg-slate-600 transition"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={() => {
+                                    if (!tenant) {
+                                        return alert("Please select a tenant");
+                                    }
+                                    const formData = new FormData();
+                                    console.log(selectedFiles)
+                                    formData.append("excel", selectedFiles);
+                                    formData.append("creator", tenant);
+                                    CreateBulkBussinerssApplcation(formData);
+                                    setIsModalOpen(false);
+                                }}
+                                className="px-4 py-2 rounded-md text-sm bg-blue-600 text-white hover:bg-blue-700 transition font-medium"
+                            >
+                                Upload
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+
             {model && (
                 <div
                     className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 "
@@ -225,7 +350,7 @@ export default function BusinessApplications() {
                                             onChange={handleChange}
                                         >
                                             <option value={"select Country"} selected >select Country</option>
-                                           {countryData.map((item,index)=><option key={index} value={item.name}  >{item.name}</option>)}
+                                            {countryData.map((item, index) => <option key={index} value={item.name}  >{item.name}</option>)}
                                         </select>
                                         {errors.country && touched.country && <p className="text-red-400" >{errors.country}</p>}
                                     </div>
@@ -243,13 +368,13 @@ export default function BusinessApplications() {
                                             onChange={handleChange}
                                         >
                                             <option value={"select value"} selected >select value</option>
-                                            {values.country && countryData.filter((item)=> item.name === values.country)[0].states.map((item,index)=><option key={index} value={item.name}  >{item.name}</option>) }
+                                            {values.country && countryData.filter((item) => item.name === values.country)[0].states.map((item, index) => <option key={index} value={item.name}  >{item.name}</option>)}
                                         </select>
                                         {errors.state && touched.state && <p className="text-red-400" >{errors.state}</p>}
                                     </div>
                                 </div>
 
-                                 <div className="grid md:grid-cols-2 gap-3" >
+                                <div className="grid md:grid-cols-2 gap-3" >
 
                                     <div className="space-y-2">
                                         <label className="block text-sm font-medium text-slate-300">City</label>
@@ -288,24 +413,24 @@ export default function BusinessApplications() {
                                 </div>
 
                                 <div className="space-y-2">
-                                        <label className="block text-sm font-medium text-slate-300">Modify Criticality</label>
-                                        <select
-                                            type="text"
-                                            placeholder="What is your title?"
-                                            className="w-full bg-slate-800 border border-slate-600 rounded-md px-3 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-slate-500 transition-colors"
-                                            name="modifyCriticality"
-                                            value={values.modifyCriticality}
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                        >
-                                            <option value={"select value"} selected >select value</option>
-                                            <option value={"Critical"}  >Critical</option>
-                                            <option value={"High"} >High</option>
-                                            <option value={"Medium"} >Medium</option>
-                                            <option value={"Low"} >Low</option>
-                                        </select>
-                                        {errors.modifyCriticality && touched.modifyCriticality && <p className="text-red-400" >{errors.modifyCriticality}</p>}
-                                    </div>
+                                    <label className="block text-sm font-medium text-slate-300">Modify Criticality</label>
+                                    <select
+                                        type="text"
+                                        placeholder="What is your title?"
+                                        className="w-full bg-slate-800 border border-slate-600 rounded-md px-3 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-slate-500 transition-colors"
+                                        name="modifyCriticality"
+                                        value={values.modifyCriticality}
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                    >
+                                        <option value={"select value"} selected >select value</option>
+                                        <option value={"Critical"}  >Critical</option>
+                                        <option value={"High"} >High</option>
+                                        <option value={"Medium"} >Medium</option>
+                                        <option value={"Low"} >Low</option>
+                                    </select>
+                                    {errors.modifyCriticality && touched.modifyCriticality && <p className="text-red-400" >{errors.modifyCriticality}</p>}
+                                </div>
 
                             </div>
 
@@ -318,7 +443,7 @@ export default function BusinessApplications() {
                                     Cancel
                                 </button>
                                 <button
-                                type="button"
+                                    type="button"
                                     onClick={handleSubmit}
                                     className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-md py-2 px-4 transition-colors font-medium"
                                 >

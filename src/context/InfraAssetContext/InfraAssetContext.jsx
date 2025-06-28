@@ -11,9 +11,9 @@ const InfraAssetContextProvider = ({ children }) => {
     const [infraAssetdata, setInfraAssetdata] = useState([]);
     const [businessApplication, setBusinessApplication] = useState([]);
 
-    const GetInfraAsset = async () => {
+    const GetInfraAsset = async (page,tenant) => {
         try {
-            const res = await AxiosHandler.get("/infraStructureAsset/get");
+            const res = await AxiosHandler.get(`/infraStructureAsset/get?page=${page}&tenant=${tenant}`);
             setInfraAssetdata(res.data.data)
         } catch (error) {
             console.log(error);
@@ -41,6 +41,8 @@ const InfraAssetContextProvider = ({ children }) => {
         }
     }
 
+     
+
     const DeleteInfraAsset = async (id) => {
         try {
             const res = await AxiosHandler.delete(`/infraStructureAsset/delete/${id}`);
@@ -63,12 +65,22 @@ const InfraAssetContextProvider = ({ children }) => {
 
 
 
-    const GetBussinerssApplcation = async () => {
+    const GetBussinerssApplcation = async (page,tenant) => {
         try {
-            const res = await AxiosHandler.get("/BusinessApplication/get");
+            const res = await AxiosHandler.get(`/BusinessApplication/get?page=${page}&tenant=${tenant}`);
             setBusinessApplication(res.data.data)
         } catch (error) {
             console.log(error);
+        }
+    }
+
+    const CreateBulkBussinerssApplcation = async (data) => {
+        try {
+            const res = await AxiosHandler.post("/BusinessApplication/bulk-create", data);
+            toast.success(res.data.message);
+            GetBussinerssApplcation()
+        } catch (error) {
+            toast.error(error.response.data.message)
         }
     }
 
@@ -117,7 +129,8 @@ const InfraAssetContextProvider = ({ children }) => {
             businessApplication,
             DeleteBussinerssApplcation,
             UpdateBussinerssApplcation,
-            CreateBulkInfraAsset
+            CreateBulkInfraAsset,
+            CreateBulkBussinerssApplcation
         }} >
             {children}
         </InfraAssetContext.Provider>
