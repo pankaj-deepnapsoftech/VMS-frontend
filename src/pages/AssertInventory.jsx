@@ -156,7 +156,7 @@ export default function TenantDashboard() {
                 </tbody>
               </table>
             </div>
-          </div>
+          </div>  
 
           {/* Pagination */}
           {/* <div className="flex justify-between items-center mt-6">
@@ -175,7 +175,7 @@ export default function TenantDashboard() {
             Next
           </Button>
         </div> */}
-        </div>
+        </div> 
       </div>
 
       {isModalOpen && (
