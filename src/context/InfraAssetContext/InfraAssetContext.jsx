@@ -1,6 +1,7 @@
 import { AxiosHandler } from "@/config/AxiosConfig";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useAuthContext } from "..";
 
 
 export const InfraAssetContext = createContext();
@@ -8,10 +9,14 @@ export const InfraAssetContext = createContext();
 // eslint-disable-next-line react/prop-types
 const InfraAssetContextProvider = ({ children }) => {
 
+    const {token} = useAuthContext();
     const [infraAssetdata, setInfraAssetdata] = useState([]);
     const [businessApplication, setBusinessApplication] = useState([]);
 
-    const GetInfraAsset = async (page,tenant) => {
+    const [totalInfraAsset,setTotalInfraAsset] = useState([]);
+    const [totalBusinessApplication, setTotalBusinessApplication] = useState([]);``
+
+    const GetInfraAsset = async (page, tenant) => {
         try {
             const res = await AxiosHandler.get(`/infraStructureAsset/get?page=${page}&tenant=${tenant}`);
             setInfraAssetdata(res.data.data)
@@ -19,7 +24,7 @@ const InfraAssetContextProvider = ({ children }) => {
             console.log(error);
         }
     }
-    
+
 
     const CreateInfraAsset = async (data) => {
         try {
@@ -41,8 +46,6 @@ const InfraAssetContextProvider = ({ children }) => {
         }
     }
 
-     
-
     const DeleteInfraAsset = async (id) => {
         try {
             const res = await AxiosHandler.delete(`/infraStructureAsset/delete/${id}`);
@@ -63,9 +66,7 @@ const InfraAssetContextProvider = ({ children }) => {
         }
     };
 
-
-
-    const GetBussinerssApplcation = async (page,tenant) => {
+    const GetBussinerssApplcation = async (page, tenant) => {
         try {
             const res = await AxiosHandler.get(`/BusinessApplication/get?page=${page}&tenant=${tenant}`);
             setBusinessApplication(res.data.data)
@@ -84,7 +85,6 @@ const InfraAssetContextProvider = ({ children }) => {
         }
     }
 
-
     const CreateBussinerssApplcation = async (data) => {
         try {
             const res = await AxiosHandler.post("/BusinessApplication/create", data);
@@ -96,7 +96,7 @@ const InfraAssetContextProvider = ({ children }) => {
         }
     }
 
-       const DeleteBussinerssApplcation = async (id) => {
+    const DeleteBussinerssApplcation = async (id) => {
         try {
             const res = await AxiosHandler.delete(`/BusinessApplication/delete/${id}`);
             toast.success(res.data.message);
@@ -116,6 +116,31 @@ const InfraAssetContextProvider = ({ children }) => {
         }
     };
 
+    const GetAllInfraAssetData = async() => {
+        try {
+            const res = await AxiosHandler.get(`/infraStructureAsset/get-all`);
+            setTotalInfraAsset(res.data.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+     const GetAllBusinessApplication = async() => {
+        try {
+            const res = await AxiosHandler.get(`/BusinessApplication/get-all`);
+            setTotalBusinessApplication(res.data.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        if(token){
+            GetAllInfraAssetData();
+            GetAllBusinessApplication();
+        }
+
+    }, []);
 
     return (
         <InfraAssetContext.Provider value={{
@@ -130,7 +155,9 @@ const InfraAssetContextProvider = ({ children }) => {
             DeleteBussinerssApplcation,
             UpdateBussinerssApplcation,
             CreateBulkInfraAsset,
-            CreateBulkBussinerssApplcation
+            CreateBulkBussinerssApplcation,
+            totalInfraAsset,
+            totalBusinessApplication
         }} >
             {children}
         </InfraAssetContext.Provider>

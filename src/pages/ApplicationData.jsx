@@ -1,607 +1,86 @@
-import { Suspense, useEffect, useState } from "react";
-import { BiSearch, BiEditAlt, BiPlus, BiSave } from "react-icons/bi";
-import { RiDeleteBinFill } from "react-icons/ri";
-import { MdClose } from "react-icons/md";
-import {
-  useAllEmployeeContext,
-  useAuthContext,
-  useDataContext,
-  useVulnerabililtyDataContext,
-} from "@/context";
-import { Formik, Form, Field } from "formik";
-import * as XLSX from "xlsx";
-import {  BsPersonCheckFill } from "react-icons/bs";
-import toast from "react-hot-toast";
-import { FaExclamationTriangle, FaSms } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Suspense, useEffect } from "react";
+import { useAuthContext, useVulnerabililtyDataContext } from "@/context";
 import Loader from "@/components/Loader/Loader";
-import InputField from "@/components/InputField";
-import { Modal } from "@/components/modal/FileUploadModal";
-import NoDataFound from "@/components/NoDataFound";
-import { excelDateToJSDate } from "@/utils/utils";
+import { Eye, Pencil, Trash2, User } from "lucide-react";
 
 export function ApplicationData() {
-  const [page, setPage] = useState(1);
 
   const {
     loading,
-    UpdateData,
-    AddData,
-    AllVulnerablilty,
-    allVulnerabilityData,
-    DeleteData,
-    AssignTask,
-    BulkAssignTask,
-    CreateNotifications,
-    orgnizationNotification,
-    datafetchCount,
-    setdatafetchCount,
-    TopVulnerablilty,
-    Notifications,
+    GetApplicationData,
+    allApplicationData
   } = useVulnerabililtyDataContext();
 
-  const {TenantAllData} = useDataContext()
-  
+  const { token } = useAuthContext();
 
-  const { authenticate, token } = useAuthContext();
 
-  const { allEmployeesData } = useAllEmployeeContext();
+console.log("vghjfhjl;j,lk ",allApplicationData);
+
 
   useEffect(() => {
-    // authenticate?.role === "Admin"
-       AllVulnerablilty(page)
-      // : OrgAllVulnerablilty(page);
-    if (token && datafetchCount === 0) {
-      TopVulnerablilty();
-      Notifications();
-      setdatafetchCount(1);
+    if (token) {
+      GetApplicationData()
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token, page, authenticate?.role]);
-
-  const [searchTerm, setSearchTerm] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectAll, setSelectAll] = useState(false);
-  const [editMode, setEditMode] = useState(false);
-  const [editData, setEditData] = useState(null);
-  const [index, setIndex] = useState([]);
-
-
-  const vulnerabilitiesItems = {
-    Organization: "",
-    Application_Name: "",
-    Title: "",
-    Vulnerability_Classification: "",
-    Scan_Type: "",
-    Severity: "",
-    Priority: "",
-    Status: "",
-    creator_id:""
-  }
-
-  // Extract headers dynamically for table display
-  const tableHeaders = Object.keys(vulnerabilitiesItems).filter(
-        (key) => key !== "_id" && key !== "__v" && key !== "updatedAt"
-      ) ;
-
-      console.log(tableHeaders);
-
-  // Headers for the Add form (show all fields)
-  const addFormHeaders = tableHeaders.filter(
-    (key) => key !== "createdAt" && key !== "updatedAt"
-  );
-
-  // Headers for the Edit form (restrict to specific fields)
-  const editFormHeaders = [
-    "Vulnerability_Classification",
-    "Scan_Type",
-    "Severity",
-    "Priority",
-    "Status",
-    "Remediate_Upcoming_Time_Line",
-  ];
-
-  const filteredData = allVulnerabilityData.filter((item) =>
-    Object.values(item).some(
-      (value) =>
-        value &&
-        value.toString().toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  );
-
-  const paginatedData = filteredData.slice();
-
-  // Open modal for editing or adding
-  const openModal = (data = null) => {
-    setEditData(data);
-    setEditMode(!!data);
-    setIsModalOpen(true);
-  };
-
-  const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this vulnerability?")) {
-      DeleteData(id);
-    }
-  };
-  const handleChecked = (id) => {
-    let data = index.filter((item) => item === id);
-    if (data.length > 0) {
-      data = index.filter((item) => item !== id);
-      setIndex(data);
-    } else {
-      setIndex((pre) => [...pre, id]);
-    }
-  };
-
-  const [empName, setEmpName] = useState("");
-  const [vulTitle, setVulTitle] = useState("");
-  const [id, setID] = useState("");
-
-  const handleAssignTask = (item) => {
-    setIsOpen(true);
-    setID(item._id);
-    setVulTitle(item.Application_Name);
-  };
-
-
-
-  const handleSelectAll = (e) => {
-    const isChecked = e.target.checked;
-    const dataId = [];
-
-    if (isChecked) {
-      paginatedData.map((data) => {
-        dataId.push(data?._id);
-      });
-      setIndex(dataId);
-    } else {
-      setIndex([]);
-    }
-  };
+  }, [])
 
 
 
 
-
-  let statusList = [
-    "Open",
-    "Closed",
-    "Fix",
-    "Re Open",
-    "On Hold",
-    "Exception",
-    "In Progress",
-  ];
-
-  let severityList = [
-    "Critical ",
-    "High",
-    "Medium",
-    "Low",
-    "Informational",
-    "Other",
-  ];
-
-  const { UploadBulkData } = useDataContext();
-
-  let navigate = useNavigate();
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
       {loading ? (
         <Loader />
       ) : (
-        <div className="p-4 md:p-6 max-w-[100%] mx-auto bg-gradient-custom min-h-screen">
-      
-
-          <div className="flex flex-col gap-3 lg:flex-row lg:justify-between  items-center py-3 ">
-            <div className="relative mt-4 md:mt-0">
-              <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-200 h-5 w-5" />
-              <input
-                type="text"
-                placeholder="Search Vulnerabilities ..."
-               className="pl-10 pr-4 py-2 border border-gray-400 text-white bg-cards rounded-lg w-full md:w-80"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-            
-             
-            
+        <div className="bg-gradient-custom min-h-screen p-4 rounded-lg overflow-x-auto text-white">
+          <div className="flex items-center mb-4">
+            <input
+              type="text"
+              placeholder="Search Vulnerabilities ..."
+              className="w-96 px-4 py-2 rounded-md bg-[#0F172A] text-white border border-[#334155] focus:outline-none"
+            />
           </div>
-
-          {/* 📊 Table */}
-          {paginatedData.length < 1 ? (
-            <NoDataFound />
-          ) : (
-            <div className="overflow-x-auto bg-[#0c1120]">
-              <table className="min-w-full divide-y divide-gray-700 shadow-sm overflow-hidden">
-                <thead className="bg-[#0c1120] text-gray-100">
-                  <tr className="h-10">
-                    {" "}
-                    {/* Reduced row height */}
-                    <th className="px-3 text-left text-xs font-semibold uppercase">
-                      <input
-                        type="checkbox"
-                        checked={selectAll}
-                        onChange={(e) => {
-                          setSelectAll(!selectAll);
-                          handleSelectAll(e);
-                        }}
-                        className="h-3.5 w-3.5 accent-blue-500"
-                      />
-                    </th>
-                    {tableHeaders?.map((header, index) => (
-                      <th
-                        key={index}
-                        className="px-3 text-left text-xs font-semibold uppercase"
-                      >
-                        {header === "createdAt"
-                          ? "Created Date"
-                          : header.replace(/_/g, " ")}
-                      </th>
-                    ))}
-                    <th className="px-3 py-2 text-left text-xs font-semibold uppercase ">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-
-                <tbody className="divide-y divide-gray-200">
-                  {paginatedData?.map((item) => (
-                    <tr
-                      key={item._id}
-                      className="hover:bg-[#323336] transition h-8"
-                    >
-                      {" "}
-                      {/* Reduced row height */}
-                      {/* Checkbox Column */}
-                      <td className="px-3 py-2 text-center">
-                        <input
-                          type="checkbox"
-                          checked={index.includes(item._id)}
-                          onChange={() => handleChecked(item._id)}
-                          className="h-3.5 w-3.5 accent-blue-500"
-                        />
-                      </td>
-                      {/* Table Data */}
-                      {tableHeaders?.map((field, i) => (
-                        <td
-                          key={i}
-                          className="px-3 py-2 text-xs text-gray-200 whitespace-nowrap"
-                        >
-                          {field === "createdAt" || field === "Exception_time"
-                            ? item[field]
-                              ? new Date(item[field]).toLocaleDateString(
-                                  "en-IN",
-                                  {
-                                    day: "2-digit",
-                                    month: "short",
-                                    year: "numeric",
-                                  }
-                                )
-                              : "-"
-                            : field === "Assigned_To"
-                            ? item[field]?.full_name ?? "-"
-                            : field === "Remediated_Date" && item[field]
-                            ? excelDateToJSDate(item.Remediated_Date)
-                            : field === "detailed_Report"
-                            ? item[field] && (
-                                <a
-                                  className="text-blue-600 underline hover:text-blue-800"
-                                  href={item[field]}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                >
-                                  View File
-                                </a>
-                              )
-                            : item[field] || "-"}
-                        </td>
-                      ))}
-                      {/* Action Buttons */}
-                      <td className="px-3 py-2 flex items-center space-x-2">
-                        <button
-                          onClick={() => openModal(item)}
-                          className="text-blue-600 hover:text-blue-800 transition"
-                        >
-                          <BiEditAlt className="h-4 w-4" />
-                        </button>
-                        <button
-                          onClick={() => handleDelete(item._id)}
-                          className="text-red-600 hover:text-red-800 transition"
-                        >
-                          <RiDeleteBinFill className="h-4 w-4" />
-                        </button>
-                        <button
-                          onClick={() => handleAssignTask(item)}
-                          className="text-green-600 hover:text-green-800 transition"
-                        >
-                          <BsPersonCheckFill className="h-4 w-4" />
-                        </button>
-                        <button
-                          onClick={() =>
-                            navigate(`/chat/${item._id}`, { state: { item } })
-                          }
-                          className="text-green-600 hover:text-green-800 transition"
-                        >
-                          <FaSms className="h-4 w-4" />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-
-          {isOpen && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-              <div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
-                {/* Header */}
-                <div className="flex justify-between items-center border-b p-4 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] ">
-                  <h2 className="text-lg font-semibold text-gray-200">
-                    {"Assign Task to Employee"}
-                  </h2>
-                  <button
-                    onClick={() => setIsOpen(false)}
-                    className="text-gray-100 hover:text-gray-200 transition"
-                  >
-                    <MdClose className="h-6 w-6" />
-                  </button>
-                </div>
-                <div className="p-10">
-                  <label
-                    htmlFor="employees"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Select an Employee
-                  </label>
-                  <select
-                    onChange={(e) => setEmpName(e.target.value)}
-                    id="employees"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                  >
-                    <option selected disabled>
-                      Select a Employee
-                    </option>
-                    {allEmployeesData?.map((item, idx) => (
-                      <option key={idx} value={item._id}>
-                        {item.full_name}
-                      </option>
-                    ))}
-                  </select>
-
-                  <div className="col-span-1 md:col-span-2 flex justify-end gap-2 mt-4 border-t pt-4">
-                    <button
-                      onClick={() => setIsOpen(false)}
-                      className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      onClick={() => {
-                        if (!id) {
-                          BulkAssignTask(empName, index);
-                          setIsOpen(false);
-                          CreateNotifications(
-                            empName,
-                            `${index.length} Tasks Assign to you`
-                          );
-                        } else {
-                          AssignTask(empName, id);
-                          setIsOpen(false);
-                          CreateNotifications(
-                            empName,
-                            `${vulTitle} has Assign a New Task To You`
-                          );
-                        }
-                      }}
-                      className="px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white rounded-md hover:bg-blue-700 transition"
-                    >
-                      Save
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* 📝 Modal Form */}
-          {isModalOpen && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-10">
-              <div className="bg-[#101831] rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
-                {/* Header */}
-                <div className="flex justify-between items-center border-b p-4 bg-gradient-custom">
-                  <h2 className="text-lg font-semibold text-gray-200">
-                    {editMode ? "Edit Vulnerability" : "Add Vulnerability"}
-                  </h2>
-                  <button
-                    onClick={() => setIsModalOpen(false)}
-                    className="text-gray-100 hover:text-gray-500 transition"
-                  >
-                    <MdClose className="h-6 w-6" />
-                  </button>
-                </div>
-
-                {/* Form */}
-                <Formik
-                  initialValues={editData || vulnerabilitiesItems}
-                  onSubmit={(values) => {
-                    //console.log(values, "hero in formik")
-                    editMode
-                      ? UpdateData(values, editData._id)
-                      : AddData(values);
-
-                    if (values.Status === "Exception") {
-                      orgnizationNotification(
-                        values.Organization,
-                        `${values.Title} is Move to Exception by ${authenticate.full_name}`
-                      );
-                    }
-                    setIsModalOpen(false);
-                  }}
-                >
-                  {(
-                    { setFieldValue, values } // ✅ Access setFieldValue here
-                  ) => (
-                    <Form className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
-                      {(editMode ? editFormHeaders : addFormHeaders).map(
-                        (field) =>
-
-                        
-                          field !== "creator" &&
-                          field !== "Exception_time" && (
-                            <div key={field} className="flex flex-col">
-                              <label className="text-sm font-medium text-white">
-                                {field.replace(/_/g, " ")}
-                              </label>
-
-                              {field === "Assigned_To" ? (
-                                <select
-                                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
-                                  name="Assigned_To"
-                                  onChange={(e) =>
-                                    setFieldValue("Assigned_To", e.target.value)
-                                  }
-                                  defaultValue=""
-                                >
-                                  <option disabled value="">
-                                    --- Select a Tester ---
-                                  </option>
-                                  {allEmployeesData?.map((item, idx) => (
-                                    <option key={idx} value={item._id}>
-                                      {item.full_name}
-                                    </option>
-                                  ))}
-                                </select>
-                              ) :field === "creator_id" ? 
-                              (<select
-                                  className="w-full p-2 bg-input text-white border rounded-md focus:ring-2 focus:ring-blue-500 transition"
-                                  name="creator_id"
-                                  onChange={(e) =>
-                                    setFieldValue("creator_id", e.target.value)
-                                  }
-                                  defaultValue=""
-                                >
-                                  <option disabled value="">
-                                    --- Select a Tenant ---
-                                  </option>
-                                  {TenantAllData?.map((item, idx) => (
-                                    <option key={idx} value={item.value}>
-                                      {item.label}
-                                    </option>
-                                  ))}
-                                </select>)
-                               : field === "Severity" ? (
-                                <select
-                                  className="w-full p-2 bg-input text-gray-300 border rounded-md focus:ring-2 focus:ring-blue-500 transition"
-                                  name="Severity"
-                                  onChange={(e) =>
-                                    setFieldValue("Severity", e.target.value)
-                                  }
-                                  defaultValue=""
-                                >
-                                  <option disabled value="">
-                                    --- Select a Severity ---
-                                  </option>
-                                  {severityList?.map((item, idx) => (
-                                    <option key={idx} value={item}>
-                                      {item}
-                                    </option>
-                                  ))}
-                                </select>
-                              ) : field === "Status" ? (
-                                <select
-                                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 bg-input text-gray-300 transition"
-                                  name="Status"
-                                  onChange={(e) =>
-                                    setFieldValue("Status", e.target.value)
-                                  }
-                                  defaultValue=""
-                                >
-                                  <option disabled value="">
-                                    --- Select a Status ---
-                                  </option>
-                                  {statusList.map((item, idx) => (
-                                    <option key={idx} value={item}>
-                                      {item}
-                                    </option>
-                                  ))}
-                                </select>
-                              ) : field === "Remediate_Upcoming_Time_Line" ? (
-                                <InputField
-                                  type="date"
-                                  onChange={(e) =>
-                                    setFieldValue(
-                                      "Remediate_Upcoming_Time_Line",
-                                      e.target.value
-                                    )
-                                  }
-                                />
-                              ) : (
-                                <Field
-                                  name={field}
-                                  className="w-full p-2 border text-white rounded-md focus:ring-2 focus:ring-blue-500 transition bg-input"
-                                />
-                              )}
-                            </div>
-                          )
-                      )}
-
-                      {values.Status === "Exception" && (
-                        <InputField
-                          label="Exception Date"
-                          type="date"
-                          onChange={(e) =>
-                            setFieldValue("Expection_time", e.target.value)
-                          }
-                        />
-                      )}
-
-                      {/* Buttons */}
-                      <div className="col-span-1 md:col-span-2 flex justify-end gap-2 mt-4 border-t pt-4">
-                        <button
-                          type="button"
-                          onClick={() => setIsModalOpen(false)}
-                          className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition"
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          type="submit"
-                          className="px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-blue-900 transition"
-                        >
-                          Save
-                        </button>
-                      </div>
-                    </Form>
-                  )}
-                </Formik>
-              </div>
-            </div>
-          )}
-
-          <div className="flex justify-between items-center my-16">
-            <button
-              className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white border rounded-md ${
-                page === 1 ? "opacity-50 cursor-not-allowed" : ""
-              }`}
-              disabled={page === 1}
-              onClick={() => setPage(page - 1)}
-            >
-              Previous
-            </button>
-            <span className="text-white"> Page {page}</span>
-            <button
-              className={`px-4 py-2 border rounded-md  text-white bg-gradient-to-tr from-[#1f1d1d] to-[#666666] `}
-              disabled={allVulnerabilityData?.length < 10}
-              onClick={() => setPage(page + 1)}
-            >
-              Next
-            </button>
-          </div>
+          <table className="w-full text-sm text-left">
+            <thead className="bg-[#1E293B] text-white uppercase text-xs">
+              <tr>
+                <th className="px-4 py-3">
+                  <input type="checkbox" />
+                </th>
+                <th className="px-4 py-3">Organization</th>
+                <th className="px-4 py-3">Application Name</th>
+                <th className="px-4 py-3">Title</th>
+                <th className="px-4 py-3">Vulnerability Classification</th>
+                <th className="px-4 py-3">Scan Type</th>
+                <th className="px-4 py-3">Severity</th>
+                <th className="px-4 py-3">Priority</th>
+                <th className="px-4 py-3">Status</th>
+                <th className="px-4 py-3">Creator ID</th>
+                <th className="px-4 py-3">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="bg-[#0F172A] border-t border-slate-700">
+             { allApplicationData.map((item,index)=><tr key={index} className="border-b border-slate-700 hover:bg-[#1E293B] transition">
+                <td className="px-4 py-3">
+                  <input type="checkbox" />
+                </td>
+                <td className="px-4 py-3">{item.creator?.company_name || '-'}</td>
+                <td className="px-4 py-3">{item.BusinessApplication?.name || '-'}</td>
+                <td className="px-4 py-3">{item.Title}</td>
+                <td className="px-4 py-3">{item.threat_type}</td>
+                <td className="px-4 py-3">{item.scan_type}</td>
+                <td className="px-4 py-3">{item.Severity}</td>
+                <td className="px-4 py-3">-</td>
+                <td className="px-4 py-3">-</td>
+                <td className="px-4 py-3">{item.creator?._id || '-'}</td>
+                <td className="px-4 py-3 flex items-center space-x-3">
+                  <Pencil className="w-4 h-4 text-blue-400 cursor-pointer" />
+                  <Trash2 className="w-4 h-4 text-red-500 cursor-pointer" />
+                  <User className="w-4 h-4 text-green-500 cursor-pointer" />
+                  <Eye className="w-4 h-4 text-lime-400 cursor-pointer" />
+                </td>
+              </tr>)}
+            </tbody>
+          </table>
         </div>
       )}
     </Suspense>

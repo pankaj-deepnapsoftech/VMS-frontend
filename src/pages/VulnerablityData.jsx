@@ -27,8 +27,8 @@ export function VulnerabilityData() {
     loading,
     UpdateData,
     AddData,
-    AllVulnerablilty,
-    allVulnerabilityData,
+    GetApplicationData,
+    allApplicationData,
     topVulnerabliltyData,
     DeleteData,
     AssignTask,
@@ -53,7 +53,7 @@ export function VulnerabilityData() {
 
   useEffect(() => {
     // authenticate?.role === "Admin"
-       AllVulnerablilty(page)
+       GetApplicationData(page)
       // : OrgAllVulnerablilty(page);
     if (token && datafetchCount === 0) {
       TopVulnerablilty();
@@ -107,7 +107,7 @@ export function VulnerabilityData() {
     "Remediate_Upcoming_Time_Line",
   ];
 
-  const filteredData = allVulnerabilityData.filter((item) =>
+  const filteredData = allApplicationData.filter((item) =>
     Object.values(item).some(
       (value) =>
         value &&
@@ -341,7 +341,7 @@ export function VulnerabilityData() {
                 <button
                   className="p-1 bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white text-[10px] rounded-lg hover:bg-blue-700 transition"
                   onClick={() => {
-                    AllVulnerablilty();
+                    GetApplicationData();
                     setSelected("");
                   }}
                 >
@@ -736,7 +736,7 @@ export function VulnerabilityData() {
             <span className="text-white"> Page {page}</span>
             <button
               className={`px-4 py-2 border rounded-md  text-white bg-gradient-to-tr from-[#1f1d1d] to-[#666666] `}
-              disabled={allVulnerabilityData?.length < 10}
+              disabled={allApplicationData?.length < 10}
               onClick={() => setPage(page + 1)}
             >
               Next
