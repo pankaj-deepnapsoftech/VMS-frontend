@@ -8,6 +8,8 @@ export function InfrastructureData() {
   const { token } = useAuthContext();
 
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
     if (token) {
@@ -15,7 +17,7 @@ export function InfrastructureData() {
     }
   }, [token]);
 
-  // Filter logic: Search across all fields
+  // Filter data by search
   const filteredData = allInfrastructureData?.filter((item) => {
     const valuesToSearch = [
       item.scan_type,
@@ -42,6 +44,22 @@ export function InfrastructureData() {
       );
   });
 
+  // Pagination Logic
+  const totalItems = filteredData?.length || 0;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentItems = filteredData?.slice(startIndex, startIndex + itemsPerPage);
+
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
       {loading ? (
@@ -59,7 +77,7 @@ export function InfrastructureData() {
             />
           </div>
 
-          {/* Horizontal Scrollable Table */}
+          {/* Table */}
           <div className="overflow-x-auto custom-scrollbar rounded-lg">
             <table className="min-w-[1400px] text-sm text-left">
               <thead className="bg-[#1E293B] text-white uppercase text-xs">
@@ -85,8 +103,8 @@ export function InfrastructureData() {
               </thead>
 
               <tbody className="bg-[#0F172A] border-t border-slate-700">
-                {Array.isArray(filteredData) && filteredData.length > 0 ? (
-                  filteredData.map((item, index) => (
+                {currentItems && currentItems.length > 0 ? (
+                  currentItems.map((item, index) => (
                     <tr key={index} className="border-b border-slate-700 hover:bg-[#1E293B] transition">
                       <td className="px-4 py-3"><input type="checkbox" /></td>
                       <td className="px-4 py-3">{item.scan_type || "-"}</td>
@@ -115,13 +133,48 @@ export function InfrastructureData() {
                 ) : (
                   <tr>
                     <td colSpan="17" className="text-center py-4 text-gray-400">
-                      No data found matching search.
+                      No data found.
                     </td>
                   </tr>
                 )}
               </tbody>
             </table>
           </div>
+
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <div className="flex justify-between items-center mt-4">
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="px-4 py-2 bg-gray-700 rounded text-white disabled:opacity-50"
+              >
+                Previous
+              </button>
+
+              <div className="space-x-2">
+                {Array.from({ length: totalPages }, (_, idx) => idx + 1).map((page) => (
+                  <button
+                    key={page}
+                    onClick={() => handlePageChange(page)}
+                    className={`px-3 py-1 rounded ${
+                      currentPage === page ? "bg-blue-500 text-white" : "bg-gray-700 text-white"
+                    }`}
+                  >
+                    {page}
+                  </button>
+                ))}
+              </div>
+
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 bg-gray-700 rounded text-white disabled:opacity-50"
+              >
+                Next
+              </button>
+            </div>
+          )}
         </div>
       )}
     </Suspense>
