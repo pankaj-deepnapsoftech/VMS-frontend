@@ -4,7 +4,8 @@ import Loader from "@/components/Loader/Loader";
 import { Eye, Pencil, Trash2, User } from "lucide-react";
 
 export function InfrastructureData() {
-  const { loading, GetInfrastructureData, allInfrastructureData,DeleteData } = useVulnerabililtyDataContext();
+  const { loading, GetInfrastructureData, allInfrastructureData, DeleteData } =
+    useVulnerabililtyDataContext();
   const { token } = useAuthContext();
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -15,7 +16,7 @@ export function InfrastructureData() {
     if (token) {
       GetInfrastructureData(currentPage);
     }
-  }, [token,currentPage]);
+  }, [token, currentPage]);
 
   // Filter data by search
   const filteredData = allInfrastructureData?.filter((item) => {
@@ -46,9 +47,10 @@ export function InfrastructureData() {
 
   // Pagination Logic
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentItems = filteredData?.slice(startIndex, startIndex + itemsPerPage);
-
-
+  const currentItems = filteredData?.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
 
   useEffect(() => {
     setCurrentPage(1);
@@ -76,7 +78,9 @@ export function InfrastructureData() {
             <table className="min-w-[1400px] text-sm text-left">
               <thead className="bg-[#1E293B] text-white uppercase text-xs">
                 <tr>
-                  <th className="px-4 py-3"><input type="checkbox" /></th>
+                  <th className="px-4 py-3">
+                    <input type="checkbox" />
+                  </th>
                   <th className="px-4 py-3">Scan Type</th>
                   <th className="px-4 py-3">Asset Type</th>
                   <th className="px-4 py-3">Threat Type</th>
@@ -99,26 +103,53 @@ export function InfrastructureData() {
               <tbody className="bg-[#0F172A] border-t border-slate-700">
                 {currentItems && currentItems.length > 0 ? (
                   currentItems.map((item, index) => (
-                    <tr key={index} className="border-b border-slate-700 hover:bg-[#1E293B] transition">
-                      <td className="px-4 py-3"><input type="checkbox" /></td>
+                    <tr
+                      key={index}
+                      className="border-b border-slate-700 hover:bg-[#1E293B] transition"
+                    >
+                      <td className="px-4 py-3">
+                        <input type="checkbox" />
+                      </td>
                       <td className="px-4 py-3">{item.scan_type || "-"}</td>
                       <td className="px-4 py-3">{item.asset_type || "-"}</td>
                       <td className="px-4 py-3">{item.threat_type || "-"}</td>
                       <td className="px-4 py-3">{item.CVE || "-"}</td>
-                      <td className="px-4 py-3">{item.Exploit_Details?.length || 0}</td>
-                      <td className="px-4 py-3">{item.exploit_complexity || "-"}</td>
+                      <td className="px-4 py-3">
+                        {item.Exploit_Details?.length || 0}
+                      </td>
+                      <td className="px-4 py-3">
+                        {item.exploit_complexity || "-"}
+                      </td>
                       <td className="px-4 py-3">{item.Location || "-"}</td>
                       <td className="px-4 py-3">{item.Title || "-"}</td>
                       <td className="px-4 py-3">{item.Description || "-"}</td>
                       <td className="px-4 py-3">{item.Severity || "-"}</td>
                       <td className="px-4 py-3">{item.CVSS || "-"}</td>
                       <td className="px-4 py-3">{item.Reference_URL || "-"}</td>
-                      <td className="px-4 py-3">{item.BusinessApplication?.name || "-"}</td>
-                      <td className="px-4 py-3">{item.Proof_of_Concept?.length || 0}</td>
-                      <td className="px-4 py-3">{item.creator?.company_name || "-"}</td>
+                      <td className="px-4 py-3">
+                        {item.BusinessApplication?.name || "-"}
+                      </td>
+                      <td className="px-4 py-3">
+                        {item.Proof_of_Concept?.length || 0}
+                      </td>
+                      <td className="px-4 py-3">
+                        {item.creator?.company_name || "-"}
+                      </td>
                       <td className="px-4 py-3 flex items-center mt-3 space-x-3">
                         <Pencil className="w-4 h-4 text-blue-400 cursor-pointer" />
-                        <Trash2 onClick={()=>DeleteData(item._id)} className="w-4 h-4 text-red-500 cursor-pointer" />
+
+                        <Trash2
+                          onClick={() => {
+                            const confirmDelete = window.confirm(
+                              "Are you sure you want to delete this record?"
+                            );
+                            if (confirmDelete) {
+                              DeleteData(item._id);
+                            }
+                          }}
+                          className="w-4 h-4 text-red-500 cursor-pointer"
+                        />
+
                         <User className="w-4 h-4 text-green-500 cursor-pointer" />
                         <Eye className="w-4 h-4 text-lime-400 cursor-pointer" />
                       </td>
@@ -136,7 +167,7 @@ export function InfrastructureData() {
           </div>
 
           {/* Pagination Controls */}
-           <div className="flex justify-between items-center mt-6">
+          <div className="flex justify-between items-center mt-6">
             <button
               className="bg-slate-800 border-slate-700 text-gray-400 hover:bg-slate-700 hover:text-white px-4 py-2 rounded-lg"
               disabled={currentPage === 1}

@@ -4,7 +4,7 @@ import Loader from "@/components/Loader/Loader";
 import { Eye, Pencil, Trash2, User } from "lucide-react";
 
 export function ApplicationData() {
-  const { loading, GetApplicationData, allApplicationData } =
+  const { loading, GetApplicationData, allApplicationData, DeleteData } =
     useVulnerabililtyDataContext();
   const { token } = useAuthContext();
 
@@ -38,7 +38,7 @@ export function ApplicationData() {
     ];
 
     return valuesToSearch
-      .filter(Boolean) // Skip undefined/null fields
+      .filter(Boolean)
       .some((field) =>
         field.toString().toLowerCase().includes(searchTerm.toLowerCase())
       );
@@ -123,7 +123,19 @@ export function ApplicationData() {
                       </td>
                       <td className="px-4 py-3 flex items-center mt-3 space-x-3">
                         <Pencil className="w-4 h-4 text-blue-400 cursor-pointer" />
-                        <Trash2 className="w-4 h-4 text-red-500 cursor-pointer" />
+
+                        <Trash2
+                          onClick={() => {
+                            const confirmDelete = window.confirm(
+                              "Are you sure you want to delete this record?"
+                            );
+                            if (confirmDelete) {
+                              DeleteData(item._id);
+                            }
+                          }}
+                          className="w-4 h-4 text-red-500 cursor-pointer"
+                        />
+
                         <User className="w-4 h-4 text-green-500 cursor-pointer" />
                         <Eye className="w-4 h-4 text-lime-400 cursor-pointer" />
                       </td>
