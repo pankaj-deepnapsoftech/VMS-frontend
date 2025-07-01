@@ -13,9 +13,9 @@ export function InfrastructureData() {
 
   useEffect(() => {
     if (token) {
-      GetInfrastructureData();
+      GetInfrastructureData(currentPage);
     }
-  }, [token]);
+  }, [token,currentPage]);
 
   // Filter data by search
   const filteredData = allInfrastructureData?.filter((item) => {
@@ -45,16 +45,10 @@ export function InfrastructureData() {
   });
 
   // Pagination Logic
-  const totalItems = filteredData?.length || 0;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentItems = filteredData?.slice(startIndex, startIndex + itemsPerPage);
 
-  const handlePageChange = (page) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-    }
-  };
+
 
   useEffect(() => {
     setCurrentPage(1);
@@ -142,39 +136,23 @@ export function InfrastructureData() {
           </div>
 
           {/* Pagination Controls */}
-          {totalPages > 1 && (
-            <div className="flex justify-between items-center mt-4">
-              <button
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="px-4 py-2 bg-gray-700 rounded text-white disabled:opacity-50"
-              >
-                Previous
-              </button>
-
-              <div className="space-x-2">
-                {Array.from({ length: totalPages }, (_, idx) => idx + 1).map((page) => (
-                  <button
-                    key={page}
-                    onClick={() => handlePageChange(page)}
-                    className={`px-3 py-1 rounded ${
-                      currentPage === page ? "bg-blue-500 text-white" : "bg-gray-700 text-white"
-                    }`}
-                  >
-                    {page}
-                  </button>
-                ))}
-              </div>
-
-              <button
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className="px-4 py-2 bg-gray-700 rounded text-white disabled:opacity-50"
-              >
-                Next
-              </button>
-            </div>
-          )}
+           <div className="flex justify-between items-center mt-6">
+            <button
+              className="bg-slate-800 border-slate-700 text-gray-400 hover:bg-slate-700 hover:text-white px-4 py-2 rounded-lg"
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage(currentPage - 1)}
+            >
+              Previous
+            </button>
+            <span className="text-gray-300">Page {currentPage}</span>
+            <button
+              onClick={() => setCurrentPage((prev) => prev + 1)}
+              disabled={currentItems.length !== 10}
+              className="bg-slate-800 border-slate-700 text-gray-400 hover:bg-slate-700 hover:text-white px-4 py-2 rounded-lg"
+            >
+              Next
+            </button>
+          </div>
         </div>
       )}
     </Suspense>
