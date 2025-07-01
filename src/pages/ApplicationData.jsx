@@ -45,7 +45,7 @@ export function ApplicationData() {
                   <th className="px-4 py-3">Severity</th>
                   <th className="px-4 py-3">CVSS</th>
                   <th className="px-4 py-3">Reference URL</th>
-                  <th className="px-4 py-3">Business Application</th>
+                  <th className="px-4 py-3">Asset</th>
                   <th className="px-4 py-3">Proof of Concept</th>
                   <th className="px-4 py-3">Tenant</th>
                   <th className="px-4 py-3">Actions</th>
