@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useAuthContext, useVulnerabililtyDataContext } from "@/context";
 import Loader from "@/components/Loader/Loader";
 import { Eye, Pencil, Trash2, User } from "lucide-react";
@@ -7,11 +7,40 @@ export function ApplicationData() {
   const { loading, GetApplicationData, allApplicationData } = useVulnerabililtyDataContext();
   const { token } = useAuthContext();
 
+  const [searchTerm, setSearchTerm] = useState("");
+
   useEffect(() => {
     if (token) {
       GetApplicationData();
     }
   }, [token]);
+
+  // Function to filter rows based on searchTerm across all fields
+  const filteredData = allApplicationData?.filter((item) => {
+    const valuesToSearch = [
+      item.scan_type,
+      item.asset_type,
+      item.threat_type,
+      item.CVE,
+      item.Exploit_Details?.toString(),
+      item.exploit_complexity,
+      item.Location,
+      item.Title,
+      item.Description,
+      item.Severity,
+      item.CVSS?.toString(),
+      item.Reference_URL,
+      item.BusinessApplication?.name,
+      item.Proof_of_Concept?.toString(),
+      item.creator?.company_name,
+    ];
+
+    return valuesToSearch
+      .filter(Boolean) // Skip undefined/null fields
+      .some((field) =>
+        field.toString().toLowerCase().includes(searchTerm.toLowerCase())
+      );
+  });
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -22,12 +51,14 @@ export function ApplicationData() {
           <div className="flex items-center mb-4">
             <input
               type="text"
-              placeholder="Search Vulnerabilities ..."
+              placeholder="Search across all fields..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               className="w-96 px-4 py-2 rounded-md bg-[#0F172A] text-white border border-[#334155] focus:outline-none"
             />
           </div>
 
-          {/* Horizontal Scroll Container */}
+          {/* Horizontal Scrollable Table */}
           <div className="overflow-x-auto custom-scrollbar rounded-lg">
             <table className="min-w-[1400px] text-sm text-left">
               <thead className="bg-[#1E293B] text-white uppercase text-xs">
@@ -51,34 +82,41 @@ export function ApplicationData() {
                   <th className="px-4 py-3">Actions</th>
                 </tr>
               </thead>
-
               <tbody className="bg-[#0F172A] border-t border-slate-700">
-                {Array.isArray(allApplicationData) && allApplicationData.map((item, index) => (
-                  <tr key={index} className="border-b border-slate-700 hover:bg-[#1E293B] transition">
-                    <td className="px-4 py-3"><input type="checkbox" /></td>
-                    <td className="px-4 py-3">{item.scan_type || "-"}</td>
-                    <td className="px-4 py-3">{item.asset_type || "-"}</td>
-                    <td className="px-4 py-3">{item.threat_type || "-"}</td>
-                    <td className="px-4 py-3">{item.CVE || "-"}</td>
-                    <td className="px-4 py-3">{item.Exploit_Details?.length || 0}</td>
-                    <td className="px-4 py-3">{item.exploit_complexity || "-"}</td>
-                    <td className="px-4 py-3">{item.Location || "-"}</td>
-                    <td className="px-4 py-3">{item.Title || "-"}</td>
-                    <td className="px-4 py-3">{item.Description || "-"}</td>
-                    <td className="px-4 py-3">{item.Severity || "-"}</td>
-                    <td className="px-4 py-3">{item.CVSS || "-"}</td>
-                    <td className="px-4 py-3">{item.Reference_URL || "-"}</td>
-                    <td className="px-4 py-3">{item.BusinessApplication?.name || "-"}</td>
-                    <td className="px-4 py-3">{item.Proof_of_Concept?.length || 0}</td>
-                    <td className="px-4 py-3">{item.creator?.company_name || "-"}</td>
-                    <td className="px-4 py-3 flex items-center mt-3 space-x-3">
-                      <Pencil className="w-4 h-4 text-blue-400 cursor-pointer" />
-                      <Trash2 className="w-4 h-4 text-red-500 cursor-pointer" />
-                      <User className="w-4 h-4 text-green-500 cursor-pointer" />
-                      <Eye className="w-4 h-4 text-lime-400 cursor-pointer" />
+                {Array.isArray(filteredData) && filteredData.length > 0 ? (
+                  filteredData.map((item, index) => (
+                    <tr key={index} className="border-b border-slate-700 hover:bg-[#1E293B] transition">
+                      <td className="px-4 py-3"><input type="checkbox" /></td>
+                      <td className="px-4 py-3">{item.scan_type || "-"}</td>
+                      <td className="px-4 py-3">{item.asset_type || "-"}</td>
+                      <td className="px-4 py-3">{item.threat_type || "-"}</td>
+                      <td className="px-4 py-3">{item.CVE || "-"}</td>
+                      <td className="px-4 py-3">{item.Exploit_Details?.length || 0}</td>
+                      <td className="px-4 py-3">{item.exploit_complexity || "-"}</td>
+                      <td className="px-4 py-3">{item.Location || "-"}</td>
+                      <td className="px-4 py-3">{item.Title || "-"}</td>
+                      <td className="px-4 py-3">{item.Description || "-"}</td>
+                      <td className="px-4 py-3">{item.Severity || "-"}</td>
+                      <td className="px-4 py-3">{item.CVSS || "-"}</td>
+                      <td className="px-4 py-3">{item.Reference_URL || "-"}</td>
+                      <td className="px-4 py-3">{item.BusinessApplication?.name || "-"}</td>
+                      <td className="px-4 py-3">{item.Proof_of_Concept?.length || 0}</td>
+                      <td className="px-4 py-3">{item.creator?.company_name || "-"}</td>
+                      <td className="px-4 py-3 flex items-center mt-3 space-x-3">
+                        <Pencil className="w-4 h-4 text-blue-400 cursor-pointer" />
+                        <Trash2 className="w-4 h-4 text-red-500 cursor-pointer" />
+                        <User className="w-4 h-4 text-green-500 cursor-pointer" />
+                        <Eye className="w-4 h-4 text-lime-400 cursor-pointer" />
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="17" className="text-center py-4 text-gray-400">
+                      No data found matching search.
                     </td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
           </div>
