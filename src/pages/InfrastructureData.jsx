@@ -4,7 +4,7 @@ import Loader from "@/components/Loader/Loader";
 import { Eye, Pencil, Trash2, User } from "lucide-react";
 
 export function InfrastructureData() {
-  const { loading, GetInfrastructureData, allInfrastructureData } = useVulnerabililtyDataContext();
+  const { loading, GetInfrastructureData, allInfrastructureData,DeleteData } = useVulnerabililtyDataContext();
   const { token } = useAuthContext();
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -118,7 +118,7 @@ export function InfrastructureData() {
                       <td className="px-4 py-3">{item.creator?.company_name || "-"}</td>
                       <td className="px-4 py-3 flex items-center mt-3 space-x-3">
                         <Pencil className="w-4 h-4 text-blue-400 cursor-pointer" />
-                        <Trash2 className="w-4 h-4 text-red-500 cursor-pointer" />
+                        <Trash2 onClick={()=>DeleteData(item._id)} className="w-4 h-4 text-red-500 cursor-pointer" />
                         <User className="w-4 h-4 text-green-500 cursor-pointer" />
                         <Eye className="w-4 h-4 text-lime-400 cursor-pointer" />
                       </td>
