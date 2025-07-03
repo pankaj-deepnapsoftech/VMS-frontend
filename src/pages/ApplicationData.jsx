@@ -2,11 +2,13 @@ import { Suspense, useEffect, useState } from "react";
 import { useAuthContext, useVulnerabililtyDataContext } from "@/context";
 import Loader from "@/components/Loader/Loader";
 import { Eye, Pencil, Trash2, User } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export function ApplicationData() {
   const { loading, GetApplicationData, allApplicationData, DeleteData } =
     useVulnerabililtyDataContext();
   const { token } = useAuthContext();
+  const navigate = useNavigate();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -122,7 +124,7 @@ export function ApplicationData() {
                         {item.creator?.company_name || "-"}
                       </td>
                       <td className="px-4 py-3 flex items-center mt-3 space-x-3">
-                        <Pencil className="w-4 h-4 text-blue-400 cursor-pointer" />
+                        <Pencil onClick={()=>navigate("/add-vulnerability-data",{state:{data:item}})} className="w-4 h-4 text-blue-400 cursor-pointer" />
 
                         <Trash2
                           onClick={() => {
