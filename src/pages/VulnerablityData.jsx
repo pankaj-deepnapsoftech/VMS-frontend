@@ -220,7 +220,7 @@ export function VulnerabilityData() {
         <div className="p-4 md:p-6 max-w-[100%] mx-auto bg-gradient-custom min-h-screen">
           {/* top 5 Vulnerability */}
 
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto custom-scrollbar">
               <table className="min-w-full divide-y divide-gray-700 shadow-md">
                 <thead className="h-8">
                   <tr className="bg-[#0c1120] text-gray-100 uppercase text-sm ">
@@ -329,7 +329,7 @@ export function VulnerabilityData() {
                 >
                   <option value="" selected disabled>
                     {" "}
-                    -- Select Organization --{" "}
+                    -- Select Organization --{" "}   
                   </option>
 
                   {getOrganizationData?.map((itm, idx) => (
@@ -355,7 +355,7 @@ export function VulnerabilityData() {
           {paginatedData.length < 1 ? (
             <NoDataFound />
           ) : (
-            <div className="overflow-x-auto bg-[#0c1120]">
+            <div className="overflow-x-auto custom-scrollbar bg-[#0c1120]">
               <table className="min-w-full divide-y divide-gray-700 shadow-sm overflow-hidden">
                 <thead className="bg-[#0c1120] text-gray-100">
                   <tr className="h-10">
@@ -584,7 +584,7 @@ export function VulnerabilityData() {
                   }}
                 >
                   {(
-                    { setFieldValue, values } // ✅ Access setFieldValue here
+                    { setFieldValue, values } 
                   ) => (
                     <Form className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
                       {(editMode ? editFormHeaders : addFormHeaders).map(
@@ -612,7 +612,7 @@ export function VulnerabilityData() {
                                   </option>
                                   {allEmployeesData?.map((item, idx) => (
                                     <option key={idx} value={item._id}>
-                                      {item.full_name}
+                                      {item.full_name} 
                                     </option>
                                   ))}
                                 </select>
@@ -627,7 +627,7 @@ export function VulnerabilityData() {
                                 >
                                   <option disabled value="">
                                     --- Select a Tenant ---
-                                  </option>
+                                  </option>   
                                   {TenantAllData?.map((item, idx) => (
                                     <option key={idx} value={item.value}>
                                       {item.label}
