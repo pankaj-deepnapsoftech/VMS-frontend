@@ -43,7 +43,7 @@ export function ApplicationData() {
         field.toString().toLowerCase().includes(searchTerm.toLowerCase())
       );
   });
-
+  
   return (
     <Suspense fallback={<div>Loading...</div>}>
       {loading ? (
@@ -84,9 +84,9 @@ export function ApplicationData() {
                   <th className="px-4 py-3">Proof of Concept</th>
                   <th className="px-4 py-3">Tenant</th>
                   <th className="px-4 py-3">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="bg-[#0F172A] border-t border-slate-700">
+                </tr>                                                
+              </thead>  
+              <tbody className="bg-[#0F172A] border-t border-slate-700">  
                 {Array.isArray(filteredData) && filteredData.length > 0 ? (
                   filteredData.map((item, index) => (
                     <tr
@@ -117,12 +117,12 @@ export function ApplicationData() {
                       </td>
                       <td className="px-4 py-3">
                         {item.Proof_of_Concept?.length || 0}
-                      </td>
+                      </td>  
                       <td className="px-4 py-3">
                         {item.creator?.company_name || "-"}
                       </td>
                       <td className="px-4 py-3 flex items-center mt-3 space-x-3">
-                        <Pencil className="w-4 h-4 text-blue-400 cursor-pointer" />
+                        <Pencil className="w-4 h-4 text-blue-400               cursor-pointer" />
 
                         <Trash2
                           onClick={() => {
