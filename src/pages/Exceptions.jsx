@@ -33,7 +33,7 @@ function Exceptions() {
     page,
     setPage,
     ExpectionData,
-    ExpectionVerifyData,
+    ExpectionPendingData,
     expectionDataFiftyDays,
     riskRating,
     deferredVulnerableItems,
@@ -48,7 +48,7 @@ function Exceptions() {
     if (token) {
       authenticate?.role === "ClientCISO"
         ? ExpectionData()
-        : ExpectionVerifyData();
+        : ExpectionPendingData();
       ClientExcectionDataFiftyDays();
       ClientRiskRating();
       ClientDeferredVulnerableItems();
@@ -60,7 +60,7 @@ function Exceptions() {
   const rowsPerPage = 10;
 
   const tableHeaders =
-    expectionData?.length > 0
+    []?.length > 0
       ? Object.keys(expectionData[0])?.filter(
           (key) =>
             key !== "_id" &&
@@ -88,7 +88,7 @@ function Exceptions() {
       DeleteData(id);
       authenticate?.role === "ClientCISO"
         ? ExpectionData()
-        : ExpectionVerifyData();
+        : ExpectionPendingData();
     }
   };
 

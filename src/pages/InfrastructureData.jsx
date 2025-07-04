@@ -89,6 +89,7 @@ export function InfrastructureData() {
                   <th className="px-4 py-3">Description</th>
                   <th className="px-4 py-3">Severity</th>
                   <th className="px-4 py-3">CVSS</th>
+                  <th className="px-4 py-3">EPSS</th>
                   <th className="px-4 py-3">Reference URL</th>
                   <th className="px-4 py-3">Asset</th>
                   <th className="px-4 py-3">Proof of Concept</th>
@@ -117,6 +118,7 @@ export function InfrastructureData() {
                       <td className="px-4 py-3">{item.Description || "-"}</td>
                       <td className="px-4 py-3">{item.Severity || "-"}</td>
                       <td className="px-4 py-3">{item.CVSS || "-"}</td>
+                      <td className="px-4 py-3">{item.EPSS || "-"}</td>
                       <td className="px-4 py-3">{item.Reference_URL || "-"}</td>
                       <td className="px-4 py-3">{item.BusinessApplication?.name || "-"}</td>
                       <td className="px-4 py-3">{item.Proof_of_Concept?.length || 0}</td>

@@ -1,10 +1,8 @@
 import { Suspense, useEffect, useState } from "react";
-import { useAuthContext, useExceptionContext, useVulnerabililtyDataContext } from "@/context";
+import { useAuthContext, useVulnerabililtyDataContext } from "@/context";
 import Loader from "@/components/Loader/Loader";
 import { Eye, Pencil, Trash2, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { Formik } from "formik";
-import * as Yup from "yup";
 import ExpectionModal from "@/modals/ExpectionModal";
 
 
@@ -12,41 +10,23 @@ export function ApplicationData() {
   const { loading, GetApplicationData, allApplicationData, DeleteData } =
     useVulnerabililtyDataContext();
   const { token } = useAuthContext();
-  const {ExceptionCreate} = useExceptionContext();
   const navigate = useNavigate();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId,setSelectedId] = useState(null)
-  const [formData, setFormData] = useState({
-    startDate: "",
-    endDate: "",
-    reason: "",
-    compensatoryControl: "No",
-    controlDetails: "",
-    approvalFile: null,
-  });
 
-  const handleChange = (e) => {
-    const { name, value, type, files } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "file" ? files[0] : value,
-    }));
-  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
-    setIsModalOpen(false);
-  };
+  
 
   useEffect(() => {
     if (token) {
       GetApplicationData();
     }
   }, [token]);
+
+  console.log(allApplicationData)
 
   const filteredData = allApplicationData?.filter((item) => {
     const valuesToSearch = [
@@ -109,6 +89,7 @@ export function ApplicationData() {
                   <th className="px-4 py-3">Severity</th>
                   <th className="px-4 py-3">CVSS</th>
                   <th className="px-4 py-3">Reference URL</th>
+                  <th className="px-4 py-3">EPSS</th>
                   <th className="px-4 py-3">Asset</th>
                   <th className="px-4 py-3">Proof of Concept</th>
                   <th className="px-4 py-3">Tenant</th>
@@ -141,6 +122,7 @@ export function ApplicationData() {
                       <td className="px-4 py-3">{item.Severity || "-"}</td>
                       <td className="px-4 py-3">{item.CVSS || "-"}</td>
                       <td className="px-4 py-3">{item.Reference_URL || "-"}</td>
+                      <td className="px-4 py-3">{item.EPSS || "-"}</td>
                       <td className="px-4 py-3">
                         {item.BusinessApplication?.name || "-"}
                       </td>

@@ -16,6 +16,7 @@ const ExceptionContextProvider = ({ children }) => {
   const [riskRating, setRiskRating] = useState([]);
   const [deferredVulnerableItems, setDeferredVulnerableItems] = useState([]);
 
+
   const ClientExcectionDataFiftyDays = async () => {
     setLoading(true);
     try {
@@ -66,11 +67,11 @@ const ExceptionContextProvider = ({ children }) => {
     }
   };
 
-  const ExpectionVerifyData = async () => {
+  const ExpectionPendingData = async (page) => {
     setLoading(true);
     try {
       const res = await AxiosHandler.get(
-        `/data/ExpectionVerify?page=${page}&limit=10`
+        `/expection/get?page=${page}`
       );
       setExpectionData(res.data?.data);
     } catch (error) {
@@ -102,7 +103,7 @@ const ExceptionContextProvider = ({ children }) => {
         page,
         setPage,
         ExpectionData,
-        ExpectionVerifyData,
+        ExpectionPendingData,
         expectionDataFiftyDays,
         riskRating,
         deferredVulnerableItems,
