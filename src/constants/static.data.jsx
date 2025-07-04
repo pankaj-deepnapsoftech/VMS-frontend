@@ -11,7 +11,13 @@ import { AiOutlineException } from "react-icons/ai";
 import { BiSolidDashboard } from "react-icons/bi";
 import { GrVulnerability } from "react-icons/gr";
 import { IoIosInformationCircleOutline } from "react-icons/io";
-import { MdInventory2, MdOutlineMiscellaneousServices, MdOutlinePendingActions, MdSettingsApplications, MdWifiTetheringErrorRounded } from "react-icons/md";
+import {
+  MdInventory2,
+  MdOutlineMiscellaneousServices,
+  MdOutlinePendingActions,
+  MdSettingsApplications,
+  MdWifiTetheringErrorRounded,
+} from "react-icons/md";
 import { SiWikimediafoundation } from "react-icons/si";
 import { TbReport } from "react-icons/tb";
 
@@ -79,20 +85,19 @@ export const AllowedPaths = [
   {
     name: "All Tasks",
     value: "/employee-tasks",
-  }, 
+  },
   {
     name: "Third Party Integrations",
     value: "/third-party-integrations",
-  }, 
+  },
   {
     name: "Role",
     value: "/roles",
-  }, 
+  },
   {
     name: "Partners",
     value: "/partners",
-  }, 
-
+  },
 ];
 
 export const ChartsColor = {
@@ -105,14 +110,12 @@ export const ChartsColor = {
 
 // products.js
 
-
-
 export const products = [
   {
     title: "Asset Inventory",
     desc: "Centralized asset visibility and management",
     borderColor: "#9b1c4d",
-    icon:"/Icons/Component 1.png",
+    icon: "/Icons/Component 1.png",
     allowedPath: [
       {
         title: "InfraStructure Asset",
@@ -133,11 +136,32 @@ export const products = [
     icon: "/Icons/Vector.png",
     allowedPath: [
       { title: "Dashboard", route: "/", icon: BiSolidDashboard },
-      { title: "Scheduling Assesment", route: "/scheduling-assesment", icon: CalendarClock },
-      { title: "Pending Assesment", route: "/pending-assesment", icon: MdOutlinePendingActions  },
-      { title: "Application Vulnerability", route: "/application-vulnerability", icon: MdOutlineMiscellaneousServices },
-      { title: "Infrastructure Vulnerability", route: "/infrastructure-vulnerability", icon: GrVulnerability },
+      {
+        title: "Scheduling Assesment",
+        route: "/scheduling-assesment",
+        icon: CalendarClock,
+      },
+      {
+        title: "Pending Assesment",
+        route: "/pending-assesment",
+        icon: MdOutlinePendingActions,
+      },
+      {
+        title: "Application Vulnerability",
+        route: "/application-vulnerability",
+        icon: MdOutlineMiscellaneousServices,
+      },
+      {
+        title: "Infrastructure Vulnerability",
+        route: "/infrastructure-vulnerability",
+        icon: GrVulnerability,
+      },
       { title: "Exceptions", route: "/exceptions", icon: AiOutlineException },
+      {
+        title: "Pending Exceptions",
+        route: "/pending-exception",
+        icon: MdInventory2,
+      },
     ],
   },
   {
@@ -151,12 +175,12 @@ export const products = [
   {
     title: "Risk and Compliances",
     desc: "Risk and Compliances",
-    bg:"from-[#9b1c4d] to-[#df4156]",
+    bg: "from-[#9b1c4d] to-[#df4156]",
     borderColor: "#9b1c4d",
     icon: "/Icons/Component 3.png",
     allowedPath: [],
   },
- 
+
   {
     title: "AI-VA",
     desc: "AI Virtual Analyst",
@@ -191,15 +215,27 @@ export const products = [
     borderColor: "#6a11cb",
     icon: "/Icons/Component 4.png",
     allowedPath: [
-      { title: "Remedition", route: "/remedition", icon: SiWikimediafoundation },
+      {
+        title: "Remedition",
+        route: "/remedition",
+        icon: SiWikimediafoundation,
+      },
       { title: "Vulnerability Data", route: "/vulnerability-data", icon: Bug },
       {
-        title:"Add Vulnerability Data",
-        route:"/add-vulnerability-data",
+        title: "Add Vulnerability Data",
+        route: "/add-vulnerability-data",
         icon: FaBug,
       },
-      { title: "Application Data", route: "/application-data", icon: MdSettingsApplications  },
-      { title: "Infrastructure Data", route: "/infrastructure-data", icon: IoIosInformationCircleOutline   },
+      {
+        title: "Application Data",
+        route: "/application-data",
+        icon: MdSettingsApplications,
+      },
+      {
+        title: "Infrastructure Data",
+        route: "/infrastructure-data",
+        icon: IoIosInformationCircleOutline,
+      },
     ],
   },
   {
@@ -213,16 +249,18 @@ export const products = [
     title: "Administration",
     desc: "Admin control panel",
     borderColor: "#f8b500",
-    icon:"/Icons/Component 6.png",
+    icon: "/Icons/Component 6.png",
     allowedPath: [
       { title: "Users", route: "/all-users", icon: Users },
       { title: "Tenant", route: "/all-tenant", icon: UserCircle },
-      { title: "Third Party Integrations", route: "/third-party-integrations", icon: MdWifiTetheringErrorRounded  },
+      {
+        title: "Third Party Integrations",
+        route: "/third-party-integrations",
+        icon: MdWifiTetheringErrorRounded,
+      },
       { title: "Config Email", route: "/config-email", icon: Settings },
-      { title: "Role", route: "/roles", icon: LucideShield  },
+      { title: "Role", route: "/roles", icon: LucideShield },
       { title: "Partners", route: "/partners", icon: Users },
     ],
   },
 ];
-
-

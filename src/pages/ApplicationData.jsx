@@ -412,7 +412,7 @@ export function ApplicationData() {
                           <label
                             htmlFor="approvalFile"
                             className="w-full inline-block bg-slate-700 hover:bg-slate-600 text-white py-2 px-4 rounded cursor-pointer text-center"
-                          >
+                          >    
                             {values.approvalFile
                               ? values.approvalFile.name
                               : "Choose file"}

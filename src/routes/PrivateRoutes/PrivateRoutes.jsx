@@ -27,6 +27,7 @@ import { ApplicationData } from "@/pages/ApplicationData";
 import { InfrastructureData } from "@/pages/InfrastructureData";
 import BusinessApplications from "@/pages/BusinessApplications";
 import VulnerabilityForm from "@/pages/AddVulnerabilityData";
+import ExceptionTable from "@/pages/ExceptionTable";
 
 export const PrivateRoutes = [
   {
@@ -149,5 +150,9 @@ export const PrivateRoutes = [
   {
     path:"/add-vulnerability-data",
     element:<VulnerabilityForm/>,
+  },
+  {
+    path:"/pending-exception",
+    element:<ExceptionTable/>
   }
 ];
