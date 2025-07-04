@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
 import { createContext, useState } from "react";
-import { useAuthContext, useVulnerabililtyDataContext } from "..";
 import { AxiosHandler } from "@/config/AxiosConfig";
-import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export const ExceptionContext = createContext();
 
@@ -81,11 +80,14 @@ const ExceptionContextProvider = ({ children }) => {
     }
   };
 
-  const ExceptionCreate = async(data)=>{
-	setLoading(true);
-	try {
-		const res = await AxiosHandler.post('/exception/create',data)
-	} catch (error) {
+  const ExceptionCreate = async (data) => {
+    console.log("that makrs",data)
+    setLoading(true);
+    try {
+      const res = await AxiosHandler.post('/expection/create', data)
+      console.log(res)
+      toast.success(res.data.message)
+    } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
@@ -109,7 +111,7 @@ const ExceptionContextProvider = ({ children }) => {
         ClientExcectionDataFiftyDays,
         ClientDeferredVulnerableItems,
         ClientRiskRating,
-		ExceptionCreate
+        ExceptionCreate
       }}
     >
       {children}
