@@ -1,22 +1,128 @@
 /* eslint-disable react/prop-types */
 import { useExceptionContext } from "@/context";
 import { dateFormaterWithDate } from "@/utils/dateFormate";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FaUserCheck } from "react-icons/fa";
 
 const ExceptionTable = () => {
   const { ExpectionPendingData, expectionData } = useExceptionContext();
   const hasData = Array.isArray(expectionData) && expectionData.length > 0;
-  console.log(expectionData)
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [approvers, setApprovers] = useState({
+    approver1: "",
+    approver2: "",
+    approver3: "",
+  });
+
+  // Example tenant users
+  const tenantUsers = [
+    { id: 1, name: "User A" },
+    { id: 2, name: "User B" },
+    { id: 3, name: "User C" },
+    { id: 4, name: "User D" },
+  ];
 
   useEffect(() => {
-    ExpectionPendingData()
-  }, [])
+    ExpectionPendingData();
+  }, []);
+
+  const openModal = (rowData) => {
+    setSelectedRow(rowData);
+    setIsModalOpen(true);
+  };
+
+  const handleSaveApprovers = () => {
+    console.log("Saving approvers:", approvers);
+    console.log("For row:", selectedRow);
+    setIsModalOpen(false);
+    setApprovers({ approver1: "", approver2: "", approver3: "" });
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setApprovers((prev) => ({ ...prev, [name]: value }));
+  };
 
   return (
-    <div className="min-h-screen bg-[#0F172A] p-8 text-white">
+    <div className="min-h-screen bg-[#0F172A] p-8 text-gray-400">
       <h1 className="text-3xl font-bold mb-6">Pending Exception</h1>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="bg-[#0F172A] text-white w-[400px] rounded-lg shadow-lg p-6 space-y-4">
+            <h2 className="text-xl font-semibold mb-4">Add Approver</h2>
+
+            <div>
+              <label className="block font-medium mb-1">1st Approver</label>
+              <select
+                name="approver1"
+                value={approvers.approver1}
+                onChange={handleChange}
+                className="w-full bg-input rounded px-3 py-2"
+              >
+                <option value="">Select User</option>
+                {tenantUsers.map((user) => (
+                  <option key={user.id} value={user.name}>
+                    {user.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block font-medium mb-1">2nd Approver</label>
+              <select
+                name="approver2"
+                value={approvers.approver2}
+                onChange={handleChange}
+                className="w-full bg-input rounded px-3 py-2"
+              >
+                <option value="">Select User</option>
+                {tenantUsers.map((user) => (
+                  <option key={user.id} value={user.name}>
+                    {user.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block font-medium mb-1">3rd Approver</label>
+              <select
+                name="approver3"
+                value={approvers.approver3}
+                onChange={handleChange}
+                className="w-full bg-input rounded px-3 py-2"
+              >
+                <option value="">Select User</option>
+                {tenantUsers.map((user) => (
+                  <option key={user.id} value={user.name}>
+                    {user.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="flex justify-end gap-2 mt-8">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="px-4 py-2 text-black bg-white rounded hover:bg-gray-300"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSaveApprovers}
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {hasData ? (
         <div className="overflow-auto custom-scrollbar">
@@ -36,8 +142,9 @@ const ExceptionTable = () => {
               {expectionData.map((item, index) => (
                 <tr
                   key={index}
-                  className={`hover:bg-slate-700/50 transition-colors ${index % 2 === 0 ? "bg-slate-800/30" : "bg-slate-800/50"
-                    }`}
+                  className={`hover:bg-slate-700/50 transition-colors ${
+                    index % 2 === 0 ? "bg-slate-800/30" : "bg-slate-800/50"
+                  }`}
                 >
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-300">
                     {dateFormaterWithDate(item?.exception_start_data)}
@@ -50,19 +157,17 @@ const ExceptionTable = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-300">
                     <span
-                      className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${item.compensatory_control
-                          === "Yes"
+                      className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                        item.compensatory_control === "Yes"
                           ? "bg-green-100 text-green-800"
                           : "bg-red-100 text-red-800"
-                        }`}
+                      }`}
                     >
-                      {item.compensatory_control
-                      }
+                      {item.compensatory_control}
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-300">
-                    {item.compensatory_control
-                      === "Yes"
+                    {item.compensatory_control === "Yes"
                       ? item.detail
                       : "N/A"}
                   </td>
@@ -80,7 +185,10 @@ const ExceptionTable = () => {
                     )}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-300">
-                   <FaUserCheck className="size-8 text-green-400" />
+                    <FaUserCheck
+                      className="size-8 text-green-400 cursor-pointer"
+                      onClick={() => openModal(item)}
+                    />
                   </td>
                 </tr>
               ))}
