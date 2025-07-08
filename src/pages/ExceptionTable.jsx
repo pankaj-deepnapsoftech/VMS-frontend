@@ -126,74 +126,92 @@ const ExceptionTable = () => {
 
       {hasData ? (
         <div className="overflow-auto custom-scrollbar">
-          <table className="min-w-full text-sm border border-gray-900">
-            <thead className="bg-gradient-to-r from-slate-800 to-slate-700 text-white">
-              <tr>
-                <th className="px-4 py-2 border">Start Date</th>
-                <th className="px-4 py-2 border">End Date</th>
-                <th className="px-4 py-2 border">Reason</th>
-                <th className="px-4 py-2 border">Control</th>
-                <th className="px-4 py-2 border">Control Details</th>
-                <th className="px-4 py-2 border">File Name</th>
-                <th className="px-4 py-2 border">Action</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-700">
-              {expectionData.map((item, index) => (
-                <tr
-                  key={index}
-                  className={`hover:bg-slate-700/50 transition-colors ${
-                    index % 2 === 0 ? "bg-slate-800/30" : "bg-slate-800/50"
-                  }`}
-                >
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-300">
-                    {dateFormaterWithDate(item?.exception_start_data)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-300">
-                    {dateFormaterWithDate(item?.exception_end_data)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-300">
-                    {item.reason}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-300">
-                    <span
-                      className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                        item.compensatory_control === "Yes"
-                          ? "bg-green-100 text-green-800"
-                          : "bg-red-100 text-red-800"
-                      }`}
+          <div className="overflow-auto rounded-xl border border-slate-700 shadow-xl backdrop-blur-sm">
+            <table className="min-w-full text-sm text-slate-200">
+              <thead className="sticky top-0 z-10 bg-slate-800/90 backdrop-blur border-b border-slate-700">
+                <tr>
+                  {[
+                    "Start Date",
+                    "End Date",
+                    "Reason",
+                    "Control",
+                    "Control Details",
+                    "File",
+                    "Action",
+                  ].map((heading) => (
+                    <th
+                      key={heading}
+                      className="px-6 py-4 text-left text-xs font-semibold tracking-widest uppercase text-slate-300"
                     >
-                      {item.compensatory_control}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-300">
-                    {item.compensatory_control === "Yes"
-                      ? item.detail
-                      : "N/A"}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-300">
-                    {item.proof ? (
-                      <a
-                        href="#"
-                        className="text-blue-400 hover:text-blue-300 transition-colors"
-                        download={item.proof}
-                      >
-                        <img src={item.proof} className="size-10" />
-                      </a>
-                    ) : (
-                      "No file"
-                    )}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-300">
-                    <FaUserCheck
-                      className="size-8 text-green-400 cursor-pointer"
-                      onClick={() => openModal(item)}
-                    />
-                  </td>
+                      {heading}
+                    </th>
+                  ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+
+              <tbody className="divide-y divide-slate-700 bg-slate-800/60">
+                {expectionData.map((item, index) => (
+                  <tr
+                    key={index}
+                    className="transition-colors duration-300 hover:bg-slate-700/50"
+                  >
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {dateFormaterWithDate(item?.exception_start_data)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {dateFormaterWithDate(item?.exception_end_data)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {item.reason}
+                    </td>
+                    <td className="px-6 py-4">
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-semibold shadow-sm ${
+                          item.compensatory_control === "Yes"
+                            ? "bg-green-500/10 text-green-300 border border-green-500/20"
+                            : "bg-red-500/10 text-red-300 border border-red-500/20"
+                        }`}
+                      >
+                        {item.compensatory_control}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      {item.compensatory_control === "Yes" ? item.detail : "—"}
+                    </td>
+                    <td className="px-6 py-4">
+                      {item.proof ? (
+                        <a
+                          href={item.proof}
+                          download
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 hover:text-blue-300 transition"
+                        >
+                          <img
+                            src={item.proof}
+                            alt="Proof"
+                            className="w-10 h-10 object-cover rounded-md border border-slate-600 shadow-sm hover:scale-105 transition-transform"
+                          />
+                          <span className="text-xs underline">Download</span>
+                        </a>
+                      ) : (
+                        <span className="italic text-slate-500">No file</span>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 text-center">
+                      <button
+                        onClick={() => openModal(item)}
+                        className="p-2 rounded-md hover:bg-slate-600/30 transition"
+                        title="View Details"
+                      >
+                        <FaUserCheck className="w-5 h-5 text-green-400 hover:scale-110 transition-transform" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       ) : (
         <p className="text-center text-gray-400 mt-6">

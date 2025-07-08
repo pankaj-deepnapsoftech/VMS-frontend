@@ -31,7 +31,7 @@ const RiskRatingTable = () => {
         </button>
       </div>
       <div className="bg-[#0c1120] overflow-x-auto custom-scrollbar overflow-hidden rounded-lg shadow-md">
-        <table className="min-w-full divide-y divide-gray-700 ">
+        <table className="min-w-full divide-y divide-gray-700">
           <thead className="bg-[#0c1120] text-[15px]  text-white ">
             <tr>
               <th className="px-4 py-3 text-left whitespace-nowrap truncate">
@@ -119,7 +119,7 @@ const RiskRatingTable = () => {
         <button
           className={`px-4 py-2 border rounded-md bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white`}
           onClick={() => setPage(page + 1)}
-          disabled={data?.length < 10} 
+          disabled={data?.length < 10}
         >
           Next
         </button>
