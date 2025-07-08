@@ -6,7 +6,6 @@ import toast from "react-hot-toast";
 export const ExceptionContext = createContext();
 
 const ExceptionContextProvider = ({ children }) => {
-  const [datafetchCount, setdatafetchCount] = useState(0);
 
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -53,11 +52,11 @@ const ExceptionContextProvider = ({ children }) => {
     }
   };
 
-  const ExpectionData = async () => {
+  const UpdateExpectionData = async () => {
     setLoading(true);
     try {
       const res = await AxiosHandler.get(
-        `/data/ExpectionApprove?page=${page}&limit=10`
+        `/expection/update/:id`
       );
       setExpectionData(res.data?.data);
     } catch (error) {
@@ -82,7 +81,6 @@ const ExceptionContextProvider = ({ children }) => {
   };
 
   const ExceptionCreate = async (data) => {
-    console.log("that makrs",data)
     setLoading(true);
     try {
       const res = await AxiosHandler.post('/expection/create', data)
@@ -102,13 +100,11 @@ const ExceptionContextProvider = ({ children }) => {
         loading,
         page,
         setPage,
-        ExpectionData,
+        UpdateExpectionData,
         ExpectionPendingData,
         expectionDataFiftyDays,
         riskRating,
         deferredVulnerableItems,
-        datafetchCount,
-        // setdatafetchCount,
         ClientExcectionDataFiftyDays,
         ClientDeferredVulnerableItems,
         ClientRiskRating,
