@@ -14,7 +14,7 @@ const InfraAssetContextProvider = ({ children }) => {
     const [businessApplication, setBusinessApplication] = useState([]);
 
     const [totalInfraAsset,setTotalInfraAsset] = useState([]);
-    const [totalBusinessApplication, setTotalBusinessApplication] = useState([]);``
+    const [totalBusinessApplication, setTotalBusinessApplication] = useState([]);
 
     const GetInfraAsset = async (page, tenant) => {
         try {
@@ -116,18 +116,18 @@ const InfraAssetContextProvider = ({ children }) => {
         }
     };
 
-    const GetAllInfraAssetData = async() => {
+    const GetAllInfraAssetData = async(tenant) => {
         try {
-            const res = await AxiosHandler.get(`/infraStructureAsset/get-all`);
+            const res = await AxiosHandler.get(`/infraStructureAsset/get-all?tenant=${tenant}`);
             setTotalInfraAsset(res.data.data);
         } catch (error) {
             console.log(error);
         }
     }
 
-     const GetAllBusinessApplication = async() => {
+     const GetAllBusinessApplication = async(tenant) => {
         try {
-            const res = await AxiosHandler.get(`/BusinessApplication/get-all`);
+            const res = await AxiosHandler.get(`/BusinessApplication/get-all?tenant=${tenant}`);
             setTotalBusinessApplication(res.data.data);
         } catch (error) {
             console.log(error);
@@ -136,8 +136,8 @@ const InfraAssetContextProvider = ({ children }) => {
 
     useEffect(() => {
         if(token){
-            GetAllInfraAssetData();
-            GetAllBusinessApplication();
+            GetAllInfraAssetData("");
+            GetAllBusinessApplication("");
         }
 
     }, []);
@@ -157,7 +157,10 @@ const InfraAssetContextProvider = ({ children }) => {
             CreateBulkInfraAsset,
             CreateBulkBussinerssApplcation,
             totalInfraAsset,
-            totalBusinessApplication
+            totalBusinessApplication,
+            GetAllInfraAssetData,
+            GetAllBusinessApplication
+
         }} >
             {children}
         </InfraAssetContext.Provider>

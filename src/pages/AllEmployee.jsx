@@ -19,11 +19,11 @@ const AllEmployee = () => {
   const {partners} = useDataContext()
 
   const { token, ChangeStatus } = useAuthContext();
+  const {TenantData} = useAllEmployeeContext()
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editable, setEdiTable] = useState(null);
   const [EmpData, setEmpData] = useState([]);
-  const [TenantData, setTenantData] = useState([]);
   const [RoleAllData, setRoleAllData] = useState([]);
   const [page, setPage] = useState(1);
   const [isloading, setloading] = useState(false);
@@ -132,14 +132,7 @@ const AllEmployee = () => {
 
  
 
-  const GetAllTenentData = async () => {
-    try {
-      const res = await AxiosHandler.get("/tenant/get-all");
-      setTenantData(res?.data?.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  
 
   const isPartOfSecurend = (e) => {
     if (e.target.value === "no") {
@@ -164,7 +157,6 @@ const AllEmployee = () => {
   useEffect(() => {
     if (token) {
       GetUsers(page);
-      GetAllTenentData();
       GetAllRoleData();
     }
   }, [token, page]);

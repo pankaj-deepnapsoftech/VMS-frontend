@@ -16,6 +16,8 @@ const AllEmployeeContextProvider = ({ children }) => {
 	const [loading, setLoading] = useState(false);
 	const [employeeTasksData, setEmployeeTasksData] = useState([]);
 	const [employeeCardData, setEmployeeCardData] = useState([]);
+	
+  const [TenantData, setTenantData] = useState([]);
 
 
 	const [page, setPage] = useState(1)
@@ -97,10 +99,20 @@ const AllEmployeeContextProvider = ({ children }) => {
 		}
 	}
 
+	const GetAllTenentData = async () => {
+    try {
+      const res = await AxiosHandler.get("/tenant/get-all");
+      setTenantData(res?.data?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
 	useEffect(() => {
 		if (token) {
 			EmployeeTasks();
 			EmployeeData();
+			GetAllTenentData()
 		}
 	}, [token, page, taskPage, authenticate?.role])
 
@@ -121,6 +133,7 @@ const AllEmployeeContextProvider = ({ children }) => {
 			datafetchCount,
 			setdatafetchCount,
 			DeleteUser,
+			TenantData
 
 		}}>
 			{children}
