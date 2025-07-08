@@ -157,7 +157,6 @@ const AllEmployee = () => {
   useEffect(() => {
     if (token) {
       GetUsers(page);
-      GetAllTenentData();
       GetAllRoleData();
     }
   }, [token, page]);
