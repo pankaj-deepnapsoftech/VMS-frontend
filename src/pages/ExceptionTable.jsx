@@ -215,7 +215,7 @@ const ExceptionTable = () => {
                       </button>
                     </td>
                   </tr>
-                ))}
+                ))} 
               </tbody>
             </table>
           </div>
@@ -226,7 +226,7 @@ const ExceptionTable = () => {
         </p>
       )}
     </div>
-  );
+  );    
 };
 
 export default ExceptionTable;
