@@ -188,7 +188,6 @@ const ExceptionTable = () => {
                             alt="Proof"
                             className="w-10 h-10 object-cover rounded-md border border-slate-600 shadow-sm hover:scale-105 transition-transform"
                           />
-                          <span className="text-xs underline">Download</span>
                         </a>
                       ) : (
                         <span className="italic text-slate-500">No file</span>
