@@ -52,13 +52,11 @@ const ExceptionContextProvider = ({ children }) => {
     }
   };
 
-  const UpdateExpectionData = async () => {
+  const UpdateExpectionData = async (id,data) => {
     setLoading(true);
     try {
-      const res = await AxiosHandler.get(
-        `/expection/update/:id`
-      );
-      setExpectionData(res.data?.data);
+      const res = await AxiosHandler.put(`/expection/update/${id}`,data);
+      toast.success(res.data.message);
     } catch (error) {
       console.log(error);
     } finally {

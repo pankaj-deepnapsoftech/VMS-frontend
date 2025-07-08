@@ -1,12 +1,13 @@
 /* eslint-disable react/prop-types */
 import { useAllEmployeeContext, useExceptionContext } from "@/context";
 import { dateFormaterWithDate } from "@/utils/dateFormate";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { FaUserCheck } from "react-icons/fa";
 
 const ExceptionTable = () => {
-  const { ExpectionPendingData, expectionData } = useExceptionContext();
-  const {TenantData} = useAllEmployeeContext()
+  const { ExpectionPendingData, expectionData, UpdateExpectionData } = useExceptionContext();
+  const { TenantData } = useAllEmployeeContext();
+
   const hasData = Array.isArray(expectionData) && expectionData.length > 0;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,29 +18,67 @@ const ExceptionTable = () => {
     approver3: "",
   });
 
-  // Example tenant users
-
-
-  useEffect(() => {
-    ExpectionPendingData();
-  }, []);
+  const modalRef = useRef();
 
   const openModal = (rowData) => {
     setSelectedRow(rowData);
+    setApprovers({
+      approver1: rowData?.aprove_1?.approver || "",
+      approver2: rowData?.aprove_2?.approver || "",
+      approver3: rowData?.aprove_3?.approver || "",
+    });
     setIsModalOpen(true);
   };
 
-  const handleSaveApprovers = () => {
-    console.log("Saving approvers:", approvers);
-    console.log("For row:", selectedRow);
+  const closeModal = () => {
     setIsModalOpen(false);
     setApprovers({ approver1: "", approver2: "", approver3: "" });
+  };
+
+  const handleSaveApprovers = () => {
+    const approverValues = [approvers.approver1, approvers.approver2, approvers.approver3].filter(Boolean);
+    const hasDuplicates = new Set(approverValues).size !== approverValues.length;
+
+    if (hasDuplicates) {
+      alert("Approvers must be unique.");
+      return;
+    }
+
+    UpdateExpectionData(selectedRow._id, {
+      aprove_1: { approver: approvers.approver1 },
+      aprove_2: { approver: approvers.approver2 },
+      aprove_3: { approver: approvers.approver3 },
+    });
+
+    closeModal();
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setApprovers((prev) => ({ ...prev, [name]: value }));
   };
+
+  const handleClickOutside = (e) => {
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
+      closeModal();
+    }
+  };
+
+  const handleEscapeKey = (e) => {
+    if (e.key === "Escape") {
+      closeModal();
+    }
+  };
+
+  useEffect(() => {
+    ExpectionPendingData();
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscapeKey);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscapeKey);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#0F172A] p-8 text-gray-400">
@@ -48,63 +87,36 @@ const ExceptionTable = () => {
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="bg-[#0F172A] text-white w-[400px] rounded-lg shadow-lg p-6 space-y-4">
+          <div
+            ref={modalRef}
+            className="bg-[#0F172A] text-white w-[400px] rounded-lg shadow-lg p-6 space-y-4"
+          >
             <h2 className="text-xl font-semibold mb-4">Add Approver</h2>
 
-            <div>
-              <label className="block font-medium mb-1">1st Approver</label>
-              <select
-                name="approver1"
-                value={approvers.approver1}
-                onChange={handleChange}
-                className="w-full bg-input rounded px-3 py-2"
-              >
-                <option value="">Select User</option>
-                {TenantData.map((user) => (
-                  <option key={user._id} value={user._id}>
-                    {user.company_name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block font-medium mb-1">2nd Approver</label>
-              <select
-                name="approver2"
-                value={approvers.approver2}
-                onChange={handleChange}
-                className="w-full bg-input rounded px-3 py-2"
-              >
-                <option value="">Select User</option>
-                {TenantData.map((user) => (
-                  <option key={user._id} value={user._id}>
-                    {user.company_name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block font-medium mb-1">3rd Approver</label>
-              <select
-                name="approver3"
-                value={approvers.approver3}
-                onChange={handleChange}
-                className="w-full bg-input rounded px-3 py-2"
-              >
-                <option value="">Select User</option>
-                {TenantData.map((user) => (
-                  <option key={user._id} value={user._id}>
-                    {user.company_name}
-                  </option>
-                ))}
-              </select>
-            </div>
+            {["approver1", "approver2", "approver3"].map((key, index) => (
+              <div key={key}>
+                <label className="block font-medium mb-1">
+                  {`${index + 1}st Approver`}
+                </label>
+                <select
+                  name={key}
+                  value={approvers[key]}
+                  onChange={handleChange}
+                  className="w-full bg-input rounded px-3 py-2"
+                >
+                  <option value="">Select User</option>
+                  {TenantData.map((user) => (
+                    <option key={user._id} value={user._id}>
+                      {user.company_name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ))}
 
             <div className="flex justify-end gap-2 mt-8">
               <button
-                onClick={() => setIsModalOpen(false)}
+                onClick={closeModal}
                 className="px-4 py-2 text-black bg-white rounded hover:bg-gray-300"
               >
                 Cancel
