@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
-import { useExceptionContext } from "@/context";
+import { useAllEmployeeContext, useExceptionContext } from "@/context";
 import { dateFormaterWithDate } from "@/utils/dateFormate";
 import { useEffect, useState } from "react";
 import { FaUserCheck } from "react-icons/fa";
 
 const ExceptionTable = () => {
   const { ExpectionPendingData, expectionData } = useExceptionContext();
+  const {TenantData} = useAllEmployeeContext()
   const hasData = Array.isArray(expectionData) && expectionData.length > 0;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,12 +18,7 @@ const ExceptionTable = () => {
   });
 
   // Example tenant users
-  const tenantUsers = [
-    { id: 1, name: "User A" },
-    { id: 2, name: "User B" },
-    { id: 3, name: "User C" },
-    { id: 4, name: "User D" },
-  ];
+
 
   useEffect(() => {
     ExpectionPendingData();
@@ -64,9 +60,9 @@ const ExceptionTable = () => {
                 className="w-full bg-input rounded px-3 py-2"
               >
                 <option value="">Select User</option>
-                {tenantUsers.map((user) => (
-                  <option key={user.id} value={user.name}>
-                    {user.name}
+                {TenantData.map((user) => (
+                  <option key={user._id} value={user._id}>
+                    {user.company_name}
                   </option>
                 ))}
               </select>
@@ -81,9 +77,9 @@ const ExceptionTable = () => {
                 className="w-full bg-input rounded px-3 py-2"
               >
                 <option value="">Select User</option>
-                {tenantUsers.map((user) => (
-                  <option key={user.id} value={user.name}>
-                    {user.name}
+                {TenantData.map((user) => (
+                  <option key={user._id} value={user._id}>
+                    {user.company_name}
                   </option>
                 ))}
               </select>
@@ -98,9 +94,9 @@ const ExceptionTable = () => {
                 className="w-full bg-input rounded px-3 py-2"
               >
                 <option value="">Select User</option>
-                {tenantUsers.map((user) => (
-                  <option key={user.id} value={user.name}>
-                    {user.name}
+                {TenantData.map((user) => (
+                  <option key={user._id} value={user._id}>
+                    {user.company_name}
                   </option>
                 ))}
               </select>
