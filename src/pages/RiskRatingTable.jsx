@@ -34,31 +34,31 @@ const RiskRatingTable = () => {
         <table className="min-w-full divide-y divide-gray-700 ">
           <thead className="bg-[#0c1120] text-[15px]  text-white ">
             <tr>
-              <th className="px-4 py-3 text-left whitespace-nowrap  truncate">
+              <th className="px-4 py-3 text-left whitespace-nowrap truncate">
                 Data Asset
               </th>
-              <th className="px-4 py-3 text-left whitespace-nowrap  truncate">
+              <th className="px-4 py-3 text-left whitespace-nowrap truncate">
                 Users Affected
               </th>
-              <th className="px-4 py-3 text-left whitespace-nowrap  truncate">
+              <th className="px-4 py-3 text-left whitespace-nowrap truncate">
                 PII
               </th>
-              <th className="px-4 py-3 text-left whitespace-nowrap  truncate">
+              <th className="px-4 py-3 text-left whitespace-nowrap truncate">
                 Business Sensitive
               </th>
-              <th className="px-4 py-3 text-left whitespace-nowrap  truncate">
+              <th className="px-4 py-3 text-left whitespace-nowrap truncate">
                 Regulations
               </th>
-              <th className="px-4 py-3 text-left whitespace-nowrap  truncate">
+              <th className="px-4 py-3 text-left whitespace-nowrap truncate">
                 Security Confidentiality
               </th>
-              <th className="px-4 py-3 text-left whitespace-nowrap  truncate">
+              <th className="px-4 py-3 text-left whitespace-nowrap truncate">
                 Security Integrity
               </th>
-              <th className="px-4 py-3 text-left whitespace-nowrap  truncate">
+              <th className="px-4 py-3 text-left whitespace-nowrap truncate">
                 Security Availability
               </th>
-              <th className="px-4 py-3 text-left whitespace-nowrap  truncate">
+              <th className="px-4 py-3 text-left whitespace-nowrap truncate">
                 Overall Risk Rating
               </th>
               <th className="px-4 py-3 text-center">Action</th>
@@ -117,9 +117,9 @@ const RiskRatingTable = () => {
         </button>
         <span className="text-white">Page {page}</span>
         <button
-          className={`px-4 py-2 border rounded-md bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white  `}
+          className={`px-4 py-2 border rounded-md bg-gradient-to-tr from-[#1f1d1d] to-[#666666] text-white`}
           onClick={() => setPage(page + 1)}
-          disabled={data?.length < 10}
+          disabled={data?.length < 10} 
         >
           Next
         </button>
