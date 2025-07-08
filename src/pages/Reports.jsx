@@ -209,7 +209,7 @@ const Reports = () => {
           className="p-2 border border-gray-300 text-white rounded-lg bg-input"
           value={orgFilter}
           onChange={(e) => setOrgFilter(e.target.value)}
-        /> 
+        />
 
         <input
           type="date"

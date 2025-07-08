@@ -40,7 +40,7 @@ const PendingAssessment = () => {
         <div className='min-h-screen p-5' >
 
 
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto custom-scrollbar">
                 <table className="min-w-full divide-y divide-slate-700">
                     <thead className="bg-gradient-to-r from-slate-800 to-slate-700">
                         <tr>

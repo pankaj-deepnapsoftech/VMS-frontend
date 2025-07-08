@@ -229,7 +229,7 @@ function Exceptions() {
             {paginatedData.length < 1 ? (
               <NoDataFound />
             ) : (
-              <div className="overflow-x-auto rounded-lg">
+              <div className="overflow-x-auto custom-scrollbar rounded-lg">
                 <table className="min-w-full divide-y divide-gray-200 text-white">
                   <thead className="bg-gradient-to-bl from-[#333333] to-[#666666]">
                     <tr>

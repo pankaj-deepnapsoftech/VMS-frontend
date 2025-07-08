@@ -121,7 +121,7 @@ export default function BusinessApplications() {
 
                     {/* Table */}
                     <div className="bg-slate-800 rounded-lg overflow-hidden">
-                        <div className="overflow-x-auto">
+                        <div className="overflow-x-auto custom-scrollbar">
                             <table className="w-full">
                                 <thead>
                                     <tr className="border-b border-slate-700">
