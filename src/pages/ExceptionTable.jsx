@@ -1,12 +1,18 @@
 /* eslint-disable react/prop-types */
-import { useAllEmployeeContext, useExceptionContext } from "@/context";
+import { useAllEmployeeContext, useAuthContext, useExceptionContext } from "@/context";
 import { dateFormaterWithDate } from "@/utils/dateFormate";
 import { useEffect, useState, useRef } from "react";
 import { FaUserCheck } from "react-icons/fa";
+import { useLocation } from "react-router-dom";
 
 const ExceptionTable = () => {
   const { ExpectionPendingData, expectionData, UpdateExpectionData } = useExceptionContext();
   const { TenantData } = useAllEmployeeContext();
+  const { token, GetTenantData, UserViaTenant } = useAuthContext();
+
+
+  const [tenant, setTenant] = useState('');
+  const location = useLocation();
 
   const hasData = Array.isArray(expectionData) && expectionData.length > 0;
 
@@ -21,6 +27,10 @@ const ExceptionTable = () => {
   const modalRef = useRef();
 
   const openModal = (rowData) => {
+    if (!tenant) {
+      alert("Please select a tenant to proceed.");
+      return;
+    }
     setSelectedRow(rowData);
     setApprovers({
       approver1: rowData?.aprove_1?.approver || "",
@@ -71,7 +81,6 @@ const ExceptionTable = () => {
   };
 
   useEffect(() => {
-    ExpectionPendingData();
     document.addEventListener("mousedown", handleClickOutside);
     document.addEventListener("keydown", handleEscapeKey);
     return () => {
@@ -79,6 +88,21 @@ const ExceptionTable = () => {
       document.removeEventListener("keydown", handleEscapeKey);
     };
   }, []);
+
+  useEffect(() => {
+    if (token) {
+      ExpectionPendingData(1, tenant);
+      
+    }
+    if(tenant) {
+      GetTenantData(tenant);
+    }
+  }, [tenant])
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setTenant(params.get('tenant') || '');
+  }, [location.search]);
 
   return (
     <div className="min-h-screen bg-[#0F172A] p-8 text-gray-400">
@@ -105,9 +129,9 @@ const ExceptionTable = () => {
                   className="w-full bg-input rounded px-3 py-2"
                 >
                   <option value="">Select User</option>
-                  {TenantData.map((user) => (
+                  {UserViaTenant.map((user) => (
                     <option key={user._id} value={user._id}>
-                      {user.company_name}
+                      {user.email}
                     </option>
                   ))}
                 </select>
@@ -174,11 +198,10 @@ const ExceptionTable = () => {
                     </td>
                     <td className="px-6 py-4">
                       <span
-                        className={`px-3 py-1 rounded-full text-xs font-semibold shadow-sm ${
-                          item.compensatory_control === "Yes"
-                            ? "bg-green-500/10 text-green-300 border border-green-500/20"
-                            : "bg-red-500/10 text-red-300 border border-red-500/20"
-                        }`}
+                        className={`px-3 py-1 rounded-full text-xs font-semibold shadow-sm ${item.compensatory_control === "Yes"
+                          ? "bg-green-500/10 text-green-300 border border-green-500/20"
+                          : "bg-red-500/10 text-red-300 border border-red-500/20"
+                          }`}
                       >
                         {item.compensatory_control}
                       </span>
@@ -215,7 +238,7 @@ const ExceptionTable = () => {
                       </button>
                     </td>
                   </tr>
-                ))} 
+                ))}
               </tbody>
             </table>
           </div>
@@ -226,7 +249,7 @@ const ExceptionTable = () => {
         </p>
       )}
     </div>
-  );    
+  );
 };
 
 export default ExceptionTable;

@@ -2,9 +2,7 @@ import { Suspense, useEffect, useState } from "react";
 import { useAuthContext, useVulnerabililtyDataContext } from "@/context";
 import Loader from "@/components/Loader/Loader";
 import { Eye, Pencil, Trash2, User } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { Formik } from "formik";
-import * as Yup from "yup";
+import { useLocation, useNavigate } from "react-router-dom";
 import ExpectionModal from "@/modals/ExpectionModal";
 
 export function InfrastructureData() {
@@ -15,14 +13,12 @@ export function InfrastructureData() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedId,setSelectedId] = useState(null)
+  const [selectedId, setSelectedId] = useState(null)
+  const [tenant, setTenant] = useState('');
+  const location = useLocation();
   const itemsPerPage = 10;
 
-  useEffect(() => {
-    if (token) {
-      GetInfrastructureData(currentPage);
-    }
-  }, [token, currentPage]);
+
 
   const filteredData = allInfrastructureData?.filter((item) => {
     const valuesToSearch = [
@@ -51,9 +47,29 @@ export function InfrastructureData() {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentItems = filteredData?.slice(startIndex, startIndex + itemsPerPage);
 
+  const handleExpectionModal = (item) => {
+    if (!item.Expection) {
+      setIsModalOpen(true);
+      setSelectedId(item._id)
+    } else {
+      alert("Expection already exists for this record");
+    }
+  }
+
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm]);
+
+  useEffect(() => {
+    if (token) {
+      GetInfrastructureData(currentPage, tenant);
+    }
+  }, [currentPage, tenant]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setTenant(params.get('tenant') || '');
+  }, [location.search]);
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -134,7 +150,7 @@ export function InfrastructureData() {
                           }}
                           className="w-4 h-4 text-red-500 cursor-pointer"
                         />
-                        <User onClick={() => {setIsModalOpen(true);setSelectedId(item._id)}} className="w-4 h-4 text-green-500 cursor-pointer" />
+                        <User onClick={() => handleExpectionModal(item)} className="w-4 h-4 text-green-500 cursor-pointer" />
                         <Eye className="w-4 h-4 text-lime-400 cursor-pointer" />
                       </td>
                     </tr>
@@ -169,7 +185,7 @@ export function InfrastructureData() {
           </div>
 
           {isModalOpen && (
-           <ExpectionModal setIsModalOpen={setIsModalOpen} creator={selectedId} />
+            <ExpectionModal setIsModalOpen={setIsModalOpen} creator={selectedId} />
           )}
         </div>
       )}

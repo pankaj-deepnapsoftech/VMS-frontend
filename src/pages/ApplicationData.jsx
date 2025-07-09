@@ -2,7 +2,7 @@ import { Suspense, useEffect, useState } from "react";
 import { useAuthContext, useVulnerabililtyDataContext } from "@/context";
 import Loader from "@/components/Loader/Loader";
 import { Eye, Pencil, Trash2, User } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ExpectionModal from "@/modals/ExpectionModal";
 
 
@@ -15,18 +15,12 @@ export function ApplicationData() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedId,setSelectedId] = useState(null)
+  const [selectedId, setSelectedId] = useState(null)
+  const [tenant, setTenant] = useState('');
+  const location = useLocation();
 
 
-  
 
-  useEffect(() => {
-    if (token) {
-      GetApplicationData();
-    }
-  }, [token]);
-
-  console.log(allApplicationData)
 
   const filteredData = allApplicationData?.filter((item) => {
     const valuesToSearch = [
@@ -53,6 +47,30 @@ export function ApplicationData() {
         field.toString().toLowerCase().includes(searchTerm.toLowerCase())
       );
   });
+
+
+
+  const handleExpectionModal = (item) => {
+    if (!item.Expection) {
+      setIsModalOpen(true);
+      setSelectedId(item._id);
+    } else {
+      alert("Expection already exists for this record");
+    }
+  }
+
+
+  useEffect(() => {
+    if (token) {
+      GetApplicationData(currentPage, tenant);
+    }
+  }, [tenant, currentPage]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setTenant(params.get('tenant') || '');
+  }, [location.search]);
+
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -154,7 +172,7 @@ export function ApplicationData() {
                         />
                         <User
                           className="w-4 h-4 text-green-500 cursor-pointer"
-                          onClick={() =>{ setIsModalOpen(true);setSelectedId(item._id);}}
+                          onClick={() => handleExpectionModal(item)}
                         />
                         <Eye className="w-4 h-4 text-lime-400 cursor-pointer" />
                       </td>
@@ -191,7 +209,7 @@ export function ApplicationData() {
 
           {/* MODAL */}
           {isModalOpen && (
-           <ExpectionModal setIsModalOpen={setIsModalOpen} creator={selectedId}/>
+            <ExpectionModal setIsModalOpen={setIsModalOpen} creator={selectedId} />
           )}
         </div>
       )}
