@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { BiPlus } from "react-icons/bi";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import Loader from "@/components/Loader/Loader";
-import Pagination from "@/components/Pagination";
 import { AxiosHandler } from "@/config/AxiosConfig";
+import { useTagsContext } from "@/context"; 
 
 export default function TagsPage() {
   const [tags, setTags] = useState([]);
@@ -13,35 +13,14 @@ export default function TagsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
+const {createTags} = useTagsContext()
+  // Form fields
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [score, setScore] = useState("");
+  const [color, setColor] = useState("");
 
-  const fetchTags = async () => {
-    try {
-      setLoading(true);
-      const res = await AxiosHandler.get(`/tag/get?page=${page}&limit=10`);
-      setTags(res.data.data || []);
-    } catch (error) {
-      console.error("Failed to fetch tags", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const deleteTag = async (id) => {
-    if (window.confirm("Are you sure you want to delete this tag?")) {
-      try {
-        await AxiosHandler.delete(`/tag/delete/${id}`);
-        fetchTags();
-      } catch (error) {
-        console.error("Failed to delete tag", error);
-      }
-    }
-  };
-
-  useEffect(() => {
-    fetchTags();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
-
+ 
   useEffect(() => {
     const query = searchQuery.toLowerCase();
     setFilteredTags(
@@ -49,40 +28,20 @@ export default function TagsPage() {
     );
   }, [tags, searchQuery]);
 
-  // Modal inner logic
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-
   useEffect(() => {
     if (editTag) {
       setName(editTag.name);
       setDescription(editTag.description || "");
+      setScore(editTag.score || "");
+      setColor(editTag.color || "");
     } else {
       setName("");
       setDescription("");
+      setScore("");
+      setColor("");
     }
   }, [editTag, isModalOpen]);
 
-  const handleSaveTag = async () => {
-    if (!name.trim()) return alert("Tag name is required");
-    try {
-      if (editTag) {
-        await AxiosHandler.put(`/tag/update/${editTag._id}`, {
-          name,
-          description,
-        });
-      } else {
-        await AxiosHandler.post(`/tag/create`, {
-          name,
-          description,
-        });
-      }
-      fetchTags();
-      setIsModalOpen(false);
-    } catch (error) {
-      console.error("Error saving tag:", error);
-    }
-  };
 
   return (
     <>
@@ -127,6 +86,8 @@ export default function TagsPage() {
                     <tr>
                       <th className="px-4 py-3 text-left">Tag Name</th>
                       <th className="px-4 py-3 text-left">Description</th>
+                      <th className="px-4 py-3 text-left">Tag Score</th>
+                      <th className="px-4 py-3 text-left">Tag Color</th>
                       <th className="px-4 py-3 text-left">Actions</th>
                     </tr>
                   </thead>
@@ -138,6 +99,14 @@ export default function TagsPage() {
                       >
                         <td className="p-3">{tag.name}</td>
                         <td className="p-3">{tag.description || "—"}</td>
+                        <td className="p-3">{tag.score || "—"}</td>
+                        <td className="p-3">
+                          <span
+                            className="inline-block w-4 h-4 rounded-full mr-2"
+                            style={{ backgroundColor: tag.color }}
+                          ></span>
+                          {tag.color}
+                        </td>
                         <td className="p-3 flex gap-2">
                           <FaEdit
                             title="Edit"
@@ -149,7 +118,7 @@ export default function TagsPage() {
                           />
                           <FaTrash
                             title="Delete"
-                            onClick={() => deleteTag(tag._id)}
+                            // onClick={() => deleteTag(tag._id)}
                             className="text-red-500 cursor-pointer"
                           />
                         </td>
@@ -159,12 +128,6 @@ export default function TagsPage() {
                 </table>
               )}
             </div>
-
-            <Pagination
-              page={page}
-              setPage={setPage}
-              hasNextPage={tags.length === 10}
-            />
           </div>
         </div>
       )}
@@ -172,32 +135,62 @@ export default function TagsPage() {
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/50 flex justify-center items-center">
-          <div className="bg-[#0F172A] text-white w-[400px] rounded-lg shadow-lg p-6 space-y-4">
+          <div className="bg-[#0F172A] text-white w-[600px] rounded-lg shadow-lg p-6 space-y-4">
             <h2 className="text-xl font-semibold mb-4">
               {editTag ? "Edit Tag" : "Add Tag"}
             </h2>
+
+            <label className="block text-sm font-medium text-gray-300 mb-1">
+              Tag Name
+            </label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Tag Name"
+              placeholder="Enter tag name"
               className="w-full p-2 bg-[#1E293B] text-white rounded-md"
             />
+
+            <label className="block text-sm font-medium text-gray-300 mb-1">
+              Description
+            </label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Description (optional)"
+              placeholder="Enter description"
+              className="w-full p-2 bg-[#1E293B] text-white rounded-md"
+            />
+
+            <label className="block text-sm font-medium text-gray-300 mb-1">
+              Tag Score
+            </label>
+            <input
+              type="number"
+              value={score}
+              onChange={(e) => setScore(e.target.value)}
+              placeholder="Enter tag score"
+              className="w-full p-2 bg-[#1E293B] text-white rounded-md"
+            />
+
+            <label className="block text-sm font-medium text-gray-300 mb-1">
+              Tag Color
+            </label>
+            <input
+              type="text"
+              value={color}
+              onChange={(e) => setColor(e.target.value)}
+              placeholder="Enter tag color"
               className="w-full p-2 bg-[#1E293B] text-white rounded-md"
             />
             <div className="flex justify-end gap-4">
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="bg-gray-500 px-4 py-2 rounded-md"
+                className="bg-gray-500 hover:bg-gray-600 text-gray-800 px-4 py-2 rounded-md"
               >
                 Cancel
               </button>
               <button
-                onClick={handleSaveTag}
+                onClick={createTags}
                 className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md"
               >
                 {editTag ? "Update" : "Add"}

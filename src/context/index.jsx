@@ -13,7 +13,7 @@ import { ExceptionContext } from "./ExceptionContext/ExceptionContext";
 import { ReportContext } from "./ReportContext/ReportContext";
 import { InfrastructureVulnerabilityContext } from "./InfrastructureVulnerabilityContext/InfrastructureVulnerabilityContext";
 import { InfraAssetContext } from "./InfraAssetContext/InfraAssetContext"; 
-
+import { TagsContext } from "./TagsContext/TagsContext";
 
 
 
@@ -34,6 +34,7 @@ export { default as ExceptionContextProvider } from "./ExceptionContext/Exceptio
 export { default as InfrastructureVulnerabilityContextProvider } from "./InfrastructureVulnerabilityContext/InfrastructureVulnerabilityContext"
 export {default as InfraAssetContextProvider} from "./InfraAssetContext/InfraAssetContext"
 
+export { default as TagsContextProvider } from "./TagsContext/TagsContext";
 
 
 
@@ -52,7 +53,7 @@ export const useRemeditionContext = () =>	useContext(RemeditionContext)
 export const useExceptionContext = () =>	useContext(ExceptionContext)
 export const useInfrastructureVulnerabilityContext = () =>	useContext(InfrastructureVulnerabilityContext)
 export const useInfraAssetContext = () => useContext(InfraAssetContext)
-
+export const useTagsContext = () => useContext(TagsContext);
 
 
 
