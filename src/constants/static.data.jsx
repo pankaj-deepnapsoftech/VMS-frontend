@@ -261,6 +261,7 @@ export const products = [
       { title: "Config Email", route: "/config-email", icon: Settings },
       { title: "Role", route: "/roles", icon: LucideShield },
       { title: "Partners", route: "/partners", icon: Users },
+      { title: "Tag Config", route: "/tags", icon: MdInventory2 },
     ],
   },
 ];

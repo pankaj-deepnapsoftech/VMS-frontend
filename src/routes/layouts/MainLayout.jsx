@@ -138,7 +138,7 @@ const MainLayout = () => {
 
                 <div className="flex gap-3 w-full">
                   <Link className="flex items-center ">
-                    <div className="flex gap-2 items-center justify-center  h-7  ">
+                    <div className="flex gap-2 items-center justify-center  h-7 ">
                       <img
                         src="/logo.png"
                         alt="logo"
@@ -150,7 +150,7 @@ const MainLayout = () => {
 
                   {!authenticate?.role
                     && (<Select
-                      className="basic-single"
+                      className="custom-scrollbar basic-single"
                       classNamePrefix="select"
                       defaultValue={tenant}
                       onChange={handleSelect}

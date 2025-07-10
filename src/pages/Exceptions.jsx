@@ -185,7 +185,7 @@ function Exceptions() {
                         {deferralData.map((entry) => (
                           <Cell key={entry.name} fill={entry.color} />
                         ))}
-                      </Bar>
+                      </Bar>                                        
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
@@ -213,7 +213,7 @@ function Exceptions() {
               </div>
             </div>
           </div>
-
+ 
           <div className="p-4 mb-20 md:p-6 max-w-[95%] mx-auto bg-[#2d333b] rounded-xl shadow-lg">
             <div className="relative mt-4 py-5 md:mt-0">
               <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white h-5 w-5" />
@@ -278,7 +278,7 @@ function Exceptions() {
                                 <button
                                   onClick={() => {
                                     const updatedItem = {
-                                      ...item,
+                                      ...item, 
                                       client_Approve: true,
                                     };
                                     UpdateData(updatedItem, item?._id);
@@ -317,7 +317,7 @@ function Exceptions() {
                 </table>
               </div>
             )}
-
+                                                       
             <div className="flex justify-between items-center my-16">
               <button
                 className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white border rounded-md ${

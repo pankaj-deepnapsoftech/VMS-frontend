@@ -28,6 +28,7 @@ import { InfrastructureData } from "@/pages/InfrastructureData";
 import BusinessApplications from "@/pages/BusinessApplications";
 import VulnerabilityForm from "@/pages/AddVulnerabilityData";
 import ExceptionTable from "@/pages/ExceptionTable";
+import TagsPage from "@/pages/TagConfig";
 
 export const PrivateRoutes = [
   {
@@ -154,5 +155,9 @@ export const PrivateRoutes = [
   {
     path:"/pending-exception",
     element:<ExceptionTable/>
+  },
+  {
+    path:"/tags",
+    element:<TagsPage/>
   }
 ];
