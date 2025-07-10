@@ -8,8 +8,8 @@ import { useFormik } from "formik";
 import { tagValidation } from "@/Validation/TagValidation";
 
 export default function TagsPage() {
-  const { createTags,GetTages,Tages } = useTagsContext()
-  const {token} = useAuthContext();
+  const { createTags, GetTages, Tages } = useTagsContext();
+  const { token } = useAuthContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editTag, setEditTag] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -17,22 +17,25 @@ export default function TagsPage() {
   const [page, setPage] = useState(1);
   // Form fields
 
-  const { values, touched, errors, handleBlur, handleChange, handleSubmit } = useFormik({
-    initialValues: { tag_name: "", tag_description: "", tag_score: "", tag_color: "" },
-    validationSchema:tagValidation,
-    onSubmit: (value) => {
-      createTags(value)
-    }
-  })
+  const { values, touched, errors, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: {
+        tag_name: "",
+        tag_description: "",
+        tag_score: "",
+        tag_color: "",
+      },
+      validationSchema: tagValidation,
+      onSubmit: (value) => {
+        createTags(value);
+      },
+    });
 
-
-  useEffect(()=>{
-    if(token){
+  useEffect(() => {
+    if (token) {
       GetTages();
     }
-  },[])
-
-
+  }, []);
 
   return (
     <>
@@ -126,7 +129,10 @@ export default function TagsPage() {
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/50 flex justify-center items-center">
-          <form onSubmit={handleSubmit} className="bg-[#0F172A] text-white w-[600px] rounded-lg shadow-lg p-6 space-y-4">
+          <form
+            onSubmit={handleSubmit}
+            className="bg-[#0F172A] text-white w-[600px] rounded-lg shadow-lg p-6 space-y-4"
+          >
             <h2 className="text-xl font-semibold mb-4">
               {editTag ? "Edit Tag" : "Add Tag"}
             </h2>
@@ -144,7 +150,9 @@ export default function TagsPage() {
                 placeholder="Enter tag name"
                 className="w-full p-2 bg-[#1E293B] text-white rounded-md"
               />
-              {errors.tag_name && touched.tag_name && <p className="text-red-500" >{errors.tag_name}</p>}
+              {errors.tag_name && touched.tag_name && (
+                <p className="text-red-500">{errors.tag_name}</p>
+              )}
             </div>
 
             {/* <label className="block text-sm font-medium text-gray-300 mb-1">
@@ -172,7 +180,9 @@ export default function TagsPage() {
                 placeholder="Enter tag score"
                 className="w-full p-2 bg-[#1E293B] text-white rounded-md"
               />
-              {errors.tag_score && touched.tag_score && <p className="text-red-500" >{errors.tag_score}</p>}
+              {errors.tag_score && touched.tag_score && (
+                <p className="text-red-500">{errors.tag_score}</p>
+              )}
             </div>
 
             {/* <label className="block text-sm font-medium text-gray-300 mb-1">
