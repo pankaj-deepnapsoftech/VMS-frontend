@@ -20,6 +20,7 @@ const AuthContextProvider = ({ children }) => {
   const [runner, setRunner] = useState(1);
   const [authenticate, setAuthenticate] = useState(null);
   const [updateProfileModal, setUpdateProfileModal] = useState(false);
+  const [UserViaTenant,setuserViaTenant] = useState([])
   const [getDataFromSession, setGetDataFromSession] = useState(() => {
     return sessionStorage.getItem("VROC");
   })
@@ -254,6 +255,14 @@ const AuthContextProvider = ({ children }) => {
   }
 
 
+   const GetTenantData = async (tenant) => {
+    try {
+      const res = await AxiosHandler.get(`/auth/user-by-tenant?tenant=${tenant  ? tenant : ""}`);
+      setuserViaTenant(res.data.data);
+    } catch (error) {
+      console.log(error)
+    } 
+  }
 
 
   useEffect(() => {
@@ -287,7 +296,9 @@ const AuthContextProvider = ({ children }) => {
       UpdateProfile,
       setUpdateProfileModal,
       updateProfileModal,
-      ResetWithQuestion
+      ResetWithQuestion,
+      GetTenantData,
+      UserViaTenant
     }}>
       {children}
     </authContext.Provider>
