@@ -8,29 +8,34 @@ import { useFormik } from "formik";
 import { tagValidation } from "@/Validation/TagValidation";
 
 export default function TagsPage() {
-  const { createTags,GetTages,Tages } = useTagsContext()
-  const {token} = useAuthContext();
+  const { createTags, GetTages, Tages, UpdateTags,DeleteTags } = useTagsContext()
+  const { token } = useAuthContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editTag, setEditTag] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
   // Form fields
 
   const { values, touched, errors, handleBlur, handleChange, handleSubmit } = useFormik({
-    initialValues: { tag_name: "", tag_description: "", tag_score: "", tag_color: "" },
-    validationSchema:tagValidation,
+    initialValues: editTag || { tag_name: "", tag_description: "", tag_score: "", tag_color: "" },
+    validationSchema: tagValidation,
+    enableReinitialize: true,
     onSubmit: (value) => {
-      createTags(value)
+      if (editTag) {
+        UpdateTags(value)
+      } else {
+        createTags(value)
+      }
+      setIsModalOpen(false)
     }
   })
 
 
-  useEffect(()=>{
-    if(token){
+  useEffect(() => {
+    if (token) {
       GetTages();
     }
-  },[])
+  }, [])
 
 
 
@@ -109,7 +114,7 @@ export default function TagsPage() {
                           />
                           <FaTrash
                             title="Delete"
-                            // onClick={() => deleteTag(tag._id)}
+                            onClick={() => DeleteTags(tag._id)}
                             className="text-red-500 cursor-pointer"
                           />
                         </td>
