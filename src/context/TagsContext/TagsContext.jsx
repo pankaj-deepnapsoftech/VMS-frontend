@@ -28,7 +28,27 @@ const TagsContextProvider = ({ children }) => {
     }
   };
 
-  return <TagsContext.Provider value={{createTags,GetTages,Tages}}>{children}</TagsContext.Provider>;
+  const UpdateTags = async(data) => {
+    try {
+      const res = await AxiosHandler.put(`/tags/update-tag/${data._id}`,data);
+      toast.success(res.data.message);
+      GetTages();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const DeleteTags = async(id) => {
+    try {
+      const res = await AxiosHandler.delete(`/tags/delete/${id}`);
+      toast.success(res.data.message);
+      GetTages();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  return <TagsContext.Provider value={{createTags,GetTages,Tages,UpdateTags,DeleteTags}}>{children}</TagsContext.Provider>;
 };
 
 export default TagsContextProvider;

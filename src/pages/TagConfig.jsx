@@ -8,26 +8,32 @@ import { useFormik } from "formik";
 import { tagValidation } from "@/Validation/TagValidation";
 
 export default function TagsPage() {
-  const { createTags, GetTages, Tages } = useTagsContext();
+  const { createTags, GetTages, Tages, UpdateTags, DeleteTags } =
+    useTagsContext();
   const { token } = useAuthContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editTag, setEditTag] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
   // Form fields
 
   const { values, touched, errors, handleBlur, handleChange, handleSubmit } =
     useFormik({
-      initialValues: {
+      initialValues: editTag || {  
         tag_name: "",
         tag_description: "",
         tag_score: "",
         tag_color: "",
       },
       validationSchema: tagValidation,
+      enableReinitialize: true,
       onSubmit: (value) => {
-        createTags(value);
+        if (editTag) {
+          UpdateTags(value);
+        } else {
+          createTags(value);
+        }
+        setIsModalOpen(false);
       },
     });
 
@@ -66,7 +72,7 @@ export default function TagsPage() {
               </button>
             </div>
           </div>
-
+   
           {/* Table */}
           <div className="m-6 p-2 bg-tablecolor shadow-lg rounded-lg">
             <div className="mt-6 bg-[#0c1120] overflow-x-auto custom-scrollbar text-sm text-white">
@@ -74,7 +80,7 @@ export default function TagsPage() {
                 <div className="text-center py-6 text-gray-400">
                   No matching records found.
                 </div>
-              ) : (
+              ) : (  
                 <table className="min-w-full divide-y divide-gray-700">
                   <thead className="bg-gradient-to-br from-[#0a0f39] via-[#080d27] to-[#050b20]">
                     <tr>
@@ -112,7 +118,14 @@ export default function TagsPage() {
                           />
                           <FaTrash
                             title="Delete"
-                            // onClick={() => deleteTag(tag._id)}
+                            onClick={() => {
+                              const confirmDelete = window.confirm(
+                                "Are you sure you want to delete this tag?"
+                              );
+                              if (confirmDelete) {
+                                DeleteTags(tag._id);
+                              }
+                            }}
                             className="text-red-500 cursor-pointer"
                           />
                         </td>
