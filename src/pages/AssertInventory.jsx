@@ -28,6 +28,8 @@ export default function TenantDashboard() {
   } = useInfraAssetContext();
   const [editable, setEditable] = useState(null);
 
+  console.log(infraAssetdata)
+
   const filteredTenants = infraAssetdata.filter((tenant) =>
     tenant.asset_hostname.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -45,16 +47,15 @@ export default function TenantDashboard() {
       validationSchema: InfraAssetvalidation,
       enableReinitialize: true,
       onSubmit: (value) => {
-        console.log("this is only for testing values",value)
-        // if (!tenant) {
-        //   return alert("Please select a tenant");
-        // }
-        // if (editable) {
-        //   UpdateInfraAsset(editable._id, value);
-        // } else {
-        //   CreateInfraAsset({ ...value, creator: tenant });
-        // }
-        // setmodel(false);
+        if (!tenant && !editable) {
+          return alert("Please select a tenant");
+        }
+        if (editable) {
+          UpdateInfraAsset(editable._id, value);
+        } else {
+          CreateInfraAsset({ ...value, creator: tenant });
+        }
+        setmodel(false);
       },
     });
   const handleFileChange = (e) => {
