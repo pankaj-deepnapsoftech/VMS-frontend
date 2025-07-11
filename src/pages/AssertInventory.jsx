@@ -6,6 +6,7 @@ import { InfraAssetvalidation } from "@/Validation/InfrastructureAssetvalidation
 import { useAuthContext, useInfraAssetContext } from "@/context";
 import * as XLSX from "xlsx";
 import { useLocation } from "react-router-dom";
+import CustomSelection from "@/components/customSelection/CustomSelection";
 
 export default function TenantDashboard() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -33,25 +34,27 @@ export default function TenantDashboard() {
 
 
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit,setFieldValue } =
     useFormik({
       initialValues: editable || {
         asset_hostname: "",
         modify_criticality: "",
         asset_ip: "",
+        tages:null,
       },
       validationSchema: InfraAssetvalidation,
       enableReinitialize: true,
       onSubmit: (value) => {
-        if (!tenant) {
-          return alert("Please select a tenant");
-        }
-        if (editable) {
-          UpdateInfraAsset(editable._id, value);
-        } else {
-          CreateInfraAsset({ ...value, creator: tenant });
-        }
-        setmodel(false);
+        console.log("this is only for testing values",value)
+        // if (!tenant) {
+        //   return alert("Please select a tenant");
+        // }
+        // if (editable) {
+        //   UpdateInfraAsset(editable._id, value);
+        // } else {
+        //   CreateInfraAsset({ ...value, creator: tenant });
+        // }
+        // setmodel(false);
       },
     });
   const handleFileChange = (e) => {
@@ -146,7 +149,7 @@ export default function TenantDashboard() {
                 <tbody>
                   {filteredTenants.map((tenant) => (
                     <tr
-                      key={tenant.id}
+                      key={tenant._id}
                       className="border-b border-slate-700 hover:bg-slate-750"
                     >
                       <td className="py-4 px-6 text-white">
@@ -360,6 +363,8 @@ export default function TenantDashboard() {
                     <p className="text-red-400">{errors.modify_criticality}</p>
                   )}
                 </div>
+
+                <CustomSelection setFieldvalue={setFieldValue} isError={errors.tages && touched.tages} error={errors.tages} handleBlur={handleBlur}/>
 
                 {/* <div className="space-y-2">
                   <label className="block text-sm font-medium text-slate-300">Description*</label>
