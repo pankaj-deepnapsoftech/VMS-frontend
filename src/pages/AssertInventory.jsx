@@ -138,7 +138,7 @@ export default function TenantDashboard() {
                     <th className="text-left py-4 px-6 font-medium text-gray-300">
                       Asset IP
                     </th>
-                    <th className="text-left py-4 px-6 font-medium text-gray-300">
+                    <th className="text-left py-4 px-6 font-medium text-gray-300"> 
                       Modify Criticality
                     </th>
                     <th className="text-left py-4 px-6 font-medium text-gray-300">
