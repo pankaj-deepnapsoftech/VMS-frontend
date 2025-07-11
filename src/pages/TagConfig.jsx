@@ -7,7 +7,8 @@ import { useFormik } from "formik";
 import { tagValidation } from "@/Validation/TagValidation";
 
 export default function TagsPage() {
-  const { createTags, GetTages, Tages, UpdateTags, DeleteTags } = useTagsContext();
+  const { createTags, GetTages, Tages, UpdateTags, DeleteTags } =
+    useTagsContext();
   const { token } = useAuthContext();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,24 +16,25 @@ export default function TagsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setLoading] = useState(false);
 
-  const { values, touched, errors, handleBlur, handleChange, handleSubmit } = useFormik({
-    initialValues: editTag || {
-      tag_name: "",
-      tag_description: "",
-      tag_score: "",
-      tag_color: "",
-    },
-    validationSchema: tagValidation,
-    enableReinitialize: true,
-    onSubmit: (value) => {
-      if (editTag) {
-        UpdateTags(value);
-      } else {
-        createTags(value);
-      }
-      setIsModalOpen(false);
-    },
-  });
+  const { values, touched, errors, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: editTag || {
+        tag_name: "",
+        tag_description: "",
+        tag_score: "",
+        tag_color: "",
+      },
+      validationSchema: tagValidation,
+      enableReinitialize: true,
+      onSubmit: (value) => {
+        if (editTag) {
+          UpdateTags(value);
+        } else {
+          createTags(value);
+        }
+        setIsModalOpen(false);
+      },
+    });
 
   useEffect(() => {
     if (token) {
@@ -165,7 +167,23 @@ export default function TagsPage() {
                 <p className="text-red-500">{errors.tag_name}</p>
               )}
             </div>
-
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-1">
+                Description
+              </label>
+              <textarea
+                type="text"
+                name="tag_description"
+                value={values.tag_description}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder="Description"
+                className="w-full p-2 bg-[#1E293B] text-white rounded-md"
+              />
+              {errors.tag_description && touched.tag_description && (
+                <p className="text-red-500">{errors.tag_description}</p>
+              )}
+            </div>
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1">
                 Tag Score
@@ -181,6 +199,24 @@ export default function TagsPage() {
               />
               {errors.tag_score && touched.tag_score && (
                 <p className="text-red-500">{errors.tag_score}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-1">
+                Tag Color
+              </label>
+              <input
+                type="color"
+                name="tag_color"
+                value={values.tag_color}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className="w-full h-10 rounded-md bg-transparent cursor-pointer"
+              />
+              <p className="text-sm text-gray-300 mt-1">{values.tag_color}</p>
+              {errors.tag_color && touched.tag_color && (
+                <p className="text-red-500">{errors.tag_color}</p>
               )}
             </div>
 
