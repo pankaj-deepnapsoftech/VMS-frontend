@@ -221,6 +221,12 @@ export default function TagsPage() {
               )}
             </div>
 
+            { values.tag_color && values.tag_name && <div className="flex items-center justify-center">
+              <span className="px-3 py-2 rounded-full" style={{ backgroundColor: values.tag_color }}>
+                {values.tag_name}
+              </span>
+            </div>}
+
             <div className="flex justify-end gap-4">
               <button
                 onClick={() => setIsModalOpen(false)}
