@@ -203,18 +203,19 @@ export default function TagsPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1">
+              <label htmlFor="tag_color" className="block text-sm font-medium text-gray-300 mb-1">
                 Tag Color
+                <div className="w-full h-10 rounded-md  bg-[#1E293B] cursor-pointer" >{values.tag_color ? values.tag_color : "Select Color"}</div>
               </label>
               <input
+              id="tag_color"
                 type="color"
                 name="tag_color"
                 value={values.tag_color}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                className="w-full h-10 rounded-md bg-transparent cursor-pointer"
+                hidden
               />
-              <p className="text-sm text-gray-300 mt-1">{values.tag_color}</p>
               {errors.tag_color && touched.tag_color && (
                 <p className="text-red-500">{errors.tag_color}</p>
               )}
