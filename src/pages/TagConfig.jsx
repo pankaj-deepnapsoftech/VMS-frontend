@@ -95,6 +95,7 @@ export default function TagsPage() {
                       <th className="px-4 py-3 text-left">Tag Name</th>
                       <th className="px-4 py-3 text-left">Description</th>
                       <th className="px-4 py-3 text-left">Tag Score</th>
+                      <th className="px-4 py-3 text-left">Tag Color</th>
                       <th className="px-4 py-3 text-left">Actions</th>
                     </tr>
                   </thead>
@@ -105,8 +106,9 @@ export default function TagsPage() {
                         className="border-b border-gray-700 whitespace-nowrap hover:bg-[#1e1e1e] transition"
                       >
                         <td className="p-3">{tag.tag_name}</td>
-                        <td className="p-3">{tag.description || "—"}</td>
+                        <td className="p-3">{tag.tag_description || "—"}</td>
                         <td className="p-3">{tag.tag_score || "—"}</td>
+                         <td className="p-3">{tag.tag_color || "—"}</td>
                         <td className="p-3 flex gap-2">
                           <FaEdit
                             title="Edit"
