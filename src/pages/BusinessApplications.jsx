@@ -26,7 +26,7 @@ export default function BusinessApplications() {
 
 
     const filteredTenants = businessApplication.filter((tenant) =>
-        tenant.name.toLowerCase().includes(searchTerm.toLowerCase()),
+        tenant?.name?.toLowerCase()?.includes(searchTerm?.toLowerCase()),
     )
 
     const { values, errors, touched, handleBlur, handleChange, handleSubmit ,setFieldValue } = useFormik({
