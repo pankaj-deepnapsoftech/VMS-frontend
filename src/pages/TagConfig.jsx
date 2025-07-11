@@ -207,7 +207,7 @@ export default function TagsPage() {
                 Tag Color
               </label>
               <input
-                type="color"
+                type="color" 
                 name="tag_color"
                 value={values.tag_color}
                 onChange={handleChange}
