@@ -6,6 +6,7 @@ import { useAuthContext, useInfraAssetContext } from "@/context"
 import { BusinessApplicationValidation } from "@/Validation/BusinessApp.validation"
 import axios from "axios";
 import * as XLSX from "xlsx";
+import CustomSelection from "@/components/customSelection/CustomSelection"
 
 
 
@@ -28,12 +29,12 @@ export default function BusinessApplications() {
         tenant.name.toLowerCase().includes(searchTerm.toLowerCase()),
     )
 
-    const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
-        initialValues: editable || { name: "", description: "", country: "", state: "", city: "", type: "", applicationUrl: "", modifyCriticality: "" },
+    const { values, errors, touched, handleBlur, handleChange, handleSubmit ,setFieldValue } = useFormik({
+        initialValues: editable || { name: "", description: "", country: "", state: "", city: "", type: "", applicationUrl: "", modifyCriticality: "",tages:null },
         validationSchema: BusinessApplicationValidation,
         enableReinitialize: true,
         onSubmit: (value) => {
-            if (!tenant) {
+            if (!tenant && !editable) {
                 return alert("Please select a tenant");
             }
             console.log(value)
@@ -48,7 +49,7 @@ export default function BusinessApplications() {
 
     const handleDownload = () => {
         const data = [{
-            name: "", description: "", country: "", state: "", city: "", type: "", applicationUrl: "", modifyCriticality: ""
+            name: "", description: "", country: "", state: "", city: "", type: "", applicationUrl: "", modifyCriticality: "",
         }]
         const worksheet = XLSX.utils.json_to_sheet(data);
         const workbook = XLSX.utils.book_new();
@@ -431,6 +432,8 @@ export default function BusinessApplications() {
                                     </select>
                                     {errors.modifyCriticality && touched.modifyCriticality && <p className="text-red-400" >{errors.modifyCriticality}</p>}
                                 </div>
+
+                                <CustomSelection setFieldvalue={setFieldValue} isError={touched.tages && errors.tages} error={errors.tages} handleBlur={()=>handleBlur('tages')}/>
 
                             </div>
 

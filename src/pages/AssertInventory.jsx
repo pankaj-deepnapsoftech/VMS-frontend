@@ -36,13 +36,13 @@ export default function TenantDashboard() {
 
 
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit,setFieldValue } =
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit, setFieldValue } =
     useFormik({
       initialValues: editable || {
         asset_hostname: "",
         modify_criticality: "",
         asset_ip: "",
-        tages:null,
+        tages: null,
       },
       validationSchema: InfraAssetvalidation,
       enableReinitialize: true,
@@ -165,8 +165,12 @@ export default function TenantDashboard() {
                       <td className="py-4 px-6 text-white">
                         {tenant.modify_criticality}
                       </td>
-                      <td className="py-4 px-6 text-white">
-                        {console.log(tenant)}
+                      <td className="py-4 px-6 text-white flex flex-wrap gap-1 w-60">
+                        {tenant.tages.length > 0 ? (
+                          tenant.tages?.map((item) => (
+                            <p key={item._id} style={{ backgroundColor:item.tag_color}} className="px-3 py-1 rounded-full" >{item.tag_name}</p>
+                          ))
+                        ) : "-"}
                       </td>
                       <td className="py-4 px-6">
                         <div className="flex space-x-2">
@@ -195,7 +199,7 @@ export default function TenantDashboard() {
                 </tbody>
               </table>
             </div>
-          </div>  
+          </div>
 
           {/* Pagination */}
           <div className="flex justify-between items-center mt-6">
@@ -371,7 +375,7 @@ export default function TenantDashboard() {
                   )}
                 </div>
 
-                <CustomSelection setFieldvalue={setFieldValue} isError={errors.tages && touched.tages} error={errors.tages} handleBlur={handleBlur}/>
+                <CustomSelection setFieldvalue={setFieldValue} isError={errors.tages && touched.tages} error={errors.tages} handleBlur={() => handleBlur("tages")} />
 
                 {/* <div className="space-y-2">
                   <label className="block text-sm font-medium text-slate-300">Description*</label>
