@@ -1,7 +1,6 @@
 import { AxiosHandler } from "@/config/AxiosConfig";
 import { createContext, useState } from "react";
 import toast from "react-hot-toast";
-import { useAuthContext } from "..";
 
 export const TagsContext = createContext();
 
@@ -14,6 +13,7 @@ const TagsContextProvider = ({ children }) => {
     try {
       const res = await AxiosHandler.get('/tags/get-tags');
       setTags(res.data.data);
+      GetTages()
     } catch (error) {
       console.error("Error fetching tags:", error);
     }
