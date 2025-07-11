@@ -205,7 +205,7 @@ export default function TagsPage() {
             <div>
               <label htmlFor="tag_color" className="block text-sm font-medium text-gray-300 mb-1">
                 Tag Color
-                <div className="w-full h-10 rounded-md  bg-[#1E293B] cursor-pointer" >{values.tag_color ? values.tag_color : "Select Color"}</div>
+                <div className="w-full mt-1 h-10 rounded-md p-2 bg-[#1E293B] cursor-pointer" >{values.tag_color ? values.tag_color : "Select Color"}</div>
               </label>
               <input
               id="tag_color"
@@ -218,7 +218,7 @@ export default function TagsPage() {
               />
               {errors.tag_color && touched.tag_color && (
                 <p className="text-red-500">{errors.tag_color}</p>
-              )}
+              )} 
             </div>
 
             <div className="flex justify-end gap-4">
