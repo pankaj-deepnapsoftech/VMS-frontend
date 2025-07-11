@@ -139,8 +139,11 @@ export default function TenantDashboard() {
                     <th className="text-left py-4 px-6 font-medium text-gray-300">
                       Asset IP
                     </th>
-                    <th className="text-left py-4 px-6 font-medium text-gray-300">
+                    <th className="text-left py-4 px-6 font-medium text-gray-300"> 
                       Modify Criticality
+                    </th>
+                    <th className="text-left py-4 px-6 font-medium text-gray-300">
+                      Tags
                     </th>
                     <th className="text-left py-4 px-6 font-medium text-gray-300">
                       Actions
@@ -161,6 +164,9 @@ export default function TenantDashboard() {
                       </td>
                       <td className="py-4 px-6 text-white">
                         {tenant.modify_criticality}
+                      </td>
+                      <td className="py-4 px-6 text-white">
+                        {console.log(tenant)}
                       </td>
                       <td className="py-4 px-6">
                         <div className="flex space-x-2">
