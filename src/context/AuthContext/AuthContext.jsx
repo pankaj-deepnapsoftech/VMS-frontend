@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 
-export const authContext = createContext();
+export const authContext = createContext({token:""});
 
 // eslint-disable-next-line react/prop-types
 const AuthContextProvider = ({ children }) => {

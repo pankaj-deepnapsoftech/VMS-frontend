@@ -1,13 +1,19 @@
 import { AxiosHandler } from "@/config/AxiosConfig";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useAuthContext } from "..";
 
-export const TagsContext = createContext();
+export const TagsContext = createContext({AllTags:[], Tages:[], createTags: () => {}, GetTages: () => {}, UpdateTags: () => {}, DeleteTags: () => {}});
 
 // eslint-disable-next-line react/prop-types
 const TagsContextProvider = ({ children }) => {
 
+  const {token} = useAuthContext();
+
   const [Tages, setTags] = useState([]);
+  const [AllTags,setallTags] = useState([]);
+
+
 
   const GetTages = async() => {
     try {
@@ -48,7 +54,22 @@ const TagsContextProvider = ({ children }) => {
     }
   }
 
-  return <TagsContext.Provider value={{createTags,GetTages,Tages,UpdateTags,DeleteTags}}>{children}</TagsContext.Provider>;
+  const getAllTags = async () => {
+    try {
+      const res = await AxiosHandler.get('/tags/get-all-tags');
+      setallTags(res.data.data);
+    } catch (error) {
+      console.error("Error fetching all tags:", error);
+    }
+  }
+
+  useEffect(() => {
+    if(token){
+      getAllTags();
+    }
+  }, []);
+
+  return <TagsContext.Provider value={{createTags,GetTages,Tages,UpdateTags,DeleteTags,AllTags}}>{children}</TagsContext.Provider>;
 };
 
 export default TagsContextProvider;
