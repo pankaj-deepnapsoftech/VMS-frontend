@@ -374,7 +374,7 @@ export default function TenantDashboard() {
                   )}
                 </div>
 
-                <CustomSelection setFieldvalue={setFieldValue} isError={errors.tages && touched.tages} error={errors.tages} handleBlur={() => handleBlur("tages")} />
+                <CustomSelection setFieldvalue={setFieldValue} isError={errors.tages && touched.tages} error={errors.tages} handleBlur={() => handleBlur("tages")} alreadySelected={editable && editable.tages} />
 
                 {/* <div className="space-y-2">
                   <label className="block text-sm font-medium text-slate-300">Description*</label>

@@ -433,7 +433,7 @@ export default function BusinessApplications() {
                                     {errors.modifyCriticality && touched.modifyCriticality && <p className="text-red-400" >{errors.modifyCriticality}</p>}
                                 </div>
 
-                                <CustomSelection setFieldvalue={setFieldValue} isError={touched.tages && errors.tages} error={errors.tages} handleBlur={()=>handleBlur('tages')}/>
+                                <CustomSelection setFieldvalue={setFieldValue} isError={touched.tages && errors.tages} error={errors.tages} handleBlur={()=>handleBlur('tages')} alreadySelected={editable && editable.tages} />
 
                             </div>
 
