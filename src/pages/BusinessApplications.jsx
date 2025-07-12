@@ -547,7 +547,7 @@ export default function BusinessApplications() {
                 </div>
 
                 <div>
-          <label className="block mb-1 text-sm">Asset</label>
+          <label className="block mb-1 text-sm text-white">Asset</label>
           <select
             name="asset"
             value={values.asset}
