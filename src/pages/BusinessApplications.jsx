@@ -216,8 +216,8 @@ export default function BusinessApplications() {
                       <td className="py-4 px-6 text-white">
                         {tenant?.modifyCriticality}
                       </td>
-                      <td  className="py-4 px-6 text-white">
-                        {tenant?.assets}
+                      <td className="py-4 px-6 text-white">
+                        {tenant?.asset?.asset_ip}
                       </td>
                       <td className="py-4 px-6 text-white flex flex-wrap gap-1 w-60">
                         {tenant.tages.length > 0
@@ -361,8 +361,9 @@ export default function BusinessApplications() {
                     <Boxes className="w-4 h-4 text-white" />
                   </div>
                 </div>
-               <span className="text-2xl font-medium text-white">
-                  Business Applications</span>
+                <span className="text-2xl font-medium text-white">
+                  Business Applications
+                </span>
                 <button
                   onClick={() => setmodel(!model)}
                   className="text-slate-400 hover:text-white transition-colors p-1"
