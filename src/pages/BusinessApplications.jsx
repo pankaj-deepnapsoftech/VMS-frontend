@@ -11,12 +11,14 @@ import CustomSelection from "@/components/customSelection/CustomSelection"
 
 
 export default function BusinessApplications() {
+    // all contexts imports
+    const { token } = useAuthContext();
+    const { CreateBussinerssApplcation,GetAllInfraAssetData, GetBussinerssApplcation,totalInfraAsset,  businessApplication, DeleteBussinerssApplcation, UpdateBussinerssApplcation, CreateBulkBussinerssApplcation } = useInfraAssetContext();
+    
+    // all UseStats
     const [searchTerm, setSearchTerm] = useState("")
     const [isModalOpen, setIsModalOpen] = useState(false);
-
     const [model, setmodel] = useState(false);
-    const { token } = useAuthContext();
-    const { CreateBussinerssApplcation, GetBussinerssApplcation, businessApplication, DeleteBussinerssApplcation, UpdateBussinerssApplcation, CreateBulkBussinerssApplcation } = useInfraAssetContext();
     const [editable, setEditable] = useState(null)
     const [countryData, setcountryData] = useState([])
     const [selectedFiles, setSelectedFiles] = useState(null);
@@ -29,8 +31,8 @@ export default function BusinessApplications() {
         tenant?.name?.toLowerCase()?.includes(searchTerm?.toLowerCase()),
     )
 
-    const { values, errors, touched, handleBlur, handleChange, handleSubmit ,setFieldValue } = useFormik({
-        initialValues: editable || { name: "", description: "", country: "", state: "", city: "", type: "", applicationUrl: "", modifyCriticality: "",tages:null },
+    const { values, errors, touched, handleBlur, handleChange, handleSubmit, setFieldValue,handleReset } = useFormik({
+        initialValues: editable || { name: "", description: "", country: "", state: "", city: "", type: "", applicationUrl: "", modifyCriticality: "", tages: null,asset:"" },
         validationSchema: BusinessApplicationValidation,
         enableReinitialize: true,
         onSubmit: (value) => {
@@ -44,6 +46,7 @@ export default function BusinessApplications() {
                 CreateBussinerssApplcation({ ...value, creator: tenant });
             }
             setmodel(false)
+            handleReset()
         }
     });
 
@@ -83,6 +86,12 @@ export default function BusinessApplications() {
         const params = new URLSearchParams(window.location.search);
         setTenant(params.get('tenant') || '');
     }, [location.search]);
+
+      useEffect(() => {
+        if (token) {
+          GetAllInfraAssetData(tenant)
+        }
+      }, [tenant])
 
     return (
         <>
@@ -413,6 +422,21 @@ export default function BusinessApplications() {
                                     </div>
                                 </div>
 
+                                <div>
+                                    <label className="block mb-1 text-sm text-white">Asset</label>
+                                    <select
+                                        name="asset"
+                                        value={values.asset}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        className="w-full p-2 rounded border border-gray-600 bg-[#252A3A] text-white focus:outline-none"
+                                    >
+                                        <option value="">-- Select --</option>
+                                        {totalInfraAsset?.map((item) => <option key={item._id} value={item._id}>{item.asset_hostname}</option>)}
+                                    </select>
+
+                                </div>
+
                                 <div className="space-y-2">
                                     <label className="block text-sm font-medium text-slate-300">Modify Criticality</label>
                                     <select
@@ -433,7 +457,7 @@ export default function BusinessApplications() {
                                     {errors.modifyCriticality && touched.modifyCriticality && <p className="text-red-400" >{errors.modifyCriticality}</p>}
                                 </div>
 
-                                <CustomSelection setFieldvalue={setFieldValue} isError={touched.tages && errors.tages} error={errors.tages} handleBlur={()=>handleBlur('tages')} alreadySelected={editable && editable.tages} />
+                                <CustomSelection setFieldvalue={setFieldValue} isError={touched.tages && errors.tages} error={errors.tages} handleBlur={() => handleBlur('tages')} alreadySelected={editable && editable.tages} />
 
                             </div>
 

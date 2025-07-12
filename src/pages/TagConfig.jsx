@@ -16,7 +16,7 @@ export default function TagsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setLoading] = useState(false);
 
-  const { values, touched, errors, handleBlur, handleChange, handleSubmit } =
+  const { values, touched, errors, handleBlur, handleChange, handleSubmit,resetForm } =
     useFormik({
       initialValues: editTag || {
         tag_name: "",
@@ -33,6 +33,7 @@ export default function TagsPage() {
           createTags(value);
         }
         setIsModalOpen(false);
+        resetForm()
       },
     });
 
@@ -72,6 +73,7 @@ export default function TagsPage() {
                 onClick={() => {
                   setIsModalOpen(true);
                   setEditTag(null);
+                  resetForm()
                 }}
                 className="px-4 py-2 bg-button hover:bg-hoverbutton mr-5 rounded-md text-white font-medium flex items-center gap-2"
               >
