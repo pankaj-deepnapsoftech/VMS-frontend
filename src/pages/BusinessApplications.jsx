@@ -21,6 +21,8 @@ export default function BusinessApplications() {
     DeleteBussinerssApplcation,
     UpdateBussinerssApplcation,
     CreateBulkBussinerssApplcation,
+    GetAllInfraAssetData,
+    totalInfraAsset
   } = useInfraAssetContext();
   const [editable, setEditable] = useState(null);
   const [countryData, setcountryData] = useState([]);
@@ -51,6 +53,7 @@ export default function BusinessApplications() {
       applicationUrl: "",
       modifyCriticality: "",
       tages: null,
+      asset:""
     },
     validationSchema: BusinessApplicationValidation,
     enableReinitialize: true,
@@ -113,6 +116,12 @@ export default function BusinessApplications() {
     const params = new URLSearchParams(window.location.search);
     setTenant(params.get("tenant") || "");
   }, [location.search]);
+
+    useEffect(() => {
+      if (token) {
+        GetAllInfraAssetData(tenant)
+      }
+    }, [tenant])
 
   return (
     <>
@@ -535,6 +544,21 @@ export default function BusinessApplications() {
                     )}
                   </div>
                 </div>
+
+                <div>
+          <label className="block mb-1 text-sm">Asset</label>
+          <select
+            name="asset"
+            value={values.asset}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            className="w-full p-2 rounded border border-gray-600 bg-[#252A3A] text-white focus:outline-none"
+          >
+            <option value="">-- Select --</option>
+            {totalInfraAsset?.map((item) => <option key={item._id} value={item._id}>{item.asset_hostname}</option>)}
+          </select>
+
+        </div>
 
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-slate-300">
