@@ -184,6 +184,9 @@ export default function BusinessApplications() {
                       Modify Criticality
                     </th>
                     <th className="text-left py-4 px-6 font-medium text-gray-300">
+                      Asset
+                    </th>
+                    <th className="text-left py-4 px-6 font-medium text-gray-300">
                       Tags
                     </th>
                     <th className="text-left py-4 px-6 font-medium text-gray-300">
@@ -212,6 +215,9 @@ export default function BusinessApplications() {
                       </td>
                       <td className="py-4 px-6 text-white">
                         {tenant?.modifyCriticality}
+                      </td>
+                      <td  className="py-4 px-6 text-white">
+                        {tenant?.asset}
                       </td>
                       <td className="py-4 px-6 text-white flex flex-wrap gap-1 w-60">
                         {tenant.tages.length > 0
@@ -346,7 +352,7 @@ export default function BusinessApplications() {
 
       {model && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 ">
-          <div className="bg-slate-900 rounded-xl shadow-2xl w-full  md:w-[60%] mx-auto h-[80%] overflow-y-scroll">
+          <div className="bg-slate-900 rounded-xl shadow-2xl w-full  md:w-[60%] mx-auto h-[80%] overflow-y-scroll custom-scrollbar">
             <div className="p-6">
               {/* Header */}
               <div className="flex items-center justify-between mb-6">
@@ -355,9 +361,9 @@ export default function BusinessApplications() {
                     <Boxes className="w-4 h-4 text-white" />
                   </div>
                 </div>
-                <span className="text-2xl font-medium text-white">
-                  Business Applications
-                </span>
+              s Applications
+               <span className="text-2xl font-medium text-white">
+                  Busines   </span>
                 <button
                   onClick={() => setmodel(!model)}
                   className="text-slate-400 hover:text-white transition-colors p-1"
