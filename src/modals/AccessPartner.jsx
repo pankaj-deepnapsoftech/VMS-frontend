@@ -1,26 +1,16 @@
 /* eslint-disable react/prop-types */
 import { useDataContext } from '@/context';
-import Multiselect from 'multiselect-react-dropdown';
 import { useEffect, useState } from 'react';
 import { AxiosHandler } from '@/config/AxiosConfig';
 import toast from 'react-hot-toast';
 
-const AccessPartner = ({id,closeModal,preSet}) => {
+const AccessPartner = ({ id, closeModal, preSet }) => {
 
 
   const { partners } = useDataContext();
   const [partnersData, setPartnersData] = useState([]);
-  const [selectedPartners, setSelectedPartners] = useState(preSet ? preSet :[]);
+  const [selectedPartners, setSelectedPartners] = useState("");
 
-  // Handle select
-  const onSelect = (selectedList) => {
-    setSelectedPartners(selectedList);
-  };
-
-  // Handle remove
-  const onRemove = (selectedList) => {
-    setSelectedPartners(selectedList);
-  };
 
   // Submit to backend
   const HandleSubmit = async () => {
@@ -30,12 +20,13 @@ const AccessPartner = ({id,closeModal,preSet}) => {
     }
 
     try {
-        const res = await AxiosHandler.put(`/tenant/update/${id}`,{Partner:selectedPartners});
-        toast.success("Allowed access to partner");
-        closeModal()
+      const res = await AxiosHandler.put(`/tenant/update/${id}`, { Partner: selectedPartners });
+      toast.success("Allowed access to partner");
+      closeModal()
 
     } catch (error) {
-        toast.error("Not Submited");
+      console.log(error)
+      toast.error("Not Submited");
     }
   };
 
@@ -52,7 +43,7 @@ const AccessPartner = ({id,closeModal,preSet}) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-      <div className="bg-[#1f2937] text-white rounded-lg shadow-lg w-full max-w-md p-6">
+      <div className="bg-background text-white rounded-lg shadow-lg w-full max-w-md p-6">
         <h2 className="text-xl font-semibold mb-4">Assign to Partner</h2>
         <div className="mb-4">
           {/* <Multiselect
@@ -63,11 +54,11 @@ const AccessPartner = ({id,closeModal,preSet}) => {
             displayValue="name"
             className="z-10"
           /> */}
-          <select>
-            {partnersData.map = () => 
-              // eslint-disable-next-line no-undef
-              <option>{item.name}</option>
-            }
+          <select defaultValue={preSet} onChange={(e)=>setSelectedPartners(e.target.value)} className=' rounded-md bg-input w-full py-2 px-2 '>
+            <option disabled selected >Select partner </option>
+            {partnersData.map((item) =>
+              <option key={item.value} value={item.value} >{item.name}</option>
+            )}
           </select>
         </div>
         <div className="flex justify-end gap-3">

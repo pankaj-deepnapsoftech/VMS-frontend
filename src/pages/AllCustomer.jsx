@@ -28,7 +28,7 @@ export default function AllCustomer() {
   const [searchQuery, setSearchQuery] = useState("");
   const { isOpen, closeModal, openModal } = useAccessPartner();
   const [tenantId,setTenantId] = useState(null)
-  const [partnersData,setPartnersData] = useState([])
+  const [partnersData,setPartnersData] = useState("")
 
 
 
