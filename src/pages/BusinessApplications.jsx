@@ -9,41 +9,64 @@ import * as XLSX from "xlsx";
 import CustomSelection from "@/components/customSelection/CustomSelection";
 
 export default function BusinessApplications() {
-    const [searchTerm, setSearchTerm] = useState("")
-    const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const [model, setmodel] = useState(false);
-    const { token } = useAuthContext();
-    const { CreateBussinerssApplcation, GetBussinerssApplcation, businessApplication, DeleteBussinerssApplcation, UpdateBussinerssApplcation, CreateBulkBussinerssApplcation } = useInfraAssetContext();
-    const [editable, setEditable] = useState(null)
-    const [countryData, setcountryData] = useState([])
-    const [selectedFiles, setSelectedFiles] = useState(null);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [tenant, setTenant] = useState('');
+  const [model, setmodel] = useState(false);
+  const { token } = useAuthContext();
+  const {
+    CreateBussinerssApplcation,
+    GetBussinerssApplcation,
+    businessApplication,
+    DeleteBussinerssApplcation,
+    UpdateBussinerssApplcation,
+    CreateBulkBussinerssApplcation,
+  } = useInfraAssetContext();
+  const [editable, setEditable] = useState(null);
+  const [countryData, setcountryData] = useState([]);
+  const [selectedFiles, setSelectedFiles] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [tenant, setTenant] = useState("");
 
+  const filteredTenants = businessApplication.filter((tenant) =>
+    tenant?.name?.toLowerCase()?.includes(searchTerm?.toLowerCase())
+  );
 
-
-    const filteredTenants = businessApplication.filter((tenant) =>
-        tenant?.name?.toLowerCase()?.includes(searchTerm?.toLowerCase()),
-    )
-
-    const { values, errors, touched, handleBlur, handleChange, handleSubmit ,setFieldValue } = useFormik({
-        initialValues: editable || { name: "", description: "", country: "", state: "", city: "", type: "", applicationUrl: "", modifyCriticality: "",tages:null },
-        validationSchema: BusinessApplicationValidation,
-        enableReinitialize: true,
-        onSubmit: (value) => {
-            if (!tenant && !editable) {
-                return alert("Please select a tenant");
-            }
-            console.log(value)
-            if (editable) {
-                UpdateBussinerssApplcation(editable._id, value);
-            } else {
-                CreateBussinerssApplcation({ ...value, creator: tenant });
-            }
-            setmodel(false)
-        }
-    });
+  const {
+    values,
+    errors,
+    touched,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    setFieldValue,
+  } = useFormik({
+    initialValues: editable || {
+      name: "",
+      description: "",
+      country: "",
+      state: "",
+      city: "",
+      type: "",
+      applicationUrl: "",
+      modifyCriticality: "",
+      tages: null,
+    },
+    validationSchema: BusinessApplicationValidation,
+    enableReinitialize: true,
+    onSubmit: (value) => {
+      if (!tenant && !editable) {
+        return alert("Please select a tenant");
+      }
+      console.log(value);
+      if (editable) {
+        UpdateBussinerssApplcation(editable._id, value);
+      } else {
+        CreateBussinerssApplcation({ ...value, creator: tenant });
+      }
+      setmodel(false);
+    },
+  });
 
   const handleDownload = () => {
     const data = [
@@ -86,10 +109,10 @@ export default function BusinessApplications() {
     }
   }, [currentPage, tenant]);
 
-    useEffect(() => {
-        const params = new URLSearchParams(window.location.search);
-        setTenant(params.get('tenant') || '');
-    }, [location.search]);
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setTenant(params.get("tenant") || "");
+  }, [location.search]);
 
   return (
     <>
@@ -194,7 +217,7 @@ export default function BusinessApplications() {
                         {tenant?.modifyCriticality}
                       </td>
                       <td  className="py-4 px-6 text-white">
-                        {tenant?.asset}
+                        {tenant?.assets}
                       </td>
                       <td className="py-4 px-6 text-white flex flex-wrap gap-1 w-60">
                         {tenant.tages.length > 0
@@ -338,9 +361,8 @@ export default function BusinessApplications() {
                     <Boxes className="w-4 h-4 text-white" />
                   </div>
                 </div>
-              s Applications
                <span className="text-2xl font-medium text-white">
-                  Busines   </span>
+                  Business Applications</span>
                 <button
                   onClick={() => setmodel(!model)}
                   className="text-slate-400 hover:text-white transition-colors p-1"
@@ -487,26 +509,32 @@ export default function BusinessApplications() {
                     )}
                   </div>
 
-                                    <div className="space-y-2">
-                                        <label className="block text-sm font-medium text-slate-300">Type</label>
-                                        <select
-                                            type="text"
-                                            placeholder="What is your title?"
-                                            className="w-full bg-slate-800 border border-slate-600 rounded-md px-3 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-slate-500 transition-colors"
-                                            name="type"
-                                            value={values.type}
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                        >
-                                            <option value={"select value"} selected >select value</option>
-                                            <option value={"Mobile"}  >Mobile</option>
-                                            <option value={"Web"} >Web</option>
-                                            <option value={"Microservice"} >Microservice</option>
-                                            <option value={"APIs"} >APIs</option>
-                                        </select>
-                                        {errors.type && touched.type && <p className="text-red-400" >{errors.type}</p>}
-                                    </div>
-                                </div>
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-slate-300">
+                      Type
+                    </label>
+                    <select
+                      type="text"
+                      placeholder="What is your title?"
+                      className="w-full bg-slate-800 border border-slate-600 rounded-md px-3 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-slate-500 transition-colors"
+                      name="type"
+                      value={values.type}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                    >
+                      <option value={"select value"} selected>
+                        select value
+                      </option>
+                      <option value={"Mobile"}>Mobile</option>
+                      <option value={"Web"}>Web</option>
+                      <option value={"Microservice"}>Microservice</option>
+                      <option value={"APIs"}>APIs</option>
+                    </select>
+                    {errors.type && touched.type && (
+                      <p className="text-red-400">{errors.type}</p>
+                    )}
+                  </div>
+                </div>
 
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-slate-300">
@@ -534,9 +562,14 @@ export default function BusinessApplications() {
                   )}
                 </div>
 
-                                <CustomSelection setFieldvalue={setFieldValue} isError={touched.tages && errors.tages} error={errors.tages} handleBlur={()=>handleBlur('tages')} alreadySelected={editable && editable.tages} />
-
-                            </div>
+                <CustomSelection
+                  setFieldvalue={setFieldValue}
+                  isError={touched.tages && errors.tages}
+                  error={errors.tages}
+                  handleBlur={() => handleBlur("tages")}
+                  alreadySelected={editable && editable.tages}
+                />
+              </div>
 
               {/* Action Buttons */}
               <div className="flex gap-3 mt-8">
