@@ -55,14 +55,20 @@ const AccessPartner = ({id,closeModal,preSet}) => {
       <div className="bg-[#1f2937] text-white rounded-lg shadow-lg w-full max-w-md p-6">
         <h2 className="text-xl font-semibold mb-4">Assign to Partner</h2>
         <div className="mb-4">
-          <Multiselect
+          {/* <Multiselect
             options={partnersData}
             selectedValues={preSet ? preSet : selectedPartners}
             onSelect={onSelect}
             onRemove={onRemove}
             displayValue="name"
             className="z-10"
-          />
+          /> */}
+          <select>
+            {partnersData.map = () => 
+              // eslint-disable-next-line no-undef
+              <option>{item.name}</option>
+            }
+          </select>
         </div>
         <div className="flex justify-end gap-3">
           <button className="px-4 py-2 border text-white rounded-md" onClick={closeModal} >

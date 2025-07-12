@@ -239,7 +239,7 @@ export default function BusinessApplications() {
                                 {item.tag_name}
                               </p>
                             ))
-                          : "-"}
+                          : "-"}                                                                                  
                       </td>
                       <td className="py-4 px-6">
                         <div className="flex space-x-2">
