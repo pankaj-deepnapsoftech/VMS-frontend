@@ -342,7 +342,7 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                       {riskScore}
                     </p>
                     <p>{getRiskLevel(riskScore)}</p>
-                  </div>
+                  </div> 
                 </div>
               </div>
 
