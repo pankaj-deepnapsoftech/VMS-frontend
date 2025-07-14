@@ -335,7 +335,7 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                 >
                   <p className="font-[500] whitespace-nowrap">
                     {" "}
-                    Risk Appetite for Risk{" "}
+                    Appetite for Risk{" "}
                   </p>
                   <div className="flex gap-2 items-center">
                     <p className="text-blue-600 text-lg font-bold">
