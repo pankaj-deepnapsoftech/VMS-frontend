@@ -22,7 +22,7 @@ export default function BusinessApplications() {
     UpdateBussinerssApplcation,
     CreateBulkBussinerssApplcation,
     GetAllInfraAssetData,
-    totalInfraAsset
+    totalInfraAsset,
   } = useInfraAssetContext();
   const [editable, setEditable] = useState(null);
   const [countryData, setcountryData] = useState([]);
@@ -53,7 +53,7 @@ export default function BusinessApplications() {
       applicationUrl: "",
       modifyCriticality: "",
       tages: null,
-      asset:""
+      asset: "",
     },
     validationSchema: BusinessApplicationValidation,
     enableReinitialize: true,
@@ -117,11 +117,11 @@ export default function BusinessApplications() {
     setTenant(params.get("tenant") || "");
   }, [location.search]);
 
-    useEffect(() => {
-      if (token) {
-        GetAllInfraAssetData(tenant)
-      }
-    }, [tenant])
+  useEffect(() => {
+    if (token) {
+      GetAllInfraAssetData(tenant);
+    }
+  }, [tenant]);
 
   return (
     <>
@@ -213,9 +213,7 @@ export default function BusinessApplications() {
                       <td className="py-4 px-6 text-white">
                         {tenant?.description}
                       </td>
-                      <td className="py-4 px-6 text-white">
-                        {tenant?.country}
-                      </td>
+                      <td className="py-4 px-6 text-white"></td>
                       <td className="py-4 px-6 text-white">{tenant?.state}</td>
                       <td className="py-4 px-6 text-white">{tenant?.city}</td>
                       <td className="py-4 px-6 text-white">{tenant?.type}</td>
@@ -229,6 +227,8 @@ export default function BusinessApplications() {
                         {tenant?.asset?.asset_ip}
                       </td>
                       <td className="py-4 px-6 text-white flex flex-wrap gap-1 w-60">
+                        {" "}
+                        {tenant?.country}
                         {tenant.tages.length > 0
                           ? tenant.tages?.map((item) => (
                               <p
@@ -239,7 +239,7 @@ export default function BusinessApplications() {
                                 {item.tag_name}
                               </p>
                             ))
-                          : "-"}                                                                                  
+                          : "-"}
                       </td>
                       <td className="py-4 px-6">
                         <div className="flex space-x-2">
@@ -547,19 +547,22 @@ export default function BusinessApplications() {
                 </div>
 
                 <div>
-          <label className="block mb-1 text-sm text-white">Asset</label>
-          <select
-            name="asset"
-            value={values.asset}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            className="w-full p-2 rounded border border-gray-600 bg-[#252A3A] text-white focus:outline-none"
-          >
-            <option value="">-- Select --</option>
-            {totalInfraAsset?.map((item) => <option key={item._id} value={item._id}>{item.asset_hostname}</option>)}
-          </select>
-
-        </div>
+                  <label className="block mb-1 text-sm text-white">Asset</label>
+                  <select
+                    name="asset"
+                    value={values.asset}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className="w-full p-2 rounded border border-gray-600 bg-[#252A3A] text-white focus:outline-none"
+                  >
+                    <option value="">-- Select --</option>
+                    {totalInfraAsset?.map((item) => (
+                      <option key={item._id} value={item._id}>
+                        {item.asset_hostname}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-slate-300">

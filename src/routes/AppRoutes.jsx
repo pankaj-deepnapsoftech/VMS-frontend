@@ -49,7 +49,7 @@ const AppRoutes = () => {
           <Route path="/verify-otp" element={<VerifyOtp />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/solutions" element={<Solutions />} />
-          <Route path="/JiraDataTable" element={<JiraDataTable />} />
+          <Route path="/JiraDataTable" element={<JiraDataTable />} /> 
         </>
       )}
 
