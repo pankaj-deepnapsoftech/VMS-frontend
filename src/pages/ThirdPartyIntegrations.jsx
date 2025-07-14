@@ -5,23 +5,21 @@ import { FaCheckCircle, FaClock, FaPlug } from "react-icons/fa";
 import { MdError } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
-
 const ThirdPartyIntegrations = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
 
   const navigate = useNavigate();
 
-const handleClick = () => {
-  navigate("/third-party-data");
-}
-
+  const handleClick = () => {
+    navigate("/third-party-data");
+  };
 
   const integrations = [
     {
       name: "Jira",
       version: "v8.20.0",
-      status: "Connected",
+      status: "Disconnected",
       synced: "2 minutes ago",
       des: "Connect with Atlassian Jira for issue tracking and project management",
       tags: ["Project Management", "Issue Tracking", "Workflow Automation"],
@@ -30,15 +28,15 @@ const handleClick = () => {
       icon2: "/Icons/SVG.png",
       icon3: "/Icons/Vector (1).png",
       icon4: "/Icons/SVG (1).png",
-      textColor: "text-green-400 ",
-      bgColor: "bg-gradient-to-t from-[#14532D4D] to-[#16653433]",
-      border: " border border-[#22C55E4D]",
+      textColor: "text-gray-400",
+      bgColor: "bg-[#1F2937]",
+      border: " border border-[#6B72804D]",
       iconBg: "bg-gradient-to-t from-[#2563EB] to-[#3B82F6]",
     },
     {
       name: "Defendly",
       version: "v2.1.4",
-      status: "Connected",
+      status: "Disconnected",
       synced: "5 minutes ago",
       des: "Advanced threat detection and security monitoring platform",
       tags: [
@@ -52,15 +50,15 @@ const handleClick = () => {
       icon2: "/Icons/SVG.png",
       icon3: "/Icons/Vector (1).png",
       icon4: "/Icons/SVG (1).png",
-      textColor: "text-green-400 ",
-      bgColor: "bg-gradient-to-t from-[#14532D4D] to-[#16653433]",
-      border: " border border-[#22C55E4D]",
+      textColor: "text-gray-400",
+      bgColor: "bg-[#1F2937]",
+      border: " border border-[#6B72804D]",
       iconBg: "bg-gradient-to-t from-[#DC2626] to-[#EF4444]",
     },
     {
       name: "Splunk",
       version: "v9.0.2",
-      status: "Pending",
+      status: "Disconnected",
       synced: "",
       des: "Data platform for security, IT and DevOps teams",
       tags: ["Monitoring", "Log Analysis", "SIEM", "Machine Learning"],
@@ -69,9 +67,9 @@ const handleClick = () => {
       icon2: "/Icons/SVG.png",
       icon3: "/Icons/Vector (1).png",
       icon4: "/Icons/SVG (1).png",
-      textColor: "text-yellow-400",
-      bgColor: "bg-[#eab30838]",
-      border: " border border-[#eab30838]",
+      textColor: "text-gray-400",
+      bgColor: "bg-[#1F2937]",
+      border: " border border-[#6B72804D]",
       iconBg: "bg-gradient-to-t from-[#16A34A] to-[#22C55E]",
     },
     {
@@ -94,7 +92,7 @@ const handleClick = () => {
     {
       name: "CrowdStrike",
       version: "v6.4.50",
-      status: "Connected",
+      status: "Disconnected",
       synced: "1 hour ago",
       des: "Cloud-native endpoint protection platform",
       tags: [
@@ -108,15 +106,15 @@ const handleClick = () => {
       icon2: "/Icons/SVG.png",
       icon3: "/Icons/Vector (1).png",
       icon4: "/Icons/SVG (1).png",
-      textColor: "text-green-400 ",
-      bgColor: "bg-gradient-to-t from-[#14532D4D] to-[#16653433]",
-      border: " border border-[#22C55E4D]",
+      textColor: "text-gray-400",
+      bgColor: "bg-[#1F2937]",
+      border: " border border-[#6B72804D]",
       iconBg: "bg-gradient-to-t from-[#9333EA] to-[#A855F7]",
     },
     {
       name: "ServiceNow",
       version: "v2023.1",
-      status: "Error",
+      status: "Disconnected",
       synced: "",
       des: "IT service management and security operations platform",
       tags: ["Project Management", "ITSM", "Security Operations", "Workflow"],
@@ -125,9 +123,9 @@ const handleClick = () => {
       icon2: "/Icons/SVG.png",
       icon3: "/Icons/Vector (1).png",
       icon4: "/Icons/SVG (1).png",
-      textColor: "text-red-400",
-      bgColor: "bg-[#EF444433]",
-      border: " border border-[#EF44444D]",
+      textColor: "text-gray-400",
+      bgColor: "bg-[#1F2937]",
+      border: " border border-[#6B72804D]",
       iconBg: "bg-gradient-to-t from-[#4F46E5] to-[#6366F1]",
     },
     {
@@ -155,7 +153,7 @@ const handleClick = () => {
     {
       name: "Elastic Security",
       version: "v8.11.0",
-      status: "Connected",
+      status: "Disconnected",
       synced: "30 minutes ago",
       des: "Search-powered security analytics platform",
       tags: ["Monitoring", "SIEM", "Endpoint Security", "Threat Hunting"],
@@ -164,9 +162,9 @@ const handleClick = () => {
       icon2: "/Icons/SVG.png",
       icon3: "/Icons/Vector (1).png",
       icon4: "/Icons/SVG (1).png",
-      textColor: "text-green-400 ",
-      bgColor: "bg-gradient-to-t from-[#14532D4D] to-[#16653433]",
-      border: " border border-[#22C55E4D]",
+      textColor: "text-gray-400",
+      bgColor: "bg-[#1F2937]",
+      border: " border border-[#6B72804D]",
       iconBg: "bg-gradient-to-t from-[#CA8A04] to-[#EAB308]",
     },
   ];
@@ -289,7 +287,7 @@ const handleClick = () => {
                     <span
                       key={i}
                       className="bg-[#1f2a44] px-2 py-1 rounded-md text-gray-300"
-                    >                       
+                    >
                       {tag}
                     </span>
                   ))}
@@ -304,14 +302,17 @@ const handleClick = () => {
                     Configure
                   </button>
                   <div className="flex gap-2 text-gray-400">
-                    <div  onClick={handleClick} className="w-9 h-9 rounded-md flex justify-center items-center bg-[#ffffff1e]">
+                    <div
+                      onClick={handleClick}
+                      className="w-9 h-9 rounded-md cursor-pointer flex justify-center items-center hover:bg-gray-700 bg-[#ffffff1e]"
+                    >
                       <img
                         className="object-cover"
                         src={integration.icon2}
                         alt=""
                       />
                     </div>
-                    <div className="w-9 h-9 rounded-md flex justify-center items-center bg-[#ffffff1e]">
+                    <div className="w-9 h-9 rounded-md cursor-pointer flex justify-center items-center hover:bg-gray-700 bg-[#ffffff1e]">
                       <img
                         className="object-cover"
                         src={integration.icon3}

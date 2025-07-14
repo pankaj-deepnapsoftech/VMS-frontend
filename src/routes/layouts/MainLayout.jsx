@@ -2,10 +2,19 @@ import Footer from "@/components/Footer/Footer";
 import { Header } from "@/constants/Components-lazy-loading/components.Lazy";
 import { Suspense, useEffect, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
-import { Outlet, useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import {
+  Outlet,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import { NotificationSidebar } from "@components/modal/NotificationSideBar";
 
-import { useAuthContext, useDataContext, useVulnerabililtyDataContext } from "@/context";
+import {
+  useAuthContext,
+  useDataContext,
+  useVulnerabililtyDataContext,
+} from "@/context";
 import UserProfile from "@/pages/UserProfile";
 import ChangePasswordModal from "@/modals/ChangePasswordModal";
 import useChangePassword from "@/hooks/changePassword";
@@ -16,21 +25,31 @@ import { products } from "@/constants/static.data";
 import UpdateProfileModal from "@/modals/UpdateProfile";
 import { Link } from "react-router-dom";
 import { MdOutlineNotificationsActive } from "react-icons/md";
-import Select from 'react-select';
+import Select from "react-select";
 import { customStyles, darkTheme } from "@/constants/constants.data";
 
 const MainLayout = () => {
-  const { notificationData, NotificationsViewed } = useVulnerabililtyDataContext();
-  const { authenticate, updateProfileModal, getDataFromSession, setOpenSideBar, showUserMenu, setShowUserMenu } = useAuthContext();
-  const { getHomeCardData,
+  const { notificationData, NotificationsViewed } =
+    useVulnerabililtyDataContext();
+  const {
+    authenticate,
+    updateProfileModal,
+    getDataFromSession,
+    setOpenSideBar,
+    showUserMenu,
+    setShowUserMenu,
+  } = useAuthContext();
+  const {
+    getHomeCardData,
     VulnerableItemsByRiskRating,
     GetExploitability,
     ClosevulnerableItems,
     CriticalHighVulnerable,
     CriticalHighVulnerableOverdue,
     VulnerableItemsByAge,
-    NewAndCloseVulnerable, TenantAllData } = useDataContext();
-
+    NewAndCloseVulnerable,
+    TenantAllData,
+  } = useDataContext();
 
   const { isOpen, openModal, closeModal } = useChangePassword();
 
@@ -42,15 +61,16 @@ const MainLayout = () => {
   const [showSidebar, setShowSideBar] = useState(false);
   const navigate = useNavigate();
 
-  const [tenant, setTenant] = useState("Select Value")
-  const [tenantId, setTenantId] = useState("")
+  const [tenant, setTenant] = useState("Select Value");
+  const [tenantId, setTenantId] = useState("");
   const [searchParams] = useSearchParams();
 
-  let notificationcount = notificationData?.filter((notification) => !notification.view).length || 0;
+  let notificationcount =
+    notificationData?.filter((notification) => !notification.view).length || 0;
 
   const handleSelect = ({ value, label }) => {
-    setTenantId(value)
-    setTenant(label)
+    setTenantId(value);
+    setTenant(label);
     getHomeCardData(value);
     VulnerableItemsByRiskRating(value);
     GetExploitability(value);
@@ -75,19 +95,19 @@ const MainLayout = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [width]);
 
-
-
   useEffect(() => {
     const name = location.pathname.split("/");
     setTemp(name[1] ?? "Dashboard");
     const params = new URLSearchParams(searchParams);
     params.set("tenant", tenantId);
-    navigate({
-      pathname: location.pathname,
-      search: params.toString(),
-    }, { replace: true });
+    navigate(
+      {
+        pathname: location.pathname,
+        search: params.toString(),
+      },
+      { replace: true }
+    );
   }, [location.pathname, tenantId]);
-
 
   useEffect(() => {
     if (getDataFromSession) {
@@ -97,97 +117,96 @@ const MainLayout = () => {
             navigate(item.allowedPath[0]?.route);
           } else if (authenticate.role) {
             const navList = item.allowedPath.filter((pathItem) =>
-              authenticate?.allowed_path.some((authItem) => authItem.value === pathItem.route))
-            navigate(navList[0]?.route)
+              authenticate?.allowed_path.some(
+                (authItem) => authItem.value === pathItem.route
+              )
+            );
+            navigate(navList[0]?.route);
           }
         }
       }
     }
-  }, [getDataFromSession, authenticate])
+  }, [getDataFromSession, authenticate]);
 
   const AllowedPath = (link) => {
-    const paths = ["reports"]
-    return paths.find((item) => item === link)
-  }
+    const paths = ["reports"];
+    return paths.find((item) => item === link);
+  };
 
   useEffect(() => {
     if (!authenticate?.mustChangePassword) {
-      openModal()
+      openModal();
     }
   }, [authenticate.mustChangePassword]);
 
+  return !getDataFromSession ? (
+    <FirstDashboard />
+  ) : (
+    <Suspense fallback={<Loader />}>
+      <Sidebar />
 
+      <div className="bg-gradient-to-t from-[#1a1c1e] to-[#212325]  border-gray-200 w-full sticky top-0 z-50">
+        <div className="flex items-center justify-between px-2 sm:px-4 py-2 bg-[#1f2937]">
+          <div className="w-full flex items-center justify-between pr-5 ">
+            <button
+              className="p-2 text-white hover:bg-gray-600 rounded lg:hidden "
+              onClick={() => setShowMenu(!showMenu)}
+            >
+              <AiOutlineMenu className="w-5 h-5" />
+            </button>
 
-  return (
-    !getDataFromSession ? <FirstDashboard /> :
-      (
-        <Suspense fallback={<Loader />}>
-
-          <Sidebar />
-
-          <div className="bg-gradient-to-t from-[#1a1c1e] to-[#212325]  border-gray-200 w-full sticky top-0 z-50">
-            <div className="flex items-center justify-between px-2 sm:px-4 py-2 bg-[#1f2937]">
-              <div className="w-full flex items-center justify-between pr-5 ">
-
-                <button
-                  className="p-2 text-white hover:bg-gray-600 rounded lg:hidden "
-                  onClick={() => setShowMenu(!showMenu)}
-                >
-                  <AiOutlineMenu className="w-5 h-5" />
-                </button>
-
-                <div className="flex gap-3 w-full">
-                  <Link className="flex items-center ">
-                    <div className="flex gap-2 items-center justify-center  h-7 ">
-                      <img
-                        src="/logo.png"
-                        alt="logo"
-                        className="h-5 transition-all duration-300 ease-in-out group-hover:scale-105"
-                      />
-
-                    </div>
-                  </Link>
-
-                  {!authenticate?.role
-                    && (<Select
-                      className="custom-scrollbar w-[200px] basic-single"
-                      classNamePrefix="select"
-                      defaultValue={tenant}
-                      onChange={handleSelect}
-                      isSearchable={true}
-                      options={TenantAllData}
-                      theme={darkTheme}
-                      styles={customStyles}
-                    />)
-                  }
+            <div className="flex gap-3 w-full">
+              <Link className="flex items-center ">
+                <div className="flex gap-2 items-center justify-center  h-7 ">
+                  <img
+                    src="/logo.png"
+                    alt="logo"
+                    className="h-5 transition-all duration-300 ease-in-out group-hover:scale-105"
+                  />
                 </div>
+              </Link>
 
+              {!authenticate?.role && (
+                <Select
+                  className="custom-scrollbar w-[200px] basic-single"
+                  classNamePrefix="select"
+                  defaultValue={tenant}
+                  onChange={handleSelect}
+                  isSearchable={true}
+                  options={TenantAllData}
+                  theme={darkTheme}
+                  styles={customStyles}
+                />
+              )}
+            </div>
 
-                <div className=" flex items-end justify-end">
-                  <button
-                    onClick={() => setSidebarOpen(true)}
-                    className="relative flex items-center gap-2  text-white px-4 py-2 rounded-lg hover:bg-blue-600"
-                  >
-                    <MdOutlineNotificationsActive className="size-7" />
-                    {notificationcount > 0 ? (
-                      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                        {notificationcount}
-                      </span>
-                    ) : (
-                      ""
-                    )}
-                  </button>
+            <div className=" flex items-end justify-end">
+              <button
+                onClick={() => setSidebarOpen(true)}
+                className="relative flex items-center gap-2  text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+              >
+                <MdOutlineNotificationsActive className="size-7" />
+                {notificationcount > 0 ? (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                    {notificationcount}
+                  </span>
+                ) : (
+                  ""
+                )}
+              </button>
 
-                  <div className="relative ml-4 flex text-white items-center gap-3 ">
-                    <button
-                      onClick={() => { setOpenSideBar(true) }}
-                      className="bg-blue-400 text-white rounded-full w-10 h-10 flex items-center justify-center border-2 "
-                    >
-                      {authenticate.fname[0].toUpperCase()}
-                    </button>
-                    {/* {authenticate?.role} */}
+              <div className="relative ml-4 flex text-white items-center gap-3">
+                <button
+                  onClick={() => {
+                    setOpenSideBar(true);
+                  }}
+                  className="bg-blue-400 text-white rounded-full w-10 h-10 flex items-center justify-center border-2 "
+                >
+                  {authenticate.fname[0].toUpperCase()}
+                </button>
+                {/* {authenticate?.role} */}
 
-                    {/* {showUserMenu && (
+                {/* {showUserMenu && (
                     <div className="absolute right-0 mt-2 w-64 bg-[#4f4f4f] rounded-lg shadow-lg z-50">
                       <div className="flex items-center gap-2 px-4 py-3 border-b">
                         <div className="bg-blue-400 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">
@@ -223,60 +242,64 @@ const MainLayout = () => {
                       </ul>
                     </div>
                   )} */}
-                  </div>
-                </div>
-
-                <NotificationSidebar
-                  notificationsViewed={NotificationsViewed}
-                  notifications={notificationData}
-                  isOpen={isSidebarOpen}
-                  onClose={() => setSidebarOpen(false)}
-                />
               </div>
             </div>
+
+            <NotificationSidebar
+              notificationsViewed={NotificationsViewed}
+              notifications={notificationData}
+              isOpen={isSidebarOpen}
+              onClose={() => setSidebarOpen(false)}
+            />
           </div>
-          {!AllowedPath(location.pathname.split("/")[1]) && <aside
-            onMouseEnter={() => setShowSideBar(true)}
-            onMouseLeave={() => setShowSideBar(false)}
-            className={` 
+        </div>
+      </div>
+      {!AllowedPath(location.pathname.split("/")[1]) && (
+        <aside
+          onMouseEnter={() => setShowSideBar(true)}
+          onMouseLeave={() => setShowSideBar(false)}
+          className={` 
     fixed top-14 z-10 flex flex-col justify-between h-full 
     bg-gradient-to-t from-[#151515] to-[#212224] 
     transition-all duration-500 ease-in-out 
-    ${showSidebar ? "lg:w-[25%] xl:w-[20%] 2xl:w-[15%]" : "lg:w-[5%] xl:w-[4%] 2xl:w-[3%]"} 
+    ${
+      showSidebar
+        ? "lg:w-[25%] xl:w-[20%] 2xl:w-[15%]"
+        : "lg:w-[5%] xl:w-[4%] 2xl:w-[3%]"
+    } 
     ${showMenu ? `left-0` : "-left-full"} 
     whitespace-nowrap
   `}
-          >
-
-
-            <Header
-              setShowMenu={() =>
-                width > 1023 ? setShowMenu(true) : setShowMenu(!showMenu)
-              }
-              showSidebar={showSidebar}
-            />
-          </aside>}
-          <div
-            className={`ml-auto mb-6 transition-all duration-500 ease-in-out 
+        >
+          <Header
+            setShowMenu={() =>
+              width > 1023 ? setShowMenu(true) : setShowMenu(!showMenu)
+            }
+            showSidebar={showSidebar}
+          />
+        </aside>
+      )}
+      <div
+        className={`ml-auto mb-6 transition-all duration-500 ease-in-out 
      bg-gradient-custom bg-black rounded-lg 
-    ${AllowedPath(location.pathname.split("/")[1])
-                ? "w-full"
-                : showSidebar
-                  ? "w-full lg:w-[75%] xl:w-[80%] 2xl:w-[85%]"
-                  : "w-full lg:w-[95%] xl:w-[96%] 2xl:w-[97%]"
-              }`}
-          >
+    ${
+      AllowedPath(location.pathname.split("/")[1])
+        ? "w-full"
+        : showSidebar
+        ? "w-full lg:w-[75%] xl:w-[80%] 2xl:w-[85%]"
+        : "w-full lg:w-[95%] xl:w-[96%] 2xl:w-[97%]"
+    }`}
+      >
+        <Outlet />
+      </div>
 
-            <Outlet />
-          </div>
+      <Footer />
+      <UserProfile showUserMenu={showUserMenu} setShowMenu={setShowUserMenu} />
 
-          <Footer />
-          <UserProfile showUserMenu={showUserMenu} setShowMenu={setShowUserMenu} />
+      {updateProfileModal && <UpdateProfileModal />}
 
-          {updateProfileModal && <UpdateProfileModal />}
-
-          <ChangePasswordModal isOpen={isOpen} onClose={closeModal} />
-        </Suspense>)
+      <ChangePasswordModal isOpen={isOpen} onClose={closeModal} />
+    </Suspense>
   );
 };
 
