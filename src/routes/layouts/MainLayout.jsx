@@ -150,7 +150,7 @@ const MainLayout = () => {
 
                   {!authenticate?.role
                     && (<Select
-                      className="custom-scrollbar basic-single"
+                      className="custom-scrollbar w-[200px] basic-single"
                       classNamePrefix="select"
                       defaultValue={tenant}
                       onChange={handleSelect}
