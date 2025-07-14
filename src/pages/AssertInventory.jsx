@@ -13,7 +13,7 @@ export default function TenantDashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [tenant, setTenant] = useState('');
+  const [tenant, setTenant] = useState("");
   const location = useLocation();
 
   const [model, setmodel] = useState(false);
@@ -28,45 +28,51 @@ export default function TenantDashboard() {
   } = useInfraAssetContext();
   const [editable, setEditable] = useState(null);
 
-
   const filteredTenants = infraAssetdata.filter((tenant) =>
     tenant.asset_hostname.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-
-
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit, setFieldValue } =
-    useFormik({
-      initialValues: editable || {
-        asset_hostname: "",
-        modify_criticality: "",
-        asset_ip: "",
-        tages: null,
-      },
-      validationSchema: InfraAssetvalidation,
-      enableReinitialize: true,
-      onSubmit: (value) => {
-        if (!tenant && !editable) {
-          return alert("Please select a tenant");
-        }
-        if (editable) {
-          UpdateInfraAsset(editable._id, value);
-        } else {
-          CreateInfraAsset({ ...value, creator: tenant });
-        }
-        setmodel(false);
-      },
-    });
+  const {
+    values,
+    errors,
+    touched,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    setFieldValue,
+  } = useFormik({
+    initialValues: editable || {
+      asset_hostname: "",
+      modify_criticality: "",
+      asset_ip: "",
+      tages: null,
+    },
+    validationSchema: InfraAssetvalidation,
+    enableReinitialize: true,
+    onSubmit: (value) => {
+      if (!tenant && !editable) {
+        return alert("Please select a tenant");
+      }
+      if (editable) {
+        UpdateInfraAsset(editable._id, value);
+      } else {
+        CreateInfraAsset({ ...value, creator: tenant });
+      }
+      setmodel(false);
+    },
+  });
   const handleFileChange = (e) => {
     setSelectedFiles(e.target.files[0]);
   };
 
   const handleDownload = () => {
-    const data = [{
-      asset_hostname: "",
-      modify_criticality: "",
-      asset_ip: "",
-    }]
+    const data = [
+      {
+        asset_hostname: "",
+        modify_criticality: "",
+        asset_ip: "",
+      },
+    ];
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Vulnerabilities");
@@ -79,10 +85,9 @@ export default function TenantDashboard() {
     }
   }, [currentPage, tenant]);
 
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    setTenant(params.get('tenant') || '');
+    setTenant(params.get("tenant") || "");
   }, [location.search]);
 
   return (
@@ -138,7 +143,7 @@ export default function TenantDashboard() {
                     <th className="text-left py-4 px-6 font-medium text-gray-300">
                       Asset IP
                     </th>
-                    <th className="text-left py-4 px-6 font-medium text-gray-300"> 
+                    <th className="text-left py-4 px-6 font-medium text-gray-300">
                       Modify Criticality
                     </th>
                     <th className="text-left py-4 px-6 font-medium text-gray-300">
@@ -165,11 +170,17 @@ export default function TenantDashboard() {
                         {tenant.modify_criticality}
                       </td>
                       <td className="py-4 px-6 text-white flex flex-wrap gap-1 w-60">
-                        {tenant.tages.length > 0 ? (
-                          tenant.tages?.map((item) => (
-                            <p key={item._id} style={{ backgroundColor:item.tag_color}} className="px-3 py-1 rounded-full" >{item.tag_name}</p>
-                          ))
-                        ) : "-"}
+                        {tenant.tages.length > 0
+                          ? tenant.tages?.map((item) => (
+                              <p
+                                key={item._id}
+                                style={{ backgroundColor: item.tag_color }}
+                                className="px-3 py-1 rounded-full"
+                              >
+                                {item.tag_name}
+                              </p>
+                            ))
+                          : "-"}
                       </td>
                       <td className="py-4 px-6">
                         <div className="flex space-x-2">
@@ -237,10 +248,14 @@ export default function TenantDashboard() {
               </button>
             </div>
 
-            <div className="text-white flex justify-between py-3" >
-
+            <div className="text-white flex justify-between py-3">
               <h3>Get sample excel file </h3>
-              <span onClick={handleDownload} className="font-normal text-blue-400 cursor-pointer" >Download Sample File</span>
+              <span
+                onClick={handleDownload}
+                className="font-normal text-blue-400 cursor-pointer"
+              >
+                Download Sample File
+              </span>
             </div>
 
             {/* File Input */}
@@ -254,8 +269,6 @@ export default function TenantDashboard() {
                 className="block w-full text-sm text-gray-300 bg-slate-800 border border-slate-700 rounded-lg cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 transition"
               />
             </div>
-
-
 
             {/* Modal Footer Buttons */}
             <div className="flex justify-end gap-3 mt-6">
@@ -271,7 +284,7 @@ export default function TenantDashboard() {
                     return alert("Please select a tenant");
                   }
                   const formData = new FormData();
-                  console.log(selectedFiles)
+                  console.log(selectedFiles);
                   formData.append("excel", selectedFiles);
                   formData.append("creator", tenant);
                   CreateBulkInfraAsset(formData);
@@ -374,7 +387,13 @@ export default function TenantDashboard() {
                   )}
                 </div>
 
-                <CustomSelection setFieldvalue={setFieldValue} isError={errors.tages && touched.tages} error={errors.tages} handleBlur={() => handleBlur("tages")} alreadySelected={editable && editable.tages} />
+                <CustomSelection
+                  setFieldvalue={setFieldValue}
+                  isError={errors.tages && touched.tages}
+                  error={errors.tages}
+                  handleBlur={() => handleBlur("tages")}
+                  alreadySelected={editable && editable.tages}
+                />
 
                 {/* <div className="space-y-2">
                   <label className="block text-sm font-medium text-slate-300">Description*</label>
