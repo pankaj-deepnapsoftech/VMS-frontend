@@ -172,8 +172,6 @@ const DataContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (token) {
-
-      console.log("this is working ")
       getHomeCardData();
       VulnerableItemsByRiskRating();
       VulnerableItemsByAge();
