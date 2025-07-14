@@ -4,6 +4,8 @@ import Loader from "@/components/Loader/Loader";
 import { Eye, Pencil, Trash2, User } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ExpectionModal from "@/modals/ExpectionModal";
+import ExploitDetail from "@/modals/ExploitDetail";
+import useAccessPartner from "@/hooks/AccessPartner";
 
 
 export function ApplicationData() {
@@ -18,6 +20,9 @@ export function ApplicationData() {
   const [selectedId, setSelectedId] = useState(null)
   const [tenant, setTenant] = useState('');
   const location = useLocation();
+  const [exploitDetails,setExploitDetails] = useState([])
+
+  const {closeModal,isOpen,openModal} = useAccessPartner()
 
 
 
@@ -47,6 +52,7 @@ export function ApplicationData() {
         field.toString().toLowerCase().includes(searchTerm.toLowerCase())
       );
   });
+
 
 
 
@@ -174,7 +180,10 @@ export function ApplicationData() {
                           className="w-4 h-4 text-green-500 cursor-pointer"
                           onClick={() => handleExpectionModal(item)}
                         />
-                        <Eye className="w-4 h-4 text-lime-400 cursor-pointer" />
+                        <Eye onClick={()=>{
+                          setExploitDetails(item.Exploit_Details);
+                          openModal()
+                        }} className="w-4 h-4 text-lime-400 cursor-pointer" />
                       </td>
                     </tr>
                   ))
@@ -211,6 +220,8 @@ export function ApplicationData() {
           {isModalOpen && (
             <ExpectionModal setIsModalOpen={setIsModalOpen} creator={selectedId} />
           )}
+
+          {isOpen && <ExploitDetail links={exploitDetails} onClose={closeModal} />}
         </div>
       )}
     </Suspense>
