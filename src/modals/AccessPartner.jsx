@@ -20,7 +20,7 @@ const AccessPartner = ({ id, closeModal, preSet }) => {
     }
 
     try {
-      const res = await AxiosHandler.put(`/tenant/update/${id}`, { Partner: selectedPartners });
+      const res = await AxiosHandler.put(`/tenant/assign-tenant/${id}`, { Partner: selectedPartners });
       toast.success("Allowed access to partner");
       closeModal()
 
@@ -54,7 +54,7 @@ const AccessPartner = ({ id, closeModal, preSet }) => {
             displayValue="name"
             className="z-10"
           /> */}
-          <select defaultValue={preSet} onChange={(e)=>setSelectedPartners(e.target.value)} className=' rounded-md bg-input w-full py-2 px-2 '>
+          <select value={preSet} onChange={(e)=>setSelectedPartners(e.target.value)} className=' rounded-md bg-input w-full py-2 px-2 '>
             <option disabled selected >Select partner </option>
             {partnersData.map((item) =>
               <option key={item.value} value={item.value} >{item.name}</option>
