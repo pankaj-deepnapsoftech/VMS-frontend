@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { SchedulingAssessmentValidation } from "@/Validation/SchedulingAssessmentValidation";
 import { useFormik } from "formik";
 import { BiEditAlt } from "react-icons/bi";
@@ -7,6 +7,7 @@ import { MdClose } from "react-icons/md";
 import { useAuthContext, useDataContext, useScheduleAssessmentContext } from "@/context";
 import Loader from "@/components/Loader/Loader";
 import NoDataFound from "@/components/NoDataFound";
+import { useLocation } from "react-router-dom";
 
 
 function SchedulingAssessmentPage() {
@@ -18,25 +19,16 @@ function SchedulingAssessmentPage() {
     UpdateAssesment,
     page,
     setPage,
-    datafetchCount,
     setdatafetchCount,
     TotalAssessments,
     TesterForAssessment,
     DashboardData,
-    CreateNotifications,
   } = useScheduleAssessmentContext();
 
-  const { authenticate, token } = useAuthContext();
+  const { token } = useAuthContext();
   const { TenantAllData } = useDataContext();
 
-  useEffect(() => {
-    TotalAssessments(page);
-    if (token && datafetchCount === 0) {
-      TesterForAssessment();
-      DashboardData();
-      setdatafetchCount(1);
-    }
-  }, [token, page]);
+
 
   // Extract headers dynamically for table display
   const tableHeaders =
@@ -58,6 +50,8 @@ function SchedulingAssessmentPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedAssessment, setSelectedAssessment] = useState(null);
+  const [tenant, setTenant] = useState('');
+  const location = useLocation();
 
   const {
     values,
@@ -82,6 +76,12 @@ function SchedulingAssessmentPage() {
     },
     validationSchema: SchedulingAssessmentValidation,
     onSubmit: (value) => {
+
+      if (!tenant) {
+        alert("Please Select Tenant first")
+        return;
+      }
+
       Object.entries(value).forEach(([key, value]) => {
         formData.append(key, value);
       });
@@ -103,6 +103,26 @@ function SchedulingAssessmentPage() {
     setSelectedAssessment(assessment);
     setIsUpdateModalOpen(true);
   };
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setTenant(params.get('tenant') || '');
+    setFieldValue("Tenant_id", params.get('tenant'))
+  }, [location.search]);
+
+  useEffect(() => {
+    if (token) {
+      TesterForAssessment();
+      DashboardData();
+      setdatafetchCount(1);
+    }
+  }, [token, page]);
+
+  useEffect(() => {
+    if (token) {
+      TotalAssessments(page, tenant);
+    }
+  }, [token, page,tenant])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-1000 to-slate-800 text-white px-6 py-8">
@@ -215,7 +235,7 @@ function SchedulingAssessmentPage() {
                 </div>
 
                 {/* Select Tenant */}
-                <div className="space-y-2">
+                {/* <div className="space-y-2">
                   <label
                     htmlFor="Select_Org"
                     className="block text-sm font-medium text-slate-200"
@@ -239,7 +259,7 @@ function SchedulingAssessmentPage() {
                   {touched.Orgenization_id && errors.Orgenization_id && (
                     <p className="text-red-400 text-sm">{errors.Orgenization_id}</p>
                   )}
-                </div>
+                </div> */}
 
                 {/* Preferred Task Start Date */}
                 <div className="space-y-2">
@@ -532,11 +552,10 @@ function SchedulingAssessmentPage() {
                                 {item[field] === "" ? "No file" : "Download File"}
                               </a>
                             ) : field === "MFA_Enabled" ? (
-                              <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                                item[field] === true 
-                                  ? 'bg-green-100 text-green-800' 
+                              <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${item[field] === true
+                                  ? 'bg-green-100 text-green-800'
                                   : 'bg-red-100 text-red-800'
-                              }`}>
+                                }`}>
                                 {item[field] === true ? "Yes" : "No"}
                               </span>
                             ) : (
@@ -570,11 +589,10 @@ function SchedulingAssessmentPage() {
             {/* Pagination */}
             <div className="flex justify-between items-center px-6 py-4 bg-slate-800/30 border-t border-slate-700">
               <button
-                className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
-                  page === 1
+                className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${page === 1
                     ? "bg-slate-700 text-slate-400 cursor-not-allowed"
                     : "bg-slate-600 text-white hover:bg-slate-500"
-                }`}
+                  }`}
                 disabled={page === 1}
                 onClick={() => setPage(page - 1)}
               >
@@ -584,11 +602,10 @@ function SchedulingAssessmentPage() {
                 Page {page}
               </span>
               <button
-                className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
-                  allAssesmentData?.length < 10
+                className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${allAssesmentData?.length < 10
                     ? "bg-slate-700 text-slate-400 cursor-not-allowed"
                     : "bg-slate-600 text-white hover:bg-slate-500"
-                }`}
+                  }`}
                 disabled={allAssesmentData?.length < 10}
                 onClick={() => setPage(page + 1)}
               >

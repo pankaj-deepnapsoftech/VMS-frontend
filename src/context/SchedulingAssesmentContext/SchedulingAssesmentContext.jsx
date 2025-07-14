@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import { AxiosHandler } from "@/config/AxiosConfig";
-import { useAllEmployeeContext, useAuthContext } from "..";
 import { createContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -27,10 +26,10 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 
 
 
-	const TotalAssessments = async (page) => {
+	const TotalAssessments = async (page,tenant) => {
 		setLoading(true);
 		try {
-			const res = await AxiosHandler.get(`/assessment/get?page=${page}&limit=10`);
+			const res = await AxiosHandler.get(`/assessment/get?page=${page}&limit=10&tenant=${tenant ? tenant : ""}`);
 			console.log(res.data.data)
 			setAllAssesmentData(res.data?.data);
 
