@@ -1,16 +1,13 @@
 /* eslint-disable react/prop-types */
-import { useDataContext } from '@/context';
-import { useEffect, useState } from 'react';
-import { AxiosHandler } from '@/config/AxiosConfig';
-import toast from 'react-hot-toast';
+import { useDataContext } from "@/context";
+import { useEffect, useState } from "react";
+import { AxiosHandler } from "@/config/AxiosConfig";
+import toast from "react-hot-toast";
 
 const AccessPartner = ({ id, closeModal, preSet }) => {
-
-
   const { partners } = useDataContext();
   const [partnersData, setPartnersData] = useState([]);
   const [selectedPartners, setSelectedPartners] = useState("");
-
 
   // Submit to backend
   const HandleSubmit = async () => {
@@ -20,12 +17,13 @@ const AccessPartner = ({ id, closeModal, preSet }) => {
     }
 
     try {
-      const res = await AxiosHandler.put(`/tenant/assign-tenant/${id}`, { Partner: selectedPartners });
+      const res = await AxiosHandler.put(`/tenant/assign-tenant/${id}`, {
+        Partner: selectedPartners,
+      });
       toast.success("Allowed access to partner");
-      closeModal()
-
+      closeModal();
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast.error("Not Submited");
     }
   };
@@ -54,15 +52,26 @@ const AccessPartner = ({ id, closeModal, preSet }) => {
             displayValue="name"
             className="z-10"
           /> */}
-          <select value={preSet} onChange={(e)=>setSelectedPartners(e.target.value)} className=' rounded-md bg-input w-full py-2 px-2 '>
-            <option disabled selected >Select partner </option>
-            {partnersData.map((item) =>
-              <option key={item.value} value={item.value} >{item.name}</option>
-            )}
+          <select
+            value={preSet}
+            onChange={(e) => setSelectedPartners(e.target.value)}
+            className=" rounded-md bg-input w-full py-2 px-2 "
+          >
+            <option disabled selected>
+              Select partner{" "}
+            </option>
+            {partnersData.map((item) => (
+              <option key={item.value} value={item.value}>
+                {item.name}
+              </option>
+            ))}
           </select>
         </div>
         <div className="flex justify-end gap-3">
-          <button className="px-4 py-2 border text-white rounded-md" onClick={closeModal} >
+          <button
+            className="px-4 py-2 border text-white rounded-md"
+            onClick={closeModal}
+          >
             Close
           </button>
           <button
