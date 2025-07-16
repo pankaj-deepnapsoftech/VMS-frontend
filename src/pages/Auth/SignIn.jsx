@@ -38,8 +38,8 @@ const SignIn = () => {
     {
       title: "Risk Quantification, Prioritisation & Remediation",
       desc: "Translate technical vulnerabilities into clear business risks. Our approach to risk quantification helps you understand the financial impact of potential cyber incidents, enabling data-driven prioritization of remediation efforts for maximum security ROI.",
-    }, 
-  ]; 
+    },
+  ];
 
   const ANIMATION_DURATION = 6000;
 
@@ -61,16 +61,16 @@ const SignIn = () => {
       {/* Left side */}
       <div
         className="flex-[3] text-white relative  hidden lg:block bg-gradient-to-tr from-[#2b2973] via-transparent to-black "
-       
+
       >
-      <img src="/logo.png" className="h-10 my-10 px-10" />
+        <img src="/logo.png" className="h-10 my-10 px-10" />
         <h2 className="text-5xl font-bold ml-10 pt-24">Products</h2>
-        <p className="ml-10 pb-5 text-gray-500">
+        <p className="ml-10 pb-5 text-gray-500 z-10">
           Explore our powerful security products that simplify complex threats and protect what matters most.
         </p>
         <img
           src="/bg5.png"
-          className="-z-[0] size-96 2xl:size-[600px] absolute top-[30%] 2xl:top-[15%] right-0"
+          className=" size-96 2xl:size-[600px] absolute top-[32%] 2xl:top-[20%] right-0"
         />
 
 
@@ -85,12 +85,12 @@ const SignIn = () => {
           ${isActive ? "max-w-md p-6 bg-white/30 backdrop-blur-md" : "bg-transparent max-w-md px-6"} 
         `}
               >
-                { isActive && (
+                {isActive && (
                   <div className="flex space-x-1 mb-4">
-                    <div className="w-2 h-2 rounded-full bg-gray-400" />
-                    <div className="w-2 h-2 rounded-full bg-gray-400" />
-                    <div className="w-2 h-2 rounded-full bg-gray-300" />
-                  </div>                       
+                    <div className={`w-2 h-2 rounded-full  ${index === 0 ? "bg-gray-200" : "bg-gray-400"} `} />
+                    <div className={`w-2 h-2 rounded-full ${index === 1 ? "bg-gray-200" : "bg-gray-400"}  `} />
+                    <div className={`w-2 h-2 rounded-full ${index === 2 ? "bg-gray-200" : "bg-gray-400"} `} />
+                  </div>
                 )}
                 <h2 className={`text-lg font-semibold mb-2 ${isActive ? "" : "text-white"}`}>
                   {card.title}

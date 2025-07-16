@@ -113,20 +113,35 @@ const MainLayout = () => {
     if (getDataFromSession) {
       for (let item of products) {
         if (item.title === getDataFromSession) {
-          if (!authenticate?.role) {
+          // CASE 1: Feature coming soon
+          if (item.allowedPath.length === 0) {
+            alert(`${getDataFromSession} is coming soon`);
+            break;
+          }
+
+          // CASE 2: User not authenticated
+          if (!authenticate?.role && item.allowedPath.length > 0) {
             navigate(item.allowedPath[0]?.route);
-          } else if (authenticate.role) {
+            return;
+          }
+
+          // CASE 3: User has a role
+          if (authenticate.role && item.allowedPath.length > 0) {
             const navList = item.allowedPath.filter((pathItem) =>
               authenticate?.allowed_path.some(
                 (authItem) => authItem.value === pathItem.route
               )
             );
-            navigate(navList[0]?.route);
+            if (navList.length > 0) {
+              navigate(navList[0]?.route);
+            }
+            return;
           }
         }
       }
     }
   }, [getDataFromSession, authenticate]);
+
 
   const AllowedPath = (link) => {
     const paths = ["reports"];
@@ -262,11 +277,10 @@ const MainLayout = () => {
     fixed top-14 z-10 flex flex-col justify-between h-full 
     bg-gradient-to-t from-[#151515] to-[#212224] 
     transition-all duration-500 ease-in-out 
-    ${
-      showSidebar
-        ? "lg:w-[25%] xl:w-[20%] 2xl:w-[15%]"
-        : "lg:w-[5%] xl:w-[4%] 2xl:w-[3%]"
-    } 
+    ${showSidebar
+              ? "lg:w-[25%] xl:w-[20%] 2xl:w-[15%]"
+              : "lg:w-[5%] xl:w-[4%] 2xl:w-[3%]"
+            } 
     ${showMenu ? `left-0` : "-left-full"} 
     whitespace-nowrap
   `}
@@ -282,13 +296,12 @@ const MainLayout = () => {
       <div
         className={`ml-auto mb-6 transition-all duration-500 ease-in-out 
      bg-gradient-custom bg-black rounded-lg 
-    ${
-      AllowedPath(location.pathname.split("/")[1])
-        ? "w-full"
-        : showSidebar
-        ? "w-full lg:w-[75%] xl:w-[80%] 2xl:w-[85%]"
-        : "w-full lg:w-[95%] xl:w-[96%] 2xl:w-[97%]"
-    }`}
+    ${AllowedPath(location.pathname.split("/")[1])
+            ? "w-full"
+            : showSidebar
+              ? "w-full lg:w-[75%] xl:w-[80%] 2xl:w-[85%]"
+              : "w-full lg:w-[95%] xl:w-[96%] 2xl:w-[97%]"
+          }`}
       >
         <Outlet />
       </div>
