@@ -111,37 +111,32 @@ const MainLayout = () => {
 
   useEffect(() => {
     if (getDataFromSession) {
-      for (let item of products) {
-        if (item.title === getDataFromSession) {
-          // CASE 1: Feature coming soon
-          if (item.allowedPath.length === 0) {
-            alert(`${getDataFromSession} is coming soon`);
-            break;
-          }
 
-          // CASE 2: User not authenticated
-          if (!authenticate?.role && item.allowedPath.length > 0) {
-            navigate(item.allowedPath[0]?.route);
-            return;
-          }
+      const filterData = products.filter((item) => item.title === getDataFromSession)[0];
 
-          // CASE 3: User has a role
-          if (authenticate.role && item.allowedPath.length > 0) {
-            const navList = item.allowedPath.filter((pathItem) =>
-              authenticate?.allowed_path.some(
-                (authItem) => authItem.value === pathItem.route
-              )
-            );
-            if (navList.length > 0) {
-              navigate(navList[0]?.route);
-            }
-            return;
-          }
+      if (filterData?.allowedPath?.length === 0) {
+        alert(`${getDataFromSession} is comming soon`)
+        return
+      }
+
+      if (!authenticate?.role && filterData?.allowedPath?.length > 0) {
+        navigate(filterData.allowedPath[0]?.route);
+        return;
+      }
+
+      if (authenticate.role && filterData?.allowedPath?.length > 0) {
+        const navList = filterData.allowedPath.filter((pathItem) =>
+          authenticate?.allowed_path.some(
+            (authItem) => authItem.value === pathItem.route
+          )
+        );
+        if (navList.length > 0) {
+          navigate(navList[0]?.route);
         }
+        return;
       }
     }
   }, [getDataFromSession, authenticate]);
-
 
   const AllowedPath = (link) => {
     const paths = ["reports"];

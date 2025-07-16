@@ -48,8 +48,14 @@ const Dashboard = () => {
           alert("You Dont Have An access This Module")
         }
       } else {
-        sessionStorage.setItem("VROC", item);
-        setGetDataFromSession(item);
+
+         const data = products.filter((value) => value.title === item)[0].allowedPath.length
+         if(data === 0){
+          alert(`${item} is comming soon`)
+         }else {
+           sessionStorage.setItem("VROC", item);
+           setGetDataFromSession(item);
+         }
       }
 
     }
@@ -144,7 +150,7 @@ const Dashboard = () => {
             <div className="flex space-x-1 mb-4">
               <div className="w-2 h-2 rounded-full bg-gray-400" />
               <div className="w-2 h-2 rounded-full bg-gray-400" />
-              <div className="w-2 h-2 rounded-full bg-gray-300" />
+              <div className="w-2 h-2 rounded-full bg-gray-400" />
             </div>
             <h1 className="text-2xl md:text-3xl font-semibold mb-2">
               Virtual Risk Operations Center (VROC)
@@ -177,25 +183,27 @@ const Dashboard = () => {
 
             {showModal
               ? filteredProducts.map((item, index) => (
-                <Card
-                  key={index}
-                  HandleClick={() => HandleClick(item.title)}
-                  borderColor={item.borderColor}
-                  bg={item.bg}
-                  animate="animate-slideInX"
-                >
-                  <div className="flex flex-col items-start gap-3">
-                    <div className="w-10 h-10 bg-[#ffffff1c] rounded-full flex items-center justify-center text-white text-xl">
-                      {typeof item.icon === "string" ? (
-                        <img src={item.icon} alt="icon" className="w-5 h-5" />
-                      ) : (
-                        item.icon
-                      )}
-                    </div>
+                <>
+                  <Card
+                    key={index}
+                    HandleClick={() => HandleClick(item.title)}
+                    borderColor={item.borderColor}
+                    bg={item.bg}
+                    animate="animate-slideInX"
+                  >
+                    <div className="flex flex-col items-start gap-3">
+                      <div className="w-10 h-10 bg-[#ffffff1c] rounded-full flex items-center justify-center text-white text-xl">
+                        {typeof item.icon === "string" ? (
+                          <img src={item.icon} alt="icon" className="w-5 h-5" />
+                        ) : (
+                          item.icon
+                        )}
+                      </div>
 
-                    <h3 className="text-sm font-semibold text-white">{item.title}</h3>
-                  </div>
-                </Card>
+                      <h3 className="text-sm font-semibold text-white">{item.title}</h3>
+                    </div>
+                  </Card>
+                </>
               ))
               : products
                 .filter(
