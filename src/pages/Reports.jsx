@@ -3,24 +3,23 @@ import InputField from "@/components/InputField";
 import ReportModal from "@/components/modal/ReportModal";
 import NoDataFound from "@/components/NoDataFound";
 import { AxiosHandler } from "@/config/AxiosConfig";
-import { useAuthContext, useScheduleAssessmentContext } from "@/context";
+import { useAuthContext } from "@/context";
+import { Reportvalidation } from "@/Validation/VulnerabililtyDataValidation";
 import { Form, Formik } from "formik";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { BiEditAlt, BiSearch, BiUpload } from "react-icons/bi";
-import { IoEyeOutline } from "react-icons/io5";
+import { BiEditAlt, BiUpload } from "react-icons/bi";
 import { MdClose } from "react-icons/md";
 import { RiDeleteBinFill } from "react-icons/ri";
 
 const Reports = () => {
-  const { getOrgnizationData: orgData } = useScheduleAssessmentContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [reportData, setReportData] = useState([]);
   const [filterData, setFilterData] = useState([]);
 
-  const { token, authenticate } = useAuthContext();
+  const { token,  } = useAuthContext();
   const [file, setFile] = useState("");
   const [isEdit, setIsEdit] = useState(false);
   const [editData, setEditData] = useState(null); // State for edit data
@@ -88,10 +87,6 @@ const Reports = () => {
   }, [creatorFilter, orgFilter, dateFilter, reportData]);
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    if (!values.Organization) {
-      toast.error("Please select an organization.");
-      return;
-    }
 
     if (!values.report && !isEdit) {
       toast.error("Please upload a report file.");
@@ -138,24 +133,6 @@ const Reports = () => {
     }
   };
 
-  const OrganizationDropdown = ({ orgData = [], setFieldValue, values }) => {
-    return (
-      <select
-        className="w-full p-2 border border-gray-300 rounded-lg bg-input text-white"
-        value={values.Organization}
-        onChange={(e) => setFieldValue("Organization", e.target.value)}
-      >
-        <option value="">Select an Organization</option>
-        {Array.isArray(orgData) &&
-          orgData.map((org) => (
-            <option key={org._id} value={org._id}>
-              {org.Organization}
-            </option>
-          ))}
-      </select>
-    );
-  };
-
   const handleDelete = async (id) => {
     console.log(id);
     try {
@@ -190,7 +167,7 @@ const Reports = () => {
             Detailed Report
           </button>
         </div>
-        )
+        
       </div>
 
       {/* Filter Inputs */}
@@ -340,45 +317,38 @@ const Reports = () => {
 
             <Formik
               initialValues={{
-                Organization: isEdit ? editData?.Organization?._id : "",
                 report: "",
                 Type_Of_Assesment: isEdit ? editData.Type_Of_Assesment : "",
               }}
+              validationSchema={Reportvalidation}
               onSubmit={handleSubmit}
             >
-              {({ setFieldValue, values, handleChange }) => (
+              {({ setFieldValue, values,handleBlur, handleChange,errors,touched }) => (
                 <Form className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
-                  {/* Organization Dropdown */}
-                  <div className="col-span-1 md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-200">
-                      Organization
-                    </label>
-                    <OrganizationDropdown
-                      orgData={orgData}
-                      setFieldValue={setFieldValue}
-                      values={values}
-                    />
-                  </div>
 
                   {/* Report Field */}
                   <InputField
-                    label="report"
+                    label="Report"
                     name="report"
                     type="file"
+                    onBlur={handleBlur}
                     onChange={(e) => {
                       const file = e.target.files[0];
                       setFieldValue("report", file);
                     }}
+                    isError={errors.report && touched.report}
+                    error={errors.report}
                   />
 
                   <div className="col-span-1 md:col-span-2">
                     <label className="block text-sm font-medium text-gray-200">
-                      type of assesment
+                      Type of assesment
                     </label>
                     <select
                       name="Type_Of_Assesment"
                       value={values.Type_Of_Assesment}
                       onChange={handleChange}
+                      onBlur={handleBlur}
                       className="w-full px-4 py-3 rounded-md border text-gray-200 bg-input border-gray-500 focus:ring-2 focus:ring-gray-500 text-sm focus:border-transparent outline-none transition"
                       id="Type_Of_Assesment"
                     >
@@ -423,6 +393,7 @@ const Reports = () => {
                         Configuration Audits
                       </option>
                     </select>
+                    {touched.Type_Of_Assesment && errors.Type_Of_Assesment && <p className="text-red-500" >{errors.Type_Of_Assesment}</p>}
                   </div>
 
                   {/* Buttons */}

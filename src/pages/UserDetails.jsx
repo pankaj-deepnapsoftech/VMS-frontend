@@ -61,8 +61,8 @@ export default function UserDetailsForm() {
                 <div className="relative">
                   <label id="profile" className="w-20 h-20 flex items-center justify-center rounded-full overflow-hidden object-cover  border-2 border-slate-600" >
                     {form.profile ? (
-                      <img src={preview || authenticate?.profile || '/default-profile.png'} />
-                    ) : <span className="text-2xl text-white"  >+</span>}
+                      <img src={preview || authenticate?.profile} />
+                    ) : <span className="text-2xl text-white"  >{authenticate.fname[0].toUpperCase()}</span>}
                     <input type="file" hidden id="profile" name="profile"
                       onChange={(e) => imagePreview(e.target.files[0])}
                       disabled={!isEditing} />

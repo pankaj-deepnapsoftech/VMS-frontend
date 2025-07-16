@@ -218,7 +218,7 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                     className="w-full bg-zinc-700 text-gray-200 placeholder-gray-500 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
                   >
                     <option value="" selected disabled>
-                      select Country
+                      Select Country
                     </option>
                     {countryData.map((item, index) => (
                       <option key={index} value={item.name}>
@@ -250,7 +250,7 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                     className="w-full bg-zinc-700 text-gray-200 placeholder-gray-500 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
                   >
                     <option value="" selected disabled>
-                      select State
+                      Select State
                     </option>
                     {formik.values.Country &&
                       countryData
@@ -330,7 +330,7 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                 />
 
                 <div
-                  className="absolute -top-6 transform -translate-x-1/2 bg-white px-4 py-2 rounded shadow text-center text-xs border text-black"
+                  className="absolute -top-3 transform -translate-x-1/2 bg-white px-4 py-2 rounded shadow text-center text-xs border text-black"
                   style={{ left: `${(riskScore / 1000) * 100}%` }}
                 >
                   <p className="font-[500] whitespace-nowrap">

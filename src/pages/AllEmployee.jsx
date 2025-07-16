@@ -1,5 +1,4 @@
 /* eslint-disable no-undef */
-/* eslint-disable react/jsx-no-undef */
 import InputField from "@/components/InputField";
 import Loader from "@/components/Loader/Loader";
 import NoDataFound from "@/components/NoDataFound";
@@ -9,17 +8,17 @@ import { BaseValidationSchema, EditUser } from "@/Validation/AuthValidation";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
-import { FaEnvelope, FaLock, FaPhone, FaUser } from "react-icons/fa";
-import { RiDeleteBinFill, RiEdit2Line } from "react-icons/ri";
+import { FaEnvelope, FaLock, FaPhone, FaRegTrashAlt, FaUser } from "react-icons/fa";
+import {RiEdit2Line } from "react-icons/ri";
 import Pagination from "./Pagination";
-import { IoClose } from "react-icons/io5";
+import { IoClose, IoSearch } from "react-icons/io5";
 
 const AllEmployee = () => {
-  const {  DeleteUser } = useAllEmployeeContext();
-  const {partners} = useDataContext()
+  const { DeleteUser } = useAllEmployeeContext();
+  const { partners } = useDataContext()
 
   const { token, ChangeStatus } = useAuthContext();
-  const {TenantData} = useAllEmployeeContext()
+  const { TenantData } = useAllEmployeeContext()
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editable, setEdiTable] = useState(null);
@@ -64,7 +63,7 @@ const AllEmployee = () => {
 
       const filteredData = Object.fromEntries(
         Object.entries(value).filter(
-          ([key, value]) =>
+          ([, value]) =>
             value !== "" && value !== null && value !== undefined
         )
       );
@@ -124,15 +123,14 @@ const AllEmployee = () => {
   const handleChangeStatus = async (type, id) => {
     if (window.confirm("Are you sure you want to change this user's status?")) {
       const deactivate = type === "activate";
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       await ChangeStatus({ deactivate }, id);
       GetUsers();
     }
   };
 
- 
 
-  
+
+
 
   const isPartOfSecurend = (e) => {
     if (e.target.value === "no") {
@@ -167,14 +165,14 @@ const AllEmployee = () => {
         <Loader />
       ) : (
         <div className="min-h-screen shadow-lg py-10">
-          <div className="max-w-screen px-4  border-[#6B728033] flex items-center gap-4backdrop-blur-md bg-[#6B728033] rounded-lg mx-5 ">
-            <input
-              type="text"
-              placeholder="Search users..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="bg-[#23252750] backdrop-blur-md py-2 w-1/3 text-white px-4 rounded-md "
-            />
+          <div className="max-w-screen px-4   flex items-center gap-4backdrop-blur-md  mx-5 ">
+
+            <div className="w-full">
+              <h2 className="text-3xl font-semibold text-white" >
+                All Users
+              </h2>
+              <span className="text-subtext">Manage your organization&apos;s employees</span>
+            </div>
             <div className="flex w-full justify-end py-4">
               <button
                 onClick={() => {
@@ -189,116 +187,122 @@ const AllEmployee = () => {
             </div>
           </div>
 
-          {filteredData?.length < 1 ? (
-            <NoDataFound />
-          ) : (
-            <div className="overflow-x-auto  custom-scrollbar w-[95%] rounded-xl mx-auto shadow-lg bg-[#0c1120] my-10">
-              <table className="min-w-full table-auto text-sm text-left text-gray-300 divide-y divide-gray-700">
-                <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
-                  <tr>
-                    {[
-                      "S No.",
-                      "First Name",
-                      "Last Name",
-                      "Email",
-                      "Phone",
-                      "Role",
-                      "Tenant",
-                      "Partner",
-                      "Status",
-                      "Actions",
-                    ].map((header) => (
-                      <th
-                        key={header}
-                        className="px-4 py-3 border-b border-gray-600 font-medium"
-                      >
-                        {header}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody className="divide-y  divide-gray-700">
-                  {filteredData.map((user, index) => (
-                    <tr
-                      key={user._id}
-                      className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
-                    >
-                      <td className="px-4 py-3">{index + 1}</td>
-                      <td className="px-4 py-3 capitalize">{user.fname}</td>
-                      <td className="px-4 py-3 capitalize">{user.lname}</td>
-                      <td className="px-4 py-3">{user.email}</td>
-                      <td className="px-4 py-3">{user.phone}</td>
-                      <td className="px-4 py-3">{user.role?.role || "—"}</td>
-                      <td className="px-4 py-3">
-                        {user.partner?.company_name || "—"}
-                      </td>
-                      <td className="px-4 py-3">
-                        {user.tenant?.company_name || "—"}
-                      </td>
+          
+          <div className="w-full bg-[#0a0e1a] min-h-screen p-6">
+            <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
+              {/* Header */}
+              <div className="px-6 py-4 border-b border-gray-700 relative">
+                <div className="relative">
+                  <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
+                  <input
+                    type="search"
+                    placeholder="Search users..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="bg-input backdrop-blur-md py-2 w-1/3 text-white ps-7 pe-3 rounded-md "
+                  />
+                </div>
 
-                      <td className="px-4 py-3">
-                        {user.deactivate ? (
-                          <button
-                            onClick={() =>
-                              handleChangeStatus("deactivate", user._id)
-                            }
-                            className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs"
-                          >
-                            Activate
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() =>
-                              handleChangeStatus("activate", user._id)
-                            }
-                            className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs"
-                          >
-                            Deactivate
-                          </button>
-                        )}
-                      </td>
-                      <td className="px-4 py-3 flex gap-2">
-                        <button
-                          onClick={() =>
-                            window.confirm("Delete this user?") &&
-                            DeleteUser(user._id)
-                          }
-                          title="Delete"
-                          className="text-red-500 hover:text-red-700"
-                        >
-                          <RiDeleteBinFill className="w-5 h-5" />
-                        </button>
-                        <button
-                          onClick={() => {
-                            setEdiTable(user);
-                            setIsModalOpen(true);
-                          }}
-                          title="Edit"
-                          className="text-blue-500 hover:text-blue-700"
-                        >
-                          <RiEdit2Line className="w-5 h-5" />
-                        </button>
-                         
-                      </td>
+              </div>
+
+              {/* Table */}
+              {filteredData?.length < 1 ? (
+                <NoDataFound />
+              ) : (<div className="overflow-x-auto custom-scrollbar w-full  mx-auto shadow-lg bg-gray-900 ">
+                <table className="min-w-full table-auto text-sm text-left text-gray-300 divide-y divide-gray-700">
+                  <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
+                    <tr>
+                      {[
+                        "S No.",
+                        "First Name",
+                        "Last Name",
+                        "Email",
+                        "Phone",
+                        "Role",
+                        "Tenant",
+                        "Partner",
+                        "Status",
+                        "Actions",
+                      ].map((header) => (
+                        <th key={header} className="px-4 py-3 border-b border-gray-600 font-medium">
+                          {header}
+                        </th>
+                      ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="divide-y divide-gray-700">
+                    {filteredData.map((user, index) => (
+                      <tr key={user._id} className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap">
+                        <td className="px-4 py-3">{index + 1}</td>
+                        <td className="px-4 py-3 capitalize">{user.fname}</td>
+                        <td className="px-4 py-3 capitalize">{user.lname}</td>
+                        <td className="px-4 py-3">{user.email}</td>
+                        <td className="px-4 py-3">{user.phone}</td>
+                        <td className="px-4 py-3">{user.role?.role || "—"}</td>
+                        <td className="px-4 py-3">{user.tenant?.company_name || "—"}</td>
+                        <td className="px-4 py-3">{user.partner?.company_name || "—"}</td>
+                        <td className="px-4 py-3">
+                          {user.deactivate ? (
+                            <button
+                              onClick={() => handleChangeStatus("deactivate", user._id)}
+                              className="bg-[#395042] hover:bg-green-700 text-green-500 px-3 py-1 rounded-full text-xs"
+                            >
+                              Activate
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => handleChangeStatus("activate", user._id)}
+                              className="bg-[#3E212D] hover:bg-[#2b161e] text-[#EC6C6D] px-3 py-1 rounded-full text-xs"
+                            >
+                              Deactivate
+                            </button>
+                          )}
+                        </td>
+                        <td className="px-4 py-3 flex gap-2">
+                          <button
+                            onClick={() => window.confirm("Delete this user?") && DeleteUser(user._id)}
+                            title="Delete"
+                            className="text-subtext hover:text-subTextHover"
+                          >
+                            <FaRegTrashAlt className="w-5 h-5" />
+                          </button>
+                          <button
+                            onClick={() => {
+                              setEdiTable(user);
+                              setIsModalOpen(true);
+                            }}
+                            title="Edit"
+                            className="text-subtext hover:text-blue-700"
+                          >
+                            <RiEdit2Line className="w-5 h-5" />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>)}
+
+              {/* Footer */}
+              <Pagination
+                page={page}
+                setPage={setPage}
+                hasNextPage={EmpData.length === 10}
+                total={EmpData.length}
+              />
+
             </div>
-          )}
-          <Pagination
-            page={page}
-            setPage={setPage}
-            hasNextPage={EmpData.length === 10}
-          />
+          </div>
+
+
+
         </div>
       )}
 
       {/* MODAL */}
       <div
-        className={`absolute top-0 left-0 z-50 min-h-screen bg-gradient-custom w-full text-white ${
-          isModalOpen ? "opacity-100 visible" : "opacity-0 invisible"
-        } transition-opacity duration-500 ease-in-out`}
+        className={`absolute top-0 left-0 z-50 min-h-screen bg-gradient-custom w-full text-white ${isModalOpen ? "opacity-100 visible" : "opacity-0 invisible"
+          } transition-opacity duration-500 ease-in-out`}
       >
         <div className="w-full flex justify-between items-center py-6 px-10">
           <div className="text-2xl text-center w-full">Add Users</div>
@@ -315,7 +319,7 @@ const AllEmployee = () => {
         <div className="flex justify-center px-10 py-8">
           <div className="flex-1 px-8 py-10 rounded-md shadow-md max-w-5xl bg-[#2a282e80]">
             <form onSubmit={handleSubmit} className="space-y-12">
-              <div>                                                    
+              <div>
                 <h1 className="text-3xl font-semibold text-white mb-2">
                   {editable ? "Edit User Details" : "Add a New User"}
                 </h1>
@@ -514,7 +518,7 @@ const AllEmployee = () => {
                 {/* Phone Number */}
                 <InputField
                   label="Phone Number"
-                  type="text"
+                  type="number"
                   showPassword={false}
                   icon={FaPhone}
                   value={values.phone}

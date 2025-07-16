@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 import { AxiosHandler } from "@/config/AxiosConfig";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import toast from "react-hot-toast";
 
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const AssesmentContext = createContext();
 
 
@@ -17,7 +18,6 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 	const [allAssesmentData, setAllAssesmentData] = useState([]);
 	const [testerData, setTesterData] = useState([]);
 	const [dashboardData, setDashboardData] = useState([]);
-	const [getOrgnizationData, setGetOrgnizationData] = useState([]);
 
 
 
@@ -141,7 +141,6 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 			DeleteAssesment,
 			UpdateAssesment,
 			testerData,
-			getOrgnizationData,
 			page,
 			setPage,
 			dashboardData,

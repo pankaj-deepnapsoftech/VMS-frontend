@@ -20,14 +20,12 @@ import {
 } from "recharts";
 
 import Card from "@/components/Card";
-import { useAuthContext, useDataContext } from "@/context";
+import { useDataContext } from "@/context";
 import { FaNetworkWired } from "react-icons/fa";
 import { Bug } from "lucide-react";
 import BarGraph from "@/components/BarGraph";
-import { useEffect, useRef, useState } from "react";
 
 import { ChartsColor } from "@/constants/static.data";
-import { AxiosHandler } from "@/config/AxiosConfig";
 
 
 function Home() {
@@ -43,16 +41,9 @@ function Home() {
     criticalHighVulnerable,
     criticalHighVulnerableOverdue,
     exploitability,
-    TenantAllData,
 
   } = useDataContext();
 
-  const { authenticate, token } = useAuthContext();
-  const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filteredOptions, setFilteredOptions] = useState(TenantAllData);
-  const dropdownRef = useRef(null);
 
 
   const closevulnerableItemsData = [closevulnerableItems];
@@ -510,11 +501,12 @@ function Home() {
                 </tr>
               </thead>
               <tbody>
+                {console.log("criticalHighVulnerableOverdue",criticalHighVulnerableOverdue)}
                 {Object.entries(criticalHighVulnerableOverdue).map(
                   ([key, value]) => (
                     <tr key={key}>
                       <td className="px-4 py-2 text-gray-400 border-b">
-                        {key}
+                        {key === "ApiServer" ? "Api Server" : key === "webApplication" ? "Web Application" : key === "mobileApplication" && "Mobile Application" }
                       </td>
                       <td className="px-4 py-2 text-gray-400 border-b">
                         {value}

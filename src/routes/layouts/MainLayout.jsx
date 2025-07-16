@@ -290,7 +290,7 @@ const MainLayout = () => {
       )}
       <div
         className={`ml-auto mb-6 transition-all duration-500 ease-in-out 
-     bg-gradient-custom bg-black rounded-lg 
+     bg-gradient-custom bg-black 
     ${AllowedPath(location.pathname.split("/")[1])
             ? "w-full"
             : showSidebar
