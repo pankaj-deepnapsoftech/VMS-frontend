@@ -6,13 +6,13 @@ import { products } from "@/constants/static.data";
 import "./animation.css";
 
 // Card component with gradient border
-const Card = ({ children, HandleClick, borderColor, bg, animate, }) => {
-
-
+const Card = ({ children, HandleClick, borderColor, bg, animate }) => {
   return (
     <div
       onClick={HandleClick}
-      className={`rounded-xl w-full h-[200px] transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-xl cursor-pointer  ${bg ? "bg-gradient-to-r " + bg : ""} ${animate}`}
+      className={`rounded-xl w-full h-[200px] transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-xl cursor-pointer  ${
+        bg ? "bg-gradient-to-r " + bg : ""
+      } ${animate}`}
       style={{
         border: `1px solid ${borderColor}`,
       }}
@@ -21,45 +21,46 @@ const Card = ({ children, HandleClick, borderColor, bg, animate, }) => {
         {children}
       </div>
     </div>
-
   );
 };
 
-
-
 const Dashboard = () => {
-
   const { authenticate, Logout, setGetDataFromSession } = useAuthContext();
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
-
   const HandleClick = (item) => {
-    if (item !== "Attack Surface Management (ASM)" && item !== "Risk and Compliances") {
+    if (
+      item !== "Attack Surface Management (ASM)" &&
+      item !== "Risk and Compliances"
+    ) {
       if (authenticate?.role) {
-        const data = products.filter((value) => value.title === item)[0].allowedPath.filter((pathItem) =>
-          authenticate?.allowed_path.some((authItem) => authItem.value === pathItem.route));
+        const data = products
+          .filter((value) => value.title === item)[0]
+          .allowedPath.filter((pathItem) =>
+            authenticate?.allowed_path.some(
+              (authItem) => authItem.value === pathItem.route
+            )
+          );
         if (data?.length) {
           sessionStorage.setItem("VROC", item);
           setGetDataFromSession(item);
         } else {
-          alert("You Dont Have An access This Module")
+          alert("You Dont Have An access This Module");
         }
       } else {
-
-         const data = products.filter((value) => value.title === item)[0].allowedPath.length
-         if(data === 0){
-          alert(`${item} is comming soon`)
-         }else {
-           sessionStorage.setItem("VROC", item);
-           setGetDataFromSession(item);
-         }
+        const data = products.filter((value) => value.title === item)[0]
+          .allowedPath.length;
+        if (data === 0) {
+          alert(`${item} is comming soon`);
+        } else {
+          sessionStorage.setItem("VROC", item);
+          setGetDataFromSession(item);
+        }
       }
-
     }
-
 
     if (item === "Attack Surface Management (ASM)") {
       const result = products.filter(
@@ -73,7 +74,6 @@ const Dashboard = () => {
       return;
     }
 
-
     if (item === "Risk and Compliances") {
       const result = products.filter(
         (item) =>
@@ -85,10 +85,7 @@ const Dashboard = () => {
       setShowModal((prev) => !prev);
       return;
     }
-
-
-  }
-
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -102,13 +99,9 @@ const Dashboard = () => {
 
   return (
     <div className="relative w-full min-h-screen bg-gradient-to-tr from-[#2b2973] via-transparent to-black bg-black text-white">
-
-
       <div className="absolute inset-0 z-0 bg-[url('/Svg/background.svg')] bg-no-repeat bg-cover bg-center   " />
 
       <div className="relative z-10 flex flex-col md:flex-row gap-8 w-full min-h-screen px-4 md:px-8 pt-12 ">
-
-
         <div className="absolute top-4 right-6 z-30" ref={dropdownRef}>
           <div className="relative">
             <button
@@ -131,15 +124,21 @@ const Dashboard = () => {
           </div>
         </div>
 
-
         <div className="w-full md:w-[40%] flex flex-col  gap-10">
           <div className="text-center md:text-left">
-            <img src="/logo.png" alt="Logo" className="mx-auto md:mx-0 w-40 md:w-60" />
+            <img
+              src="/logo.png"
+              alt="Logo"
+              className="mx-auto md:mx-0 w-40 md:w-60"
+            />
           </div>
 
           <div className="text-center md:text-left px-2">
             <h2 className="text-4xl md:text-5xl font-bold">
-              Hello, <span className="capitalize font-lexendDeca">{authenticate?.fname}</span>
+              Hello,{" "}
+              <span className="capitalize font-lexendDeca">
+                {authenticate?.fname}
+              </span>
             </h2>
             <p className="mt-2 text-md md:text-lg text-gray-400">
               Welcome to the Virtual Risk Operation Center
@@ -159,80 +158,82 @@ const Dashboard = () => {
               Welcome to the Virtual Risk Operation Center
             </p>
           </div>
-
         </div>
 
-
         <div className="w-full md:w-[60%] flex flex-col gap-6 pt-10 md:pt-0">
-
-
           <div className="w-full sm:w-1/2 lg:w-1/3 2xl:w-[23%] aspect-[4/3] rounded-xl bg-gradient-to-r from-[#9b1c4d] to-[#df4156] p-6 shadow-md flex flex-col justify-between">
             <div>
               <div className="w-12 h-12 rounded-full bg-[#ffffff3d] flex items-center justify-center">
                 <FiDatabase size={24} color="white" />
               </div>
               <div className="pt-4">
-                <h2 className="text-white text-lg font-semibold">Asset Inventory</h2>
+                <h2 className="text-white text-lg font-semibold">
+                  Asset Inventory
+                </h2>
                 <p className="text-gray-200 text-sm mt-1">Active Plan.....</p>
               </div>
             </div>
           </div>
 
-
           <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
-
             {showModal
               ? filteredProducts.map((item, index) => (
-                <>
-                  <Card
-                    key={index}
-                    HandleClick={() => HandleClick(item.title)}
-                    borderColor={item.borderColor}
-                    bg={item.bg}
-                    animate="animate-slideInX"
-                  >
-                    <div className="flex flex-col items-start gap-3">
-                      <div className="w-10 h-10 bg-[#ffffff1c] rounded-full flex items-center justify-center text-white text-xl">
-                        {typeof item.icon === "string" ? (
-                          <img src={item.icon} alt="icon" className="w-5 h-5" />
-                        ) : (
-                          item.icon
-                        )}
-                      </div>
+                  <>
+                    <Card
+                      key={index}
+                      HandleClick={() => HandleClick(item.title)}
+                      borderColor={item.borderColor}
+                      bg={item.bg}
+                      animate="animate-slideInX"
+                    >
+                      <div className="flex flex-col items-start gap-3">
+                        <div className="w-10 h-10 bg-[#ffffff1c] rounded-full flex items-center justify-center text-white text-xl">
+                          {typeof item.icon === "string" ? (
+                            <img
+                              src={item.icon}
+                              alt="icon"
+                              className="w-5 h-5"
+                            />
+                          ) : (
+                            item.icon
+                          )}
+                        </div>
 
-                      <h3 className="text-sm font-semibold text-white">{item.title}</h3>
-                    </div>
-                  </Card>
-                </>
-              ))
+                        <h3 className="text-sm font-semibold text-white">
+                          {item.title}
+                        </h3>
+                      </div>
+                    </Card>
+                  </>
+                ))
               : products
-                .filter(
-                  (item) =>
-                    !(
-                      item.title.includes("AI-VA") ||
-                      item.title.includes("Vulnerability Intelligence") ||
-                      item.title.includes("GRC") ||
-                      item.title.includes("TPRM")
-                    )
-                )
-                .map((item, index) => (
-                  <Card
-                    key={index}
-                    HandleClick={() => HandleClick(item.title)}
-                    borderColor={item.borderColor}
-                    title={item.title}
-
-                  >
-                    <div className="flex flex-col items-start  gap-3">
-                      <div className="w-10 h-10 bg-[#ffffff1c] rounded-full flex items-center justify-center text-white text-xl">
-                        <img src={item.icon} alt="icon" />
+                  .filter(
+                    (item) =>
+                      !(
+                        item.title.includes("AI-VA") ||
+                        item.title.includes("Vulnerability Intelligence") ||
+                        item.title.includes("GRC") ||
+                        item.title.includes("TPRM")
+                      )
+                  )
+                  .map((item, index) => (
+                    <Card
+                      key={index}
+                      HandleClick={() => HandleClick(item.title)}
+                      borderColor={item.borderColor}
+                      title={item.title}
+                    >
+                      <div className="flex flex-col items-start  gap-3">
+                        <div className="w-10 h-10 bg-[#ffffff1c] rounded-full flex items-center justify-center text-white text-xl">
+                          <img src={item.icon} alt="icon" />
+                        </div>
+                        <h3 className="text-sm font-semibold text-white">
+                          {item.title}
+                        </h3>
                       </div>
-                      <h3 className="text-sm font-semibold text-white">{item.title}</h3>
-                    </div>
-                  </Card>
-                ))}
+                    </Card>
+                  ))}
           </div>
-
         </div>
       </div>
     </div>
