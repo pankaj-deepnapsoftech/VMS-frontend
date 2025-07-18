@@ -22,7 +22,7 @@ export default function BusinessApplications() {
     UpdateBussinerssApplcation,
     CreateBulkBussinerssApplcation,
     GetAllInfraAssetData,
-    totalInfraAsset
+    totalInfraAsset,
   } = useInfraAssetContext();
   const [editable, setEditable] = useState(null);
   const [countryData, setcountryData] = useState([]);
@@ -53,7 +53,7 @@ export default function BusinessApplications() {
       applicationUrl: "",
       modifyCriticality: "",
       tages: null,
-      asset:""
+      asset: "",
     },
     validationSchema: BusinessApplicationValidation,
     enableReinitialize: true,
@@ -117,33 +117,30 @@ export default function BusinessApplications() {
     setTenant(params.get("tenant") || "");
   }, [location.search]);
 
-    useEffect(() => {
-      if (token) {
-        GetAllInfraAssetData(tenant)
-      }
-    }, [tenant])
+  useEffect(() => {
+    if (token) {
+      GetAllInfraAssetData(tenant);
+    }
+  }, [tenant]);
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-custom text-white p-6">
+      <div className="min-h-screen mb-10 bg-gradient-custom text-white p-6">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="max-w-screen px-4  border-[#6B728033] flex items-center gap-4backdrop-blur-md bg-[#6B728033] rounded-lg  my-5 ">
+          <div className="max-w-screen px-4 border border-[#6B728033] backdrop-blur-md bg-[#6B728033] rounded-lg my-5 py-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <input
               type="text"
               placeholder="Search users..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="bg-[#13141450] border backdrop-blur-md py-2 w-1/3 text-white px-4 rounded-md "
+              className="bg-[#13141450] border border-gray-600 backdrop-blur-md py-2 px-4 text-white rounded-md w-full md:w-1/3"
             />
 
-            <div className="flex w-full justify-end py-4 gap-5">
+            <div className="flex flex-col sm:flex-row w-full md:w-auto justify-end gap-4">
               <button
-                onClick={() => {
-                  // eslint-disable-next-line no-undef
-                  setIsModalOpen(true);
-                }}
-                className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center gap-2"
+                onClick={() => setIsModalOpen(true)}
+                className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center justify-center gap-2"
               >
                 <BiPlus className="h-6 w-6" />
                 Bulk Upload
@@ -154,9 +151,9 @@ export default function BusinessApplications() {
                   setmodel(!model);
                   setEditable(null);
                 }}
-                className="px-4 py-2 mr-5 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center gap-2"
+                className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center justify-center gap-2"
               >
-                <BiPlus className="h-6 w-6 mr-1" />
+                <BiPlus className="h-6 w-6" />
                 Business Applications
               </button>
             </div>
@@ -239,7 +236,7 @@ export default function BusinessApplications() {
                                 {item.tag_name}
                               </p>
                             ))
-                          : "-"}                                                                                  
+                          : "-"}
                       </td>
                       <td className="py-4 px-6">
                         <div className="flex space-x-2">
@@ -547,19 +544,22 @@ export default function BusinessApplications() {
                 </div>
 
                 <div>
-          <label className="block mb-1 text-sm text-white">Asset</label>
-          <select
-            name="asset"
-            value={values.asset}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            className="w-full p-2 rounded border border-gray-600 bg-[#252A3A] text-white focus:outline-none"
-          >
-            <option value="">-- Select --</option>
-            {totalInfraAsset?.map((item) => <option key={item._id} value={item._id}>{item.asset_hostname}</option>)}
-          </select>
-
-        </div>
+                  <label className="block mb-1 text-sm text-white">Asset</label>
+                  <select
+                    name="asset"
+                    value={values.asset}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className="w-full p-2 rounded border border-gray-600 bg-[#252A3A] text-white focus:outline-none"
+                  >
+                    <option value="">-- Select --</option>
+                    {totalInfraAsset?.map((item) => (
+                      <option key={item._id} value={item._id}>
+                        {item.asset_hostname}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-slate-300">

@@ -95,24 +95,21 @@ export default function TenantDashboard() {
       <div className="min-h-screen bg-gradient-custom text-white p-6">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="max-w-screen px-4 border-[#6B728033] flex items-center justify-between backdrop-blur-md bg-[#435b8a33] rounded-lg my-5 h-[70px]">
+          <div className="w-full px-4 border border-[#6B728033] backdrop-blur-md bg-[#435b8a33] rounded-lg my-5 py-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             {/* Search Input */}
             <input
               type="text"
               placeholder="Search users..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="bg-[#13141450] border border-gray-500 backdrop-blur-md py-2 w-1/3 text-white px-4 rounded-md"
+              className="bg-[#13141450] border border-gray-500 backdrop-blur-md py-2 px-4 rounded-md text-white w-full md:w-1/3"
             />
 
             {/* Buttons */}
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col sm:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
               <button
-                onClick={() => {
-                  // eslint-disable-next-line no-undef
-                  setIsModalOpen(true);
-                }}
-                className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center gap-2"
+                onClick={() => setIsModalOpen(true)}
+                className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center justify-center gap-2"
               >
                 <BiPlus className="h-6 w-6" />
                 Bulk Upload
@@ -123,7 +120,7 @@ export default function TenantDashboard() {
                   setmodel(true);
                   setEditable(null);
                 }}
-                className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center gap-2"
+                className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center justify-center gap-2"
               >
                 <BiPlus className="h-6 w-6" />
                 Infrastructure Asset

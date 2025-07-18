@@ -15,7 +15,7 @@ const ThirdPartyIntegrations = () => {
     navigate("/third-party-data");
   };
 
-  const integrations = [
+  const integrations = [         
     {
       name: "Jira",
       version: "v8.20.0",
@@ -187,7 +187,7 @@ const ThirdPartyIntegrations = () => {
   });
 
   return (
-    <div className="min-h-screen w-full bg-transparent text-white">
+    <div className="min-h-screen w-full mb-10 bg-transparent text-white">
       <div className="flex w-full">
         <main className="flex-1 p-4 sm:p-6 w-full">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
