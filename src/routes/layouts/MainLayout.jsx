@@ -155,9 +155,10 @@ const MainLayout = () => {
     <Suspense fallback={<Loader />}>
       <Sidebar />
 
-      <div className="bg-gradient-to-t from-[#1a1c1e] to-[#212325]  border-gray-200 w-full sticky top-0 z-50">
-        <div className="flex items-center justify-between px-2 sm:px-4 py-2 bg-[#1f2937]">
-          <div className="w-full flex items-center justify-between pr-5 ">
+{/* header */}
+      <header className="bg-gradient-to-t from-[#1a1c1e] to-[#212325]  border-gray-200 w-full sticky top-0 z-50">
+        <div className="  px-2 sm:px-4 py-2 bg-[#1f2937]">
+          <div className="w-full flex items-center justify-between">
             <button
               className="p-2 text-white hover:bg-gray-600 rounded lg:hidden "
               onClick={() => setShowMenu(!showMenu)}
@@ -176,18 +177,21 @@ const MainLayout = () => {
                 </div>
               </Link>
 
-              {!authenticate?.role && (
-                <Select
-                  className="custom-scrollbar w-[200px] basic-single"
-                  classNamePrefix="select"
-                  defaultValue={tenant}
-                  onChange={handleSelect}
-                  isSearchable={true}
-                  options={TenantAllData}
-                  theme={darkTheme}
-                  styles={customStyles}
-                />
-              )}
+              <div className="hidden md:block">
+                {!authenticate?.role && (
+                  <Select
+                    className="custom-scrollbar w-[200px] basic-single"
+                    classNamePrefix="select"
+                    defaultValue={tenant}
+                    onChange={handleSelect}
+                    isSearchable={true}
+                    options={TenantAllData}
+                    theme={darkTheme}
+                    styles={customStyles}
+                  />
+                )}
+              </div>
+
             </div>
 
             <div className=" flex items-end justify-end">
@@ -205,7 +209,7 @@ const MainLayout = () => {
                 )}
               </button>
 
-              <div className="relative ml-4 flex text-white items-center gap-3">
+              <div className="relative ml-4 flex text-white items-center gap-1 md:gap-3">
                 <button
                   onClick={() => {
                     setOpenSideBar(true);
@@ -214,44 +218,7 @@ const MainLayout = () => {
                 >
                   {authenticate.fname[0].toUpperCase()}
                 </button>
-                {/* {authenticate?.role} */}
-
-                {/* {showUserMenu && (
-                    <div className="absolute right-0 mt-2 w-64 bg-[#4f4f4f] rounded-lg shadow-lg z-50">
-                      <div className="flex items-center gap-2 px-4 py-3 border-b">
-                        <div className="bg-blue-400 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">
-                          {user.name
-                            .split(" ")
-                            .map((n) => n[0])
-                            .join("")
-                            .toUpperCase()}
-                        </div>
-                        <div>
-                          <p className="text-sm font-semibold text-gray-200">
-                            {user.name}
-                          </p>
-                          <p className="text-xs text-gray-400">{user.email}</p>
-                        </div>
-                      </div>
-                      <ul className="text-sm text-gray-200">
-                        <li
-                          className="px-4 py-2 hover:bg-gray-500 cursor-pointer flex items-center gap-2"
-                          onClick={() => {
-                          
-                            console.log("Logout");
-                          }}
-                        >
-                          ⤴️ Logout
-                        </li>
-                        <li
-                          className="px-4 py-2 hover:bg-gray-500 cursor-pointer flex items-center gap-2"
-                          onClick={() => setShowUserMenu(false)}
-                        >
-                          ❌ Close
-                        </li>
-                      </ul>
-                    </div>
-                  )} */}
+               
               </div>
             </div>
 
@@ -262,8 +229,30 @@ const MainLayout = () => {
               onClose={() => setSidebarOpen(false)}
             />
           </div>
+          
+          <div className="md:hidden">
+                {!authenticate?.role && (
+                  <Select
+                    className="custom-scrollbar w-[90%] mx-auto my-5 basic-single"
+                    classNamePrefix="select"
+                    defaultValue={tenant}
+                    onChange={handleSelect}
+                    isSearchable={true}
+                    options={TenantAllData}
+                    theme={darkTheme}
+                    styles={customStyles}
+                  />
+                )}
+              </div>
         </div>
-      </div>
+      </header>
+
+
+
+
+
+
+
       {!AllowedPath(location.pathname.split("/")[1]) && (
         <aside
           onMouseEnter={() => setShowSideBar(true)}
@@ -289,7 +278,7 @@ const MainLayout = () => {
         </aside>
       )}
       <div
-        className={`ml-auto mb-6 transition-all duration-500 ease-in-out 
+        className={`ml-auto transition-all min-h-screen duration-500 ease-in-out 
      bg-gradient-custom bg-black 
     ${AllowedPath(location.pathname.split("/")[1])
             ? "w-full"
