@@ -287,13 +287,13 @@ const MainLayout = () => {
               ? "lg:w-[25%] xl:w-[20%] 2xl:w-[15%]"
               : "lg:w-[5%] xl:w-[4%] 2xl:w-[3%]"
             } 
-    ${showMenu ? `left-0 sm:left-0` : "-left-full "} 
+    ${showMenu ? `left-0 ` : "-left-full lg:left-0 "} 
     whitespace-nowrap
   `}
         >
           <Header
             setShowMenu={() =>
-              width > 1023 ? setShowMenu(true) : setShowMenu(!showMenu)
+              width > 1023 ? setShowMenu(true) : setShowMenu(false)
             }
             showSidebar={showSidebar}
           />
