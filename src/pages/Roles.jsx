@@ -106,28 +106,30 @@ const Roles = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <section className="h-screen w-full px-6 py-8">
+        // Only highlighted changes are shown in comments
+        // ...
+
+        <section className="min-h-screen w-full px-4 sm:px-6 py-6 sm:py-8">
           {/* Top Bar */}
-          <div className="max-w-screen px-4 justify-between h-16 border-[#6B728033] flex items-center gap-4 rounded-md backdrop-blur-md bg-[#6B728033] my-10 mx-5">
+          <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-4 h-auto sm:h-16 border-[#6B728033] rounded-md backdrop-blur-md bg-[#6B728033] my-6 sm:my-10 mx-0 sm:mx-5 px-4 py-4">
             <input
               type="text"
               value={search}
               onChange={(e) => handleSearch(e.target.value)}
               placeholder="Search..."
-              className="bg-[#23252750] backdrop-blur-md py-2 w-1/3 px-4 rounded-md text-white"
+              className="bg-[#23252750] backdrop-blur-md py-2 px-4 w-full sm:w-1/3 rounded-md text-white"
             />
             <button
               onClick={() => {
                 setModal(true);
                 setEditable(null);
               }}
-              className="px-4 py-2 bg-button hover:bg-hoverbutton mr-5 rounded-md text-white font-medium flex items-center gap-2"
+              className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center gap-2 w-full sm:w-auto"
             >
               <BiPlus className="h-5 w-5" />
               Add Role
             </button>
           </div>
-
           {/* Modal */}
           {showModal && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 transition-opacity duration-300">
@@ -219,37 +221,37 @@ const Roles = () => {
           )}
 
           {/* Table */}
-          <div className="mt-10 max-w-6xl mx-auto">
+          <div className="mt-10 max-w-full sm:max-w-6xl mx-auto px-2 sm:px-0">
             {filteredRoles.length === 0 ? (
               <p className="text-center text-gray-400 text-sm">
                 No roles found.
               </p>
             ) : (
               <div className="overflow-x-auto bg-[#0c1120] rounded-md shadow-xl">
-                <table className="min-w-full divide-y divide-gray-700">
+                <table className="min-w-full divide-y divide-gray-700 text-sm">
                   <thead className="bg-gradient-to-bl from-[#0a0f39] via-[#080d27] to-[#050b20]">
                     <tr>
-                      <th className="px-6 py-3 text-left text-sm font-semibold text-white">
+                      <th className="px-4 sm:px-6 py-3 text-left font-semibold text-white">
                         Role
                       </th>
-                      <th className="px-6 py-3 text-left text-sm font-semibold text-white">
+                      <th className="px-4 sm:px-6 py-3 text-left font-semibold text-white">
                         Allowed Paths
                       </th>
-                      <th className="px-6 py-3 text-left text-sm font-semibold text-white">
+                      <th className="px-4 sm:px-6 py-3 text-left font-semibold text-white">
                         Actions
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="text-sm text-gray-300">
+                  <tbody className="text-gray-300">
                     {filteredRoles.map((roleItem, idx) => (
                       <tr
                         key={idx}
                         className="border-b border-gray-700 hover:bg-[#1e1e1e] transition"
                       >
-                        <td className="px-6 py-4 text-white">
+                        <td className="px-4 sm:px-6 py-4 text-white">
                           {roleItem.role}
                         </td>
-                        <td className="px-6 py-4">
+                        <td className="px-4 sm:px-6 py-4">
                           {roleItem.allowed_path?.length > 0 ? (
                             <div className="flex flex-wrap gap-2">
                               {roleItem.allowed_path.map((path, i) => (
@@ -267,14 +269,14 @@ const Roles = () => {
                             </span>
                           )}
                         </td>
-                        <td className="px-6 py-4">
-                          <div className="flex gap-3">
+                        <td className="px-4 sm:px-6 py-4">
+                          <div className="flex flex-wrap gap-3">
                             <button
                               onClick={() => {
                                 setEditable(roleItem);
                                 setModal(true);
                               }}
-                              className="flex items-center gap-1 bg-gray-700 hover:bg-blue-500 text-white text-sm px-3 py-1 rounded transition"
+                              className="flex items-center gap-1 bg-gray-700 hover:bg-blue-500 text-white text-sm px-5 py-1 rounded transition"
                             >
                               <FiEdit2 />
                               Edit

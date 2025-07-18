@@ -203,10 +203,10 @@ const ThirdPartyIntegrations = () => {
             {/* Status summary cards if needed */}
           </div>
 
-          <div className="w-full px-4 h-16 border-[#6B728033] flex items-center gap-4 rounded-md backdrop-blur-md bg-[#6B728033] justify-between">
+          <div className="w-full px-4 py-4 sm:py-0 border-[#6B728033] flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-4 rounded-md backdrop-blur-md bg-[#6B728033] justify-between">
             <input
               type="text"
-              className="bg-[#23252750] backdrop-blur-md py-2 w-1/3 px-4 rounded-md"
+              className="bg-[#23252750] backdrop-blur-md py-2 w-full sm:w-1/3 px-4 rounded-md"
               placeholder="Search integrations..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -241,7 +241,7 @@ const ThirdPartyIntegrations = () => {
                 </svg>
               </div>
             </div>
-            <button className="bg-button hover:bg-hoverbutton text-white px-4 py-2 rounded-md transition-colors flex items-center">
+            <button className="bg-button hover:bg-hoverbutton text-white px-4 py-2 w-full sm:w-auto rounded-md transition-colors flex items-center justify-center">
               <span className="mr-2">+</span> Add Integration
             </button>
           </div>

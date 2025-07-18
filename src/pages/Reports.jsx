@@ -19,7 +19,7 @@ const Reports = () => {
   const [reportData, setReportData] = useState([]);
   const [filterData, setFilterData] = useState([]);
 
-  const { token,  } = useAuthContext();
+  const { token } = useAuthContext();
   const [file, setFile] = useState("");
   const [isEdit, setIsEdit] = useState(false);
   const [editData, setEditData] = useState(null); // State for edit data
@@ -87,7 +87,6 @@ const Reports = () => {
   }, [creatorFilter, orgFilter, dateFilter, reportData]);
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-
     if (!values.report && !isEdit) {
       toast.error("Please upload a report file.");
       return;
@@ -153,29 +152,28 @@ const Reports = () => {
   return (
     <div className="p-4 md:p-6 mx-auto bg-gradient-custom shadow-lg">
       {/* Search Bar & Buttons */}
-      <div className="mb-4 flex flex-col md:flex-row items-start md:items-center justify-between">
-        <div className="flex w-full lg:justify-end items-center py-2 gap-2">
+      <div className="mb-4 w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div className="w-full sm:w-auto flex justify-start sm:justify-end">
           <button
             onClick={(e) => {
               e.preventDefault();
               setIsEdit(false);
               setIsModalOpen(true);
             }}
-            className="px-4 py-2 bg-button hover:bg-hoverbutton text-white text-sm font-medium rounded-md flex items-center"
+            className="w-full sm:w-auto px-4 py-2 bg-button hover:bg-hoverbutton text-white text-sm font-medium rounded-md flex items-center justify-center"
           >
             <BiUpload className="h-4 w-4 mr-2" />
             Detailed Report
           </button>
         </div>
-        
       </div>
 
       {/* Filter Inputs */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 ml-60 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4 px-4 sm:px-6">
         <input
           type="text"
           placeholder="Filter by Creator Name"
-          className="p-2 border border-gray-300 rounded-lg text-white bg-input"
+          className="p-2 border border-gray-300 rounded-lg text-white bg-input w-full"
           value={creatorFilter}
           onChange={(e) => setCreatorFilter(e.target.value)}
         />
@@ -183,7 +181,7 @@ const Reports = () => {
         <input
           type="text"
           placeholder="Filter by Organization Name"
-          className="p-2 border border-gray-300 text-white rounded-lg bg-input"
+          className="p-2 border border-gray-300 text-white rounded-lg bg-input w-full"
           value={orgFilter}
           onChange={(e) => setOrgFilter(e.target.value)}
         />
@@ -191,7 +189,7 @@ const Reports = () => {
         <input
           type="date"
           placeholder="Filter by Date"
-          className="p-2 border border-gray-300 text-white rounded-lg bg-input"
+          className="p-2 border border-gray-300 text-white rounded-lg bg-input w-full"
           value={dateFilter}
           onChange={(e) => setDateFilter(e.target.value)}
         />
@@ -323,9 +321,15 @@ const Reports = () => {
               validationSchema={Reportvalidation}
               onSubmit={handleSubmit}
             >
-              {({ setFieldValue, values,handleBlur, handleChange,errors,touched }) => (
+              {({
+                setFieldValue,
+                values,
+                handleBlur,
+                handleChange,
+                errors,
+                touched,
+              }) => (
                 <Form className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
-
                   {/* Report Field */}
                   <InputField
                     label="Report"
@@ -393,7 +397,9 @@ const Reports = () => {
                         Configuration Audits
                       </option>
                     </select>
-                    {touched.Type_Of_Assesment && errors.Type_Of_Assesment && <p className="text-red-500" >{errors.Type_Of_Assesment}</p>}
+                    {touched.Type_Of_Assesment && errors.Type_Of_Assesment && (
+                      <p className="text-red-500">{errors.Type_Of_Assesment}</p>
+                    )}
                   </div>
 
                   {/* Buttons */}

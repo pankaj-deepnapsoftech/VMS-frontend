@@ -102,21 +102,22 @@ const Partners = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <section className="p-8 h-screen shadow-lg">
-          <div className="max-w-screen px-4 h-16 border-[#6B728033] flex items-center gap-4 rounded-md backdrop-blur-md justify-between bg-[#6B728033] my-10 mx-5">
+        <section className="p-4 sm:p-6 md:p-8 h-screen md:h-screen shadow-lg overflow-y-auto">
+          {/* Header */}
+          <div className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-[#6B728033] border border-[#6B728033] rounded-md backdrop-blur-md p-4 mb-6">
             <input
               type="text"
               placeholder="Search..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="bg-zinc-900 text-white placeholder-gray-400 border border-gray-600 rounded-md px-4 py-2 mr-3 focus:outline-none transition duration-200"
+              className="w-full sm:w-1/2 bg-zinc-900 text-white placeholder-gray-400 border border-gray-600 rounded-md px-4 py-2 focus:outline-none transition duration-200"
             />
             <button
               onClick={() => {
                 setModal(true);
                 setEdittable(null);
               }}
-              className="px-5 py-2.5 bg-button text-white font-semibold rounded-lg transition-all duration-300 flex items-center gap-2 shadow-md"
+              className="w-full sm:w-auto px-5 py-2.5 bg-button text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-md"
             >
               <BiPlus className="h-5 w-5" />
               Add Partners
@@ -127,7 +128,7 @@ const Partners = () => {
           <div
             className={`${
               showModal ? "opacity-100 visible" : "opacity-0 invisible"
-            } fixed inset-0 z-50 transition-opacity duration-500 bg-black/50 flex justify-center items-center`}
+            } fixed inset-0 z-50 transition-opacity duration-500 bg-black/50 flex justify-center items-center px-2`}
           >
             <div className="relative bg-tablecolor rounded-lg shadow-2xl w-full max-w-3xl mx-4 p-1 overflow-hidden">
               <div className="flex justify-between items-center border-b border-gray-700 p-4 bg-table">
@@ -145,7 +146,6 @@ const Partners = () => {
                   <MdClose className="h-6 w-6 text-gray-100" />
                 </button>
               </div>
-
               <form onSubmit={handleSubmit} className="p-6 md:p-10 space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
@@ -165,7 +165,7 @@ const Partners = () => {
                       </p>
                     )}
                   </div>
-
+ 
                   <div>
                     <InputField
                       onChange={handleChange}
@@ -232,9 +232,7 @@ const Partners = () => {
                       placeholder="Enter city"
                     />
                     {touched.city && errors.city && (
-                      <p className="text-sm text-red-500 mt-1">
-                        {errors.city}
-                      </p>
+                      <p className="text-sm text-red-500 mt-1">{errors.city}</p>
                     )}
                   </div>
                 </div>
@@ -262,21 +260,33 @@ const Partners = () => {
           </div>
 
           {/* Table */}
-          <div className="mt-6 bg-[#0c1120] overflow-x-auto text-sm text-white">
+          <div className="mt-6 bg-[#0c1120] overflow-x-auto text-sm text-white rounded-md">
             {partnersData?.length < 1 ? (
               <div className="text-center py-6 text-gray-400">
                 No matching records found.
               </div>
             ) : (
               <table className="min-w-full divide-y divide-gray-700">
-                <thead className="bg-gradient-to-bl from-[#0a0f39] via-[#080d27] to-[#050b20]">
+                <thead className="bg-gradient-to-bl from-[#0a0f39] via-[#080d27] to-[#050b20] text-xs sm:text-sm">
                   <tr>
-                    <th className="px-4 py-3 text-left">Company Name</th>
-                    <th className="px-4 py-3 text-left">Website URL</th>
-                    <th className="px-4 py-3 text-left">Country</th>
-                    <th className="px-4 py-3 text-left">State</th>
-                    <th className="px-4 py-3 text-left">City</th>
-                    <th className="px-4 py-3 text-left">Actions</th>
+                    <th className="px-4 py-3 text-left whitespace-nowrap">
+                      Company Name
+                    </th>
+                    <th className="px-4 py-3 text-left whitespace-nowrap">
+                      Website URL
+                    </th>
+                    <th className="px-4 py-3 text-left whitespace-nowrap">
+                      Country
+                    </th>
+                    <th className="px-4 py-3 text-left whitespace-nowrap">
+                      State
+                    </th>
+                    <th className="px-4 py-3 text-left whitespace-nowrap">
+                      City
+                    </th>
+                    <th className="px-4 py-3 text-left whitespace-nowrap">
+                      Actions
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="text-sm text-gray-300">
@@ -297,7 +307,7 @@ const Partners = () => {
                         <td className="p-3">{tenant.country}</td>
                         <td className="p-3">{tenant.state}</td>
                         <td className="p-3">{tenant.city}</td>
-                        <td className="p-3 flex gap-2">
+                        <td className="p-3 flex gap-2 items-center">
                           <FaEdit
                             onClick={() => {
                               setEdittable(tenant);
