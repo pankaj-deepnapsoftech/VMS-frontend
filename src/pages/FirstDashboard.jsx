@@ -14,7 +14,7 @@ const Card = ({ children, HandleClick, borderColor, bg, animate }) => {
         bg ? "bg-gradient-to-r " + bg : ""
       } ${animate}`}
       style={{
-        border: `1px solid ${borderColor}`,
+        border: `2px solid ${borderColor}`,
       }}
     >
       <div className="h-full w-full rounded-xl p-6 flex flex-col ">

@@ -1,6 +1,6 @@
 import Footer from "@/components/Footer/Footer";
 import { Header } from "@/constants/Components-lazy-loading/components.Lazy";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import {
   Outlet,
@@ -64,6 +64,7 @@ const MainLayout = () => {
   const [tenant, setTenant] = useState("Select Value");
   const [tenantId, setTenantId] = useState("");
   const [searchParams] = useSearchParams();
+  const isMobile = width <= 1023;
 
   let notificationcount =
     notificationData?.filter((notification) => !notification.view).length || 0;
@@ -149,13 +150,33 @@ const MainLayout = () => {
     }
   }, [authenticate.mustChangePassword]);
 
+  const sidebarRef = useRef(null);
+
+  // Detect outside click
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target)
+      ) {
+        setShowMenu(false); // close the sidebar
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return !getDataFromSession ? (
     <FirstDashboard />
   ) : (
     <Suspense fallback={<Loader />}>
       <Sidebar />
 
-{/* header */}
+      {/* header */}
       <header className="bg-gradient-to-t from-[#1a1c1e] to-[#212325]  border-gray-200 w-full sticky top-0 z-50">
         <div className="  px-2 sm:px-4 py-2 bg-[#1f2937]">
           <div className="w-full flex items-center justify-between">
@@ -180,7 +201,7 @@ const MainLayout = () => {
               <div className="hidden md:block">
                 {!authenticate?.role && (
                   <Select
-                    className="custom-scrollbar w-[200px] basic-single"
+                    className="custom-scrollbar w-[250px] basic-single"
                     classNamePrefix="select"
                     defaultValue={tenant}
                     onChange={handleSelect}
@@ -218,7 +239,7 @@ const MainLayout = () => {
                 >
                   {authenticate.fname[0].toUpperCase()}
                 </button>
-               
+
               </div>
             </div>
 
@@ -229,21 +250,21 @@ const MainLayout = () => {
               onClose={() => setSidebarOpen(false)}
             />
           </div>
-          
+
           <div className="md:hidden">
-                {!authenticate?.role && (
-                  <Select
-                    className="custom-scrollbar w-[90%] mx-auto my-5 basic-single"
-                    classNamePrefix="select"
-                    defaultValue={tenant}
-                    onChange={handleSelect}
-                    isSearchable={true}
-                    options={TenantAllData}
-                    theme={darkTheme}
-                    styles={customStyles}
-                  />
-                )}
-              </div>
+            {!authenticate?.role && (
+              <Select
+                className="custom-scrollbar w-[90%] mx-auto my-5 basic-single"
+                classNamePrefix="select"
+                defaultValue={tenant}
+                onChange={handleSelect}
+                isSearchable={true}
+                options={TenantAllData}
+                theme={darkTheme}
+                styles={customStyles}
+              />
+            )}
+          </div>
         </div>
       </header>
 
@@ -252,20 +273,21 @@ const MainLayout = () => {
 
 
 
-
+      {/* sidebar */}
       {!AllowedPath(location.pathname.split("/")[1]) && (
         <aside
           onMouseEnter={() => setShowSideBar(true)}
           onMouseLeave={() => setShowSideBar(false)}
+          ref={sidebarRef}
           className={` 
-    fixed top-14 z-10 flex flex-col justify-between h-full 
+    fixed top:24 md:top-14 z-10 flex flex-col justify-between h-full 
     bg-gradient-to-t from-[#151515] to-[#212224] 
     transition-all duration-500 ease-in-out 
     ${showSidebar
               ? "lg:w-[25%] xl:w-[20%] 2xl:w-[15%]"
               : "lg:w-[5%] xl:w-[4%] 2xl:w-[3%]"
             } 
-    ${showMenu ? `left-0` : "-left-full"} 
+    ${showMenu ? `left-0 sm:left-0` : "-left-full "} 
     whitespace-nowrap
   `}
         >
@@ -277,6 +299,8 @@ const MainLayout = () => {
           />
         </aside>
       )}
+
+
       <div
         className={`ml-auto transition-all min-h-screen duration-500 ease-in-out 
      bg-gradient-custom bg-black 

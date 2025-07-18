@@ -380,7 +380,7 @@ function Home() {
         </div>
 
         {/* exploybality */}
-        <div className="flex gap-2">
+        <div className="flex flex-col md:flex-row gap-2">
           <div className="bg-cards p-3  rounded-xl shadow-lg w-full lg:w-1/2 ">
             <h3 className="text-lg p-1 font-semibold text-gray-200 ">
               Exploitability
@@ -405,6 +405,8 @@ function Home() {
                   paddingAngle={1}
                   dataKey="value"
                   label
+                  activeShape={false}
+                  isAnimationActive={false}
                 >
                   {data1.map((entry, index) => (
                     <Cell
@@ -501,12 +503,12 @@ function Home() {
                 </tr>
               </thead>
               <tbody>
-                {console.log("criticalHighVulnerableOverdue",criticalHighVulnerableOverdue)}
+                {console.log("criticalHighVulnerableOverdue", criticalHighVulnerableOverdue)}
                 {Object.entries(criticalHighVulnerableOverdue).map(
                   ([key, value]) => (
                     <tr key={key}>
                       <td className="px-4 py-2 text-gray-400 border-b">
-                        {key === "ApiServer" ? "Api Server" : key === "webApplication" ? "Web Application" : key === "mobileApplication" && "Mobile Application" }
+                        {key === "ApiServer" ? "Api Server" : key === "webApplication" ? "Web Application" : key === "mobileApplication" && "Mobile Application"}
                       </td>
                       <td className="px-4 py-2 text-gray-400 border-b">
                         {value}

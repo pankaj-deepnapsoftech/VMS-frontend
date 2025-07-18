@@ -7,6 +7,7 @@ import { BusinessApplicationValidation } from "@/Validation/BusinessApp.validati
 import axios from "axios";
 import * as XLSX from "xlsx";
 import CustomSelection from "@/components/customSelection/CustomSelection";
+import Pagination from "./Pagination";
 
 export default function BusinessApplications() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -272,7 +273,15 @@ export default function BusinessApplications() {
             </div>
           </div>
 
-          <div className="flex justify-between items-center mt-6">
+
+          <Pagination
+                page={currentPage}
+                setPage={setCurrentPage}
+                hasNextPage={filteredTenants.length === 10}
+                total={filteredTenants.length}
+              />
+
+          {/* <div className="flex justify-between items-center mt-6">
             <button
               className="bg-slate-800 border-slate-700 text-gray-400 hover:bg-slate-700 hover:text-white px-4 py-2 rounded-lg"
               disabled={currentPage === 1}
@@ -288,7 +297,7 @@ export default function BusinessApplications() {
             >
               Next
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
 

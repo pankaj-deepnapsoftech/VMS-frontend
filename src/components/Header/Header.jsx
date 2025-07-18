@@ -64,7 +64,8 @@ function Header({ setShowMenu, showSidebar }) {
             className="flex 
               w-full
               px-10
-              my-24
+              mb-52
+              md:mb-24
               items-center  
             text-indigo-600
               hover:scale-95 

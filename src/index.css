@@ -207,3 +207,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .multiselect-container .option:hover {
   background-color: #374151 !important;
 }
+
+
+.recharts-sector:focus {
+  outline: none !important;
+}

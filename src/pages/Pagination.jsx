@@ -9,12 +9,12 @@ const Pagination = ({ page, setPage, hasNextPage, total }) => {
                 Showing 1-10 of {total} results
             </div>
             <div className="flex items-center space-x-2">
-                <button className="px-4 text-white py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm" disabled={page === 1}
+                <button className={`px-4 text-white py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm ${page === 1 && "cursor-not-allowed"}`} disabled={page === 1}
                     onClick={() => setPage(page - 1)}>Previous</button>
                 <div className="flex items-center space-x-2">
                     <button className="px-3 py-1 bg-blue-600 text-white rounded-lg text-sm"> Page {page}</button>
                 </div>
-                <button className="px-4 py-2 text-white bg-gray-700 hover:bg-gray-600 rounded-lg text-sm" disabled={!hasNextPage}
+                <button className={`px-4 py-2 text-white bg-gray-700 hover:bg-gray-600 rounded-lg text-sm ${!hasNextPage && "cursor-not-allowed"} `} disabled={!hasNextPage}
                     onClick={() => setPage(page + 1)}>Next</button>
             </div>
         </div>

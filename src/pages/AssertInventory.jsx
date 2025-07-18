@@ -7,6 +7,7 @@ import { useAuthContext, useInfraAssetContext } from "@/context";
 import * as XLSX from "xlsx";
 import { useLocation } from "react-router-dom";
 import CustomSelection from "@/components/customSelection/CustomSelection";
+import Pagination from "./Pagination";
 
 export default function TenantDashboard() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -212,23 +213,13 @@ export default function TenantDashboard() {
           </div>
 
           {/* Pagination */}
-          <div className="flex justify-between items-center mt-6">
-            <button
-              className="bg-slate-800 border-slate-700 text-gray-400 hover:bg-slate-700 hover:text-white px-4 py-2 rounded-lg"
-              disabled={currentPage === 1}
-              onClick={() => setCurrentPage(currentPage - 1)}
-            >
-              Previous
-            </button>
-            <span className="text-gray-300">Page {currentPage}</span>
-            <button
-              onClick={() => setCurrentPage((prev) => prev + 1)}
-              disabled={filteredTenants.length !== 10}
-              className="bg-slate-800 border-slate-700 text-gray-400 hover:bg-slate-700 hover:text-white px-4 py-2 rounded-lg"
-            >
-              Next
-            </button>
-          </div>
+          <Pagination
+                page={currentPage}
+                setPage={setCurrentPage}
+                hasNextPage={filteredTenants.length === 10}
+                total={filteredTenants.length}
+              />
+          
         </div>
       </div>
 
@@ -394,14 +385,6 @@ export default function TenantDashboard() {
                   handleBlur={() => handleBlur("tages")}
                   alreadySelected={editable && editable.tages}
                 />
-
-                {/* <div className="space-y-2">
-                  <label className="block text-sm font-medium text-slate-300">Description*</label>
-                  <textarea
-                    rows={4}
-                    className="w-full bg-slate-800 border border-slate-600 rounded-md px-3 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-slate-500 transition-colors resize-none"
-                  />
-                </div> */}
               </div>
 
               {/* Action Buttons */}

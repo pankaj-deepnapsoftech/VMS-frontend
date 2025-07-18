@@ -252,7 +252,7 @@ const ThirdPartyIntegrations = () => {
                 key={idx}
                 className="bg-[#10162e] p-4 rounded-xl border border-[#1f2a44] shadow-md flex flex-col justify-between"
               >
-                <div className="flex justify-between items-center mb-3">
+                <div className=" flex flex-col lg:flex-row gap-2 justify-between items-center mb-3">
                   <div className="flex gap-2 items-center">
                     <div
                       className={`h-12 w-12 ${integration.iconBg} rounded-md flex justify-center items-center`}

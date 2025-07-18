@@ -325,12 +325,12 @@ const Partners = () => {
                 </tbody>
               </table>
             )}
+          </div>
             <Pagination
               page={page}
               setPage={setPage}
               hasNextPage={partnersData.length === 10}
             />
-          </div>
         </section>
       )}
     </>

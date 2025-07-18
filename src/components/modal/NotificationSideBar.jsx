@@ -1,21 +1,37 @@
 /* eslint-disable react/prop-types */
-import { useAuthContext } from "@/context";
-import { FaTimesCircle, FaCheckCircle, FaExclamationTriangle, FaBell } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { FaTimesCircle, FaBell } from "react-icons/fa";
 
 export function NotificationSidebar({ notifications, isOpen, onClose, notificationsViewed }) {
 
-	const {
-		authenticate
-	} = useAuthContext()
-
-	let navigate = useNavigate();
 
 
 	let notificationcount = notifications?.filter(notification => !notification.view).length || 0;
 
+	const sidebarRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target)
+      ) {
+        onClose(); // Call parent handler to close the sidebar
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen, onClose]);
+
 	return (
 		<div
+		ref={sidebarRef}
 			className={`fixed top-0 right-0 h-full w-80 bg-cards shadow-lg z-10 transform transition-transform duration-300 ${isOpen ? "translate-x-0" : "translate-x-full"
 				}`}
 		>
