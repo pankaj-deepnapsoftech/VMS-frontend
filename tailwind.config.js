@@ -13,7 +13,8 @@ export default {
         cards:"#0a0f39",
         light:"#4A4A4A",
         subtext:"#8A91A1",
-        subTextHover:"#c5cad6"
+        subTextHover:"#c5cad6",
+        modalBg:"#111827"
        
       },
       fontFamily: {

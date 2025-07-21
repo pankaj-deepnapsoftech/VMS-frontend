@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-binary-expression */
 import { Suspense, useEffect, useState } from "react";
 import { useAuthContext, useVulnerabililtyDataContext } from "@/context";
 import Loader from "@/components/Loader/Loader";
@@ -9,8 +10,7 @@ import useAccessPartner from "@/hooks/AccessPartner";
 
 
 export function ApplicationData() {
-  const { loading, GetApplicationData, allApplicationData, DeleteData } =
-    useVulnerabililtyDataContext();
+  const { loading, GetApplicationData, allApplicationData, DeleteData } = useVulnerabililtyDataContext();
   const { token } = useAuthContext();
   const navigate = useNavigate();
 
@@ -33,6 +33,8 @@ export function ApplicationData() {
       item.asset_type,
       item.threat_type,
       item.CVE,
+      item.CVE_ID,
+      item.Exploit_Availale,
       item.Exploit_Details?.toString(),
       item.exploit_complexity,
       item.Location,
@@ -104,7 +106,9 @@ export function ApplicationData() {
                   <th className="px-4 py-3">Scan Type</th>
                   <th className="px-4 py-3">Asset Type</th>
                   <th className="px-4 py-3">Threat Type</th>
-                  <th className="px-4 py-3">CVE</th>
+                  <th className="px-4 py-3 ">CVE</th>
+                  <th className="px-4 py-3">CVE ID</th>
+                  <th className="px-4 py-3">Exploit Availale</th>
                   <th className="px-4 py-3">Exploit Details</th>
                   <th className="px-4 py-3">Exploit Complexity</th>
                   <th className="px-4 py-3">Location</th>
@@ -134,6 +138,8 @@ export function ApplicationData() {
                       <td className="px-4 py-3">{item.asset_type || "-"}</td>
                       <td className="px-4 py-3">{item.threat_type || "-"}</td>
                       <td className="px-4 py-3">{item.CVE || "-"}</td>
+                      <td className="px-4 py-3">{item.CVE_ID || "-"}</td>
+                       <td className="px-4 py-3">{item.Exploit_Availale ? "Yes" : "No" || "-"}</td>
                       <td className="px-4 py-3">
                         {item.Exploit_Details?.length || 0}
                       </td>
@@ -146,7 +152,7 @@ export function ApplicationData() {
                       <td className="px-4 py-3">{item.Severity || "-"}</td>
                       <td className="px-4 py-3">{item.CVSS || "-"}</td>
                       <td className="px-4 py-3">{item.Reference_URL || "-"}</td>
-                      <td className="px-4 py-3">{item.EPSS || "-"}</td>
+                      <td className="px-4 py-3">{(item.EPSS * 100).toFixed(2) + "%" || "-"}</td>
                       <td className="px-4 py-3">
                         {item.BusinessApplication?.name || "-"}
                       </td>

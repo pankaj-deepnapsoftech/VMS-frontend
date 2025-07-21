@@ -1,9 +1,12 @@
+/* eslint-disable no-constant-binary-expression */
 import { Suspense, useEffect, useState } from "react";
 import { useAuthContext, useVulnerabililtyDataContext } from "@/context";
 import Loader from "@/components/Loader/Loader";
 import { Eye, Pencil, Trash2, User } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ExpectionModal from "@/modals/ExpectionModal";
+import ExploitDetail from "@/modals/ExploitDetail";
+import useAccessPartner from "@/hooks/AccessPartner";
 
 export function InfrastructureData() {
   const { loading, GetInfrastructureData, allInfrastructureData, DeleteData } = useVulnerabililtyDataContext();
@@ -13,9 +16,11 @@ export function InfrastructureData() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedId, setSelectedId] = useState(null)
+  const [selectedId, setSelectedId] = useState(null);
+  const [exploitDetails, setExploitDetails] = useState([]);
   const [tenant, setTenant] = useState('');
   const location = useLocation();
+  const { closeModal, isOpen, openModal } = useAccessPartner();
   const itemsPerPage = 10;
 
 
@@ -26,8 +31,10 @@ export function InfrastructureData() {
       item.asset_type,
       item.threat_type,
       item.CVE,
+      item.CVE_ID,
       item.Exploit_Details?.toString(),
       item.exploit_complexity,
+      item.Exploit_Availale,
       item.Location,
       item.Title,
       item.Description,
@@ -98,6 +105,8 @@ export function InfrastructureData() {
                   <th className="px-4 py-3">Asset Type</th>
                   <th className="px-4 py-3">Threat Type</th>
                   <th className="px-4 py-3">CVE</th>
+                  <th className="px-4 py-3">CVE ID</th>
+                  <th className="px-4 py-3">Exploit Availale</th>
                   <th className="px-4 py-3">Exploit Details</th>
                   <th className="px-4 py-3">Exploit Complexity</th>
                   <th className="px-4 py-3">Location</th>
@@ -127,6 +136,8 @@ export function InfrastructureData() {
                       <td className="px-4 py-3">{item.asset_type || "-"}</td>
                       <td className="px-4 py-3">{item.threat_type || "-"}</td>
                       <td className="px-4 py-3">{item.CVE || "-"}</td>
+                      <td className="px-4 py-3">{item.CVE_ID || "-"}</td>
+                      <td className="px-4 py-3">{item.Exploit_Availale ? "Yes" : "No" || "-"}</td>
                       <td className="px-4 py-3">{item.Exploit_Details?.length || 0}</td>
                       <td className="px-4 py-3">{item.exploit_complexity || "-"}</td>
                       <td className="px-4 py-3">{item.Location || "-"}</td>
@@ -134,7 +145,7 @@ export function InfrastructureData() {
                       <td className="px-4 py-3">{item.Description || "-"}</td>
                       <td className="px-4 py-3">{item.Severity || "-"}</td>
                       <td className="px-4 py-3">{item.CVSS || "-"}</td>
-                      <td className="px-4 py-3">{item.EPSS || "-"}</td>
+                      <td className="px-4 py-3">{(item.EPSS * 100).toFixed(2) + "%" || "-"}</td>
                       <td className="px-4 py-3">{item.Reference_URL || "-"}</td>
                       <td className="px-4 py-3">{item.BusinessApplication?.name || "-"}</td>
                       <td className="px-4 py-3">{item.Proof_of_Concept?.length || 0}</td>
@@ -151,7 +162,10 @@ export function InfrastructureData() {
                           className="w-4 h-4 text-red-500 cursor-pointer"
                         />
                         <User onClick={() => handleExpectionModal(item)} className="w-4 h-4 text-green-500 cursor-pointer" />
-                        <Eye className="w-4 h-4 text-lime-400 cursor-pointer" />
+                        <Eye onClick={() => {
+                          setExploitDetails(item.Exploit_Details);
+                          openModal()
+                        }} className="w-4 h-4 text-lime-400 cursor-pointer" />
                       </td>
                     </tr>
                   ))
@@ -187,6 +201,8 @@ export function InfrastructureData() {
           {isModalOpen && (
             <ExpectionModal setIsModalOpen={setIsModalOpen} creator={selectedId} />
           )}
+
+          {isOpen && <ExploitDetail links={exploitDetails} onClose={closeModal} />}
         </div>
       )}
     </Suspense>

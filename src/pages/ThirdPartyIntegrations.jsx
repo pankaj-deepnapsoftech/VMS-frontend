@@ -203,7 +203,7 @@ const ThirdPartyIntegrations = () => {
             {/* Status summary cards if needed */}
           </div>
 
-          <div className="w-full px-4 py-4 sm:py-0 border-[#6B728033] flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-4 rounded-md backdrop-blur-md bg-[#6B728033] justify-between">
+          <div className="w-full px-4 py-4  border-[#6B728033] flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-4 rounded-md backdrop-blur-md bg-[#6B728033] justify-between">
             <input
               type="text"
               className="bg-[#23252750] backdrop-blur-md py-2 w-full sm:w-1/3 px-4 rounded-md"
