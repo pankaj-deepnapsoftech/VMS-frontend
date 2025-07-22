@@ -167,7 +167,7 @@ const AllEmployee = () => {
   return (
     <>
       {isloading ? (
-        <Loader />
+        <Loader />           
       ) : (
         <div className="min-h-screen shadow-lg py-4">
           <div className="flex items-center justify-between px-4 py-4">
