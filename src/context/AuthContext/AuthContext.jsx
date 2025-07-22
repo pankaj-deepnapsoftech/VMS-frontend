@@ -209,6 +209,7 @@ const AuthContextProvider = ({ children }) => {
   const ChangePassword = async (data) => {
     try {
       const res = await AxiosHandler.put("/auth/change-password", data);
+      console.log(res)
       toast.success(res.data.message);
       getLogedInUser();
     } catch (error) {
@@ -249,6 +250,20 @@ const AuthContextProvider = ({ children }) => {
     } catch (error) {
       toast.error(error?.response?.data?.message);
       console.log(error)
+    } finally {
+      setLoading(false);
+    }
+  }
+
+   const Verifyrecaptcha = async (token) => {
+    setLoading(true);
+    try {
+      const res = await AxiosHandler.post(`/auth/verify-recaptcha`, {token});
+      console.log(res)
+      return res.data.success
+    } catch (error) {
+      console.log(error)
+      return false
     } finally {
       setLoading(false);
     }
@@ -298,7 +313,8 @@ const AuthContextProvider = ({ children }) => {
       updateProfileModal,
       ResetWithQuestion,
       GetTenantData,
-      UserViaTenant
+      UserViaTenant,
+      Verifyrecaptcha
     }}>
       {children}
     </authContext.Provider>

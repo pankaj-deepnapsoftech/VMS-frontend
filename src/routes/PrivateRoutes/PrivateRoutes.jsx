@@ -29,6 +29,7 @@ import BusinessApplications from "@/pages/BusinessApplications";
 import VulnerabilityForm from "@/pages/AddVulnerabilityData";
 import ExceptionTable from "@/pages/ExceptionTable";
 import TagsPage from "@/pages/TagConfig";
+import DemoDashboard from "@/pages/demo/Dashboard";
 
 export const PrivateRoutes = [
   {
@@ -151,5 +152,9 @@ export const PrivateRoutes = [
   {
     path:"/tags",
     element:<TagsPage/>
+  },
+  {
+    path:"/demo",
+    element:<DemoDashboard/>
   }
 ];

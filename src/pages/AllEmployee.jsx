@@ -192,7 +192,7 @@ const AllEmployee = () => {
             </button>
           </div>
 
-          <div className="w-full bg-[#0a0e1a] min-h-screen p-6">
+          <div className="w-full  min-h-screen p-6">
             <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
               {/* Header */}
               <div className="px-6 py-4 border-b border-gray-700 relative">
@@ -213,7 +213,7 @@ const AllEmployee = () => {
                 <NoDataFound />
               ) : (
                 <div className="overflow-x-auto custom-scrollbar w-full">
-                  <table className="min-w-[800px] text-sm text-left text-gray-300 divide-y divide-gray-700">
+                  <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
                     <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
                       <tr>
                         {[
@@ -338,7 +338,7 @@ const AllEmployee = () => {
           </button>
         </div>
         <div className="flex justify-center px-4 sm:px-6 py-6 overflow-y-auto max-h-[90vh]">
-          <div className="w-full sm:max-w-4xl bg-[#2a282e80] p-6 sm:p-10 rounded-md shadow-md overflow-y-auto">
+          <div className="w-full sm:max-w-4xl bg-modalBg p-6 sm:p-10 rounded-md shadow-md overflow-y-auto">
             <form onSubmit={handleSubmit} className="space-y-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <h1 className="text-3xl font-semibold text-white mb-2">

@@ -9,11 +9,8 @@ import {
   VerifyOtp,
 } from "@/constants/Components-lazy-loading/components.Lazy";
 import { useAuthContext } from "@/context";
-import UnauthorizedAccessPage from "@/pages/UnauthorizedAccess";
 import Pricing from "@/pages/Auth/Pricing";
 import Solutions from "@/pages/Auth/Solutions";
-import LandingPage from "@/pages/Auth/LandingPage";
-import Addtanent from "@/pages/Addtanent";
 import JiraDataTable from "@/pages/JiraDataTable";
 
 const AppRoutes = () => {
@@ -41,8 +38,8 @@ const AppRoutes = () => {
       {/* Public routes */}
       {!isAuthenticated && (
         <>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/sign-in" element={<SignIn />} />
+          {/* <Route path="/" element={<LandingPage />} /> */}
+          <Route path="/" element={<SignIn />} />
           {/* <Route path="/sign-up" element={<SignUp />} /> */}
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />

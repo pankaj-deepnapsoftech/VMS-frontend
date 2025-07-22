@@ -15,20 +15,20 @@ const TagsContextProvider = ({ children }) => {
 
 
 
-  const GetTages = async() => {
+  const GetTages = async(page) => {
     try {
-      const res = await AxiosHandler.get('/tags/get-tags');
+      const res = await AxiosHandler.get(`/tags/get-tags?page=${page}`);
       setTags(res.data.data);
-      GetTages()
     } catch (error) {
       console.error("Error fetching tags:", error);
     }
-  }
+  };
 
   const createTags = async(data) => {
     try {
       const res = await AxiosHandler.post('/tags/create',data);
-      toast.success(res.data.message);;
+      toast.success(res.data.message);
+      GetTages();
     } catch (error) {
       console.log(error)
     }
@@ -42,7 +42,7 @@ const TagsContextProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const DeleteTags = async(id) => {
     try {
@@ -52,7 +52,7 @@ const TagsContextProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const getAllTags = async () => {
     try {
@@ -61,7 +61,7 @@ const TagsContextProvider = ({ children }) => {
     } catch (error) {
       console.error("Error fetching all tags:", error);
     }
-  }
+  };
 
   useEffect(() => {
     if(token){

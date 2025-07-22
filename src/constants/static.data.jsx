@@ -16,6 +16,7 @@ import {
   MdOutlineMiscellaneousServices,
   MdOutlinePendingActions,
   MdSettingsApplications,
+  MdSlowMotionVideo,
   MdWifiTetheringErrorRounded,
 } from "react-icons/md";
 import { SiWikimediafoundation } from "react-icons/si";
@@ -161,6 +162,11 @@ export const products = [
         title: "Pending Exceptions",
         route: "/pending-exception",
         icon: MdInventory2,
+      },
+      {
+        title: "Demo",
+        route: "/demo",
+        icon: MdSlowMotionVideo,
       },
     ],
   },

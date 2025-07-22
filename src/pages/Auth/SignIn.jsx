@@ -1,17 +1,14 @@
 import { useAuthContext } from "@/context";
 import { useFormik } from "formik";
 import { Eye, EyeOff } from "lucide-react";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
-import { BsEyeSlash } from "react-icons/bs";
 import "./../Css/SignInAnimation.css";
 
 const SignIn = () => {
-  const { Signin } = useAuthContext();
+  const { Signin,Verifyrecaptcha } = useAuthContext();
   const [togglePassword, setTogglePassword] = useState(false);
   const [disable, setDisable] = useState(true);
-  const [showHeading, setShowHeading] = useState(false);
-  const [cardVisible, setCardVisible] = useState(true);
 
   const { values, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues: { email: "", password: "" },
@@ -20,8 +17,9 @@ const SignIn = () => {
     },
   });
 
-  const handleCaptcha = () => {
-    setDisable(false);
+  const handleCaptcha = async (token) => {
+    const data = await Verifyrecaptcha(token)
+    setDisable(import.meta.env.VITE_REACT_ENV ? data : !data);
   };
 
 

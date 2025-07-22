@@ -49,7 +49,7 @@ const ChangePasswordModal = ({ isOpen }) => {
             newPassword: formData.newPassword,
             oldPassword: formData.currentPassword
         };
-        if(passwordStrength <= 4){
+        if(passwordStrength < 4){
             alert("password is week");
         }else {
             ChangePassword(data);

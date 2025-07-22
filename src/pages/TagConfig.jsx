@@ -1,28 +1,33 @@
 import { useState, useEffect } from "react";
 import { BiPlus } from "react-icons/bi";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaRegTrashAlt, FaTrash } from "react-icons/fa";
 import Loader from "@/components/Loader/Loader";
 import { useAuthContext, useTagsContext } from "@/context";
 import { useFormik } from "formik";
 import { tagValidation } from "@/Validation/TagValidation";
+import { RiEdit2Line } from "react-icons/ri";
+import { IoSearch } from "react-icons/io5";
+import Pagination from "./Pagination";
 
 export default function TagsPage() {
-  const { createTags, GetTages, Tages, UpdateTags, DeleteTags } =
-    useTagsContext();
+  const { createTags, GetTages, Tages, UpdateTags, DeleteTags } = useTagsContext();
   const { token } = useAuthContext();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editTag, setEditTag] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
 
-  const { values, touched, errors, handleBlur, handleChange, handleSubmit,resetForm } =
+  const { values, touched, errors, handleBlur, handleChange, handleSubmit, resetForm } =
     useFormik({
       initialValues: editTag || {
         tag_name: "",
         tag_description: "",
         tag_score: "",
         tag_color: "",
+        amount: "",
+        related: ""
       },
       validationSchema: tagValidation,
       enableReinitialize: true,
@@ -39,9 +44,9 @@ export default function TagsPage() {
 
   useEffect(() => {
     if (token) {
-      GetTages();
+      GetTages(page);
     }
-  }, []);
+  }, [page]);
 
   // 🔍 Filter logic
   const filteredTags = Tages?.filter((tag) => {
@@ -59,14 +64,15 @@ export default function TagsPage() {
       ) : (
         <div className="min-h-screen py-10">
           {/* Top bar */}
-          <div className="max-w-screen px-4 h-fit border-[#6B728033] flex items-center gap-4 backdrop-blur-md bg-[#6B728033] rounded-lg mx-5">
-            <input
-              type="text"
-              className="bg-[#23252750] backdrop-blur-md py-2 w-1/3 text-white px-4 rounded-md"
-              placeholder="Search Tags..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
+          <div className="max-w-screen px-4 h-fit border-[#6B728033] flex items-center gap-4 backdrop-blur-md  rounded-lg mx-5">
+
+ {/* Optional Left Side Heading */}
+            <div className="w-full">
+              <h2 className="text-2xl font-semibold text-white w-full">All Tags</h2>
+              <span className="text-subtext text-sm w-full">
+                Manage your tags
+              </span>
+            </div>
 
             <div className="flex w-full justify-end py-4">
               <button
@@ -84,44 +90,62 @@ export default function TagsPage() {
           </div>
 
           {/* Table */}
-          <div className="m-6 p-2 bg-tablecolor shadow-lg rounded-lg">
-            <div className="mt-6 bg-[#0c1120] overflow-x-auto custom-scrollbar text-sm text-white">
-              {filteredTags?.length < 1 ? (
-                <div className="text-center py-6 text-gray-400">
-                  No matching records found.
+          <div className="w-full  min-h-screen p-6">
+            <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
+              {/* Header */}
+              <div className="px-6 py-4 border-b border-gray-700 relative">
+                <div className="relative">
+                  <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
+                  <input
+                    type="search"
+                    placeholder="Search tags..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="bg-input backdrop-blur-md py-2 w-1/3 text-white ps-7 pe-3 rounded-md "
+                  />
                 </div>
-              ) : (
-                <table className="min-w-full divide-y divide-gray-700">
-                  <thead className="bg-gradient-to-br from-[#0a0f39] via-[#080d27] to-[#050b20]">
+              </div>
+
+              {/* table */}
+              <div className="overflow-x-auto custom-scrollbar w-full">
+                <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+                  <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
                     <tr>
-                      <th className="px-4 py-3 text-left">Tag Name</th>
-                      <th className="px-4 py-3 text-left">Description</th>
-                      <th className="px-4 py-3 text-left">Tag Score</th>
-                      <th className="px-4 py-3 text-left">Tag Color</th>
-                      <th className="px-4 py-3 text-left">Actions</th>
+                      {[
+                        "S No.",
+                        "Tag Name",
+                        "Description",
+                        "Tag Score",
+                        "Tag Color",
+                        "Related",
+                        "Amount",
+                        "Actions",
+                      ].map((header) => (
+                        <th
+                          key={header}
+                          className="px-4 py-3 border-b border-gray-600 font-medium"
+                        >
+                          {header}
+                        </th>
+                      ))}
                     </tr>
                   </thead>
-                  <tbody className="text-sm text-gray-300">
-                    {filteredTags?.map((tag, index) => (
+                  <tbody className="divide-y divide-gray-700">
+                    {filteredTags.map((tag, index) => (
                       <tr
-                        key={index}
-                        className="border-b border-gray-700 whitespace-nowrap hover:bg-[#1e1e1e] transition"
+                        key={tag._id}
+                        className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
                       >
-                        <td className="p-3">{tag.tag_name}</td>
-                        <td className="p-3">{tag.tag_description || "—"}</td>
-                        <td className="p-3">{tag.tag_score || "—"}</td>
-                         <td className="p-3">{tag.tag_color || "—"}</td>
-                        <td className="p-3 flex gap-2">
-                          <FaEdit
-                            title="Edit"
-                            onClick={() => {
-                              setEditTag(tag);
-                              setIsModalOpen(true);
-                            }}
-                            className="text-blue-400 cursor-pointer"
-                          />
-                          <FaTrash
-                            title="Delete"
+                        <td className="px-4 py-3">{index + 1}</td>
+                        <td className="px-4 py-3 capitalize">{tag.tag_name || "-"}</td>
+                        <td className="px-4 py-3 capitalize">{tag.tag_description || "-"}</td>
+                        <td className="px-4 py-3">{tag.tag_score || "0"}</td>
+                        <td className="px-4 py-3">{tag.tag_color || "-"}</td>
+                        <td className="px-4 py-3">{tag.related || "-"}</td>
+                        <td className="px-4 py-3">{tag.amount || "-"}</td>
+
+                        <td className="px-4 py-3 flex gap-2">
+                          <button
                             onClick={() => {
                               const confirmDelete = window.confirm(
                                 "Are you sure you want to delete this tag?"
@@ -130,16 +154,42 @@ export default function TagsPage() {
                                 DeleteTags(tag._id);
                               }
                             }}
-                            className="text-red-500 cursor-pointer"
-                          />
+                            title="Delete"
+                            className="text-subtext hover:text-subTextHover"
+                          >
+                            <FaRegTrashAlt className="w-5 h-5" />
+                          </button>
+                          <button
+
+                            title="Edit"
+                            onClick={() => {
+                              setEditTag(tag);
+                              setIsModalOpen(true);
+                            }}
+                            className="text-subtext hover:text-blue-700"
+                          >
+                            <RiEdit2Line className="w-5 h-5" />
+                          </button>
                         </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
-              )}
+              </div>
+
+              {/* Footer */}
+              <Pagination
+                page={page}
+                setPage={setPage}
+                hasNextPage={filteredTags.length === 10}
+                total={filteredTags.length}
+              />
+
             </div>
           </div>
+
+
+
         </div>
       )}
 
@@ -207,12 +257,58 @@ export default function TagsPage() {
             </div>
 
             <div>
+              <label className="block text-sm font-medium text-gray-300 mb-1">
+                Related
+              </label>
+              <select
+                className="w-full p-2 bg-[#1E293B] text-white rounded-md"
+                name="related"
+                value={values.related}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              >
+                <option selected disabled value="" >Select value</option>
+                <option value="Service Role">Service Role</option>
+                <option value="Data Sensitivity">Data Sensitivity</option>
+              </select>
+              {errors.related && touched.related && (
+                <p className="text-red-500">{errors.related}</p>
+              )}
+            </div>
+
+
+            {values.related === "Data Sensitivity" && (
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1">
+                  Amount
+                </label>
+                <div className="flex items-center">
+                  <span className="px-3 py-2 bg-[#1E293B] text-white rounded-l-md border border-r-0 border-gray-600">
+                    USD
+                  </span>
+                  <input
+                    type="number"
+                    name="amount"
+                    value={values.amount}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    placeholder="Enter tag score"
+                    className="w-full p-2 bg-[#1E293B] text-white rounded-r-md border border-gray-600"
+                  />
+                </div>
+                {errors.amount && touched.amount && (
+                  <p className="text-red-500">{errors.amount}</p>
+                )}
+              </div>
+            )}
+
+            <div>
               <label htmlFor="tag_color" className="block text-sm font-medium text-gray-300 mb-1">
                 Tag Color
                 <div className="w-full mt-1 h-10 rounded-md p-2 bg-[#1E293B] cursor-pointer" >{values.tag_color ? values.tag_color : "Select Color"}</div>
               </label>
               <input
-              id="tag_color"
+                id="tag_color"
                 type="color"
                 name="tag_color"
                 value={values.tag_color}
@@ -222,10 +318,10 @@ export default function TagsPage() {
               />
               {errors.tag_color && touched.tag_color && (
                 <p className="text-red-500">{errors.tag_color}</p>
-              )} 
+              )}
             </div>
 
-            { values.tag_color && values.tag_name && <div className="flex items-center justify-center">
+            {values.tag_color && values.tag_name && <div className="flex items-center justify-center">
               <span className="px-3 py-2 rounded-full" style={{ backgroundColor: values.tag_color }}>
                 {values.tag_name}
               </span>
