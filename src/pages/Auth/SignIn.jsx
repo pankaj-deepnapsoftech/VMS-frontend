@@ -19,7 +19,7 @@ const SignIn = () => {
 
   const handleCaptcha = async (token) => {
     const data = await Verifyrecaptcha(token)
-    setDisable(data);
+    setDisable(import.meta.env.VITE_REACT_ENV ? data : !data);
   };
 
 

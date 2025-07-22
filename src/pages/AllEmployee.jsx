@@ -192,7 +192,7 @@ const AllEmployee = () => {
             </button>
           </div>
 
-          <div className="w-full bg-[#0a0e1a] min-h-screen p-6">
+          <div className="w-full  min-h-screen p-6">
             <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
               {/* Header */}
               <div className="px-6 py-4 border-b border-gray-700 relative">
