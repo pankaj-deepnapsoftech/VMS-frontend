@@ -66,6 +66,10 @@ export function InfrastructureData() {
     }
   }
 
+  const calculateARS = (data)=> {
+    console.log("this is just for testing ARS",data)
+  }
+
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm]);
@@ -138,6 +142,7 @@ export function InfrastructureData() {
                           "Asset",
                           "Proof of Concept",     
                           "Tenant",
+                          "ARS",
                           "Actions",
                         ].map((header) => (
                           <th
@@ -184,6 +189,9 @@ export function InfrastructureData() {
                           </td>
                           <td className="px-4 py-3">
                             {item.creator?.company_name || "-"}
+                          </td>
+                          <td className="px-4 py-3">
+                            {calculateARS(item.InfraStructureAsset) || "-"}
                           </td>
                           <td className="px-4 py-3 flex items-center mt-3 space-x-3">
                             <Pencil
