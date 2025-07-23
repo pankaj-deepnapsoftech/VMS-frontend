@@ -5,6 +5,7 @@ import { IoMdCloseCircleOutline } from 'react-icons/io';
 // eslint-disable-next-line react/prop-types
 const CustomSelection = ({ setFieldvalue, isError, error, handleBlur, alreadySelected }) => {
   const { AllTags } = useTagsContext();
+
   const [selected, setSelected] = useState([]);
   const [alltages, setAllTages] = useState([]);
   const [showOptions, setShowOptions] = useState(false);
@@ -16,7 +17,7 @@ const CustomSelection = ({ setFieldvalue, isError, error, handleBlur, alreadySel
       const newSelected = [...selected, tag];
       setSelected(newSelected);
       const data = newSelected.map((item) => item._id);
-      setFieldvalue('tages', data);
+      setFieldvalue('service_role', data);
     }
   };
 
@@ -24,16 +25,21 @@ const CustomSelection = ({ setFieldvalue, isError, error, handleBlur, alreadySel
     const newSelected = selected.filter((t) => t._id !== tag._id);
     setSelected(newSelected);
     const data = newSelected.map((item) => item._id);
-    setFieldvalue('tages', data);
+    setFieldvalue('service_role', data);
   };
 
-  const filteredTags = alltages.filter((tag) =>
+  const filteredTags = alltages?.filter((tag) =>
     tag.tag_name.toLowerCase().includes(search.toLowerCase())
   );
 
   useEffect(() => {
-    if (AllTags) {
-      setAllTages(AllTags.filter((item) => !selected.some((sel) => sel._id === item._id)));
+    if (AllTags && selected?.length > 0) {
+      const data = AllTags?.filter((item) => item.related === "Service Role")
+      setAllTages(data.filter((item) => !selected.some((sel) => sel._id === item._id )));
+    }
+    else {
+      console.log("get all tags " ,AllTags?.filter((item) => item.related === "Service Role"))
+      setAllTages(AllTags?.filter((item) => item.related === "Service Role"));
     }
   }, [AllTags, selected]);
 
@@ -60,7 +66,7 @@ const CustomSelection = ({ setFieldvalue, isError, error, handleBlur, alreadySel
   return (
     <div ref={dropdownRef} onBlur={handleBlur} className="relative w-full text-white">
       <label htmlFor="multiselect" className="block mb-1">
-        Tags
+        Service Role
       </label>
 
       <div
@@ -100,8 +106,8 @@ const CustomSelection = ({ setFieldvalue, isError, error, handleBlur, alreadySel
             className="w-full mb-2 px-2 py-1 rounded text-black"
           />
 
-          {filteredTags.length > 0 ? (
-            filteredTags.map((item) => (
+          {filteredTags?.length > 0 ? (
+            filteredTags?.map((item) => (
               <div
                 key={item._id}
                 onClick={() => addTag(item)}

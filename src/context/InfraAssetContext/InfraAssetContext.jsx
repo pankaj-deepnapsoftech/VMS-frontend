@@ -18,7 +18,7 @@ const InfraAssetContextProvider = ({ children }) => {
 
     const GetInfraAsset = async (page, tenant) => {
         try {
-            const res = await AxiosHandler.get(`/infraStructureAsset/get?page=${page}&tenant=${tenant}`);
+            const res = await AxiosHandler.get(`/infraStructureAsset/get?page=${page}&tenant=${tenant ? tenant : ""}`);
             setInfraAssetdata(res.data.data)
         } catch (error) {
             console.log(error);

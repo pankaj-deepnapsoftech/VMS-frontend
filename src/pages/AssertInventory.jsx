@@ -8,6 +8,10 @@ import * as XLSX from "xlsx";
 import { useLocation } from "react-router-dom";
 import CustomSelection from "@/components/customSelection/CustomSelection";
 import Pagination from "./Pagination";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { RiEdit2Line } from "react-icons/ri";
+import { IoSearch } from "react-icons/io5";
+import NoDataFound from "@/components/NoDataFound";
 
 export default function TenantDashboard() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -29,6 +33,8 @@ export default function TenantDashboard() {
   } = useInfraAssetContext();
   const [editable, setEditable] = useState(null);
 
+  console.log(infraAssetdata)
+
   const filteredTenants = infraAssetdata.filter((tenant) =>
     tenant.asset_hostname.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -46,11 +52,10 @@ export default function TenantDashboard() {
       asset_hostname: "",
       modify_criticality: "",
       asset_ip: "",
-      tages: null,
-      asset_class:"",
-      service_role:"",
-      exposure:"",
-      Hosting:"",
+      asset_class: "",
+      service_role: null,
+      exposure: "",
+      hosting: "",
     },
     validationSchema: InfraAssetvalidation,
     enableReinitialize: true,
@@ -66,6 +71,9 @@ export default function TenantDashboard() {
       setmodel(false);
     },
   });
+
+
+
   const handleFileChange = (e) => {
     setSelectedFiles(e.target.files[0]);
   };
@@ -100,15 +108,14 @@ export default function TenantDashboard() {
       <div className="min-h-screen bg-gradient-custom text-white p-6">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="w-full px-4 border border-[#6B728033] backdrop-blur-md bg-[#435b8a33] rounded-lg my-5 py-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            {/* Search Input */}
-            <input
-              type="text"
-              placeholder="Search users..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="bg-[#13141450] border border-gray-500 backdrop-blur-md py-2 px-4 rounded-md text-white w-full md:w-1/3"
-            />
+          <div className="w-full px-4  my-5 py-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            
+            <div>
+              <h2 className="text-2xl font-semibold text-white">All InfraStructure Asset</h2>
+              <span className="text-subtext text-sm">
+                Manage your infraStructure asset
+              </span>
+            </div>
 
             {/* Buttons */}
             <div className="flex flex-col sm:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
@@ -133,94 +140,121 @@ export default function TenantDashboard() {
             </div>
           </div>
 
-          {/* Table */}
-          <div className="bg-slate-800 rounded-lg overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-slate-700">
-                    <th className="text-left py-4 px-6 font-medium text-gray-300">
-                      Asset Hostname
-                    </th>
-                    <th className="text-left py-4 px-6 font-medium text-gray-300">
-                      Asset IP
-                    </th>
-                    <th className="text-left py-4 px-6 font-medium text-gray-300">
-                      Modify Criticality
-                    </th>
-                    <th className="text-left py-4 px-6 font-medium text-gray-300">
-                      Tags
-                    </th>
-                    <th className="text-left py-4 px-6 font-medium text-gray-300">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredTenants.map((tenant) => (
-                    <tr
-                      key={tenant._id}
-                      className="border-b border-slate-700 hover:bg-slate-750"
-                    >
-                      <td className="py-4 px-6 text-white">
-                        {tenant.asset_hostname}
-                      </td>
-                      <td className="py-4 px-6 text-white">
-                        {tenant.asset_ip}
-                      </td>
-                      <td className="py-4 px-6 text-white">
-                        {tenant.modify_criticality}
-                      </td>
-                      <td className="py-4 px-6 text-white flex flex-wrap gap-1 w-60">
-                        {tenant.tages.length > 0
-                          ? tenant.tages?.map((item) => (
-                              <p
-                                key={item._id}
-                                style={{ backgroundColor: item.tag_color }}
-                                className="px-3 py-1 rounded-full"
-                              >
-                                {item.tag_name}
-                              </p>
-                            ))
-                          : "-"}
-                      </td>
-                      <td className="py-4 px-6">
-                        <div className="flex space-x-2">
-                          <button className="p-1 text-blue-400 hover:text-blue-300">
-                            <ExternalLink className="w-4 h-4" />
-                          </button>
-                          <button
-                            onClick={() => DeleteInfraAsset(tenant._id)}
-                            className="p-1 text-red-400 hover:text-red-300"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                          <button
-                            onClick={() => {
-                              setEditable(tenant);
-                              setmodel(!model);
-                            }}
-                            className="p-1 text-green-400 hover:text-green-300"
-                          >
-                            <Edit className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
+          {/*table */}
 
-          {/* Pagination */}
-          <Pagination
+          <div className="w-full   p-6">
+            <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
+              {/* Header */}
+              <div className="px-6 py-4 border-b border-gray-700 relative">
+                <div className="relative">
+                  <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
+                  <input
+                    type="search"
+                    placeholder="Search users..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="bg-input backdrop-blur-md py-2 w-1/3 text-white ps-7 pe-3 rounded-md "
+                  />
+                </div>
+              </div>
+
+              {/* Table */}
+              {filteredTenants?.length < 1 ? (
+                <NoDataFound />
+              ) : (
+                <div className="overflow-x-auto custom-scrollbar w-full">
+                  <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+                    <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
+                      <tr>
+                        {[
+                          "S No.",
+                          "Asset Hostname",
+                          "Asset IP",
+                          "Modify Criticality",
+                          "Asset Class",
+                          "Exposure",
+                          "Hosting",
+                          "Service Role",
+                          "Actions",
+
+                        ].map((header) => (
+                          <th
+                            key={header}
+                            className="px-4 py-3 border-b border-gray-600 font-medium"
+                          >
+                            {header}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-700">
+                      {filteredTenants.map((tenant, index) => (
+                        <tr
+                          key={tenant._id}
+                          className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
+                        >
+                          <td className="px-4 py-3">{index + 1}</td>
+                          <td className="px-4 py-3 ">{tenant.asset_hostname || "-"}</td>
+                          <td className="px-4 py-3 ">{tenant.asset_ip || "-"}</td>
+                          <td className="px-4 py-3">{tenant.modify_criticality || "-"}</td>
+                          <td className="px-4 py-3">{tenant.asset_class || "-"}</td>
+                          <td className="px-4 py-3">{tenant.exposure || "0"} </td>
+                          <td className="px-4 py-3">{tenant.hosting || "-"} </td>
+                         
+                          <td className="py-4 px-6 text-white flex flex-wrap gap-1 w-40">
+                            {tenant?.service_role?.length > 0
+                              ? tenant?.service_role?.map((item) => (
+                                <p
+                                  key={item._id}
+                                  style={{ backgroundColor: item.tag_color }}
+                                  className="px-3 py-1 rounded-full"
+                                >
+                                  {item.tag_name}
+                                </p>
+                              ))
+                              : "-"}
+                          </td>
+
+                           <td className="px-4 py-3">
+                            <button
+                              onClick={() => DeleteInfraAsset(tenant._id)}
+                              title="Delete"
+                              className="text-subtext hover:text-subTextHover"
+                            >
+                              <FaRegTrashAlt className="w-5 h-5" />
+                            </button>
+                            <button
+                              onClick={() => {
+                                setEditable(tenant);
+                                setmodel(!model);
+                              }}
+                              title="Edit"
+                              className="text-subtext hover:text-blue-700"
+                            >
+                              <RiEdit2Line className="w-5 h-5" />
+                            </button>
+                          </td>
+
+
+
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+
+              {/* Footer */}
+              <Pagination
                 page={currentPage}
                 setPage={setCurrentPage}
                 hasNextPage={filteredTenants.length === 10}
                 total={filteredTenants.length}
               />
-          
+            </div>
+          </div>
+
+  
         </div>
       </div>
 
@@ -293,7 +327,7 @@ export default function TenantDashboard() {
 
       {model && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-slate-900 rounded-xl shadow-2xl w-full max-w-md mx-auto">
+          <div className="bg-slate-900 rounded-xl shadow-2xl w-full max-w-md mx-auto h-[80%] overflow-y-scroll">
             <div className="p-6">
               {/* Header */}
               <div className="flex items-center justify-between mb-6">
@@ -366,7 +400,7 @@ export default function TenantDashboard() {
                     onBlur={handleBlur}
                     onChange={handleChange}
                   >
-                    <option value={"select value"} selected>
+                    <option value={""} disabled selected>
                       select value
                     </option>
                     <option value={"Critical"}>Critical</option>
@@ -379,13 +413,83 @@ export default function TenantDashboard() {
                   )}
                 </div>
 
-                <CustomSelection
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-slate-300">
+                    Asset class
+                  </label>
+                  <select
+                    type="text"
+                    placeholder="What is your title?"
+                    className="w-full bg-slate-800 border border-slate-600 rounded-md px-3 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-slate-500 transition-colors"
+                    name="asset_class"
+                    value={values.asset_class}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                  >
+                    <option value={""} disabled selected>
+                      select value
+                    </option>
+                    <option value={3}>Endpoint</option>
+                    <option value={6}>Server</option>
+                  </select>
+                  {errors.asset_class && touched.asset_class && (
+                    <p className="text-red-400">{errors.asset_class}</p>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-slate-300">
+                    Exposure
+                  </label>
+                  <select
+                    type="text"
+                    placeholder="What is your title?"
+                    className="w-full bg-slate-800 border border-slate-600 rounded-md px-3 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-slate-500 transition-colors"
+                    name="exposure"
+                    value={values.exposure}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                  >
+                    <option value={""} disabled selected>
+                      select value
+                    </option>
+                    <option value={0}>Does not have Internet Access</option>
+                    <option value={6}>Has Internet Access</option>
+                  </select>
+                  {errors.exposure && touched.exposure && (
+                    <p className="text-red-400">{errors.exposure}</p>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-slate-300">
+                    Hosting
+                  </label>
+                  <select
+                    type="text"
+                    placeholder="What is your title?"
+                    className="w-full bg-slate-800 border border-slate-600 rounded-md px-3 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-slate-500 transition-colors"
+                    name="hosting"
+                    value={values.hosting}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                  >
+                    <option value={""} disabled selected>
+                      select value
+                    </option>
+                    <option value={2}>On-Prem</option>
+                    <option value={4}>Cloud</option>
+                  </select>
+                  {errors.hosting && touched.hosting && (
+                    <p className="text-red-400">{errors.hosting}</p>
+                  )}
+                </div>
+
+                {values.asset_class === '6' && <CustomSelection
                   setFieldvalue={setFieldValue}
                   isError={errors.tages && touched.tages}
                   error={errors.tages}
-                  handleBlur={() => handleBlur("tages")}
+                  handleBlur={() => handleBlur("service_role")}
                   alreadySelected={editable && editable.tages}
-                />
+                />}
               </div>
 
               {/* Action Buttons */}
