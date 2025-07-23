@@ -8,6 +8,10 @@ import axios from "axios";
 import * as XLSX from "xlsx";
 import CustomSelection from "@/components/customSelection/CustomSelection";
 import Pagination from "./Pagination";
+import { RiEdit2Line } from "react-icons/ri";
+import { FaRegTrashAlt } from "react-icons/fa";
+import NoDataFound from "@/components/NoDataFound";
+import { IoSearch } from "react-icons/io5";
 
 export default function BusinessApplications() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -30,9 +34,10 @@ export default function BusinessApplications() {
   const [selectedFiles, setSelectedFiles] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [tenant, setTenant] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const filteredTenants = businessApplication.filter((tenant) =>
-    tenant?.name?.toLowerCase()?.includes(searchTerm?.toLowerCase())
+    tenant?.name?.toLowerCase()?.includes(searchQuery.toLowerCase())
   );
 
   const {
@@ -127,173 +132,161 @@ export default function BusinessApplications() {
   return (
     <>
       <div className="min-h-screen mb-10 bg-gradient-custom text-white p-6">
-        <div className="max-w-7xl mx-auto">
+        <div className="w-full px-6  my-5 py-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           {/* Header */}
-          <div className="max-w-screen px-4 border border-[#6B728033] backdrop-blur-md bg-[#6B728033] rounded-lg my-5 py-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <input
-              type="text"
-              placeholder="Search users..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="bg-[#13141450] border border-gray-600 backdrop-blur-md py-2 px-4 text-white rounded-md w-full md:w-1/3"
-            />
 
-            <div className="flex flex-col sm:flex-row w-full md:w-auto justify-end gap-4">
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center justify-center gap-2"
-              >
-                <BiPlus className="h-6 w-6" />
-                Bulk Upload
-              </button>
-
-              <button
-                onClick={() => {
-                  setmodel(!model);
-                  setEditable(null);
-                }}
-                className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center justify-center gap-2"
-              >
-                <BiPlus className="h-6 w-6" />
-                Business Applications
-              </button>
-            </div>
+          <div>
+            <h2 className="text-2xl font-semibold text-white">
+              All Business Applications
+            </h2>
+            <span className="text-subtext text-sm">
+              Manage your business applications
+            </span>
           </div>
 
-          {/* Table */}
-          <div className="bg-slate-800 rounded-lg overflow-hidden">
-            <div className="overflow-x-auto custom-scrollbar">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-slate-700">
-                    <th className="text-left py-4 px-6 font-medium text-gray-300">
-                      Name
-                    </th>
-                    <th className="text-left py-4 px-6 font-medium text-gray-300">
-                      Description
-                    </th>
-                    <th className="text-left py-4 px-6 font-medium text-gray-300">
-                      Country
-                    </th>
-                    <th className="text-left py-4 px-6 font-medium text-gray-300">
-                      State
-                    </th>
-                    <th className="text-left py-4 px-6 font-medium text-gray-300">
-                      City
-                    </th>
-                    <th className="text-left py-4 px-6 font-medium text-gray-300">
-                      Type
-                    </th>
-                    <th className="text-left py-4 px-6 font-medium text-gray-300">
-                      Application URL
-                    </th>
-                    <th className="text-left py-4 px-6 font-medium text-gray-300">
-                      Modify Criticality
-                    </th>
-                    <th className="text-left py-4 px-6 font-medium text-gray-300">
-                      Infrastructure Asset
-                    </th>
-                    <th className="text-left py-4 px-6 font-medium text-gray-300">
-                      Tags
-                    </th>
-                    <th className="text-left py-4 px-6 font-medium text-gray-300">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredTenants.map((tenant) => (
-                    <tr
-                      key={tenant.id}
-                      className="border-b border-slate-700 hover:bg-slate-750"
-                    >
-                      <td className="py-4 px-6 text-white">{tenant?.name}</td>
-                      <td className="py-4 px-6 text-white">
-                        {tenant?.description}
-                      </td>
-                      <td className="py-4 px-6 text-white">
-                        {tenant?.country}
-                      </td>
-                      <td className="py-4 px-6 text-white">{tenant?.state}</td>
-                      <td className="py-4 px-6 text-white">{tenant?.city}</td>
-                      <td className="py-4 px-6 text-white">{tenant?.type}</td>
-                      <td className="py-4 px-6 text-white">
-                        {tenant?.applicationUrl}
-                      </td>
-                      <td className="py-4 px-6 text-white">
-                        {tenant?.modifyCriticality}
-                      </td>
-                      <td className="py-4 px-6 text-white">
-                        {tenant?.asset?.asset_ip}
-                      </td>
-                      <td className="py-4 px-6 text-white flex flex-wrap gap-1 w-60">
-                        {tenant.tages.length > 0
-                          ? tenant.tages?.map((item) => (
-                              <p
-                                key={item._id}
-                                style={{ backgroundColor: item.tag_color }}
-                                className="px-3 py-1 rounded-full"
-                              >
-                                {item.tag_name}
-                              </p>
-                            ))
-                          : "-"}
-                      </td>
-                      <td className="py-4 px-6">
-                        <div className="flex space-x-2">
-                          <button className="p-1 text-blue-400 hover:text-blue-300">
-                            <ExternalLink className="w-4 h-4" />
-                          </button>
-                          <button
-                            onClick={() =>
-                              DeleteBussinerssApplcation(tenant._id)
-                            }
-                            className="p-1 text-red-400 hover:text-red-300"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                          <button
-                            onClick={() => {
-                              setEditable(tenant);
-                              setmodel(!model);
-                            }}
-                            className="p-1 text-green-400 hover:text-green-300"
-                          >
-                            <Edit className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </td>
+          {/* Buttons */}
+          <div className="flex flex-col sm:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center justify-center gap-2"
+            >
+              <BiPlus className="h-6 w-6" />
+              Bulk Upload
+            </button>
+
+            <button
+              onClick={() => {
+                setmodel(!model);
+                setEditable(null);
+              }}
+              className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center justify-center gap-2"
+            >
+              <BiPlus className="h-6 w-6" />
+              Business Applications
+            </button>
+          </div>
+        </div>
+
+        <div className="w-full  min-h-screen p-6">
+          <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
+            {/* Header */}
+            <div className="px-6 py-4 border-b border-gray-700 relative">
+              <div className="relative">
+                <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
+                <input
+                  type="search"
+                  placeholder="Search users..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="bg-input backdrop-blur-md py-2 w-1/3 text-white ps-7 pe-3 rounded-md "
+                />
+              </div>
+            </div>
+
+            {/* Table */}
+            {filteredTenants?.length < 1 ? (
+              <NoDataFound />
+            ) : (
+              <div className="overflow-x-auto custom-scrollbar w-full">
+                <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+                  <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
+                    <tr>
+                      {[
+                        "Name",
+                        "Description",
+                        "Country",
+                        "State",
+                        "City",
+                        "Type",
+                        "Application URL",
+                        "Modify Criticality",
+                        "Infrastructure Asset",
+                        "Tags",
+                        "Actions",
+                      ].map((header) => (
+                        <th
+                          key={header}
+                          className="px-4 py-3 border-b border-gray-600 font-medium"
+                        >
+                          {header}
+                        </th>
+                      ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody className="divide-y divide-gray-700">
+                    {filteredTenants.map((tenant, index) => (
+                      <tr
+                        key={tenant._id}
+                        className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
+                      >
+                        <td className="px-4 py-3">{tenant?.name}</td>
+                        <td className="px-4 py-3 capitalize">
+                          {tenant?.description}
+                        </td>
+                        <td className="px-4 py-3 capitalize">
+                          {tenant?.country}
+                        </td>
+                        <td className="px-4 py-3">{tenant?.state}</td>
+                        <td className="px-4 py-3">{tenant?.city}</td>
+                        <td className="px-4 py-3">{tenant?.type}</td>
+                        <td className="px-4 py-3">{tenant?.applicationUrl}</td>
+                        <td className="px-4 py-3">
+                          {tenant?.modifyCriticality}
+                        </td>
+                        <td className="px-4 py-3">{tenant?.asset?.asset_ip}</td>
+
+                        <td className="px-4 py-3">
+                          {tenant.tages.length > 0
+                            ? tenant.tages?.map((item) => (
+                                <p
+                                  key={item._id}
+                                  style={{ backgroundColor: item.tag_color }}
+                                  className="px-3 py-1 rounded-full"
+                                >
+                                  {item.tag_name}
+                                </p>
+                              ))
+                            : "-"}
+                        </td>
+                        <td className="py-3 px-4">
+                          <div className="flex space-x-2">
+                            <button className="p-1 text-blue-400 hover:text-blue-300">
+                              <ExternalLink className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() =>
+                                DeleteBussinerssApplcation(tenant._id)
+                              }
+                              className="text-subtext hover:text-subTextHover"
+                            >
+                              <Trash2 className="w-5 h-5" />
+                            </button>
+                            <button
+                              onClick={() => {
+                                setEditable(tenant);
+                                setmodel(!model);
+                              }}
+                              className="text-subtext hover:text-blue-700"
+                            >
+                              <Edit className="w-5 h-5" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+            {/* Footer */}
+            <Pagination
+              page={currentPage}
+              setPage={setCurrentPage}
+              hasNextPage={filteredTenants.length === 10}
+              total={filteredTenants.length}
+            />
           </div>
-
-          <Pagination
-            page={currentPage}
-            setPage={setCurrentPage}
-            hasNextPage={filteredTenants.length === 10}
-            total={filteredTenants.length}
-          />
-
-          {/* <div className="flex justify-between items-center mt-6">
-            <button
-              className="bg-slate-800 border-slate-700 text-gray-400 hover:bg-slate-700 hover:text-white px-4 py-2 rounded-lg"
-              disabled={currentPage === 1}
-              onClick={() => setCurrentPage(currentPage - 1)}
-            >
-              Previous
-            </button>
-            <span className="text-gray-300">Page {currentPage}</span>
-            <button
-              onClick={() => setCurrentPage((prev) => prev + 1)}
-              disabled={filteredTenants.length !== 10}
-              className="bg-slate-800 border-slate-700 text-gray-400 hover:bg-slate-700 hover:text-white px-4 py-2 rounded-lg"
-            >
-              Next
-            </button>
-          </div> */}
         </div>
       </div>
 
@@ -567,7 +560,7 @@ export default function BusinessApplications() {
                       </option>
                     ))}
                   </select>
-                  {errors.type && touched.type && (
+                  {errors.asset && touched.asset && (
                     <p className="text-red-400">{errors.asset}</p>
                   )}
                 </div>

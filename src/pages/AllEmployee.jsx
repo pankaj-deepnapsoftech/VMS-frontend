@@ -170,7 +170,7 @@ const AllEmployee = () => {
         <Loader />           
       ) : (
         <div className="min-h-screen shadow-lg py-4">
-          <div className="flex items-center justify-between px-4 py-4">
+          <div className="flex items-center justify-between px-6 py-4">
             {/* Optional Left Side Heading */}
             <div className="w-full">
               <h2 className="text-2xl font-semibold text-white">All Users</h2>
