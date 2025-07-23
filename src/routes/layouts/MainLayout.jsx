@@ -51,6 +51,7 @@ const MainLayout = () => {
     TenantAllData,
   } = useDataContext();
 
+
   const { isOpen, openModal, closeModal } = useChangePassword();
 
   const [width, setWidth] = useState(window.innerWidth);
@@ -64,7 +65,6 @@ const MainLayout = () => {
   const [tenant, setTenant] = useState("Select Value");
   const [tenantId, setTenantId] = useState("");
   const [searchParams] = useSearchParams();
-  const isMobile = width <= 1023;
 
   let notificationcount =
     notificationData?.filter((notification) => !notification.view).length || 0;
@@ -169,6 +169,14 @@ const MainLayout = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const data = TenantAllData.filter((item)=>item.value === params.get("tenant"))[0];
+    if(data){
+      setTenant(data);
+    }
+  }, [location.search]);
 
   return !getDataFromSession ? (
     <FirstDashboard />
