@@ -107,7 +107,7 @@ export default function TenantDashboard() {
       <div className="min-h-screen bg-gradient-custom text-white p-6">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="w-full px-4  my-5 py-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="w-full px-6  my-5 py-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             
             <div>
               <h2 className="text-2xl font-semibold text-white">All InfraStructure Asset</h2>

@@ -87,7 +87,7 @@ export default function AllCustomer() {
         <Loader />
       ) : (
         <div className="min-h-screen py-10">
-          <div className="max-w-screen px-4 h-fit border-[#6B728033] flex items-center gap-4 backdrop-blur-md rounded-lg mx-5">
+          <div className="max-w-screen px-6 h-fit border-[#6B728033] flex items-center gap-4 backdrop-blur-md rounded-lg mx-5">
             <div className="w-full">
               <h2 className="text-2xl font-semibold text-white">All Tenants</h2>
               <span className="text-subtext text-sm">

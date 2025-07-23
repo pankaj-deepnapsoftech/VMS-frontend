@@ -106,7 +106,7 @@ const Partners = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <section className="p-4 sm:p-6 md:p-8 h-screen md:h-screen shadow-lg overflow-y-auto">
+        <section className="p-6 sm:p-6 md:p-8 h-screen md:h-screen shadow-lg overflow-y-auto">
           {/* Header */}
           <div className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-md backdrop-blur-md p-4 mb-6">
             <div className="w-full">
@@ -120,7 +120,7 @@ const Partners = () => {
                 setModal(true);
                 setEdittable(null);
               }}
-              className="flex items-center gap-2 px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium whitespace-nowrap"
+              className="flex items-center gap-2 px-6 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium whitespace-nowrap"
             >
               <BiPlus className="h-5 w-5" />
               Add Partners
@@ -261,74 +261,6 @@ const Partners = () => {
               </form>
             </div>
           </div>
-
-          {/* Table */}
-          {/* <div className="mt-6 bg-[#0c1120] overflow-x-auto text-sm text-white rounded-md">
-            {partnersData?.length < 1 ? (
-              <div className="text-center py-6 text-gray-400">
-                No matching records found.
-              </div>
-            ) : (
-              <table className="min-w-full divide-y divide-gray-700">
-                <thead className="bg-gradient-to-bl from-[#0a0f39] via-[#080d27] to-[#050b20] text-xs sm:text-sm">
-                  <tr>
-                    <th className="px-4 py-3 text-left whitespace-nowrap">
-                      Company Name
-                    </th>
-                    <th className="px-4 py-3 text-left whitespace-nowrap">
-                      Website URL
-                    </th>
-                    <th className="px-4 py-3 text-left whitespace-nowrap">
-                      Country
-                    </th>
-                    <th className="px-4 py-3 text-left whitespace-nowrap">
-                      State
-                    </th>
-                    <th className="px-4 py-3 text-left whitespace-nowrap">
-                      City
-                    </th>
-                    <th className="px-4 py-3 text-left whitespace-nowrap">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="text-sm text-gray-300">
-                  {partnersData
-                    .filter((partner) =>
-                      Object.values(partner)
-                        .join(" ")
-                        .toLowerCase()
-                        .includes(searchQuery.toLowerCase())
-                    )
-                    .map((tenant, index) => (
-                      <tr
-                        key={index}
-                        className="border-b border-gray-700 hover:bg-[#1e1e1e] transition"
-                      >
-                        <td className="p-3">{tenant.company_name}</td>
-                        <td className="p-3">{tenant.website_url}</td>
-                        <td className="p-3">{tenant.country}</td>
-                        <td className="p-3">{tenant.state}</td>
-                        <td className="p-3">{tenant.city}</td>
-                        <td className="p-3 flex gap-2 items-center">
-                          <FaEdit
-                            onClick={() => {
-                              setEdittable(tenant);
-                              setModal(true);
-                            }}
-                            className="text-blue-400 cursor-pointer"
-                          />
-                          <FaTrash
-                            onClick={() => DeletePartnersData(tenant._id)}
-                            className="text-red-500 cursor-pointer"
-                          />
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
-            )}
-          </div> */}
 
           <div className="w-full  min-h-screen p-6">
             <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
