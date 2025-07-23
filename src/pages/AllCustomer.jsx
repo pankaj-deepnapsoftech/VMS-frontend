@@ -30,8 +30,8 @@ export default function AllCustomer() {
   const [isLoading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const { isOpen, closeModal, openModal } = useAccessPartner();
-  const [tenantId,setTenantId] = useState(null)
-  const [partnersData,setPartnersData] = useState("")
+  const [tenantId, setTenantId] = useState(null)
+  const [partnersData, setPartnersData] = useState("")
 
 
 
@@ -108,173 +108,108 @@ export default function AllCustomer() {
             </div>
           </div>
 
-          {/* <div className="m-6 p-2 bg-tablecolor shadow-lg rounded-lg">
-            <div>
-              <div className="mt-6 bg-[#0c1120] overflow-x-auto custom-scrollbar text-sm text-white">
-                {filteredTenants.length < 1 ? (
-                  <div className="text-center py-6 text-gray-400">
-                    No matching records found.
-                  </div>
-                ) : (
-                  <table className="min-w-full divide-y divide-gray-700">
-                    <thead className="bg-gradient-to-br from-[#0a0f39] via-[#080d27] to-[#050b20]  whitespace-nowrap">
+
+
+          <div className="w-full  min-h-screen p-6">
+            <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
+              {/* Header */}
+              <div className="px-6 py-4 border-b border-gray-700 relative">
+                <div className="relative">
+                  <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
+                  <input
+                    type="search"
+                    placeholder="Search users..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="bg-input backdrop-blur-md py-2 w-1/3 text-white ps-7 pe-3 rounded-md "
+                  />
+                </div>
+              </div>
+
+              {/* Table */}
+              {filteredTenants?.length < 1 ? (
+                <NoDataFound />
+              ) : (
+                <div className="overflow-x-auto custom-scrollbar w-full">
+                  <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+                    <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
                       <tr>
-                        <th className="px-4 py-3 text-left">Company Name</th>
-                        <th className="px-4 py-3 text-left">Website URL</th>
-                        <th className="px-4 py-3 text-left">Employee Count</th>
-                        <th className="px-4 py-3 text-left">Country</th>
-                        <th className="px-4 py-3 text-left">State</th>
-                        <th className="px-4 py-3 text-left">City</th>
-                        <th className="px-4 py-3 text-left">Industry</th>
-                        <th className="px-4 py-3 text-left">Risk Appetite</th>
-                        <th className="px-4 py-3 text-left">Actions</th>
+                        {[
+                          "Company Name",
+                          "Website URL",
+                          "Employee Count",
+                          "Country",
+                          "State",
+                          "City",
+                          "Industry",
+                          "Risk Appetite",
+                          "Actions",
+                        ].map((header) => (
+                          <th
+                            key={header}
+                            className="px-4 py-3 border-b border-gray-600 font-medium"
+                          >
+                            {header}
+                          </th>
+                        ))}
                       </tr>
                     </thead>
-                    <tbody className="text-sm text-gray-300">
+                    <tbody className="divide-y divide-gray-700">
                       {filteredTenants.map((tenant, index) => (
                         <tr
-                          key={index}
-                          className="border-b border-gray-700 whitespace-nowrap hover:bg-[#1e1e1e] transition"
+                          key={tenant._id}
+                          className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
                         >
-                          <td className="p-3">{tenant.company_name}</td>
-                          <td className="p-3">{tenant.Website_url}</td>
-                          <td className="p-3">{tenant.Employee_count}</td>
-                          <td className="p-3">{tenant.Country}</td>
-                          <td className="p-3">{tenant.State}</td>
-                          <td className="p-3">{tenant.City}</td>
-                          <td className="p-3">{tenant.Industry}</td>
-                          <td className="p-3">{tenant.Risk_Apetite}</td>
-                          <td className="p-3 flex gap-2">
-                            <FaEdit
-                              title="Edit"
+                          <td className="px-4 py-3">{tenant.company_name}</td>
+                          <td className="px-4 py-3 capitalize">{tenant.Website_url}</td>
+                          <td className="px-4 py-3 capitalize">{tenant.Employee_count}</td>
+                          <td className="px-4 py-3">{tenant.Country}</td>
+                          <td className="px-4 py-3">{tenant.State}</td>
+                          <td className="px-4 py-3">
+                            {tenant.City}
+                          </td>
+                          <td className="px-4 py-3">
+                            {tenant.Industry}
+                          </td>
+                          <td className="px-4 py-3">
+                            {tenant.Risk_Apetite}
+                          </td>
+
+                          <td className="px-4 py-3 flex gap-2">
+                            <button
+                              onClick={() => DeleteData(tenant?._id)}
+                              title="Delete"
+                              className="text-subtext hover:text-subTextHover"
+                            >
+                              <FaRegTrashAlt className="w-5 h-5" />
+                            </button>
+                            <button
                               onClick={() => {
                                 setEditTable(tenant);
                                 setIsModalOpen(true);
                               }}
-                              className="text-blue-400 cursor-pointer"
-                            />
-                            <FaTrash
-                              title="Delete"
-                              onClick={() => DeleteData(tenant?._id)}
-                              className="text-red-500 cursor-pointer"
-                            />
-                            <MdAssignmentAdd onClick={() => { openModal();setTenantId(tenant?._id);setPartnersData(tenant.Partner) }} title="Assign Partner" className="text-green-500 cursor-pointer" />
+                              title="Edit"
+                              className="text-subtext hover:text-blue-700"
+                            >
+                              <RiEdit2Line className="w-5 h-5" />
+                            </button>
                           </td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
-                )}
-              </div>
+                </div>
+              )}
 
+              {/* Footer */}
               <Pagination
                 page={page}
                 setPage={setPage}
-                hasNextPage={tenants.length === 10}
+                hasNextPage={filteredTenants.length === 10}
+                total={filteredTenants.length}
               />
             </div>
-          </div> */}
-
-           <div className="w-full  min-h-screen p-6">
-                      <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
-                        {/* Header */}
-                        <div className="px-6 py-4 border-b border-gray-700 relative">
-                          <div className="relative">
-                            <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
-                            <input
-                              type="search"
-                              placeholder="Search users..."
-                              value={searchQuery}
-                              onChange={(e) => setSearchQuery(e.target.value)}
-                              className="bg-input backdrop-blur-md py-2 w-1/3 text-white ps-7 pe-3 rounded-md "
-                            />
-                          </div>
-                        </div>
-          
-                        {/* Table */}
-                        {filteredTenants?.length < 1 ? (
-                          <NoDataFound />
-                        ) : (
-                          <div className="overflow-x-auto custom-scrollbar w-full">
-                            <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
-                              <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
-                                <tr>
-                                  {[
-                                    "Company Name",
-                                    "Website URL",
-                                    "Employee Count",
-                                    "Country",
-                                    "State",
-                                    "City",
-                                    "Industry",
-                                    "Risk Appetite",
-                                    "Actions",
-                                  ].map((header) => (
-                                    <th
-                                      key={header}
-                                      className="px-4 py-3 border-b border-gray-600 font-medium"
-                                    >
-                                      {header}
-                                    </th>
-                                  ))}
-                                </tr>
-                              </thead>
-                              <tbody className="divide-y divide-gray-700">
-                                {filteredTenants.map((tenant, index) => (
-                                  <tr
-                                    key={tenant._id}
-                                    className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
-                                  >
-                                    <td className="px-4 py-3">{tenant.company_name}</td>
-                                    <td className="px-4 py-3 capitalize">{tenant.Website_url}</td>
-                                    <td className="px-4 py-3 capitalize">{tenant.Employee_count}</td>
-                                    <td className="px-4 py-3">{tenant.Country}</td>
-                                    <td className="px-4 py-3">{tenant.State}</td>
-                                    <td className="px-4 py-3">
-                                      {tenant.City}
-                                    </td>
-                                    <td className="px-4 py-3">
-                                      {tenant.Industry}
-                                    </td>
-                                    <td className="px-4 py-3">
-                                      {tenant.Risk_Apetite}
-                                    </td>
-                                    
-                                    <td className="px-4 py-3 flex gap-2">
-                                      <button
-                                        onClick={() => DeleteData(tenant?._id)}
-                                        title="Delete"
-                                        className="text-subtext hover:text-subTextHover"
-                                      >
-                                        <FaRegTrashAlt className="w-5 h-5" />
-                                      </button>
-                                      <button
-                                        onClick={() => {
-                                setEditTable(tenant);
-                                setIsModalOpen(true);
-                              }}
-                                        title="Edit"
-                                        className="text-subtext hover:text-blue-700"
-                                      >
-                                        <RiEdit2Line className="w-5 h-5" />
-                                      </button>
-                                    </td>
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </table>
-                          </div>
-                        )}
-          
-                        {/* Footer */}
-                        <Pagination
-                          page={page}
-                          setPage={setPage}
-                          hasNextPage={filteredTenants.length === 10}
-                          total={filteredTenants.length}
-                        />
-                      </div>
-                    </div>   
+          </div>
         </div>
       )}
 

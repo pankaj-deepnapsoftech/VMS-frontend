@@ -7,6 +7,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ExpectionModal from "@/modals/ExpectionModal";
 import ExploitDetail from "@/modals/ExploitDetail";
 import useAccessPartner from "@/hooks/AccessPartner";
+import Pagination from "./Pagination";
+import { IoSearch } from "react-icons/io5";
+import NoDataFound from "@/components/NoDataFound";
 
 
 export function ApplicationData() {
@@ -20,9 +23,9 @@ export function ApplicationData() {
   const [selectedId, setSelectedId] = useState(null)
   const [tenant, setTenant] = useState('');
   const location = useLocation();
-  const [exploitDetails,setExploitDetails] = useState([])
+  const [exploitDetails, setExploitDetails] = useState([])
 
-  const {closeModal,isOpen,openModal} = useAccessPartner()
+  const { closeModal, isOpen, openModal } = useAccessPartner()
 
 
 
@@ -86,140 +89,150 @@ export function ApplicationData() {
         <Loader />
       ) : (
         <div className="bg-gradient-custom min-h-screen p-4 rounded-lg text-white">
-          <div className="flex items-center mb-4">
-            <input
-              type="text"
-              placeholder="Search across all fields..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-96 px-4 py-2 rounded-md bg-[#0F172A] text-white border border-[#334155] focus:outline-none"
-            />
+
+
+          <div className="w-full px-6">
+            <h2 className="text-2xl font-semibold text-white">All Application Data</h2>
+            <span className="text-subtext text-sm">
+              Manage your Application Data
+            </span>
           </div>
 
-          <div className="overflow-x-auto custom-scrollbar rounded-lg">
-            <table className="min-w-[1400px] text-sm text-left">
-              <thead className="bg-[#1E293B] text-white uppercase text-xs">
-                <tr>
-                  <th className="px-4 py-3">
-                    <input type="checkbox" />
-                  </th>
-                  <th className="px-4 py-3">Scan Type</th>
-                  <th className="px-4 py-3">Asset Type</th>
-                  <th className="px-4 py-3">Threat Type</th>
-                  <th className="px-4 py-3 ">CVE</th>
-                  <th className="px-4 py-3">CVE ID</th>
-                  <th className="px-4 py-3">Exploit Availale</th>
-                  <th className="px-4 py-3">Exploit Details</th>
-                  <th className="px-4 py-3">Exploit Complexity</th>
-                  <th className="px-4 py-3">Location</th>
-                  <th className="px-4 py-3">Title</th>
-                  <th className="px-4 py-3">Description</th>
-                  <th className="px-4 py-3">Severity</th>
-                  <th className="px-4 py-3">CVSS</th>
-                  <th className="px-4 py-3">Reference URL</th>
-                  <th className="px-4 py-3">EPSS</th>
-                  <th className="px-4 py-3">Asset</th>
-                  <th className="px-4 py-3">Proof of Concept</th>
-                  <th className="px-4 py-3">Tenant</th>
-                  <th className="px-4 py-3">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="bg-[#0F172A] border-t border-slate-700">
-                {Array.isArray(filteredData) && filteredData.length > 0 ? (
-                  filteredData.map((item, index) => (
-                    <tr
-                      key={index}
-                      className="border-b border-slate-700 hover:bg-[#1E293B] transition"
-                    >
-                      <td className="px-4 py-3">
-                        <input type="checkbox" />
-                      </td>
-                      <td className="px-4 py-3">{item.scan_type || "-"}</td>
-                      <td className="px-4 py-3">{item.asset_type || "-"}</td>
-                      <td className="px-4 py-3">{item.threat_type || "-"}</td>
-                      <td className="px-4 py-3">{item.CVE || "-"}</td>
-                      <td className="px-4 py-3">{item.CVE_ID || "-"}</td>
-                       <td className="px-4 py-3">{item.Exploit_Availale ? "Yes" : "No" || "-"}</td>
-                      <td className="px-4 py-3">
-                        {item.Exploit_Details?.length || 0}
-                      </td>
-                      <td className="px-4 py-3">
-                        {item.exploit_complexity || "-"}
-                      </td>
-                      <td className="px-4 py-3">{item.Location || "-"}</td>
-                      <td className="px-4 py-3">{item.Title || "-"}</td>
-                      <td className="px-4 py-3">{item.Description || "-"}</td>
-                      <td className="px-4 py-3">{item.Severity || "-"}</td>
-                      <td className="px-4 py-3">{item.CVSS || "-"}</td>
-                      <td className="px-4 py-3">{item.Reference_URL || "-"}</td>
-                      <td className="px-4 py-3">{(item.EPSS * 100).toFixed(2) + "%" || "-"}</td>
-                      <td className="px-4 py-3">
-                        {item.BusinessApplication?.name || "-"}
-                      </td>
-                      <td className="px-4 py-3">
-                        {item.Proof_of_Concept?.length || 0}
-                      </td>
-                      <td className="px-4 py-3">
-                        {item.creator?.company_name || "-"}
-                      </td>
-                      <td className="px-4 py-3 flex items-center mt-3 space-x-3">
-                        <Pencil
-                          onClick={() =>
-                            navigate("/add-vulnerability-data", {
-                              state: { data: item },
-                            })
-                          }
-                          className="w-4 h-4 text-blue-400 cursor-pointer"
-                        />
-                        <Trash2
-                          onClick={() => {
-                            const confirmDelete = window.confirm(
-                              "Are you sure you want to delete this record?"
-                            );
-                            if (confirmDelete) {
-                              DeleteData(item._id);
-                            }
-                          }}
-                          className="w-4 h-4 text-red-500 cursor-pointer"
-                        />
-                        <User
-                          className="w-4 h-4 text-green-500 cursor-pointer"
-                          onClick={() => handleExpectionModal(item)}
-                        />
-                        <Eye onClick={()=>{
-                          setExploitDetails(item.Exploit_Details);
-                          openModal()
-                        }} className="w-4 h-4 text-lime-400 cursor-pointer" />
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="17" className="text-center py-4 text-gray-400">
-                      No data found matching search.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+          <div className="w-full  min-h-screen p-6">
+            <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
+              {/* Header */}
+              <div className="px-6 py-4 border-b border-gray-700 relative">
+                <div className="relative">
+                  <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
+                  <input
+                    type="search"
+                    placeholder="Search users..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="bg-input backdrop-blur-md py-2 w-1/3 text-white ps-7 pe-3 rounded-md "
+                  />
+                </div>
+              </div>
 
-          <div className="flex justify-between items-center mt-6">
-            <button
-              className="bg-slate-800 border-slate-700 text-gray-400 hover:bg-slate-700 hover:text-white px-4 py-2 rounded-lg"
-              disabled={currentPage === 1}
-              onClick={() => setCurrentPage(currentPage - 1)}
-            >
-              Previous
-            </button>
-            <span className="text-gray-300">Page {currentPage}</span>
-            <button
-              onClick={() => setCurrentPage((prev) => prev + 1)}
-              disabled={filteredData.length !== 10}
-              className="bg-slate-800 border-slate-700 text-gray-400 hover:bg-slate-700 hover:text-white px-4 py-2 rounded-lg"
-            >
-              Next
-            </button>
+              {/* Table */}
+              {filteredData?.length < 1 ? (
+                <NoDataFound />
+              ) : (
+                <div className="overflow-x-auto custom-scrollbar w-full">
+                  <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+                    <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
+                      <tr>
+                        {[
+                          "S No.",
+                          "Scan Type",
+                          "Asset Type",
+                          "Threat Type",
+                          "CVE",
+                          "CVE ID",
+                          "Exploit Availale",
+                          "Exploit Details",
+                          "Exploit Complexity",
+                          "Location",
+                          "Title",
+                          "Description",
+                          "Severity",
+                          "CVSS",
+                          "Reference URL",
+                          "EPSS",
+                          "Asset",
+                          "Proof of Concept",
+                          "Tenant",
+                          "Actions",
+                        ].map((header) => (
+                          <th
+                            key={header}
+                            className="px-4 py-3 border-b border-gray-600 font-medium"
+                          >
+                            {header}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-700">
+                      {filteredData.map((item, index) => (
+                        <tr
+                          key={index}
+                          className="border-b border-slate-700 hover:bg-[#1E293B] transition"
+                        >
+
+                          <td className="px-4 py-3">{index + 1}</td>
+                          <td className="px-4 py-3">{item.scan_type || "-"}</td>
+                          <td className="px-4 py-3">{item.asset_type || "-"}</td>
+                          <td className="px-4 py-3">{item.threat_type || "-"}</td>
+                          <td className="px-4 py-3">{item.CVE || "-"}</td>
+                          <td className="px-4 py-3">{item.CVE_ID || "-"}</td>
+                          <td className="px-4 py-3">{item.Exploit_Availale ? "Yes" : "No" || "-"}</td>
+                          <td className="px-4 py-3">
+                            {item.Exploit_Details?.length || 0}
+                          </td>
+                          <td className="px-4 py-3">
+                            {item.exploit_complexity || "-"}
+                          </td>
+                          <td className="px-4 py-3">{item.Location || "-"}</td>
+                          <td className="px-4 py-3">{item.Title || "-"}</td>
+                          <td className="px-4 py-3">{item.Description || "-"}</td>
+                          <td className="px-4 py-3">{item.Severity || "-"}</td>
+                          <td className="px-4 py-3">{item.CVSS || "-"}</td>
+                          <td className="px-4 py-3">{item.Reference_URL || "-"}</td>
+                          <td className="px-4 py-3">{(item.EPSS * 100).toFixed(2) + "%" || "-"}</td>
+                          <td className="px-4 py-3">
+                            {item.BusinessApplication?.name || "-"}
+                          </td>
+                          <td className="px-4 py-3">
+                            {item.Proof_of_Concept?.length || 0}
+                          </td>
+                          <td className="px-4 py-3">
+                            {item.creator?.company_name || "-"}
+                          </td>
+                          <td className="px-4 py-3 flex items-center mt-3 space-x-3">
+                            <Pencil
+                              onClick={() =>
+                                navigate("/add-vulnerability-data", {
+                                  state: { data: item },
+                                })
+                              }
+                              className="w-4 h-4 text-blue-400 cursor-pointer"
+                            />
+                            <Trash2
+                              onClick={() => {
+                                const confirmDelete = window.confirm(
+                                  "Are you sure you want to delete this record?"
+                                );
+                                if (confirmDelete) {
+                                  DeleteData(item._id);
+                                }
+                              }}
+                              className="w-4 h-4 text-red-500 cursor-pointer"
+                            />
+                            <User
+                              className="w-4 h-4 text-green-500 cursor-pointer"
+                              onClick={() => handleExpectionModal(item)}
+                            />
+                            <Eye onClick={() => {
+                              setExploitDetails(item.Exploit_Details);
+                              openModal()
+                            }} className="w-4 h-4 text-lime-400 cursor-pointer" />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+
+              {/* Footer */}
+              <Pagination
+                page={currentPage}
+                setPage={setCurrentPage}
+                hasNextPage={filteredData.length === 10}
+                total={filteredData.length}
+              />
+            </div>
           </div>
 
           {/* MODAL */}

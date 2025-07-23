@@ -33,7 +33,6 @@ export default function TenantDashboard() {
   } = useInfraAssetContext();
   const [editable, setEditable] = useState(null);
 
-  console.log(infraAssetdata)
 
   const filteredTenants = infraAssetdata.filter((tenant) =>
     tenant.asset_hostname.toLowerCase().includes(searchTerm.toLowerCase())
