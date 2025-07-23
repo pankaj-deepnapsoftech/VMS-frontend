@@ -326,7 +326,7 @@ export default function TenantDashboard() {
 
       {model && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-slate-900 rounded-xl shadow-2xl w-full max-w-md mx-auto h-[80%] overflow-y-scroll">
+          <div className="bg-slate-900 rounded-xl shadow-2xl w-full max-w-md mx-auto h-[80%] custom-scrollbar overflow-y-scroll">
             <div className="p-6">
               {/* Header */}
               <div className="flex items-center justify-between mb-6">
