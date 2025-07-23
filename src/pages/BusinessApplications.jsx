@@ -86,7 +86,7 @@ export default function BusinessApplications() {
         state: "",
         city: "",
         type: "",
-        applicationUrl: "",
+        applicationUrl: "", 
         modifyCriticality: "",
       },
     ];
@@ -529,14 +529,14 @@ export default function BusinessApplications() {
                       value={values.type}
                       onBlur={handleBlur}
                       onChange={handleChange}
-                    >
+                    >     
                       <option value={"select value"} selected>
                         select value
                       </option>
                       <option value={"Mobile"}>Mobile</option>
                       <option value={"Web"}>Web</option>
                       <option value={"Microservice"}>Microservice</option>
-                      <option value={"APIs"}>APIs</option>
+                      <option value={"APIs"}>APIs</option>    
                     </select>
                     {errors.type && touched.type && (
                       <p className="text-red-400">{errors.type}</p>
