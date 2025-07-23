@@ -12,7 +12,8 @@ import NoDataFound from "@/components/NoDataFound";
 import { IoSearch } from "react-icons/io5";
 
 export function InfrastructureData() {
-  const { loading, GetInfrastructureData, allInfrastructureData, DeleteData } = useVulnerabililtyDataContext();
+  const { loading, GetInfrastructureData, allInfrastructureData, DeleteData } =
+    useVulnerabililtyDataContext();
   const { token } = useAuthContext();
   const navigate = useNavigate();
 
@@ -21,12 +22,10 @@ export function InfrastructureData() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [exploitDetails, setExploitDetails] = useState([]);
-  const [tenant, setTenant] = useState('');
+  const [tenant, setTenant] = useState("");
   const location = useLocation();
   const { closeModal, isOpen, openModal } = useAccessPartner();
   const itemsPerPage = 10;
-
-
 
   const filteredData = allInfrastructureData?.filter((item) => {
     const valuesToSearch = [
@@ -51,20 +50,25 @@ export function InfrastructureData() {
 
     return valuesToSearch
       .filter(Boolean)
-      .some((field) => field.toString().toLowerCase().includes(searchTerm.toLowerCase()));
+      .some((field) =>
+        field.toString().toLowerCase().includes(searchTerm.toLowerCase())
+      );
   });
 
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentItems = filteredData?.slice(startIndex, startIndex + itemsPerPage);
+  const currentItems = filteredData?.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
 
   const handleExpectionModal = (item) => {
     if (!item.Expection) {
       setIsModalOpen(true);
-      setSelectedId(item._id)
+      setSelectedId(item._id);
     } else {
       alert("Expection already exists for this record");
     }
-  }
+  };
 
   const calculateARS = (data)=> {
     console.log("this is just for testing ARS",data)
@@ -82,7 +86,7 @@ export function InfrastructureData() {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    setTenant(params.get('tenant') || '');
+    setTenant(params.get("tenant") || "");
   }, [location.search]);
 
   return (
@@ -92,7 +96,9 @@ export function InfrastructureData() {
       ) : (
         <div className="bg-gradient-custom min-h-screen p-4 rounded-lg text-white">
           <div className="w-full px-6">
-            <h2 className="text-2xl font-semibold text-white">All Infrastructure Data</h2>
+            <h2 className="text-2xl font-semibold text-white">
+              All Infrastructure Data
+            </h2>
             <span className="text-subtext text-sm">
               Manage your Infrastructure Data
             </span>
@@ -140,7 +146,7 @@ export function InfrastructureData() {
                           "Reference URL",
                           "EPSS",
                           "Asset",
-                          "Proof of Concept",     
+                          "Proof of Concept",
                           "Tenant",
                           "ARS",
                           "Actions",
@@ -160,14 +166,19 @@ export function InfrastructureData() {
                           key={index}
                           className="border-b border-slate-700 hover:bg-[#1E293B] transition"
                         >
-
                           <td className="px-4 py-3">{index + 1}</td>
                           <td className="px-4 py-3">{item.scan_type || "-"}</td>
-                          <td className="px-4 py-3">{item.asset_type || "-"}</td>
-                          <td className="px-4 py-3">{item.threat_type || "-"}</td>
+                          <td className="px-4 py-3">
+                            {item.asset_type || "-"}
+                          </td>
+                          <td className="px-4 py-3">
+                            {item.threat_type || "-"}
+                          </td>
                           <td className="px-4 py-3">{item.CVE || "-"}</td>
                           <td className="px-4 py-3">{item.CVE_ID || "-"}</td>
-                          <td className="px-4 py-3">{item.Exploit_Availale ? "Yes" : "No" || "-"}</td>
+                          <td className="px-4 py-3">
+                            {item.Exploit_Availale ? "Yes" : "No" || "-"}
+                          </td>
                           <td className="px-4 py-3">
                             {item.Exploit_Details?.length || 0}
                           </td>
@@ -176,11 +187,17 @@ export function InfrastructureData() {
                           </td>
                           <td className="px-4 py-3">{item.Location || "-"}</td>
                           <td className="px-4 py-3">{item.Title || "-"}</td>
-                          <td className="px-4 py-3">{item.Description || "-"}</td>
+                          <td className="px-4 py-3">
+                            {item.Description || "-"}
+                          </td>
                           <td className="px-4 py-3">{item.Severity || "-"}</td>
                           <td className="px-4 py-3">{item.CVSS || "-"}</td>
-                          <td className="px-4 py-3">{item.Reference_URL || "-"}</td>
-                          <td className="px-4 py-3">{(item.EPSS * 100).toFixed(2) + "%" || "-"}</td>
+                          <td className="px-4 py-3">
+                            {item.Reference_URL || "-"}
+                          </td>
+                          <td className="px-4 py-3">
+                            {(item.EPSS * 100).toFixed(2) + "%" || "-"}
+                          </td>
                           <td className="px-4 py-3">
                             {item.BusinessApplication?.name || "-"}
                           </td>
@@ -217,10 +234,13 @@ export function InfrastructureData() {
                               className="w-4 h-4 text-green-500 cursor-pointer"
                               onClick={() => handleExpectionModal(item)}
                             />
-                            <Eye onClick={() => {
-                              setExploitDetails(item.Exploit_Details);
-                              openModal()
-                            }} className="w-4 h-4 text-lime-400 cursor-pointer" />
+                            <Eye
+                              onClick={() => {
+                                setExploitDetails(item.Exploit_Details);
+                                openModal();
+                              }}
+                              className="w-4 h-4 text-lime-400 cursor-pointer"
+                            />
                           </td>
                         </tr>
                       ))}
@@ -258,10 +278,15 @@ export function InfrastructureData() {
           </div>
 
           {isModalOpen && (
-            <ExpectionModal setIsModalOpen={setIsModalOpen} creator={selectedId} />
+            <ExpectionModal
+              setIsModalOpen={setIsModalOpen}
+              creator={selectedId}
+            />
           )}
 
-          {isOpen && <ExploitDetail links={exploitDetails} onClose={closeModal} />}
+          {isOpen && (
+            <ExploitDetail links={exploitDetails} onClose={closeModal} />
+          )}
         </div>
       )}
     </Suspense>
