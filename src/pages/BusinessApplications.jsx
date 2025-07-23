@@ -161,7 +161,7 @@ export default function BusinessApplications() {
               }}
               className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center justify-center gap-2"
             >
-              <BiPlus className="h-6 w-6" />
+              <BiPlus className="h-6 w-6" />  
               Business Applications
             </button>
           </div>
@@ -237,7 +237,7 @@ export default function BusinessApplications() {
 
                         <td className="px-4 py-3">
                           {tenant.tages.length > 0
-                            ? tenant.tages?.map((item) => (
+                            ? tenant.tages?.map((item) => (              
                                 <p
                                   key={item._id}
                                   style={{ backgroundColor: item.tag_color }}
