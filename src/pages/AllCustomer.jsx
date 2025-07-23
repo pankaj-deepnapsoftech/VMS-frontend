@@ -5,7 +5,7 @@ import AllowedModal from "@/components/modal/AllowedModal";
 import { useAllEmployeeContext, useAuthContext } from "@/context";
 import { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaRegTrashAlt, FaTrash } from "react-icons/fa";
 import { AxiosHandler } from "@/config/AxiosConfig";
 import Pagination from "./Pagination";
 import Loader from "@/components/Loader/Loader";
@@ -13,6 +13,9 @@ import Addtanent from "./Addtanent";
 import { MdAssignmentAdd } from "react-icons/md";
 import AccessPartner from "@/modals/AccessPartner";
 import useAccessPartner from "@/hooks/AccessPartner";
+import { IoSearch } from "react-icons/io5";
+import NoDataFound from "@/components/NoDataFound";
+import { RiEdit2Line } from "react-icons/ri";
 
 export default function AllCustomer() {
   const { token } = useAuthContext();
@@ -84,15 +87,13 @@ export default function AllCustomer() {
         <Loader />
       ) : (
         <div className="min-h-screen py-10">
-          <div className="max-w-screen px-4 h-fit border-[#6B728033] flex items-center gap-4 backdrop-blur-md bg-[#6B728033]  rounded-lg mx-5">
-            <input
-              type="text"
-              className="bg-[#23252750] backdrop-blur-md py-2 w-1/3 text-white px-4 rounded-md"
-              placeholder="Search Tenants..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-
+          <div className="max-w-screen px-4 h-fit border-[#6B728033] flex items-center gap-4 backdrop-blur-md rounded-lg mx-5">
+            <div className="w-full">
+              <h2 className="text-2xl font-semibold text-white">All Tenants</h2>
+              <span className="text-subtext text-sm">
+                Manage all tenants
+              </span>
+            </div>
             <div className="flex w-full justify-end py-4">
               <button
                 onClick={() => {
@@ -107,7 +108,7 @@ export default function AllCustomer() {
             </div>
           </div>
 
-          <div className="m-6 p-2 bg-tablecolor shadow-lg rounded-lg">
+          {/* <div className="m-6 p-2 bg-tablecolor shadow-lg rounded-lg">
             <div>
               <div className="mt-6 bg-[#0c1120] overflow-x-auto custom-scrollbar text-sm text-white">
                 {filteredTenants.length < 1 ? (
@@ -172,7 +173,108 @@ export default function AllCustomer() {
                 hasNextPage={tenants.length === 10}
               />
             </div>
-          </div>
+          </div> */}
+
+           <div className="w-full  min-h-screen p-6">
+                      <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
+                        {/* Header */}
+                        <div className="px-6 py-4 border-b border-gray-700 relative">
+                          <div className="relative">
+                            <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
+                            <input
+                              type="search"
+                              placeholder="Search users..."
+                              value={searchQuery}
+                              onChange={(e) => setSearchQuery(e.target.value)}
+                              className="bg-input backdrop-blur-md py-2 w-1/3 text-white ps-7 pe-3 rounded-md "
+                            />
+                          </div>
+                        </div>
+          
+                        {/* Table */}
+                        {filteredTenants?.length < 1 ? (
+                          <NoDataFound />
+                        ) : (
+                          <div className="overflow-x-auto custom-scrollbar w-full">
+                            <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+                              <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
+                                <tr>
+                                  {[
+                                    "Company Name",
+                                    "Website URL",
+                                    "Employee Count",
+                                    "Country",
+                                    "State",
+                                    "City",
+                                    "Industry",
+                                    "Risk Appetite",
+                                    "Actions",
+                                  ].map((header) => (
+                                    <th
+                                      key={header}
+                                      className="px-4 py-3 border-b border-gray-600 font-medium"
+                                    >
+                                      {header}
+                                    </th>
+                                  ))}
+                                </tr>
+                              </thead>
+                              <tbody className="divide-y divide-gray-700">
+                                {filteredTenants.map((tenant, index) => (
+                                  <tr
+                                    key={tenant._id}
+                                    className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
+                                  >
+                                    <td className="px-4 py-3">{tenant.company_name}</td>
+                                    <td className="px-4 py-3 capitalize">{tenant.Website_url}</td>
+                                    <td className="px-4 py-3 capitalize">{tenant.Employee_count}</td>
+                                    <td className="px-4 py-3">{tenant.Country}</td>
+                                    <td className="px-4 py-3">{tenant.State}</td>
+                                    <td className="px-4 py-3">
+                                      {tenant.City}
+                                    </td>
+                                    <td className="px-4 py-3">
+                                      {tenant.Industry}
+                                    </td>
+                                    <td className="px-4 py-3">
+                                      {tenant.Risk_Apetite}
+                                    </td>
+                                    
+                                    <td className="px-4 py-3 flex gap-2">
+                                      <button
+                                        onClick={() => DeleteData(tenant?._id)}
+                                        title="Delete"
+                                        className="text-subtext hover:text-subTextHover"
+                                      >
+                                        <FaRegTrashAlt className="w-5 h-5" />
+                                      </button>
+                                      <button
+                                        onClick={() => {
+                                setEditTable(tenant);
+                                setIsModalOpen(true);
+                              }}
+                                        title="Edit"
+                                        className="text-subtext hover:text-blue-700"
+                                      >
+                                        <RiEdit2Line className="w-5 h-5" />
+                                      </button>
+                                    </td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        )}
+          
+                        {/* Footer */}
+                        <Pagination
+                          page={page}
+                          setPage={setPage}
+                          hasNextPage={filteredTenants.length === 10}
+                          total={filteredTenants.length}
+                        />
+                      </div>
+                    </div>   
         </div>
       )}
 

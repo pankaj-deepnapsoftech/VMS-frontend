@@ -148,16 +148,16 @@ export const products = [
         icon: MdOutlinePendingActions,
       },
       {
-        title: "Application Vulnerability",
+        title: "Application Dashboard",
         route: "/application-vulnerability",
         icon: MdOutlineMiscellaneousServices,
       },
       {
-        title: "Infrastructure Vulnerability",
+        title: "Infrastructure Dashboard",
         route: "/infrastructure-vulnerability",
         icon: GrVulnerability,
       },
-      { title: "Exceptions", route: "/exceptions", icon: AiOutlineException },
+      { title: "Exceptions Dashboard", route: "/exceptions", icon: AiOutlineException },
       {
         title: "Pending Exceptions",
         route: "/pending-exception",

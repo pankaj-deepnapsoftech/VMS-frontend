@@ -270,13 +270,12 @@ export default function BusinessApplications() {
             </div>
           </div>
 
-
           <Pagination
-                page={currentPage}
-                setPage={setCurrentPage}
-                hasNextPage={filteredTenants.length === 10}
-                total={filteredTenants.length}
-              />
+            page={currentPage}
+            setPage={setCurrentPage}
+            hasNextPage={filteredTenants.length === 10}
+            total={filteredTenants.length}
+          />
 
           {/* <div className="flex justify-between items-center mt-6">
             <button
@@ -568,6 +567,9 @@ export default function BusinessApplications() {
                       </option>
                     ))}
                   </select>
+                  {errors.type && touched.type && (
+                    <p className="text-red-400">{errors.asset}</p>
+                  )}
                 </div>
 
                 <div className="space-y-2">

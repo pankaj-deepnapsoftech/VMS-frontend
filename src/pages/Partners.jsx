@@ -13,10 +13,14 @@ import {
   FaEdit,
   FaGlobe,
   FaMapMarkedAlt,
+  FaRegTrashAlt,
   FaTrash,
 } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import Pagination from "./Pagination";
+import { RiEdit2Line } from "react-icons/ri";
+import NoDataFound from "@/components/NoDataFound";
+import { IoSearch } from "react-icons/io5";
 
 const Partners = () => {
   const [isLoading, setLoading] = useState(false);
@@ -104,20 +108,19 @@ const Partners = () => {
       ) : (
         <section className="p-4 sm:p-6 md:p-8 h-screen md:h-screen shadow-lg overflow-y-auto">
           {/* Header */}
-          <div className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-[#6B728033] border border-[#6B728033] rounded-md backdrop-blur-md p-4 mb-6">
-            <input
-              type="text"
-              placeholder="Search..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full sm:w-1/2 bg-zinc-900 text-white placeholder-gray-400 border border-gray-600 rounded-md px-4 py-2 focus:outline-none transition duration-200"
-            />
+          <div className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-md backdrop-blur-md p-4 mb-6">
+            <div className="w-full">
+              <h2 className="text-2xl font-semibold text-white">
+                All Partners
+              </h2>
+              <span className="text-subtext text-sm">Manage all partners</span>
+            </div>
             <button
               onClick={() => {
                 setModal(true);
                 setEdittable(null);
               }}
-              className="w-full sm:w-auto px-5 py-2.5 bg-button text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-md"
+              className="flex items-center gap-2 px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium whitespace-nowrap"
             >
               <BiPlus className="h-5 w-5" />
               Add Partners
@@ -165,7 +168,7 @@ const Partners = () => {
                       </p>
                     )}
                   </div>
- 
+
                   <div>
                     <InputField
                       onChange={handleChange}
@@ -260,7 +263,7 @@ const Partners = () => {
           </div>
 
           {/* Table */}
-          <div className="mt-6 bg-[#0c1120] overflow-x-auto text-sm text-white rounded-md">
+          {/* <div className="mt-6 bg-[#0c1120] overflow-x-auto text-sm text-white rounded-md">
             {partnersData?.length < 1 ? (
               <div className="text-center py-6 text-gray-400">
                 No matching records found.
@@ -325,12 +328,97 @@ const Partners = () => {
                 </tbody>
               </table>
             )}
+          </div> */}
+
+          <div className="w-full  min-h-screen p-6">
+            <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
+              {/* Header */}
+              <div className="px-6 py-4 border-b border-gray-700 relative">
+                <div className="relative">
+                  <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
+                  <input
+                    type="search"
+                    placeholder="Search users..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="bg-input backdrop-blur-md py-2 w-1/3 text-white ps-7 pe-3 rounded-md "
+                  />
+                </div>
+              </div>
+
+              {/* Table */}
+              {partnersData?.length < 1 ? (
+                <NoDataFound />
+              ) : (
+                <div className="overflow-x-auto custom-scrollbar w-full">
+                  <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+                    <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
+                      <tr>
+                        {[
+                          "Company Name",
+                          "Website URL",
+                          "Country",
+                          "State",
+                          "City",
+                          "Actions",
+                        ].map((header) => (
+                          <th
+                            key={header}
+                            className="px-4 py-3 border-b border-gray-600 font-medium"
+                          >
+                            {header}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-700">
+                      {partnersData.map((tenant, index) => (
+                        <tr
+                          key={tenant._id}
+                          className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
+                        >
+                          <td className="px-4 py-3">{tenant.company_name}</td>
+                          <td className="px-4 py-3 capitalize">
+                            {tenant.website_url}
+                          </td>
+                          <td className="px-4 py-3">{tenant.country}</td>
+                          <td className="px-4 py-3">{tenant.state}</td>
+                          <td className="px-4 py-3">{tenant.city}</td>
+
+                          <td className="px-4 py-3 flex gap-2">
+                            <button
+                              onClick={() => DeletePartnersData(tenant._id)}
+                              title="Delete"
+                              className="text-subtext hover:text-subTextHover"
+                            >
+                              <FaRegTrashAlt className="w-5 h-5" />
+                            </button>
+                            <button
+                              onClick={() => {
+                                setEdittable(tenant);
+                                setModal(true);
+                              }}
+                              title="Edit"
+                              className="text-subtext hover:text-blue-700"
+                            >
+                              <RiEdit2Line className="w-5 h-5" />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+
+              {/* Footer */}
+              <Pagination
+                page={page}
+                setPage={setPage}
+                hasNextPage={partnersData.length === 10}
+              />
+            </div>
           </div>
-            <Pagination
-              page={page}
-              setPage={setPage}
-              hasNextPage={partnersData.length === 10}
-            />
         </section>
       )}
     </>

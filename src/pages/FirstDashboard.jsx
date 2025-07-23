@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 import { useAuthContext } from "@/context";
 import { useState, useEffect, useRef } from "react";
-import { FiDatabase } from "react-icons/fi";
+import { FiDatabase, FiSettings } from "react-icons/fi";
 import { products } from "@/constants/static.data";
 import "./animation.css";
+import { GrShieldSecurity } from "react-icons/gr";
 
 // Card component with gradient border
 const Card = ({ children, HandleClick, borderColor, bg, animate }) => {
@@ -164,11 +165,11 @@ const Dashboard = () => {
           <div className="w-full sm:w-1/2 lg:w-1/3 2xl:w-[23%] aspect-[4/3] rounded-xl bg-gradient-to-r from-[#9b1c4d] to-[#df4156] p-6 shadow-md flex flex-col justify-between">
             <div>
               <div className="w-12 h-12 rounded-full bg-[#ffffff3d] flex items-center justify-center">
-                <FiDatabase size={24} color="white" />
+                <GrShieldSecurity  size={24} color="white" />
               </div>
               <div className="pt-4">
                 <h2 className="text-white text-lg font-semibold">
-                  Asset Inventory
+                  Risk Operation Center (ROC)
                 </h2>
                 <p className="text-gray-200 text-sm mt-1">Active Plan.....</p>
               </div>
