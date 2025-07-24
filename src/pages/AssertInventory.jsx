@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
-import {  X, Boxes } from "lucide-react";
+import { X, Boxes } from "lucide-react";
 import { BiPlus } from "react-icons/bi";
 import { useFormik } from "formik";
 import { InfraAssetvalidation } from "@/Validation/InfrastructureAssetvalidation";
-import { useAuthContext, useInfraAssetContext, useTagsContext} from "@/context";
+import {
+  useAuthContext,
+  useInfraAssetContext,
+  useTagsContext,
+} from "@/context";
 import * as XLSX from "xlsx";
 import { useLocation } from "react-router-dom";
 import CustomSelection from "@/components/customSelection/CustomSelection";
@@ -35,7 +39,6 @@ export default function TenantDashboard() {
   } = useInfraAssetContext();
   const [editable, setEditable] = useState(null);
 
-
   const filteredTenants = infraAssetdata.filter((tenant) =>
     tenant.asset_hostname.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -47,6 +50,7 @@ export default function TenantDashboard() {
     handleBlur,
     handleChange,
     handleSubmit,
+    handleReset,
     setFieldValue,
   } = useFormik({
     initialValues: editable || {
@@ -57,8 +61,7 @@ export default function TenantDashboard() {
       service_role: null,
       exposure: "",
       hosting: "",
-      data_sensitivity:""
-
+      data_sensitivity: "",
     },
     validationSchema: InfraAssetvalidation,
     enableReinitialize: true,
@@ -72,10 +75,9 @@ export default function TenantDashboard() {
         CreateInfraAsset({ ...value, creator: tenant });
       }
       setmodel(false);
+      handleReset();
     },
   });
-
-
 
   const handleFileChange = (e) => {
     setSelectedFiles(e.target.files[0]);
@@ -112,9 +114,10 @@ export default function TenantDashboard() {
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="w-full px-6  my-5 py-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            
             <div>
-              <h2 className="text-2xl font-semibold text-white">All InfraStructure Asset</h2>
+              <h2 className="text-2xl font-semibold text-white">
+                All InfraStructure Asset
+              </h2>
               <span className="text-subtext text-sm">
                 Manage your infraStructure asset
               </span>
@@ -180,7 +183,6 @@ export default function TenantDashboard() {
                           "Data Sensitivity",
                           "Service Role",
                           "Actions",
-
                         ].map((header) => (
                           <th
                             key={header}
@@ -198,36 +200,59 @@ export default function TenantDashboard() {
                           className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
                         >
                           <td className="px-4 py-3">{index + 1}</td>
-                          <td className="px-4 py-3 ">{tenant.asset_hostname || "-"}</td>
-                          <td className="px-4 py-3 ">{tenant.asset_ip || "-"}</td>
-                          <td className="px-4 py-3">{tenant.modify_criticality || "-"}</td>
-                          <td className="px-4 py-3">{tenant.asset_class || "0"}</td>
-                          <td className="px-4 py-3">{tenant.exposure || "0"} </td>
-                          <td className="px-4 py-3">{tenant.hosting || "0"} </td>
-                          <td className="px-4 py-3">{tenant.data_sensitivity || "0"} </td>
-                         
+                          <td className="px-4 py-3 ">
+                            {tenant.asset_hostname || "-"}
+                          </td>
+                          <td className="px-4 py-3 ">
+                            {tenant.asset_ip || "-"}
+                          </td>
+                          <td className="px-4 py-3">
+                            {tenant.modify_criticality || "-"}
+                          </td>
+                          <td className="px-4 py-3">
+                            {tenant.asset_class || "0"}
+                          </td>
+                          <td className="px-4 py-3">
+                            {tenant.exposure || "0"}{" "}
+                          </td>
+                          <td className="px-4 py-3">
+                            {tenant.hosting || "0"}{" "}
+                          </td>
+                          <td className="px-4 py-3">
+                            {tenant.data_sensitivity || "0"}{" "}
+                          </td>
+
                           <td className="py-4 px-6 text-white flex flex-wrap gap-2 w-40">
                             {tenant?.service_role?.length > 0
                               ? tenant?.service_role?.map((item) => (
-                                <p
-                                  key={item._id}
-                                  style={{ backgroundColor: item.tag_color }}
-                                  className="px-3 py-1 rounded-full"
-                                >
-                                  {item.tag_name}
-                                </p>
-                              ))
+                                  <p
+                                    key={item._id}
+                                    style={{ backgroundColor: item.tag_color }}
+                                    className="px-3 py-1 rounded-full"
+                                  >
+                                    {item.tag_name}
+                                  </p>
+                                ))
                               : "-"}
                           </td>
 
-                           <td className="px-4 py-3 space-x-4">
+                          <td className="px-4 py-3 space-x-4">
                             <button
-                              onClick={() => DeleteInfraAsset(tenant._id)}
+                              onClick={() => {
+                                if (
+                                  window.confirm(
+                                    "Are you sure you want to delete this item?"
+                                  )
+                                ) {
+                                  DeleteInfraAsset(tenant._id);
+                                }
+                              }}
                               title="Delete"
                               className="text-subtext hover:text-subTextHover"
                             >
                               <FaRegTrashAlt className="w-5 h-5" />
                             </button>
+
                             <button
                               onClick={() => {
                                 setEditable(tenant);
@@ -239,9 +264,6 @@ export default function TenantDashboard() {
                               <RiEdit2Line className="w-5 h-5" />
                             </button>
                           </td>
-
-
-
                         </tr>
                       ))}
                     </tbody>
@@ -258,8 +280,6 @@ export default function TenantDashboard() {
               />
             </div>
           </div>
-
-  
         </div>
       </div>
 
@@ -480,7 +500,14 @@ export default function TenantDashboard() {
                     <option value={""} disabled selected>
                       select value
                     </option>
-                   {AllTags.length > 0  && AllTags.filter((item)=>item.related === "Data Sensitivity").map((item)=> <option key={item._id} value={item.tag_score}>{item.tag_name}</option>)}
+                    {AllTags.length > 0 &&
+                      AllTags.filter(
+                        (item) => item.related === "Data Sensitivity"
+                      ).map((item) => (
+                        <option key={item._id} value={item.tag_score}>
+                          {item.tag_name}
+                        </option>
+                      ))}
                   </select>
                   {errors.data_sensitivity && touched.data_sensitivity && (
                     <p className="text-red-400">{errors.data_sensitivity}</p>
@@ -510,13 +537,15 @@ export default function TenantDashboard() {
                   )}
                 </div>
 
-                {values.asset_class === '6' && <CustomSelection
-                  setFieldvalue={setFieldValue}
-                  isError={errors.tages && touched.tages}
-                  error={errors.tages}
-                  handleBlur={() => handleBlur("service_role")}
-                  alreadySelected={editable && editable.tages}
-                />}
+                {values.asset_class === "6" && (
+                  <CustomSelection
+                    setFieldvalue={setFieldValue}
+                    isError={errors.tages && touched.tages}
+                    error={errors.tages}
+                    handleBlur={() => handleBlur("service_role")}
+                    alreadySelected={editable && editable.tages}
+                  />
+                )}
               </div>
 
               {/* Action Buttons */}
