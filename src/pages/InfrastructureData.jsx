@@ -190,7 +190,7 @@ export function InfrastructureData() {
                           </td>
                           <td className="px-4 py-3">
                             {item.exploit_complexity || "-"}
-                          </td>
+                          </td>                             
                           <td className="px-4 py-3">{item.Location || "-"}</td>
                           <td className="px-4 py-3">{item.Title || "-"}</td>
                           <td className="px-4 py-3">
