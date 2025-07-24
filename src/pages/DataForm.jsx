@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import Loader from "@/components/Loader/Loader";
 import { AssetDataContext } from "@/context/Asset Data Context/AssetDataContex";
 import DataFormSchema from "@/Validation/DataFormValidation";

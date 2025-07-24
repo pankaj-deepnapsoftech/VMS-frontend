@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { FaCheckCircle, FaClock, FaPlug } from "react-icons/fa";
 import { MdError } from "react-icons/md";

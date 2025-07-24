@@ -22,7 +22,7 @@ const PendingAssessment = () => {
             )
             : [];
 
-    // Headers for the Add form (show all fields)
+    
     const addFormHeaders = tableHeaders.filter(
         (key) => key !== "createdAt" && key !== "updatedAt" && key !== "creator_id"
     );

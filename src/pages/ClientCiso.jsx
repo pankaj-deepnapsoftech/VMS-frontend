@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-no-undef */
-/* eslint-disable no-undef */
 import Loader from "@/components/Loader/Loader";
 import AllowedModal from "@/components/modal/AllowedModal";
 import NoDataFound from "@/components/NoDataFound";

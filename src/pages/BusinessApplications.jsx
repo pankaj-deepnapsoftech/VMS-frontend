@@ -207,7 +207,7 @@ export default function BusinessApplications() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-700">
-                    {filteredTenants.map((tenant, index) => (
+                    {filteredTenants.map((tenant) => (
                       <tr
                         key={tenant._id}
                         className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"

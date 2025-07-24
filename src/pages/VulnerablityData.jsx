@@ -20,7 +20,6 @@ export function VulnerabilityData() {
 
   useEffect(() => {
     TopVulnerablilty();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 

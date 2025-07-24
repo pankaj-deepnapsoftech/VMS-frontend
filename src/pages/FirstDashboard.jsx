@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useAuthContext } from "@/context";
 import { useState, useEffect, useRef } from "react";
 import { FiDatabase, FiSettings } from "react-icons/fi";

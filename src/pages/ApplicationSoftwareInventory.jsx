@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-
 import Loader from "@/components/Loader/Loader";
 import { ApplicationSoftwareInventoryContext } from "@/context/ApplicationSoftwareInventoryContext/ApplicationSoftwareInventoryContext";
 import { ApplicationSoftwareSchema } from "@/Validation/ApplicationSoftwareInventoryValidation";
