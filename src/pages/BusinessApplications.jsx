@@ -6,15 +6,11 @@ import { useAuthContext, useInfraAssetContext } from "@/context";
 import { BusinessApplicationValidation } from "@/Validation/BusinessApp.validation";
 import axios from "axios";
 import * as XLSX from "xlsx";
-import CustomSelection from "@/components/customSelection/CustomSelection";
 import Pagination from "./Pagination";
-import { RiEdit2Line } from "react-icons/ri";
-import { FaRegTrashAlt } from "react-icons/fa";
 import NoDataFound from "@/components/NoDataFound";
 import { IoSearch } from "react-icons/io5";
 
 export default function BusinessApplications() {
-  const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [model, setmodel] = useState(false);
@@ -47,7 +43,6 @@ export default function BusinessApplications() {
     handleBlur,
     handleChange,
     handleSubmit,
-    setFieldValue,
   } = useFormik({
     initialValues: editable || {
       name: "",
@@ -58,7 +53,6 @@ export default function BusinessApplications() {
       type: "",
       applicationUrl: "",
       modifyCriticality: "",
-      tages: null,
       asset: "",
     },
     validationSchema: BusinessApplicationValidation,
@@ -201,7 +195,6 @@ export default function BusinessApplications() {
                         "Application URL",
                         "Modify Criticality",
                         "Infrastructure Asset",
-                        "Tags",
                         "Actions",
                       ].map((header) => (
                         <th
@@ -233,21 +226,8 @@ export default function BusinessApplications() {
                         <td className="px-4 py-3">
                           {tenant?.modifyCriticality}
                         </td>
-                        <td className="px-4 py-3">{tenant?.asset?.asset_ip}</td>
+                        <td className="px-4 py-3">{tenant?.asset?.asset_hostname}</td>
 
-                        <td className="px-4 py-3">
-                          {tenant.tages.length > 0
-                            ? tenant.tages?.map((item) => (              
-                                <p
-                                  key={item._id}
-                                  style={{ backgroundColor: item.tag_color }}
-                                  className="px-3 py-1 rounded-full"
-                                >
-                                  {item.tag_name}
-                                </p>
-                              ))
-                            : "-"}
-                        </td>
                         <td className="py-3 px-4">
                           <div className="flex space-x-2">
                             <button className="p-1 text-blue-400 hover:text-blue-300">
@@ -591,13 +571,6 @@ export default function BusinessApplications() {
                   )}
                 </div>
 
-                <CustomSelection
-                  setFieldvalue={setFieldValue}
-                  isError={touched.tages && errors.tages}
-                  error={errors.tages}
-                  handleBlur={() => handleBlur("tages")}
-                  alreadySelected={editable && editable.tages}
-                />
               </div>
 
               {/* Action Buttons */}
