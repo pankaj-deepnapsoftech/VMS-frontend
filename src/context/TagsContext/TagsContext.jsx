@@ -67,7 +67,7 @@ const TagsContextProvider = ({ children }) => {
     if(token){
       getAllTags();
     }
-  }, []);
+  }, [token]);
 
   return <TagsContext.Provider value={{createTags,GetTages,Tages,UpdateTags,DeleteTags,AllTags}}>{children}</TagsContext.Provider>;
 };

@@ -17,6 +17,7 @@ export const InfraAssetvalidation = object().shape({
   asset_class: string().required("Asset Class is required "),
   exposure: string().required("Exposure is required "),
   hosting: string().required("Hosting is required "),
+  data_sensitivity: string().required("Data Sensitivity is required "),
 });
 
 

@@ -70,8 +70,14 @@ export function InfrastructureData() {
     }
   };
 
-  const calculateARS = (data)=> {
-    console.log("this is just for testing ARS",data)
+  const calculateARS = (data) => {
+    let total = data.asset_class + data.data_sensitivity + data.exposure + data.hosting
+    if (!data.service_role) {
+      total += 0
+    }
+
+    console.log("this is total points",total)
+    console.log("this is just for testing ARS", data)
   }
 
   useEffect(() => {

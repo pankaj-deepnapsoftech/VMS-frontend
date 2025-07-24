@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { ExternalLink, Trash2, Edit, X, Boxes } from "lucide-react";
+import {  X, Boxes } from "lucide-react";
 import { BiPlus } from "react-icons/bi";
 import { useFormik } from "formik";
 import { InfraAssetvalidation } from "@/Validation/InfrastructureAssetvalidation";
-import { useAuthContext, useInfraAssetContext } from "@/context";
+import { useAuthContext, useInfraAssetContext, useTagsContext} from "@/context";
 import * as XLSX from "xlsx";
 import { useLocation } from "react-router-dom";
 import CustomSelection from "@/components/customSelection/CustomSelection";
@@ -23,6 +23,8 @@ export default function TenantDashboard() {
 
   const [model, setmodel] = useState(false);
   const { token } = useAuthContext();
+  const { AllTags } = useTagsContext();
+
   const {
     CreateInfraAsset,
     GetInfraAsset,
@@ -55,6 +57,8 @@ export default function TenantDashboard() {
       service_role: null,
       exposure: "",
       hosting: "",
+      data_sensitivity:""
+
     },
     validationSchema: InfraAssetvalidation,
     enableReinitialize: true,
@@ -173,6 +177,7 @@ export default function TenantDashboard() {
                           "Asset Class",
                           "Exposure",
                           "Hosting",
+                          "Data Sensitivity",
                           "Service Role",
                           "Actions",
 
@@ -196,11 +201,12 @@ export default function TenantDashboard() {
                           <td className="px-4 py-3 ">{tenant.asset_hostname || "-"}</td>
                           <td className="px-4 py-3 ">{tenant.asset_ip || "-"}</td>
                           <td className="px-4 py-3">{tenant.modify_criticality || "-"}</td>
-                          <td className="px-4 py-3">{tenant.asset_class || "-"}</td>
+                          <td className="px-4 py-3">{tenant.asset_class || "0"}</td>
                           <td className="px-4 py-3">{tenant.exposure || "0"} </td>
-                          <td className="px-4 py-3">{tenant.hosting || "-"} </td>
+                          <td className="px-4 py-3">{tenant.hosting || "0"} </td>
+                          <td className="px-4 py-3">{tenant.data_sensitivity || "0"} </td>
                          
-                          <td className="py-4 px-6 text-white flex flex-wrap gap-1 w-40">
+                          <td className="py-4 px-6 text-white flex flex-wrap gap-2 w-40">
                             {tenant?.service_role?.length > 0
                               ? tenant?.service_role?.map((item) => (
                                 <p
@@ -214,7 +220,7 @@ export default function TenantDashboard() {
                               : "-"}
                           </td>
 
-                           <td className="px-4 py-3">
+                           <td className="px-4 py-3 space-x-4">
                             <button
                               onClick={() => DeleteInfraAsset(tenant._id)}
                               title="Delete"
@@ -456,6 +462,28 @@ export default function TenantDashboard() {
                   </select>
                   {errors.exposure && touched.exposure && (
                     <p className="text-red-400">{errors.exposure}</p>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-slate-300">
+                    Data Sensitivity
+                  </label>
+                  <select
+                    type="text"
+                    placeholder="What is your title?"
+                    className="w-full bg-slate-800 border border-slate-600 rounded-md px-3 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-slate-500 transition-colors"
+                    name="data_sensitivity"
+                    value={values.data_sensitivity}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                  >
+                    <option value={""} disabled selected>
+                      select value
+                    </option>
+                   {AllTags.length > 0  && AllTags.filter((item)=>item.related === "Data Sensitivity").map((item)=> <option key={item._id} value={item.tag_score}>{item.tag_name}</option>)}
+                  </select>
+                  {errors.data_sensitivity && touched.data_sensitivity && (
+                    <p className="text-red-400">{errors.data_sensitivity}</p>
                   )}
                 </div>
                 <div className="space-y-2">
