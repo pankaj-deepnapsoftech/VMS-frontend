@@ -270,4 +270,9 @@ export const products = [
       { title: "Tag Config", route: "/tags", icon: MdInventory2 },
     ],
   },
+  {
+    title: "ROC",
+    desc: "Risk Operation Center",
+    allowedPath: [{ title: "Reports", route: "/reports", icon: TbReport }],
+  }
 ];

@@ -11,9 +11,8 @@ const Card = ({ children, HandleClick, borderColor, bg, animate }) => {
   return (
     <div
       onClick={HandleClick}
-      className={`rounded-xl w-full h-[200px] transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-xl cursor-pointer  ${
-        bg ? "bg-gradient-to-r " + bg : ""
-      } ${animate}`}
+      className={`rounded-xl w-full h-[200px] transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-xl cursor-pointer  ${bg ? "bg-gradient-to-r " + bg : ""
+        } ${animate}`}
       style={{
         border: `2px solid ${borderColor}`,
       }}
@@ -31,6 +30,8 @@ const Dashboard = () => {
   const dropdownRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
+
+  console.log(filteredProducts)
 
   const HandleClick = (item) => {
     if (
@@ -162,10 +163,13 @@ const Dashboard = () => {
         </div>
 
         <div className="w-full md:w-[60%] flex flex-col gap-6 pt-10 md:pt-0">
-          <div className="w-full sm:w-1/2 lg:w-1/3 2xl:w-[23%] aspect-[4/3] rounded-xl bg-gradient-to-r from-[#9b1c4d] to-[#df4156] p-6 shadow-md flex flex-col justify-between">
+          <div onClick={() => {
+            sessionStorage.setItem("VROC", "ROC");
+            setGetDataFromSession("ROC");
+          }} className="w-full cursor-pointer sm:w-1/2 lg:w-1/3 2xl:w-[23%] aspect-[4/3] rounded-xl bg-gradient-to-r from-[#9b1c4d] to-[#df4156] p-6 shadow-md flex flex-col justify-between">
             <div>
               <div className="w-12 h-12 rounded-full bg-[#ffffff3d] flex items-center justify-center">
-                <GrShieldSecurity  size={24} color="white" />
+                <GrShieldSecurity size={24} color="white" />
               </div>
               <div className="pt-4">
                 <h2 className="text-white text-lg font-semibold">
@@ -179,61 +183,63 @@ const Dashboard = () => {
           <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
             {showModal
               ? filteredProducts.map((item, index) => (
-                  <>
-                    <Card
-                      key={index}
-                      HandleClick={() => HandleClick(item.title)}
-                      borderColor={item.borderColor}
-                      bg={item.bg}
-                      animate="animate-slideInX"
-                    >
-                      <div className="flex flex-col items-start gap-3">
-                        <div className="w-10 h-10 bg-[#ffffff1c] rounded-full flex items-center justify-center text-white text-xl">
-                          {typeof item.icon === "string" ? (
-                            <img
-                              src={item.icon}
-                              alt="icon"
-                              className="w-5 h-5"
-                            />
-                          ) : (
-                            item.icon
-                          )}
-                        </div>
+                <>
+                  <Card
+                    key={index}
+                    HandleClick={() => HandleClick(item.title)}
+                    borderColor={item.borderColor}
+                    bg={item.bg}
+                    animate="animate-slideInX"
+                  >
+                    <div className="flex flex-col items-start gap-3">
+                      <div className="w-10 h-10 bg-[#ffffff1c] rounded-full flex items-center justify-center text-white text-xl">
+                        {typeof item.icon === "string" ? (
+                          <img
+                            src={item.icon}
+                            alt="icon"
+                            className="w-5 h-5"
+                          />
+                        ) : (
+                          item.icon
+                        )}
+                      </div>
 
-                        <h3 className="text-sm font-semibold text-white">
-                          {item.title}
-                        </h3>
-                      </div>
-                    </Card>
-                  </>
-                ))
+                      <h3 className="text-sm font-semibold text-white">
+                        {item.title}
+                      </h3>
+                    </div>
+                  </Card>
+                </>
+              ))
               : products
-                  .filter(
-                    (item) =>
-                      !(
-                        item.title.includes("AI-VA") ||
-                        item.title.includes("Vulnerability Intelligence") ||
-                        item.title.includes("GRC") ||
-                        item.title.includes("TPRM")
-                      )
-                  )
-                  .map((item, index) => (
-                    <Card
-                      key={index}
-                      HandleClick={() => HandleClick(item.title)}
-                      borderColor={item.borderColor}
-                      title={item.title}
-                    >
-                      <div className="flex flex-col items-start  gap-3">
-                        <div className="w-10 h-10 bg-[#ffffff1c] rounded-full flex items-center justify-center text-white text-xl">
-                          <img src={item.icon} alt="icon" />
-                        </div>
-                        <h3 className="text-sm font-semibold text-white">
-                          {item.title}
-                        </h3>
+                .filter(
+                  (item) =>
+                    !(
+                      item.title.includes("AI-VA") ||
+                      item.title.includes("Vulnerability Intelligence") ||
+                      item.title.includes("GRC") ||
+                      item.title.includes("TPRM") ||
+                      item.title.includes("ROC")
+
+                    )
+                )
+                .map((item, index) => (
+                  <Card
+                    key={index}
+                    HandleClick={() => HandleClick(item.title)}
+                    borderColor={item.borderColor}
+                    title={item.title}
+                  >
+                    <div className="flex flex-col items-start  gap-3">
+                      <div className="w-10 h-10 bg-[#ffffff1c] rounded-full flex items-center justify-center text-white text-xl">
+                        <img src={item.icon} alt="icon" />
                       </div>
-                    </Card>
-                  ))}
+                      <h3 className="text-sm font-semibold text-white">
+                        {item.title}
+                      </h3>
+                    </div>
+                  </Card>
+                ))}
           </div>
         </div>
       </div>

@@ -154,7 +154,7 @@ export function InfrastructureData() {
                           "Asset",
                           "Proof of Concept",
                           "Tenant",
-                          "ARS",
+                          "ACS",
                           "Actions",
                         ].map((header) => (
                           <th
