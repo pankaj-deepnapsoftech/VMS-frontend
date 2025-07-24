@@ -157,7 +157,11 @@ export const products = [
         route: "/infrastructure-vulnerability",
         icon: GrVulnerability,
       },
-      { title: "Exceptions Dashboard", route: "/exceptions", icon: AiOutlineException },
+      {
+        title: "Exceptions Dashboard",
+        route: "/exceptions",
+        icon: AiOutlineException,
+      },
       {
         title: "Pending Exceptions",
         route: "/pending-exception",
@@ -273,6 +277,9 @@ export const products = [
   {
     title: "ROC",
     desc: "Risk Operation Center",
-    allowedPath: [{ title: "Reports", route: "/reports", icon: TbReport }],
-  }
+    allowedPath: [
+      { title: "Executive Dashboard", route: "/executivedashboard", icon: BiSolidDashboard },
+      { title: "Risk Quantification", route: "/riskoperation", icon: AiOutlineException },
+    ],
+  },
 ];

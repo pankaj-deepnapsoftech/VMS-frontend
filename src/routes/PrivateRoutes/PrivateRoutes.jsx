@@ -30,6 +30,8 @@ import VulnerabilityForm from "@/pages/AddVulnerabilityData";
 import ExceptionTable from "@/pages/ExceptionTable";
 import TagsPage from "@/pages/TagConfig";
 import DemoDashboard from "@/pages/demo/Dashboard";
+import RiskOperation from "@/pages/RiskQuantification";
+import ExecutiveDashboard from "@/pages/ExecutiveDashboard";
 
 export const PrivateRoutes = [
   {
@@ -156,5 +158,13 @@ export const PrivateRoutes = [
   {
     path:"/demo",
     element:<DemoDashboard/>
+  },
+  {
+    path:"/riskoperation",
+    element:<RiskOperation/>
+  },
+  {
+    path:"/executivedashboard",
+    element:<ExecutiveDashboard/>
   }
 ];
