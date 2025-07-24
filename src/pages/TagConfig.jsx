@@ -90,7 +90,7 @@ export default function TagsPage() {
           </div>
 
           {/* Table */}
-          <div className="w-full  min-h-screen p-6">
+          <div className="w-full min-h-screen p-6">
             <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
               {/* Header */}
               <div className="px-6 py-4 border-b border-gray-700 relative">
