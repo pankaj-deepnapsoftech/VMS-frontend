@@ -127,7 +127,7 @@ export default function ExecutiveSummaryPage() {
               <h2 className="text-white text-xl font-semibold">
                 Executive Summary
               </h2>
-              <span className="text-white text-xl font-bold">...</span>
+              <span className="text-white/50 hover:text-white text-xl leading-none">...</span>
             </div>
 
             <div className="flex gap-x-3">
@@ -198,10 +198,12 @@ export default function ExecutiveSummaryPage() {
         <div className="flex flex-col md:flex-row gap-3">
           {/* Risk Score Overview */}
           <div className="bg-[#161d3d] text-white rounded-2xl p-4 w-[310px] h-[340px] shadow-md border border-gray-800">
-            <div className="flex justify-between items-center mb-2">
-              <h2 className="text-sm font-semibold">Risk Score Overview</h2>
-              <span className="text-xl font-bold">...</span>
-            </div>
+            <div className="flex justify-between items-start mb-4">
+            <h2 className="text-lg font-semibold">Risk Score Overview</h2>
+            <button className="text-white/50 hover:text-white text-xl leading-none">
+              ⋯
+            </button>
+          </div>
 
             <div className="w-28 h-28 mx-auto my-1">
               <CircularProgressbarWithChildren
@@ -230,9 +232,14 @@ export default function ExecutiveSummaryPage() {
 
           {/* SOC vs ROC Coverage */}
           <div className="bg-[#161d3d] text-white rounded-2xl p-4 w-full md:w-[340px] h-[340px] shadow-md border border-gray-800">
-            <h2 className="text-base font-semibold mb-4">
-              SOC vs ROC Coverage Comparison
-            </h2>
+            <div className="flex justify-between items-start mb-4">
+              <h2 className="text-lg font-semibold">
+                SOC vs ROC Coverage Comparison
+              </h2>
+              <button className="text-white/50 hover:text-white text-xl leading-none">
+                ⋯
+              </button>
+            </div>
             <div className="h-44">
               <Radar data={data} options={options} />
             </div>
@@ -250,7 +257,12 @@ export default function ExecutiveSummaryPage() {
 
           {/* Risk Heat Map */}
           <div className="bg-[#161d3d] p-6 h-[340px] rounded-md w-full max-w-6xl text-white font-sans">
-            <h2 className="text-lg font-semibold mb-6">Risk Heat Map</h2>
+            <div className="flex justify-between items-start mb-4">
+              <h2 className="text-lg font-semibold">Risk Heat Map</h2>
+              <button className="text-white/50 hover:text-white text-xl leading-none">
+                ⋯
+              </button>
+            </div>
 
             <div className="grid grid-cols-[150px_repeat(5,1fr)] gap-1 items-center">
               <div></div>
@@ -302,10 +314,14 @@ export default function ExecutiveSummaryPage() {
             </div>
           </div>
         </div>
-
-        <div className="bg-[#161d3d] border h-[500px] border-gray-800 p-6 rounded-md w-full max-w-6xl text-white mb-20 font-sans">
-          <h2 className="text-lg font-semibold mb-4">Top 10 Risk Indicators</h2>
-
+        {/* Risk Indicators */}
+        <div className="bg-[#161d3d] border h-[500px] border-gray-800 p-6 rounded-md w-full max-w-6xl text-white font-sans">
+          <div className="flex justify-between items-start mb-4">
+            <h2 className="text-lg font-semibold">Top 10 Risk Indicators</h2>
+            <button className="text-white/50 hover:text-white text-xl leading-none">
+              ⋯
+            </button>
+          </div>
           <div className="space-y-3 h-[20px">
             <div className="bg-[#242f49] rounded-md p-4 flex justify-between items-center">
               <div>
@@ -384,6 +400,98 @@ export default function ExecutiveSummaryPage() {
                   Exposure:{" "}
                   <span className="text-white font-semibold">$3.2M</span>
                 </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Asset Inventory */}
+        <div className="bg-[#161d3d] p-6 rounded-xl w-full h-[450px] mb-20 max-w-sm text-white font-sans">
+          <div className="flex justify-between items-start mb-4">
+            <h2 className="text-lg font-semibold">Asset Inventory</h2>
+            <button className="text-white/50 hover:text-white text-xl leading-none">
+              ⋯
+            </button>
+          </div>
+
+          <div className="flex justify-center items-center mb-2">
+            <div className="relative w-28 h-28">
+              <svg className="w-full h-full" viewBox="0 0 100 100">
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="46"
+                  stroke="#8B5CF6"
+                  strokeWidth="8"
+                  fill="none"
+                />
+              </svg>
+
+              <div className="absolute inset-0 flex flex-col justify-center items-center text-center">
+                <p className="text-2xl font-bold">691</p>
+                <p className="text-xs text-white/60">Total Assets</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-3 text-sm">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-blue-500"></span>
+                <span>Cloud Assets</span>
+              </div>
+              <div className="text-right">
+                <span>145</span>
+                <br />
+                <span className="text-red-500 text-xs">23 critical</span>
+              </div>
+            </div>
+
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-red-500"></span>
+                <span>IoT Devices</span>
+              </div>
+              <div className="text-right">
+                <span>89</span>
+                <br />
+                <span className="text-red-500 text-xs">12 critical</span>
+              </div>
+            </div>
+
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-yellow-400"></span>
+                <span>Endpoints</span>
+              </div>
+              <div className="text-right">
+                <span>234</span>
+                <br />
+                <span className="text-red-500 text-xs">45 critical</span>
+              </div>
+            </div>
+
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-green-400"></span>
+                <span>Network Infrastructure</span>
+              </div>
+              <div className="text-right">
+                <span>67</span>
+                <br />
+                <span className="text-red-500 text-xs">8 critical</span>
+              </div>
+            </div>
+
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-purple-400"></span>
+                <span>Mobile Devices</span>
+              </div>
+              <div className="text-right">
+                <span>156</span>
+                <br />
+                <span className="text-red-500 text-xs">19 critical</span>
               </div>
             </div>
           </div>
