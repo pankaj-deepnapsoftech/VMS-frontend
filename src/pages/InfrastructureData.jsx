@@ -9,6 +9,7 @@ import useAccessPartner from "@/hooks/AccessPartner";
 import Pagination from "./Pagination";
 import NoDataFound from "@/components/NoDataFound";
 import { IoSearch } from "react-icons/io5";
+import { calculateARS } from "@/utils/vulnerableOperations";
 
 export function InfrastructureData() {
   const { loading, GetInfrastructureData, allInfrastructureData, DeleteData } =
@@ -69,15 +70,7 @@ export function InfrastructureData() {
     }
   };
 
-  const calculateARS = (data) => {
-    if(data){
-      let total = data.asset_class + data.data_sensitivity + data.exposure + data.hosting + data.service_role_score_total;
-      const result = 100*(total)/50;
-      return result
-    }
-   
-    return 0
-  }
+  
 
   useEffect(() => {
     setCurrentPage(1);

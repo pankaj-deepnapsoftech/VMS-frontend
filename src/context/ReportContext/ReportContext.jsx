@@ -1,24 +1,35 @@
-import { createContext, useState, useEffect, useCallback } from "react";
-import { useAuthContext } from "..";
+import { createContext, useState } from "react";
 import { AxiosHandler } from "@/config/AxiosConfig";
 
-export const ReportContext = createContext();
+export const ReportContext = createContext({
+  riskQuantification: () => { },
+  riskQuantificationData: [],
+  loading:false
+});
 
+// eslint-disable-next-line react/prop-types
 const ReportContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
-  const [reportData, setReportData] = useState([]);
-  
-  const [page, setPage] = useState(1); // Pagination support if needed
-  const { token } = useAuthContext();
+  const [riskQuantificationData, setRiskQuantificationData] = useState([])
 
- 
-// commented this code because the fetchReportData component not present
-  // useEffect(() => {
-  //   fetchReportData(); // Fetch reports when component mounts
-  // }, [fetchReportData]);
+  const [page, setPage] = useState(1);
+
+
+  const riskQuantification = async () => {
+    setLoading(true)
+    try {
+      const res = await AxiosHandler.get("/data/risk-quantification");
+      setRiskQuantificationData(res.data.data);
+    } catch (error) {
+      console.log(error)
+    } finally{
+      setLoading(false)
+    }
+  }
+
 
   return (
-    <ReportContext.Provider value={{ loading, fetchReportData, page, setPage }}>
+    <ReportContext.Provider value={{ loading, page, setPage, riskQuantification,riskQuantificationData }}>
       {children}
     </ReportContext.Provider>
   );

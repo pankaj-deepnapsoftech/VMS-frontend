@@ -35,6 +35,7 @@ export { default as InfrastructureVulnerabilityContextProvider } from "./Infrast
 export {default as InfraAssetContextProvider} from "./InfraAssetContext/InfraAssetContext"
 
 export { default as TagsContextProvider } from "./TagsContext/TagsContext";
+export {default as ReportContextProvider } from "./ReportContext/ReportContext";
 
 
 
@@ -54,6 +55,7 @@ export const useExceptionContext = () =>	useContext(ExceptionContext)
 export const useInfrastructureVulnerabilityContext = () =>	useContext(InfrastructureVulnerabilityContext)
 export const useInfraAssetContext = () => useContext(InfraAssetContext)
 export const useTagsContext = () => useContext(TagsContext);
+export const useReportContext=()=> useContext(ReportContext);
 
 
 

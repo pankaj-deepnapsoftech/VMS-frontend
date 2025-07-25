@@ -219,7 +219,7 @@ export default function TenantDashboard() {
                             {tenant.hosting || "0"}{" "}
                           </td>
                           <td className="px-4 py-3">
-                            {tenant.data_sensitivity || "0"}{" "}
+                            {tenant.data_sensitivity.tag_score || "0"}{" "}
                           </td>
 
                           <td className="py-4 px-6 text-white flex flex-wrap gap-2 w-40">
@@ -504,7 +504,7 @@ export default function TenantDashboard() {
                       AllTags.filter(
                         (item) => item.related === "Data Sensitivity"
                       ).map((item) => (
-                        <option key={item._id} value={item.tag_score}>
+                        <option key={item._id} value={item._id}>
                           {item.tag_name}
                         </option>
                       ))}

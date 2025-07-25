@@ -9,6 +9,7 @@ import useAccessPartner from "@/hooks/AccessPartner";
 import Pagination from "./Pagination";
 import { IoSearch } from "react-icons/io5";
 import NoDataFound from "@/components/NoDataFound";
+import { calculateVRS } from "@/utils/vulnerableOperations";
 
 
 export function ApplicationData() {
@@ -69,16 +70,7 @@ export function ApplicationData() {
     }
   }
 
-  const calculateVRS = (EPSS,exploitComplexity,exploitAvailale,threatType) => {
-    const exploitComp = exploitComplexity ? 1 : 0 ;
-    const threat = threatType === "Vulnerability" ? 1 : 0.7;
-    const exploitAvail = exploitAvailale ? 1 : 0;
-    
-    const result = 100 * ((EPSS*0.35)+(exploitComp*0.25)+(exploitAvail*0.25)+(threat*0.15))/1
 
-    return result.toFixed(2)
-
-  }
 
 
   useEffect(() => {
@@ -201,7 +193,7 @@ export function ApplicationData() {
                             {item.creator?.company_name || "-"}
                           </td>
                           <td className="px-4 py-3">
-                            {calculateVRS(item.EPSS,item.exploit_complexity,item.Exploit_Availale ,item.threat_type) || "-"}
+                            {calculateVRS(item.EPSS, item.exploit_complexity, item.Exploit_Availale, item.threat_type) || "-"}
                           </td>
                           <td className="px-4 py-3 flex items-center mt-3 space-x-3">
                             <Pencil

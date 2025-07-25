@@ -1,20 +1,39 @@
-import React, { useState } from "react";
-import { BiPlus } from "react-icons/bi";
+import { useEffect, useState } from "react";
 import Pagination from "./Pagination";
 import NoDataFound from "@/components/NoDataFound";
 import { IoSearch } from "react-icons/io5";
-import { FaRegTrashAlt } from "react-icons/fa";
-import { RiEdit2Line } from "react-icons/ri";
+import { useAuthContext, useReportContext } from "@/context";
+import Loader from "@/components/Loader/Loader";
+import { calculateARS, calculateVRS } from "@/utils/vulnerableOperations";
 
 const RiskOperation = () => {
+
+  const { token } = useAuthContext();
+  const { riskQuantification, riskQuantificationData, loading } = useReportContext()
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState("");
-  const [EmpData, setEmpData] = useState([]);
 
-  const filteredData = [];
+
+
+  const filteredData = riskQuantificationData.filter((item) =>
+    item.Title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item?.BusinessApplication?.name?.toLowerCase()?.includes(searchTerm.toLowerCase()) || 
+    item?.BusinessApplication?.name?.toLowerCase()?.includes(searchTerm.toLowerCase()) || 
+    item?.BusinessApplication?.asset_hostname?.toLowerCase()?.includes(searchTerm.toLowerCase()) || 
+    item?.InfraStructureAsset?.asset_hostname?.toLowerCase()?.includes(searchTerm.toLowerCase())
+  );
+
+  console.log(filteredData)
+
+
+  useEffect(() => {
+    if (token) {
+      riskQuantification()
+    }
+  }, [token])
 
   return (
-    <div>
+    loading ? <Loader /> : <div>
       <div className="flex items-center justify-between px-6 py-4">
         {/* Optional Left Side Heading */}
         <div className="w-full">
@@ -51,15 +70,12 @@ const RiskOperation = () => {
                   <tr>
                     {[
                       "S No.",
-                      "First Name",
-                      "Last Name",
-                      "Email",
-                      "Phone",
-                      "Role",
-                      "Tenant",
-                      "Partner",
-                      "Status",
-                      "Actions",
+                      "Business Application",
+                      "Infrastructure Asset",
+                      "Vulnerability Title",
+                      "VRS",
+                      "ACS",
+                      "ALE"
                     ].map((header) => (
                       <th
                         key={header}
@@ -77,42 +93,15 @@ const RiskOperation = () => {
                       className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
                     >
                       <td className="px-4 py-3">{index + 1}</td>
-                      <td className="px-4 py-3 capitalize">{user.fname}</td>
-                      <td className="px-4 py-3 capitalize">{user.lname}</td>
-                      <td className="px-4 py-3">{user.email}</td>
-                      <td className="px-4 py-3">{user.phone}</td>
+                      <td className="px-4 py-3 capitalize">{user?.BusinessApplication?.name || "Not Added"}</td>
+                      <td className="px-4 py-3 capitalize">{user?.BusinessApplication?.asset_hostname || user?.InfraStructureAsset?.asset_hostname || "-"}</td>
+                      <td className="px-4 py-3">{user.Title || "-"}</td>
+                      <td className="px-4 py-3">{calculateVRS(user.EPSS, user.exploit_complexity, user.Exploit_Availale, user.threat_type) || "-"}</td>
+                      <td className="px-4 py-3">{user?.BusinessApplication ? calculateARS(user?.BusinessApplication) : calculateARS(user?.InfraStructureAsset) || "0"}</td>
                       <td className="px-4 py-3">{user.role?.role || "—"}</td>
-                      <td className="px-4 py-3">
-                        {user.tenant?.company_name || "—"}
-                      </td>
-                      <td className="px-4 py-3">
-                        {user.partner?.company_name || "—"}
-                      </td>
-                      <td className="px-4 py-3">
-                        {user.deactivate ? (
-                          <button className="bg-[#395042] hover:bg-green-700 text-green-500 px-3 py-1 rounded-full text-xs">
-                            Activate
-                          </button>
-                        ) : (
-                          <button className="bg-[#3E212D] hover:bg-[#2b161e] text-[#EC6C6D] px-3 py-1 rounded-full text-xs">
-                            Deactivate
-                          </button>
-                        )}
-                      </td>
-                      <td className="px-4 py-3 flex gap-2">
-                        <button
-                          title="Delete"
-                          className="text-subtext hover:text-subTextHover"
-                        >
-                          <FaRegTrashAlt className="w-5 h-5" />
-                        </button>
-                        <button
-                          title="Edit"
-                          className="text-subtext hover:text-blue-700"
-                        >
-                          <RiEdit2Line className="w-5 h-5" />
-                        </button>
-                      </td>
+
+
+
                     </tr>
                   ))}
                 </tbody>
@@ -124,8 +113,8 @@ const RiskOperation = () => {
           <Pagination
             page={page}
             setPage={setPage}
-            hasNextPage={EmpData.length === 10}
-            total={EmpData.length}
+            hasNextPage={filteredData.length === 10}
+            total={filteredData.length}
           />
         </div>
       </div>

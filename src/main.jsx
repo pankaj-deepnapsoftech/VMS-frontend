@@ -1,4 +1,3 @@
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
@@ -14,6 +13,7 @@ import {
   InfrastructureVulnerabilityContextProvider,
   JiraContextProvider,
   RemeditionContextProvider,
+  ReportContextProvider,
   SchedulingAssesmentContextProvider,
   TagsContextProvider,
   VulnerabililtyDataContextProvider,
@@ -36,7 +36,9 @@ createRoot(document.getElementById("root")).render(
                           <AppSoftContextProvider>
                             <InfraAssetContextProvider>
                               <TagsContextProvider>
-                                <App />
+                                <ReportContextProvider>
+                                  <App />
+                                </ReportContextProvider>
                               </TagsContextProvider>
                             </InfraAssetContextProvider>
                           </AppSoftContextProvider>

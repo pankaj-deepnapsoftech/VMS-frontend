@@ -36,6 +36,10 @@ export default function BusinessApplications() {
     tenant?.name?.toLowerCase()?.includes(searchQuery.toLowerCase())
   );
 
+  console.log("this sis business application ======>>>>>>>>>>",businessApplication)
+
+  console.log("this is just fort testing filteredTenants ====>>>",filteredTenants)
+
   const {
     values,
     errors,
