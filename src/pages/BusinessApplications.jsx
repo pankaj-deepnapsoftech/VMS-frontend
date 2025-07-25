@@ -36,44 +36,34 @@ export default function BusinessApplications() {
     tenant?.name?.toLowerCase()?.includes(searchQuery.toLowerCase())
   );
 
-  console.log("this sis business application ======>>>>>>>>>>",businessApplication)
-
-  console.log("this is just fort testing filteredTenants ====>>>",filteredTenants)
-
-  const {
-    values,
-    errors,
-    touched,
-    handleBlur,
-    handleChange,
-    handleSubmit,
-  } = useFormik({
-    initialValues: editable || {
-      name: "",
-      description: "",
-      country: "",
-      state: "",
-      city: "",
-      type: "",
-      applicationUrl: "",
-      modifyCriticality: "",
-      asset: "",
-    },
-    validationSchema: BusinessApplicationValidation,
-    enableReinitialize: true,
-    onSubmit: (value) => {
-      if (!tenant && !editable) {
-        return alert("Please select a tenant");
-      }
-      console.log(value);
-      if (editable) {
-        UpdateBussinerssApplcation(editable._id, value);
-      } else {
-        CreateBussinerssApplcation({ ...value, creator: tenant });
-      }
-      setmodel(false);
-    },
-  });
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: editable || {
+        name: "",
+        description: "",
+        country: "",
+        state: "",
+        city: "",
+        type: "",
+        applicationUrl: "",
+        modifyCriticality: "",
+        asset: "",
+      },
+      validationSchema: BusinessApplicationValidation,
+      enableReinitialize: true,
+      onSubmit: (value) => {
+        if (!tenant && !editable) {
+          return alert("Please select a tenant");
+        }
+        console.log(value);
+        if (editable) {
+          UpdateBussinerssApplcation(editable._id, value);
+        } else {
+          CreateBussinerssApplcation({ ...value, creator: tenant });
+        }
+        setmodel(false);
+      },
+    });
 
   const handleDownload = () => {
     const data = [
@@ -84,7 +74,7 @@ export default function BusinessApplications() {
         state: "",
         city: "",
         type: "",
-        applicationUrl: "", 
+        applicationUrl: "",
         modifyCriticality: "",
       },
     ];
@@ -159,7 +149,7 @@ export default function BusinessApplications() {
               }}
               className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center justify-center gap-2"
             >
-              <BiPlus className="h-6 w-6" />  
+              <BiPlus className="h-6 w-6" />
               Business Applications
             </button>
           </div>
@@ -230,7 +220,9 @@ export default function BusinessApplications() {
                         <td className="px-4 py-3">
                           {tenant?.modifyCriticality}
                         </td>
-                        <td className="px-4 py-3">{tenant?.asset?.asset_hostname}</td>
+                        <td className="px-4 py-3">
+                          {tenant?.asset?.asset_hostname}
+                        </td>
 
                         <td className="py-3 px-4">
                           <div className="flex space-x-2">
@@ -238,13 +230,19 @@ export default function BusinessApplications() {
                               <ExternalLink className="w-4 h-4" />
                             </button>
                             <button
-                              onClick={() =>
-                                DeleteBussinerssApplcation(tenant._id)
-                              }
+                              onClick={() => {
+                                const confirmDelete = window.confirm(
+                                  "Are you sure you want to delete this business application?"
+                                );
+                                if (confirmDelete) {
+                                  DeleteBussinerssApplcation(tenant._id);
+                                }
+                              }}
                               className="text-subtext hover:text-subTextHover"
                             >
                               <Trash2 className="w-5 h-5" />
                             </button>
+
                             <button
                               onClick={() => {
                                 setEditable(tenant);
@@ -513,14 +511,14 @@ export default function BusinessApplications() {
                       value={values.type}
                       onBlur={handleBlur}
                       onChange={handleChange}
-                    >     
+                    >
                       <option value={"select value"} selected>
                         select value
                       </option>
                       <option value={"Mobile"}>Mobile</option>
                       <option value={"Web"}>Web</option>
                       <option value={"Microservice"}>Microservice</option>
-                      <option value={"APIs"}>APIs</option>    
+                      <option value={"APIs"}>APIs</option>
                     </select>
                     {errors.type && touched.type && (
                       <p className="text-red-400">{errors.type}</p>
@@ -529,7 +527,9 @@ export default function BusinessApplications() {
                 </div>
 
                 <div>
-                  <label className="block mb-1 text-sm text-white">Asset</label>
+                  <label className="block mb-1 text-sm text-white">
+                    Infrastructure Asset
+                  </label>
                   <select
                     name="asset"
                     value={values.asset}
@@ -574,7 +574,6 @@ export default function BusinessApplications() {
                     <p className="text-red-400">{errors.modifyCriticality}</p>
                   )}
                 </div>
-
               </div>
 
               {/* Action Buttons */}
