@@ -110,7 +110,6 @@ export const ChartsColor = {
 };
 
 // products.js
-
 export const products = [
   {
     title: "Asset Inventory",
@@ -278,8 +277,16 @@ export const products = [
     title: "ROC",
     desc: "Risk Operation Center",
     allowedPath: [
-      { title: "Executive Dashboard", route: "/executivedashboard", icon: BiSolidDashboard },
-      { title: "Risk Quantification", route: "/riskoperation", icon: AiOutlineException },
+      {
+        title: "Executive Dashboard",
+        route: "/executivedashboard",
+        icon: BiSolidDashboard,
+      },
+      {
+        title: "Risk Quantification",
+        route: "/riskoperation",
+        icon: AiOutlineException,
+      },
     ],
   },
 ];
