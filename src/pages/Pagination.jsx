@@ -1,6 +1,5 @@
 
 
-// eslint-disable-next-line react/prop-types
 const Pagination = ({ page, setPage, hasNextPage, total }) => {
     return (
 

@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useAllEmployeeContext, useAuthContext, useExceptionContext } from "@/context";
 import { dateFormaterWithDate } from "@/utils/dateFormate";
 import { useEffect, useState, useRef } from "react";

@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import InputField from "@/components/InputField";
 import Loader from "@/components/Loader/Loader";
 import NoDataFound from "@/components/NoDataFound";

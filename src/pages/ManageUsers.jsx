@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { FaEdit, FaTrash, FaLock, FaUndo, FaEye } from "react-icons/fa";
 
 const users = [

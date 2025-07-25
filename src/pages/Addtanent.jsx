@@ -1,5 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { useFormik } from "formik";

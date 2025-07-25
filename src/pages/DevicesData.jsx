@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-
 import Loader from "@/components/Loader/Loader";
 import { DeviceContext } from "@/context/DevicesContext/DevicesContext";
 import { DevicesDataSchema } from "@/Validation/DevicesDataValidations";
