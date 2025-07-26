@@ -9,7 +9,7 @@ import useAccessPartner from "@/hooks/AccessPartner";
 import Pagination from "./Pagination";
 import NoDataFound from "@/components/NoDataFound";
 import { IoSearch } from "react-icons/io5";
-import { calculateARS } from "@/utils/vulnerableOperations";
+import { calculateACS } from "@/utils/vulnerableOperations";
 
 export function InfrastructureData() {
   const { loading, GetInfrastructureData, allInfrastructureData, DeleteData } =
@@ -206,7 +206,7 @@ export function InfrastructureData() {
                             {item.creator?.company_name || "-"}
                           </td>
                           <td className="px-4 py-3">
-                            {calculateARS(item.InfraStructureAsset) || "-"}
+                            {calculateACS(item.InfraStructureAsset) || "-"}
                           </td>
                           <td className="px-4 py-3 flex items-center mt-3 space-x-3">
                             <Pencil
