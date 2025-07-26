@@ -4,7 +4,7 @@ import NoDataFound from "@/components/NoDataFound";
 import { IoSearch } from "react-icons/io5";
 import { useAuthContext, useReportContext } from "@/context";
 import Loader from "@/components/Loader/Loader";
-import { calculateARS, calculateVRS } from "@/utils/vulnerableOperations";
+import { calculateACS, calculateALE, calculateARS, calculateVRS } from "@/utils/vulnerableOperations";
 
 const RiskOperation = () => {
 
@@ -12,6 +12,7 @@ const RiskOperation = () => {
   const { riskQuantification, riskQuantificationData, loading } = useReportContext()
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState("");
+   const [tenant, setTenant] = useState('');
 
 
 
@@ -23,14 +24,19 @@ const RiskOperation = () => {
     item?.InfraStructureAsset?.asset_hostname?.toLowerCase()?.includes(searchTerm.toLowerCase())
   );
 
-  console.log(filteredData)
 
 
   useEffect(() => {
     if (token) {
-      riskQuantification()
+      riskQuantification(tenant)
     }
-  }, [token])
+  }, [token,tenant])
+
+  
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setTenant(params.get('tenant') || '');
+  }, [location.search]);
 
   return (
     loading ? <Loader /> : <div>
@@ -75,6 +81,7 @@ const RiskOperation = () => {
                       "Vulnerability Title",
                       "VRS",
                       "ACS",
+                      "ARS",
                       "ALE"
                     ].map((header) => (
                       <th
@@ -97,8 +104,9 @@ const RiskOperation = () => {
                       <td className="px-4 py-3 capitalize">{user?.BusinessApplication?.asset_hostname || user?.InfraStructureAsset?.asset_hostname || "-"}</td>
                       <td className="px-4 py-3">{user.Title || "-"}</td>
                       <td className="px-4 py-3">{calculateVRS(user.EPSS, user.exploit_complexity, user.Exploit_Availale, user.threat_type) || "-"}</td>
-                      <td className="px-4 py-3">{user?.BusinessApplication ? calculateARS(user?.BusinessApplication) : calculateARS(user?.InfraStructureAsset) || "0"}</td>
-                      <td className="px-4 py-3">{user.role?.role || "—"}</td>
+                      <td className="px-4 py-3">{user?.BusinessApplication ? calculateACS(user?.BusinessApplication) : calculateACS(user?.InfraStructureAsset) || "0"}</td>
+                      <td className="px-4 py-3">{calculateARS(user) || "0"}</td>
+                      <td className="px-4 py-3">$ {calculateALE(user) || "—"}</td>
 
 
 

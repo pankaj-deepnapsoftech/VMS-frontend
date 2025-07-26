@@ -15,10 +15,10 @@ const ReportContextProvider = ({ children }) => {
   const [page, setPage] = useState(1);
 
 
-  const riskQuantification = async () => {
+  const riskQuantification = async (tenant) => {
     setLoading(true)
     try {
-      const res = await AxiosHandler.get("/data/risk-quantification");
+      const res = await AxiosHandler.get(`/data/risk-quantification?tenant=${tenant ? tenant : ""}`);
       setRiskQuantificationData(res.data.data);
     } catch (error) {
       console.log(error)
