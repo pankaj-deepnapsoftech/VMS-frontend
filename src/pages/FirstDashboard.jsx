@@ -6,6 +6,7 @@ import "./animation.css";
 import { GrShieldSecurity } from "react-icons/gr";
 
 // Card component with gradient border
+// eslint-disable-next-line react/prop-types
 const Card = ({ children, HandleClick, borderColor, bg, animate }) => {
   return (
     <div
