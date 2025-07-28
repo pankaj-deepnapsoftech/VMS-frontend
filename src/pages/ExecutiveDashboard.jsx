@@ -115,12 +115,12 @@ export default function ExecutiveSummaryPage() {
     <div className="min-h-screen bg-background p-6 font-sans">
       <div className="flex flex-col mb-10 gap-3 max-w-7xl mx-auto">
         {/* First Row */}
-        <div className="flex flex-col lg:flex-row gap-4">
+        <div className="flex flex-col xl:flex-row gap-4 lg:gap-6">
           {/* Executive Summary */}
-          <div className="bg-[#161d3d] rounded-2xl p-4 w-full lg:w-[65%] shadow-md border border-gray-800">
+          <div className="bg-[#161d3d] rounded-2xl p-4 sm:p-5 w-full xl:w-[65%] shadow-md border border-gray-800">
             {/* Header */}
-            <div className="flex justify-between items-start mb-2">
-              <h2 className="text-xl text-white font-semibold">
+            <div className="flex justify-between items-start mb-3">
+              <h2 className="text-lg sm:text-xl text-white font-semibold">
                 Executive Summary
               </h2>
               <button className="text-white/50 hover:text-white text-lg leading-none">
@@ -136,11 +136,19 @@ export default function ExecutiveSummaryPage() {
                   className="rounded-xl bg-[#1C2543] px-3 py-2 text-white shadow-sm border border-[#303A60] flex flex-col justify-between h-[100px]"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-xs text-gray-300">{item.title}</span>
-                    <img src={item.icon} alt="icon" className="w-8 h-8" />
+                    <span className="text-xs sm:text-sm text-gray-300">
+                      {item.title}
+                    </span>
+                    <img
+                      src={item.icon}
+                      alt="icon"
+                      className="w-7 h-7 sm:w-8 sm:h-8"
+                    />
                   </div>
-                  <div className="text-base font-semibold">{item.value}</div>
-                  <div className={`${item.trendColor} text-xs`}>
+                  <div className="text-sm sm:text-base font-semibold">
+                    {item.value}
+                  </div>
+                  <div className={`${item.trendColor} text-xs sm:text-sm`}>
                     {item.change}
                   </div>
                 </div>
@@ -149,10 +157,12 @@ export default function ExecutiveSummaryPage() {
           </div>
 
           {/* Compliance Status */}
-          <div className="bg-[#161d3d] text-white rounded-xl p-5 w-full lg:w-[35%] shadow-lg border border-[#1A233A] flex flex-col">
+          <div className="bg-[#161d3d] text-white rounded-xl p-4 sm:p-5 w-full xl:w-[35%] shadow-lg border border-[#1A233A] flex flex-col">
             {/* Header */}
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold">Compliance Status</h2>
+              <h2 className="text-lg sm:text-xl font-semibold">
+                Compliance Status
+              </h2>
               <button className="text-white/50 hover:text-white text-lg leading-none">
                 ⋯
               </button>
@@ -164,7 +174,7 @@ export default function ExecutiveSummaryPage() {
               <div className="flex flex-col gap-4 w-full md:w-2/3">
                 {complianceData.map((item, idx) => (
                   <div key={idx}>
-                    <div className="flex justify-between text-sm mb-1 text-white/80">
+                    <div className="flex justify-between text-xs sm:text-sm mb-1 text-white/80">
                       <span>{item.title}</span>
                       <span>{item.percent}%</span>
                     </div>
@@ -183,7 +193,7 @@ export default function ExecutiveSummaryPage() {
 
               {/* Right: Circular Chart */}
               <div className="w-full md:w-1/3 flex flex-col items-center justify-center">
-                <div className="w-24 h-24 relative">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 relative">
                   <CircularProgressbarWithChildren
                     value={85.5}
                     strokeWidth={10}
@@ -193,11 +203,15 @@ export default function ExecutiveSummaryPage() {
                     })}
                   >
                     <div className="flex flex-col items-center">
-                      <p className="text-xl font-semibold text-white">85.5%</p>
+                      <p className="text-base sm:text-xl font-semibold text-white">
+                        85.5%
+                      </p>
                     </div>
                   </CircularProgressbarWithChildren>
                 </div>
-                <p className="text-xs text-gray-400 mt-2">Overall Compliance</p>
+                <p className="text-[10px] sm:text-xs text-gray-400 mt-2">
+                  Overall Compliance
+                </p>
               </div>
             </div>
           </div>
@@ -249,166 +263,193 @@ export default function ExecutiveSummaryPage() {
               <div className="flex items-center gap-1">
                 <span className="w-2 h-2 rounded-full bg-[#4F7FFF]" /> SOC
               </div>
-              <div className="flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-[#1DC37E]" /> ROC
+              <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto my-2">
+                <CircularProgressbarWithChildren
+                  value={dasboardData?.risk_score ? (dasboardData?.risk_score/1000)*100 : '0' }
+                  strokeWidth={10}
+                  styles={buildStyles({
+                    pathColor: "#FF7F0E",
+                    trailColor: "#1E2A3E",
+                  })}
+                >
+                  <p className="text-sm sm:text-lg font-bold">507</p>
+                  <p className="text-xs text-gray-400">/ 1000</p>
+                </CircularProgressbarWithChildren>
+              </div>
+              <p className="text-xs text-center text-white mt-1">
+                Current Risk Score
+              </p>
+              <div className="flex items-center justify-center mt-2">
+                <p className="text-green-400 text-xs">↓ 12%</p>
+              </div>
+            </div>
+
+            {/* SOC vs ROC Coverage */}
+            <div className="bg-[#161d3d] text-white rounded-2xl p-4 w-full lg:w-1/4 shadow-md border border-gray-800">
+              <div className="flex justify-between items-start mb-4">
+                <h2 className="text-base sm:text-lg font-semibold">
+                  SOC vs ROC Coverage
+                </h2>
+                <button className="text-white/50 hover:text-white text-lg sm:text-xl leading-none">
+                  ⋯
+                </button>
+              </div>
+              <div className="h-36 sm:h-40">
+                <Radar data={data} options={options} />
+              </div>
+              <div className="flex flex-wrap gap-4 justify-center mt-2 text-xs text-white/80">
+                <div className="flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-[#4F7FFF]" /> SOC
+                </div>
+                <div className="flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-[#1DC37E]" /> ROC
+                </div>
+              </div>
+            </div>
+
+            {/* Risk Heat Map */}
+            <div className="bg-[#161d3d] border border-gray-800 p-4 rounded-2xl w-full lg:w-2/4 text-white">
+              <div className="flex justify-between items-start mb-4">
+                <h2 className="text-base sm:text-lg font-semibold">
+                  Risk Heat Map
+                </h2>
+                <button className="text-white/50 hover:text-white text-lg sm:text-xl leading-none">
+                  ⋯
+                </button>
+              </div>
+
+              <div className="overflow-x-auto">
+                <div className="grid grid-cols-6 gap-1 text-[10px] sm:text-xs md:text-sm min-w-[400px]">
+                  <div></div>
+                  <div className="text-center text-white/70">VL</div>
+                  <div className="text-center text-white/70">Low</div>
+                  <div className="text-center text-white/70">Med</div>
+                  <div className="text-center text-white/70">High</div>
+                  <div className="text-center text-white/70">Crit</div>
+
+                  {/* Rows */}
+                  {["VL", "Low", "Med", "High", "Crit"].map((row, rIdx) => (
+                    <React.Fragment key={rIdx}>
+                      <div className="text-white/70">{row}</div>
+                      {[...Array(5)].map((_, cIdx) => (
+                        <div
+                          key={cIdx}
+                          className={`h-8 rounded ${
+                            rIdx === 0 || rIdx === 1
+                              ? cIdx < 2
+                                ? "bg-green-500"
+                                : cIdx === 2
+                                ? "bg-yellow-400"
+                                : cIdx === 3
+                                ? "bg-orange-500"
+                                : "bg-red-500"
+                              : rIdx === 2
+                              ? cIdx < 2
+                                ? "bg-yellow-400"
+                                : cIdx < 4
+                                ? "bg-orange-500"
+                                : "bg-red-500"
+                              : "bg-red-500"
+                          }`}
+                        ></div>
+                      ))}
+                    </React.Fragment>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex justify-between text-xs text-white/60 mt-4">
+                <span>↑ Impact</span>
+                <span>Likelihood →</span>
               </div>
             </div>
           </div>
 
-          {/* Risk Heat Map */}
-          <div className="bg-[#161d3d] border border-gray-800 p-4 rounded-2xl w-full lg:w-2/4 text-white">
+          {/* Second Row: Risk Indicators */}
+          <div className="bg-[#161d3d] border border-gray-800 p-4 sm:p-6 rounded-2xl w-full text-white font-sans">
             <div className="flex justify-between items-start mb-4">
-              <h2 className="text-lg font-semibold">Risk Heat Map</h2>
-              <button className="text-white/50 hover:text-white text-xl leading-none">
+              <h2 className="text-base sm:text-lg md:text-xl font-semibold">
+                Top 10 Risk Indicators
+              </h2>
+              <button className="text-white/50 hover:text-white text-lg sm:text-xl leading-none">
                 ⋯
               </button>
             </div>
 
-            <div className="grid grid-cols-6 gap-1 text-xs sm:text-sm">
-              <div></div>
-              <div className="text-center text-white/70">VL</div>
-              <div className="text-center text-white/70">Low</div>
-              <div className="text-center text-white/70">Med</div>
-              <div className="text-center text-white/70">High</div>
-              <div className="text-center text-white/70">Crit</div>
-
-              <div className="text-white/70">VL</div>
-              <div className="h-8 bg-green-500 rounded"></div>
-              <div className="h-8 bg-green-500 rounded"></div>
-              <div className="h-8 bg-yellow-400 rounded"></div>
-              <div className="h-8 bg-orange-500 rounded"></div>
-              <div className="h-8 bg-red-500 rounded"></div>
-
-              <div className="text-white/70">Low</div>
-              <div className="h-8 bg-green-500 rounded"></div>
-              <div className="h-8 bg-green-500 rounded"></div>
-              <div className="h-8 bg-yellow-400 rounded"></div>
-              <div className="h-8 bg-orange-500 rounded"></div>
-              <div className="h-8 bg-red-500 rounded"></div>
-
-              <div className="text-white/70">Med</div>
-              <div className="h-8 bg-yellow-400 rounded"></div>
-              <div className="h-8 bg-yellow-400 rounded"></div>
-              <div className="h-8 bg-orange-500 rounded"></div>
-              <div className="h-8 bg-orange-500 rounded"></div>
-              <div className="h-8 bg-red-500 rounded"></div>
-
-              <div className="text-white/70">High</div>
-              <div className="h-8 bg-orange-500 rounded"></div>
-              <div className="h-8 bg-orange-500 rounded"></div>
-              <div className="h-8 bg-orange-500 rounded"></div>
-              <div className="h-8 bg-red-500 rounded"></div>
-              <div className="h-8 bg-red-500 rounded"></div>
-
-              <div className="text-white/70">Crit</div>
-              <div className="h-8 bg-red-500 rounded"></div>
-              <div className="h-8 bg-red-500 rounded"></div>
-              <div className="h-8 bg-red-500 rounded"></div>
-              <div className="h-8 bg-red-500 rounded"></div>
-              <div className="h-8 bg-red-500 rounded"></div>
-            </div>
-
-            <div className="flex justify-between text-xs text-white/60 mt-4">
-              <span>↑ Impact</span>
-              <span>Likelihood →</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Third Row  */}
-        {/* Risk Indicators */}
-        <div className="bg-[#161d3d] border h-[500px] border-gray-800 p-6 rounded-md w-full max-w-6xl text-white font-sans">
-          <div className="flex justify-between items-start mb-4">
-            <h2 className="text-xl font-semibold">Top 10 Risk Indicators</h2>
-            <button className="text-white/50 hover:text-white text-xl leading-none">
-              ⋯
-            </button>
-          </div>
-          <div className="space-y-3 h-[20px">
-            <div className="bg-[#242f49] rounded-md p-4 flex justify-between items-center">
-              <div>
-                <p className="font-medium">Unpatched Critical CVE-2024-1234</p>
-                <p className="text-sm text-white/60">Web Server</p>
-                <p className="text-sm text-white/60">
-                  Likelihood:{" "}
-                  <span className="text-white font-semibold">95%</span>
-                </p>
-              </div>
-              <div className="text-right">
-                <span className="px-2 py-1 bg-red-600/20 text-red-400 text-xs rounded">
-                  Critical
-                </span>
-                <p className="text-sm text-white/60 mt-1">
-                  Exposure:{" "}
-                  <span className="text-white font-semibold">$2.4M</span>
-                </p>
-              </div>
-            </div>
-
-            <div className="bg-[#242f49] rounded-md p-4 flex justify-between items-center">
-              <div>
-                <p className="font-medium">Weak Authentication Controls</p>
-                <p className="text-sm text-white/60">Database</p>
-                <p className="text-sm text-white/60">
-                  Likelihood:{" "}
-                  <span className="text-white font-semibold">78%</span>
-                </p>
-              </div>
-              <div className="text-right">
-                <span className="px-2 py-1 bg-orange-600/20 text-orange-400 text-xs rounded">
-                  High
-                </span>
-                <p className="text-sm text-white/60 mt-1">
-                  Exposure:{" "}
-                  <span className="text-white font-semibold">$1.8M</span>
-                </p>
-              </div>
-            </div>
-
-            <div className="bg-[#242f49] rounded-md p-4 flex justify-between items-center">
-              <div>
-                <p className="font-medium">Outdated SSL Certificates</p>
-                <p className="text-sm text-white/60">Load Balancer</p>
-                <p className="text-sm text-white/60">
-                  Likelihood:{" "}
-                  <span className="text-white font-semibold">85%</span>
-                </p>
-              </div>
-              <div className="text-right">
-                <span className="px-2 py-1 bg-orange-600/20 text-orange-400 text-xs rounded">
-                  High
-                </span>
-                <p className="text-sm text-white/60 mt-1">
-                  Exposure:{" "}
-                  <span className="text-white font-semibold">$950K</span>
-                </p>
-              </div>
-            </div>
-
-            <div className="bg-[#242f49] rounded-md p-4 flex justify-between items-center">
-              <div>
-                <p className="font-medium">Privileged Account Misuse</p>
-                <p className="text-sm text-white/60">Domain Controller</p>
-                <p className="text-sm text-white/60">
-                  Likelihood:{" "}
-                  <span className="text-white font-semibold">67%</span>
-                </p>
-              </div>
-              <div className="text-right">
-                <span className="px-2 py-1 bg-red-600/20 text-red-400 text-xs rounded">
-                  Critical
-                </span>
-                <p className="text-sm text-white/60 mt-1">
-                  Exposure:{" "}
-                  <span className="text-white font-semibold">$3.2M</span>
-                </p>
-              </div>
+            <div className="space-y-3">
+              {[
+                {
+                  title: "Unpatched Critical CVE-2024-1234",
+                  system: "Web Server",
+                  likelihood: "95%",
+                  level: "Critical",
+                  exposure: "$2.4M",
+                },
+                {
+                  title: "Weak Authentication Controls",
+                  system: "Database",
+                  likelihood: "78%",
+                  level: "High",
+                  exposure: "$1.8M",
+                },
+                {
+                  title: "Outdated SSL Certificates",
+                  system: "Load Balancer",
+                  likelihood: "85%",
+                  level: "High",
+                  exposure: "$950K",
+                },
+                {
+                  title: "Privileged Account Misuse",
+                  system: "Domain Controller",
+                  likelihood: "67%",
+                  level: "Critical",
+                  exposure: "$3.2M",
+                },
+              ].map((item, idx) => (
+                <div
+                  key={idx}
+                  className="bg-[#242f49] rounded-md p-3 sm:p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center"
+                >
+                  <div className="mb-2 sm:mb-0">
+                    <p className="font-medium text-sm sm:text-base">
+                      {item.title}
+                    </p>
+                    <p className="text-xs sm:text-sm text-white/60">
+                      {item.system}
+                    </p>
+                    <p className="text-xs sm:text-sm text-white/60">
+                      Likelihood:{" "}
+                      <span className="text-white font-semibold">
+                        {item.likelihood}
+                      </span>
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <span
+                      className={`px-2 py-1 text-xs rounded ${
+                        item.level === "Critical"
+                          ? "bg-red-600/20 text-red-400"
+                          : "bg-orange-600/20 text-orange-400"
+                      }`}
+                    >
+                      {item.level}
+                    </span>
+                    <p className="text-xs sm:text-sm text-white/60 mt-1">
+                      Exposure:{" "}
+                      <span className="text-white font-semibold">
+                        {item.exposure}
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
         {/* Fourth Row  */}
-        <div className="flex gap-4 w-full h-[350px]">
+        <div className="flex gap-4 w-full h-[380px]">
           {/* Asset Inventory */}
           <div className="bg-[#161d3d] p-4 border border-gray-800 rounded-xl flex-1 text-white font-sans flex flex-col">
             {/* Header */}
