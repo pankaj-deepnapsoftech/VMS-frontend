@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-constant-binary-expression */
 import { Suspense, useEffect, useState } from "react";
 import { useAuthContext, useVulnerabililtyDataContext } from "@/context";
 import Loader from "@/components/Loader/Loader";
@@ -11,24 +13,21 @@ import { IoSearch } from "react-icons/io5";
 import NoDataFound from "@/components/NoDataFound";
 import { calculateVRS } from "@/utils/vulnerableOperations";
 
-
 export function ApplicationData() {
-  const { loading, GetApplicationData, allApplicationData, DeleteData } = useVulnerabililtyDataContext();
+  const { loading, GetApplicationData, allApplicationData, DeleteData } =
+    useVulnerabililtyDataContext();
   const { token } = useAuthContext();
   const navigate = useNavigate();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedId, setSelectedId] = useState(null)
-  const [tenant, setTenant] = useState('');
+  const [selectedId, setSelectedId] = useState(null);
+  const [tenant, setTenant] = useState("");
   const location = useLocation();
-  const [exploitDetails, setExploitDetails] = useState([])
+  const [exploitDetails, setExploitDetails] = useState([]);
 
-  const { closeModal, isOpen, openModal } = useAccessPartner()
-
-
-
+  const { closeModal, isOpen, openModal } = useAccessPartner();
 
   const filteredData = allApplicationData?.filter((item) => {
     const valuesToSearch = [
@@ -58,9 +57,6 @@ export function ApplicationData() {
       );
   });
 
-
-
-
   const handleExpectionModal = (item) => {
     if (!item.Expection) {
       setIsModalOpen(true);
@@ -68,10 +64,7 @@ export function ApplicationData() {
     } else {
       alert("Expection already exists for this record");
     }
-  }
-
-
-
+  };
 
   useEffect(() => {
     if (token) {
@@ -81,9 +74,60 @@ export function ApplicationData() {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    setTenant(params.get('tenant') || '');
+    setTenant(params.get("tenant") || "");
   }, [location.search]);
 
+  const StatusModal = ({ setIsModalOpen }) => {
+    const [status, setStatus] = useState("");
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+        <div className="bg-modalBg rounded-xl w-[90%] max-w-md p-6 shadow-lg">
+          {/* Close Button */}
+          <div className="flex justify-end mb-4">
+            <button
+              className="text-gray-200 hover:text-gray-500"
+              onClick={() => setIsModalOpen(false)}
+            >
+              ✕
+            </button>
+          </div>
+
+          {/* Only Status Select */}
+          <div className="mb-6 space-y-4">
+            {/* Status Select */}
+            <div>
+              <label className="block text-sm font-medium text-white mb-2">
+                Status
+              </label>
+              <select
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                className="w-full border border-gray-800 bg-[#1e253b] text-white rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 relative z-50"
+              >
+                <option value="">Select a status</option>
+                <option value="Open">Open</option>
+                <option value="Closed">Closed</option>
+                <option value="Re-Open">Re-Open</option>
+                <option value="False Positive">False Positive</option>
+              </select>
+            </div>
+
+            {/* Comment Textarea */}
+            <div>
+              <label className="block text-sm font-medium text-white mb-2">
+                Comment
+              </label>
+              <textarea
+                placeholder="Add your comment..."
+                rows={3}
+                className="w-full border border-gray-800 bg-[#1e253b] text-white rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -91,10 +135,10 @@ export function ApplicationData() {
         <Loader />
       ) : (
         <div className="bg-gradient-custom min-h-screen p-4 rounded-lg text-white">
-
-
           <div className="w-full px-6">
-            <h2 className="text-2xl font-semibold text-white">All Application Data</h2>
+            <h2 className="text-2xl font-semibold text-white">
+              All Application Data
+            </h2>
             <span className="text-subtext text-sm">
               Manage your Application Data
             </span>
@@ -162,14 +206,19 @@ export function ApplicationData() {
                           key={index}
                           className="border-b border-slate-700 hover:bg-[#1E293B] transition"
                         >
-
                           <td className="px-4 py-3">{index + 1}</td>
                           <td className="px-4 py-3">{item.scan_type || "-"}</td>
-                          <td className="px-4 py-3">{item.asset_type || "-"}</td>
-                          <td className="px-4 py-3">{item.threat_type || "-"}</td>
+                          <td className="px-4 py-3">
+                            {item.asset_type || "-"}
+                          </td>
+                          <td className="px-4 py-3">
+                            {item.threat_type || "-"}
+                          </td>
                           <td className="px-4 py-3">{item.CVE || "-"}</td>
                           <td className="px-4 py-3">{item.CVE_ID || "-"}</td>
-                          <td className="px-4 py-3">{item.Exploit_Availale ? "Yes" : "No" || "-"}</td>
+                          <td className="px-4 py-3">
+                            {item.Exploit_Availale ? "Yes" : "No" || "-"}
+                          </td>
                           <td className="px-4 py-3">
                             {item.Exploit_Details?.length || 0}
                           </td>
@@ -178,11 +227,17 @@ export function ApplicationData() {
                           </td>
                           <td className="px-4 py-3">{item.Location || "-"}</td>
                           <td className="px-4 py-3">{item.Title || "-"}</td>
-                          <td className="px-4 py-3">{item.Description || "-"}</td>
+                          <td className="px-4 py-3">
+                            {item.Description || "-"}
+                          </td>
                           <td className="px-4 py-3">{item.Severity || "-"}</td>
                           <td className="px-4 py-3">{item.CVSS || "-"}</td>
-                          <td className="px-4 py-3">{item.Reference_URL || "-"}</td>
-                          <td className="px-4 py-3">{(item.EPSS * 100).toFixed(2) + "%" || "-"}</td>
+                          <td className="px-4 py-3">
+                            {item.Reference_URL || "-"}
+                          </td>
+                          <td className="px-4 py-3">
+                            {(item.EPSS * 100).toFixed(2) + "%" || "-"}
+                          </td>
                           <td className="px-4 py-3">
                             {item.BusinessApplication?.name || "-"}
                           </td>
@@ -193,7 +248,12 @@ export function ApplicationData() {
                             {item.creator?.company_name || "-"}
                           </td>
                           <td className="px-4 py-3">
-                            {calculateVRS(item.EPSS, item.exploit_complexity, item.Exploit_Availale, item.threat_type) || "-"}
+                            {calculateVRS(
+                              item.EPSS,
+                              item.exploit_complexity,
+                              item.Exploit_Availale,
+                              item.threat_type
+                            ) || "-"}
                           </td>
                           <td className="px-4 py-3 flex items-center mt-3 space-x-3">
                             <Pencil
@@ -219,10 +279,13 @@ export function ApplicationData() {
                               className="w-4 h-4 text-green-500 cursor-pointer"
                               onClick={() => handleExpectionModal(item)}
                             />
-                            <Eye onClick={() => {
-                              setExploitDetails(item.Exploit_Details);
-                              openModal()
-                            }} className="w-4 h-4 text-lime-400 cursor-pointer" />
+                            <Eye
+                              onClick={() => {
+                                setExploitDetails(item.Exploit_Details);
+                                openModal();
+                              }}
+                              className="w-4 h-4 text-lime-400 cursor-pointer"
+                            />
                           </td>
                         </tr>
                       ))}
@@ -241,12 +304,21 @@ export function ApplicationData() {
             </div>
           </div>
 
-          {/* MODAL */}
+          {/* EXCEPTION MODAL */}
           {isModalOpen && (
-            <ExpectionModal setIsModalOpen={setIsModalOpen} creator={selectedId} />
+            <ExpectionModal
+              setIsModalOpen={setIsModalOpen}
+              creator={selectedId}
+            />
           )}
 
-          {isOpen && <ExploitDetail links={exploitDetails} onClose={closeModal} />}
+          {/* EXPLOIT DETAIL MODAL */}
+          {isOpen && (
+            <ExploitDetail links={exploitDetails} onClose={closeModal} />
+          )}
+
+          {/* STATUS MODAL */}
+          {isModalOpen && <StatusModal setIsModalOpen={setIsModalOpen} />}
         </div>
       )}
     </Suspense>

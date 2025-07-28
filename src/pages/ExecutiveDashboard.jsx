@@ -18,8 +18,6 @@ import { useAuthContext, useReportContext } from "@/context";
 import Loader from "@/components/Loader/Loader";
 import { summaryData } from "@/constants/dynomic.data";
 
-
-
 const complianceData = [
   { title: "HIPAA", percent: 87, color: "#4F7FFF" },
   { title: "PCI-DSS", percent: 55, color: "#28C4B9" },
@@ -87,31 +85,25 @@ const options = {
 };
 
 export default function ExecutiveSummaryPage() {
-
   const { token } = useAuthContext();
   const { GetRiskData, dasboardData, loading } = useReportContext();
 
-  const [tenant, setTenant] = useState('');
-
-
-  
+  const [tenant, setTenant] = useState("");
 
   useEffect(() => {
     if (token) {
       GetRiskData(tenant);
     }
-
   }, [token, tenant]);
-
-
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    setTenant(params.get('tenant') || '');
+    setTenant(params.get("tenant") || "");
   }, [location.search]);
 
-
-  return loading ? <Loader /> : (
+  return loading ? (
+    <Loader />
+  ) : (
     <div className="min-h-screen bg-background p-6 font-sans">
       <div className="flex flex-col mb-10 gap-3 max-w-7xl mx-auto">
         {/* First Row */}
@@ -218,7 +210,7 @@ export default function ExecutiveSummaryPage() {
         </div>
 
         {/* Second Row */}
-       <div className="flex flex-col gap-4 w-full">
+        <div className="flex flex-col gap-4 w-full">
           {/* First Row: Risk Score, SOC vs ROC, Risk Heat Map */}
           <div className="flex flex-col lg:flex-row gap-4 w-full">
             {/* Risk Score Overview */}
@@ -232,18 +224,24 @@ export default function ExecutiveSummaryPage() {
                 </button>
               </div>
               <div className="w-24 h-24 mx-auto my-2">
-              <CircularProgressbarWithChildren
-                value={dasboardData?.risk_score ? (dasboardData?.risk_score / 1000) * 100 : "0"}
-                strokeWidth={10}
-                styles={buildStyles({
-                  pathColor: "#FF7F0E",
-                  trailColor: "#1E2A3E",
-                })}
-              >
-                <p className="text-lg font-bold">{dasboardData?.risk_score ? dasboardData?.risk_score : "0"}</p>
-                <p className="text-xs text-gray-400">/ 1000</p>
-              </CircularProgressbarWithChildren>
-            </div>
+                <CircularProgressbarWithChildren
+                  value={
+                    dasboardData?.risk_score
+                      ? (dasboardData?.risk_score / 1000) * 100
+                      : "0"
+                  }
+                  strokeWidth={10}
+                  styles={buildStyles({
+                    pathColor: "#FF7F0E",
+                    trailColor: "#1E2A3E",
+                  })}
+                >
+                  <p className="text-lg font-bold">
+                    {dasboardData?.risk_score ? dasboardData?.risk_score : "0"}
+                  </p>
+                  <p className="text-xs text-gray-400">/ 1000</p>
+                </CircularProgressbarWithChildren>
+              </div>
 
               <p className="text-xs text-center text-white mt-1">
                 Current Risk Score
@@ -416,12 +414,6 @@ export default function ExecutiveSummaryPage() {
             </div>
           </div>
         </div>
-
-
-
-
-
-
 
         {/* Fourth Row  */}
         <div className="flex gap-4 w-full h-[380px]">
