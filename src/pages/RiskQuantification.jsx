@@ -28,9 +28,9 @@ const RiskOperation = () => {
 
   useEffect(() => {
     if (token) {
-      riskQuantification(tenant)
+      riskQuantification(tenant,page)
     }
-  }, [token,tenant])
+  }, [token,tenant,page])
 
   
   useEffect(() => {
@@ -94,7 +94,7 @@ const RiskOperation = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-700">
-                  {filteredData.map((user, index) => (
+                  {filteredData?.map((user, index) => (
                     <tr
                       key={user._id}
                       className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   CircularProgressbarWithChildren,
   buildStyles,
@@ -14,38 +14,11 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { useAuthContext, useReportContext } from "@/context";
+import Loader from "@/components/Loader/Loader";
+import { summaryData } from "@/constants/dynomic.data";
 
-const summaryData = [
-  {
-    title: "Risk Score",
-    value: "1,247",
-    change: "-12%",
-    trendColor: "text-red-400",
-    icon: "/Icons/executive1.png",
-    backgroundColor: "blue",
-  },
-  {
-    title: "Financial Exposure",
-    value: "$8.2M",
-    change: "-8%",
-    trendColor: "text-orange-400",
-    icon: "/Icons/executive2.png",
-  },
-  {
-    title: "MTTR",
-    value: "4.2 days",
-    change: "+15%",
-    trendColor: "text-green-400",
-    icon: "/Icons/executive3.png",
-  },
-  {
-    title: "Compliance Score",
-    value: "94%",
-    change: "+3%",
-    trendColor: "text-blue-400",
-    icon: "/Icons/executive4.png",
-  },
-];
+
 
 const complianceData = [
   { title: "HIPAA", percent: 87, color: "#4F7FFF" },
@@ -110,13 +83,35 @@ const options = {
     legend: { display: false },
   },
   responsive: true,
-  maintainAspectRatio: false,                                
+  maintainAspectRatio: false,
 };
 
 export default function ExecutiveSummaryPage() {
-  const percentage = (1247 / 2000) * 100;
 
-  return (
+  const { token } = useAuthContext();
+  const { GetRiskData, dasboardData, loading } = useReportContext();
+
+  const [tenant, setTenant] = useState('');
+
+
+  
+
+  useEffect(() => {
+    if (token) {
+      GetRiskData(tenant);
+    }
+
+  }, [token, tenant]);
+
+
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setTenant(params.get('tenant') || '');
+  }, [location.search]);
+
+
+  return loading ? <Loader /> : (
     <div className="min-h-screen bg-background p-6 font-sans">
       <div className="flex flex-col mb-10 gap-3 max-w-7xl mx-auto">
         {/* First Row */}
@@ -135,7 +130,7 @@ export default function ExecutiveSummaryPage() {
 
             {/* Summary Cards */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {summaryData.map((item, idx) => (
+              {summaryData(dasboardData).map((item, idx) => (
                 <div
                   key={idx}
                   className="rounded-xl bg-[#1C2543] px-3 py-2 text-white shadow-sm border border-[#303A60] flex flex-col justify-between h-[100px]"
@@ -220,15 +215,15 @@ export default function ExecutiveSummaryPage() {
             </div>
             <div className="w-24 h-24 mx-auto my-2">
               <CircularProgressbarWithChildren
-                value={percentage}
+                value={dasboardData?.risk_score ? (dasboardData?.risk_score / 1000) * 100 : "0"}
                 strokeWidth={10}
                 styles={buildStyles({
                   pathColor: "#FF7F0E",
                   trailColor: "#1E2A3E",
                 })}
               >
-                <p className="text-lg font-bold">1247</p>
-                <p className="text-xs text-gray-400">/ 2000</p>
+                <p className="text-lg font-bold">{dasboardData?.risk_score ? dasboardData?.risk_score : "0"}</p>
+                <p className="text-xs text-gray-400">/ 1000</p>
               </CircularProgressbarWithChildren>
             </div>
             <p className="text-xs text-center text-white mt-1">
@@ -679,6 +674,6 @@ export default function ExecutiveSummaryPage() {
           </div>
         </div>
       </div>
-    </div>   
+    </div>
   );
 }

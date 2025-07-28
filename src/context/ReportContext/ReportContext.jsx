@@ -3,33 +3,49 @@ import { AxiosHandler } from "@/config/AxiosConfig";
 
 export const ReportContext = createContext({
   riskQuantification: () => { },
+  GetRiskData: () => { },
   riskQuantificationData: [],
-  loading:false
+  loading: false,
+  dasboardData:null
 });
 
 // eslint-disable-next-line react/prop-types
 const ReportContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
-  const [riskQuantificationData, setRiskQuantificationData] = useState([])
+  const [riskQuantificationData, setRiskQuantificationData] = useState([]);
+  const [dasboardData,setDashboardData] = useState(null);
+
 
   const [page, setPage] = useState(1);
 
 
-  const riskQuantification = async (tenant) => {
+  const riskQuantification = async (tenant,page) => {
     setLoading(true)
     try {
-      const res = await AxiosHandler.get(`/data/risk-quantification?tenant=${tenant ? tenant : ""}`);
+      const res = await AxiosHandler.get(`/data/risk-quantification?page=${page}&tenant=${tenant ? tenant : ""}`);
       setRiskQuantificationData(res.data.data);
     } catch (error) {
       console.log(error)
-    } finally{
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const GetRiskData = async (tenant) => {
+    setLoading(true)
+    try {
+      const res = await AxiosHandler.get(`/vroc/risk-score?tenant=${tenant ? tenant : ""}`);
+      setDashboardData(res.data);
+    } catch (error) {
+      console.log(error)
+    } finally {
       setLoading(false)
     }
   }
 
 
   return (
-    <ReportContext.Provider value={{ loading, page, setPage, riskQuantification,riskQuantificationData }}>
+    <ReportContext.Provider value={{ loading, page, setPage, riskQuantification, riskQuantificationData,GetRiskData,dasboardData }}>
       {children}
     </ReportContext.Provider>
   );
