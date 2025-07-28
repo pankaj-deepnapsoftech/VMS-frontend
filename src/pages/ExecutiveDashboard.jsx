@@ -129,7 +129,7 @@ export default function ExecutiveSummaryPage() {
             </div>
 
             {/* Summary Cards */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-10">
               {summaryData(dasboardData).map((item, idx) => (
                 <div
                   key={idx}
@@ -218,16 +218,20 @@ export default function ExecutiveSummaryPage() {
         </div>
 
         {/* Second Row */}
-        <div className="flex flex-col lg:flex-row gap-4 w-full">
-          {/* Risk Score Overview */}
-          <div className="bg-[#161d3d] text-white rounded-2xl p-4 w-full lg:w-1/4 shadow-md border border-gray-800">
-            <div className="flex justify-between items-start mb-4">
-              <h2 className="text-lg font-semibold">Risk Score Overview</h2>
-              <button className="text-white/50 hover:text-white text-xl leading-none">
-                ⋯
-              </button>
-            </div>
-            <div className="w-24 h-24 mx-auto my-2">
+       <div className="flex flex-col gap-4 w-full">
+          {/* First Row: Risk Score, SOC vs ROC, Risk Heat Map */}
+          <div className="flex flex-col lg:flex-row gap-4 w-full">
+            {/* Risk Score Overview */}
+            <div className="bg-[#161d3d] text-white rounded-2xl p-4 w-full lg:w-1/4 shadow-md border border-gray-800">
+              <div className="flex justify-between items-start mb-4">
+                <h2 className="text-base sm:text-lg font-semibold">
+                  Risk Score Overview
+                </h2>
+                <button className="text-white/50 hover:text-white text-lg sm:text-xl leading-none">
+                  ⋯
+                </button>
+              </div>
+              <div className="w-24 h-24 mx-auto my-2">
               <CircularProgressbarWithChildren
                 value={dasboardData?.risk_score ? (dasboardData?.risk_score / 1000) * 100 : "0"}
                 strokeWidth={10}
@@ -240,42 +244,7 @@ export default function ExecutiveSummaryPage() {
                 <p className="text-xs text-gray-400">/ 1000</p>
               </CircularProgressbarWithChildren>
             </div>
-            <p className="text-xs text-center text-white mt-1">
-              Current Risk Score
-            </p>
-            <div className="flex items-center justify-center mt-2">
-              <p className="text-green-400 text-xs">↓ 12%</p>
-            </div>
-          </div>
 
-          {/* SOC vs ROC Coverage */}
-          <div className="bg-[#161d3d] text-white rounded-2xl p-4 w-full lg:w-1/4 shadow-md border border-gray-800">
-            <div className="flex justify-between items-start mb-4">
-              <h2 className="text-lg font-semibold">SOC vs ROC Coverage</h2>
-              <button className="text-white/50 hover:text-white text-xl leading-none">
-                ⋯
-              </button>
-            </div>
-            <div className="h-40">
-              <Radar data={data} options={options} />
-            </div>
-            <div className="flex gap-4 justify-center mt-2 text-xs text-white/80">
-              <div className="flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-[#4F7FFF]" /> SOC
-              </div>
-              <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto my-2">
-                <CircularProgressbarWithChildren
-                  value={dasboardData?.risk_score ? (dasboardData?.risk_score/1000)*100 : '0' }
-                  strokeWidth={10}
-                  styles={buildStyles({
-                    pathColor: "#FF7F0E",
-                    trailColor: "#1E2A3E",
-                  })}
-                >
-                  <p className="text-sm sm:text-lg font-bold">507</p>
-                  <p className="text-xs text-gray-400">/ 1000</p>
-                </CircularProgressbarWithChildren>
-              </div>
               <p className="text-xs text-center text-white mt-1">
                 Current Risk Score
               </p>
@@ -365,7 +334,7 @@ export default function ExecutiveSummaryPage() {
             </div>
           </div>
 
-          {/* Second Row: Risk Indicators */}
+          {/* Third Row */}
           <div className="bg-[#161d3d] border border-gray-800 p-4 sm:p-6 rounded-2xl w-full text-white font-sans">
             <div className="flex justify-between items-start mb-4">
               <h2 className="text-base sm:text-lg md:text-xl font-semibold">
@@ -447,6 +416,12 @@ export default function ExecutiveSummaryPage() {
             </div>
           </div>
         </div>
+
+
+
+
+
+
 
         {/* Fourth Row  */}
         <div className="flex gap-4 w-full h-[380px]">
