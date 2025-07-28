@@ -128,25 +128,13 @@ export function InfrastructureData() {
                       <tr>
                         {[
                           "S No.",
-                          "Scan Type",
-                          "Asset Type",
-                          "Threat Type",
-                          "CVE",
-                          "CVE ID",
-                          "Exploit Available",
-                          "Exploit Details",
-                          "Exploit Complexity",
-                          "Location",
                           "Title",
-                          "Description",
+                          "Scan Type",
+                          "Threat Type",
                           "Severity",
-                          "CVSS",
-                          "Reference URL",
-                          "EPSS",
                           "Asset",
-                          "Proof of Concept",
-                          "Tenant",
                           "ACS",
+                          "Status",
                           "Actions",
                         ].map((header) => (
                           <th
@@ -165,49 +153,21 @@ export function InfrastructureData() {
                           className="border-b border-slate-700 hover:bg-[#1E293B] transition"
                         >
                           <td className="px-4 py-3">{index + 1}</td>
+                          <td className="px-4 py-3">{item.Title || "-"}</td>
                           <td className="px-4 py-3">{item.scan_type || "-"}</td>
-                          <td className="px-4 py-3">
-                            {item.asset_type || "-"}
-                          </td>
                           <td className="px-4 py-3">
                             {item.threat_type || "-"}
                           </td>
-                          <td className="px-4 py-3">{item.CVE || "-"}</td>
-                          <td className="px-4 py-3">{item.CVE_ID || "-"}</td>
-                          <td className="px-4 py-3">
-                            {item.Exploit_Availale ? "Yes" : "No" || "-"}
-                          </td>
-                          <td className="px-4 py-3">
-                            {item.Exploit_Details?.length || 0}
-                          </td>
-                          <td className="px-4 py-3">
-                            {item.exploit_complexity || "-"}
-                          </td>                             
-                          <td className="px-4 py-3">{item.Location || "-"}</td>
-                          <td className="px-4 py-3">{item.Title || "-"}</td>
-                          <td className="px-4 py-3">
-                            {item.Description || "-"}
-                          </td>
+                          
                           <td className="px-4 py-3">{item.Severity || "-"}</td>
-                          <td className="px-4 py-3">{item.CVSS || "-"}</td>
+                        
                           <td className="px-4 py-3">
-                            {item.Reference_URL || "-"}
-                          </td>
-                          <td className="px-4 py-3">
-                            {(item.EPSS * 100).toFixed(2) + "%" || "-"}
-                          </td>
-                          <td className="px-4 py-3">
-                            {item.BusinessApplication?.name || "-"}
-                          </td>
-                          <td className="px-4 py-3">
-                            {item.Proof_of_Concept?.length || 0}
-                          </td>
-                          <td className="px-4 py-3">
-                            {item.creator?.company_name || "-"}
+                            {item.InfraStructureAsset?.asset_hostname || "-"}
                           </td>
                           <td className="px-4 py-3">
                             {calculateACS(item.InfraStructureAsset) || "-"}
                           </td>
+                          <td className="px-4 py-3">{item?.status || "-"}</td>
                           <td className="px-4 py-3 flex items-center mt-3 space-x-3">
                             <Pencil
                               onClick={() =>

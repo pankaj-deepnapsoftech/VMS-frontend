@@ -12,6 +12,7 @@ import Pagination from "./Pagination";
 import { IoSearch } from "react-icons/io5";
 import NoDataFound from "@/components/NoDataFound";
 import { calculateVRS } from "@/utils/vulnerableOperations";
+import { StatusModal } from "@/modals/StatusModal";
 
 export function ApplicationData() {
   const { loading, GetApplicationData, allApplicationData, DeleteData } =
@@ -77,57 +78,7 @@ export function ApplicationData() {
     setTenant(params.get("tenant") || "");
   }, [location.search]);
 
-  const StatusModal = ({ setIsModalOpen }) => {
-    const [status, setStatus] = useState("");
-    return (
-      <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-        <div className="bg-modalBg rounded-xl w-[90%] max-w-md p-6 shadow-lg">
-          {/* Close Button */}
-          <div className="flex justify-end mb-4">
-            <button
-              className="text-gray-200 hover:text-gray-500"
-              onClick={() => setIsModalOpen(false)}
-            >
-              ✕
-            </button>
-          </div>
 
-          {/* Only Status Select */}
-          <div className="mb-6 space-y-4">
-            {/* Status Select */}
-            <div>
-              <label className="block text-sm font-medium text-white mb-2">
-                Status
-              </label>
-              <select
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
-                className="w-full border border-gray-800 bg-[#1e253b] text-white rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 relative z-50"
-              >
-                <option value="">Select a status</option>
-                <option value="Open">Open</option>
-                <option value="Closed">Closed</option>
-                <option value="Re-Open">Re-Open</option>
-                <option value="False Positive">False Positive</option>
-              </select>
-            </div>
-
-            {/* Comment Textarea */}
-            <div>
-              <label className="block text-sm font-medium text-white mb-2">
-                Comment
-              </label>
-              <textarea
-                placeholder="Add your comment..."
-                rows={3}
-                className="w-full border border-gray-800 bg-[#1e253b] text-white rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -170,25 +121,13 @@ export function ApplicationData() {
                       <tr>
                         {[
                           "S No.",
-                          "Scan Type",
-                          "Asset Type",
-                          "Threat Type",
-                          "CVE",
-                          "CVE ID",
-                          "Exploit Availale",
-                          "Exploit Details",
-                          "Exploit Complexity",
-                          "Location",
                           "Title",
-                          "Description",
+                          "Scan Type",
+                          "Threat Type",
                           "Severity",
-                          "CVSS",
-                          "Reference URL",
-                          "EPSS",
                           "Asset",
-                          "Proof of Concept",
-                          "Tenant",
                           "VRS",
+                          "Status",
                           "Actions",
                         ].map((header) => (
                           <th
@@ -207,46 +146,17 @@ export function ApplicationData() {
                           className="border-b border-slate-700 hover:bg-[#1E293B] transition"
                         >
                           <td className="px-4 py-3">{index + 1}</td>
+                          <td className="px-4 py-3">{item.Title || "-"}</td>
                           <td className="px-4 py-3">{item.scan_type || "-"}</td>
                           <td className="px-4 py-3">
                             {item.asset_type || "-"}
                           </td>
-                          <td className="px-4 py-3">
-                            {item.threat_type || "-"}
-                          </td>
-                          <td className="px-4 py-3">{item.CVE || "-"}</td>
-                          <td className="px-4 py-3">{item.CVE_ID || "-"}</td>
-                          <td className="px-4 py-3">
-                            {item.Exploit_Availale ? "Yes" : "No" || "-"}
-                          </td>
-                          <td className="px-4 py-3">
-                            {item.Exploit_Details?.length || 0}
-                          </td>
-                          <td className="px-4 py-3">
-                            {item.exploit_complexity || "-"}
-                          </td>
-                          <td className="px-4 py-3">{item.Location || "-"}</td>
-                          <td className="px-4 py-3">{item.Title || "-"}</td>
-                          <td className="px-4 py-3">
-                            {item.Description || "-"}
-                          </td>
                           <td className="px-4 py-3">{item.Severity || "-"}</td>
-                          <td className="px-4 py-3">{item.CVSS || "-"}</td>
-                          <td className="px-4 py-3">
-                            {item.Reference_URL || "-"}
-                          </td>
-                          <td className="px-4 py-3">
-                            {(item.EPSS * 100).toFixed(2) + "%" || "-"}
-                          </td>
+                         
                           <td className="px-4 py-3">
                             {item.BusinessApplication?.name || "-"}
                           </td>
-                          <td className="px-4 py-3">
-                            {item.Proof_of_Concept?.length || 0}
-                          </td>
-                          <td className="px-4 py-3">
-                            {item.creator?.company_name || "-"}
-                          </td>
+                         
                           <td className="px-4 py-3">
                             {calculateVRS(
                               item.EPSS,
@@ -255,6 +165,12 @@ export function ApplicationData() {
                               item.threat_type
                             ) || "-"}
                           </td>
+
+                           <td className="px-4 py-3">
+                            {item?.status || "-"}
+                          </td>
+                          
+                          
                           <td className="px-4 py-3 flex items-center mt-3 space-x-3">
                             <Pencil
                               onClick={() =>
@@ -318,7 +234,7 @@ export function ApplicationData() {
           )}
 
           {/* STATUS MODAL */}
-          {isModalOpen && <StatusModal setIsModalOpen={setIsModalOpen} />}
+          {isModalOpen && <StatusModal setIsModalOpen={setIsModalOpen} defaultData={""}  />}
         </div>
       )}
     </Suspense>
