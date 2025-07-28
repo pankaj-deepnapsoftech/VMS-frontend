@@ -12,7 +12,7 @@ export const summaryData = (data) => {
   },
   {
     title: "Financial Exposure",
-    value: "$8.2M",
+    value: data?.financial ? `${(data?.financial/10000000)} M `: '0 M',
     change: "-8%",
     trendColor: "text-orange-400",
     icon: "/Icons/executive2.png",

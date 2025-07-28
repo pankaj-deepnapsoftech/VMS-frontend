@@ -219,7 +219,7 @@ export default function TenantDashboard() {
                             {tenant.hosting || "0"}{" "}
                           </td>
                           <td className="px-4 py-3">
-                            {tenant.data_sensitivity.tag_score || "0"}{" "}
+                            {tenant?.data_sensitivity?.tag_score || "0"}{" "}
                           </td>
 
                           <td className="py-4 px-6 text-white flex flex-wrap gap-2 w-40">
