@@ -166,5 +166,9 @@ export const PrivateRoutes = [
   {
     path:"/executivedashboard",
     element:<ExecutiveDashboard/>
-  }
+  },
+  {
+    path:"/edit-vulnerability-data",
+    element:<VulnerabilityForm/>,
+  },
 ];

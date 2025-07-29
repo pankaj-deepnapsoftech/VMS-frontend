@@ -1,21 +1,30 @@
 import { Suspense, useEffect, useState } from "react";
 import { useAuthContext, useVulnerabililtyDataContext } from "@/context";
 import Loader from "@/components/Loader/Loader";
-import { Eye, Pencil, Trash2, User } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ExpectionModal from "@/modals/ExpectionModal";
 import ExploitDetail from "@/modals/ExploitDetail";
 import useAccessPartner from "@/hooks/AccessPartner";
 import Pagination from "./Pagination";
 import NoDataFound from "@/components/NoDataFound";
-import { IoSearch } from "react-icons/io5";
+import { IoSearch, IoWarningOutline } from "react-icons/io5";
 import { calculateACS } from "@/utils/vulnerableOperations";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { PopupMenu } from "@/modals/PopupManue";
+import { MdDelete, MdModeEditOutline } from "react-icons/md";
+import { BiDetail } from "react-icons/bi";
+import { StatusModal } from "@/modals/StatusModal";
+import { GrStatusGood } from "react-icons/gr";
+
+// Popup Menu Component using Portal
+
 
 export function InfrastructureData() {
   const { loading, GetInfrastructureData, allInfrastructureData, DeleteData } =
     useVulnerabililtyDataContext();
   const { token } = useAuthContext();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,29 +32,24 @@ export function InfrastructureData() {
   const [selectedId, setSelectedId] = useState(null);
   const [exploitDetails, setExploitDetails] = useState([]);
   const [tenant, setTenant] = useState("");
-  const location = useLocation();
+  const [isStatusModalOpen, setIsStatusModalOpen] = useState(false)
+  const [status, setStatus] = useState(null)
   const { closeModal, isOpen, openModal } = useAccessPartner();
   const itemsPerPage = 10;
+
+  console.log(isOpen)
+
+  // Popup state
+  const [activeMenu, setActiveMenu] = useState(null);
+  const [menuPosition, setMenuPosition] = useState(null);
 
   const filteredData = allInfrastructureData?.filter((item) => {
     const valuesToSearch = [
       item.scan_type,
-      item.asset_type,
       item.threat_type,
-      item.CVE,
-      item.CVE_ID,
-      item.Exploit_Details?.toString(),
-      item.exploit_complexity,
-      item.Exploit_Availale,
-      item.Location,
       item.Title,
-      item.Description,
       item.Severity,
-      item.CVSS?.toString(),
-      item.Reference_URL,
       item.BusinessApplication?.name,
-      item.Proof_of_Concept?.toString(),
-      item.creator?.company_name,
     ];
 
     return valuesToSearch
@@ -70,7 +74,24 @@ export function InfrastructureData() {
     }
   };
 
-  
+  const toggleMenu = (index, e) => {
+    if (activeMenu === index) {
+      setActiveMenu(null);
+      setMenuPosition(null);
+    } else {
+      const rect = e.currentTarget.getBoundingClientRect();
+      setMenuPosition({
+        top: rect.bottom + window.scrollY,
+        left: rect.left + window.scrollX - 120,
+      });
+      setActiveMenu(index);
+    }
+  };
+
+  const closeMenu = () => {
+    setActiveMenu(null);
+    setMenuPosition(null);
+  };
 
   useEffect(() => {
     setCurrentPage(1);
@@ -102,7 +123,7 @@ export function InfrastructureData() {
             </span>
           </div>
 
-          <div className="w-full  min-h-screen p-6">
+          <div className="relative w-full min-h-screen p-6">
             <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
               {/* Header */}
               <div className="px-6 py-4 border-b border-gray-700 relative">
@@ -122,7 +143,7 @@ export function InfrastructureData() {
               {filteredData?.length < 1 ? (
                 <NoDataFound />
               ) : (
-                <div className="overflow-x-auto custom-scrollbar w-full">
+                <div className="overflow-x-auto custom-scrollbar w-full relative">
                   <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
                     <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
                       <tr>
@@ -146,21 +167,17 @@ export function InfrastructureData() {
                         ))}
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-700">
+                    <tbody className="divide-y divide-gray-700 relative">
                       {filteredData.map((item, index) => (
                         <tr
                           key={index}
-                          className="border-b border-slate-700 hover:bg-[#1E293B] transition"
+                          className="border-b border-slate-700 hover:bg-[#1E293B] transition relative"
                         >
                           <td className="px-4 py-3">{index + 1}</td>
                           <td className="px-4 py-3">{item.Title || "-"}</td>
                           <td className="px-4 py-3">{item.scan_type || "-"}</td>
-                          <td className="px-4 py-3">
-                            {item.threat_type || "-"}
-                          </td>
-                          
+                          <td className="px-4 py-3">{item.threat_type || "-"}</td>
                           <td className="px-4 py-3">{item.Severity || "-"}</td>
-                        
                           <td className="px-4 py-3">
                             {item.InfraStructureAsset?.asset_hostname || "-"}
                           </td>
@@ -168,37 +185,13 @@ export function InfrastructureData() {
                             {calculateACS(item.InfraStructureAsset) || "-"}
                           </td>
                           <td className="px-4 py-3">{item?.status || "-"}</td>
-                          <td className="px-4 py-3 flex items-center mt-3 space-x-3">
-                            <Pencil
-                              onClick={() =>
-                                navigate("/add-vulnerability-data", {
-                                  state: { data: item },
-                                })
-                              }
-                              className="w-4 h-4 text-blue-400 cursor-pointer"
-                            />
-                            <Trash2
-                              onClick={() => {
-                                const confirmDelete = window.confirm(
-                                  "Are you sure you want to delete this record?"
-                                );
-                                if (confirmDelete) {
-                                  DeleteData(item._id);
-                                }
-                              }}
-                              className="w-4 h-4 text-red-500 cursor-pointer"
-                            />
-                            <User
-                              className="w-4 h-4 text-green-500 cursor-pointer"
-                              onClick={() => handleExpectionModal(item)}
-                            />
-                            <Eye
-                              onClick={() => {
-                                setExploitDetails(item.Exploit_Details);
-                                openModal();
-                              }}
-                              className="w-4 h-4 text-lime-400 cursor-pointer"
-                            />
+                          <td className="px-4 py-3 ">
+                            <button
+                              className="hover:bg-gray-700 px-3 py-2 rounded-lg"
+                              onClick={(e) => toggleMenu(index, e)}
+                            >
+                              <BsThreeDotsVertical />
+                            </button>
                           </td>
                         </tr>
                       ))}
@@ -217,23 +210,63 @@ export function InfrastructureData() {
             </div>
           </div>
 
-          <div className="flex justify-between items-center mt-6">
-            <button
-              className="bg-slate-800 border-slate-700 text-gray-400 hover:bg-slate-700 hover:text-white px-4 py-2 rounded-lg"
-              disabled={currentPage === 1}
-              onClick={() => setCurrentPage(currentPage - 1)}
-            >
-              Previous
-            </button>
-            <span className="text-gray-300">Page {currentPage}</span>
-            <button
-              onClick={() => setCurrentPage((prev) => prev + 1)}
-              disabled={currentItems.length !== 10}
-              className="bg-slate-800 border-slate-700 text-gray-400 hover:bg-slate-700 hover:text-white px-4 py-2 rounded-lg"
-            >
-              Next
-            </button>
-          </div>
+
+          {/* Portal Popup */}
+          <PopupMenu position={menuPosition} onClose={closeMenu}>
+            {activeMenu !== null && (
+              <>
+                <li
+                  className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
+                  onClick={() =>
+                    navigate("/edit-vulnerability-data", {
+                      state: { data: filteredData[activeMenu] },
+                    })
+                  }
+                >
+                  <MdModeEditOutline /> Edit
+                </li>
+                <li
+                  className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
+                  onClick={() => {
+                    if (window.confirm("Are you sure to delete?")) {
+                      DeleteData(filteredData[activeMenu]._id);
+                      closeMenu();
+                    }
+                  }}
+                >
+                  <MdDelete /> Delete
+                </li>
+                <li
+                  className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
+                  onClick={() => {
+                    handleExpectionModal(filteredData[activeMenu]);
+                    closeMenu();
+                  }}
+                >
+                  <IoWarningOutline /> Add Exception
+                </li>
+                <li
+                  className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
+                  onClick={() => {
+                    setExploitDetails(filteredData[activeMenu]);
+                    openModal();
+                    closeMenu();
+                  }}
+                >
+                  <BiDetail />View Details
+                </li>
+                <li
+                  className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
+                  onClick={() => {
+                    setStatus({ status: filteredData[activeMenu].status, _id: filteredData[activeMenu]._id });
+                    setIsStatusModalOpen(true)
+                  }}
+                >
+                  <GrStatusGood /> Change Status
+                </li>
+              </>
+            )}
+          </PopupMenu>
 
           {isModalOpen && (
             <ExpectionModal
@@ -242,9 +275,12 @@ export function InfrastructureData() {
             />
           )}
 
-          {isOpen && (
-            <ExploitDetail links={exploitDetails} onClose={closeModal} />
+          <ExploitDetail data={exploitDetails} onClose={closeModal} isOpen={isOpen} />
+
+          {isStatusModalOpen && (
+            <StatusModal setIsModalOpen={setIsStatusModalOpen} defaultData={status} />
           )}
+
         </div>
       )}
     </Suspense>
