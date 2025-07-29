@@ -78,8 +78,6 @@ export function ApplicationData() {
     setTenant(params.get("tenant") || "");
   }, [location.search]);
 
-
-
   return (
     <Suspense fallback={<div>Loading...</div>}>
       {loading ? (
@@ -152,11 +150,11 @@ export function ApplicationData() {
                             {item.asset_type || "-"}
                           </td>
                           <td className="px-4 py-3">{item.Severity || "-"}</td>
-                         
+
                           <td className="px-4 py-3">
                             {item.BusinessApplication?.name || "-"}
                           </td>
-                         
+
                           <td className="px-4 py-3">
                             {calculateVRS(
                               item.EPSS,
@@ -166,11 +164,8 @@ export function ApplicationData() {
                             ) || "-"}
                           </td>
 
-                           <td className="px-4 py-3">
-                            {item?.status || "-"}
-                          </td>
-                          
-                          
+                          <td className="px-4 py-3">{item?.status || "-"}</td>
+
                           <td className="px-4 py-3 flex items-center mt-3 space-x-3">
                             <Pencil
                               onClick={() =>
@@ -234,7 +229,9 @@ export function ApplicationData() {
           )}
 
           {/* STATUS MODAL */}
-          {isModalOpen && <StatusModal setIsModalOpen={setIsModalOpen} defaultData={""}  />}
+          {isModalOpen && (
+            <StatusModal setIsModalOpen={setIsModalOpen} defaultData={""} />
+          )}
         </div>
       )}
     </Suspense>
