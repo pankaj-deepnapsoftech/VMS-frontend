@@ -3,33 +3,46 @@
 import { Suspense, useEffect, useState } from "react";
 import { useAuthContext, useVulnerabililtyDataContext } from "@/context";
 import Loader from "@/components/Loader/Loader";
-import { Eye, Pencil, Trash2, User } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ExpectionModal from "@/modals/ExpectionModal";
 import ExploitDetail from "@/modals/ExploitDetail";
 import useAccessPartner from "@/hooks/AccessPartner";
 import Pagination from "./Pagination";
-import { IoSearch } from "react-icons/io5";
+import { IoSearch, IoWarningOutline } from "react-icons/io5";
 import NoDataFound from "@/components/NoDataFound";
 import { calculateVRS } from "@/utils/vulnerableOperations";
 import { StatusModal } from "@/modals/StatusModal";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { BiDetail } from "react-icons/bi";
+import { MdDelete, MdModeEditOutline } from "react-icons/md";
+import { PopupMenu } from "@/modals/PopupManue";
+import { GrStatusGood } from "react-icons/gr";
 
 export function ApplicationData() {
   const { loading, GetApplicationData, allApplicationData, DeleteData } =
     useVulnerabililtyDataContext();
   const { token } = useAuthContext();
   const navigate = useNavigate();
-
-  const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedId, setSelectedId] = useState(null);
-  const [tenant, setTenant] = useState("");
   const location = useLocation();
-  const [exploitDetails, setExploitDetails] = useState([]);
-
   const { closeModal, isOpen, openModal } = useAccessPartner();
 
+  // States
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [tenant, setTenant] = useState("");
+  const [exploitDetails, setExploitDetails] = useState([]);
+  const [status,setStatus] = useState(null)
+
+  // Popup Menu States
+  const [activeMenu, setActiveMenu] = useState(null);
+  const [menuPosition, setMenuPosition] = useState(null);
+
+  // Modals
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
+  const [isStatusModalOpen,setIsStatusModalOpen] = useState(false)
+
+  // Filtered Data
   const filteredData = allApplicationData?.filter((item) => {
     const valuesToSearch = [
       item.scan_type,
@@ -58,15 +71,37 @@ export function ApplicationData() {
       );
   });
 
+  // Menu toggle logic
+  const toggleMenu = (index, e) => {
+    if (activeMenu === index) {
+      setActiveMenu(null);
+      setMenuPosition(null);
+    } else {
+      const rect = e.currentTarget.getBoundingClientRect();
+      setMenuPosition({
+        top: rect.bottom + window.scrollY,
+        left: rect.left + window.scrollX - 120,
+      });
+      setActiveMenu(index);
+    }
+  };
+
+  const closeMenu = () => {
+    setActiveMenu(null);
+    setMenuPosition(null);
+  };
+
+  // Exception Modal Handler
   const handleExpectionModal = (item) => {
     if (!item.Expection) {
       setIsModalOpen(true);
       setSelectedId(item._id);
     } else {
-      alert("Expection already exists for this record");
+      alert("Exception already exists for this record");
     }
   };
 
+  // API calls
   useEffect(() => {
     if (token) {
       GetApplicationData(currentPage, tenant);
@@ -84,6 +119,7 @@ export function ApplicationData() {
         <Loader />
       ) : (
         <div className="bg-gradient-custom min-h-screen p-4 rounded-lg text-white">
+          {/* HEADER */}
           <div className="w-full px-6">
             <h2 className="text-2xl font-semibold text-white">
               All Application Data
@@ -93,15 +129,16 @@ export function ApplicationData() {
             </span>
           </div>
 
-          <div className="w-full  min-h-screen p-6">
+          {/* TABLE WRAPPER */}
+          <div className="w-full min-h-screen p-6">
             <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
-              {/* Header */}
+              {/* SEARCH */}
               <div className="px-6 py-4 border-b border-gray-700 relative">
                 <div className="relative">
                   <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
                   <input
                     type="search"
-                    placeholder="Search users..."
+                    placeholder="Search data..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="bg-input backdrop-blur-md py-2 w-1/3 text-white ps-7 pe-3 rounded-md "
@@ -109,7 +146,7 @@ export function ApplicationData() {
                 </div>
               </div>
 
-              {/* Table */}
+              {/* TABLE */}
               {filteredData?.length < 1 ? (
                 <NoDataFound />
               ) : (
@@ -146,15 +183,11 @@ export function ApplicationData() {
                           <td className="px-4 py-3">{index + 1}</td>
                           <td className="px-4 py-3">{item.Title || "-"}</td>
                           <td className="px-4 py-3">{item.scan_type || "-"}</td>
-                          <td className="px-4 py-3">
-                            {item.asset_type || "-"}
-                          </td>
+                          <td className="px-4 py-3">{item.asset_type || "-"}</td>
                           <td className="px-4 py-3">{item.Severity || "-"}</td>
-
                           <td className="px-4 py-3">
                             {item.BusinessApplication?.name || "-"}
                           </td>
-
                           <td className="px-4 py-3">
                             {calculateVRS(
                               item.EPSS,
@@ -163,40 +196,14 @@ export function ApplicationData() {
                               item.threat_type
                             ) || "-"}
                           </td>
-
                           <td className="px-4 py-3">{item?.status || "-"}</td>
-
-                          <td className="px-4 py-3 flex items-center mt-3 space-x-3">
-                            <Pencil
-                              onClick={() =>
-                                navigate("/add-vulnerability-data", {
-                                  state: { data: item },
-                                })
-                              }
-                              className="w-4 h-4 text-blue-400 cursor-pointer"
-                            />
-                            <Trash2
-                              onClick={() => {
-                                const confirmDelete = window.confirm(
-                                  "Are you sure you want to delete this record?"
-                                );
-                                if (confirmDelete) {
-                                  DeleteData(item._id);
-                                }
-                              }}
-                              className="w-4 h-4 text-red-500 cursor-pointer"
-                            />
-                            <User
-                              className="w-4 h-4 text-green-500 cursor-pointer"
-                              onClick={() => handleExpectionModal(item)}
-                            />
-                            <Eye
-                              onClick={() => {
-                                setExploitDetails(item.Exploit_Details);
-                                openModal();
-                              }}
-                              className="w-4 h-4 text-lime-400 cursor-pointer"
-                            />
+                          <td className="px-4 py-3">
+                            <button
+                              className="hover:bg-gray-700 px-3 py-2 rounded-lg"
+                              onClick={(e) => toggleMenu(index, e)}
+                            >
+                              <BsThreeDotsVertical />
+                            </button>
                           </td>
                         </tr>
                       ))}
@@ -205,7 +212,7 @@ export function ApplicationData() {
                 </div>
               )}
 
-              {/* Footer */}
+              {/* PAGINATION */}
               <Pagination
                 page={currentPage}
                 setPage={setCurrentPage}
@@ -214,6 +221,63 @@ export function ApplicationData() {
               />
             </div>
           </div>
+
+          {/* POPUP MENU USING PORTAL */}
+          <PopupMenu position={menuPosition} onClose={closeMenu}>
+            {activeMenu !== null && (
+              <>
+                <li
+                  className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
+                  onClick={() =>
+                    navigate("/edit-vulnerability-data", {
+                      state: { data: filteredData[activeMenu] },
+                    })
+                  }
+                >
+                  <MdModeEditOutline /> Edit
+                </li>
+                <li
+                  className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
+                  onClick={() => {
+                    if (window.confirm("Are you sure to delete?")) {
+                      DeleteData(filteredData[activeMenu]._id);
+                      closeMenu();
+                    }
+                  }}
+                >
+                  <MdDelete /> Delete
+                </li>
+                <li
+                  className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
+                  onClick={() => {
+                    handleExpectionModal(filteredData[activeMenu]);
+                    closeMenu();
+                  }}
+                >
+                  <IoWarningOutline /> Add Exception
+                </li>
+                <li
+                  className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
+                  onClick={() => {
+                    setExploitDetails(filteredData[activeMenu]);
+                    openModal();
+                    closeMenu();
+                  }}
+                >
+                  <BiDetail /> View Details
+                </li>
+                 <li
+                  className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
+                  onClick={() => {
+                    setStatus({status:filteredData[activeMenu].status,_id:filteredData[activeMenu]._id});
+                    setIsStatusModalOpen(true)
+                  }}
+                >
+                  <GrStatusGood /> Change Status
+                </li>
+              </>
+            )}
+          </PopupMenu>
 
           {/* EXCEPTION MODAL */}
           {isModalOpen && (
@@ -224,13 +288,13 @@ export function ApplicationData() {
           )}
 
           {/* EXPLOIT DETAIL MODAL */}
-          {isOpen && (
-            <ExploitDetail links={exploitDetails} onClose={closeModal} />
-          )}
+          
+            <ExploitDetail data={exploitDetails} isOpen={isOpen} onClose={closeModal} />
+          
 
           {/* STATUS MODAL */}
-          {isModalOpen && (
-            <StatusModal setIsModalOpen={setIsModalOpen} defaultData={""} />
+          {isStatusModalOpen && (
+            <StatusModal setIsModalOpen={setIsStatusModalOpen} defaultData={status} />
           )}
         </div>
       )}
