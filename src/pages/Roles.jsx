@@ -106,12 +106,11 @@ const Roles = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        // Only highlighted changes are shown in comments
-        // ...
-
         <section className="min-h-screen w-full px-4 sm:px-6 py-6 sm:py-8">
+            <h1 className="text-3xl font-semibold text-white">Role Management</h1>
+            <p className="text-gray-400">Manage user roles and permissions accross the platform</p>
           {/* Top Bar */}
-          <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-4 h-auto sm:h-16 border-[#6B728033] rounded-md backdrop-blur-md bg-[#6B728033] my-6 sm:my-10 mx-0 sm:mx-5 px-4 py-4">
+          <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-4 h-auto sm:h-16 border-[#6B728033] rounded-md border-b backdrop-blur-md bg-[#6B728033] my-6 sm:my-10 mx-0 sm:mx-5 px-4 py-4">
             <input
               type="text"
               value={search}
@@ -155,87 +154,84 @@ const Roles = () => {
                   </button>
                 </div>
 
-                {/* Body */}
-             
-                  {/* Module Permissions */}
-                  <div className="rounded-lg p-4">
-                    <h3 className="text-white font-semibold text-base mb-4">
-                      Module Permissions
-                    </h3>
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-left text-sm text-gray-300">
-                        <thead className="text-xs uppercase text-gray-400 border-b border-gray-600">
-                          <tr>
-                            <th className="px-4 py-3">Module</th>
-                            {["View", "Create", "Modify", "Delete"].map(
+                {/* Module Permissions */}
+                <div className="rounded-lg p-4">
+                  <h3 className="text-white font-semibold text-base mb-4">
+                    Module Permissions    
+                  </h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-sm text-gray-300">
+                      <thead className="text-xs uppercase text-gray-400 border-b border-gray-600">
+                        <tr>
+                          <th className="px-4 py-3">Module</th>
+                          {["View", "Create", "Modify", "Delete"].map(
+                            (perm) => (
+                              <th key={perm} className="px-4 py-3">
+                                {perm}
+                              </th>
+                            )
+                          )}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {[
+                          "Asset Inventory",
+                          "TVM",
+                          "ASM",
+                          "Risk and Compliances",
+                          "Remediation Factory",
+                          "Reports",
+                          "Administration",
+                          "Remediation Factory",
+                        ].map((module, index) => (
+                          <tr
+                            key={index}
+                            className="border-b border-gray-800 hover:bg-[#1a223f]"
+                          >
+                            <td className="flex items-center gap-2 px-4 py-3">
+                              {/* Use icons if needed */}
+                              <div className="w-4 h-4 bg-gray-500 rounded" />
+                              {module}
+                            </td>
+                            {["view", "create", "modify", "delete"].map(
                               (perm) => (
-                                <th key={perm} className="px-4 py-3">
-                                  {perm}
-                                </th>
+                                <td key={perm} className="px-4 py-3">
+                                  <input
+                                    type="checkbox"
+                                    className="form-checkbox h-4 w-4 text-blue-500 bg-transparent border-gray-500"
+                                    // bind to your form state here if needed
+                                  />
+                                </td>
                               )
                             )}
                           </tr>
-                        </thead>
-                        <tbody>
-                          {[
-                            "Asset Inventory",
-                            "TVM",
-                            "ASM",
-                            "Risk and Compliances",
-                            "Remediation Factory",
-                            "Reports",
-                            "Administration",
-                            "Remediation Factory",
-                          ].map((module, index) => (
-                            <tr
-                              key={index}
-                              className="border-b border-gray-800 hover:bg-[#1a223f]"
-                            >
-                              <td className="flex items-center gap-2 px-4 py-3">
-                                {/* Use icons if needed */}
-                                <div className="w-4 h-4 bg-gray-500 rounded" />
-                                {module}
-                              </td>
-                              {["view", "create", "modify", "delete"].map(
-                                (perm) => (
-                                  <td key={perm} className="px-4 py-3">
-                                    <input
-                                      type="checkbox"
-                                      className="form-checkbox h-4 w-4 text-blue-500 bg-transparent border-gray-500"
-                                      // bind to your form state here if needed
-                                    />
-                                  </td>
-                                )
-                              )}
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
+                </div>
 
-                  {/* Buttons */}
-                  <div className="flex justify-end gap-4 mt-6">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setModal(false);
-                        formik.resetForm();
-                        setEditable(null);
-                      }}
-                      className="px-5 py-2 border border-gray-400 text-white rounded-md hover:bg-gray-700"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      disabled={isLoading}
-                      className="px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-                    >
-                      Confirm
-                    </button>
-                  </div>
-               
+                {/* Buttons */}
+                <div className="flex justify-end gap-4 mt-6">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setModal(false);
+                      formik.resetForm();
+                      setEditable(null);
+                    }}
+                    className="px-5 py-2 border border-gray-400 text-white rounded-md hover:bg-gray-700"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                  >
+                    Confirm
+                  </button>
+                </div>
               </form>
             </div>
           )}
