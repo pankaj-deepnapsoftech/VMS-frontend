@@ -132,12 +132,13 @@ const Roles = () => {
           </div>
           {/* Modal */}
           {showModal && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 transition-opacity duration-300">
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 transition-opacity duration-300">
               <form
                 onSubmit={formik.handleSubmit}
-                className="bg-input rounded-lg shadow-xl w-full max-w-lg"
+                className="bg-[#0c1128] rounded-lg shadow-xl w-full max-w-5xl"
               >
-                <div className="bg-table border-b px-6 py-4 flex justify-between items-center">
+                {/* Header */}
+                <div className="bg-[#0f172a] border-b border-gray-700 px-6 py-4 flex justify-between items-center">
                   <h2 className="text-xl font-bold text-white">
                     {editable ? "Edit Role" : "Add Role"}
                   </h2>
@@ -148,54 +149,73 @@ const Roles = () => {
                       setEditable(null);
                     }}
                     type="button"
-                    className="text-gray-300 hover:text-red-500 transition duration-200 text-xl font-bold"
+                    className="text-white hover:text-gray-500 transition duration-200 text-xl font-bold"
                   >
                     ✕
                   </button>
                 </div>
 
-                <div className="p-6 bg-[#0c1120]">
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-300 mb-1">
-                      Role Name
-                    </label>
-                    <input
-                      type="text"
-                      name="role"
-                      value={formik.values.role}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      placeholder="Enter role name"
-                      className="w-full px-3 py-2 rounded-md bg-input text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                    {formik.touched.role && formik.errors.role && (
-                      <p className="text-sm text-red-500">
-                        {formik.errors.role}
-                      </p>
-                    )}
+                {/* Body */}
+             
+                  {/* Module Permissions */}
+                  <div className="rounded-lg p-4">
+                    <h3 className="text-white font-semibold text-base mb-4">
+                      Module Permissions
+                    </h3>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left text-sm text-gray-300">
+                        <thead className="text-xs uppercase text-gray-400 border-b border-gray-600">
+                          <tr>
+                            <th className="px-4 py-3">Module</th>
+                            {["View", "Create", "Modify", "Delete"].map(
+                              (perm) => (
+                                <th key={perm} className="px-4 py-3">
+                                  {perm}
+                                </th>
+                              )
+                            )}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {[
+                            "Asset Inventory",
+                            "TVM",
+                            "ASM",
+                            "Risk and Compliances",
+                            "Remediation Factory",
+                            "Reports",
+                            "Administration",
+                            "Remediation Factory",
+                          ].map((module, index) => (
+                            <tr
+                              key={index}
+                              className="border-b border-gray-800 hover:bg-[#1a223f]"
+                            >
+                              <td className="flex items-center gap-2 px-4 py-3">
+                                {/* Use icons if needed */}
+                                <div className="w-4 h-4 bg-gray-500 rounded" />
+                                {module}
+                              </td>
+                              {["view", "create", "modify", "delete"].map(
+                                (perm) => (
+                                  <td key={perm} className="px-4 py-3">
+                                    <input
+                                      type="checkbox"
+                                      className="form-checkbox h-4 w-4 text-blue-500 bg-transparent border-gray-500"
+                                      // bind to your form state here if needed
+                                    />
+                                  </td>
+                                )
+                              )}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
 
-                  <div className="mb-4 z-[100]">
-                    <label className="block text-sm font-medium text-gray-300 mb-1">
-                      Allowed Paths
-                    </label>
-                    <Multiselect
-                      options={AllowedPaths}
-                      selectedValues={formik.values.allowed_path}
-                      onSelect={onSelect}
-                      onRemove={onRemove}
-                      displayValue="name"
-                      className="z-10 bg-input"
-                    />
-                    {formik.touched.allowed_path &&
-                      formik.errors.allowed_path && (
-                        <p className="text-sm text-red-500">
-                          {formik.errors.allowed_path}
-                        </p>
-                      )}
-                  </div>
-
-                  <div className="flex justify-end gap-3 mt-6">
+                  {/* Buttons */}
+                  <div className="flex justify-end gap-4 mt-6">
                     <button
                       type="button"
                       onClick={() => {
@@ -203,19 +223,19 @@ const Roles = () => {
                         formik.resetForm();
                         setEditable(null);
                       }}
-                      className="px-4 py-2 bg-gray-400 text-gray-800 rounded-md hover:bg-gray-500 transition"
+                      className="px-5 py-2 border border-gray-400 text-white rounded-md hover:bg-gray-700"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="px-4 py-2 bg-button hover:scale-105 transition duration-200 text-white rounded-md"
+                      className="px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
                     >
-                      Save
+                      Confirm
                     </button>
                   </div>
-                </div>
+               
               </form>
             </div>
           )}

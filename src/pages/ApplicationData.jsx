@@ -23,7 +23,7 @@ export function ApplicationData() {
     useVulnerabililtyDataContext();
   const { token } = useAuthContext();
   const navigate = useNavigate();
-  const location = useLocation();
+  const location = useLocation();     
   const { closeModal, isOpen, openModal } = useAccessPartner();
 
   // States
@@ -84,7 +84,7 @@ export function ApplicationData() {
       });
       setActiveMenu(index);
     }
-  };
+  };     
 
   const closeMenu = () => {
     setActiveMenu(null);
