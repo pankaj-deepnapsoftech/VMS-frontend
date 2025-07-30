@@ -4,11 +4,11 @@ import { AllowedPaths } from "@/constants/static.data";
 import { useAuthContext } from "@/context";
 import { RoleSchema } from "@/Validation/RoleValidations";
 import { useFormik } from "formik";
-import Multiselect from "multiselect-react-dropdown";
 import React, { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import Pagination from "./Pagination";
+import RoleModel from "@/modals/RoleModel";
 
 const Roles = () => {
   const [showModal, setModal] = useState(false);
@@ -34,41 +34,8 @@ const Roles = () => {
     }
   };
 
-  const formik = useFormik({
-    initialValues: {
-      role: editable?.role || "",
-      allowed_path: editable?.allowed_path || [],
-      _id: editable?._id || null,
-    },
-    validationSchema: RoleSchema,
-    enableReinitialize: true,
-    onSubmit: async (values) => {
-      setLoading(true);
-      try {
-        if (editable) {
-          await AxiosHandler.put(`/role/update/${values._id}`, values);
-        } else {
-          await AxiosHandler.post("/role/create", values);
-        }
-        await GetData(page);
-        setModal(false);
-        formik.resetForm();
-        setEditable(null);
-      } catch (error) {
-        console.error("Error saving role:", error);
-      } finally {
-        setLoading(false);
-      }
-    },
-  });
 
-  const onSelect = (selectedList) => {
-    formik.setFieldValue("allowed_path", selectedList);
-  };
-
-  const onRemove = (selectedList) => {
-    formik.setFieldValue("allowed_path", selectedList);
-  };
+ 
 
   const DeleteData = async (_id) => {
     if (!window.confirm("Are you sure you want to delete this role?")) return;
@@ -132,112 +99,7 @@ const Roles = () => {
           </div>
           {/* Modal */}
           {showModal && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 transition-opacity duration-300">
-              <form
-                onSubmit={formik.handleSubmit}
-                className="bg-[#0c1128] rounded-lg shadow-xl w-full max-w-5xl"
-              >
-                {/* Header */}
-                <div className="bg-[#0f172a] border-b border-gray-700 px-6 py-4 flex justify-between items-center">
-                  <h2 className="text-xl font-bold text-white">
-                    {editable ? "Edit Role" : "Add Role"}
-                  </h2>
-                  <button
-                    onClick={() => {
-                      setModal(false);
-                      formik.resetForm();
-                      setEditable(null);
-                    }}
-                    type="button"
-                    className="text-white hover:text-gray-500 transition duration-200 text-xl font-bold"
-                  >
-                    ✕
-                  </button>
-                </div>
-
-                {/* Body */}
-             
-                  {/* Module Permissions */}
-                  <div className="rounded-lg p-4">
-                    <h3 className="text-white font-semibold text-base mb-4">
-                      Module Permissions
-                    </h3>
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-left text-sm text-gray-300">
-                        <thead className="text-xs uppercase text-gray-400 border-b border-gray-600">
-                          <tr>
-                            <th className="px-4 py-3">Module</th>
-                            {["View", "Create", "Modify", "Delete"].map(
-                              (perm) => (
-                                <th key={perm} className="px-4 py-3">
-                                  {perm}
-                                </th>
-                              )
-                            )}
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {[
-                            "Asset Inventory",
-                            "TVM",
-                            "ASM",
-                            "Risk and Compliances",
-                            "Remediation Factory",
-                            "Reports",
-                            "Administration",
-                            "Remediation Factory",
-                          ].map((module, index) => (
-                            <tr
-                              key={index}
-                              className="border-b border-gray-800 hover:bg-[#1a223f]"
-                            >
-                              <td className="flex items-center gap-2 px-4 py-3">
-                                {/* Use icons if needed */}
-                                <div className="w-4 h-4 bg-gray-500 rounded" />
-                                {module}
-                              </td>
-                              {["view", "create", "modify", "delete"].map(
-                                (perm) => (
-                                  <td key={perm} className="px-4 py-3">
-                                    <input
-                                      type="checkbox"
-                                      className="form-checkbox h-4 w-4 text-blue-500 bg-transparent border-gray-500"
-                                      // bind to your form state here if needed
-                                    />
-                                  </td>
-                                )
-                              )}
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-
-                  {/* Buttons */}
-                  <div className="flex justify-end gap-4 mt-6">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setModal(false);
-                        formik.resetForm();
-                        setEditable(null);
-                      }}
-                      className="px-5 py-2 border border-gray-400 text-white rounded-md hover:bg-gray-700"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      disabled={isLoading}
-                      className="px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-                    >
-                      Confirm
-                    </button>
-                  </div>
-               
-              </form>
-            </div>
+          <RoleModel handleClose={()=>setModal(false)} />
           )}
 
           {/* Table */}
