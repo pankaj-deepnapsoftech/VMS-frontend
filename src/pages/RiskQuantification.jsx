@@ -11,7 +11,7 @@ const RiskOperation = () => {
   const { token } = useAuthContext();
   const { riskQuantification, riskQuantificationData, loading } = useReportContext()
   const [searchTerm, setSearchTerm] = useState("");
-  const [page, setPage] = useState("");
+  const [page, setPage] = useState(1);
    const [tenant, setTenant] = useState('');
 
 
@@ -99,7 +99,7 @@ const RiskOperation = () => {
                       key={user._id}
                       className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
                     >
-                      <td className="px-4 py-3">{index + 1}</td>
+                      <td className="px-4 py-3">{index + 1 + (page-1)*10}</td>
                       <td className="px-4 py-3 capitalize">{user?.BusinessApplication?.name || "Not Added"}</td>
                       <td className="px-4 py-3 capitalize">{user?.BusinessApplication?.asset_hostname || user?.InfraStructureAsset?.asset_hostname || "-"}</td>
                       <td className="px-4 py-3">{user.Title || "-"}</td>
