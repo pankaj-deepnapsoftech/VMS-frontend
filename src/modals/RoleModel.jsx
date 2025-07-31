@@ -1,23 +1,27 @@
+/* eslint-disable react/prop-types */
 import RoleConfig from '@/components/role/Config'
 import RoleTable from '@/components/role/table'
 import { useFormik } from 'formik'
-import { LucideShield } from 'lucide-react'
-import React, { useState } from 'react'
+import  { useState } from 'react'
 
-// eslint-disable-next-line react/prop-types
-const RoleModel = ({ editable, handleClose,CreateRole }) => {
+const RoleModel = ({ editable, handleClose,CreateRole,UpdateRole }) => {
 
     const [step, setStep] = useState(1);
 
     const { values, errors,touched, handleBlur, handleChange, handleSubmit,setFieldValue } = useFormik({
-        initialValues: {role:"",description:"",allowed_path:null},
+        initialValues: editable || {role:"",description:"",allowed_path:null},
+        enableReinitialize:true,
         onSubmit: (value) => {
             if (step) {
                 setStep(2);
             };
             
             if(step === 2){
-                CreateRole(value);
+                if(editable){
+                    UpdateRole(editable._id,value)
+                }else{
+                    CreateRole(value);
+                }
                 handleClose();
             };
             

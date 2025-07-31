@@ -18,12 +18,7 @@ const Roles = () => {
   const [search, setSearch] = useState("");
   const { token } = useAuthContext();
   const [page, setPage] = useState(1);
-  const itemsPerPage = 5;
 
-  const paginatedData = filteredRoles.slice(
-    (page - 1) * itemsPerPage,
-    page * itemsPerPage
-  );
 
   const pathMap = AllowedPaths.reduce((acc, path) => {
     acc[path.name] = {
@@ -33,10 +28,10 @@ const Roles = () => {
     return acc;
   }, {});
 
-  const GetData = async () => {
+  const GetData = async (page) => {
     setLoading(true);
     try {
-      const res = await AxiosHandler.get(`/role/get?page=1&limit=100`);
+      const res = await AxiosHandler.get(`/role/get?page=${page}&limit=5`);
       const roles = res?.data?.data || [];
       setRolesList(roles);
       setFilteredRoles(roles);
@@ -48,8 +43,8 @@ const Roles = () => {
   };
 
   const CreateRole = async (data) => {
-      try {
-      const res = await AxiosHandler.post(`/role/create`,data);
+    try {
+      const res = await AxiosHandler.post(`/role/create`, data);
       GetData()
       toast.success(res.data.message)
     } catch (error) {
@@ -57,9 +52,23 @@ const Roles = () => {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
- 
+   const UpdateRole = async (id,data) => {
+    try {
+      const res = await AxiosHandler.put(`/role/update/${id}`, data);
+      GetData()
+      toast.success(res.data.message)
+    } catch (error) {
+      console.error("Error fetching roles:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+
+
 
   const DeleteData = async (_id) => {
     if (!window.confirm("Are you sure you want to delete this role?")) return;
@@ -88,8 +97,8 @@ const Roles = () => {
   };
 
   useEffect(() => {
-    if (token) GetData();
-  }, [token]);
+    if (token) GetData(page);
+  }, [token,page]);
 
   return (
     <>
@@ -125,7 +134,7 @@ const Roles = () => {
 
           {/* Modal */}
           {showModal && (
-          <RoleModel handleClose={()=>setModal(false)} CreateRole={CreateRole} />
+            <RoleModel handleClose={() => setModal(false)} CreateRole={CreateRole} editable={editable} UpdateRole={UpdateRole} />
           )}
 
           {/* Table */}
@@ -154,7 +163,7 @@ const Roles = () => {
                     </tr>
                   </thead>
                   <tbody className="text-white divide-y divide-[#1e2b45]">
-                    {paginatedData.map((roleItem, idx) => (
+                    {rolesList.map((roleItem, idx) => (
                       <tr
                         key={idx}
                         className="bg-[#151c39] transition w-10 duration-200"
@@ -224,10 +233,11 @@ const Roles = () => {
 
             {/* Pagination */}
             <Pagination
-              className="bg-[#1a233c] text-white border border-gray-700 rounded-md px-4 py-2 mt-4 mx-auto flex justify-center w-fit"
               page={page}
               setPage={setPage}
-              hasNextPage={filteredRoles.length > page * itemsPerPage}
+              hasNextPage={rolesList?.length === 5}
+              total={rolesList?.length}
+              limit={5}
             />
           </div>
         </section>

@@ -1,12 +1,12 @@
 
 
 // eslint-disable-next-line react/prop-types
-const Pagination = ({ page, setPage, hasNextPage, total }) => {
+const Pagination = ({ page, setPage, hasNextPage, total,limit=10 }) => {
     return (
 
         <div className="px-6 py-4 border-t border-gray-700 flex items-center justify-between">
             <div className="text-sm text-gray-400">
-                Showing {1+(page-1)*10}-{10*page} of {total} results
+                Showing {1+(page-1)*limit}-{limit*page} of {total} results
             </div>
             <div className="flex items-center space-x-2">
                 <button className={`px-4 text-white py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm ${page <= 1 && "cursor-not-allowed"}`} disabled={page <= 1}
