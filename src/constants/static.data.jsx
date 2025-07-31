@@ -26,80 +26,119 @@ export const AllowedPaths = [
   {
     name: "Dashboard",
     value: "/",
+    color: "#E0F7FA",
+    border: "1px solid #00ACC1",
   },
   {
     name: "Scheduling Assesment",
     value: "/scheduling-assesment",
+    color: "#FFF3E0",
+    border: "1px solid #FB8C00",
   },
   {
     name: "Pending Assesment",
     value: "/pending-assesment",
+    color: "#FFFDE7",
+    border: "1px solid #FBC02D",
   },
   {
     name: "Vulnerability Data",
     value: "/vulnerability-data",
+    color: "#FCE4EC",
+    border: "1px solid #EC407A",
   },
   {
     name: "Application Data",
     value: "/application-data",
+    color: "#E3F2FD",
+    border: "1px solid #42A5F5",
   },
   {
     name: "Infrastructure Data",
     value: "/infrastructure-data",
+    color: "#E8F5E9",
+    border: "1px solid #66BB6A",
   },
   {
     name: "Users",
     value: "/all-users",
+    color: "#EDE7F6",
+    border: "1px solid #7E57C2",
   },
   {
     name: "Application Vulnerability",
     value: "/application-vulnerability",
+    color: "#FBE9E7",
+    border: "1px solid #FF7043",
   },
   {
     name: "Infrastructure Vulnerability",
     value: "/infrastructure-vulnerability",
+    color: "#F3E5F5",
+    border: "1px solid #BA68C8",
   },
   {
     name: "Exceptions",
     value: "/exceptions",
+    color: "#FFFDE7",
+    border: "1px solid #FDD835",
   },
   {
     name: "Reports",
     value: "/reports",
+    color: "#E0F2F1",
+    border: "1px solid #26A69A",
   },
   {
     name: "Remedition",
     value: "/remedition",
+    color: "#F1F8E9",
+    border: "1px solid #9CCC65",
   },
   {
     name: "InfraStructure Asset",
     value: "/infraStructure-asset",
+    color: "#ECEFF1",
+    border: "1px solid #90A4AE",
   },
   {
     name: "Business Applications",
     value: "/business_applications",
+    color: "#F9FBE7",
+    border: "1px solid #D4E157",
   },
   {
     name: "All Tenents",
     value: "/all-tenant",
+    color: "#E1F5FE",
+    border: "1px solid #29B6F6",
   },
   {
     name: "All Tasks",
     value: "/employee-tasks",
+    color: "#FFFDE7",
+    border: "1px solid #FBC02D",
   },
   {
     name: "Third Party Integrations",
     value: "/third-party-integrations",
+    color: "#E8EAF6",
+    border: "1px solid #5C6BC0",
   },
   {
     name: "Role",
     value: "/roles",
+    color: "#F3E5F5",
+    border: "1px solid #AB47BC",
   },
   {
     name: "Partners",
     value: "/partners",
+    color: "#FFEBEE",
+    border: "1px solid #EF5350",
   },
 ];
+
 
 export const ChartsColor = {
   Informational: "#A0C878",
