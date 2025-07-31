@@ -48,18 +48,16 @@ const Roles = () => {
   };
 
   const CreateRole = async (data) => {
-      try {
-      const res = await AxiosHandler.post(`/role/create`,data);
-      GetData()
-      toast.success(res.data.message)
+    try {
+      const res = await AxiosHandler.post(`/role/create`, data);
+      GetData();
+      toast.success(res.data.message);
     } catch (error) {
       console.error("Error fetching roles:", error);
     } finally {
       setLoading(false);
     }
-  }
-
- 
+  };
 
   const DeleteData = async (_id) => {
     if (!window.confirm("Are you sure you want to delete this role?")) return;
@@ -125,7 +123,10 @@ const Roles = () => {
 
           {/* Modal */}
           {showModal && (
-          <RoleModel handleClose={()=>setModal(false)} CreateRole={CreateRole} />
+            <RoleModel
+              handleClose={() => setModal(false)}
+              CreateRole={CreateRole}
+            />
           )}
 
           {/* Table */}
