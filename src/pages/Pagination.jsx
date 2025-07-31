@@ -2,7 +2,6 @@
 
 // eslint-disable-next-line react/prop-types
 const Pagination = ({ page, setPage, hasNextPage, total }) => {
-    console.log(page)
     return (
 
         <div className="px-6 py-4 border-t border-gray-700 flex items-center justify-between">
