@@ -179,7 +179,7 @@ const Roles = () => {
                             {roleItem.description || "No description provided"}
                           </p>
                         </td>
-                        <td className="px-4 py-4">
+                        <td className="px-4 w-[60%] py-4">
                           {roleItem.allowed_path?.length > 0 ? (
                             <div className="flex flex-wrap gap-2">
                               {roleItem.allowed_path
