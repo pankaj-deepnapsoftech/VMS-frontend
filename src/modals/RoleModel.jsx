@@ -61,7 +61,7 @@ const RoleModel = ({ editable, handleClose,CreateRole }) => {
             </div>
             <form
             onSubmit={handleSubmit}
-                className="bg-[#182031] rounded-lg shadow-xl max-w-5xl h-[90%] p-5 border border-[#293550] mx-auto  overflow-auto"
+                className={`bg-[#182031] rounded-lg shadow-xl max-w-5xl ${step === 2 ? "h-[90%]" : "h-fit"} p-5 border border-[#293550] mx-auto overflow-auto custom-scrollbar`}
             >
 
                 {/* Body */}
