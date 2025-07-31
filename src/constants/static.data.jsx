@@ -186,31 +186,31 @@ export const products = [
         route: "/pending-assesment",
         icon: MdOutlinePendingActions,
       },
-      {
-        title: "Application Dashboard",
-        route: "/application-vulnerability",
-        icon: MdOutlineMiscellaneousServices,
-      },
-      {
-        title: "Infrastructure Dashboard",
-        route: "/infrastructure-vulnerability",
-        icon: GrVulnerability,
-      },
-      {
-        title: "Exceptions Dashboard",
-        route: "/exceptions",
-        icon: AiOutlineException,
-      },
+      // {
+      //   title: "Application Dashboard",
+      //   route: "/application-vulnerability",
+      //   icon: MdOutlineMiscellaneousServices,
+      // },
+      // {
+      //   title: "Infrastructure Dashboard",
+      //   route: "/infrastructure-vulnerability",
+      //   icon: GrVulnerability,
+      // },
+      // {
+      //   title: "Exceptions Dashboard",
+      //   route: "/exceptions",
+      //   icon: AiOutlineException,
+      // },
       {
         title: "Pending Exceptions",
         route: "/pending-exception",
         icon: MdInventory2,
       },
-      {
-        title: "Demo",
-        route: "/demo",
-        icon: MdSlowMotionVideo,
-      },
+      // {
+      //   title: "Demo",
+      //   route: "/demo",
+      //   icon: MdSlowMotionVideo,
+      // },
     ],
   },
   {
@@ -264,12 +264,12 @@ export const products = [
     borderColor: "#6a11cb",
     icon: "/Icons/Component 4.png",
     allowedPath: [
-      {
-        title: "Remedition",
-        route: "/remedition",
-        icon: SiWikimediafoundation,
-      },
-      { title: "Vulnerability Data", route: "/vulnerability-data", icon: Bug },
+      // {
+      //   title: "Remedition",
+      //   route: "/remedition",
+      //   icon: SiWikimediafoundation,
+      // },
+      // { title: "Vulnerability Data", route: "/vulnerability-data", icon: Bug },
       {
         title: "Add Vulnerability Data",
         route: "/add-vulnerability-data",
@@ -307,7 +307,7 @@ export const products = [
         route: "/third-party-integrations",
         icon: MdWifiTetheringErrorRounded,
       },
-      { title: "Config Email", route: "/config-email", icon: Settings },
+      // { title: "Config Email", route: "/config-email", icon: Settings },
       { title: "Role", route: "/roles", icon: LucideShield },
       { title: "Partners", route: "/partners", icon: Users },
       { title: "Tag Config", route: "/tags", icon: MdInventory2 },
