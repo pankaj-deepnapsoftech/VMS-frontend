@@ -1,11 +1,11 @@
+/* eslint-disable react/prop-types */
 import RoleConfig from "@/components/role/Config";
 import RoleTable from "@/components/role/table";
 import { useFormik } from "formik";
 import { LucideShield } from "lucide-react";
 import React, { useState } from "react";
 
-// eslint-disable-next-line react/prop-types
-const RoleModel = ({ editable, handleClose, CreateRole }) => {
+const RoleModel = ({ editable, handleClose, CreateRole, UpdateRole }) => {
   const [step, setStep] = useState(1);
 
   const {
@@ -17,14 +17,23 @@ const RoleModel = ({ editable, handleClose, CreateRole }) => {
     handleSubmit,
     setFieldValue,
   } = useFormik({
-    initialValues: { role: "", description: "", allowed_path: null      },
+    initialValues: editable || {
+      role: "",
+      description: "",
+      allowed_path: null,
+    },
+    enableReinitialize: true,
     onSubmit: (value) => {
       if (step) {
         setStep(2);
       }
 
       if (step === 2) {
-        CreateRole(value);
+        if (editable) {
+          UpdateRole(editable._id, value);
+        } else {
+          CreateRole(value);
+        }
         handleClose();
       }
     },
@@ -49,10 +58,10 @@ const RoleModel = ({ editable, handleClose, CreateRole }) => {
           <div
             className={`bg-blue-500 h-10 w-10 rounded-full text-2xl text-white font-bold flex items-center justify-center`}
           >
-            {" "}     
+            {" "}
             1
           </div>
-          <div className="relative h-1 w-20 bg-white overflow-hidden">      
+          <div className="relative h-1 w-20 bg-white overflow-hidden">
             <div
               className={`absolute top-0 left-0 h-full transition-all duration-700 ease-in-out ${
                 step > 1 ? "w-full bg-blue-500" : "w-0"
