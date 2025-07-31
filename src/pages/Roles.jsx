@@ -28,6 +28,8 @@ const Roles = () => {
     return acc;
   }, {});
 
+  console.log("this si path map",pathMap)
+
   const GetData = async (page) => {
     setLoading(true);
     try {
@@ -184,13 +186,14 @@ const Roles = () => {
                                 .slice(0, 5)
                                 .map((path, i) => {
                                   const style = pathMap[path.name] || {
-                                    bgColor: "bg-blue-600/80",
+                                    bgColor: `bg-blue-600/80`,
                                     textColor: "text-white",
+                                    border:``
                                   };
                                   return (
                                     <span
                                       key={i}
-                                      className={`px-3 py-1 rounded text-xs font-medium ${style.bgColor} ${style.textColor}`}
+                                      className={`px-3 py-1 rounded text-xs font-medium ${style.bgColor} ${style.textColor} ${style.border}`}
                                     >
                                       {path.name}
                                     </span>

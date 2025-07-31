@@ -26,13 +26,14 @@ export const AllowedPaths = [
   {
     name: "Dashboard",
     value: "/",
-    color: "#E0F7FA",
+    bgColor: "bg-[#E0F7FA]",
     border: "1px solid #00ACC1",
+    textColor:"text-black"
   },
   {
     name: "Scheduling Assesment",
     value: "/scheduling-assesment",
-    color: "#FFF3E0",
+    color: "bg-[#FFF3E0]",
     border: "1px solid #FB8C00",
   },
   {
