@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { FiEdit2, FiMoreVertical, FiTrash2 } from "react-icons/fi";
 import Pagination from "./Pagination";
+import toast from "react-hot-toast";
 
 const Roles = () => {
   const [showModal, setModal] = useState(false);
@@ -45,6 +46,20 @@ const Roles = () => {
       setLoading(false);
     }
   };
+
+  const CreateRole = async (data) => {
+      try {
+      const res = await AxiosHandler.post(`/role/create`,data);
+      GetData()
+      toast.success(res.data.message)
+    } catch (error) {
+      console.error("Error fetching roles:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+ 
 
   const DeleteData = async (_id) => {
     if (!window.confirm("Are you sure you want to delete this role?")) return;
@@ -110,10 +125,7 @@ const Roles = () => {
 
           {/* Modal */}
           {showModal && (
-            <RoleModel
-              handleClose={() => setModal(false)}
-              editable={editable}
-            />
+          <RoleModel handleClose={()=>setModal(false)} CreateRole={CreateRole} />
           )}
 
           {/* Table */}
