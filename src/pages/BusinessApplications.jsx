@@ -467,8 +467,7 @@ export default function BusinessApplications() {
                       </option>
                       {values.country &&
                         countryData
-                          .filter((item) => item.name === values.country)[0]
-                          .states.map((item, index) => (
+                          .filter((item) => item.name === values.country)[0]?.states.map((item, index) => (
                             <option key={index} value={item.name}>
                               {item.name}
                             </option>
