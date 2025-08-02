@@ -16,6 +16,7 @@ import {
   ReportContextProvider,
   SchedulingAssesmentContextProvider,
   TagsContextProvider,
+  TVMCardsContextProvider,
   VulnerabililtyDataContextProvider,
 } from "./context";
 import AppSoftContextProvider from "./context/ApplicationSoftwareInventoryContext/ApplicationSoftwareInventoryContext";
@@ -35,11 +36,13 @@ createRoot(document.getElementById("root")).render(
                         <InfrastructureVulnerabilityContextProvider>
                           <AppSoftContextProvider>
                             <InfraAssetContextProvider>
-                              <TagsContextProvider>
+                                                          <TagsContextProvider>
+                              <TVMCardsContextProvider>
                                 <ReportContextProvider>
                                   <App />
                                 </ReportContextProvider>
-                              </TagsContextProvider>
+                              </TVMCardsContextProvider>
+                            </TagsContextProvider>
                             </InfraAssetContextProvider>
                           </AppSoftContextProvider>
                         </InfrastructureVulnerabilityContextProvider>

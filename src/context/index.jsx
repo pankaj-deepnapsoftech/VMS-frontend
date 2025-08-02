@@ -14,6 +14,7 @@ import { ReportContext } from "./ReportContext/ReportContext";
 import { InfrastructureVulnerabilityContext } from "./InfrastructureVulnerabilityContext/InfrastructureVulnerabilityContext";
 import { InfraAssetContext } from "./InfraAssetContext/InfraAssetContext"; 
 import { TagsContext } from "./TagsContext/TagsContext";
+import { TVMCardsContext } from "./TVMCardsContext/TVMCardsContext";
 
 
 
@@ -36,6 +37,7 @@ export {default as InfraAssetContextProvider} from "./InfraAssetContext/InfraAss
 
 export { default as TagsContextProvider } from "./TagsContext/TagsContext";
 export {default as ReportContextProvider } from "./ReportContext/ReportContext";
+export { default as TVMCardsContextProvider } from "./TVMCardsContext/TVMCardsContext";
 
 
 
@@ -56,6 +58,7 @@ export const useInfrastructureVulnerabilityContext = () =>	useContext(Infrastruc
 export const useInfraAssetContext = () => useContext(InfraAssetContext)
 export const useTagsContext = () => useContext(TagsContext);
 export const useReportContext=()=> useContext(ReportContext);
+export const useTVMCardsContext = () => useContext(TVMCardsContext);
 
 
 

@@ -11,6 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { useTVMCardsContext } from "../context";
 
 const data = [
   { name: "Critical", green: 2, yellow: 4, red: 1 },
@@ -31,38 +32,7 @@ ChartJS.register(
   Legend
 );
 
-const cardData = [
-  {
-    title: "Applications",
-    value: "153",
-    icon: "/Icons/TVM1.png",
-    color: "#3B82F6",
-  },
-  {
-    title: "Infrastructure IPs",
-    value: "0",
-    icon: "/Icons/TVM2.png",
-    color: "#22C55E",
-  },
-  {
-    title: "Total Vulnerabilities",
-    value: "159",
-    icon: "/Icons/TVM3.png",
-    color: "#EF4444",
-  },
-  {
-    title: "Remediated",
-    value: "4",
-    icon: "/Icons/TVM4.png",
-    color: "#10B981",
-  },
-  {
-    title: "Exceptions",
-    value: "8",
-    icon: "/Icons/TVM5.png",
-    color: "#F59E0B",
-  },
-];
+// This will be replaced with dynamic data from API
 
 const vulnerabilityData = [
   { label: "Open", value: 50, color: "#EF4444" },
@@ -79,6 +49,42 @@ const InventoryData = [
 ];
 
 const DashboardCards = () => {
+  const { tvmCardsData, loading } = useTVMCardsContext();
+  
+  // Create dynamic card data from API
+  const cardData = [
+    {
+      title: "Applications",
+      value: tvmCardsData.applications.toString(),
+      icon: "/Icons/TVM1.png",
+      color: "#3B82F6",
+    },
+    {
+      title: "Infrastructure IPs",
+      value: tvmCardsData.infrastructureIPs.toString(),
+      icon: "/Icons/TVM2.png",
+      color: "#22C55E",
+    },
+    {
+      title: "Total Vulnerabilities",
+      value: tvmCardsData.totalVulnerabilities.toString(),
+      icon: "/Icons/TVM3.png",
+      color: "#EF4444",
+    },
+    {
+      title: "Remediated",
+      value: tvmCardsData.remediated.toString(),
+      icon: "/Icons/TVM4.png",
+      color: "#10B981",
+    },
+    {
+      title: "Exceptions",
+      value: tvmCardsData.exceptions.toString(),
+      icon: "/Icons/TVM5.png",
+      color: "#F59E0B",
+    },
+  ];
+
   // Total Vulnerabilities (for Doughnut center text)
   const total = vulnerabilityData.reduce((sum, item) => sum + item.value, 0);
   const totall = InventoryData.reduce((sum, item) => sum + item.value, 0);
@@ -250,32 +256,49 @@ const DashboardCards = () => {
 
       {/* Cards */}
       <div className="w-full">
-        <div
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8 min-w-[300px] sm:min-w-0"
-          style={{ minWidth: "fit-content" }}
-        >
-          {cardData.map((card, index) => (
-            <div
-              key={index}
-              className="bg-[#161e3e] rounded-xl px-4 py-4 shadow-md border border-gray-800 hover:shadow-lg transition-shadow flex flex-col items-start min-w-[200px] sm:min-w-0"
-            >
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 flex items-center justify-center rounded-md">
-                  <img src={card.icon} alt={card.title} className="w-7 h-7" />
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+            {[...Array(5)].map((_, index) => (
+              <div
+                key={index}
+                className="bg-[#161e3e] rounded-xl px-4 py-4 shadow-md border border-gray-800 animate-pulse"
+              >
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 bg-gray-600 rounded-md"></div>
+                  <div className="h-4 bg-gray-600 rounded w-20"></div>
                 </div>
-                <p
-                  className="text-sm font-medium whitespace-nowrap"
-                  style={{ color: card.color }}
-                >
-                  {card.title}
+                <div className="h-6 bg-gray-600 rounded w-12 mt-3"></div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8 min-w-[300px] sm:min-w-0"
+            style={{ minWidth: "fit-content" }}
+          >
+            {cardData.map((card, index) => (
+              <div
+                key={index}
+                className="bg-[#161e3e] rounded-xl px-4 py-4 shadow-md border border-gray-800 hover:shadow-lg transition-shadow flex flex-col items-start min-w-[200px] sm:min-w-0"
+              >
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 flex items-center justify-center rounded-md">
+                    <img src={card.icon} alt={card.title} className="w-7 h-7" />
+                  </div>
+                  <p
+                    className="text-sm font-medium whitespace-nowrap"
+                    style={{ color: card.color }}
+                  >
+                    {card.title}
+                  </p>
+                </div>
+                <p className="text-xl font-semibold text-white mt-3 ml-1">
+                  {card.value}
                 </p>
               </div>
-              <p className="text-xl font-semibold text-white mt-3 ml-1">
-                {card.value}
-              </p>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* First Row */}
