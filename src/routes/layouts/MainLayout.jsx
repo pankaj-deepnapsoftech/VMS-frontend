@@ -71,7 +71,7 @@ const MainLayout = () => {
 
   const handleSelect = ({ value, label }) => {
     setTenantId(value);
-    setTenant(label);
+    setTenant({label,value});
     getHomeCardData(value);
     VulnerableItemsByRiskRating(value);
     GetExploitability(value);
@@ -174,7 +174,7 @@ const MainLayout = () => {
     const params = new URLSearchParams(window.location.search);
     const data = TenantAllData.filter((item)=>item.value === params.get("tenant"))[0];
     if(data){
-      setTenant(data.label);
+      setTenant(data);
     }
   }, [location.search]);
 
@@ -213,6 +213,7 @@ const MainLayout = () => {
                     classNamePrefix="select"
                     defaultValue={tenant}
                     onChange={handleSelect}
+                    value={tenant}
                     isSearchable={true}
                     options={TenantAllData}
                     theme={darkTheme}
