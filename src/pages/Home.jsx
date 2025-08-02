@@ -1,24 +1,9 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { Doughnut, Line } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Filler,
-  ArcElement,
-  Tooltip,
-  Legend,
-} from "chart.js";
-import { useTVMCardsContext } from "../context";
+import {  Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Filler, ArcElement, Tooltip, Legend} from "chart.js";
+import { useAuthContext, useDataContext, useTVMCardsContext } from "../context";
+import {  CardsData, firstChartDatady, SecondChartDatady } from "@/constants/dynomic.data";
 
-const data = [
-  { name: "Critical", green: 2, yellow: 4, red: 1 },
-  { name: "High", green: 5, yellow: 6, red: 2 },
-  { name: "Medium", green: 9, yellow: 11, red: 4 },
-  { name: "Low", green: 11, yellow: 14, red: 5 },
-];
 
 // Register Chart.js components once
 ChartJS.register(
@@ -32,14 +17,8 @@ ChartJS.register(
   Legend
 );
 
-// This will be replaced with dynamic data from API
 
-const vulnerabilityData = [
-  { label: "Open", value: 50, color: "#EF4444" },
-  { label: "Closed", value: 67, color: "#22C55E" },
-  { label: "Re Open", value: 25, color: "#F97316" },
-  { label: "On Hold", value: 8, color: "#3B82F6" },
-];
+
 
 const InventoryData = [
   { label: "App assessed", value: 30, color: "#EF4444" },
@@ -49,105 +28,34 @@ const InventoryData = [
 ];
 
 const DashboardCards = () => {
+  const {token} = useAuthContext()
   const { tvmCardsData, loading } = useTVMCardsContext();
-  
-  // Create dynamic card data from API
-  const cardData = [
-    {
-      title: "Applications",
-      value: tvmCardsData.applications.toString(),
-      icon: "/Icons/TVM1.png",
-      color: "#3B82F6",
-    },
-    {
-      title: "Infrastructure IPs",
-      value: tvmCardsData.infrastructureIPs.toString(),
-      icon: "/Icons/TVM2.png",
-      color: "#22C55E",
-    },
-    {
-      title: "Total Vulnerabilities",
-      value: tvmCardsData.totalVulnerabilities.toString(),
-      icon: "/Icons/TVM3.png",
-      color: "#EF4444",
-    },
-    {
-      title: "Remediated",
-      value: tvmCardsData.remediated.toString(),
-      icon: "/Icons/TVM4.png",
-      color: "#10B981",
-    },
-    {
-      title: "Exceptions",
-      value: tvmCardsData.exceptions.toString(),
-      icon: "/Icons/TVM5.png",
-      color: "#F59E0B",
-    },
-  ];
+  const { GetFirstChart,firstChartData, GetSecondChart,
+        secondChartData} = useDataContext();
 
-  // Total Vulnerabilities (for Doughnut center text)
-  const total = vulnerabilityData.reduce((sum, item) => sum + item.value, 0);
+
+  // usestats
+    const [tenant, setTenant] = useState("");
+
+  
+ 
   const totall = InventoryData.reduce((sum, item) => sum + item.value, 0);
 
   // Doughnut Chart Data
   const doughnutData = {
-    labels: vulnerabilityData.map((item) => item.label),
+    labels: firstChartDatady(firstChartData).map((item) => item.label),
     datasets: [
       {
-        data: vulnerabilityData.map((item) => item.value),
-        backgroundColor: vulnerabilityData.map((item) => item.color),
+        data: firstChartDatady(firstChartData).map((item) => item.value),
+        backgroundColor: firstChartDatady(firstChartData).map((item) => item.color),
         borderWidth: 0,
       },
     ],
   };
 
+
   // Line Chart Data
-  const labels = ["Apr", "May", "Jun", "Jul"];
-  const lineData = {
-    labels,
-    datasets: [
-      {
-        label: "Critical",
-        data: [45, 40, 35, 32],
-        borderColor: "#EF4444",
-        backgroundColor: "rgba(239,68,68,0.3)",
-        fill: true,
-        tension: 0.4,
-      },
-      {
-        label: "High",
-        data: [30, 32, 33, 34],
-        borderColor: "#F97316",
-        backgroundColor: "rgba(249,115,22,0.3)",
-        fill: true,
-        tension: 0.4,
-      },
-      {
-        label: "Medium",
-        data: [20, 22, 23, 22],
-        borderColor: "#FACC15",
-        backgroundColor: "rgba(250,204,21,0.3)",
-        fill: true,
-        tension: 0.4,
-      },
-      {
-        label: "Low",
-        data: [10, 12, 14, 15],
-        borderColor: "#22C55E",
-        backgroundColor: "rgba(34,197,94,0.3)",
-        fill: true,
-        tension: 0.4,
-      },
-      {
-        label: "Informational",
-        data: [7, 8, 9, 10],
-        borderColor: "#3B82F6",
-        backgroundColor: "rgba(59,130,246,0.3)",
-        fill: true,
-        tension: 0.4,
-      },
-    ],
-  };
+ 
 
   // Line Chart Options
   const lineOptions = {
@@ -243,6 +151,18 @@ const DashboardCards = () => {
 
   const maxY = 16;
 
+  useEffect(()=>{
+    if(token){
+      GetFirstChart(tenant);
+      GetSecondChart(tenant);
+    }
+  },[token,tenant])
+
+   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setTenant(params.get("tenant") || "");
+  }, [location.search]);
+
   return (
     <div className="w-full px-4 sm:px-6">
       {/* Search bar */}
@@ -276,7 +196,7 @@ const DashboardCards = () => {
             className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8 min-w-[300px] sm:min-w-0"
             style={{ minWidth: "fit-content" }}
           >
-            {cardData.map((card, index) => (
+            {CardsData(tvmCardsData).map((card, index) => (
               <div
                 key={index}
                 className="bg-[#161e3e] rounded-xl px-4 py-4 shadow-md border border-gray-800 hover:shadow-lg transition-shadow flex flex-col items-start min-w-[200px] sm:min-w-0"
@@ -326,7 +246,7 @@ const DashboardCards = () => {
               }}
             />
             <div className="absolute flex flex-col items-center">
-              <p className="text-white text-lg font-bold">{total}</p>
+              <p className="text-white text-lg font-bold">{firstChartData?.total}</p>
               <p className="text-gray-400 text-xs">Total</p>
             </div>
           </div>
@@ -335,7 +255,7 @@ const DashboardCards = () => {
           <div className="grid grid-cols-2 gap-y-2 mt-3">
             {/* Column 1 */}
             <div className="flex flex-col items-start gap-2 pl-4 sm:pl-6">
-              {vulnerabilityData.slice(0, 2).map((item, idx) => (
+              {firstChartDatady().slice(0, 2).map((item, idx) => (
                 <div key={idx} className="flex items-center gap-2">
                   <span
                     className="w-2.5 h-2.5 rounded-full"
@@ -350,7 +270,7 @@ const DashboardCards = () => {
             </div>
             {/* Column 2 */}
             <div className="flex flex-col items-start gap-2">
-              {vulnerabilityData.slice(2, 4).map((item, idx) => (
+              {firstChartDatady().slice(2, 4).map((item, idx) => (
                 <div key={idx} className="flex items-center gap-2">
                   <span
                     className="w-2.5 h-2.5 rounded-full"
@@ -385,7 +305,7 @@ const DashboardCards = () => {
           {/* Line Chart Container */}
           <div className="w-full h-[150px] md:h-[160px] overflow-hidden">
             <Line
-              data={lineData}
+              data={SecondChartDatady(secondChartData)}
               options={{
                 ...lineOptions,
                 maintainAspectRatio: false,
@@ -396,7 +316,7 @@ const DashboardCards = () => {
 
           {/* Legend */}
           <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mt-4">
-            {lineData.datasets.map((ds, idx) => (
+            {SecondChartDatady(secondChartData).datasets.map((ds, idx) => (
               <div key={idx} className="flex items-center gap-2">
                 <span
                   className="w-3 h-3 rounded-full"

@@ -8,12 +8,15 @@ import toast from "react-hot-toast";
 export const DataContext = createContext();
 
 const DataContextProvider = ({ children }) => {
-  const [loading, setLoading] = useState(false);
-  const [TenantAllData, setTenantAllData] = useState([])
-
-  const [partners, setPartners] = useState([]);
-
   const { token } = useAuthContext();
+
+  // useState
+  const [loading, setLoading] = useState(false);
+  const [TenantAllData, setTenantAllData] = useState([]);
+  const [firstChartData,setFirstChartData] = useState(null);
+  const [partners, setPartners] = useState([]);
+  const [secondChartData,setSecondChartData] = useState(null);
+
 
 
   const UploadBulkData = async (data) => {
@@ -59,6 +62,24 @@ const DataContextProvider = ({ children }) => {
     }
   };
 
+  const GetFirstChart = async (tenant) => {
+    try {
+      const res = await AxiosHandler.get(`/data/tvm-first-chart?tenant=${tenant ? tenant : ""}`);
+      setFirstChartData(res?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
+   const GetSecondChart = async (tenant) => {
+    try {
+      const res = await AxiosHandler.get(`/data/tvm-second-chart?tenant=${tenant ? tenant : ""}`);
+      setSecondChartData(res?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
 
 
@@ -74,7 +95,11 @@ const DataContextProvider = ({ children }) => {
         loading,
         UploadBulkData,
         TenantAllData,
-        partners
+        partners,
+        GetFirstChart,
+        firstChartData,
+        GetSecondChart,
+        secondChartData
       }}
     >
       {children}
