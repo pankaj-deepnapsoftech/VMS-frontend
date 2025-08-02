@@ -19,7 +19,6 @@ const Roles = () => {
   const { token } = useAuthContext();
   const [page, setPage] = useState(1);
 
-
   const pathMap = AllowedPaths.reduce((acc, path) => {
     acc[path.name] = {
       bgColor: path.bgColor || "bg-blue-600/80",
@@ -28,7 +27,7 @@ const Roles = () => {
     return acc;
   }, {});
 
-  console.log("this si path map",pathMap)
+  console.log("this si path map", pathMap);
 
   const GetData = async (page) => {
     setLoading(true);
@@ -47,8 +46,8 @@ const Roles = () => {
   const CreateRole = async (data) => {
     try {
       const res = await AxiosHandler.post(`/role/create`, data);
-      GetData()
-      toast.success(res.data.message)
+      GetData();
+      toast.success(res.data.message);
     } catch (error) {
       console.error("Error fetching roles:", error);
     } finally {
@@ -56,21 +55,17 @@ const Roles = () => {
     }
   };
 
-   const UpdateRole = async (id,data) => {
+  const UpdateRole = async (id, data) => {
     try {
       const res = await AxiosHandler.put(`/role/update/${id}`, data);
-      GetData()
-      toast.success(res.data.message)
+      GetData();
+      toast.success(res.data.message);
     } catch (error) {
       console.error("Error fetching roles:", error);
     } finally {
       setLoading(false);
     }
   };
-
-
-
-
 
   const DeleteData = async (_id) => {
     if (!window.confirm("Are you sure you want to delete this role?")) return;
@@ -100,7 +95,7 @@ const Roles = () => {
 
   useEffect(() => {
     if (token) GetData(page);
-  }, [token,page]);
+  }, [token, page]);
 
   return (
     <>
@@ -136,7 +131,12 @@ const Roles = () => {
 
           {/* Modal */}
           {showModal && (
-            <RoleModel handleClose={() => setModal(false)} CreateRole={CreateRole} editable={editable} UpdateRole={UpdateRole} />
+            <RoleModel
+              handleClose={() => setModal(false)}
+              CreateRole={CreateRole}
+              editable={editable}
+              UpdateRole={UpdateRole}
+            />
           )}
 
           {/* Table */}
@@ -188,7 +188,7 @@ const Roles = () => {
                                   const style = pathMap[path.name] || {
                                     bgColor: `bg-blue-600/80`,
                                     textColor: "text-white",
-                                    border:``
+                                    border: ``,
                                   };
                                   return (
                                     <span
@@ -219,13 +219,13 @@ const Roles = () => {
                                 setEditable(roleItem);
                                 setModal(true);
                               }}
-                            />
+                            /> 
                             <FiTrash2
                               className="cursor-pointer text-gray-300 hover:text-red-500"
                               onClick={() => DeleteData(roleItem._id)}
                             />
                             <FiMoreVertical className="cursor-pointer text-gray-300 hover:text-gray-100" />
-                          </div>
+                          </div>  
                         </td>
                       </tr>
                     ))}
