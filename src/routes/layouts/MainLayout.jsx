@@ -174,7 +174,7 @@ const MainLayout = () => {
     const params = new URLSearchParams(window.location.search);
     const data = TenantAllData.filter((item)=>item.value === params.get("tenant"))[0];
     if(data){
-      setTenant(data);
+      setTenant(data.label);
     }
   }, [location.search]);
 
