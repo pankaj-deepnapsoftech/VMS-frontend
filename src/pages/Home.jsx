@@ -108,12 +108,12 @@ const DashboardCards = () => {
 
   const vulnerableData = [
     {
-      label: "Overdue Critical / High Vulnerable Items",
+      label: "Critical Vulnerable Items",
       value: 85,
       color: "bg-red-500",
     },
     {
-      label: "by Assignment Group",
+      label: "High Vulnerable Items",
       value: 65,
       color: "bg-orange-500",
     },
