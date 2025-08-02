@@ -14,16 +14,16 @@ const TVMCardsContextProvider = ({ children }) => {
     remediated: 0,
     exceptions: 0,
   });
+  const [currentTenantId, setCurrentTenantId] = useState("");
   const { token } = useAuthContext();
 
-  const getTVMCardsData = async () => {
+  const getTVMCardsData = async (tenantId = "") => {
     setLoading(true);
     try {
-      const res = await AxiosHandler.get("/data/tvm-cards");
+      const params = tenantId ? { tenant: tenantId } : {};
+      const res = await AxiosHandler.get("/data/tvm-cards", { params });
       const data = res.data;
 
-      
-      
       // Transform the API response to match the frontend structure
       setTvmCardsData({
         applications: data.businessApplication || 0,
@@ -32,6 +32,7 @@ const TVMCardsContextProvider = ({ children }) => {
         remediated: data.Remediated || 0,
         exceptions: data.expections || 0,
       });
+      setCurrentTenantId(tenantId);
     } catch (error) {
       console.error("Error fetching TVM cards data:", error);
       toast.error("Failed to load dashboard data");
@@ -46,8 +47,8 @@ const TVMCardsContextProvider = ({ children }) => {
     }
   }, [token]);
 
-  const refreshTVMCardsData = () => {
-    getTVMCardsData();
+  const refreshTVMCardsData = (tenantId = "") => {
+    getTVMCardsData(tenantId);
   };
 
   return (
@@ -56,6 +57,7 @@ const TVMCardsContextProvider = ({ children }) => {
         tvmCardsData,
         loading,
         refreshTVMCardsData,
+        currentTenantId,
       }}
     >
       {children}

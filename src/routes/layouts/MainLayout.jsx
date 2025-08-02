@@ -14,6 +14,7 @@ import {
   useAuthContext,
   useDataContext,
   useVulnerabililtyDataContext,
+  useTVMCardsContext,
 } from "@/context";
 import UserProfile from "@/pages/UserProfile";
 import ChangePasswordModal from "@/modals/ChangePasswordModal";
@@ -40,16 +41,10 @@ const MainLayout = () => {
     setShowUserMenu,
   } = useAuthContext();
   const {
-    getHomeCardData,
-    VulnerableItemsByRiskRating,
-    GetExploitability,
-    ClosevulnerableItems,
-    CriticalHighVulnerable,
-    CriticalHighVulnerableOverdue,
-    VulnerableItemsByAge,
-    NewAndCloseVulnerable,
     TenantAllData,
   } = useDataContext();
+
+  const { refreshTVMCardsData } = useTVMCardsContext();
 
 
   const { isOpen, openModal, closeModal } = useChangePassword();
@@ -72,14 +67,7 @@ const MainLayout = () => {
   const handleSelect = ({ value, label }) => {
     setTenantId(value);
     setTenant({label,value});
-    getHomeCardData(value);
-    VulnerableItemsByRiskRating(value);
-    GetExploitability(value);
-    ClosevulnerableItems(value);
-    CriticalHighVulnerable(value);
-    CriticalHighVulnerableOverdue(value);
-    VulnerableItemsByAge(value);
-    NewAndCloseVulnerable(value);
+    refreshTVMCardsData(value);
   };
 
   useEffect(() => {
