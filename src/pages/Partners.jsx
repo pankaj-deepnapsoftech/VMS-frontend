@@ -120,7 +120,7 @@ const Partners = () => {
                 setModal(true);
                 setEdittable(null);
               }}
-              className="flex items-center gap-2 px-6 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium whitespace-nowrap"
+              className="flex items-center gap-2 px-6 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium whitespace-nowrap" 
             >
               <BiPlus className="h-5 w-5" />
               Add Partners
@@ -133,7 +133,7 @@ const Partners = () => {
               showModal ? "opacity-100 visible" : "opacity-0 invisible"
             } fixed inset-0 z-50 transition-opacity duration-500 bg-black/50 flex justify-center items-center px-2`}
           >
-            <div className="relative bg-tablecolor rounded-lg shadow-2xl w-full max-w-3xl mx-4 p-1 overflow-hidden">
+            <div className="relative bg-tablecolor rounded-lg shadow-2xl w-full max-w-3xl mx-4 p-1 overflow-hidden"> 
               <div className="flex justify-between items-center border-b border-gray-700 p-4 bg-table">
                 <h2 className="text-xl font-semibold text-gray-100">
                   {editTable ? "Edit Tenant" : "Add Tenant"}
@@ -243,7 +243,7 @@ const Partners = () => {
                 <div className="flex justify-end gap-3 pt-4 border-t border-gray-700">
                   <button
                     type="button"
-                    onClick={() => {
+                    onClick={() => {     
                       setModal(false);
                       resetForm();
                     }}
@@ -275,7 +275,7 @@ const Partners = () => {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="bg-input backdrop-blur-md py-2 w-1/3 text-white ps-7 pe-3 rounded-md "
                   />
-                </div>
+                </div> 
               </div>
 
               {/* Table */}
@@ -287,7 +287,7 @@ const Partners = () => {
                     <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
                       <tr>
                         {[
-                          "Company Name",
+                          "Company Name",             
                           "Website URL",
                           "Country",
                           "State",
@@ -341,12 +341,12 @@ const Partners = () => {
                     </tbody>
                   </table>
                 </div>
-              )}
+              )}  
 
               {/* Footer */}
               <Pagination
                 page={page}
-                setPage={setPage}
+                setPage={setPage}  
                 hasNextPage={partnersData.length === 10}
               />
             </div>
