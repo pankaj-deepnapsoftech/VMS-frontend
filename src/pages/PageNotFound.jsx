@@ -22,15 +22,15 @@ function PageNotFound() {
         <h1 className="text-[120px] md:text-[200px] font-light text-red-400 leading-none select-none tracking-tight">
           404
         </h1>
-        <h2 className="text-2xl md:text-4xl font-bold text-gray-900 mb-4 text-center">
+        <h2 className="text-2xl md:text-4xl font-bold text-white mb-4 text-center">
           Page not found
         </h2>
-        <p className="text-sm md:text-base text-gray-600 text-center mb-8 max-w-md px-4">
+        <p className="text-sm md:text-base font-extrabold text-gray-600 text-center mb-8 max-w-md px-4">
           Oops! The page you are looking for does not exist. It might have been moved or deleted.
         </p>
         <button
           onClick={() => navigate('/')}
-          className="inline-flex items-center px-4 md:px-6 py-2 md:py-3 border-2 border-gray-900 text-gray-900 text-sm md:text-base font-medium rounded-lg hover:bg-gray-900 hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+          className="inline-flex items-center px-4 md:px-6 py-2 md:py-3 border-2 border-modalBg hover:bg-gray-700 text-sm md:text-base font-medium rounded-lg bg-gray-900 text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
         >
           <IoHomeOutline className="w-4 h-4 md:w-5 md:h-5 mr-2" />
           BACK TO HOME
