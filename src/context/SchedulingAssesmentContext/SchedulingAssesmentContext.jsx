@@ -29,8 +29,8 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 	const TotalAssessments = async (page,tenant) => {
 		setLoading(true);
 		try {
-			const res = await AxiosHandler.get(`/assessment/get?page=${page}&limit=10&tenant=${tenant ? tenant : ""}`);
-			console.log(res.data.data)
+			const res = await AxiosHandler.get(`/assessment/get?page=${page}&tenant=${tenant ? tenant : ""}`);
+			console.log("this is just for testing",res.data.data)
 			setAllAssesmentData(res.data?.data);
 
 		} catch (error) {

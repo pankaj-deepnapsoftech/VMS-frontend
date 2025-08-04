@@ -2,13 +2,10 @@ import { useAuthContext, useScheduleAssessmentContext } from "@/context";
 import { useEffect, useState } from "react";
 import { RiDeleteBinFill } from "react-icons/ri";
 import Pagination from "./Pagination";
-import { AxiosHandler } from "@/config/AxiosConfig";
-
 const PendingAssessment = () => {
   const {
     allAssesmentData,
     DeleteAssesment,
-    datafetchCount,
     setdatafetchCount,
     TotalAssessments,
     TesterForAssessment,
@@ -16,8 +13,6 @@ const PendingAssessment = () => {
   } = useScheduleAssessmentContext();
   const { token } = useAuthContext();
   const [page, setPage] = useState(1);
-  const [EmpData, setEmpData] = useState([]);
-  const [isloading, setloading] = useState(false);
 
   const tableHeaders =
     allAssesmentData?.length > 0
@@ -32,17 +27,15 @@ const PendingAssessment = () => {
   );
 
   useEffect(() => {
-    TotalAssessments(page);
-    if (token && datafetchCount === 0) {
+    if (token ) {
+      TotalAssessments(page);
       TesterForAssessment();
       DashboardData();
       setdatafetchCount(1);
     }
   }, [token, page]);
 
-  useEffect(() => {
-    setEmpData(allAssesmentData);
-  }, [allAssesmentData]);
+  
 
   return (
     <div className="min-h-screen p-5">
