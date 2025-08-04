@@ -368,7 +368,7 @@ const DashboardCards = () => {
                 datasets: [
                   {
                     data: Object.values(fourthChartData || {}),
-                    backgroundColor: ["#EF4444", "#22C55E", "#F97316", "#3B82F6"],
+                    backgroundColor: ["#EF4444", "#22C55E"],
                     borderWidth: 0,
                   },
                 ],
@@ -402,65 +402,33 @@ const DashboardCards = () => {
           </div>
 
           {/* Legend */}
-          <div className="grid grid-cols-2 gap-y-2 mt-3">
-            {/* Column 1 */}
-            <div className="flex flex-col items-start gap-2 pl-4 sm:pl-6">
-              {fourthChartData ? 
-                Object.entries(fourthChartData).slice(0, 2).map(([label, value], idx) => (
-                  <div key={idx} className="flex items-center gap-2">
-                    <span
-                      className="w-2.5 h-2.5 rounded-full"
-                      style={{ backgroundColor: ["#EF4444", "#22C55E", "#F97316", "#3B82F6"][idx] }}
-                    ></span>
-                    <p className="text-white text-xs">
-                      {label}{" "}
-                      <span className="text-gray-400">{value}</span>
-                    </p>
-                  </div>
-                )) :
-                InventoryData.slice(0, 2).map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2">
-                    <span
-                      className="w-2.5 h-2.5 rounded-full"
-                      style={{ backgroundColor: item.color }}
-                    ></span>
-                    <p className="text-white text-xs">
-                      {item.label}{" "}
-                      <span className="text-gray-400">{item.value}</span>
-                    </p>
-                  </div>
-                ))
-              }
-            </div>
-            {/* Column 2 */}
-            <div className="flex flex-col items-start gap-2">
-              {fourthChartData ? 
-                Object.entries(fourthChartData).slice(2, 4).map(([label, value], idx) => (
-                  <div key={idx} className="flex items-center gap-2">
-                    <span
-                      className="w-2.5 h-2.5 rounded-full"
-                      style={{ backgroundColor: ["#EF4444", "#22C55E", "#F97316", "#3B82F6"][idx + 2] }}
-                    ></span>
-                    <p className="text-white text-xs">
-                      {label}{" "}
-                      <span className="text-gray-400">{value}</span>
-                    </p>
-                  </div>
-                )) :
-                InventoryData.slice(2, 4).map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2">
-                    <span
-                      className="w-2.5 h-2.5 rounded-full"
-                      style={{ backgroundColor: item.color }}
-                    ></span>
-                    <p className="text-white text-xs">
-                      {item.label}{" "}
-                      <span className="text-gray-400">{item.value}</span>
-                    </p>
-                  </div>
-                ))
-              }
-            </div>
+          <div className="flex justify-center gap-8 mt-3">
+            {fourthChartData ? 
+              Object.entries(fourthChartData).map(([label, value], idx) => (
+                <div key={idx} className="flex items-center gap-2 mt-0.5">
+                  <span
+                    className="w-2.5 h-2.5 rounded-full"
+                    style={{ backgroundColor: idx === 0 ? "#EF4444" : "#22C55E" }}
+                  ></span>
+                  <p className="text-white text-xs">
+                    {label}{" "}
+                    <span className="text-gray-400">{value}</span>
+                  </p>
+                </div>
+              )) :
+              InventoryData.map((item, idx) => (
+                <div key={idx} className="flex items-center gap-2 mt-0.5">
+                  <span
+                    className="w-2.5 h-2.5 rounded-full"
+                    style={{ backgroundColor: item.color }}
+                  ></span>
+                  <p className="text-white text-xs">
+                    {item.label}{" "}
+                    <span className="text-gray-400">{item.value}</span>
+                  </p>
+                </div>
+              ))
+            }
           </div>
         </div>
 
