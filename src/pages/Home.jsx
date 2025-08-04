@@ -31,7 +31,8 @@ const DashboardCards = () => {
   const {token} = useAuthContext()
   const { tvmCardsData, loading } = useTVMCardsContext();
   const { GetFirstChart,firstChartData, GetSecondChart,
-        secondChartData, GetFourthChart, fourthChartData} = useDataContext();
+        secondChartData, GetFourthChart, fourthChartData,ninthChartData,
+        GetNinthChart} = useDataContext();
 
 
   // usestats
@@ -153,6 +154,7 @@ const DashboardCards = () => {
       GetFirstChart(tenant);
       GetSecondChart(tenant);
       GetFourthChart(tenant);
+      GetNinthChart(tenant)
     }
   },[token,tenant])
 
@@ -733,10 +735,10 @@ const DashboardCards = () => {
 
               {/* Bars */}
               <div className="flex justify-around items-end h-full relative z-10">
-                {["Jan", "Feb", "Mar", "Apr", "May", "June"].map((month, i) => {
-                  const openVal = [14, 2, 32, 24, 16, 8][i];
-                  const closedVal = [2, 13, 28, 20, 14, 10][i];
-                  const exceptionVal = [1, 10, 13, 11, 5, 0][i];
+                {ninthChartData?.label?.map((month, i) => {
+                  const openVal = (ninthChartData?.Open || [])[i];
+                  const closedVal = (ninthChartData?.Closed || [])[i];
+                  const exceptionVal = (ninthChartData?.Exception || [])[i];
                   return (
                     <div key={month} className="flex flex-col items-center">
                       <div className="flex items-end space-x-[3px] sm:space-x-[4px]">

@@ -17,6 +17,7 @@ const DataContextProvider = ({ children }) => {
   const [partners, setPartners] = useState([]);
   const [secondChartData,setSecondChartData] = useState(null);
   const [fourthChartData,setFourthChartData] = useState(null);
+  const [ninthChartData,setNinthChartData] = useState(null)
 
 
   const UploadBulkData = async (data) => {
@@ -91,6 +92,18 @@ const DataContextProvider = ({ children }) => {
    };
 
 
+   const GetNinthChart = async (tenant) => {
+     try {
+       const res = await AxiosHandler.get(`/data/tvm-nine-chart?tenant=${tenant ? tenant : ""}`);
+       setNinthChartData(res?.data);
+     } catch (error) {
+       console.error(error);
+     }
+   };
+
+
+
+
   useEffect(() => {
     if (token) {
       GetAllTenentData();
@@ -109,7 +122,9 @@ const DataContextProvider = ({ children }) => {
         GetSecondChart,
         secondChartData,
         GetFourthChart,
-        fourthChartData
+        fourthChartData,
+        ninthChartData,
+        GetNinthChart
       }}
     >
       {children}
