@@ -514,13 +514,13 @@ const DashboardCards = () => {
           <h2 className="text-lg font-semibold mb-4">
           Vulnerable Items by Risk Rating - Full Data
           </h2>
-          {fourthChartData ? (() => {
+          {secondChartData ? (() => {
             // Calculate total sum for percentage calculation
-            const criticalSum = fourthChartData.Critical ? fourthChartData.Critical.reduce((sum, val) => sum + (val || 0), 0) : 0;
-            const highSum = fourthChartData.High ? fourthChartData.High.reduce((sum, val) => sum + (val || 0), 0) : 0;
-            const mediumSum = fourthChartData.Medium ? fourthChartData.Medium.reduce((sum, val) => sum + (val || 0), 0) : 0;
-            const lowSum = fourthChartData.Low ? fourthChartData.Low.reduce((sum, val) => sum + (val || 0), 0) : 0;
-            const informationalSum = fourthChartData.Informational ? fourthChartData.Informational.reduce((sum, val) => sum + (val || 0), 0) : 0;
+            const criticalSum = secondChartData.Critical ? secondChartData.Critical.reduce((sum, val) => sum + (val || 0), 0) : 0;
+            const highSum = secondChartData.High ? secondChartData.High.reduce((sum, val) => sum + (val || 0), 0) : 0;
+            const mediumSum = secondChartData.Medium ? secondChartData.Medium.reduce((sum, val) => sum + (val || 0), 0) : 0;
+            const lowSum = secondChartData.Low ? secondChartData.Low.reduce((sum, val) => sum + (val || 0), 0) : 0;
+            const informationalSum = secondChartData.Informational ? secondChartData.Informational.reduce((sum, val) => sum + (val || 0), 0) : 0;
             
             const totalSum = criticalSum + highSum + mediumSum + lowSum + informationalSum;
             
