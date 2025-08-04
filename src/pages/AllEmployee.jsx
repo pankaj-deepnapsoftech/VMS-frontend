@@ -329,6 +329,7 @@ const AllEmployee = () => {
           <button
             onClick={() => {
               setIsModalOpen(false);
+              // eslint-disable-next-line no-undef
               formik.resetForm();
             }}
             className="text-3xl hover:text-red-400 transition duration-300"
