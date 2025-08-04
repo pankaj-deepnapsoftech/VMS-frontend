@@ -16,7 +16,7 @@ const DataContextProvider = ({ children }) => {
   const [firstChartData,setFirstChartData] = useState(null);
   const [partners, setPartners] = useState([]);
   const [secondChartData,setSecondChartData] = useState(null);
-
+  const [fourthChartData,setFourthChartData] = useState(null);
 
 
   const UploadBulkData = async (data) => {
@@ -81,6 +81,14 @@ const DataContextProvider = ({ children }) => {
     }
   };
 
+   const GetFourthChart = async (tenant) => {
+     try {
+       const res = await AxiosHandler.get(`/BusinessApplication/tvm-forth-chart?tenant=${tenant ? tenant : ""}`);
+       setFourthChartData(res?.data);
+     } catch (error) {
+       console.error(error);
+     }
+   };
 
 
   useEffect(() => {
@@ -99,7 +107,9 @@ const DataContextProvider = ({ children }) => {
         GetFirstChart,
         firstChartData,
         GetSecondChart,
-        secondChartData
+        secondChartData,
+        GetFourthChart,
+        fourthChartData
       }}
     >
       {children}
