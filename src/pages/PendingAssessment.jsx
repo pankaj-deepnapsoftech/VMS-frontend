@@ -1,12 +1,13 @@
 import { useAuthContext, useScheduleAssessmentContext } from "@/context";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { RiDeleteBinFill } from "react-icons/ri";
+import Pagination from "./Pagination";
+import { AxiosHandler } from "@/config/AxiosConfig";
 
 const PendingAssessment = () => {
   const {
     allAssesmentData,
     DeleteAssesment,
-    page,
     datafetchCount,
     setdatafetchCount,
     TotalAssessments,
@@ -14,6 +15,9 @@ const PendingAssessment = () => {
     DashboardData,
   } = useScheduleAssessmentContext();
   const { token } = useAuthContext();
+  const [page, setPage] = useState(1);
+  const [EmpData, setEmpData] = useState([]);
+  const [isloading, setloading] = useState(false);
 
   const tableHeaders =
     allAssesmentData?.length > 0
@@ -36,6 +40,10 @@ const PendingAssessment = () => {
     }
   }, [token, page]);
 
+  useEffect(() => {
+    setEmpData(allAssesmentData);
+  }, [allAssesmentData]);
+
   return (
     <div className="min-h-screen p-5">
       <div className="overflow-x-auto custom-scrollbar">
@@ -52,7 +60,7 @@ const PendingAssessment = () => {
                     : header.replace(/_/g, " ")}
                 </th>
               ))}
-              <th className="px-6 py-4 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">
+              <th className="px-6 py-4 text-left text-xs font  -medium text-slate-300 uppercase tracking-wider">
                 Actions
               </th>
             </tr>
@@ -108,6 +116,13 @@ const PendingAssessment = () => {
           </tbody>
         </table>
       </div>
+
+      <Pagination
+        page={page}
+        setPage={setPage}
+        hasNextPage={allAssesmentData.length === 10}
+        total={allAssesmentData.length}
+      />
     </div>
   );
 };

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import Loader from "@/components/Loader/Loader";
 import { RiskRatingContext } from "@/context/RiskRating/RiskRatingContext";
 import { RiskRatingValidationSchema } from "@/Validation/RiskRatingValidation";
