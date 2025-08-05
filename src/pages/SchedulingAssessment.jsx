@@ -138,7 +138,7 @@ function SchedulingAssessmentPage() {
           </div>
 
           {/* Form Section - Contained in a box */}
-          <div className="bg-gradient-to-br from-slate-800/40 to-blue-900/30 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8 mb-12 shadow-2xl">
+          <div className="bg-gradient-to-br h-[450px] from-slate-800/40 to-blue-900/30 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8 mb-12 shadow-2xl">
             <form onSubmit={handleSubmit} className="space-y-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Type of Assessment */}
@@ -302,7 +302,7 @@ function SchedulingAssessmentPage() {
               <div className="flex justify-end">
                 <button
                   type="submit"
-                  className="absolute bottom-2 left-10 px-8 mb-1 mt-2 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                  className="absolute bottom-2 left-10 px-8 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
                 >
                   Submit Assessment Request
                 </button>
@@ -517,7 +517,7 @@ function SchedulingAssessmentPage() {
               </div>
             ) : (
               <div className="overflow-x-auto custom-scrollbar">
-                <table className="min-w-full divide-y divide-slate-700">
+                {/* <table className="min-w-full divide-y divide-slate-700">
                   <thead className="bg-gradient-to-r from-slate-800 to-slate-700">
                     <tr>
                       {addFormHeaders.map((header, index) => (
@@ -582,12 +582,12 @@ function SchedulingAssessmentPage() {
                       </tr>
                     ))}
                   </tbody>
-                </table>
+                </table> */}
               </div>
             )}
 
             {/* Pagination */}
-            <div className="flex justify-between items-center px-6 py-4 bg-slate-800/30 border-t border-slate-700">
+            {/* <div className="flex justify-between items-center px-6 py-4 bg-slate-800/30 border-t border-slate-700">
               <button
                 className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${page === 1
                     ? "bg-slate-700 text-slate-400 cursor-not-allowed"
@@ -611,7 +611,7 @@ function SchedulingAssessmentPage() {
               >
                 Next
               </button>
-            </div>
+            </div> */}
           </div>
         </main>
       )}

@@ -161,7 +161,7 @@ export const products = [
     icon: "/Icons/Component 1.png",
     allowedPath: [
       {
-        title: "InfraStructure Asset",
+        title: "Infrastructure Asset",
         route: "/infraStructure-asset",
         icon: MdInventory2,
       },

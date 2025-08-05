@@ -294,9 +294,9 @@ const Reports = () => {
       {/* Modal Form */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-10">
-          <div className="bg-input rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
+          <div className="bg-modalBg rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
             {/* Header */}
-            <div className="flex justify-between items-center border-b p-4 bg-gradient-to-tr from-[#1f1d1d] to-[#666666] ">
+            <div className="flex justify-between items-center border-b p-4 bg-table ">
               <h2 className="text-lg font-semibold text-gray-200">
                 {isEdit ? "Edit Detailed Report" : "Add Detailed Report"}
               </h2>
@@ -306,7 +306,7 @@ const Reports = () => {
                   setIsEdit(false); // Reset edit mode
                   setEditData(null); // Clear edit data
                 }}
-                className="text-gray-100 hover:text-gray-200 transition"
+                className="text-gray-100 hover:text-gray-500 transition"
               >
                 <MdClose className="h-6 w-6" />
               </button>
@@ -352,7 +352,7 @@ const Reports = () => {
                       value={values.Type_Of_Assesment}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      className="w-full px-4 py-3 rounded-md border text-gray-200 bg-input border-gray-500 focus:ring-2 focus:ring-gray-500 text-sm focus:border-transparent outline-none transition"
+                      className="w-full px-4 py-3 rounded-md text-gray-200 bg-input focus:ring-2 focus:ring-gray-500 text-sm focus:border-transparent outline-none transition"
                       id="Type_Of_Assesment"
                     >
                       <option value="" disabled>
@@ -410,13 +410,13 @@ const Reports = () => {
                         setIsEdit(false); // Reset edit mode
                         setEditData(null); // Clear edit data
                       }}
-                      className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition"
+                      className="px-4 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400 transition"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
-                      className="px-4 py-2 bg-gradient-to-r from-[#333333] to-[#666666] text-white rounded-md hover:bg-blue-700 transition"
+                      className="px-4 py-2 bg-blue-800 hover:bg-blue-600 text-white rounded-md transition"
                     >
                       {isEdit ? "Update" : "Save"}
                     </button>

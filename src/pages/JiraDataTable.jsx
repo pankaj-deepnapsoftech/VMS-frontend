@@ -37,7 +37,7 @@ export const JiraDataTable = () => {
     UpdateData,
   } = useJiraContext();
 
-  console.log("this is jira data",jiraData)
+  console.log("this is jira data", jiraData);
 
   const { token } = useAuthContext();
   const [selectedRows, setSelectedRows] = useState([]);
@@ -97,8 +97,6 @@ export const JiraDataTable = () => {
       currentPage * rowsPerPage
     );
   }, [filteredData, currentPage]);
-
-
 
   const handleDownload = useCallback(() => {
     if (filteredData.length < 1) {
@@ -165,14 +163,14 @@ export const JiraDataTable = () => {
         <Loader />
       ) : (
         <div className="pl-10 h-screen w-full">
-          <h1 className="text-white font-semibold text-3xl mt-10 ">
+          <h1 className="text-white font-semibold pt-10 text-3xl">
             Third Party Data
           </h1>
           <p className="text-gray-400">
             Monitor and manage your jira issues and project data
           </p>
 
-          <div className="grid grid-cols-4 gap-4 px-4 py-6 ">
+          <div className="grid grid-cols-4 gap-4  py-6 ">
             {/* Total Issues */}
             <div className="bg-[#101b54] border border-blue-900 text-white rounded-xl px-4  flex justify-between items-center shadow-md">
               <div>
@@ -183,7 +181,7 @@ export const JiraDataTable = () => {
                 <img src="/Icons/total-issue.png" alt="icon" />
               </div>
             </div>
-          {/* Closed */}
+            {/* Closed */}
             <div className="bg-[#0c2330] border border-green-900  text-white rounded-xl p-4  flex justify-between items-center shadow-md">
               <div>
                 <p className="text-sm text-green-400 font-medium">Closed</p>
@@ -242,7 +240,7 @@ export const JiraDataTable = () => {
                     className="border-b border-gray-700 hover:bg-[#1e1e1e] transition"
                   >
                     <td className="p-3">
-                      <input 
+                      <input
                         type="checkbox"
                         checked={selectedRows.includes(item)}
                         onChange={() => handleSelectRow(item)}

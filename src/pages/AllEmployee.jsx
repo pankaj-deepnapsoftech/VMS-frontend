@@ -332,7 +332,7 @@ const AllEmployee = () => {
               // eslint-disable-next-line no-undef
               formik.resetForm();
             }}
-            className="text-3xl hover:text-red-400 transition duration-300"
+            className="text-3xl hover:text-gray-400 transition duration-300"
           >
             <IoClose />
           </button>
