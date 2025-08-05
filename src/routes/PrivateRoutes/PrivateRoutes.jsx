@@ -88,15 +88,15 @@ export const PrivateRoutes = [
     element: <AllEmployee />,
   },
   {
-    path: "/application-vulnerability",
+    path: "/application-dashboard",
     element: <ApplicationVulnerability />,
   },
   {
-    path: "/infrastructure-vulnerability",
+    path: "/infrastructure-dashboard",
     element: <InfraStructureVulnerability />,
   },
   {
-    path: "/exceptions",
+    path: "/exceptions-dashboard",
     element: <Exceptions />,
   },
   {
@@ -161,11 +161,11 @@ export const PrivateRoutes = [
     element:<DemoDashboard/>
   },
   {
-    path:"/riskoperation",
+    path:"/risk-operation",
     element:<RiskOperation/>
   },
   {
-    path:"/executivedashboard",
+    path:"/executive-dashboard",
     element:<ExecutiveDashboard/>
   },
   {
