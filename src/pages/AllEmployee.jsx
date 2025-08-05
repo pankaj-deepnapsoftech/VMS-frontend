@@ -317,7 +317,7 @@ const AllEmployee = () => {
           </div>
         </div>
       )}
-
+         
       {/* MODAL */}
       <div
         className={`absolute top-0 left-0 z-50 min-h-screen bg-gradient-custom w-full text-white ${
@@ -425,7 +425,7 @@ const AllEmployee = () => {
                   </select>
                   {touched.role && errors.role && (
                     <p className="text-red-400 text-sm">{errors.role}</p>
-                  )}
+                  )}                 
                 </div>
 
                 <div>

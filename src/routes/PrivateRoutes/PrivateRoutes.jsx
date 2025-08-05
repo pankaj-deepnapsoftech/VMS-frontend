@@ -1,5 +1,5 @@
 import Exceptions from "@/pages/Exceptions";
-import Remedition from "@/pages/Remedition";
+import Remediation from "@/pages/Remedition";
 import Home from "@/pages/Home";
 import AllCustomer from "@/pages/AllCustomer";
 import { VulnerabilityData } from "@/pages/VulnerablityData";
@@ -39,9 +39,10 @@ export const PrivateRoutes = [
     element: <Home />,
   },
   {
-    path: "/scheduling-assesment",
+    path: "/assesment-schedule",
     element: <SchedulingAssessmentPage />,
   },
+
   {
     path: "/pending-assesment",
     element: <PendingAssessment />,
@@ -100,7 +101,7 @@ export const PrivateRoutes = [
   },
   {
     path: "/remedition",
-    element: <Remedition />,
+    element: <Remediation />,
   },
   {
     path: "/reports",
