@@ -16,6 +16,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { RiEdit2Line } from "react-icons/ri";
 import { IoSearch } from "react-icons/io5";
 import NoDataFound from "@/components/NoDataFound";
+import Access from "@/components/role/Access";
 
 export default function TenantDashboard() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -26,7 +27,18 @@ export default function TenantDashboard() {
   const location = useLocation();
 
   const [model, setmodel] = useState(false);
-  const { token } = useAuthContext();
+  const { token, authenticate } = useAuthContext();
+
+
+  console.log("authenticate", authenticate.allowed_path)
+
+  console.log(location)
+
+
+
+
+
+
   const { AllTags } = useTagsContext();
 
   const {
@@ -108,6 +120,13 @@ export default function TenantDashboard() {
     setTenant(params.get("tenant") || "");
   }, [location.search]);
 
+  const access = authenticate?.allowed_path?.filter((item) => item.value === location.pathname)[0];
+
+
+  if (authenticate?.role && !access?.permission?.includes("view")) {
+    return <Access/>
+  }
+
   return (
     <>
       <div className="min-h-screen bg-gradient-custom text-white p-6">
@@ -124,7 +143,7 @@ export default function TenantDashboard() {
             </div>
 
             {/* Buttons */}
-            <div className="flex flex-col sm:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
+           {access?.permission?.includes("create") && <div className="flex flex-col sm:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
               <button
                 onClick={() => setIsModalOpen(true)}
                 className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center justify-center gap-2"
@@ -143,7 +162,7 @@ export default function TenantDashboard() {
                 <BiPlus className="h-6 w-6" />
                 Infrastructure Asset
               </button>
-            </div>
+            </div>}
           </div>
 
           {/*table */}
@@ -182,7 +201,7 @@ export default function TenantDashboard() {
                           "Hosting",
                           "Data Sensitivity",
                           "Service Role",
-                          "Actions",
+                          access?.permission?.includes("delete") || access?.permission?.includes("modify") && "Actions",
                         ].map((header) => (
                           <th
                             key={header}
@@ -225,19 +244,19 @@ export default function TenantDashboard() {
                           <td className="py-4 px-6 text-white flex flex-wrap gap-2 w-40">
                             {tenant?.service_role?.length > 0
                               ? tenant?.service_role?.map((item) => (
-                                  <p
-                                    key={item._id}
-                                    style={{ backgroundColor: item.tag_color }}
-                                    className="px-3 py-1 rounded-full"
-                                  >
-                                    {item.tag_name}
-                                  </p>
-                                ))
+                                <p
+                                  key={item._id}
+                                  style={{ backgroundColor: item.tag_color }}
+                                  className="px-3 py-1 rounded-full"
+                                >
+                                  {item.tag_name}
+                                </p>
+                              ))
                               : "-"}
                           </td>
 
                           <td className="px-4 py-3 space-x-4">
-                            <button
+                            {access?.permission?.includes("delete") && <button
                               onClick={() => {
                                 if (
                                   window.confirm(
@@ -251,9 +270,9 @@ export default function TenantDashboard() {
                               className="text-subtext hover:text-subTextHover"
                             >
                               <FaRegTrashAlt className="w-5 h-5" />
-                            </button>
+                            </button>}
 
-                            <button
+                           {access?.permission?.includes("modify") && <button
                               onClick={() => {
                                 setEditable(tenant);
                                 setmodel(!model);
@@ -262,7 +281,7 @@ export default function TenantDashboard() {
                               className="text-subtext hover:text-blue-700"
                             >
                               <RiEdit2Line className="w-5 h-5" />
-                            </button>
+                            </button>}
                           </td>
                         </tr>
                       ))}

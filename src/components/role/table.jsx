@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable react/prop-types */
 import { AllowedPaths } from '@/constants/static.data';
 import { LucideShield } from 'lucide-react';
@@ -61,22 +62,23 @@ const RoleTable = ({ setFieldValue, defaultValue }) => {
       </thead>
       <tbody>
         {AllowedPaths.map((module, index) => (
-          <tr key={index} className="border-b border-gray-800 hover:bg-[#1a223f]">
-            <td className="flex items-center gap-2 px-4 py-3">
-              <div className="w-4 h-4 bg-gray-500 rounded" />
-              {module.name}
-            </td>
-            {['view', 'create', 'modify', 'delete'].map((perm) => (
-              <td key={perm} className="px-4 py-3">
-                <input
-                  type="checkbox"
-                  checked={hasPermission(module.name, perm)}
-                  onChange={() => togglePermission(module, perm)}
-                  className="form-checkbox h-4 w-4 text-blue-500 bg-transparent border-gray-500"
-                />
+          module?.heading ? <h3 className='text-xl px-2 py-4' >{module?.heading}</h3> :
+            <tr key={index} className="border-b border-gray-800 hover:bg-[#1a223f] ">
+              <td className="flex items-center gap-2 px-4 py-3">
+                <div className="w-4 h-4 bg-gray-500 rounded" />
+                {module.name}
               </td>
-            ))}
-          </tr>
+              {['view', 'create', 'modify', 'delete'].map((perm) => (
+                <td key={perm} className="px-4 py-3">
+                  <input
+                    type="checkbox"
+                    checked={hasPermission(module.name, perm)}
+                    onChange={() => togglePermission(module, perm)}
+                    className="form-checkbox h-4 w-4 text-blue-500 bg-transparent border-gray-500"
+                  />
+                </td>
+              ))}
+            </tr>
         ))}
       </tbody>
     </table>

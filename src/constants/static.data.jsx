@@ -22,127 +22,231 @@ import { TbReport } from "react-icons/tb";
 import { GrVulnerability } from "react-icons/gr";
 import { SiWikimediafoundation } from "react-icons/si";
 
-// export const AllowedPaths = [
-//   {
-//     name: "Dashboard",
-//     value: "/",
-//     bgColor: "bg-[#143b4a]/70",
-//     border: "1px solid #144d59",
-//     textColor:"text-white"
-//   },
-//   {
-//     name: "Scheduling Assesment",
-//     value: "/scheduling-assesment",
-//     bgColor: "bg-[#153b37]",
-//     border: "1px solid #154639",
-//   },
-//   {
-//     name: "Pending Assesment",
-//     value: "/pending-assesment",
-//     bgColor: "bg-[#232958]",
-//     border: "1px solid #282e63",
-//   },
-//   {
-//     name: "Pending Exception",
-//     value: "/pending-exception",
-//     bgColor: "bg-[#232958]",
-//     border: "1px solid #2b316c",
-//   },
-//   {
-//     name: "Application Data",
-//     value: "/application-data",
-//     bgColor: "bg-[#143b4a]",
-//     border: "1px solid #144d59",
-//   },
-//   {
-//     name: "Infrastructure Data",
-//     value: "/infrastructure-data",
-//     bgColor: "bg-[#232958]",
-//     border: "1px solid #282e63",
-//   },
-//   {
-//     name: "Users",
-//     value: "/all-users",
-//     bgColor: "bg-[#153b37]",
-//     border: "1px solid #154639",
-//   },
-//   {
-//     name: "Application Vulnerability",
-//     value: "/application-vulnerability",
-//     bgColor: "bg-[#1b3057]",
-//     border: "1px solid #1a2c51",
-//   },
-//   {
-//     name: "Infrastructure Vulnerability",
-//     value: "/infrastructure-vulnerability",
-//     bgColor: "bg-[#123945]",
-//     border: "1px solid #124c54",
-//   },
-//   {
-//     name: "Exceptions",
-//     value: "/exceptions",
-//     bgColor: "bg-[#1b3057]",
-//     border: "1px solid #1a2c51",
-//   },
-//   {
-//     name: "Reports",
-//     value: "/reports",
-//     bgColor: "bg-[#3e2334]/70",
-//     border: "1px solid #552635",
-//   },
-//   {
-//     name: "Remedition",
-//     value: "/remedition",
-//     bgColor: "bg-[#232958]",
-//     border: "1px solid #282e63",
-//   },
-//   {
-//     name: "InfraStructure Asset",
-//     value: "/infraStructure-asset",
-//     bgColor: "bg-[#232958]",
-//     border: "1px solid #282e63",
-//   },
-//   {
-//     name: "Business Applications",
-//     value: "/business_applications",
-//     bgColor: "bg-[#153b37]/80",
-//     border: "1px solid #154639",
-//   },
-//   {
-//     name: "All Tenents",
-//     value: "/all-tenant",
-//     bgColor: "bg-[#232958]",
-//     border: "1px solid #282e63",
-//   },
-//   {
-//     name: "All Tasks",
-//     value: "/employee-tasks",
-//     bgColor: "bg-[#123945]",
-//     border: "1px solid #124c54",
-//   },
-//   {
-//     name: "Third Party Integrations",
-//     value: "/third-party-integrations",
-//     bgColor: "bg-[#232958]",
-//     border: "1px solid #282e63",
-//   },
-//   {
-//     name: "Role",
-//     value: "/roles",
-//     bgColor: "bg-[#232958]",
-//     border: "1px solid #282e63",
-//   },
-//   {
-//     name: "Partners",
-//     value: "/partners",
-//     bgColor: "bg-[#1b3057]",
-//     border: "1px solid #1a2c51",
-//   },
-// ];
+export const AllowedPaths = [
+  // --------------------Roc Pages-----------------------
 
- export const AllowedPaths = [
-  
- ]
+  { heading: "ROC Pages" },
+  {
+    name: "Executive Dashboard",
+    value: "/executive-dashboard",
+    bgColor: "bg-[#143b4a]/70",
+    border: "1px solid #144d59",
+    textColor: "text-white"
+  },
+  {
+    name: "Risk Quantification",
+    value: "/risk-operation",
+    bgColor: "bg-[#153b37]",
+    border: "1px solid #154639",
+    textColor: "text-white"
+  },
+
+
+
+  // ------------------asset inventory----------------------
+
+
+
+  { heading: "Asset Inventory Pages" },
+  {
+    name: "InfraStructure Asset",
+    value: "/infraStructure-asset",
+    bgColor: "bg-[#232958]",
+    border: "1px solid #282e63",
+    textColor: "text-white"
+  },
+  {
+    name: "Business Applications",
+    value: "/business-applications",
+    bgColor: "bg-[#153b37]/80",
+    border: "1px solid #154639",
+    textColor: "text-white"
+  },
+
+
+
+  // ----------------------- tvm  ------------------------------
+
+
+  { heading: "TVM Pages" },
+  {
+    name: "Dashboard",
+    value: "/",
+    bgColor: "bg-[#143b4a]/70",
+    border: "1px solid #144d59",
+    textColor: "text-white",
+  },
+  {
+    name: "Scheduling Assesment",
+    value: "/scheduling-assesment",
+    bgColor: "bg-[#153b37]",
+    border: "1px solid #154639",
+    textColor: "text-white"
+  },
+  {
+    name: "Pending Assesment",
+    value: "/pending-assesment",
+    bgColor: "bg-[#232958]",
+    border: "1px solid #282e63",
+    textColor: "text-white"
+  },
+  {
+    name: "Application Dashbaord",
+    value: "/application-dashboard",
+    bgColor: "bg-[#1b3057]",
+    border: "1px solid #1a2c51",
+  },
+  {
+    name: "Infrastructure Dashbaord",
+    value: "/infrastructure-dashboard",
+    bgColor: "bg-[#123945]",
+    border: "1px solid #124c54",
+  },
+  {
+    name: "Exceptions Dashbaord",
+    value: "/exceptions-dashboard",
+    bgColor: "bg-[#1b3057]",
+    border: "1px solid #1a2c51",
+  },
+  {
+    name: "Pending Exception",
+    value: "/pending-exception",
+    bgColor: "bg-[#232958]",
+    border: "1px solid #2b316c",
+    textColor: "text-white"
+  },
+
+
+
+
+  // ---------------- Remediation factory ---------------------
+
+
+
+
+  { heading: "Remediation Factory Pages" },
+  {
+    name: "Remediation",
+    value: "/remediation",
+    bgColor: "bg-[#232958]",
+    border: "1px solid #282e63",
+    textColor: "text-white"
+  },
+  {
+    name: "Vulnerability Data",
+    value: "/remedition",
+    bgColor: "bg-[#232958]",
+    border: "1px solid #282e63",
+    textColor: "text-white"
+  },
+  {
+    name: "Add Vulnerability Data",
+    value: "/add-vulnerability-data",
+    bgColor: "bg-[#232958]",
+    border: "1px solid #282e63",
+    textColor: "text-white"
+  },
+  {
+    name: "Application Data",
+    value: "/application-data",
+    bgColor: "bg-[#143b4a]",
+    border: "1px solid #144d59",
+    textColor: "text-white"
+  },
+  {
+    name: "Infrastructure Data",
+    value: "/infrastructure-data",
+    bgColor: "bg-[#232958]",
+    border: "1px solid #282e63",
+    textColor: "text-white"
+  },
+
+
+
+
+  // ---------------------------- Report -----------------------------
+
+
+  { heading: "Report Pages" },
+  {
+    name: "Reports",
+    value: "/reports",
+    bgColor: "bg-[#3e2334]/70",
+    border: "1px solid #552635",
+    textColor: "text-white"
+  },
+
+
+
+  //  ------------------------------- Administration --------------------
+
+
+
+
+  { heading: "Administration Pages" },
+  {
+    name: "Users",
+    value: "/all-users",
+    bgColor: "bg-[#153b37]",
+    border: "1px solid #154639",
+    textColor: "text-white"
+  },
+  {
+    name: "All Tenents",
+    value: "/all-tenant",
+    bgColor: "bg-[#232958]",
+    border: "1px solid #282e63",
+    textColor: "text-white"
+  },
+
+  {
+    name: "Third Party Integrations",
+    value: "/third-party-integrations",
+    bgColor: "bg-[#232958]",
+    border: "1px solid #282e63",
+    textColor: "text-white"
+  },
+  {
+    name: "Config Email",
+    value: "/config-email",
+    bgColor: "bg-[#232958]",
+    border: "1px solid #282e63",
+    textColor: "text-white"
+  },
+  {
+    name: "Role",
+    value: "/roles",
+    bgColor: "bg-[#232958]",
+    border: "1px solid #282e63",
+    textColor: "text-white"
+  },
+  {
+    name: "Partners",
+    value: "/partners",
+    bgColor: "bg-[#1b3057]",
+    border: "1px solid #1a2c51",
+    textColor: "text-white"
+  },
+  {
+    name: "Tag Config",
+    value: "/tags",
+    bgColor: "bg-[#232958]",
+    border: "1px solid #282e63",
+    textColor: "text-white"
+  },
+
+
+  //  ---------------------- unselected ------------------------
+
+  {
+    name: "All Tasks",
+    value: "/employee-tasks",
+    bgColor: "bg-[#123945]",
+    border: "1px solid #124c54",
+  },
+];
+
+
 
 export const ChartsColor = {
   Informational: "#A0C878",
