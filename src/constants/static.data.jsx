@@ -177,8 +177,8 @@ export const products = [
     allowedPath: [
       { title: "Dashboard", route: "/", icon: BiSolidDashboard },
       {
-        title: "Scheduling Assesment",
-        route: "/scheduling-assesment",
+        title: "Assesment Schedule",
+        route: "/assesment-schedule",
         icon: CalendarClock,
       },
       {
