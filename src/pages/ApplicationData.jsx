@@ -17,11 +17,13 @@ import { BiDetail } from "react-icons/bi";
 import { MdDelete, MdModeEditOutline } from "react-icons/md";
 import { PopupMenu } from "@/modals/PopupManue";
 import { GrStatusGood } from "react-icons/gr";
+import { isDeleteAccess, isHaveAction, isModifyAccess, isViewAccess } from "@/utils/pageAccess";
+import Access from "@/components/role/Access";
 
 export function ApplicationData() {
   const { loading, GetApplicationData, allApplicationData, DeleteData } =
     useVulnerabililtyDataContext();
-  const { token } = useAuthContext();
+  const { token,authenticate } = useAuthContext();
   const navigate = useNavigate();
   const location = useLocation();     
   const { closeModal, isOpen, openModal } = useAccessPartner();
@@ -106,12 +108,16 @@ export function ApplicationData() {
     if (token) {
       GetApplicationData(currentPage, tenant);
     }
-  }, [tenant, currentPage]);
+  }, [tenant, currentPage,token]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     setTenant(params.get("tenant") || "");
   }, [location.search]);
+
+  if(isViewAccess(authenticate,location)){
+    return <Access/>
+  };
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -163,7 +169,7 @@ export function ApplicationData() {
                           "Asset",
                           "VRS",
                           "Status",
-                          "Actions",
+                          isHaveAction() && "Actions",
                         ].map((header) => (
                           <th
                             key={header}
@@ -197,14 +203,14 @@ export function ApplicationData() {
                             ) || "-"}
                           </td>
                           <td className="px-4 py-3">{item?.status || "-"}</td>
-                          <td className="px-4 py-3">
+                          {isHaveAction() && <td className="px-4 py-3">
                             <button
                               className="hover:bg-gray-700 px-3 py-2 rounded-lg"
                               onClick={(e) => toggleMenu(index, e)}
                             >
                               <BsThreeDotsVertical />
                             </button>
-                          </td>
+                          </td>}
                         </tr>
                       ))}
                     </tbody>
@@ -226,7 +232,7 @@ export function ApplicationData() {
           <PopupMenu position={menuPosition} onClose={closeMenu}>
             {activeMenu !== null && (
               <>
-                <li
+                {isModifyAccess() && <li
                   className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
                   onClick={() =>
                     navigate("/edit-vulnerability-data", {
@@ -235,8 +241,8 @@ export function ApplicationData() {
                   }
                 >
                   <MdModeEditOutline /> Edit
-                </li>
-                <li
+                </li>}
+                {isDeleteAccess() && <li
                   className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
                   onClick={() => {
                     if (window.confirm("Are you sure to delete?")) {
@@ -246,8 +252,8 @@ export function ApplicationData() {
                   }}
                 >
                   <MdDelete /> Delete
-                </li>
-                <li
+                </li>}
+                {isModifyAccess() && <li
                   className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
                   onClick={() => {
                     handleExpectionModal(filteredData[activeMenu]);
@@ -255,7 +261,7 @@ export function ApplicationData() {
                   }}
                 >
                   <IoWarningOutline /> Add Exception
-                </li>
+                </li>}
                 <li
                   className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
                   onClick={() => {
@@ -266,7 +272,7 @@ export function ApplicationData() {
                 >
                   <BiDetail /> View Details
                 </li>
-                 <li
+                {isModifyAccess() &&  <li
                   className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
                   onClick={() => {
                     setStatus({status:filteredData[activeMenu].status,_id:filteredData[activeMenu]._id});
@@ -274,7 +280,7 @@ export function ApplicationData() {
                   }}
                 >
                   <GrStatusGood /> Change Status
-                </li>
+                </li>}
               </>
             )}
           </PopupMenu>

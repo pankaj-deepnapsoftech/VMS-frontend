@@ -31,14 +31,16 @@ export const AllowedPaths = [
     value: "/executive-dashboard",
     bgColor: "bg-[#143b4a]/70",
     border: "1px solid #144d59",
-    textColor: "text-white"
+    textColor: "text-white",
+    permission:['view']
   },
   {
     name: "Risk Quantification",
     value: "/risk-operation",
     bgColor: "bg-[#153b37]",
     border: "1px solid #154639",
-    textColor: "text-white"
+    textColor: "text-white",
+    permission:['view']
   },
 
 
@@ -53,14 +55,16 @@ export const AllowedPaths = [
     value: "/infraStructure-asset",
     bgColor: "bg-[#232958]",
     border: "1px solid #282e63",
-    textColor: "text-white"
+    textColor: "text-white",
+    permission:['view','create','modify','delete']
   },
   {
     name: "Business Applications",
     value: "/business-applications",
     bgColor: "bg-[#153b37]/80",
     border: "1px solid #154639",
-    textColor: "text-white"
+    textColor: "text-white",
+    permission:['view','create','modify','delete']
   },
 
 
@@ -75,45 +79,53 @@ export const AllowedPaths = [
     bgColor: "bg-[#143b4a]/70",
     border: "1px solid #144d59",
     textColor: "text-white",
+    permission:['view']
+    
   },
   {
     name: "Scheduling Assesment",
-    value: "/scheduling-assesment",
+    value: "/assesment-schedule",
     bgColor: "bg-[#153b37]",
     border: "1px solid #154639",
-    textColor: "text-white"
+    textColor: "text-white",
+    permission:['view','create','modify','delete']
   },
   {
     name: "Pending Assesment",
     value: "/pending-assesment",
     bgColor: "bg-[#232958]",
     border: "1px solid #282e63",
-    textColor: "text-white"
+    textColor: "text-white",
+    permission:['view','create','modify','delete']
   },
   {
     name: "Application Dashbaord",
     value: "/application-dashboard",
     bgColor: "bg-[#1b3057]",
     border: "1px solid #1a2c51",
+    permission:['view'],
   },
   {
     name: "Infrastructure Dashbaord",
     value: "/infrastructure-dashboard",
     bgColor: "bg-[#123945]",
     border: "1px solid #124c54",
+    permission:['view']
   },
   {
     name: "Exceptions Dashbaord",
     value: "/exceptions-dashboard",
     bgColor: "bg-[#1b3057]",
     border: "1px solid #1a2c51",
+    permission:['view']
   },
   {
     name: "Pending Exception",
     value: "/pending-exception",
     bgColor: "bg-[#232958]",
     border: "1px solid #2b316c",
-    textColor: "text-white"
+    textColor: "text-white",
+    permission:['view','create']
   },
 
 
@@ -130,35 +142,32 @@ export const AllowedPaths = [
     value: "/remediation",
     bgColor: "bg-[#232958]",
     border: "1px solid #282e63",
-    textColor: "text-white"
-  },
-  {
-    name: "Vulnerability Data",
-    value: "/remedition",
-    bgColor: "bg-[#232958]",
-    border: "1px solid #282e63",
-    textColor: "text-white"
+    textColor: "text-white",
+    permission:['view']
   },
   {
     name: "Add Vulnerability Data",
     value: "/add-vulnerability-data",
     bgColor: "bg-[#232958]",
     border: "1px solid #282e63",
-    textColor: "text-white"
+    textColor: "text-white",
+    permission:['','create',]
   },
   {
     name: "Application Data",
     value: "/application-data",
     bgColor: "bg-[#143b4a]",
     border: "1px solid #144d59",
-    textColor: "text-white"
+    textColor: "text-white",
+    permission:['view','','modify','delete']
   },
   {
     name: "Infrastructure Data",
     value: "/infrastructure-data",
     bgColor: "bg-[#232958]",
     border: "1px solid #282e63",
-    textColor: "text-white"
+    textColor: "text-white",
+    permission:['view','','modify','delete']
   },
 
 
@@ -173,7 +182,8 @@ export const AllowedPaths = [
     value: "/reports",
     bgColor: "bg-[#3e2334]/70",
     border: "1px solid #552635",
-    textColor: "text-white"
+    textColor: "text-white",
+    permission:['view','create','modify','delete']
   },
 
 
@@ -189,14 +199,16 @@ export const AllowedPaths = [
     value: "/all-users",
     bgColor: "bg-[#153b37]",
     border: "1px solid #154639",
-    textColor: "text-white"
+    textColor: "text-white",
+    permission:['view','create','modify','delete']
   },
   {
     name: "All Tenents",
     value: "/all-tenant",
     bgColor: "bg-[#232958]",
     border: "1px solid #282e63",
-    textColor: "text-white"
+    textColor: "text-white",
+    permission:['view','create','modify','delete']
   },
 
   {
@@ -204,46 +216,52 @@ export const AllowedPaths = [
     value: "/third-party-integrations",
     bgColor: "bg-[#232958]",
     border: "1px solid #282e63",
-    textColor: "text-white"
+    textColor: "text-white",
+    permission:['view','create','modify','delete']
   },
   {
     name: "Config Email",
     value: "/config-email",
     bgColor: "bg-[#232958]",
     border: "1px solid #282e63",
-    textColor: "text-white"
+    textColor: "text-white",
+    permission:['','create']
   },
   {
     name: "Role",
     value: "/roles",
     bgColor: "bg-[#232958]",
     border: "1px solid #282e63",
-    textColor: "text-white"
+    textColor: "text-white",
+    permission:['view','create','modify','delete']
   },
   {
     name: "Partners",
     value: "/partners",
     bgColor: "bg-[#1b3057]",
     border: "1px solid #1a2c51",
-    textColor: "text-white"
+    textColor: "text-white",
+    permission:['view','create','modify','delete']
   },
   {
     name: "Tag Config",
     value: "/tags",
     bgColor: "bg-[#232958]",
     border: "1px solid #282e63",
-    textColor: "text-white"
+    textColor: "text-white",
+    permission:['view','create','modify','delete']
   },
 
 
   //  ---------------------- unselected ------------------------
 
-  {
-    name: "All Tasks",
-    value: "/employee-tasks",
-    bgColor: "bg-[#123945]",
-    border: "1px solid #124c54",
-  },
+  // {
+  //   name: "All Tasks",
+  //   value: "/employee-tasks",
+  //   bgColor: "bg-[#123945]",
+  //   border: "1px solid #124c54",
+  //   permission:['view','create','modify','delete']
+  // },
 ];
 
 

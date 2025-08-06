@@ -9,12 +9,14 @@ import * as XLSX from "xlsx";
 import Pagination from "./Pagination";
 import NoDataFound from "@/components/NoDataFound";
 import { IoSearch } from "react-icons/io5";
+import { isCreateAccess, isDeleteAccess, isHaveAction, isModifyAccess, isViewAccess } from "@/utils/pageAccess";
+import Access from "@/components/role/Access";
+import { useLocation } from "react-router-dom";
 
 export default function BusinessApplications() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [model, setmodel] = useState(false);
-  const { token } = useAuthContext();
+  // context api hooks
+  const { token,authenticate } = useAuthContext();
   const {
     CreateBussinerssApplcation,
     GetBussinerssApplcation,
@@ -25,6 +27,13 @@ export default function BusinessApplications() {
     GetAllInfraAssetData,
     totalInfraAsset,
   } = useInfraAssetContext();
+
+  // location hook
+  const location = useLocation()
+  
+  // use States 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [model, setmodel] = useState(false);
   const [editable, setEditable] = useState(null);
   const [countryData, setcountryData] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState(null);
@@ -115,7 +124,11 @@ export default function BusinessApplications() {
     if (token) {
       GetAllInfraAssetData(tenant);
     }
-  }, [tenant]);
+  }, [tenant,token]);
+
+  if(isViewAccess(authenticate,location)){
+    return <Access/>
+  }
 
   return (
     <>
@@ -133,7 +146,7 @@ export default function BusinessApplications() {
           </div>
 
           {/* Buttons */}
-          <div className="flex flex-col sm:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
+         {isCreateAccess() &&  <div className="flex flex-col sm:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
             <button
               onClick={() => setIsModalOpen(true)}
               className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center justify-center gap-2"
@@ -152,7 +165,7 @@ export default function BusinessApplications() {
               <BiPlus className="h-6 w-6" />
               Business Applications
             </button>
-          </div>
+          </div>}
         </div>
 
         <div className="w-full  min-h-screen p-6">
@@ -189,7 +202,7 @@ export default function BusinessApplications() {
                         "Application URL",
                         "Modify Criticality",
                         "Infrastructure Asset",
-                        "Actions",
+                        isHaveAction() && "Actions",
                       ].map((header) => (
                         <th
                           key={header}
@@ -226,10 +239,10 @@ export default function BusinessApplications() {
 
                         <td className="py-3 px-4">
                           <div className="flex space-x-2">
-                            <button className="p-1 text-blue-400 hover:text-blue-300">
+                            {/* <button className="p-1 text-blue-400 hover:text-blue-300">
                               <ExternalLink className="w-4 h-4" />
-                            </button>
-                            <button
+                            </button> */}
+                           {isDeleteAccess() && <button
                               onClick={() => {
                                 const confirmDelete = window.confirm(
                                   "Are you sure you want to delete this business application?"
@@ -241,9 +254,9 @@ export default function BusinessApplications() {
                               className="text-subtext hover:text-subTextHover"
                             >
                               <Trash2 className="w-5 h-5" />
-                            </button>
+                            </button>}
 
-                            <button
+                            {isModifyAccess() && <button
                               onClick={() => {
                                 setEditable(tenant);
                                 setmodel(!model);
@@ -251,7 +264,7 @@ export default function BusinessApplications() {
                               className="text-subtext hover:text-blue-700"
                             >
                               <Edit className="w-5 h-5" />
-                            </button>
+                            </button>}
                           </div>
                         </td>
                       </tr>

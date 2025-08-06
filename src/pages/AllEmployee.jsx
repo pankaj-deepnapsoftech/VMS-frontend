@@ -21,13 +21,21 @@ import {
 import { RiEdit2Line } from "react-icons/ri";
 import Pagination from "./Pagination";
 import { IoClose, IoSearch } from "react-icons/io5";
+import { useLocation } from "react-router-dom";
+import { isCreateAccess, isDeleteAccess, isHaveAction, isModifyAccess, isViewAccess } from "@/utils/pageAccess";
+import Access from "@/components/role/Access";
 
 const AllEmployee = () => {
+  // all context api hooks
   const { DeleteUser } = useAllEmployeeContext();
   const { partners } = useDataContext();
-
-  const { token, ChangeStatus } = useAuthContext();
+  const { token, ChangeStatus,authenticate } = useAuthContext();
   const { TenantData } = useAllEmployeeContext();
+  // use location hook
+
+  const location = useLocation()
+
+  // all useState
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editable, setEdiTable] = useState(null);
@@ -37,7 +45,6 @@ const AllEmployee = () => {
   const [isloading, setloading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [apiError, setApiError] = useState(null);
-
   const [partOfPartner, setPartOfPartner] = useState(null);
   const [partOfSecurend, setPartOfSecurend] = useState(null);
 
@@ -163,6 +170,10 @@ const AllEmployee = () => {
     }
   }, [token, page]);
 
+  if(isViewAccess(authenticate,location)){
+    return <Access/>
+  }
+
   return (
     <>
       {isloading ? (
@@ -179,7 +190,7 @@ const AllEmployee = () => {
             </div>
 
             {/* Right Side Button */}
-            <button
+           {isCreateAccess() && <button
               onClick={() => {
                 setIsModalOpen(true);
                 setEdiTable(null);
@@ -188,7 +199,7 @@ const AllEmployee = () => {
             >
               <BiPlus className="h-5 w-5" />
               Add User
-            </button>
+            </button>}
           </div>
 
           <div className="w-full  min-h-screen p-6">
@@ -224,8 +235,8 @@ const AllEmployee = () => {
                           "Role",
                           "Tenant",
                           "Partner",
-                          "Status",
-                          "Actions",
+                          isModifyAccess() && "Status",
+                          isHaveAction() && "Actions",
                         ].map((header) => (
                           <th
                             key={header}
@@ -257,7 +268,7 @@ const AllEmployee = () => {
                             {user.partner?.company_name || "—"}
                           </td>
                           <td className="px-4 py-3">
-                            {user.deactivate ? (
+                            {isModifyAccess() && (user.deactivate ? (
                               <button
                                 onClick={() =>
                                   handleChangeStatus("deactivate", user._id)
@@ -275,10 +286,10 @@ const AllEmployee = () => {
                               >
                                 Deactivate
                               </button>
-                            )}
+                            ))}
                           </td>
                           <td className="px-4 py-3 flex gap-2">
-                            <button
+                            {isDeleteAccess() && <button
                               onClick={() =>
                                 window.confirm("Delete this user?") &&
                                 DeleteUser(user._id)
@@ -287,8 +298,8 @@ const AllEmployee = () => {
                               className="text-subtext hover:text-subTextHover"
                             >
                               <FaRegTrashAlt className="w-5 h-5" />
-                            </button>
-                            <button
+                            </button>}
+                           {isModifyAccess() && <button
                               onClick={() => {
                                 setEdiTable(user);
                                 setIsModalOpen(true);
@@ -297,7 +308,7 @@ const AllEmployee = () => {
                               className="text-subtext hover:text-blue-700"
                             >
                               <RiEdit2Line className="w-5 h-5" />
-                            </button>
+                            </button>}
                           </td>
                         </tr>
                       ))}

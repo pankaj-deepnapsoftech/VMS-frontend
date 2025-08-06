@@ -15,6 +15,8 @@ import { MdDelete, MdModeEditOutline } from "react-icons/md";
 import { BiDetail } from "react-icons/bi";
 import { StatusModal } from "@/modals/StatusModal";
 import { GrStatusGood } from "react-icons/gr";
+import { isDeleteAccess, isHaveAction, isModifyAccess, isViewAccess } from "@/utils/pageAccess";
+import Access from "@/components/role/Access";
 
 // Popup Menu Component using Portal
 
@@ -22,7 +24,7 @@ import { GrStatusGood } from "react-icons/gr";
 export function InfrastructureData() {
   const { loading, GetInfrastructureData, allInfrastructureData, DeleteData } =
     useVulnerabililtyDataContext();
-  const { token } = useAuthContext();
+  const { token,authenticate } = useAuthContext();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -35,9 +37,7 @@ export function InfrastructureData() {
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false)
   const [status, setStatus] = useState(null)
   const { closeModal, isOpen, openModal } = useAccessPartner();
-  const itemsPerPage = 10;
 
-  console.log(isOpen)
 
   // Popup state
   const [activeMenu, setActiveMenu] = useState(null);
@@ -59,11 +59,8 @@ export function InfrastructureData() {
       );
   });
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentItems = filteredData?.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  );
+
+
 
   const handleExpectionModal = (item) => {
     if (!item.Expection) {
@@ -107,6 +104,10 @@ export function InfrastructureData() {
     const params = new URLSearchParams(window.location.search);
     setTenant(params.get("tenant") || "");
   }, [location.search]);
+
+  if(isViewAccess(authenticate,location)){
+      return <Access/>
+    };
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -156,7 +157,7 @@ export function InfrastructureData() {
                           "Asset",
                           "ACS",
                           "Status",
-                          "Actions",
+                          isHaveAction() && "Actions",
                         ].map((header) => (
                           <th
                             key={header}
@@ -185,14 +186,14 @@ export function InfrastructureData() {
                             {calculateACS(item.InfraStructureAsset) || "-"}
                           </td>
                           <td className="px-4 py-3">{item?.status || "-"}</td>
-                          <td className="px-4 py-3 ">
+                          {isHaveAction() && <td className="px-4 py-3 ">
                             <button
                               className="hover:bg-gray-700 px-3 py-2 rounded-lg"
                               onClick={(e) => toggleMenu(index, e)}
                             >
                               <BsThreeDotsVertical />
                             </button>
-                          </td>
+                          </td>}
                         </tr>
                       ))}
                     </tbody>
@@ -215,7 +216,7 @@ export function InfrastructureData() {
           <PopupMenu position={menuPosition} onClose={closeMenu}>
             {activeMenu !== null && (
               <>
-                <li
+               {isModifyAccess() && <li
                   className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
                   onClick={() =>
                     navigate("/edit-vulnerability-data", {
@@ -224,8 +225,8 @@ export function InfrastructureData() {
                   }
                 >
                   <MdModeEditOutline /> Edit
-                </li>
-                <li
+                </li>}
+                {isDeleteAccess() && <li
                   className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
                   onClick={() => {
                     if (window.confirm("Are you sure to delete?")) {
@@ -235,8 +236,8 @@ export function InfrastructureData() {
                   }}
                 >
                   <MdDelete /> Delete
-                </li>
-                <li
+                </li>}
+              {isModifyAccess() &&   <li
                   className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
                   onClick={() => {
                     handleExpectionModal(filteredData[activeMenu]);
@@ -244,7 +245,7 @@ export function InfrastructureData() {
                   }}
                 >
                   <IoWarningOutline /> Add Exception
-                </li>
+                </li>}
                 <li
                   className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
                   onClick={() => {
@@ -255,7 +256,7 @@ export function InfrastructureData() {
                 >
                   <BiDetail />View Details
                 </li>
-                <li
+               {isModifyAccess() &&  <li
                   className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
                   onClick={() => {
                     setStatus({ status: filteredData[activeMenu].status, _id: filteredData[activeMenu]._id });
@@ -263,7 +264,7 @@ export function InfrastructureData() {
                   }}
                 >
                   <GrStatusGood /> Change Status
-                </li>
+                </li>}
               </>
             )}
           </PopupMenu>

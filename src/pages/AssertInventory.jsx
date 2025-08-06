@@ -17,6 +17,7 @@ import { RiEdit2Line } from "react-icons/ri";
 import { IoSearch } from "react-icons/io5";
 import NoDataFound from "@/components/NoDataFound";
 import Access from "@/components/role/Access";
+import { isCreateAccess, isDeleteAccess, isHaveAction, isModifyAccess, isViewAccess } from "@/utils/pageAccess";
 
 export default function TenantDashboard() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -120,12 +121,9 @@ export default function TenantDashboard() {
     setTenant(params.get("tenant") || "");
   }, [location.search]);
 
-  const access = authenticate?.allowed_path?.filter((item) => item.value === location.pathname)[0];
-
-
-  if (authenticate?.role && !access?.permission?.includes("view")) {
-    return <Access/>
-  }
+   if (isViewAccess(authenticate,location)) {
+        return <Access />
+    }
 
   return (
     <>
@@ -143,7 +141,7 @@ export default function TenantDashboard() {
             </div>
 
             {/* Buttons */}
-           {access?.permission?.includes("create") && <div className="flex flex-col sm:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
+           {isCreateAccess() && <div className="flex flex-col sm:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
               <button
                 onClick={() => setIsModalOpen(true)}
                 className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center justify-center gap-2"
@@ -201,7 +199,7 @@ export default function TenantDashboard() {
                           "Hosting",
                           "Data Sensitivity",
                           "Service Role",
-                          access?.permission?.includes("delete") || access?.permission?.includes("modify") && "Actions",
+                          isHaveAction() && "Actions",
                         ].map((header) => (
                           <th
                             key={header}
@@ -256,7 +254,7 @@ export default function TenantDashboard() {
                           </td>
 
                           <td className="px-4 py-3 space-x-4">
-                            {access?.permission?.includes("delete") && <button
+                            {isDeleteAccess() && <button
                               onClick={() => {
                                 if (
                                   window.confirm(
@@ -272,7 +270,7 @@ export default function TenantDashboard() {
                               <FaRegTrashAlt className="w-5 h-5" />
                             </button>}
 
-                           {access?.permission?.includes("modify") && <button
+                           {isModifyAccess() && <button
                               onClick={() => {
                                 setEditable(tenant);
                                 setmodel(!model);
