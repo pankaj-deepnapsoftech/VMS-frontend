@@ -10,17 +10,24 @@ import { AxiosHandler } from "@/config/AxiosConfig";
 import Pagination from "./Pagination";
 import Loader from "@/components/Loader/Loader";
 import Addtanent from "./Addtanent";
-import { MdAssignmentAdd } from "react-icons/md";
 import AccessPartner from "@/modals/AccessPartner";
 import useAccessPartner from "@/hooks/AccessPartner";
 import { IoSearch } from "react-icons/io5";
 import NoDataFound from "@/components/NoDataFound";
 import { RiEdit2Line } from "react-icons/ri";
+import { useLocation } from "react-router-dom";
+import Access from "@/components/role/Access";
+import { isCreateAccess, isDeleteAccess, isHaveAction, isModifyAccess, isViewAccess } from "@/utils/pageAccess";
 
 export default function AllCustomer() {
-  const { token } = useAuthContext();
+  // context api hooks
+  const { token,authenticate } = useAuthContext();
   const { VerifyEmployee } = useAllEmployeeContext();
 
+  // location hook
+  const location = useLocation();
+
+  // all use States
   const [page, setPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
@@ -66,6 +73,10 @@ export default function AllCustomer() {
     }
   }, [token, page, VerifyEmployee]);
 
+  if(isViewAccess(authenticate,location)){
+    return <Access/>
+  }
+
   const filteredTenants = tenants.filter((tenant) =>
     [
       tenant.company_name,
@@ -95,7 +106,7 @@ export default function AllCustomer() {
               </span>
             </div>
             <div className="flex w-full justify-end py-4">
-              <button
+              {isCreateAccess() && <button
                 onClick={() => {
                   setIsModalOpen(true);
                   setEditTable(null);
@@ -104,7 +115,7 @@ export default function AllCustomer() {
               >
                 <BiPlus className="h-6 w-6 mr-1" />
                 Add Tenant
-              </button>
+              </button>}
             </div>
           </div>
 
@@ -143,7 +154,7 @@ export default function AllCustomer() {
                           "City",
                           "Industry",
                           "Risk Appetite",
-                          "Actions",
+                          isHaveAction() && "Actions",
                         ].map((header) => (
                           <th
                             key={header}
@@ -176,14 +187,14 @@ export default function AllCustomer() {
                           </td>
 
                           <td className="px-4 py-3 flex gap-2">
-                            <button
+                          {isDeleteAccess() &&   <button
                               onClick={() => DeleteData(tenant?._id)}
                               title="Delete"
                               className="text-subtext hover:text-subTextHover"
                             >
                               <FaRegTrashAlt className="w-5 h-5" />
-                            </button>
-                            <button
+                            </button>}
+                            {isModifyAccess() && <button
                               onClick={() => {
                                 setEditTable(tenant);
                                 setIsModalOpen(true);
@@ -192,7 +203,7 @@ export default function AllCustomer() {
                               className="text-subtext hover:text-blue-700"
                             >
                               <RiEdit2Line className="w-5 h-5" />
-                            </button>
+                            </button>}
                           </td>
                         </tr>
                       ))}

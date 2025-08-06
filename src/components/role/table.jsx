@@ -68,15 +68,15 @@ const RoleTable = ({ setFieldValue, defaultValue }) => {
                 <div className="w-4 h-4 bg-gray-500 rounded" />
                 {module.name}
               </td>
-              {['view', 'create', 'modify', 'delete'].map((perm) => (
-                <td key={perm} className="px-4 py-3">
-                  <input
+              {module.permission.map((perm) => (
+                 <td key={perm} className="px-4 py-3">
+                 {perm && <input
                     type="checkbox"
                     checked={hasPermission(module.name, perm)}
                     onChange={() => togglePermission(module, perm)}
                     className="form-checkbox h-4 w-4 text-blue-500 bg-transparent border-gray-500"
-                  />
-                </td>
+                  />  }
+                </td> 
               ))}
             </tr>
         ))}

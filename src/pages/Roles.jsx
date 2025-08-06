@@ -8,15 +8,25 @@ import { BiPlus } from "react-icons/bi";
 import { FiEdit2, FiMoreVertical, FiTrash2 } from "react-icons/fi";
 import Pagination from "./Pagination";
 import toast from "react-hot-toast";
+import { useLocation } from "react-router-dom";
+import { isCreateAccess, isDeleteAccess, isHaveAction, isModifyAccess, isViewAccess } from "@/utils/pageAccess";
+import Access from "@/components/role/Access";
 
 const Roles = () => {
+  // all context api hooks
+  const { token,authenticate } = useAuthContext();
+  
+
+  // location hook 
+  const location = useLocation();
+
+  // use States
   const [showModal, setModal] = useState(false);
   const [rolesList, setRolesList] = useState([]);
   const [filteredRoles, setFilteredRoles] = useState([]);
   const [editable, setEditable] = useState(null);
   const [isLoading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
-  const { token } = useAuthContext();
   const [page, setPage] = useState(1);
 
   const pathMap = AllowedPaths.reduce((acc, path) => {
@@ -27,7 +37,6 @@ const Roles = () => {
     return acc;
   }, {});
 
-  console.log("this si path map", pathMap);
 
   const GetData = async (page) => {
     setLoading(true);
@@ -97,6 +106,10 @@ const Roles = () => {
     if (token) GetData(page);
   }, [token, page]);
 
+  if(isViewAccess(authenticate,location)){
+    return <Access/>
+  }
+
   return (
     <>
       {isLoading ? (
@@ -117,7 +130,7 @@ const Roles = () => {
               placeholder="Search..."
               className="bg-[#23252750] backdrop-blur-md py-2 px-4 w-full sm:w-1/3 rounded-md text-white"
             />
-            <button
+           {isCreateAccess() && <button
               onClick={() => {
                 setModal(true);
                 setEditable(null);
@@ -126,7 +139,7 @@ const Roles = () => {
             >
               <BiPlus className="h-5 w-5" />
               Add Role
-            </button>
+            </button>}
           </div>
 
           {/* Modal */}
@@ -159,9 +172,9 @@ const Roles = () => {
                       <th className="px-4 py-3 text-left font-semibold text-white">
                         Allowed Paths
                       </th>
-                      <th className="px-4 py-3 text-left font-semibold text-white">
+                     {isHaveAction() && <th className="px-4 py-3 text-left font-semibold text-white">
                         Actions
-                      </th>
+                      </th>}
                     </tr>
                   </thead>
                   <tbody className="text-white divide-y divide-[#1e2b45]">
@@ -213,18 +226,18 @@ const Roles = () => {
                         </td>
                         <td className="px-4 py-4">
                           <div className="flex items-center gap-4">
-                            <FiEdit2
+                           {isModifyAccess() && <FiEdit2
                               className="cursor-pointer text-gray-300 hover:text-blue-400"
                               onClick={() => {
                                 setEditable(roleItem);
                                 setModal(true);
                               }}
-                            /> 
-                            <FiTrash2
+                            /> }
+                            {isDeleteAccess() && <FiTrash2
                               className="cursor-pointer text-gray-300 hover:text-red-500"
                               onClick={() => DeleteData(roleItem._id)}
-                            />
-                            <FiMoreVertical className="cursor-pointer text-gray-300 hover:text-gray-100" />
+                            />}
+                            {/* <FiMoreVertical className="cursor-pointer text-gray-300 hover:text-gray-100" /> */}
                           </div>  
                         </td>
                       </tr>

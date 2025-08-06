@@ -4,33 +4,40 @@ import { useAuthContext } from "@/context";
 import { PartnersSchema } from "@/Validation/PartnerrValidations";
 import { useFormik } from "formik";
 import { Loader } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import {
   FaBuilding,
   FaCity,
   FaCompass,
-  FaEdit,
   FaGlobe,
   FaMapMarkedAlt,
   FaRegTrashAlt,
-  FaTrash,
 } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import Pagination from "./Pagination";
 import { RiEdit2Line } from "react-icons/ri";
 import NoDataFound from "@/components/NoDataFound";
 import { IoSearch } from "react-icons/io5";
+import { useLocation } from "react-router-dom";
+import Access from "@/components/role/Access";
+import { isCreateAccess, isDeleteAccess, isHaveAction, isModifyAccess, isViewAccess } from "@/utils/pageAccess";
 
 const Partners = () => {
+  // all context api hooks
+  const { token,authenticate } = useAuthContext();
+
+  // location hook
+  const location = useLocation();
+
+  // all useStates
   const [isLoading, setLoading] = useState(false);
   const [showModal, setModal] = useState(false);
   const [partnersData, setPartnersData] = useState([]);
   const [editTable, setEdittable] = useState(false);
   const [page, setPage] = useState(1);
-  const [searchQuery, setSearchQuery] = useState(""); // 🔍 Search state
+  const [searchQuery, setSearchQuery] = useState(""); 
 
-  const { token } = useAuthContext();
 
   const {
     handleBlur,
@@ -101,6 +108,10 @@ const Partners = () => {
     }
   }, [token, page]);
 
+  if(isViewAccess(authenticate,location)){
+    return <Access/>;
+  }
+
   return (
     <>
       {isLoading ? (
@@ -115,7 +126,7 @@ const Partners = () => {
               </h2>
               <span className="text-subtext text-sm">Manage all partners</span>
             </div>
-            <button
+            {isCreateAccess() && <button
               onClick={() => {
                 setModal(true);
                 setEdittable(null);
@@ -124,7 +135,7 @@ const Partners = () => {
             >
               <BiPlus className="h-5 w-5" />
               Add Partners
-            </button>
+            </button>}
           </div>
 
           {/* Modal */}
@@ -292,7 +303,7 @@ const Partners = () => {
                           "Country",
                           "State",
                           "City",
-                          "Actions",
+                          isHaveAction() && "Actions",
                         ].map((header) => (
                           <th
                             key={header}
@@ -318,14 +329,14 @@ const Partners = () => {
                           <td className="px-4 py-3">{tenant.city}</td>
 
                           <td className="px-4 py-3 flex gap-2">
-                            <button
+                           {isDeleteAccess() &&  <button
                               onClick={() => DeletePartnersData(tenant._id)}
                               title="Delete"
                               className="text-subtext hover:text-subTextHover"
                             >
                               <FaRegTrashAlt className="w-5 h-5" />
-                            </button>
-                            <button
+                            </button>}
+                            {isModifyAccess() && <button
                               onClick={() => {
                                 setEdittable(tenant);
                                 setModal(true);
@@ -334,7 +345,7 @@ const Partners = () => {
                               className="text-subtext hover:text-blue-700"
                             >
                               <RiEdit2Line className="w-5 h-5" />
-                            </button>
+                            </button>}
                           </td>
                         </tr>
                       ))}

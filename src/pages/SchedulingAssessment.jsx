@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
 import { SchedulingAssessmentValidation } from "@/Validation/SchedulingAssessmentValidation";
 import { useFormik } from "formik";
-import { BiEditAlt } from "react-icons/bi";
 import { RiDeleteBinFill } from "react-icons/ri";
 import { MdClose } from "react-icons/md";
 import {
   useAuthContext,
-  useDataContext,
   useScheduleAssessmentContext,
 } from "@/context";
 import Loader from "@/components/Loader/Loader";
 import NoDataFound from "@/components/NoDataFound";
 import { useLocation } from "react-router-dom";
 import Pagination from "./Pagination";
+import { isCreateAccess, isDeleteAccess, isHaveAction, isViewAccess } from "@/utils/pageAccess";
+import Access from "@/components/role/Access";
 
 function SchedulingAssessmentPage() {
+  // all context api hooks 
   const {
     loading,
     SchedulingAssesment,
@@ -29,15 +30,34 @@ function SchedulingAssessmentPage() {
     DashboardData,
   } = useScheduleAssessmentContext();
 
-  const { token } = useAuthContext();
-  const { TenantAllData } = useDataContext();
+  const { token, authenticate } = useAuthContext();
+
+
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [file, setFile] = useState("");
+  const formData = new FormData();
+  const [activeTab, setActiveTab] = useState("schedule");
+
+  // location
+  const location = useLocation();
+
+
+
+  // all useStates
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [selectedAssessment, setSelectedAssessment] = useState(null);
+  const [tenant, setTenant] = useState("");
+
+
 
   // Extract headers dynamically for table display
   const tableHeaders =
     allAssesmentData?.length > 0
       ? Object.keys(allAssesmentData[0]).filter(
-          (key) => key !== "_id" && key !== "__v" && key !== "updatedAt"
-        )
+        (key) => key !== "_id" && key !== "__v" && key !== "updatedAt"
+      )
       : [];
 
   // Headers for the Add form (show all fields)
@@ -45,16 +65,6 @@ function SchedulingAssessmentPage() {
     (key) => key !== "createdAt" && key !== "updatedAt" && key !== "creator_id"
   );
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [file, setFile] = useState("");
-  const formData = new FormData();
-  const [activeTab, setActiveTab] = useState("schedule");
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-  const [selectedAssessment, setSelectedAssessment] = useState(null);
-  const [tenant, setTenant] = useState("");
-  const location = useLocation();
 
   const {
     values,
@@ -100,6 +110,7 @@ function SchedulingAssessmentPage() {
     },
   });
 
+
   const handleEdit = (assessment) => {
     setValues(assessment);
     setSelectedAssessment(assessment);
@@ -126,6 +137,14 @@ function SchedulingAssessmentPage() {
     }
   }, [token, page, tenant]);
 
+  if (isViewAccess(authenticate, location)) {
+    return <Access />
+  }
+
+  // if (!isCreateAccess()) {
+  //   setActiveTab("pending")
+  // }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-1000 to-slate-800 text-white px-6 py-8">
       {/* Main Content */}
@@ -138,32 +157,29 @@ function SchedulingAssessmentPage() {
           <div className="w-full mx-auto p-4 rounded-md shadow-sm bg-modalBg">
             {/* Tab Headers */}
             <div className="flex -b bg-slate-800 rounded-lg p-4 mb-4">
-              <button
-                className={`px-4 py-2 font-semibold transition-colors ${
-                  activeTab === "schedule"
+              {isCreateAccess() && <button
+                className={`px-4 py-2 font-semibold transition-colors ${activeTab === "schedule"
                     ? "border-b-2 border-blue-500 text-blue-500"
                     : "text-gray-200 hover:text-blue-400"
-                }`}
+                  }`}
                 onClick={() => setActiveTab("schedule")}
               >
                 Schedule Assessment
-              </button>
+              </button>}
               <button
-                className={`ml-4 px-4 py-2 font-semibold transition-colors ${
-                  activeTab === "pending"
+                className={`ml-4 px-4 py-2 font-semibold transition-colors ${activeTab === "pending"
                     ? "border-b-2 border-blue-500 text-blue-500"
                     : "text-gray-200 hover:text-blue-500"
-                }`}
+                  }`}
                 onClick={() => setActiveTab("pending")}
               >
                 Pending Assessments
               </button>
               <button
-                className={`ml-4 px-4 py-2 font-semibold transition-colors ${
-                  activeTab === "completed"
+                className={`ml-4 px-4 py-2 font-semibold transition-colors ${activeTab === "completed"
                     ? "border-b-2 border-blue-500 text-blue-500"
                     : "text-gray-200 hover:text-blue-500"
-                }`}
+                  }`}
                 onClick={() => setActiveTab("completed")}
               >
                 Completed Assessments
@@ -207,7 +223,7 @@ function SchedulingAssessmentPage() {
                               if (
                                 e.target.value === "Dynamic Application" ||
                                 e.target.value ===
-                                  "Web Application Penetration Testing"
+                                "Web Application Penetration Testing"
                               ) {
                                 setIsOpen(true);
                               }
@@ -386,20 +402,19 @@ function SchedulingAssessmentPage() {
                                 : header.replace(/_/g, " ")}
                             </th>
                           ))}
-                          <th className="px-6 py-4 text-left text-xs font  -medium text-slate-300 uppercase tracking-wider">
+                          {isHaveAction() && <th className="px-6 py-4 text-left text-xs font  -medium text-slate-300 uppercase tracking-wider">
                             Actions
-                          </th>
+                          </th>}
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-slate-700">
                         {allAssesmentData?.map((item, index) => (
                           <tr
                             key={item._id}
-                            className={`hover:bg-slate-700/50 transition-colors ${
-                              index % 2 === 0
+                            className={`hover:bg-slate-700/50 transition-colors ${index % 2 === 0
                                 ? "bg-slate-800/30"
                                 : "bg-slate-800/50"
-                            }`}
+                              }`}
                           >
                             {addFormHeaders.map((field, i) => (
                               <td
@@ -418,11 +433,10 @@ function SchedulingAssessmentPage() {
                                   </a>
                                 ) : field === "MFA_Enabled" ? (
                                   <span
-                                    className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                                      item[field] === true
+                                    className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${item[field] === true
                                         ? "bg-green-100 text-green-800"
                                         : "bg-red-100 text-red-800"
-                                    }`}
+                                      }`}
                                   >
                                     {item[field] === true ? "Yes" : "No"}
                                   </span>
@@ -432,7 +446,7 @@ function SchedulingAssessmentPage() {
                               </td>
                             ))}
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="flex space-x-3">
+                              {isDeleteAccess() && <div className="flex space-x-3">
                                 <button
                                   onClick={() => {
                                     console.log("Delete clicked"); // Debug
@@ -447,7 +461,7 @@ function SchedulingAssessmentPage() {
                                 >
                                   <RiDeleteBinFill className="h-5 w-5" />
                                 </button>
-                              </div>
+                              </div>}
                             </td>
                           </tr>
                         ))}

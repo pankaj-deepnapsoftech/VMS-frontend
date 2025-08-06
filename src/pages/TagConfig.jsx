@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { BiPlus } from "react-icons/bi";
-import { FaEdit, FaRegTrashAlt, FaTrash } from "react-icons/fa";
+import { FaRegTrashAlt } from "react-icons/fa";
 import Loader from "@/components/Loader/Loader";
 import { useAuthContext, useTagsContext } from "@/context";
 import { useFormik } from "formik";
@@ -8,11 +8,19 @@ import { tagValidation } from "@/Validation/TagValidation";
 import { RiEdit2Line } from "react-icons/ri";
 import { IoSearch } from "react-icons/io5";
 import Pagination from "./Pagination";
+import { useLocation } from "react-router-dom";
+import Access from "@/components/role/Access";
+import { isCreateAccess, isDeleteAccess, isHaveAction, isModifyAccess, isViewAccess } from "@/utils/pageAccess";
 
 export default function TagsPage() {
+  // all context api hooks
   const { createTags, GetTages, Tages, UpdateTags, DeleteTags } = useTagsContext();
-  const { token } = useAuthContext();
+  const { token,authenticate } = useAuthContext();
 
+  // location hook
+  const location = useLocation()
+
+  // all useStates
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editTag, setEditTag] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -57,6 +65,10 @@ export default function TagsPage() {
     );
   });
 
+  if(isViewAccess(authenticate,location)){
+    return <Access/>
+  }
+
   return (
     <>
       {isLoading ? (
@@ -75,7 +87,7 @@ export default function TagsPage() {
             </div>
 
             <div className="flex w-full justify-end py-4">
-              <button
+             {isCreateAccess() &&  <button
                 onClick={() => {
                   setIsModalOpen(true);
                   setEditTag(null);
@@ -85,7 +97,7 @@ export default function TagsPage() {
               >
                 <BiPlus className="h-6 w-6 mr-1" />
                 Add Tag
-              </button>
+              </button>}
             </div>
           </div>
 
@@ -119,7 +131,7 @@ export default function TagsPage() {
                         "Tag Color",
                         "Related",
                         "Amount",
-                        "Actions",
+                        isHaveAction() && "Actions",
                       ].map((header) => (
                         <th
                           key={header}
@@ -145,7 +157,7 @@ export default function TagsPage() {
                         <td className="px-4 py-3">{tag.amount || "-"}</td>
 
                         <td className="px-4 py-3 flex gap-2">
-                          <button
+                         {isDeleteAccess() &&  <button
                             onClick={() => {
                               const confirmDelete = window.confirm(
                                 "Are you sure you want to delete this tag?"
@@ -158,8 +170,8 @@ export default function TagsPage() {
                             className="text-subtext hover:text-subTextHover"
                           >
                             <FaRegTrashAlt className="w-5 h-5" />
-                          </button>
-                          <button
+                          </button>}
+                         {isModifyAccess() &&  <button
 
                             title="Edit"
                             onClick={() => {
@@ -169,7 +181,7 @@ export default function TagsPage() {
                             className="text-subtext hover:text-blue-700"
                           >
                             <RiEdit2Line className="w-5 h-5" />
-                          </button>
+                          </button>}
                         </td>
                       </tr>
                     ))}
