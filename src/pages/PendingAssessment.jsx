@@ -114,7 +114,7 @@ const PendingAssessment = () => {
                       </button>}
                       {isModifyAccess() && <button
                         onClick={() => {
-                          setEditable(item);
+                          setEditable({...item,creator_id:item.creator_id._id,Tenant_id:item.Tenant_id._id});
                         }}
                         title="Edit"
                         className="text-subtext hover:text-blue-700"
