@@ -1,24 +1,28 @@
 /* eslint-disable no-constant-binary-expression */
-import { useEffect, useState } from 'react'
-import Pagination from './Pagination';
-import { isDeleteAccess, isHaveAction, isModifyAccess } from '@/utils/pageAccess';
-import { FaRegTrashAlt } from 'react-icons/fa';
-import { RiEdit2Line } from 'react-icons/ri';
-import { IoSearch } from 'react-icons/io5';
-import NoDataFound from '@/components/NoDataFound';
-import { useAuthContext, useScheduleAssessmentContext } from '@/context';
+import { useEffect, useState } from "react";
+import Pagination from "./Pagination";
+import {
+  isDeleteAccess,
+  isHaveAction,
+  isModifyAccess,
+} from "@/utils/pageAccess";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { RiEdit2Line } from "react-icons/ri";
+import { IoSearch } from "react-icons/io5";
+import NoDataFound from "@/components/NoDataFound";
+import { useAuthContext, useScheduleAssessmentContext } from "@/context";
+import SchedulingAssessmentPage from "./SchedulingAssessment";
 
 const PendingAssessment = () => {
-
   // all context api hooks
-  const { token } = useAuthContext()
-  const { getCompleteAssessment,
-			completeAssessment,DeleteAssesment} = useScheduleAssessmentContext();
-
+  const { token } = useAuthContext();
+  const { getCompleteAssessment, completeAssessment, DeleteAssesment } =
+    useScheduleAssessmentContext();
 
   // all useState hooks
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
+  const [editable, setEditable] = useState(null);
 
   const filteredData = completeAssessment;
 
@@ -26,9 +30,7 @@ const PendingAssessment = () => {
     if (token) {
       getCompleteAssessment();
     }
-
-  }, [token])
-
+  }, [token]);
 
   return (
     <div className="w-full  pb-20 p-6">
@@ -83,44 +85,51 @@ const PendingAssessment = () => {
                     className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
                   >
                     <td className="px-4 py-3">{index + 1}</td>
-                    <td className="px-4 py-3 capitalize">{item?.Data_Classification || "-"}</td>
-                    <td className="px-4 py-3 capitalize">{item?.MFA_Enabled ? "Yes" : "NO" || "-"}</td>
-                    <td className="px-4 py-3">{item?.Type_Of_Assesment || "-"}</td>
+                    <td className="px-4 py-3 capitalize">
+                      {item?.Data_Classification || "-"}
+                    </td>
+                    <td className="px-4 py-3 capitalize">
+                      {item?.MFA_Enabled ? "Yes" : "NO" || "-"}
+                    </td>
+                    <td className="px-4 py-3">
+                      {item?.Type_Of_Assesment || "-"}
+                    </td>
                     <td className="px-4 py-3">{item.code_Upload || "-"}</td>
-                    <td className="px-4 py-3">
-                      {item?.status || "—"}
-                    </td>
-                    <td className="px-4 py-3">
-                      {item?.task_start|| "—"}
-                    </td>
-                    <td className="px-4 py-3">
-                      {item?.task_end || "—"}
-                    </td>
+                    <td className="px-4 py-3">{item?.status || "—"}</td>
+                    <td className="px-4 py-3">{item?.task_start || "—"}</td>
+                    <td className="px-4 py-3">{item?.task_end || "—"}</td>
                     <td className="px-4 py-3">
                       {item?.creator_id?.fname || "—"}
                     </td>
-                   
+
                     <td className="px-4 py-3 flex gap-2">
-                      {isDeleteAccess() && <button
-                        onClick={() =>
-                          window.confirm("Delete this user?") &&
-                          DeleteAssesment(item._id)
-                        }
-                        title="Delete"
-                        className="text-subtext hover:text-subTextHover"
-                      >
-                        <FaRegTrashAlt className="w-5 h-5" />
-                      </button>}
-                      {isModifyAccess() && <button
-                        // onClick={() => {
-                        //   setEdiTable(user);
-                        //   setIsModalOpen(true);
-                        // }}
-                        title="Edit"
-                        className="text-subtext hover:text-blue-700"
-                      >
-                        <RiEdit2Line className="w-5 h-5" />
-                      </button>}
+                      {isDeleteAccess() && (
+                        <button
+                          onClick={() =>
+                            window.confirm("Delete this user?") &&
+                            DeleteAssesment(item._id)
+                          }
+                          title="Delete"
+                          className="text-subtext hover:text-subTextHover"
+                        >
+                          <FaRegTrashAlt className="w-5 h-5" />
+                        </button>
+                      )}
+                      {isModifyAccess() && (
+                        <button
+                          onClick={() => {
+                            setEditable({
+                              ...item,
+                              creator_id: item.creator_id._id,
+                              Tenant_id: item.Tenant_id._id,
+                            });
+                          }}
+                          title="Edit"
+                          className="text-subtext hover:text-blue-700"
+                        >
+                          <RiEdit2Line className="w-5 h-5" />
+                        </button>
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -137,8 +146,15 @@ const PendingAssessment = () => {
           total={filteredData.length}
         />
       </div>
-    </div>
-  )
-}
 
-export default PendingAssessment
+      {editable && (
+        <SchedulingAssessmentPage
+          editable={editable}
+          setEditable={setEditable}
+        />
+      )}
+    </div>
+  );
+};
+
+export default PendingAssessment;
