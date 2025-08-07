@@ -1,17 +1,11 @@
 import { useEffect, useState } from "react";
 import { SchedulingAssessmentValidation } from "@/Validation/SchedulingAssessmentValidation";
 import { useFormik } from "formik";
-import { RiDeleteBinFill } from "react-icons/ri";
 import { MdClose } from "react-icons/md";
 import { useAuthContext, useScheduleAssessmentContext } from "@/context";
 import Loader from "@/components/Loader/Loader";
-import NoDataFound from "@/components/NoDataFound";
 import { useLocation } from "react-router-dom";
-import Pagination from "./Pagination";
 import {
-  isCreateAccess,
-  isDeleteAccess,
-  isHaveAction,
   isViewAccess,
 } from "@/utils/pageAccess";
 import Access from "@/components/role/Access";
@@ -22,12 +16,9 @@ function SchedulingAssessmentPage() {
     loading,
     SchedulingAssesment,
     allAssesmentData,
-    DeleteAssesment,
     UpdateAssesment,
     page,
-    setPage,
     setdatafetchCount,
-    TotalAssessments,
     TesterForAssessment,
     DashboardData,
   } = useScheduleAssessmentContext();
@@ -37,7 +28,6 @@ function SchedulingAssessmentPage() {
   const [isOpen, setIsOpen] = useState(false);
   const [file, setFile] = useState("");
   const formData = new FormData();
-  const [activeTab, setActiveTab] = useState("schedule");
 
   // location
   const location = useLocation();
@@ -70,7 +60,6 @@ function SchedulingAssessmentPage() {
     handleSubmit,
     setFieldValue,
     resetForm,
-    setValues,
   } = useFormik({
     initialValues: {
       Tenant_id: "",
@@ -88,6 +77,8 @@ function SchedulingAssessmentPage() {
         alert("Please Select Tenant first");
         return;
       }
+
+      value = {...value,Tenant_id:tenant}
 
       Object.entries(value).forEach(([key, value]) => {
         formData.append(key, value);
