@@ -12,7 +12,7 @@ const PendingAssessment = () => {
 
   // all context api hooks
   const { token } = useAuthContext()
-  const { pendingAssessment, getPendingAssessments } = useScheduleAssessmentContext();
+  const { pendingAssessment, getPendingAssessments,DeleteAssesment } = useScheduleAssessmentContext();
 
 
   // all useState hooks
@@ -101,10 +101,10 @@ const PendingAssessment = () => {
                    
                     <td className="px-4 py-3 flex gap-2">
                       {isDeleteAccess() && <button
-                        // onClick={() =>
-                        //   window.confirm("Delete this user?") &&
-                        //   DeleteUser(user._id)
-                        // }
+                        onClick={() =>
+                          window.confirm("Delete this user?") &&
+                          DeleteAssesment(item._id)
+                        }
                         title="Delete"
                         className="text-subtext hover:text-subTextHover"
                       >
