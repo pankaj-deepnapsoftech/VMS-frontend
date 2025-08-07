@@ -303,7 +303,7 @@ export const products = [
       { title: "Dashboard", route: "/", icon: BiSolidDashboard },
       {
         title: "Manage Assessments",
-        route: "/assesment-schedule",
+        // route: "/assesment-schedule",
         icon: CalendarClock,
         childRoutes:[
           {title: "Schedule Assessment",route: "/assesment-schedule",icon: CalendarClock,},

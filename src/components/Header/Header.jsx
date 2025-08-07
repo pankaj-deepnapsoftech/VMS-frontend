@@ -46,10 +46,10 @@ function Header({ setShowMenu, showSidebar }) {
         {navList?.map((data) => (
           <React.Fragment key={data.route}>
             <NavLink
-              to={data.route}
-              onClick={()=>{setShowMenu();setDropDown(!dropDown)}}
+              to={data?.route}
+              onClick={()=>{setShowMenu();setDropDown(data?.childRoutes && data?.childRoutes.length && !dropDown)}}
               className={({ isActive }) =>
-                `flex items-center px-2 py-2 space-x-2 rounded-lg transition duration-200 ${isActive ? "bg-[#3533cc]" : ""
+                `flex items-center px-2 py-2 space-x-2 rounded-lg transition duration-200 ${isActive && !(data?.childRoutes && data?.childRoutes.length)  ? "bg-[#3533cc]" : ""
                 }`
               }
             >
@@ -62,7 +62,7 @@ function Header({ setShowMenu, showSidebar }) {
                 to={item.route}
                 onClick={setShowMenu}
                 className={({ isActive }) =>
-                  `flex items-center px-2 py-2 space-x-2 mx-3 rounded-lg transition duration-200 ${isActive ? "bg-[#3533cc]" : ""
+                  `flex items-center px-2 py-2 h-fit space-x-2 mx-3 rounded-lg transition duration-200 ${isActive ? "bg-[#3533cc]" : ""
                   }`
                 }
               >
