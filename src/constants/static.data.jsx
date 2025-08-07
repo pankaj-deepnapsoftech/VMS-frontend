@@ -6,7 +6,7 @@ import {
   UserCircle,
   Users,
 } from "lucide-react";
-import { FaBug } from "react-icons/fa";
+import { FaBug, FaCheckCircle } from "react-icons/fa";
 import { AiOutlineException } from "react-icons/ai";
 import { BiSolidDashboard } from "react-icons/bi";
 import { IoIosInformationCircleOutline } from "react-icons/io";
@@ -14,6 +14,7 @@ import {
   MdInventory2,
   MdOutlineMiscellaneousServices,
   MdOutlinePendingActions,
+  MdScheduleSend,
   MdSettingsApplications,
   MdSlowMotionVideo,
   MdWifiTetheringErrorRounded,
@@ -21,6 +22,7 @@ import {
 import { TbReport } from "react-icons/tb";
 import { GrVulnerability } from "react-icons/gr";
 import { SiWikimediafoundation } from "react-icons/si";
+import { GiProgression } from "react-icons/gi";
 
 export const AllowedPaths = [
   // --------------------Roc Pages-----------------------
@@ -32,7 +34,7 @@ export const AllowedPaths = [
     bgColor: "bg-[#143b4a]/70",
     border: "1px solid #144d59",
     textColor: "text-white",
-    permission:['view']
+    permission: ["view"],
   },
   {
     name: "Risk Quantification",
@@ -40,14 +42,10 @@ export const AllowedPaths = [
     bgColor: "bg-[#153b37]",
     border: "1px solid #154639",
     textColor: "text-white",
-    permission:['view']
+    permission: ["view"],
   },
 
-
-
   // ------------------asset inventory----------------------
-
-
 
   { heading: "Asset Inventory Pages" },
   {
@@ -56,7 +54,7 @@ export const AllowedPaths = [
     bgColor: "bg-[#232958]",
     border: "1px solid #282e63",
     textColor: "text-white",
-    permission:['view','create','modify','delete']
+    permission: ["view", "create", "modify", "delete"],
   },
   {
     name: "Business Applications",
@@ -64,13 +62,10 @@ export const AllowedPaths = [
     bgColor: "bg-[#153b37]/80",
     border: "1px solid #154639",
     textColor: "text-white",
-    permission:['view','create','modify','delete']
+    permission: ["view", "create", "modify", "delete"],
   },
 
-
-
   // ----------------------- tvm  ------------------------------
-
 
   { heading: "TVM Pages" },
   {
@@ -79,8 +74,7 @@ export const AllowedPaths = [
     bgColor: "bg-[#143b4a]/70",
     border: "1px solid #144d59",
     textColor: "text-white",
-    permission:['view']
-    
+    permission: ["view"],
   },
   {
     name: "Scheduling Assesment",
@@ -88,7 +82,7 @@ export const AllowedPaths = [
     bgColor: "bg-[#153b37]",
     border: "1px solid #154639",
     textColor: "text-white",
-    permission:['view','create','modify','delete']
+    permission: ["view", "create", "modify", "delete"],
   },
   {
     name: "Pending Assesment",
@@ -96,28 +90,28 @@ export const AllowedPaths = [
     bgColor: "bg-[#232958]",
     border: "1px solid #282e63",
     textColor: "text-white",
-    permission:['view','create','modify','delete']
+    permission: ["view", "create", "modify", "delete"],
   },
   {
     name: "Application Dashbaord",
     value: "/application-dashboard",
     bgColor: "bg-[#1b3057]",
     border: "1px solid #1a2c51",
-    permission:['view'],
+    permission: ["view"],
   },
   {
     name: "Infrastructure Dashbaord",
     value: "/infrastructure-dashboard",
     bgColor: "bg-[#123945]",
     border: "1px solid #124c54",
-    permission:['view']
+    permission: ["view"],
   },
   {
     name: "Exceptions Dashbaord",
     value: "/exceptions-dashboard",
     bgColor: "bg-[#1b3057]",
     border: "1px solid #1a2c51",
-    permission:['view']
+    permission: ["view"],
   },
   {
     name: "Pending Exception",
@@ -125,16 +119,10 @@ export const AllowedPaths = [
     bgColor: "bg-[#232958]",
     border: "1px solid #2b316c",
     textColor: "text-white",
-    permission:['view','create']
+    permission: ["view", "create"],
   },
 
-
-
-
   // ---------------- Remediation factory ---------------------
-
-
-
 
   { heading: "Remediation Factory Pages" },
   {
@@ -143,7 +131,7 @@ export const AllowedPaths = [
     bgColor: "bg-[#232958]",
     border: "1px solid #282e63",
     textColor: "text-white",
-    permission:['view']
+    permission: ["view"],
   },
   {
     name: "Add Vulnerability Data",
@@ -151,7 +139,7 @@ export const AllowedPaths = [
     bgColor: "bg-[#232958]",
     border: "1px solid #282e63",
     textColor: "text-white",
-    permission:['','create',]
+    permission: ["", "create"],
   },
   {
     name: "Application Data",
@@ -159,7 +147,7 @@ export const AllowedPaths = [
     bgColor: "bg-[#143b4a]",
     border: "1px solid #144d59",
     textColor: "text-white",
-    permission:['view','','modify','delete']
+    permission: ["view", "", "modify", "delete"],
   },
   {
     name: "Infrastructure Data",
@@ -167,14 +155,10 @@ export const AllowedPaths = [
     bgColor: "bg-[#232958]",
     border: "1px solid #282e63",
     textColor: "text-white",
-    permission:['view','','modify','delete']
+    permission: ["view", "", "modify", "delete"],
   },
 
-
-
-
   // ---------------------------- Report -----------------------------
-
 
   { heading: "Report Pages" },
   {
@@ -183,15 +167,10 @@ export const AllowedPaths = [
     bgColor: "bg-[#3e2334]/70",
     border: "1px solid #552635",
     textColor: "text-white",
-    permission:['view','create','modify','delete']
+    permission: ["view", "create", "modify", "delete"],
   },
 
-
-
   //  ------------------------------- Administration --------------------
-
-
-
 
   { heading: "Administration Pages" },
   {
@@ -200,7 +179,7 @@ export const AllowedPaths = [
     bgColor: "bg-[#153b37]",
     border: "1px solid #154639",
     textColor: "text-white",
-    permission:['view','create','modify','delete']
+    permission: ["view", "create", "modify", "delete"],
   },
   {
     name: "All Tenents",
@@ -208,7 +187,7 @@ export const AllowedPaths = [
     bgColor: "bg-[#232958]",
     border: "1px solid #282e63",
     textColor: "text-white",
-    permission:['view','create','modify','delete']
+    permission: ["view", "create", "modify", "delete"],
   },
 
   {
@@ -217,7 +196,7 @@ export const AllowedPaths = [
     bgColor: "bg-[#232958]",
     border: "1px solid #282e63",
     textColor: "text-white",
-    permission:['view','create','modify','delete']
+    permission: ["view", "create", "modify", "delete"],
   },
   {
     name: "Config Email",
@@ -225,7 +204,7 @@ export const AllowedPaths = [
     bgColor: "bg-[#232958]",
     border: "1px solid #282e63",
     textColor: "text-white",
-    permission:['','create']
+    permission: ["", "create"],
   },
   {
     name: "Role",
@@ -233,7 +212,7 @@ export const AllowedPaths = [
     bgColor: "bg-[#232958]",
     border: "1px solid #282e63",
     textColor: "text-white",
-    permission:['view','create','modify','delete']
+    permission: ["view", "create", "modify", "delete"],
   },
   {
     name: "Partners",
@@ -241,7 +220,7 @@ export const AllowedPaths = [
     bgColor: "bg-[#1b3057]",
     border: "1px solid #1a2c51",
     textColor: "text-white",
-    permission:['view','create','modify','delete']
+    permission: ["view", "create", "modify", "delete"],
   },
   {
     name: "Tag Config",
@@ -249,9 +228,8 @@ export const AllowedPaths = [
     bgColor: "bg-[#232958]",
     border: "1px solid #282e63",
     textColor: "text-white",
-    permission:['view','create','modify','delete']
+    permission: ["view", "create", "modify", "delete"],
   },
-
 
   //  ---------------------- unselected ------------------------
 
@@ -263,8 +241,6 @@ export const AllowedPaths = [
   //   permission:['view','create','modify','delete']
   // },
 ];
-
-
 
 export const ChartsColor = {
   Informational: "#A0C878",
@@ -305,17 +281,28 @@ export const products = [
         title: "Manage Assessments",
         route: "/assesment-schedule",
         icon: CalendarClock,
-        childRoutes:[
-          {title: "Schedule Assessment",route: "/assesment-schedule",icon: CalendarClock,},
-          {title: "Pending Assessment",route: "/pending-assessment",icon: CalendarClock,},
-          {title: "In-Progress Assessment",route: "/in-progress-assessment",icon: CalendarClock,},
-          {title: "Complete Assessment",route: "/complete-assessment",icon: CalendarClock,},
-        ]
-      },
-      {
-        title: "Pending Assesment",
-        route: "/pending-assesment",
-        icon: MdOutlinePendingActions,
+        childRoutes: [
+          {
+            title: "Schedule Assessment",
+            route: "/assesment-schedule",
+            icon: MdScheduleSend ,
+          },
+          {
+            title: "Pending Assesment",
+            route: "/pending-assesment",
+            icon: MdOutlinePendingActions,
+          },
+          {
+            title: "In-Progress Assessment",
+            route: "/in-progress-assessment",
+            icon: GiProgression ,
+          },
+          {
+            title: "Complete Assessment",
+            route: "/complete-assessment",
+            icon: FaCheckCircle ,
+          },
+        ],
       },
       {
         title: "Application Dashboard",
