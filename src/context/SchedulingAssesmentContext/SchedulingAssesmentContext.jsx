@@ -18,20 +18,46 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 	const [pendingAssessment, setPendingAssessment] = useState([]);
 	const [testerData, setTesterData] = useState([]);
 	const [dashboardData, setDashboardData] = useState([]);
-    const [progressAssessment, setProgressAssessment] = useState([]);
+	const [progressAssessment, setProgressAssessment] = useState([]);
 	const [completeAssessment, setCompleteAssessment] = useState([]);
 
 
 
-	const [page, setPage] = useState(1) 
 
 
 
-	const getPendingAssessments = async (page,tenant) => {
+	const getPendingAssessments = async (page, tenant) => {
 		setLoading(true);
 		try {
 			const res = await AxiosHandler.get(`/assessment/get?page=${page}&tenant=${tenant ? tenant : ""}`);
 			setPendingAssessment(res.data?.data);
+
+		} catch (error) {
+			console.log(error)
+		} finally {
+			setLoading(false);
+		}
+	}
+
+	const getInProgressAssessment = async (page, tenant) => {
+		setLoading(true);
+		try {
+			const res = await AxiosHandler.get(`/assessment/get-in-progress?page=${page}&tenant=${tenant ? tenant : ""}`);
+			setProgressAssessment(res.data?.data);
+
+		} catch (error) {
+			console.log(error)
+		} finally {
+			setLoading(false);
+		}
+	}
+
+
+	const getCompleteAssessment = async (page, tenant) => {
+		setLoading(true);
+		try {
+			const res = await AxiosHandler.get(`/assessment/get-completed?page=${page}&tenant=${tenant ? tenant : ""}`);
+			setCompleteAssessment(res.data?.data);
 
 		} catch (error) {
 			console.log(error)
@@ -89,6 +115,8 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 			const res = await AxiosHandler.patch(`/assessment/update/${id}`, data);
 
 			getPendingAssessments();
+			getCompleteAssessment();
+			getInProgressAssessment();
 			toast.dismiss(toastId);
 			toast.success(res.data.message);
 
@@ -106,7 +134,8 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 		try {
 			const res = await AxiosHandler.delete(`/assessment/delete/${id}`);
 			getPendingAssessments();
-
+			getCompleteAssessment();
+			getInProgressAssessment();
 			toast.dismiss(toastId);
 			toast.success(res.data.message);
 
@@ -119,32 +148,7 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 		}
 	}
 
-	const getInProgressAssessment = async (page,tenant) => {
-		setLoading(true);
-		try {
-			const res = await AxiosHandler.get(`/assessment/get-in-progress?page=${page}&tenant=${tenant ? tenant : ""}`);
-			setProgressAssessment(res.data?.data);
 
-		} catch (error) {
-			console.log(error)
-		} finally {
-			setLoading(false);
-		}
-	}
-
-
-	const getCompleteAssessment = async (page,tenant) => {
-		setLoading(true);
-		try {
-			const res = await AxiosHandler.get(`/assessment/get-completed?page=${page}&tenant=${tenant ? tenant : ""}`);
-			setCompleteAssessment(res.data?.data);
-
-		} catch (error) {
-			console.log(error)
-		} finally {
-			setLoading(false);
-		}
-	}
 
 
 	return (
@@ -155,8 +159,6 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 			DeleteAssesment,
 			UpdateAssesment,
 			testerData,
-			page,
-			setPage,
 			dashboardData,
 			datafetchCount,
 			setdatafetchCount,
@@ -167,7 +169,7 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 			progressAssessment,
 			getCompleteAssessment,
 			completeAssessment,
-            
+
 
 			// CreateNotifications
 		}}>
