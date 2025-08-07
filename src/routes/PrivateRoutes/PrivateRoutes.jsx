@@ -32,6 +32,8 @@ import TagsPage from "@/pages/TagConfig";
 import DemoDashboard from "@/pages/demo/Dashboard";
 import RiskOperation from "@/pages/RiskQuantification";
 import ExecutiveDashboard from "@/pages/ExecutiveDashboard";
+import InProgressAssessment from "@/pages/InProgress";
+import CompleteAssessment from "@/pages/CompleteAssessment";
 
 export const PrivateRoutes = [
   {
@@ -172,4 +174,12 @@ export const PrivateRoutes = [
     path:"/edit-vulnerability-data",
     element:<VulnerabilityForm/>,
   },
+  {
+    path:"/in-progress-assessment",
+    element:<InProgressAssessment/>,
+  },
+  {
+    path:"/complete-assessment",
+    element:<CompleteAssessment/>,
+  }
 ];
