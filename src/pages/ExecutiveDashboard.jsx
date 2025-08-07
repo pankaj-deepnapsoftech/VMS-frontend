@@ -416,9 +416,9 @@ export default function ExecutiveSummaryPage() {
         </div>
 
         {/* Fourth Row  */}
-        <div className="flex gap-4 w-full h-[380px]">
+        <div className="flex flex-wrap gap-4 w-full">
           {/* Asset Inventory */}
-          <div className="bg-[#161d3d] p-4 border border-gray-800 rounded-xl flex-1 text-white font-sans flex flex-col">
+          <div className="bg-[#161d3d] p-4 border border-gray-800 rounded-xl text-white font-sans flex flex-col w-full sm:w-[48%] xl:w-[23.5%]">
             {/* Header */}
             <div className="flex justify-between items-start mb-2">
               <h2 className="text-base font-semibold">Asset Inventory</h2>
@@ -501,7 +501,7 @@ export default function ExecutiveSummaryPage() {
           </div>
 
           {/* Financial Exposure */}
-          <div className="bg-[#161d3d] p-4 border border-gray-800 rounded-xl flex-1 text-white shadow-lg font-sans flex flex-col">
+          <div className="bg-[#161d3d] p-4 border border-gray-800 rounded-xl text-white shadow-lg font-sans flex flex-col w-full sm:w-[48%] xl:w-[23.5%]">
             {/* Header */}
             <div className="flex justify-between items-start mb-3">
               <h2 className="text-lg font-semibold">Financial Exposure</h2>
@@ -561,7 +561,7 @@ export default function ExecutiveSummaryPage() {
           </div>
 
           {/* Remediation Workflow */}
-          <div className="bg-[#161d3d] p-4 border border-gray-800 rounded-xl flex-1 text-white shadow-lg font-sans flex flex-col">
+          <div className="bg-[#161d3d] p-4 border border-gray-800 rounded-xl text-white shadow-lg font-sans flex flex-col w-full sm:w-[48%] xl:w-[23.5%]">
             <div className="flex justify-between items-start mb-3">
               <h2 className="text-lg font-semibold">Remediation Workflow</h2>
               <button className="text-white/50 hover:text-white text-lg leading-none">
@@ -618,7 +618,7 @@ export default function ExecutiveSummaryPage() {
           </div>
 
           {/* Threat Intelligence Feed */}
-          <div className="bg-[#161d3d] p-4 border border-gray-800 rounded-xl flex-1 text-white shadow-lg font-sans flex flex-col">
+          <div className="bg-[#161d3d] p-4 border border-gray-800 rounded-xl text-white shadow-lg font-sans flex flex-col w-full sm:w-[48%] xl:w-[23.5%]">
             <div className="flex justify-between items-start mb-2">
               <h2 className="text-base font-semibold">
                 Threat Intelligence Feed
