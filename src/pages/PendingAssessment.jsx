@@ -7,6 +7,7 @@ import { RiEdit2Line } from 'react-icons/ri';
 import { IoSearch } from 'react-icons/io5';
 import NoDataFound from '@/components/NoDataFound';
 import { useAuthContext, useScheduleAssessmentContext } from '@/context';
+import { TbStatusChange } from 'react-icons/tb';
 
 const PendingAssessment = () => {
 
@@ -60,10 +61,10 @@ const PendingAssessment = () => {
                     "MFA Enabled",
                     "Type Of Assesment",
                     "Code Upload",
-                    "status",
+                    "status",        
                     "Start Date",
-                    "End Date",
-                    "Created By",
+                    "End Date", 
+                    "Created By",             
                     isHaveAction() && "Actions",
                   ].map((header) => (
                     <th
@@ -110,16 +111,23 @@ const PendingAssessment = () => {
                       >
                         <FaRegTrashAlt className="w-5 h-5" />
                       </button>}
-                      {isModifyAccess() && <button
+                      {isModifyAccess() && <button 
                         // onClick={() => {
                         //   setEdiTable(user);
                         //   setIsModalOpen(true);
-                        // }}
+                        // }}  
                         title="Edit"
                         className="text-subtext hover:text-blue-700"
                       >
                         <RiEdit2Line className="w-5 h-5" />
                       </button>}
+                      <button
+                        title="Change Status"
+                        className="text-subtext hover:text-blue-700"
+                      >
+                        <TbStatusChange className="w-5 h-5" />
+                      </button>
+
                     </td>
                   </tr>
                 ))}
@@ -135,7 +143,7 @@ const PendingAssessment = () => {
           hasNextPage={filteredData.length === 10}
           total={filteredData.length}
         />
-      </div>
+      </div>  
     </div>
   )
 }
