@@ -7,6 +7,7 @@ import { RiEdit2Line } from 'react-icons/ri';
 import { IoSearch } from 'react-icons/io5';
 import NoDataFound from '@/components/NoDataFound';
 import { useAuthContext, useScheduleAssessmentContext } from '@/context';
+import SchedulingAssessmentPage from './SchedulingAssessment';
 import { TbStatusChange } from 'react-icons/tb';
 
 const PendingAssessment = () => {
@@ -19,6 +20,7 @@ const PendingAssessment = () => {
   // all useState hooks
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
+  const [editable,setEditable] = useState(null)
 
   const filteredData = pendingAssessment;
 
@@ -111,11 +113,10 @@ const PendingAssessment = () => {
                       >
                         <FaRegTrashAlt className="w-5 h-5" />
                       </button>}
-                      {isModifyAccess() && <button 
-                        // onClick={() => {
-                        //   setEdiTable(user);
-                        //   setIsModalOpen(true);
-                        // }}  
+                      {isModifyAccess() && <button
+                        onClick={() => {
+                          setEditable({...item,creator_id:item.creator_id._id,Tenant_id:item.Tenant_id._id});
+                        }}
                         title="Edit"
                         className="text-subtext hover:text-blue-700"
                       >
@@ -143,7 +144,9 @@ const PendingAssessment = () => {
           hasNextPage={filteredData.length === 10}
           total={filteredData.length}
         />
-      </div>  
+      </div>
+
+      {editable && <SchedulingAssessmentPage editable={editable} setEditable={setEditable}/>}
     </div>
   )
 }

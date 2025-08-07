@@ -23,9 +23,6 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 
 
 
-
-
-
 	const getPendingAssessments = async (page, tenant) => {
 		setLoading(true);
 		try {
@@ -109,7 +106,6 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 	}
 
 	const UpdateAssesment = async (id, data) => {
-		console.log(data, "data in context ")
 		const toastId = toast.loading("Loading...");
 		try {
 			const res = await AxiosHandler.patch(`/assessment/update/${id}`, data);
