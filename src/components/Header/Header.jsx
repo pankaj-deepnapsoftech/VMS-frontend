@@ -44,7 +44,6 @@ function Header({ setShowMenu, showSidebar }) {
       setDropDown(true);
     }
 
-    console.log("this is just testing",filter)
 
   }, [showSidebar])
 

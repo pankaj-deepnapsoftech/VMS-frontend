@@ -62,12 +62,9 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
     enableReinitialize: true,
     validationSchema: SchedulingAssessmentValidation,
     onSubmit: (value) => {
-      if (value?.Tenant_id || !tenant) {
-        alert("Please Select Tenant first");
-        return;
-      }
 
-      value = { ...value, Tenant_id: tenant }
+
+      value = { ...value, Tenant_id: tenant ? tenant :editable?.Tenant_id }
 
       Object.entries(value).forEach(([key, value]) => {
         formData.append(key, value);
@@ -77,6 +74,10 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
         UpdateAssesment(editable._id, formData);
         setEditable(null);
       } else {
+        if (!tenant) {
+          alert("Please Select Tenant first");
+          return;
+        }
         SchedulingAssesment(formData);
       }
 
@@ -420,7 +421,7 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
         )}
 
         {/* Update Modal - keeping existing structure but with new styling */}
-       
+
       </div>
 
     </div>
