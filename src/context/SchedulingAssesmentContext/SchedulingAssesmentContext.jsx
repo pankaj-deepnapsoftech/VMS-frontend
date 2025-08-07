@@ -15,7 +15,7 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 	const [loading, setLoading] = useState(false);
 	const [datafetchCount, setdatafetchCount] = useState(0)
 
-	const [allAssesmentData, setAllAssesmentData] = useState([]);
+	const [pendingAssessment, setPendingAssessment] = useState([]);
 	const [testerData, setTesterData] = useState([]);
 	const [dashboardData, setDashboardData] = useState([]);
 
@@ -26,12 +26,12 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 
 
 
-	const TotalAssessments = async (page,tenant) => {
+	const getPendingAssessments = async (page,tenant) => {
 		setLoading(true);
 		try {
 			const res = await AxiosHandler.get(`/assessment/get?page=${page}&tenant=${tenant ? tenant : ""}`);
 			console.log("this is just for testing",res.data.data)
-			setAllAssesmentData(res.data?.data);
+			setPendingAssessment(res.data?.data);
 
 		} catch (error) {
 			console.log(error)
@@ -70,7 +70,7 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 		const toastId = toast.loading("Loading...");
 		try {
 			const res = await AxiosHandler.post(`/assessment/create`, data);
-			TotalAssessments();
+			getPendingAssessments();
 			toast.dismiss(toastId);
 			toast.success(res.data.message);
 
@@ -88,7 +88,7 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 		try {
 			const res = await AxiosHandler.patch(`/assessment/update/${id}`, data);
 
-			TotalAssessments();
+			getPendingAssessments();
 			toast.dismiss(toastId);
 			toast.success(res.data.message);
 
@@ -105,7 +105,7 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 		const toastId = toast.loading("Loading...");
 		try {
 			const res = await AxiosHandler.delete(`/assessment/delete/${id}`);
-			TotalAssessments();
+			getPendingAssessments();
 
 			toast.dismiss(toastId);
 			toast.success(res.data.message);
@@ -119,25 +119,25 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 		}
 	}
 
-	const CreateNotifications = async (reciver_id, title) => {
-		console.log('notification create')
-		try {
-			const res = await AxiosHandler.post(`/notification/create`, {
-				reciver_id,
-				title,
-			});
-		} catch (error) {
-			console.log(error);
-			toast.error(error?.response?.data?.message);
-		}
-	};
+	// const CreateNotifications = async (reciver_id, title) => {
+	// 	console.log('notification create')
+	// 	try {
+	// 		const res = await AxiosHandler.post(`/notification/create`, {
+	// 			reciver_id,
+	// 			title,
+	// 		});
+	// 	} catch (error) {
+	// 		console.log(error);
+	// 		toast.error(error?.response?.data?.message);
+	// 	}
+	// };
 
 
 	return (
 		<AssesmentContext.Provider value={{
 			loading,
 			SchedulingAssesment,
-			allAssesmentData,
+			pendingAssessment,
 			DeleteAssesment,
 			UpdateAssesment,
 			testerData,
@@ -146,12 +146,12 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 			dashboardData,
 			datafetchCount,
 			setdatafetchCount,
-			TotalAssessments,
+			getPendingAssessments,
 			TesterForAssessment,
 			DashboardData,
 
 
-			CreateNotifications
+			// CreateNotifications
 		}}>
 			{children}
 		</AssesmentContext.Provider>

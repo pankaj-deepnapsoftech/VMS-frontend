@@ -42,12 +42,12 @@ function Header({ setShowMenu, showSidebar }) {
       </Link> */}
       <hr className="border-gray-100 mx-8" />
 
-      <nav className={`flex-1 mx-2 py-5 space-y-1`}>
+      <nav className={`flex-1 mx-2 py-5 space-y-1 `}>
         {navList?.map((data) => (
           <React.Fragment key={data.route}>
             <NavLink
               to={data?.route}
-              onClick={()=>{setShowMenu();setDropDown(data?.childRoutes && data?.childRoutes.length && !dropDown)}}
+              onClick={()=>{!(data?.childRoutes && data?.childRoutes.length ) && setShowMenu();setDropDown(data?.childRoutes && data?.childRoutes.length && !dropDown)}}
               className={({ isActive }) =>
                 `flex items-center px-2 py-2 space-x-2 rounded-lg transition duration-200 ${isActive && !(data?.childRoutes && data?.childRoutes.length)  ? "bg-[#3533cc]" : ""
                 }`

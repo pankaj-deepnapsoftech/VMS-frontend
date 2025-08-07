@@ -105,11 +105,7 @@ function SchedulingAssessmentPage() {
     },
   });
 
-  const handleEdit = (assessment) => {
-    setValues(assessment);
-    setSelectedAssessment(assessment);
-    setIsUpdateModalOpen(true);
-  };
+
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -125,19 +121,12 @@ function SchedulingAssessmentPage() {
     }
   }, [token, page]);
 
-  useEffect(() => {
-    if (token) {
-      TotalAssessments(page, tenant);
-    }
-  }, [token, page, tenant]);
+  
 
   if (isViewAccess(authenticate, location)) {
     return <Access />;
   }
 
-  // if (!isCreateAccess()) {
-  //   setActiveTab("pending")
-  // }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-1000 to-slate-800 text-white px-6 py-8">
