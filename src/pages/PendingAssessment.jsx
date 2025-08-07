@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-binary-expression */
 import { useEffect, useState } from 'react'
 import Pagination from './Pagination';
 import { isDeleteAccess, isHaveAction, isModifyAccess } from '@/utils/pageAccess';

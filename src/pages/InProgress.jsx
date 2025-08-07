@@ -1,123 +1,144 @@
-import { useAuthContext, useScheduleAssessmentContext } from "@/context";
-import { useEffect, useState } from "react";
-import { RiDeleteBinFill } from "react-icons/ri";
-import Pagination from "./Pagination";
-const InProgressAssessment = () => {
-  const {
-    allAssesmentData,
-    DeleteAssesment,
-    setdatafetchCount,
-    TotalAssessments,
-    TesterForAssessment,
-    DashboardData,
-  } = useScheduleAssessmentContext();
-  const { token } = useAuthContext();
+/* eslint-disable no-constant-binary-expression */
+import { useEffect, useState } from 'react'
+import Pagination from './Pagination';
+import { isDeleteAccess, isHaveAction, isModifyAccess } from '@/utils/pageAccess';
+import { FaRegTrashAlt } from 'react-icons/fa';
+import { RiEdit2Line } from 'react-icons/ri';
+import { IoSearch } from 'react-icons/io5';
+import NoDataFound from '@/components/NoDataFound';
+import { useAuthContext, useScheduleAssessmentContext } from '@/context';
+
+const PendingAssessment = () => {
+
+  // all context api hooks
+  const { token } = useAuthContext()
+  const { getInProgressAssessment,
+			progressAssessment,} = useScheduleAssessmentContext();
+
+
+  // all useState hooks
   const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const tableHeaders =
-    allAssesmentData?.length > 0
-      ? Object.keys(allAssesmentData[0]).filter(
-          (key) => key !== "_id" && key !== "__v" && key !== "updatedAt"
-        )
-      : [];
-
-  // Headers for the Add form (show all fields)
-  const addFormHeaders = tableHeaders.filter(
-    (key) => key !== "createdAt" && key !== "updatedAt" && key !== "creator_id"
-  );
+  const filteredData = progressAssessment;
 
   useEffect(() => {
-    if (token ) {
-      TotalAssessments(page);
-      TesterForAssessment();
-      DashboardData();
-      setdatafetchCount(1);
+    if (token) {
+      getInProgressAssessment();
     }
-  }, [token, page]);
 
-  
+  }, [token])
+ 
 
   return (
-    <div className="min-h-screen p-5">
-      <div className="overflow-x-auto custom-scrollbar">
-        <table className="min-w-full divide-y divide-slate-700">
-          <thead className="bg-gradient-to-r from-slate-800 to-slate-700">
-            <tr>
-              {addFormHeaders.map((header, index) => (
-                <th
-                  key={index}
-                  className="px-6 py-4 text-left text-xs font-medium text-slate-300 uppercase tracking-wider"
-                >
-                  {header === "createdAt"
-                    ? "Created Date"
-                    : header.replace(/_/g, " ")}
-                </th>
-              ))}
-              <th className="px-6 py-4 text-left text-xs font  -medium text-slate-300 uppercase tracking-wider">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-700">
-            {allAssesmentData?.map((item, index) => (
-              <tr
-                key={item._id}
-                className={`hover:bg-slate-700/50 transition-colors ${
-                  index % 2 === 0 ? "bg-slate-800/30" : "bg-slate-800/50"
-                }`}
-              >
-                {addFormHeaders.map((field, i) => (
-                  <td
-                    key={i}
-                    className="px-6 py-4 whitespace-nowrap text-sm text-slate-300"
-                  >
-                    {field === "code_Upload" ? (
-                      <a
-                        className="text-blue-400 hover:text-blue-300 transition-colors"
-                        href=""
-                        download={"CodeFile"}
-                      >
-                        {item[field] === "" ? "No file" : "Download File"}
-                      </a>
-                    ) : field === "MFA_Enabled" ? (
-                      <span
-                        className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                          item[field] === true
-                            ? "bg-green-100 text-green-800"
-                            : "bg-red-100 text-red-800"
-                        }`}
-                      >
-                        {item[field] === true ? "Yes" : "No"}
-                      </span>
-                    ) : (
-                      item[field]
-                    )}
-                  </td>
-                ))}
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex space-x-3">
-                    <button
-                      onClick={() => DeleteAssesment(item._id)}
-                      className="text-red-400 hover:text-red-300 transition-colors"
+    <div className="w-full  pb-20 p-6">
+      <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
+        {/* Header */}
+        <div className="px-6 py-4 border-b border-gray-700 relative">
+          <div className="relative">
+            <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
+            <input
+              type="search"
+              placeholder="Search users..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="bg-input backdrop-blur-md py-2 w-1/3 text-white ps-7 pe-3 rounded-md "
+            />
+          </div>
+        </div>
+
+        {/* Table */}
+        {filteredData?.length < 1 ? (
+          <NoDataFound />
+        ) : (
+          <div className="overflow-x-auto custom-scrollbar w-full">
+            <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+              <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
+                <tr>
+                  {[
+                    "S No.",
+                    "Data Classification",
+                    "MFA Enabled",
+                    "Type Of Assesment",
+                    "Code Upload",
+                    "status",
+                    "Start Date",
+                    "End Date",
+                    "Created By",
+                    isHaveAction() && "Actions",
+                  ].map((header) => (
+                    <th
+                      key={header}
+                      className="px-4 py-3 border-b border-gray-600 font-medium"
                     >
-                      <RiDeleteBinFill className="h-5 w-5" />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                      {header}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-700">
+                {filteredData.map((item, index) => (
+                  <tr
+                    key={item._id}
+                    className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
+                  >
+                    <td className="px-4 py-3">{index + 1}</td>
+                    <td className="px-4 py-3 capitalize">{item?.Data_Classification || "-"}</td>
+                    <td className="px-4 py-3 capitalize">{item?.MFA_Enabled ? "Yes" : "NO" || "-"}</td>
+                    <td className="px-4 py-3">{item?.Type_Of_Assesment || "-"}</td>
+                    <td className="px-4 py-3">{item.code_Upload || "-"}</td>
+                    <td className="px-4 py-3">
+                      {item?.status || "—"}
+                    </td>
+                    <td className="px-4 py-3">
+                      {item?.task_start|| "—"}
+                    </td>
+                    <td className="px-4 py-3">
+                      {item?.task_end || "—"}
+                    </td>
+                    <td className="px-4 py-3">
+                      {item?.creator_id?.fname || "—"}
+                    </td>
+                   
+                    <td className="px-4 py-3 flex gap-2">
+                      {isDeleteAccess() && <button
+                        // onClick={() =>
+                        //   window.confirm("Delete this user?") &&
+                        //   DeleteUser(user._id)
+                        // }
+                        title="Delete"
+                        className="text-subtext hover:text-subTextHover"
+                      >
+                        <FaRegTrashAlt className="w-5 h-5" />
+                      </button>}
+                      {isModifyAccess() && <button
+                        // onClick={() => {
+                        //   setEdiTable(user);
+                        //   setIsModalOpen(true);
+                        // }}
+                        title="Edit"
+                        className="text-subtext hover:text-blue-700"
+                      >
+                        <RiEdit2Line className="w-5 h-5" />
+                      </button>}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {/* Footer */}
+        <Pagination
+          page={page}
+          setPage={setPage}
+          hasNextPage={filteredData.length === 10}
+          total={filteredData.length}
+        />
       </div>
-
-      <Pagination
-        page={page}
-        setPage={setPage}
-        hasNextPage={allAssesmentData.length === 10}
-        total={allAssesmentData.length}
-      />
     </div>
-  );
-};
+  )
+}
 
-export default InProgressAssessment;
+export default PendingAssessment

@@ -18,11 +18,12 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 	const [pendingAssessment, setPendingAssessment] = useState([]);
 	const [testerData, setTesterData] = useState([]);
 	const [dashboardData, setDashboardData] = useState([]);
+    const [progressAssessment, setProgressAssessment] = useState([]);
+	const [completeAssessment, setCompleteAssessment] = useState([]);
 
 
 
-
-	const [page, setPage] = useState(1)
+	const [page, setPage] = useState(1) 
 
 
 
@@ -30,7 +31,6 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 		setLoading(true);
 		try {
 			const res = await AxiosHandler.get(`/assessment/get?page=${page}&tenant=${tenant ? tenant : ""}`);
-			console.log("this is just for testing",res.data.data)
 			setPendingAssessment(res.data?.data);
 
 		} catch (error) {
@@ -119,18 +119,32 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 		}
 	}
 
-	// const CreateNotifications = async (reciver_id, title) => {
-	// 	console.log('notification create')
-	// 	try {
-	// 		const res = await AxiosHandler.post(`/notification/create`, {
-	// 			reciver_id,
-	// 			title,
-	// 		});
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 		toast.error(error?.response?.data?.message);
-	// 	}
-	// };
+	const getInProgressAssessment = async (page,tenant) => {
+		setLoading(true);
+		try {
+			const res = await AxiosHandler.get(`/assessment/get-in-progress?page=${page}&tenant=${tenant ? tenant : ""}`);
+			setProgressAssessment(res.data?.data);
+
+		} catch (error) {
+			console.log(error)
+		} finally {
+			setLoading(false);
+		}
+	}
+
+
+	const getCompleteAssessment = async (page,tenant) => {
+		setLoading(true);
+		try {
+			const res = await AxiosHandler.get(`/assessment/get-completed?page=${page}&tenant=${tenant ? tenant : ""}`);
+			setCompleteAssessment(res.data?.data);
+
+		} catch (error) {
+			console.log(error)
+		} finally {
+			setLoading(false);
+		}
+	}
 
 
 	return (
@@ -149,7 +163,11 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 			getPendingAssessments,
 			TesterForAssessment,
 			DashboardData,
-
+			getInProgressAssessment,
+			progressAssessment,
+			getCompleteAssessment,
+			completeAssessment,
+            
 
 			// CreateNotifications
 		}}>
