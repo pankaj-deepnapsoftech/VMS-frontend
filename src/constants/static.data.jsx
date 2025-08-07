@@ -302,9 +302,15 @@ export const products = [
     allowedPath: [
       { title: "Dashboard", route: "/", icon: BiSolidDashboard },
       {
-        title: "Assesment Schedule",
+        title: "Manage Assessments",
         route: "/assesment-schedule",
         icon: CalendarClock,
+        childRoutes:[
+          {title: "Schedule Assessment",route: "/assesment-schedule",icon: CalendarClock,},
+          {title: "Pending Assessment",route: "/pending-assessment",icon: CalendarClock,},
+          {title: "In-Progress Assessment",route: "/in-progress-assessment",icon: CalendarClock,},
+          {title: "Complete Assessment",route: "/complete-assessment",icon: CalendarClock,},
+        ]
       },
       {
         title: "Pending Assesment",

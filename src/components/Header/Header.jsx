@@ -1,12 +1,14 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import {  NavLink } from "react-router-dom";
 import { useAuthContext } from "@/context";
 import { IoIosLogOut } from "react-icons/io";
 import { products } from "@/constants/static.data";
 
 function Header({ setShowMenu, showSidebar }) {
   const { Logout, getDataFromSession, authenticate } = useAuthContext();
+
+  const [dropDown,setDropDown] = useState("")
 
 
   const handleLogout = () => {
@@ -42,18 +44,35 @@ function Header({ setShowMenu, showSidebar }) {
 
       <nav className={`flex-1 mx-2 py-5 space-y-1`}>
         {navList?.map((data) => (
-          <NavLink
-            key={data.route}
-            to={data.route}
-            onClick={setShowMenu}
-            className={({ isActive }) =>
-              `flex items-center px-2 py-2 space-x-2 rounded-lg transition duration-200 ${isActive ? "bg-[#3533cc]" : ""
-              }`
+          <React.Fragment key={data.route}>
+            <NavLink
+              to={data.route}
+              onClick={()=>{setShowMenu();setDropDown(data.route)}}
+              className={({ isActive }) =>
+                `flex items-center px-2 py-2 space-x-2 rounded-lg transition duration-200 ${isActive ? "bg-[#3533cc]" : ""
+                }`
+              }
+            >
+              <data.icon className="text-white w-5 h-5" />
+              {<p className={`text-sm font-semibold text-white ${showSidebar ? "" : "block lg:hidden"}`}>{data.title}</p>}
+            </NavLink>
+            {dropDown ===data.route &&  data?.childRoutes && data?.childRoutes.length > 0 && data?.childRoutes.map((item) =>
+              <NavLink
+              key={item.route}
+                to={item.route}
+                onClick={setShowMenu}
+                className={({ isActive }) =>
+                  `flex items-center px-2 py-2 space-x-2 mx-3 rounded-lg transition duration-200 ${isActive ? "bg-[#3533cc]" : ""
+                  }`
+                }
+              >
+                <item.icon className="text-white w-5 h-5" />
+                {<p className={`text-sm font-semibold text-white ${showSidebar ? "" : "block lg:hidden"}`}>{item.title}</p>}
+              </NavLink>
+            )
+
             }
-          >
-            <data.icon className="text-white w-5 h-5" />
-            {<p className={`text-sm font-semibold text-white ${showSidebar ? "" : "block lg:hidden"}`}>{data.title}</p>}
-          </NavLink>
+          </React.Fragment>
         ))}
       </nav>
       <hr className="border-gray-100 mx-8" />
