@@ -288,7 +288,7 @@ const MainLayout = () => {
     whitespace-nowrap
   `}
         >
-          <Header
+          <Header 
             setShowMenu={() =>
               width > 1023 ? setShowMenu(true) : setShowMenu(false)
             }

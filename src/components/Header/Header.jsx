@@ -1,14 +1,16 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from "react";
-import {  NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import { useAuthContext } from "@/context";
 import { IoIosArrowDown, IoIosLogOut } from "react-icons/io";
 import { products } from "@/constants/static.data";
 
 function Header({ setShowMenu, showSidebar }) {
+
+
   const { Logout, getDataFromSession, authenticate } = useAuthContext();
 
-  const [dropDown,setDropDown] = useState(false)
+  const [dropDown, setDropDown] = useState(false)
 
 
   const handleLogout = () => {
@@ -31,6 +33,21 @@ function Header({ setShowMenu, showSidebar }) {
   });
 
 
+  useEffect(() => {
+    if (dropDown) {
+      setDropDown(false);
+    }
+
+    const filter  = navList.filter((item) => item?.childRoutes)[0]?.childRoutes.filter((ite) => ite.route === location.pathname);
+
+    if(filter?.length > 0 && !dropDown){
+      setDropDown(true);
+    }
+
+    console.log("this is just testing",filter)
+
+  }, [showSidebar])
+
 
 
   return (
@@ -47,18 +64,18 @@ function Header({ setShowMenu, showSidebar }) {
           <React.Fragment key={data.route}>
             <NavLink
               to={data?.route}
-              onClick={()=>{!(data?.childRoutes && data?.childRoutes.length ) && setShowMenu();setDropDown(data?.childRoutes && data?.childRoutes.length && !dropDown)}}
+              onClick={() => { !(data?.childRoutes && data?.childRoutes.length) && setShowMenu(); setDropDown(data?.childRoutes && data?.childRoutes.length && !dropDown) }}
               className={({ isActive }) =>
-                `flex items-center px-2 py-2 space-x-2 rounded-lg transition duration-200 ${isActive && !(data?.childRoutes && data?.childRoutes.length)  ? "bg-[#3533cc]" : ""
+                `flex items-center px-2 py-2 space-x-2 rounded-lg transition duration-200 ${isActive && !(data?.childRoutes && data?.childRoutes.length) ? "bg-[#3533cc]" : ""
                 }`
               }
             >
               <data.icon className="text-white w-5 h-5" />
               {<p className={`text-sm font-semibold text-white flex items-center justify-center gap-2 ${showSidebar ? "" : "block lg:hidden"}`}>{data.title} {data?.childRoutes && data?.childRoutes.length > 0 && <IoIosArrowDown className={` transition-all duration-500 ${dropDown ? 'rotate-0' : "rotate-180"} rotate-180`} />} </p>}
             </NavLink>
-            {dropDown  &&  data?.childRoutes && data?.childRoutes.length > 0 && data?.childRoutes.map((item) =>
+            {dropDown && data?.childRoutes && data?.childRoutes.length > 0 && data?.childRoutes.map((item) =>
               <NavLink
-              key={item.route}
+                key={item.route}
                 to={item.route}
                 onClick={setShowMenu}
                 className={({ isActive }) =>
