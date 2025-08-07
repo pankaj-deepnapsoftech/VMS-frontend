@@ -13,8 +13,6 @@ const PendingAssessment = () => {
   const { token } = useAuthContext()
   const { pendingAssessment, getPendingAssessments } = useScheduleAssessmentContext();
 
-  console.log("this is just for testing",pendingAssessment)
-
 
   // all useState hooks
   const [page, setPage] = useState(1);
@@ -65,7 +63,6 @@ const PendingAssessment = () => {
                     "Start Date",
                     "End Date",
                     "Created By",
-                    "Status",
                     isHaveAction() && "Actions",
                   ].map((header) => (
                     <th
@@ -89,38 +86,18 @@ const PendingAssessment = () => {
                     <td className="px-4 py-3">{item?.Type_Of_Assesment || "-"}</td>
                     <td className="px-4 py-3">{item.code_Upload || "-"}</td>
                     <td className="px-4 py-3">
+                      {item?.status || "—"}
+                    </td>
+                    <td className="px-4 py-3">
                       {item?.task_start|| "—"}
                     </td>
                     <td className="px-4 py-3">
                       {item?.task_end || "—"}
                     </td>
                     <td className="px-4 py-3">
-                      {item?.status || "—"}
-                    </td>
-                    <td className="px-4 py-3">
                       {item?.creator_id?.fname || "—"}
                     </td>
-                    <td className="px-4 py-3">
-                      {isModifyAccess() && (item.deactivate ? (
-                        <button
-                          // onClick={() =>
-                          //   handleChangeStatus("deactivate", user._id)
-                          // }
-                          className="bg-[#395042] hover:bg-green-700 text-green-500 px-3 py-1 rounded-full text-xs"
-                        >
-                          Activate
-                        </button>
-                      ) : (
-                        <button
-                          // onClick={() =>
-                          //   handleChangeStatus("activate", user._id)
-                          // }
-                          className="bg-[#3E212D] hover:bg-[#2b161e] text-[#EC6C6D] px-3 py-1 rounded-full text-xs"
-                        >
-                          Deactivate
-                        </button>
-                      ))}
-                    </td>
+                   
                     <td className="px-4 py-3 flex gap-2">
                       {isDeleteAccess() && <button
                         // onClick={() =>
