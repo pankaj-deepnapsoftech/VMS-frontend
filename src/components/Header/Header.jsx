@@ -2,13 +2,13 @@
 import React, { useState } from "react";
 import {  NavLink } from "react-router-dom";
 import { useAuthContext } from "@/context";
-import { IoIosLogOut } from "react-icons/io";
+import { IoIosArrowDown, IoIosLogOut } from "react-icons/io";
 import { products } from "@/constants/static.data";
 
 function Header({ setShowMenu, showSidebar }) {
   const { Logout, getDataFromSession, authenticate } = useAuthContext();
 
-  const [dropDown,setDropDown] = useState("")
+  const [dropDown,setDropDown] = useState(false)
 
 
   const handleLogout = () => {
@@ -47,16 +47,16 @@ function Header({ setShowMenu, showSidebar }) {
           <React.Fragment key={data.route}>
             <NavLink
               to={data.route}
-              onClick={()=>{setShowMenu();setDropDown(data.route)}}
+              onClick={()=>{setShowMenu();setDropDown(!dropDown)}}
               className={({ isActive }) =>
                 `flex items-center px-2 py-2 space-x-2 rounded-lg transition duration-200 ${isActive ? "bg-[#3533cc]" : ""
                 }`
               }
             >
               <data.icon className="text-white w-5 h-5" />
-              {<p className={`text-sm font-semibold text-white ${showSidebar ? "" : "block lg:hidden"}`}>{data.title}</p>}
+              {<p className={`text-sm font-semibold text-white flex items-center justify-center gap-2 ${showSidebar ? "" : "block lg:hidden"}`}>{data.title} {data?.childRoutes && data?.childRoutes.length > 0 && <IoIosArrowDown className={` transition-all duration-500 ${dropDown ? 'rotate-0' : "rotate-180"} rotate-180`} />} </p>}
             </NavLink>
-            {dropDown ===data.route &&  data?.childRoutes && data?.childRoutes.length > 0 && data?.childRoutes.map((item) =>
+            {dropDown  &&  data?.childRoutes && data?.childRoutes.length > 0 && data?.childRoutes.map((item) =>
               <NavLink
               key={item.route}
                 to={item.route}
