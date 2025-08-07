@@ -62,7 +62,7 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
     enableReinitialize: true,
     validationSchema: SchedulingAssessmentValidation,
     onSubmit: (value) => {
-      if (!tenant) {
+      if (value?.Tenant_id || !tenant) {
         alert("Please Select Tenant first");
         return;
       }
