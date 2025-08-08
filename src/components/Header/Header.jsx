@@ -23,14 +23,23 @@ function Header({ setShowMenu, showSidebar }) {
         navList = item.allowedPath;
       } else if (authenticate.role) {
         navList = item.allowedPath.filter((pathItem) =>
-          authenticate?.allowed_path.some((authItem) => authItem.value === pathItem.route));
-        if(getDataFromSession === "Threat & Vulnerability Management (TVM)"){
-          const childRoutes = item.allowedPath[1].childRoutes.filter((child)=>  authenticate?.allowed_path.some((authItem) => authItem.value === child.route));
-          if(childRoutes.length > 0){
-            navList = [...navList, {...item.allowedPath[1], childRoutes: childRoutes}];
+          authenticate?.allowed_path.some(
+            (authItem) => authItem.value === pathItem.route
+          )
+        );
+        if (getDataFromSession === "Threat & Vulnerability Management (TVM)") {
+          const childRoutes = item.allowedPath[1].childRoutes.filter((child) =>
+            authenticate?.allowed_path.some(
+              (authItem) => authItem.value === child.route
+            )
+          );
+          if (childRoutes.length > 0) {
+            navList = [
+              ...navList,
+              { ...item.allowedPath[1], childRoutes: childRoutes },
+            ];
           }
         }
-      
       }
     }
   });
@@ -51,7 +60,6 @@ function Header({ setShowMenu, showSidebar }) {
 
   return (
     <div className=" flex flex-col text-white  h-[100%] hide-scrollbar bg-[#1f2937]   overflow-y-auto transition-all duration-500 ease-in-out ">
-      
       <hr className="border-gray-100 mx-8" />
 
       <nav className={`flex-1 mx-2 py-5 space-y-1 `}>
@@ -127,7 +135,7 @@ function Header({ setShowMenu, showSidebar }) {
           showSidebar ? "" : "block lg:hidden"
         }`}
       >
-        <div className="relative p-5 flex ">
+        <div className="relative p-5 flex">
           <button
             onClick={handleLogout}
             className="flex 
