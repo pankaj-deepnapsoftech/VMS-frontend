@@ -420,8 +420,6 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
           </div>
         )}
 
-        {/* Update Modal - keeping existing structure but with new styling */}
-
       </div>
 
     </div>
