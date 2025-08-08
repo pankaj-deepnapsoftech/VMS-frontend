@@ -5,6 +5,7 @@ import {
   isDeleteAccess,
   isHaveAction,
   isModifyAccess,
+  isViewAccess,
 } from "@/utils/pageAccess";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { RiEdit2Line } from "react-icons/ri";
@@ -13,12 +14,17 @@ import NoDataFound from "@/components/NoDataFound";
 import { useAuthContext, useScheduleAssessmentContext } from "@/context";
 import SchedulingAssessmentPage from "./SchedulingAssessment";
 import { TbStatusChange } from "react-icons/tb";
+import Access from "@/components/role/Access";
+import { useLocation } from "react-router-dom";
 
 const PendingAssessment = () => {
   // all context api hooks
-  const { token } = useAuthContext();
+  const { token,authenticate } = useAuthContext();
   const { pendingAssessment, getPendingAssessments, DeleteAssesment ,UpdateAssesment} =
     useScheduleAssessmentContext();
+
+    // location 
+    const location = useLocation();
 
   // all useState hooks
   const [page, setPage] = useState(1);
@@ -36,24 +42,9 @@ const PendingAssessment = () => {
     }
   }, [token]);
 
-  const updateAssessmentStatus = async (id, status) => {
-    try {
-      // Replace this with actual API call
-      const res = await fetch(`/api/assessments/${id}/status`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ status }),
-      });
-
-      if (!res.ok) throw new Error("Failed to update status");
-    } catch (error) {
-      console.error("Status update error:", error);
-      alert("Could not update status.");
-    }
-  };
+  if(isViewAccess(authenticate, location)){
+    return <Access/>
+  }
 
   return (
     <div className="w-full  pb-20 p-6">
@@ -153,7 +144,7 @@ const PendingAssessment = () => {
                           <RiEdit2Line className="w-5 h-5" />
                         </button>
                       )}
-                      <button
+                      {isModifyAccess() && <button
                         title="Change Status"
                         className="text-subtext hover:text-blue-700"
                         onClick={() => {
@@ -163,7 +154,7 @@ const PendingAssessment = () => {
                         }}
                       >
                         <TbStatusChange className="w-5 h-5" />
-                      </button>
+                      </button>}
                     </td>
                   </tr>
                 ))}
@@ -184,7 +175,7 @@ const PendingAssessment = () => {
               >
                 <option value="">Select status</option>
                 <option value="Pending">Pending</option>
-                <option value="In-progress">In-progress</option>
+                <option value="In-Progress">In-Progress</option>
                 <option value="Completed">Completed</option>
               </select>
 
@@ -200,7 +191,7 @@ const PendingAssessment = () => {
                     if (!newStatus) return;
                     await UpdateAssesment(
                       selectedAssessmentId,
-                      newStatus
+                      {status:newStatus}
                     );
                     getPendingAssessments();
                     setIsStatusModalOpen(false);

@@ -103,10 +103,6 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
 
 
 
-  if (isViewAccess(authenticate, location)) {
-    return <Access />;
-  }
-
 
   return (
     <div className={` ${editable && "fixed top-0 left-0 w-full z-50"} min-h-screen bg-gradient-to-br from-slate-900 via-blue-1000 to-slate-800 text-white px-6 py-8`}>
