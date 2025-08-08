@@ -6,6 +6,8 @@ import { IoIosArrowDown, IoIosLogOut } from "react-icons/io";
 import { products } from "@/constants/static.data";
 
 function Header({ setShowMenu, showSidebar }) {
+
+
   const { Logout, getDataFromSession, authenticate } = useAuthContext();
 
   const [dropDown, setDropDown] = useState(false);
@@ -44,19 +46,7 @@ function Header({ setShowMenu, showSidebar }) {
     }
   });
 
-  useEffect(() => {
-    if (dropDown) {
-      setDropDown(false);
-    }
-
-    const filter = navList
-      .filter((item) => item?.childRoutes)[0]
-      ?.childRoutes.filter((ite) => ite.route === location.pathname);
-
-    if (filter?.length > 0 && !dropDown) {
-      setDropDown(true);
-    }
-  }, [showSidebar]);
+ 
 
   return (
     <div className=" flex flex-col text-white  h-[100%] hide-scrollbar bg-[#1f2937]   overflow-y-auto transition-all duration-500 ease-in-out ">
@@ -94,7 +84,7 @@ function Header({ setShowMenu, showSidebar }) {
                     <IoIosArrowDown
                       className={` transition-all duration-500 ${
                         dropDown ? "rotate-0" : "rotate-180"
-                      } rotate-180`}
+                      } `}
                     />
                   )}{" "}
                 </p>
@@ -109,7 +99,7 @@ function Header({ setShowMenu, showSidebar }) {
                   to={item.route}
                   onClick={setShowMenu}
                   className={({ isActive }) =>
-                    `flex items-center px-2 py-2 h-fit space-x-2 mx-3 rounded-lg transition duration-200 ${
+                    `flex items-center px-2 py-2 h-fit ${showSidebar && "mx-3"} space-x-2  rounded-lg transition duration-200 ${
                       isActive ? "bg-[#3533cc]" : ""
                     }`
                   }
