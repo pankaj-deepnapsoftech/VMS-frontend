@@ -5,6 +5,7 @@ import {
   isDeleteAccess,
   isHaveAction,
   isModifyAccess,
+  isViewAccess,
 } from "@/utils/pageAccess";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { RiEdit2Line } from "react-icons/ri";
@@ -12,10 +13,11 @@ import { IoSearch } from "react-icons/io5";
 import NoDataFound from "@/components/NoDataFound";
 import { useAuthContext, useScheduleAssessmentContext } from "@/context";
 import SchedulingAssessmentPage from "./SchedulingAssessment";
+import Access from "@/components/role/Access";
 
 const PendingAssessment = () => {
   // all context api hooks
-  const { token } = useAuthContext();
+  const { token,authenticate } = useAuthContext();
   const { getCompleteAssessment, completeAssessment, DeleteAssesment } =
     useScheduleAssessmentContext();
 
@@ -31,6 +33,10 @@ const PendingAssessment = () => {
       getCompleteAssessment();
     }
   }, [token]);
+
+    if(isViewAccess(authenticate, location)){
+    return <Access/>
+  }
 
   return (
     <div className="w-full  pb-20 p-6">

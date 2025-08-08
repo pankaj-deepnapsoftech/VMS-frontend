@@ -139,7 +139,7 @@ function Header({ setShowMenu, showSidebar }) {
             text-indigo-600
               hover:scale-95 
              transition
-           bg-gradient-to from-[#3533cc] to-[#2d2aee] rounded-lg justify-center"
+           bg-[#3533cc] rounded-lg justify-center"
           >
             <p className="text-base text-white p-2 font-medium">Log Out</p>
 

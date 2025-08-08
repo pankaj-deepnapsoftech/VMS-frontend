@@ -5,6 +5,7 @@ import {
   isDeleteAccess,
   isHaveAction,
   isModifyAccess,
+  isViewAccess,
 } from "@/utils/pageAccess";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { RiEdit2Line } from "react-icons/ri";
@@ -13,12 +14,17 @@ import NoDataFound from "@/components/NoDataFound";
 import { useAuthContext, useScheduleAssessmentContext } from "@/context";
 import SchedulingAssessmentPage from "./SchedulingAssessment";
 import { TbStatusChange } from "react-icons/tb";
+import { useLocation } from "react-router-dom";
+import Access from "@/components/role/Access";
 
 const PendingAssessment = () => {
   // all context api hooks
-  const { token } = useAuthContext();
-  const { getInProgressAssessment, progressAssessment, DeleteAssesment } =
+  const { token,authenticate } = useAuthContext();
+  const { getInProgressAssessment, progressAssessment, DeleteAssesment,UpdateAssesment } =
     useScheduleAssessmentContext();
+
+    // location 
+    const location = useLocation();
 
   // all useState hooks
   const [page, setPage] = useState(1);
@@ -35,20 +41,11 @@ const PendingAssessment = () => {
     }
   }, [token]);
 
-  const updateAssessmentStatusToCompleted = async (id) => {
-    const res = await fetch(`/api/assessments/${id}/status`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ status: "Completed" }),
-    });
 
-    if (!res.ok) {
-      throw new Error("Failed to update status");
+    if(isViewAccess(authenticate, location)){
+      return <Access/>
     }
-  };
+ 
 
   return (
     <div className="w-full  pb-20 p-6">
@@ -189,8 +186,10 @@ const PendingAssessment = () => {
                   onClick={async () => {
                     try {
                       // 🔧 Call your API or context function here
-                      await updateAssessmentStatusToCompleted(
-                        selectedStatusItemId
+                      await UpdateAssesment(
+                        selectedStatusItemId,{
+                          status: "Completed"
+                        }
                       );
 
                       // Refresh table data
