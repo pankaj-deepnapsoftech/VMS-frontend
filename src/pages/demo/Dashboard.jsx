@@ -103,12 +103,12 @@ const DemoDashboard = () => {
 
   return (
     <div className="dark bg-gray-900 text-white min-h-screen">
-      <header className="bg-blue-900 p-4 flex justify-between items-center text-white">
+      <header className="bg-modalBg p-4 flex justify-between items-center text-white">
         <span className="text-xl font-semibold">Risk Operations Center Dashboard</span>
-        <button className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded">Apply Filters</button>
+        <button className="bg-blue-800 hover:bg-blue-700 px-4 py-2 rounded">Apply Filters</button>
       </header>
 
-      <main className="p-6">
+      <main className="p-6 pb-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {Object.entries(chartData).map(([key, { title, info }]) => (
             <div
