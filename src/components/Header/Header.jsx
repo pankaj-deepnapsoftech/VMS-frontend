@@ -113,13 +113,13 @@ function Header({ setShowMenu, showSidebar }) {
                       isActive ? "bg-[#3533cc]" : ""
                     }`
                   }
-                >
+                > 
                   <item.icon className="text-white w-5 h-5" />
                   {
                     <p
                       className={`text-sm font-semibold text-white ${
                         showSidebar ? "" : "block lg:hidden"
-                      }`}
+                      }`} 
                     >
                       {item.title}
                     </p>
@@ -150,7 +150,6 @@ function Header({ setShowMenu, showSidebar }) {
            bg-[#3533cc] rounded-lg justify-center"
           >
             <p className="text-base text-white p-2 font-medium">Log Out</p>
-
             <IoIosLogOut className="w-6 h-6 text-white " />
           </button>
         </div>
