@@ -82,7 +82,7 @@ export const AllowedPaths = [
     bgColor: "bg-[#153b37]",
     border: "1px solid #154639",
     textColor: "text-white",
-    permission: ["view", "create", "modify", "delete"],
+    permission: ["", "create"],
   },
   {
     name: "Pending Assesment",
@@ -90,7 +90,23 @@ export const AllowedPaths = [
     bgColor: "bg-[#232958]",
     border: "1px solid #282e63",
     textColor: "text-white",
-    permission: ["view", "create", "modify", "delete"],
+    permission: ["view", "", "modify", "delete"],
+  },
+  {
+    name: "In-Progress Assesment",
+    value: "/in-progress-assessment",
+    bgColor: "bg-[#232958]",
+    border: "1px solid #282e63",
+    textColor: "text-white",
+    permission: ["view", "", "modify", "delete"],
+  },
+  {
+    name: "Completed Assesment",
+    value: "/complete-assessment",
+    bgColor: "bg-[#232958]",
+    border: "1px solid #282e63",
+    textColor: "text-white",
+    permission: ["view", "", "modify", "delete"],
   },
   {
     name: "Application Dashbaord",
