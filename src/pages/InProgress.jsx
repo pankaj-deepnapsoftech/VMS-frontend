@@ -12,6 +12,7 @@ import { IoSearch } from "react-icons/io5";
 import NoDataFound from "@/components/NoDataFound";
 import { useAuthContext, useScheduleAssessmentContext } from "@/context";
 import SchedulingAssessmentPage from "./SchedulingAssessment";
+import { TbStatusChange } from "react-icons/tb";
 
 const PendingAssessment = () => {
   // all context api hooks
@@ -23,6 +24,8 @@ const PendingAssessment = () => {
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [editable, setEditable] = useState(null);
+  const [showStatusModal, setShowStatusModal] = useState(false);
+  const [selectedStatusItemId, setSelectedStatusItemId] = useState(null);
 
   const filteredData = progressAssessment;
 
@@ -31,6 +34,21 @@ const PendingAssessment = () => {
       getInProgressAssessment();
     }
   }, [token]);
+
+  const updateAssessmentStatusToCompleted = async (id) => {
+    const res = await fetch(`/api/assessments/${id}/status`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ status: "Completed" }),
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to update status");
+    }
+  };
 
   return (
     <div className="w-full  pb-20 p-6">
@@ -130,11 +148,68 @@ const PendingAssessment = () => {
                           <RiEdit2Line className="w-5 h-5" />
                         </button>
                       )}
+                      {isModifyAccess() && (
+                        <button
+                          onClick={() => {
+                            setSelectedStatusItemId(item._id);
+                            setShowStatusModal(true);
+                          }}
+                          title="Change Status"
+                          className="text-subtext hover:text-blue-700"
+                        >
+                          <TbStatusChange className="w-5 h-5" />
+                        </button>
+                      )}
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+          </div>
+        )}
+
+        {showStatusModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-modalBg text-gray-300 rounded-lg shadow-lg p-6 w-[90%] max-w-md">
+              <h2 className="text-lg font-semibold mb-6">
+                Do you want to change status from <b>In-progress</b> to{" "}
+                <b>Completed</b>?
+              </h2>
+              <div className="flex justify-end gap-4">
+                <button
+                  onClick={() => {
+                    setShowStatusModal(false);
+                    setSelectedStatusItemId(null);
+                  }}
+                  className="px-4 py-2 rounded bg-gray-400 hover:bg-gray-600 text-black"
+                >
+                  No
+                </button>
+                <button
+                  onClick={async () => {
+                    try {
+                      // 🔧 Call your API or context function here
+                      await updateAssessmentStatusToCompleted(
+                        selectedStatusItemId
+                      );
+
+                      // Refresh table data
+                      getInProgressAssessment();
+
+                      // Close modal
+                      setShowStatusModal(false);
+                      setSelectedStatusItemId(null);
+                    } catch (error) {
+                      console.error("Status update failed", error);
+                      alert("Failed to update status");
+                    }
+                  }}
+                  className="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white"
+                >
+                  Yes
+                </button>
+              </div>
+            </div>
           </div>
         )}
 

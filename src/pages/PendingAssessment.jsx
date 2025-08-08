@@ -1,26 +1,32 @@
 /* eslint-disable no-constant-binary-expression */
-import { useEffect, useState } from 'react'
-import Pagination from './Pagination';
-import { isDeleteAccess, isHaveAction, isModifyAccess } from '@/utils/pageAccess';
-import { FaRegTrashAlt } from 'react-icons/fa';
-import { RiEdit2Line } from 'react-icons/ri';
-import { IoSearch } from 'react-icons/io5';
-import NoDataFound from '@/components/NoDataFound';
-import { useAuthContext, useScheduleAssessmentContext } from '@/context';
-import SchedulingAssessmentPage from './SchedulingAssessment';
-import { TbStatusChange } from 'react-icons/tb';
+import { useEffect, useState } from "react";
+import Pagination from "./Pagination";
+import {
+  isDeleteAccess,
+  isHaveAction,
+  isModifyAccess,
+} from "@/utils/pageAccess";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { RiEdit2Line } from "react-icons/ri";
+import { IoSearch } from "react-icons/io5";
+import NoDataFound from "@/components/NoDataFound";
+import { useAuthContext, useScheduleAssessmentContext } from "@/context";
+import SchedulingAssessmentPage from "./SchedulingAssessment";
+import { TbStatusChange } from "react-icons/tb";
 
 const PendingAssessment = () => {
-
   // all context api hooks
-  const { token } = useAuthContext()
-  const { pendingAssessment, getPendingAssessments,DeleteAssesment } = useScheduleAssessmentContext();
-
+  const { token } = useAuthContext();
+  const { pendingAssessment, getPendingAssessments, DeleteAssesment ,UpdateAssesment} =
+    useScheduleAssessmentContext();
 
   // all useState hooks
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
-  const [editable,setEditable] = useState(null)
+  const [editable, setEditable] = useState(null);
+  const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
+  const [selectedAssessmentId, setSelectedAssessmentId] = useState(null);
+  const [newStatus, setNewStatus] = useState("");
 
   const filteredData = pendingAssessment;
 
@@ -28,9 +34,26 @@ const PendingAssessment = () => {
     if (token) {
       getPendingAssessments();
     }
+  }, [token]);
 
-  }, [token])
+  const updateAssessmentStatus = async (id, status) => {
+    try {
+      // Replace this with actual API call
+      const res = await fetch(`/api/assessments/${id}/status`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ status }),
+      });
 
+      if (!res.ok) throw new Error("Failed to update status");
+    } catch (error) {
+      console.error("Status update error:", error);
+      alert("Could not update status.");
+    }
+  };
 
   return (
     <div className="w-full  pb-20 p-6">
@@ -63,10 +86,10 @@ const PendingAssessment = () => {
                     "MFA Enabled",
                     "Type Of Assesment",
                     "Code Upload",
-                    "status",        
+                    "status",
                     "Start Date",
-                    "End Date", 
-                    "Created By",             
+                    "End Date",
+                    "Created By",
                     isHaveAction() && "Actions",
                   ].map((header) => (
                     <th
@@ -85,55 +108,109 @@ const PendingAssessment = () => {
                     className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
                   >
                     <td className="px-4 py-3">{index + 1}</td>
-                    <td className="px-4 py-3 capitalize">{item?.Data_Classification || "-"}</td>
-                    <td className="px-4 py-3 capitalize">{item?.MFA_Enabled ? "Yes" : "NO" || "-"}</td>
-                    <td className="px-4 py-3">{item?.Type_Of_Assesment || "-"}</td>
+                    <td className="px-4 py-3 capitalize">
+                      {item?.Data_Classification || "-"}
+                    </td>
+                    <td className="px-4 py-3 capitalize">
+                      {item?.MFA_Enabled ? "Yes" : "NO" || "-"}
+                    </td>
+                    <td className="px-4 py-3">
+                      {item?.Type_Of_Assesment || "-"}
+                    </td>
                     <td className="px-4 py-3">{item.code_Upload || "-"}</td>
-                    <td className="px-4 py-3">
-                      {item?.status || "—"}
-                    </td>
-                    <td className="px-4 py-3">
-                      {item?.task_start|| "—"}
-                    </td>
-                    <td className="px-4 py-3">
-                      {item?.task_end || "—"}
-                    </td>
+                    <td className="px-4 py-3">{item?.status || "—"}</td>
+                    <td className="px-4 py-3">{item?.task_start || "—"}</td>
+                    <td className="px-4 py-3">{item?.task_end || "—"}</td>
                     <td className="px-4 py-3">
                       {item?.creator_id?.fname || "—"}
                     </td>
-                   
+
                     <td className="px-4 py-3 flex gap-2">
-                      {isDeleteAccess() && <button
-                        onClick={() =>
-                          window.confirm("Delete this user?") &&
-                          DeleteAssesment(item._id)
-                        }
-                        title="Delete"
-                        className="text-subtext hover:text-subTextHover"
-                      >
-                        <FaRegTrashAlt className="w-5 h-5" />
-                      </button>}
-                      {isModifyAccess() && <button
-                        onClick={() => {
-                          setEditable({...item,creator_id:item.creator_id._id,Tenant_id:item.Tenant_id._id});
-                        }}
-                        title="Edit"
-                        className="text-subtext hover:text-blue-700"
-                      >
-                        <RiEdit2Line className="w-5 h-5" />
-                      </button>}
+                      {isDeleteAccess() && (
+                        <button
+                          onClick={() =>
+                            window.confirm("Delete this user?") &&
+                            DeleteAssesment(item._id)
+                          }
+                          title="Delete"
+                          className="text-subtext hover:text-subTextHover"
+                        >
+                          <FaRegTrashAlt className="w-5 h-5" />
+                        </button>
+                      )}
+                      {isModifyAccess() && (
+                        <button
+                          onClick={() => {
+                            setEditable({
+                              ...item,
+                              creator_id: item.creator_id._id,
+                              Tenant_id: item.Tenant_id._id,
+                            });
+                          }}
+                          title="Edit"
+                          className="text-subtext hover:text-blue-700"
+                        >
+                          <RiEdit2Line className="w-5 h-5" />
+                        </button>
+                      )}
                       <button
                         title="Change Status"
                         className="text-subtext hover:text-blue-700"
+                        onClick={() => {
+                          setSelectedAssessmentId(item._id);
+                          setNewStatus(item.status); 
+                          setIsStatusModalOpen(true);
+                        }}
                       >
                         <TbStatusChange className="w-5 h-5" />
                       </button>
-
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+          </div>
+        )}
+
+        {isStatusModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-modalBg rounded-lg shadow-lg w-[500px] h-[200px] p-6 text-black">
+              <h2 className="text-lg text-white font-semibold mb-4">Change Status</h2>
+
+              <select
+                value={newStatus}
+                onChange={(e) => setNewStatus(e.target.value)}
+                className="w-full text-white p-2 bg-input rounded mb-4"
+              >
+                <option value="">Select status</option>
+                <option value="Pending">Pending</option>
+                <option value="In-progress">In-progress</option>
+                <option value="Completed">Completed</option>
+              </select>
+
+              <div className="flex justify-end gap-2">
+                <button
+                  onClick={() => setIsStatusModalOpen(false)}
+                  className="px-3 py-1 text-sm text-gray-300 hover:text-gray-500"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={async () => {
+                    if (!newStatus) return;
+                    await UpdateAssesment(
+                      selectedAssessmentId,
+                      newStatus
+                    );
+                    getPendingAssessments();
+                    setIsStatusModalOpen(false);
+                  }}
+                  className="px-4 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
           </div>
         )}
 
@@ -146,9 +223,14 @@ const PendingAssessment = () => {
         />
       </div>
 
-      {editable && <SchedulingAssessmentPage editable={editable} setEditable={setEditable}/>}
+      {editable && (
+        <SchedulingAssessmentPage
+          editable={editable}
+          setEditable={setEditable}
+        />
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default PendingAssessment
+export default PendingAssessment;

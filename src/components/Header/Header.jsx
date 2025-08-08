@@ -6,12 +6,9 @@ import { IoIosArrowDown, IoIosLogOut } from "react-icons/io";
 import { products } from "@/constants/static.data";
 
 function Header({ setShowMenu, showSidebar }) {
-
-
   const { Logout, getDataFromSession, authenticate } = useAuthContext();
 
-  const [dropDown, setDropDown] = useState(false)
-
+  const [dropDown, setDropDown] = useState(false);
 
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to log out?")) {
@@ -38,22 +35,19 @@ function Header({ setShowMenu, showSidebar }) {
     }
   });
 
-
   useEffect(() => {
     if (dropDown) {
       setDropDown(false);
     }
 
-    const filter  = navList.filter((item) => item?.childRoutes)[0]?.childRoutes.filter((ite) => ite.route === location.pathname);
+    const filter = navList
+      .filter((item) => item?.childRoutes)[0]
+      ?.childRoutes.filter((ite) => ite.route === location.pathname);
 
-    if(filter?.length > 0 && !dropDown){
+    if (filter?.length > 0 && !dropDown) {
       setDropDown(true);
     }
-
-
-  }, [showSidebar])
-
-
+  }, [showSidebar]);
 
   return (
     <div className=" flex flex-col text-white  h-[100%] hide-scrollbar bg-[#1f2937]   overflow-y-auto transition-all duration-500 ease-in-out ">
@@ -65,36 +59,74 @@ function Header({ setShowMenu, showSidebar }) {
           <React.Fragment key={data.route}>
             <NavLink
               to={data?.route}
-              onClick={() => { !(data?.childRoutes && data?.childRoutes.length) && setShowMenu(); setDropDown(data?.childRoutes && data?.childRoutes.length && !dropDown) }}
+              onClick={() => {
+                !(data?.childRoutes && data?.childRoutes.length) &&
+                  setShowMenu();
+                setDropDown(
+                  data?.childRoutes && data?.childRoutes.length && !dropDown
+                );
+              }}
               className={({ isActive }) =>
-                `flex items-center px-2 py-2 space-x-2 rounded-lg transition duration-200 ${isActive && !(data?.childRoutes && data?.childRoutes.length) ? "bg-[#3533cc]" : ""
+                `flex items-center px-2 py-2 space-x-2 rounded-lg transition duration-200 ${
+                  isActive && !(data?.childRoutes && data?.childRoutes.length)
+                    ? "bg-[#3533cc]"
+                    : ""
                 }`
               }
             >
               <data.icon className="text-white w-5 h-5" />
-              {<p className={`text-sm font-semibold text-white flex items-center justify-center gap-2 ${showSidebar ? "" : "block lg:hidden"}`}>{data.title} {data?.childRoutes && data?.childRoutes.length > 0 && <IoIosArrowDown className={` transition-all duration-500 ${dropDown ? 'rotate-0' : "rotate-180"} rotate-180`} />} </p>}
+              {
+                <p
+                  className={`text-sm font-semibold text-white flex items-center justify-center gap-2 ${
+                    showSidebar ? "" : "block lg:hidden"
+                  }`}
+                >
+                  {data.title}{" "}
+                  {data?.childRoutes && data?.childRoutes.length > 0 && (
+                    <IoIosArrowDown
+                      className={` transition-all duration-500 ${
+                        dropDown ? "rotate-0" : "rotate-180"
+                      } rotate-180`}
+                    />
+                  )}{" "}
+                </p>
+              }
             </NavLink>
-            {dropDown && data?.childRoutes && data?.childRoutes.length > 0 && data?.childRoutes.map((item) =>
-              <NavLink
-                key={item.route}
-                to={item.route}
-                onClick={setShowMenu}
-                className={({ isActive }) =>
-                  `flex items-center px-2 py-2 h-fit space-x-2 mx-3 rounded-lg transition duration-200 ${isActive ? "bg-[#3533cc]" : ""
-                  }`
-                }
-              >
-                <item.icon className="text-white w-5 h-5" />
-                {<p className={`text-sm font-semibold text-white ${showSidebar ? "" : "block lg:hidden"}`}>{item.title}</p>}
-              </NavLink>
-            )
-
-            }
+            {dropDown &&
+              data?.childRoutes &&
+              data?.childRoutes.length > 0 &&
+              data?.childRoutes.map((item) => (
+                <NavLink
+                  key={item.route}
+                  to={item.route}
+                  onClick={setShowMenu}
+                  className={({ isActive }) =>
+                    `flex items-center px-2 py-2 h-fit space-x-2 mx-3 rounded-lg transition duration-200 ${
+                      isActive ? "bg-[#3533cc]" : ""
+                    }`
+                  }
+                >
+                  <item.icon className="text-white w-5 h-5" />
+                  {
+                    <p
+                      className={`text-sm font-semibold text-white ${
+                        showSidebar ? "" : "block lg:hidden"
+                      }`}
+                    >
+                      {item.title}
+                    </p>
+                  }
+                </NavLink>
+              ))}
           </React.Fragment>
         ))}
       </nav>
       <hr className="border-gray-100 mx-8" />
-      <div className={`h-full p-2 flex justify-start items-end  ${showSidebar ? "" : "block lg:hidden"}`}>
+      <div
+        className={`h-full p-2 flex justify-start items-end  ${
+          showSidebar ? "" : "block lg:hidden"
+        }`}
+      >
         <div className="relative p-5 flex ">
           <button
             onClick={handleLogout}
@@ -107,11 +139,7 @@ function Header({ setShowMenu, showSidebar }) {
             text-indigo-600
               hover:scale-95 
              transition
-           bg-gradient-to-r 
-           
-           from-[#3533cc] to-[#2d2aee] 
-             rounded-lg  
-             justify-center"
+           bg-gradient-to from-[#3533cc] to-[#2d2aee] rounded-lg justify-center"
           >
             <p className="text-base text-white p-2 font-medium">Log Out</p>
 
@@ -120,7 +148,6 @@ function Header({ setShowMenu, showSidebar }) {
         </div>
       </div>
     </div>
-
   );
 }
 
