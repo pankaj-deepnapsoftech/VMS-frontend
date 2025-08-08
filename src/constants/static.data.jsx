@@ -314,8 +314,8 @@ export const products = [
             icon: GiProgression ,
           },
           {
-            title: "Complete Assessment",
-            route: "/complete-assessment",
+            title: "Completed Assessment",
+            route: "/completed-assessment",
             icon: FaCheckCircle ,
           },
         ],

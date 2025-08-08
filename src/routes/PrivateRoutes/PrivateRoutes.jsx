@@ -179,7 +179,7 @@ export const PrivateRoutes = [
     element:<InProgressAssessment/>,
   },
   {
-    path:"/complete-assessment",
+    path:"/completed-assessment",
     element:<CompleteAssessment/>,
   }
 ];
