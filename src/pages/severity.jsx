@@ -23,7 +23,7 @@ const Severity = () => {
 
 
 
-    const { values, handleBlur, handleChange, handleSubmit, setFieldValue } = useFormik({
+    const { values, handleBlur, handleChange, handleSubmit, setFieldValue,handleReset } = useFormik({
         initialValues: { name: "", description: "", days: "", tenant:tenant },
         onSubmit:(value)=>{
             if(!value.tenant){
@@ -33,6 +33,7 @@ const Severity = () => {
 
             CreateSeverity(value)
             setIsModalOpen(false);
+            handleReset();
         },
 
     })
@@ -54,9 +55,9 @@ const Severity = () => {
 
   useEffect(() => {
     if(token){
-        GetSeverity();
+        GetSeverity(page,tenant);
     }
-  },[token])
+  },[token,page,tenant])
 
     return (
         <div className="min-h-screen py-10">

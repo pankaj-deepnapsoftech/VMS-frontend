@@ -4,37 +4,65 @@ import toast from "react-hot-toast";
 
 
 export const SeverityContext = createContext({
-    CreateSeverity: () => {},
-    GetSeverity:() => {},
-    SeverityData:[],
+    CreateSeverity: () => { },
+    GetSeverity: () => { },
+    SeverityData: [],
+    UpdateSeverity: () => { },
+    DeleteSeverity: () => { }
 });
 
 // eslint-disable-next-line react/prop-types
 const SeverityContextProvider = ({ children }) => {
 
-    const [SeverityData,setSeverityData] = useState([]);
+    const [SeverityData, setSeverityData] = useState([]);
 
-    const CreateSeverity = async(data) => {
+    const CreateSeverity = async (data) => {
         try {
             const res = await AxiosHandler.post("/severity/create", data);
-            console.log("Severity created successfully:", res.data);
+            setSeverityData(prevData => [res.data.data, ...prevData]);
             toast.success(res.data.message || "Severity created successfully");
         } catch (error) {
             console.error("Error creating severity:", error);
         }
     };
 
-    const GetSeverity = async () => {
+    const GetSeverity = async (page, tenant) => {
         try {
-            const res = await AxiosHandler.get("/severity/get");
+            const res = await AxiosHandler.get(`/severity/get?page=${page}&tenant=${tenant ? tenant : ""}`);
             setSeverityData(res.data.data);
         } catch (error) {
             console.error("Error fetching severity:", error);
         }
     }
 
+    const UpdateSeverity = async (id, data) => {
+        try {
+            const res = await AxiosHandler.get(`/severity/update/${id}`, data);
+            setSeverityData((prevData) =>
+                prevData.map((item) => (item._id === id ? res.data.data : item))
+            );
+            toast.success(res.data.message || "Severity updated successfully");
+        } catch (error) {
+            console.error("Error fetching severity:", error);
+            toast.error("Failed to update severity");
+        }
+    };
+
+    const DeleteSeverity = async (id) => {
+        try {
+            const res = await AxiosHandler.delete(`/severity/delete/${id}`);
+            setSeverityData((prevData) =>
+                prevData.filter((item) => item._id !== id)
+            );
+            toast.success(res.data.message || "Severity deleted successfully");
+        } catch (error) {
+            console.error("Error deleting severity:", error);
+            toast.error("Failed to delete severity");
+        }
+    };
+
     return (
-        <SeverityContext.Provider value={{CreateSeverity,GetSeverity,SeverityData}}>
+        <SeverityContext.Provider value={{ CreateSeverity, GetSeverity, SeverityData, UpdateSeverity,DeleteSeverity }}>
             {children}
         </SeverityContext.Provider>
     );
