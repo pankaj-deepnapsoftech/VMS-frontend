@@ -140,7 +140,7 @@ const InfraAssetContextProvider = ({ children }) => {
             GetAllBusinessApplication("");
         }
 
-    }, []);
+    }, [token]);
 
     return (
         <InfraAssetContext.Provider value={{

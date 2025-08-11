@@ -1,6 +1,7 @@
 import { AxiosHandler } from "@/config/AxiosConfig";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useAuthContext } from "..";
 
 
 export const SeverityContext = createContext({
@@ -8,14 +9,17 @@ export const SeverityContext = createContext({
     GetSeverity: () => { },
     SeverityData: [],
     UpdateSeverity: () => { },
-    DeleteSeverity: () => { }
+    DeleteSeverity: () => { },
+    SeverityOptions:[]
 });
 
 // eslint-disable-next-line react/prop-types
 const SeverityContextProvider = ({ children }) => {
 
+    const { token, tenant } = useAuthContext();
     const [SeverityData, setSeverityData] = useState([]);
     const [SeverityOptions,setSeverityOption] = useState([]);
+
 
     const CreateSeverity = async (data) => {
         try {
@@ -64,7 +68,7 @@ const SeverityContextProvider = ({ children }) => {
 
     const GetSeverityDataByTenant = async (tenant) => {
         try {
-            const res = await AxiosHandler.get(`/severity/get?tenant=${tenant}`);
+            const res = await AxiosHandler.get(`/severity/get-by-tenant?tenant=${tenant}`);
             setSeverityOption(res.data.data);
         } catch (error) {
             console.error("Error fetching severity by tenant:", error);
@@ -72,8 +76,14 @@ const SeverityContextProvider = ({ children }) => {
         }
     }
 
+    useEffect(()=>{
+        if(token && tenant){
+            GetSeverityDataByTenant(tenant);
+        }
+    },[token,tenant])
+
     return (
-        <SeverityContext.Provider value={{ CreateSeverity, GetSeverity, SeverityData, UpdateSeverity,DeleteSeverity }}>
+        <SeverityContext.Provider value={{ CreateSeverity, GetSeverity, SeverityData, UpdateSeverity,DeleteSeverity,SeverityOptions }}>
             {children}
         </SeverityContext.Provider>
     );

@@ -273,7 +273,7 @@ const Partners = () => {
             </div>
           </div>
 
-          <div className="w-full  min-h-screen p-6">
+          <div className="w-full p-6">
             <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
               {/* Header */}
               <div className="px-6 py-4 border-b border-gray-700 relative">
@@ -357,7 +357,8 @@ const Partners = () => {
               {/* Footer */}
               <Pagination
                 page={page}
-                setPage={setPage}  
+                setPage={setPage} 
+                total={partnersData.length} 
                 hasNextPage={partnersData.length === 10}
               />
             </div>
