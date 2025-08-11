@@ -1,39 +1,62 @@
 import { isCreateAccess, isDeleteAccess, isHaveAction, isModifyAccess } from '@/utils/pageAccess';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BiPlus } from 'react-icons/bi';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import { IoSearch } from 'react-icons/io5';
 import { RiEdit2Line } from 'react-icons/ri';
 import Pagination from './Pagination';
+import { useFormik } from 'formik';
+import { useAuthContext, useSeverityContext } from '@/context';
 
 const Severity = () => {
+
+    // all context apis here 
+    const { token } = useAuthContext();
+    const {CreateSeverity,GetSeverity,SeverityData} = useSeverityContext();
+
     const [page, setPage] = useState(1);
     const [searchQuery, setSearchQuery] = useState("");
 
     const [severityList, setSeverityList] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
+     const [tenant, setTenant] = useState("");
 
-    // Form states
-    const [formData, setFormData] = useState({
-        name: "",
-        description: "",
-        days: ""
-    });
 
-    const filteredTags = severityList.filter(item =>
+
+    const { values, handleBlur, handleChange, handleSubmit, setFieldValue } = useFormik({
+        initialValues: { name: "", description: "", days: "", tenant:tenant },
+        onSubmit:(value)=>{
+            if(!value.tenant){
+                alert("Please select tenant");
+                return 
+            }
+
+            CreateSeverity(value)
+            setIsModalOpen(false);
+        },
+
+    })
+
+    const filteredTags = SeverityData.filter(item =>
         item.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    const handleAddSeverity = () => {
-        if (!formData.name.trim()) return alert("Severity Name is required");
-        setSeverityList([...severityList, { ...formData, id: Date.now() }]);
-        setFormData({ name: "", description: "", days: "" });
-        setIsModalOpen(false);
-    };
+ 
 
     const handleDelete = (id) => {
         setSeverityList(severityList.filter(item => item.id !== id));
     };
+     useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setTenant(params.get("tenant") || "");
+    setFieldValue('tenant', params.get("tenant") || "");
+  }, [location.search]);
+
+  useEffect(() => {
+    if(token){
+        GetSeverity();
+    }
+  },[token])
 
     return (
         <div className="min-h-screen py-10">
@@ -145,7 +168,7 @@ const Severity = () => {
             {/* Modal */}
             {isModalOpen && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-                    <div className="bg-[#1a1f2e] p-6 rounded-2xl w-[600px] h-[400px] relative">
+                    <form onSubmit={handleSubmit} className="bg-[#1a1f2e] p-6 rounded-2xl w-[600px] h-[400px] relative">
                         {/* Close Button */}
                         <button
                             onClick={() => setIsModalOpen(false)}
@@ -159,16 +182,20 @@ const Severity = () => {
                         <label className="text-white text-sm">Severity Name</label>
                         <input
                             type="text"
-                            value={formData.name}
-                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                            name='name'
+                            value={values.name}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
                             className="w-full mb-3 p-2 rounded-lg bg-input text-white"
                             placeholder='Enter severty name'
                         />
 
                         <label className="text-white text-sm">Description</label>
                         <textarea
-                            value={formData.description}
-                            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                            value={values.description}
+                            name='description'
+                            onChange={handleChange}
+                            onBlur={handleBlur}
                             className="w-full mb-3 p-2 rounded-lg bg-input text-white"
                             placeholder='Enter description'
                         />
@@ -176,27 +203,30 @@ const Severity = () => {
                         <label className="text-white rounded-lg text-sm">Days</label>
                         <input
                             type="number"
-                            value={formData.days}
-                            onChange={(e) => setFormData({ ...formData, days: e.target.value })}
+                            value={values.days}
+                            name='days'
+                            onChange={handleChange}
+                            onBlur={handleBlur}
                             className="w-full mb-5 p-2 rounded-lg bg-input text-white"
                             placeholder='Enter days'
                         />
 
                         <div className="flex justify-end gap-2">
                             <button
+                                type='button'
                                 onClick={() => setIsModalOpen(false)}
                                 className="px-4 py-2 bg-gray-500 text-white rounded"
                             >
                                 Cancel
                             </button>
                             <button
-                                onClick={handleAddSeverity}
+                                type='submit'
                                 className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded"
                             >
                                 Save
                             </button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             )}
         </div>

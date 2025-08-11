@@ -184,7 +184,7 @@ export const PrivateRoutes = [
     element:<CompleteAssessment/>,
   },
   {
-    path:"/severity",
+    path:"/sla-configuration",
     element:<Severity/>,
   }
 ];

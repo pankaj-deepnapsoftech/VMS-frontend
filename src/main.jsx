@@ -15,6 +15,7 @@ import {
   RemeditionContextProvider,
   ReportContextProvider,
   SchedulingAssesmentContextProvider,
+  SeverityContextProvider,
   TagsContextProvider,
   TVMCardsContextProvider,
   VulnerabililtyDataContextProvider,
@@ -36,13 +37,15 @@ createRoot(document.getElementById("root")).render(
                         <InfrastructureVulnerabilityContextProvider>
                           <AppSoftContextProvider>
                             <InfraAssetContextProvider>
-                                                          <TagsContextProvider>
-                              <TVMCardsContextProvider>
-                                <ReportContextProvider>
-                                  <App />
-                                </ReportContextProvider>
-                              </TVMCardsContextProvider>
-                            </TagsContextProvider>
+                              <TagsContextProvider>
+                                <TVMCardsContextProvider>
+                                  <ReportContextProvider>
+                                    <SeverityContextProvider>
+                                      <App />
+                                    </SeverityContextProvider>
+                                  </ReportContextProvider>
+                                </TVMCardsContextProvider>
+                              </TagsContextProvider>
                             </InfraAssetContextProvider>
                           </AppSoftContextProvider>
                         </InfrastructureVulnerabilityContextProvider>

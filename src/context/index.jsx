@@ -7,7 +7,7 @@ import { AllCustomerContext } from "./AllCustomerContext/AllCustomerContext";
 import { AllEmployeeContext } from "./AllEmployeeContext/AllEmployeeContext";
 import { JiraContext } from "./JiraTableContext/JiraTableContext";
 import { ApplicationVulnerabilityContext } from "./ApplicationVulnerabilityContext/ApplicationVulnerabilityContext";
-import SchedulingAssesmentContext, { AssesmentContext } from "./SchedulingAssesmentContext/SchedulingAssesmentContext";
+import { AssesmentContext } from "./SchedulingAssesmentContext/SchedulingAssesmentContext";
 import { RemeditionContext } from "./RemeditionContext/RemeditionContext";
 import { ExceptionContext } from "./ExceptionContext/ExceptionContext";
 import { ReportContext } from "./ReportContext/ReportContext";
@@ -15,6 +15,8 @@ import { InfrastructureVulnerabilityContext } from "./InfrastructureVulnerabilit
 import { InfraAssetContext } from "./InfraAssetContext/InfraAssetContext"; 
 import { TagsContext } from "./TagsContext/TagsContext";
 import { TVMCardsContext } from "./TVMCardsContext/TVMCardsContext";
+import {SeverityContext} from "./SeverityContext/SeverityContext";
+
 
 
 
@@ -38,7 +40,7 @@ export {default as InfraAssetContextProvider} from "./InfraAssetContext/InfraAss
 export { default as TagsContextProvider } from "./TagsContext/TagsContext";
 export {default as ReportContextProvider } from "./ReportContext/ReportContext";
 export { default as TVMCardsContextProvider } from "./TVMCardsContext/TVMCardsContext";
-
+export {default as SeverityContextProvider} from "./SeverityContext/SeverityContext";
 
 
 
@@ -59,6 +61,7 @@ export const useInfraAssetContext = () => useContext(InfraAssetContext)
 export const useTagsContext = () => useContext(TagsContext);
 export const useReportContext=()=> useContext(ReportContext);
 export const useTVMCardsContext = () => useContext(TVMCardsContext);
+export const useSeverityContext = () => useContext(SeverityContext);
 
 
 

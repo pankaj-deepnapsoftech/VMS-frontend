@@ -454,7 +454,7 @@ export const products = [
       { title: "Role", route: "/roles", icon: LucideShield },
       { title: "Partners", route: "/partners", icon: Users },
       { title: "Tag Config", route: "/tags", icon: MdInventory2 },
-      { title: "Severity", route: "/severity", icon: PiHardHatFill },
+      { title: "SLA Configuration", route: "/sla-configuration", icon: PiHardHatFill },
     ],
   },
   {
