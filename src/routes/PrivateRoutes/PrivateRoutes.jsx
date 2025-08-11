@@ -34,6 +34,7 @@ import RiskOperation from "@/pages/RiskQuantification";
 import ExecutiveDashboard from "@/pages/ExecutiveDashboard";
 import InProgressAssessment from "@/pages/InProgress";
 import CompleteAssessment from "@/pages/CompleteAssessment";
+import Severity from "@/pages/severity";
 
 export const PrivateRoutes = [
   {
@@ -181,5 +182,9 @@ export const PrivateRoutes = [
   {
     path:"/completed-assessment",
     element:<CompleteAssessment/>,
+  },
+  {
+    path:"/severity",
+    element:<Severity/>,
   }
 ];

@@ -246,6 +246,14 @@ export const AllowedPaths = [
     textColor: "text-white",
     permission: ["view", "create", "modify", "delete"],
   },
+  {
+    name: "Severity",
+    value: "/severity",
+    bgColor: "bg-[#232958]",
+    border: "1px solid #282e63",
+    textColor: "text-white",
+    permission: ["view", "create", "modify", "delete"],
+  },
 
   //  ---------------------- unselected ------------------------
 
@@ -445,6 +453,7 @@ export const products = [
       { title: "Role", route: "/roles", icon: LucideShield },
       { title: "Partners", route: "/partners", icon: Users },
       { title: "Tag Config", route: "/tags", icon: MdInventory2 },
+      { title: "Severity", route: "/severity", icon: MdInventory2 },
     ],
   },
   {
