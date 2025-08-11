@@ -1,4 +1,4 @@
-import { isCreateAccess, isDeleteAccess, isHaveAction, isModifyAccess } from '@/utils/pageAccess';
+import { isCreateAccess, isDeleteAccess, isHaveAction, isModifyAccess, isViewAccess } from '@/utils/pageAccess';
 import React, { useEffect, useState } from 'react'
 import { BiPlus } from 'react-icons/bi';
 import { FaRegTrashAlt } from 'react-icons/fa';
@@ -7,31 +7,42 @@ import { RiEdit2Line } from 'react-icons/ri';
 import Pagination from './Pagination';
 import { useFormik } from 'formik';
 import { useAuthContext, useSeverityContext } from '@/context';
+import Access from '@/components/role/Access';
+import { useLocation } from 'react-router-dom';
 
 const Severity = () => {
 
     // all context apis here 
-    const { token } = useAuthContext();
-    const {CreateSeverity,GetSeverity,SeverityData} = useSeverityContext();
+    const { token,authenticate } = useAuthContext();
+    const { CreateSeverity, GetSeverity, SeverityData, UpdateSeverity } = useSeverityContext();
 
+    // location hook to get the current URL
+    const location = useLocation();
+
+    //  all state variables here
     const [page, setPage] = useState(1);
     const [searchQuery, setSearchQuery] = useState("");
 
     const [severityList, setSeverityList] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-     const [tenant, setTenant] = useState("");
+    const [tenant, setTenant] = useState("");
+    const [editableData, setEditableData] = useState(null);
 
 
 
-    const { values, handleBlur, handleChange, handleSubmit, setFieldValue,handleReset } = useFormik({
-        initialValues: { name: "", description: "", days: "", tenant:tenant },
-        onSubmit:(value)=>{
-            if(!value.tenant){
+    const { values, handleBlur, handleChange, handleSubmit, setFieldValue, handleReset } = useFormik({
+        initialValues: editableData || { name: "", description: "", days: "", tenant: tenant },
+        enableReinitialize: true,
+        onSubmit: (value) => {
+            if (!value.tenant) {
                 alert("Please select tenant");
-                return 
+                return
             }
-
-            CreateSeverity(value)
+            if (editableData) {
+                UpdateSeverity(editableData._id, value);
+            } else {
+                CreateSeverity(value)
+            }
             setIsModalOpen(false);
             handleReset();
         },
@@ -42,22 +53,26 @@ const Severity = () => {
         item.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
- 
+
 
     const handleDelete = (id) => {
         setSeverityList(severityList.filter(item => item.id !== id));
     };
-     useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    setTenant(params.get("tenant") || "");
-    setFieldValue('tenant', params.get("tenant") || "");
-  }, [location.search]);
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        setTenant(params.get("tenant") || "");
+        setFieldValue('tenant', params.get("tenant") || "");
+    }, [location.search]);
 
-  useEffect(() => {
-    if(token){
-        GetSeverity(page,tenant);
+    useEffect(() => {
+        if (token) {
+            GetSeverity(page, tenant);
+        }
+    }, [token, page, tenant])
+
+    if(isViewAccess(authenticate,location)){
+        return <Access/>
     }
-  },[token,page,tenant])
 
     return (
         <div className="min-h-screen py-10">
@@ -144,6 +159,10 @@ const Severity = () => {
                                             </button>}
                                             {isModifyAccess() && <button
                                                 title="Edit"
+                                                onClick={() => {
+                                                    setEditableData(tag);
+                                                    setIsModalOpen(true);
+                                                }}
                                                 className="text-subtext hover:text-blue-700"
                                             >
                                                 <RiEdit2Line className="w-5 h-5" />

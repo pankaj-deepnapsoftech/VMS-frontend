@@ -37,7 +37,7 @@ const SeverityContextProvider = ({ children }) => {
 
     const UpdateSeverity = async (id, data) => {
         try {
-            const res = await AxiosHandler.get(`/severity/update/${id}`, data);
+            const res = await AxiosHandler.put(`/severity/update/${id}`, data);
             setSeverityData((prevData) =>
                 prevData.map((item) => (item._id === id ? res.data.data : item))
             );
