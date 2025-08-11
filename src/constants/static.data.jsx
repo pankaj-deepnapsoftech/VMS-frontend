@@ -23,6 +23,7 @@ import { TbReport } from "react-icons/tb";
 import { GrVulnerability } from "react-icons/gr";
 import { SiWikimediafoundation } from "react-icons/si";
 import { GiProgression } from "react-icons/gi";
+import { PiHardHatFill } from "react-icons/pi";
 
 export const AllowedPaths = [
   // --------------------Roc Pages-----------------------
@@ -453,7 +454,7 @@ export const products = [
       { title: "Role", route: "/roles", icon: LucideShield },
       { title: "Partners", route: "/partners", icon: Users },
       { title: "Tag Config", route: "/tags", icon: MdInventory2 },
-      { title: "Severity", route: "/severity", icon: MdInventory2 },
+      { title: "Severity", route: "/severity", icon: PiHardHatFill },
     ],
   },
   {

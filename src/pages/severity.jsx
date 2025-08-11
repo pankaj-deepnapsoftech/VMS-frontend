@@ -9,7 +9,32 @@ import Pagination from './Pagination';
 const Severity = () => {
     const [page, setPage] = useState(1);
     const [searchQuery, setSearchQuery] = useState("");
-    const filteredTags = [];
+
+    const [severityList, setSeverityList] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    // Form states
+    const [formData, setFormData] = useState({
+        name: "",
+        description: "",
+        days: ""
+    });
+
+    const filteredTags = severityList.filter(item =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    const handleAddSeverity = () => {
+        if (!formData.name.trim()) return alert("Severity Name is required");
+        setSeverityList([...severityList, { ...formData, id: Date.now() }]);
+        setFormData({ name: "", description: "", days: "" });
+        setIsModalOpen(false);
+    };
+
+    const handleDelete = (id) => {
+        setSeverityList(severityList.filter(item => item.id !== id));
+    };
+
     return (
         <div className="min-h-screen py-10">
             {/* Top bar */}
@@ -25,11 +50,7 @@ const Severity = () => {
 
                 <div className="flex w-full justify-end py-4">
                     {isCreateAccess() && <button
-                        // onClick={() => {
-                        //     setIsModalOpen(true);
-                        //     setEditTag(null);
-                        //     resetForm()
-                        // }}
+                        onClick={() => setIsModalOpen(true)}
                         className="px-4 py-2 bg-button hover:bg-hoverbutton mr-5 rounded-md text-white font-medium flex items-center gap-2"
                     >
                         <BiPlus className="h-6 w-6 mr-1" />
@@ -67,48 +88,38 @@ const Severity = () => {
                                         "Days",
                                         isHaveAction() && "Actions",
                                     ].map((header) => (
-                                        <th
-                                            key={header}
-                                            className="px-4 py-3 border-b border-gray-600 font-medium"
-                                        >
-                                            {header}
-                                        </th>
+                                        header && (
+                                            <th
+                                                key={header}
+                                                className="px-4 py-3 border-b border-gray-600 font-medium"
+                                            >
+                                                {header}
+                                            </th>
+                                        )
                                     ))}
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-700">
                                 {filteredTags.map((tag, index) => (
                                     <tr
-                                        key={tag._id}
+                                        key={tag.id}
                                         className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
                                     >
                                         <td className="px-4 py-3">{index + 1}</td>
-                                        <td className="px-4 py-3 capitalize">{tag.tag_name || "-"}</td>
-                                        <td className="px-4 py-3 capitalize">{tag.tag_description || "-"}</td>
-                                        <td className="px-4 py-3">{tag.tag_score || "0"}</td>
+                                        <td className="px-4 py-3 capitalize">{tag.name || "-"}</td>
+                                        <td className="px-4 py-3 capitalize">{tag.description || "-"}</td>
+                                        <td className="px-4 py-3">{tag.days || "0"}</td>
 
                                         <td className="px-4 py-3 flex gap-2">
                                             {isDeleteAccess() && <button
-                                                // onClick={() => {
-                                                //     const confirmDelete = window.confirm(
-                                                //         "Are you sure you want to delete this tag?"
-                                                //     );
-                                                //     if (confirmDelete) {
-                                                //         DeleteTags(tag._id);
-                                                //     }
-                                                // }}
+                                                onClick={() => handleDelete(tag.id)}
                                                 title="Delete"
                                                 className="text-subtext hover:text-subTextHover"
                                             >
                                                 <FaRegTrashAlt className="w-5 h-5" />
                                             </button>}
                                             {isModifyAccess() && <button
-
                                                 title="Edit"
-                                                // onClick={() => {
-                                                //     setEditTag(tag);
-                                                //     setIsModalOpen(true);
-                                                // }}
                                                 className="text-subtext hover:text-blue-700"
                                             >
                                                 <RiEdit2Line className="w-5 h-5" />
@@ -131,10 +142,65 @@ const Severity = () => {
                 </div>
             </div>
 
+            {/* Modal */}
+            {isModalOpen && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                    <div className="bg-[#1a1f2e] p-6 rounded-2xl w-[600px] h-[400px] relative">
+                        {/* Close Button */}
+                        <button
+                            onClick={() => setIsModalOpen(false)}
+                            className="absolute top-3 right-3 text-white hover:text-gray-400"
+                        >
+                            ✕
+                        </button>
 
+                        <h2 className="text-xl font-semibold text-white mb-4">Add Severity</h2>
 
+                        <label className="text-white text-sm">Severity Name</label>
+                        <input
+                            type="text"
+                            value={formData.name}
+                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                            className="w-full mb-3 p-2 rounded-lg bg-input text-white"
+                            placeholder='Enter severty name'
+                        />
+
+                        <label className="text-white text-sm">Description</label>
+                        <textarea
+                            value={formData.description}
+                            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                            className="w-full mb-3 p-2 rounded-lg bg-input text-white"
+                            placeholder='Enter description'
+                        />
+
+                        <label className="text-white rounded-lg text-sm">Days</label>
+                        <input
+                            type="number"
+                            value={formData.days}
+                            onChange={(e) => setFormData({ ...formData, days: e.target.value })}
+                            className="w-full mb-5 p-2 rounded-lg bg-input text-white"
+                            placeholder='Enter days'
+                        />
+
+                        <div className="flex justify-end gap-2">
+                            <button
+                                onClick={() => setIsModalOpen(false)}
+                                className="px-4 py-2 bg-gray-500 text-white rounded"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleAddSeverity}
+                                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded"
+                            >
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
 
-export default Severity
+export default Severity;

@@ -12,7 +12,7 @@ function Header({ setShowMenu, showSidebar }) {
 
   const [dropDown, setDropDown] = useState(false);
 
-  const handleLogout = () => {
+  const handleLogout = () => { 
     if (window.confirm("Are you sure you want to log out?")) {
       Logout();
     }
@@ -25,7 +25,7 @@ function Header({ setShowMenu, showSidebar }) {
         navList = item.allowedPath;
       } else if (authenticate.role) {
         navList = item.allowedPath.filter((pathItem) =>
-          authenticate?.allowed_path.some(
+          authenticate?.allowed_path.some(   
             (authItem) => authItem.value === pathItem.route
           )
         );
@@ -40,13 +40,11 @@ function Header({ setShowMenu, showSidebar }) {
               ...navList,
               { ...item.allowedPath[1], childRoutes: childRoutes },
             ];
-          }
+          }                                  
         }
       }
     }
   });
-
- 
 
   return (
     <div className=" flex flex-col text-white  h-[100%] hide-scrollbar bg-[#1f2937]   overflow-y-auto transition-all duration-500 ease-in-out ">
@@ -85,15 +83,15 @@ function Header({ setShowMenu, showSidebar }) {
                       className={` transition-all duration-500 ${
                         dropDown ? "rotate-0" : "rotate-180"
                       } `}
-                    />
+                    />  
                   )}{" "}
-                </p>
+                </p> 
               }
             </NavLink>
             {dropDown &&
               data?.childRoutes &&
               data?.childRoutes.length > 0 &&
-              data?.childRoutes.map((item) => (
+              data?.childRoutes.map((item) => ( 
                 <NavLink
                   key={item.route}
                   to={item.route}
