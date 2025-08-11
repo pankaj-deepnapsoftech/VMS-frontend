@@ -248,8 +248,8 @@ export const AllowedPaths = [
     permission: ["view", "create", "modify", "delete"],
   },
   {
-    name: "Severity",
-    value: "/severity",
+    name: "SLA Configuration",
+    value: "/sla-configuration",
     bgColor: "bg-[#232958]",
     border: "1px solid #282e63",
     textColor: "text-white",

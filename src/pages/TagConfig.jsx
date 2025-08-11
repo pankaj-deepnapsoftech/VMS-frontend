@@ -148,7 +148,7 @@ export default function TagsPage() {
                         key={tag._id}
                         className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
                       >
-                        <td className="px-4 py-3">{index + 1}</td>
+                        <td className="px-4 py-3">{(page -1 ) * 10 + 1+ index}</td>
                         <td className="px-4 py-3 capitalize">{tag.tag_name || "-"}</td>
                         <td className="px-4 py-3 capitalize">{tag.tag_description || "-"}</td>
                         <td className="px-4 py-3">{tag.tag_score || "0"}</td>

@@ -15,6 +15,7 @@ export const SeverityContext = createContext({
 const SeverityContextProvider = ({ children }) => {
 
     const [SeverityData, setSeverityData] = useState([]);
+    const [SeverityOptions,setSeverityOption] = useState([]);
 
     const CreateSeverity = async (data) => {
         try {
@@ -60,6 +61,16 @@ const SeverityContextProvider = ({ children }) => {
             toast.error("Failed to delete severity");
         }
     };
+
+    const GetSeverityDataByTenant = async (tenant) => {
+        try {
+            const res = await AxiosHandler.get(`/severity/get?tenant=${tenant}`);
+            setSeverityOption(res.data.data);
+        } catch (error) {
+            console.error("Error fetching severity by tenant:", error);
+            toast.error("Failed to fetch severity data");
+        }
+    }
 
     return (
         <SeverityContext.Provider value={{ CreateSeverity, GetSeverity, SeverityData, UpdateSeverity,DeleteSeverity }}>
