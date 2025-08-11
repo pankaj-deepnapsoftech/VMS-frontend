@@ -34,7 +34,7 @@ import RiskOperation from "@/pages/RiskQuantification";
 import ExecutiveDashboard from "@/pages/ExecutiveDashboard";
 import InProgressAssessment from "@/pages/InProgress";
 import CompleteAssessment from "@/pages/CompleteAssessment";
-import Severity from "@/pages/Severity";
+import Severity from "@/pages/SlaConfig";
 
 export const PrivateRoutes = [
   {
