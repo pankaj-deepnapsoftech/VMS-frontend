@@ -140,7 +140,7 @@ const Severity = () => {
                                         key={tag.id}
                                         className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
                                     >
-                                        <td className="px-4 py-3">{index + 1}</td>
+                                        <td className="px-4 py-3">{(page -1 ) * 10 + 1+ index}</td>
                                         <td className="px-4 py-3 capitalize">{tag.name || "-"}</td>
                                         <td className="px-4 py-3 capitalize">{tag.description || "-"}</td>
                                         <td className="px-4 py-3">{tag.days || "0"}</td>

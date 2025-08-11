@@ -174,7 +174,7 @@ export function InfrastructureData() {
                           key={index}
                           className="border-b border-slate-700 hover:bg-[#1E293B] transition relative"
                         >
-                          <td className="px-4 py-3">{index + 1}</td>
+                          <td className="px-4 py-3">{(currentPage -1 ) * 10 + 1+ index}</td>
                           <td className="px-4 py-3">{item.Title || "-"}</td>
                           <td className="px-4 py-3">{item.scan_type || "-"}</td>
                           <td className="px-4 py-3">{item.threat_type || "-"}</td>
