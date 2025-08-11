@@ -13,8 +13,8 @@ import { useLocation } from 'react-router-dom';
 const Severity = () => {
 
     // all context apis here 
-    const { token,authenticate } = useAuthContext();
-    const { CreateSeverity, GetSeverity, SeverityData, UpdateSeverity } = useSeverityContext();
+    const { token, authenticate } = useAuthContext();
+    const { CreateSeverity, GetSeverity, SeverityData, UpdateSeverity,DeleteSeverity } = useSeverityContext();
 
     // location hook to get the current URL
     const location = useLocation();
@@ -23,7 +23,6 @@ const Severity = () => {
     const [page, setPage] = useState(1);
     const [searchQuery, setSearchQuery] = useState("");
 
-    const [severityList, setSeverityList] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [tenant, setTenant] = useState("");
     const [editableData, setEditableData] = useState(null);
@@ -55,9 +54,6 @@ const Severity = () => {
 
 
 
-    const handleDelete = (id) => {
-        setSeverityList(severityList.filter(item => item.id !== id));
-    };
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         setTenant(params.get("tenant") || "");
@@ -70,8 +66,8 @@ const Severity = () => {
         }
     }, [token, page, tenant])
 
-    if(isViewAccess(authenticate,location)){
-        return <Access/>
+    if (isViewAccess(authenticate, location)) {
+        return <Access />
     }
 
     return (
@@ -151,7 +147,19 @@ const Severity = () => {
 
                                         <td className="px-4 py-3 flex gap-2">
                                             {isDeleteAccess() && <button
-                                                onClick={() => handleDelete(tag.id)}
+                                                onClick={() => {
+                                                    if (
+                                                        window.confirm(
+                                                            "Are you sure you want to delete this severity?"
+                                                        )
+                                                    ) {
+                                                        DeleteSeverity(tag._id)
+                                                            .then(() => GetSeverity())
+                                                            .catch((err) =>
+                                                                console.error("Delete failed:", err)
+                                                            );
+                                                    }
+                                                }}
                                                 title="Delete"
                                                 className="text-subtext hover:text-subTextHover"
                                             >
