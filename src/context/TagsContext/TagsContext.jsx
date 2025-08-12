@@ -38,7 +38,7 @@ const TagsContextProvider = ({ children }) => {
     try {
       const res = await AxiosHandler.put(`/tags/update-tag/${data._id}`,data);
       toast.success(res.data.message);
-      GetTages();
+      setTags(prevTags => prevTags.map(tag => tag._id === data._id ? res.data.data : tag));
     } catch (error) {
       console.log(error);
     }

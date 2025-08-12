@@ -178,7 +178,7 @@ export function InfrastructureData() {
                           <td className="px-4 py-3">{item.Title || "-"}</td>
                           <td className="px-4 py-3">{item.scan_type || "-"}</td>
                           <td className="px-4 py-3">{item.threat_type || "-"}</td>
-                          <td className="px-4 py-3">{item.Severity || "-"}</td>
+                          <td className="px-4 py-3">{item?.Severity?.name || "-"}</td>
                           <td className="px-4 py-3">
                             {item.InfraStructureAsset?.asset_hostname || "-"}
                           </td>

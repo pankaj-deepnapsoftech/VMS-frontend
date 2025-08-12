@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 
-export const authContext = createContext({token:"",authenticate:null});
+export const authContext = createContext({token:"",authenticate:null,tenant:""});
 
 // eslint-disable-next-line react/prop-types
 const AuthContextProvider = ({ children }) => {
@@ -13,6 +13,7 @@ const AuthContextProvider = ({ children }) => {
 
 
   const [token, setToken] = useState(Cookies.get("token"));
+  const [tenant, setTenant] = useState()
 
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -286,6 +287,11 @@ const AuthContextProvider = ({ children }) => {
     }
   }, [token])
 
+   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setTenant(params.get("tenant") || "");
+  }, [location.search]);
+
   return (
     <authContext.Provider value={{
       loading,
@@ -314,7 +320,8 @@ const AuthContextProvider = ({ children }) => {
       ResetWithQuestion,
       GetTenantData,
       UserViaTenant,
-      Verifyrecaptcha
+      Verifyrecaptcha,
+      tenant
     }}>
       {children}
     </authContext.Provider>
