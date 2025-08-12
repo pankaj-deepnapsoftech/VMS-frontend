@@ -62,7 +62,7 @@ export function InfrastructureData() {
       );
   });
 
-  const handleExpectionModal = (item) => {
+  const handleExpectionModal = (item) => {  
     if (!item.Expection) {
       setIsModalOpen(true);
       setSelectedId(item._id);
@@ -73,7 +73,7 @@ export function InfrastructureData() {
 
   const toggleMenu = (index, e) => {
     if (activeMenu === index) {
-      setActiveMenu(null);
+      setActiveMenu(null); 
       setMenuPosition(null);
     } else {
       const rect = e.currentTarget.getBoundingClientRect();
