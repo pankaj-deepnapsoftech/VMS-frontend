@@ -288,9 +288,13 @@ const AuthContextProvider = ({ children }) => {
   }, [token])
 
    useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    setTenant(params.get("tenant") || "");
-  }, [location.search]);
+    if(!authenticate?.role || authenticate?.part_securend){
+      const params = new URLSearchParams(window.location.search);
+      setTenant(params.get("tenant") || "");
+    }else{
+      setTenant(authenticate?.tenant || "");
+    }
+  }, [location.search,authenticate]);
 
   return (
     <authContext.Provider value={{

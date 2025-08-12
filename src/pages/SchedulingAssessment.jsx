@@ -15,7 +15,6 @@ import { IoClose } from "react-icons/io5";
 function SchedulingAssessmentPage({ editable, setEditable }) {
   // all context api hooks
   const {
-    loading,
     SchedulingAssesment,
     UpdateAssesment,
     page,
@@ -24,18 +23,15 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
     DashboardData,
   } = useScheduleAssessmentContext();
 
-  const { token, authenticate } = useAuthContext();
+  const { token, tenant } = useAuthContext();
 
   const [isOpen, setIsOpen] = useState(false);
   const [file, setFile] = useState("");
   const formData = new FormData();
 
-  // location
-  const location = useLocation();
 
   // all useStates
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [tenant, setTenant] = useState("");
 
 
 
@@ -85,13 +81,6 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
     },
   });
 
-
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    setTenant(params.get("tenant") || "");
-    setFieldValue("Tenant_id", params.get("tenant"));
-  }, [location.search]);
 
   useEffect(() => {
     if (token) {

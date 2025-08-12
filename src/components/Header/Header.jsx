@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useAuthContext } from "@/context";
 import { IoIosArrowDown, IoIosLogOut } from "react-icons/io";
 import { products } from "@/constants/static.data";
+import { UserCircle } from "lucide-react";
 
 function Header({ setShowMenu, showSidebar }) {
 
@@ -12,39 +13,46 @@ function Header({ setShowMenu, showSidebar }) {
 
   const [dropDown, setDropDown] = useState(false);
 
-  const handleLogout = () => { 
+  const handleLogout = () => {
     if (window.confirm("Are you sure you want to log out?")) {
       Logout();
     }
   };
 
   let navList = [];
-  products.map((item) => {
-    if (getDataFromSession === item.title) {
-      if (!authenticate?.role) {
-        navList = item.allowedPath;
-      } else if (authenticate.role) {
-        navList = item.allowedPath.filter((pathItem) =>
-          authenticate?.allowed_path.some(   
-            (authItem) => authItem.value === pathItem.route
-          )
-        );
-        if (getDataFromSession === "Threat & Vulnerability Management (TVM)") {
-          const childRoutes = item.allowedPath[1].childRoutes.filter((child) =>
-            authenticate?.allowed_path.some(
-              (authItem) => authItem.value === child.route
-            )
-          );
-          if (childRoutes.length > 0) {
-            navList = [
-              ...navList,
-              { ...item.allowedPath[1], childRoutes: childRoutes },
-            ];
-          }                                  
-        }
+
+  const selectedProduct = products.find(item => getDataFromSession === item.title);
+  if (!selectedProduct) return;
+
+  const { allowedPath } = selectedProduct;
+
+  if (!authenticate?.role) {
+    navList = allowedPath;
+  } else {
+    // Filter main allowed paths
+    navList = allowedPath.filter(pathItem =>
+      authenticate?.allowed_path.some(authItem => authItem.value === pathItem.route )
+    );
+
+    // Special case for TVM
+    if (getDataFromSession === "Threat & Vulnerability Management (TVM)" && allowedPath[1]?.childRoutes) {
+      const childRoutes = allowedPath[1].childRoutes.filter(child =>
+        authenticate?.allowed_path.some(authItem => authItem.value === child.route)
+      );
+
+      if (childRoutes.length) {
+        navList = [
+          ...navList,
+          { ...allowedPath[1], childRoutes }
+        ];
       }
+    };
+
+    if(getDataFromSession === "Administration" && authenticate?.part_securend){
+      navList = [...navList, { title: "Tenant", route: "/all-tenant", icon: UserCircle }]
     }
-  });
+  }
+
 
   return (
     <div className=" flex flex-col text-white  h-[100%] hide-scrollbar bg-[#1f2937]   overflow-y-auto transition-all duration-500 ease-in-out ">
@@ -63,51 +71,46 @@ function Header({ setShowMenu, showSidebar }) {
                 );
               }}
               className={({ isActive }) =>
-                `flex items-center px-2 py-2 space-x-2 rounded-lg transition duration-200 ${
-                  isActive && !(data?.childRoutes && data?.childRoutes.length)
-                    ? "bg-[#3533cc]"
-                    : ""
+                `flex items-center px-2 py-2 space-x-2 rounded-lg transition duration-200 ${isActive && !(data?.childRoutes && data?.childRoutes.length)
+                  ? "bg-[#3533cc]"
+                  : ""
                 }`
               }
             >
               <data.icon className="text-white w-5 h-5" />
               {
                 <p
-                  className={`text-sm font-semibold text-white flex items-center justify-center gap-2 ${
-                    showSidebar ? "" : "block lg:hidden"
-                  }`}
+                  className={`text-sm font-semibold text-white flex items-center justify-center gap-2 ${showSidebar ? "" : "block lg:hidden"
+                    }`}
                 >
                   {data.title}{" "}
                   {data?.childRoutes && data?.childRoutes.length > 0 && (
                     <IoIosArrowDown
-                      className={` transition-all duration-500 ${
-                        dropDown ? "rotate-0" : "rotate-180"
-                      } `}
-                    />  
+                      className={` transition-all duration-500 ${dropDown ? "rotate-0" : "rotate-180"
+                        } `}
+                    />
                   )}{" "}
-                </p> 
+                </p>
               }
             </NavLink>
             {dropDown &&
               data?.childRoutes &&
               data?.childRoutes.length > 0 &&
-              data?.childRoutes.map((item) => ( 
+              data?.childRoutes.map((item) => (
                 <NavLink
                   key={item.route}
                   to={item.route}
                   onClick={setShowMenu}
                   className={({ isActive }) =>
-                    `flex items-center px-2 py-2 h-fit ${showSidebar && "mx-3"} space-x-2  rounded-lg transition duration-200 ${
-                      isActive ? "bg-[#3533cc]" : ""
+                    `flex items-center px-2 py-2 h-fit ${showSidebar && "mx-3"} space-x-2  rounded-lg transition duration-200 ${isActive ? "bg-[#3533cc]" : ""
                     }`
                   }
-                > 
+                >
                   <item.icon className="text-white w-5 h-5" />
                   {
                     <p
-                      className={`text-sm font-semibold text-white ${
-                        showSidebar ? "" : "block lg:hidden"
-                      }`} 
+                      className={`text-sm font-semibold text-white ${showSidebar ? "" : "block lg:hidden"
+                        }`}
                     >
                       {item.title}
                     </p>
@@ -119,9 +122,8 @@ function Header({ setShowMenu, showSidebar }) {
       </nav>
       <hr className="border-gray-100 mx-8" />
       <div
-        className={`h-full p-2 flex justify-start items-end  ${
-          showSidebar ? "" : "block lg:hidden"
-        }`}
+        className={`h-full p-2 flex justify-start items-end  ${showSidebar ? "" : "block lg:hidden"
+          }`}
       >
         <div className="relative p-5 flex">
           <button

@@ -24,16 +24,13 @@ export default function TenantDashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [tenant, setTenant] = useState("");
   const location = useLocation();
 
   const [model, setmodel] = useState(false);
-  const { token, authenticate } = useAuthContext();
+  const { token, authenticate,tenant } = useAuthContext();
 
 
-  console.log("authenticate", authenticate.allowed_path)
-
-  console.log(location)
+  console.log("tenant", tenant);
 
 
 
@@ -79,13 +76,13 @@ export default function TenantDashboard() {
     validationSchema: InfraAssetvalidation,
     enableReinitialize: true,
     onSubmit: (value) => {
-      if (!tenant && !editable) {
+      if (!tenant  ) {
         return alert("Please select a tenant");
       }
       if (editable) {
         UpdateInfraAsset(editable._id, value);
       } else {
-        CreateInfraAsset({ ...value, creator: tenant });
+        CreateInfraAsset({ ...value, creator: tenant ? tenant : editable?.creator });
       }
       setmodel(false);
       handleReset();
@@ -116,10 +113,7 @@ export default function TenantDashboard() {
     }
   }, [currentPage, tenant]);
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    setTenant(params.get("tenant") || "");
-  }, [location.search]);
+
 
    if (isViewAccess(authenticate,location)) {
         return <Access />

@@ -16,7 +16,7 @@ import { useLocation } from "react-router-dom";
 export default function BusinessApplications() {
 
   // context api hooks
-  const { token,authenticate } = useAuthContext();
+  const { token,authenticate,tenant } = useAuthContext();
   const {
     CreateBussinerssApplcation,
     GetBussinerssApplcation,
@@ -38,7 +38,6 @@ export default function BusinessApplications() {
   const [countryData, setcountryData] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [tenant, setTenant] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredTenants = businessApplication.filter((tenant) =>
@@ -64,11 +63,11 @@ export default function BusinessApplications() {
         if (!tenant && !editable) {
           return alert("Please select a tenant");
         }
-        console.log(value);
+        
         if (editable) {
           UpdateBussinerssApplcation(editable._id, value);
         } else {
-          CreateBussinerssApplcation({ ...value, creator: tenant });
+          CreateBussinerssApplcation({ ...value, creator: tenant ? tenant : editable?.creator });
         }
         setmodel(false);
       },
@@ -114,11 +113,6 @@ export default function BusinessApplications() {
       GetCountryData();
     }
   }, [currentPage, tenant]);
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    setTenant(params.get("tenant") || "");
-  }, [location.search]);
 
   useEffect(() => {
     if (token) {

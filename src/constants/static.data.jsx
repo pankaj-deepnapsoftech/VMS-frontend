@@ -198,14 +198,6 @@ export const AllowedPaths = [
     textColor: "text-white",
     permission: ["view", "create", "modify", "delete"],
   },
-  {
-    name: "All Tenents",
-    value: "/all-tenant",
-    bgColor: "bg-[#232958]",
-    border: "1px solid #282e63",
-    textColor: "text-white",
-    permission: ["view", "create", "modify", "delete"],
-  },
 
   {
     name: "Third Party Integrations",
