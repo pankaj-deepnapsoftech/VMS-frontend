@@ -66,7 +66,7 @@ const MainLayout = () => {
 
   const handleSelect = ({ value, label }) => {
     setTenantId(value);
-    setTenant({label,value});
+    setTenant({ label, value });
     refreshTVMCardsData(value);
   };
 
@@ -160,8 +160,8 @@ const MainLayout = () => {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const data = TenantAllData.filter((item)=>item.value === params.get("tenant"))[0];
-    if(data){
+    const data = TenantAllData.filter((item) => item.value === params.get("tenant"))[0];
+    if (data) {
       setTenant(data);
     }
   }, [location.search]);
@@ -288,7 +288,7 @@ const MainLayout = () => {
     whitespace-nowrap
   `}
         >
-          <Header 
+          <Header
             setShowMenu={() =>
               width > 1023 ? setShowMenu(true) : setShowMenu(false)
             }
