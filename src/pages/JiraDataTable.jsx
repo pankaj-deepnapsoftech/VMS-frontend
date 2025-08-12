@@ -34,7 +34,6 @@ export const JiraDataTable = () => {
     ConfigData,
     DeleteMultipleData,
     DeleteData,
-    UpdateData,
   } = useJiraContext();
 
   console.log("this is jira data", jiraData);
@@ -115,17 +114,7 @@ export const JiraDataTable = () => {
     );
   };
 
-  const handleSelectAll = () => {
-    setSelectedRows(
-      selectedRows.length === paginatedData.length ? [] : [...paginatedData]
-    );
-  };
 
-  const deleteData = async () => {
-    const deleteList = selectedRows.map((item) => item.issueId);
-    DeleteMultipleData(deleteList);
-    setSelectedRows([]);
-  };
 
   const getPriorityBadge = (priority) => {
     const colors = {
@@ -147,15 +136,7 @@ export const JiraDataTable = () => {
     return colors[status] || "bg-gray-500 text-white";
   };
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik({
-      initialValues: { email: "", password: "" },
-      onSubmit: (value) => {
-        console.log("UpdateData", value);
-        UpdateData(selectedItem?.issueId, value);
-        setIsUpdateModalOpen(false);
-      },
-    });
+
 
   return (
     <Suspense fallback={<div>Loading...</div>}>

@@ -278,7 +278,7 @@ export default function ExecutiveSummaryPage() {
             <div className="bg-[#161d3d] border border-gray-800 p-4 rounded-2xl w-full lg:w-2/4 text-white">
               <div className="flex justify-between items-start mb-4">
                 <h2 className="text-base sm:text-lg font-semibold">
-                  Risk Heat Map
+                  Risk Heat Map 
                 </h2>
                 <button className="text-white/50 hover:text-white text-lg sm:text-xl leading-none">
                   ⋯
