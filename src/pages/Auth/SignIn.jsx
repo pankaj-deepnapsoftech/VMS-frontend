@@ -6,7 +6,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import "./../Css/SignInAnimation.css";
 
 const SignIn = () => {
-  const { Signin,Verifyrecaptcha } = useAuthContext();
+  const { Signin, Verifyrecaptcha } = useAuthContext();
   const [togglePassword, setTogglePassword] = useState(false);
   const [disable, setDisable] = useState(true);
 
@@ -18,17 +18,15 @@ const SignIn = () => {
   });
 
   const handleCaptcha = async (token) => {
-    const data = await Verifyrecaptcha(token)
+    const data = await Verifyrecaptcha(token);
     setDisable(import.meta.env.VITE_REACT_ENV === "development" ? data : !data);
   };
-
 
   const cards = [
     {
       title: "Threat & Vulnerability Management (TVM)",
       desc: "Proactively identify, assess, and mitigate security weaknesses across your infrastructure. Our TVM solutions empower you to stay ahead of potential breaches by continuously monitoring for threats and vulnerabilities, ensuring your digital assets remain secure.",
     },
-
     {
       title: "Attack Surface Management (ASM)",
       desc: "Understand and control your evolving attack surface. ASM provides a continuous, outside-in view of your organization's digital assets, revealing potential entry points for attackers and enabling you to proactively shrink your risk.",
@@ -40,7 +38,6 @@ const SignIn = () => {
   ];
 
   const ANIMATION_DURATION = 6000;
-
   const [currentAnimatingCardIndex, setCurrentAnimatingCardIndex] = useState(0);
 
   useEffect(() => {
@@ -49,17 +46,14 @@ const SignIn = () => {
         prev + 1 < cards.length ? prev + 1 : 0
       );
     }, ANIMATION_DURATION);
-
     return () => clearTimeout(timer);
   }, [currentAnimatingCardIndex]);
 
-
   return (
     <div className="flex min-h-screen bg-[url('/Svg/background.svg')] bg-no-repeat bg-cover bg-center bg-black">
-      {/* Left side */}
+      {/* Left side — Desktop product cards */}
       <div
-        className="flex-[3] text-white relative  hidden lg:block bg-gradient-to-tr from-[#2b2973] via-transparent to-black "
-
+        className="flex-[3] text-white relative hidden lg:block bg-gradient-to-tr from-[#2b2973] via-transparent to-black "
       >
         <img src="/logo.png" className="h-10 my-10 px-10" />
         <h2 className="text-5xl font-bold ml-10 pt-24">Products</h2>
@@ -71,7 +65,6 @@ const SignIn = () => {
           className=" size-96 2xl:size-[600px] absolute top-[32%] 2xl:top-[20%] right-0"
         />
 
-
         <div className="relative space-y-3 ">
           {cards.map((card, index) => {
             const isActive = currentAnimatingCardIndex === index;
@@ -79,7 +72,7 @@ const SignIn = () => {
             return (
               <div
                 key={index}
-                className={`transition-all duration-500 ml-10 rounded-2xl text-white shadow-lg  relative py-3
+                className={`transition-all duration-500 ml-10 rounded-2xl text-white shadow-lg relative py-3
           ${isActive ? "max-w-md p-6 bg-white/30 backdrop-blur-md" : "bg-transparent max-w-md px-6"} 
         `}
               >
@@ -110,11 +103,45 @@ const SignIn = () => {
         </div>
       </div>
 
-      {/* Right side */}
       <div
-        className=" flex-[2] text-white flex flex-col items-center justify-center border-l border-light  px-2 lg:pl-20 "
+        className="flex-[2] text-white flex flex-col items-center justify-center border-l border-light px-2 lg:pl-20"
         style={{ backgroundPosition: "right 0 1000px" }}
       >
+     
+        <div className="w-full  flex flex-col gap-4 p-8 lg:hidden">
+          <h2 className="text-center text-xl font-semibold text-gray-200 mb-4">Products</h2>
+          <p className="text-gray-400">Explore our powerful security products that simplify complex threats and protect what matters most.</p>
+          {cards.map((card, index) => {
+            const isActive = currentAnimatingCardIndex === index;
+            if (!isActive) return null; // Only render current card
+            return (
+              <div
+                key={index}
+                className="rounded-xl p-4 bg-white/10  text-white shadow-md relative transition-all duration-500"
+              >
+                <div className="flex justify-center mb-3">
+                  {/* little dots for indicator */}
+                  {cards.map((_, dotIndex) => (
+                    <div
+                      key={dotIndex}
+                      className={`w-2 h-2 rounded-full mx-1 ${dotIndex === index ? "bg-gray-200" : "bg-gray-500"}`}
+                    />
+                  ))}
+                </div>
+                <h3 className="text-lg font-bold">{card.title}</h3>
+                <p className="text-sm text-gray-300 mt-2">{card.desc}</p>
+                <button className="mt-3 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-md w-full">
+                  Try Now
+                </button>
+                <div className="absolute bottom-0 left-0 bg-gray-400 h-1 rounded-b-xl w-full overflow-hidden">
+                  <div className="bg-yellow-300 h-full rounded-xl fill-animation"></div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+       
         <h2 className=" text-2xl xl:text-4xl 2xl:text-5xl font-medium py-3 ">
           Welcome to Secure End
         </h2>

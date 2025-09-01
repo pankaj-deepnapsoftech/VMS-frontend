@@ -11,6 +11,7 @@ import {
 } from "@/utils/pageAccess";
 import Access from "@/components/role/Access";
 import { IoClose } from "react-icons/io5";
+import { ImageUploader } from "@/utils/ImagesUploader";
 
 function SchedulingAssessmentPage({ editable, setEditable }) {
   // all context api hooks
@@ -33,6 +34,8 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
   // all useStates
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+
+  
 
 
   const {
@@ -368,15 +371,25 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
                     htmlFor="codeFileUpLoad"
                     className="block text-sm font-medium text-slate-200"
                   >
-                    Upload Code File *
+                    Upload Code File *   
                   </label>
-                  <input
+                  <input  
                     type="file"
-                    id="codeFileUpLoad"
-                    onChange={(e) => {
-                      setFile(e.target?.files[0]);
-                      setFieldValue("code_Upload", file);
+                    id="codeFileUpLoad" 
+                    onChange={async (e) => {
+                      const selectedFile = e.target?.files?.[0];
+                      if (selectedFile) {
+                        setFile(selectedFile);
+                        const uploadedURL = await ImageUploader(selectedFile);
+                       
+                        if (uploadedURL) {
+                          setFieldValue("code_Upload", uploadedURL); 
+                        } else {
+                          alert("File upload failed. Please try again.");
+                        }
+                      }
                     }}
+
                     className="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                   />
                   {touched.code_Upload && errors.code_Upload && (
@@ -397,7 +410,7 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
                     type="submit"
                     className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
                   >
-                    Save
+                    Save 
                   </button>
                 </div>
               </div>

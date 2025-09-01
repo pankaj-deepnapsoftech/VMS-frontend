@@ -259,18 +259,19 @@ const AllEmployee = () => {
                                 onClick={() =>
                                   handleChangeStatus("deactivate", user._id)
                                 }
-                                className="bg-[#395042] hover:bg-green-700 text-green-500 px-3 py-1 rounded-full text-xs"
+                                
+                                className="bg-[#3E212D] hover:bg-[#2b161e] text-[#EC6C6D] px-3 py-1 rounded-full text-xs"
                               >
-                                Activate
+                                Deactivate
                               </button>
                             ) : (
                               <button
                                 onClick={() =>
                                   handleChangeStatus("activate", user._id)
                                 }
-                                className="bg-[#3E212D] hover:bg-[#2b161e] text-[#EC6C6D] px-3 py-1 rounded-full text-xs"
+                                  className="bg-[#395042] hover:bg-green-700 text-green-500 px-3 py-1 rounded-full text-xs"
                               >
-                                Deactivate
+                                   Activate
                               </button>
                             ))}
                           </td>
