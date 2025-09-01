@@ -16,8 +16,9 @@ const AllEmployeeContextProvider = ({ children }) => {
 	const [loading, setLoading] = useState(false);
 	const [employeeTasksData, setEmployeeTasksData] = useState([]);
 	const [employeeCardData, setEmployeeCardData] = useState([]);
-	
-  const [TenantData, setTenantData] = useState([]);
+	const [EmpData, setEmpData] = useState([]);
+
+	const [TenantData, setTenantData] = useState([]);
 
 
 	const [page, setPage] = useState(1)
@@ -89,24 +90,37 @@ const AllEmployeeContextProvider = ({ children }) => {
 		}
 	}
 
+	const GetUsers = async (page = 1) => {
+		try {
+			const res = await AxiosHandler.get(
+				`/auth/all-users?page=${page}&limit=10`
+			);
+			setEmpData(res?.data.data);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	const DeleteUser = async (id) => {
 		try {
 			const res = await AxiosHandler.delete(`/auth/delete-user/${id}`);
 			toast.success(res.data.message);
-
+			GetUsers()
 		} catch (error) {
 			toast.error(error.response.data.message)
 		}
 	}
 
 	const GetAllTenentData = async () => {
-    try {
-      const res = await AxiosHandler.get("/tenant/get-all");
-      setTenantData(res?.data?.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+		try {
+			const res = await AxiosHandler.get("/tenant/get-all");
+			setTenantData(res?.data?.data);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+
 
 	useEffect(() => {
 		if (token) {
@@ -133,7 +147,9 @@ const AllEmployeeContextProvider = ({ children }) => {
 			datafetchCount,
 			setdatafetchCount,
 			DeleteUser,
-			TenantData
+			TenantData,
+			GetUsers,
+			EmpData
 
 		}}>
 			{children}

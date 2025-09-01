@@ -27,9 +27,10 @@ import Access from "@/components/role/Access";
 
 const AllEmployee = () => {
   // all context api hooks
-  const { DeleteUser } = useAllEmployeeContext();
+  const { DeleteUser, GetUsers,
+    EmpData } = useAllEmployeeContext();
   const { partners } = useDataContext();
-  const { token, ChangeStatus,authenticate } = useAuthContext();
+  const { token, ChangeStatus, authenticate } = useAuthContext();
   const { TenantData } = useAllEmployeeContext();
   // use location hook
 
@@ -39,14 +40,14 @@ const AllEmployee = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editable, setEdiTable] = useState(null);
-  const [EmpData, setEmpData] = useState([]);
+
+
   const [RoleAllData, setRoleAllData] = useState([]);
   const [page, setPage] = useState(1);
   const [isloading, setloading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [apiError, setApiError] = useState(null);
   const [partOfPartner, setPartOfPartner] = useState(null);
-  const [partOfSecurend, setPartOfSecurend] = useState(null);
 
   const {
     values,
@@ -58,7 +59,7 @@ const AllEmployee = () => {
     setFieldValue,
     resetForm,
   } = useFormik({
-    initialValues: editable || {
+    initialValues: editable ? {...editable,role:editable?.role?._id} : {
       fname: "",
       lname: "",
       phone: "",
@@ -104,7 +105,6 @@ const AllEmployee = () => {
       } finally {
         setloading(false);
         setPartOfPartner(null);
-        setPartOfSecurend(null);
       }
     },
   });
@@ -121,19 +121,7 @@ const AllEmployee = () => {
     );
   });
 
-  const GetUsers = async (page = 1) => {
-    setloading(true);
-    try {
-      const res = await AxiosHandler.get(
-        `/auth/all-users?page=${page}&limit=10`
-      );
-      setEmpData(res?.data.data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setloading(false);
-    }
-  };
+
 
   const handleChangeStatus = async (type, id) => {
     if (window.confirm("Are you sure you want to change this user's status?")) {
@@ -146,10 +134,8 @@ const AllEmployee = () => {
   const isPartOfSecurend = (e) => {
     if (e.target.value === "no") {
       setFieldValue("part_securend", false);
-      setPartOfSecurend("no");
     } else if (e.target.value === "yes") {
       setFieldValue("part_securend", true);
-      setPartOfSecurend("yes");
     }
   };
 
@@ -170,14 +156,14 @@ const AllEmployee = () => {
     }
   }, [token, page]);
 
-  if(isViewAccess(authenticate,location)){
-    return <Access/>
+  if (isViewAccess(authenticate, location)) {
+    return <Access />
   }
 
   return (
     <>
       {isloading ? (
-        <Loader />           
+        <Loader />
       ) : (
         <div className="min-h-screen shadow-lg py-4">
           <div className="flex items-center justify-between px-6 py-4">
@@ -190,7 +176,7 @@ const AllEmployee = () => {
             </div>
 
             {/* Right Side Button */}
-           {isCreateAccess() && <button
+            {isCreateAccess() && <button
               onClick={() => {
                 setIsModalOpen(true);
                 setEdiTable(null);
@@ -253,7 +239,7 @@ const AllEmployee = () => {
                           key={user._id}
                           className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
                         >
-                          <td className="px-4 py-3">{(page -1 ) * 10 + 1+ index}</td>
+                          <td className="px-4 py-3">{(page - 1) * 10 + 1 + index}</td>
                           <td className="px-4 py-3 capitalize">{user.fname}</td>
                           <td className="px-4 py-3 capitalize">{user.lname}</td>
                           <td className="px-4 py-3">{user.email}</td>
@@ -290,16 +276,19 @@ const AllEmployee = () => {
                           </td>
                           <td className="px-4 py-3 flex gap-2">
                             {isDeleteAccess() && <button
-                              onClick={() =>
-                                window.confirm("Delete this user?") &&
-                                DeleteUser(user._id)
+                              onClick={() => {
+                                if (window.confirm("Delete this user?")) {
+                                  DeleteUser(user._id)
+                                }
+
+                              }
                               }
                               title="Delete"
                               className="text-subtext hover:text-subTextHover"
                             >
                               <FaRegTrashAlt className="w-5 h-5" />
                             </button>}
-                           {isModifyAccess() && <button
+                            {isModifyAccess() && <button
                               onClick={() => {
                                 setEdiTable(user);
                                 setIsModalOpen(true);
@@ -328,12 +317,11 @@ const AllEmployee = () => {
           </div>
         </div>
       )}
-         
+
       {/* MODAL */}
       <div
-        className={`absolute top-0 left-0 z-50 min-h-screen bg-gradient-custom w-full text-white ${
-          isModalOpen ? "opacity-100 visible" : "opacity-0 invisible"
-        } transition-opacity duration-500 ease-in-out`}
+        className={`absolute top-0 left-0 z-50 min-h-screen bg-gradient-custom w-full text-white ${isModalOpen ? "opacity-100 visible" : "opacity-0 invisible"
+          } transition-opacity duration-500 ease-in-out`}
       >
         <div className="w-full flex justify-between items-center py-6 px-10">
           <div className="text-2xl text-center w-full">Add Users</div>
@@ -436,7 +424,7 @@ const AllEmployee = () => {
                   </select>
                   {touched.role && errors.role && (
                     <p className="text-red-400 text-sm">{errors.role}</p>
-                  )}                 
+                  )}
                 </div>
 
                 <div>
@@ -447,6 +435,7 @@ const AllEmployee = () => {
                         type="radio"
                         name="securend"
                         value="yes"
+                        checked={values.part_securend}
                         onChange={isPartOfSecurend}
                       />{" "}
                       Yes
@@ -456,6 +445,7 @@ const AllEmployee = () => {
                         type="radio"
                         name="securend"
                         value="no"
+                        checked={values.part_securend === false}
                         onChange={isPartOfSecurend}
                       />{" "}
                       No
@@ -463,7 +453,7 @@ const AllEmployee = () => {
                   </div>
                 </div>
 
-                {partOfSecurend === "no" && (
+                {values.part_securend == false && (
                   <div>
                     <h3>Part of Partner</h3>
                     <div className="flex gap-4">

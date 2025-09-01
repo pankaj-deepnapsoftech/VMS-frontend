@@ -13,7 +13,8 @@ function InputField({
   placeholder = "",
   name = "",
   isError,
-  error
+  error,
+  ...prop
 }) {
   const [toggle, setToggle] = useState(false);
 
