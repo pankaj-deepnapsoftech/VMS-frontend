@@ -5,10 +5,7 @@ import { useFormik } from "formik";
 import { MdClose } from "react-icons/md";
 import { useAuthContext, useScheduleAssessmentContext } from "@/context";
 import { IoClose } from "react-icons/io5";
-<<<<<<< HEAD
 import { handleFileChange } from "@/utils/CheckFileType";
-=======
->>>>>>> 23165b0fcf57633ccb3216a35667e316ccad0840
 import { ImageUploader } from "@/utils/ImagesUploader";
 
 function SchedulingAssessmentPage({ editable, setEditable }) {
