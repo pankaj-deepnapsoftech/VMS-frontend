@@ -4,13 +4,9 @@ import { SchedulingAssessmentValidation } from "@/Validation/SchedulingAssessmen
 import { useFormik } from "formik";
 import { MdClose } from "react-icons/md";
 import { useAuthContext, useScheduleAssessmentContext } from "@/context";
-import Loader from "@/components/Loader/Loader";
-import { useLocation } from "react-router-dom";
-import {
-  isViewAccess,
-} from "@/utils/pageAccess";
-import Access from "@/components/role/Access";
 import { IoClose } from "react-icons/io5";
+import { handleFileChange } from "@/utils/CheckFileType";
+import { ImageUploader } from "@/utils/ImagesUploader";
 
 function SchedulingAssessmentPage({ editable, setEditable }) {
   // all context api hooks
@@ -62,24 +58,23 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
 
       value = { ...value, Tenant_id: tenant ? tenant :editable?.Tenant_id }
 
-      Object.entries(value).forEach(([key, value]) => {
-        formData.append(key, value);
-      });
+      
 
       if (editable) {
-        UpdateAssesment(editable._id, formData);
+        UpdateAssesment(editable._id, value);
         setEditable(null);
       } else {
         if (!tenant) {
           alert("Please Select Tenant first");
           return;
         }
-        SchedulingAssesment(formData);
+        SchedulingAssesment(value);
       }
 
       resetForm();
     },
   });
+
 
 
   useEffect(() => {
@@ -374,9 +369,14 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
                     type="file"
                     id="codeFileUpLoad"
                     onChange={(e) => {
-                      setFile(e.target?.files[0]);
-                      setFieldValue("code_Upload", file);
+                      const file = handleFileChange(e.target.files[0]);
+                      if(file){
+                        setFile(file);
+                      }else {
+                        e.target.value = ""
+                      }
                     }}
+                    accept=".pdf"
                     className="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                   />
                   {touched.code_Upload && errors.code_Upload && (
@@ -395,6 +395,12 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
                   </button>
                   <button
                     type="submit"
+                    onClick={async ()=>{
+                      const image = await ImageUploader(file);
+                      console.log(image)
+                      setFieldValue("code_Upload",image);
+                      setIsModalOpen(false)
+                    }}
                     className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
                   >
                     Save
