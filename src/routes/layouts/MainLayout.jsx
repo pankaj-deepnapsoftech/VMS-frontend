@@ -17,7 +17,7 @@ import {
   useTVMCardsContext,
 } from "@/context";
 import UserProfile from "@/pages/UserProfile";
-import ChangePasswordModal from "@/modals/ChangePasswordModal";
+// import ChangePasswordModal from "@/modals/ChangePasswordModal";
 import useChangePassword from "@/hooks/changePassword";
 import FirstDashboard from "@/pages/FirstDashboard";
 import Loader from "@/components/Loader/Loader";
@@ -316,7 +316,7 @@ const MainLayout = () => {
 
       {updateProfileModal && <UpdateProfileModal />}
 
-      <ChangePasswordModal isOpen={isOpen} onClose={closeModal} />
+      {/* <ChangePasswordModal isOpen={isOpen} onClose={closeModal} /> */}
     </Suspense>
   );
 };

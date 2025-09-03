@@ -5,7 +5,10 @@ import { useFormik } from "formik";
 import { MdClose } from "react-icons/md";
 import { useAuthContext, useScheduleAssessmentContext } from "@/context";
 import { IoClose } from "react-icons/io5";
+<<<<<<< HEAD
 import { handleFileChange } from "@/utils/CheckFileType";
+=======
+>>>>>>> 23165b0fcf57633ccb3216a35667e316ccad0840
 import { ImageUploader } from "@/utils/ImagesUploader";
 
 function SchedulingAssessmentPage({ editable, setEditable }) {
@@ -29,6 +32,8 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
   // all useStates
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+
+  
 
 
   const {
@@ -363,9 +368,9 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
                     htmlFor="codeFileUpLoad"
                     className="block text-sm font-medium text-slate-200"
                   >
-                    Upload Code File *
+                    Upload Code File *   
                   </label>
-                  <input
+                  <input  
                     type="file"
                     id="codeFileUpLoad"
                     onChange={(e) => {
@@ -403,7 +408,7 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
                     }}
                     className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
                   >
-                    Save
+                    Save 
                   </button>
                 </div>
               </div>
