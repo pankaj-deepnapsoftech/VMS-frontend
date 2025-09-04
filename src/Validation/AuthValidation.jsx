@@ -31,10 +31,10 @@ export const SignUpValidation = BaseValidationSchema.omit(['department']);
 
 export const SignInValidation = object({
   email: string().email().required("E-mail is Required"),
-  password: string().min(4).max(12).required("Password is Required")
+  password: string().min(8).max(16).required("Password is Required")
 })
 export const ResetPasswordValidation = object({
-  password: string().min(4).max(12).required("Password is Required")
+  password: string().min(8).max(16).required("Password is Required")
 })
 
 export const ForgotPasswordValidation = object({

@@ -5,14 +5,14 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 
-export const authContext = createContext({token:"",authenticate:null,tenant:""});
+export const authContext = createContext({ token: "", authenticate: null, tenant: "" });
 
 // eslint-disable-next-line react/prop-types
 const AuthContextProvider = ({ children }) => {
   let navigate = useNavigate();
 
 
-  const [token, setToken] = useState(Cookies.get("token"));
+  const [token, setToken] = useState(Cookies.get("AT"));
   const [tenant, setTenant] = useState()
 
   const [showUserMenu, setShowUserMenu] = useState(false);
@@ -21,7 +21,7 @@ const AuthContextProvider = ({ children }) => {
   const [runner, setRunner] = useState(1);
   const [authenticate, setAuthenticate] = useState(null);
   const [updateProfileModal, setUpdateProfileModal] = useState(false);
-  const [UserViaTenant,setuserViaTenant] = useState([])
+  const [UserViaTenant, setuserViaTenant] = useState([])
   const [getDataFromSession, setGetDataFromSession] = useState(() => {
     return sessionStorage.getItem("VROC");
   })
@@ -50,9 +50,8 @@ const AuthContextProvider = ({ children }) => {
     try {
       const res = await AxiosHandler.post("/auth/login", data);
       AxiosHandler.defaults.headers.authorization = `Bearer ${res.data.token}`;
-      Cookies.set("token", res.data.token, { expires: 1 });
+      Cookies.set("AT", res.data.token, { expires: 1, secure: true });
       setToken(res.data.token);
-      console.log("sign in data ", res.data)
       if (!res.data.user.email_verification) {
         navigate("/verify-otp");
         ResendOtp()
@@ -256,10 +255,10 @@ const AuthContextProvider = ({ children }) => {
     }
   }
 
-   const Verifyrecaptcha = async (token) => {
+  const Verifyrecaptcha = async (token) => {
     setLoading(true);
     try {
-      const res = await AxiosHandler.post(`/auth/verify-recaptcha`, {token});
+      const res = await AxiosHandler.post(`/auth/verify-recaptcha`, { token });
       console.log(res)
       return res.data.success
     } catch (error) {
@@ -271,13 +270,13 @@ const AuthContextProvider = ({ children }) => {
   }
 
 
-   const GetTenantData = async (tenant) => {
+  const GetTenantData = async (tenant) => {
     try {
-      const res = await AxiosHandler.get(`/auth/user-by-tenant?tenant=${tenant  ? tenant : ""}`);
+      const res = await AxiosHandler.get(`/auth/user-by-tenant?tenant=${tenant ? tenant : ""}`);
       setuserViaTenant(res.data.data);
     } catch (error) {
       console.log(error)
-    } 
+    }
   }
 
 
@@ -287,14 +286,14 @@ const AuthContextProvider = ({ children }) => {
     }
   }, [token])
 
-   useEffect(() => {
-    if(!authenticate?.role || authenticate?.part_securend){
+  useEffect(() => {
+    if (!authenticate?.role || authenticate?.part_securend) {
       const params = new URLSearchParams(window.location.search);
       setTenant(params.get("tenant") || "");
-    }else{
+    } else {
       setTenant(authenticate?.tenant || "");
     }
-  }, [location.search,authenticate]);
+  }, [location.search, authenticate]);
 
   return (
     <authContext.Provider value={{

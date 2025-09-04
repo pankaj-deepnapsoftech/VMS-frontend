@@ -47,7 +47,7 @@ const MainLayout = () => {
   const { refreshTVMCardsData } = useTVMCardsContext();
 
 
-  const { isOpen, openModal, closeModal } = useChangePassword();
+  const { openModal } = useChangePassword();
 
   const [width, setWidth] = useState(window.innerWidth);
   const [temp, setTemp] = useState("");

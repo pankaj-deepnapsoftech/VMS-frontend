@@ -50,7 +50,7 @@ const Dashboard = () => {
           sessionStorage.setItem("VROC", item);
           setGetDataFromSession(item);
         } else {
-          alert("You Dont Have An access This Module");
+          alert("You don't have access to this module.");
         }
       } else {
         const data = products.filter((value) => value.title === item)[0]

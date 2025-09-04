@@ -12,6 +12,7 @@ import { IoSearch } from "react-icons/io5";
 import { isCreateAccess, isDeleteAccess, isHaveAction, isModifyAccess, isViewAccess } from "@/utils/pageAccess";
 import Access from "@/components/role/Access";
 import { useLocation } from "react-router-dom";
+import { handleExcelFile } from "@/utils/CheckFileType";
 
 export default function BusinessApplications() {
 
@@ -104,7 +105,21 @@ export default function BusinessApplications() {
   };
 
   const handleFileChange = (e) => {
-    setSelectedFiles(e.target.files[0]);
+      if(!e.target.files[0]){
+          alert("file is required field");
+          return
+        };
+
+        if(e.target.files[0].size >= (10 * 1024 * 1024)){
+          alert("File is too large")
+        }
+
+        const file = handleExcelFile(e.target.files[0])
+        if(file){
+          setSelectedFiles(file);
+        }else{
+          e.target.value = ""
+        };
   };
 
   useEffect(() => {
@@ -312,6 +327,7 @@ export default function BusinessApplications() {
               </label>
               <input
                 type="file"
+                accept=".xlsx,.xls"
                 onChange={handleFileChange}
                 className="block w-full text-sm text-gray-300 bg-slate-800 border border-slate-700 rounded-lg cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 transition"
               />

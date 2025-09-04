@@ -4,14 +4,16 @@ import { Eye, EyeOff } from "lucide-react";
 import { useState, useEffect } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import "./../Css/SignInAnimation.css";
+import { SignInValidation } from "@/Validation/AuthValidation";
 
 const SignIn = () => {
   const { Signin, Verifyrecaptcha } = useAuthContext();
   const [togglePassword, setTogglePassword] = useState(false);
   const [disable, setDisable] = useState(true);
 
-  const { values, handleBlur, handleChange, handleSubmit } = useFormik({
+  const { values,errors,touched, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues: { email: "", password: "" },
+    validationSchema:SignInValidation,
     onSubmit: (value) => {
       Signin(value);
     },
@@ -165,6 +167,7 @@ const SignIn = () => {
               placeholder="Enter your email address"
               className="bg-transparent h-12 2xl:h-[60px] text-sm lg:test-base 2xl:text-xl w-full border border-gray-500 rounded px-3"
             />
+            {errors.email && touched.email && <p className="text-red-500 p-1"  >{errors.email}</p>}
           </div>
 
           <div className="flex flex-col w-96 2xl:w-[600px] relative">
@@ -184,8 +187,9 @@ const SignIn = () => {
               placeholder="Enter your password"
               className="bg-transparent h-12 text-sm lg:test-base 2xl:h-[60px] 2xl:text-xl w-full border border-gray-500 rounded px-3"
             />
+             {errors.password && touched.password && <p className="text-red-500 p-1"  >{errors.password}</p>}
             <div
-              className="absolute top-[60%] right-5 -translate-y-[20%] cursor-pointer"
+              className={`absolute top-[50%] right-5 ${errors.password && "-translate-y-[50%]" } cursor-pointer`}
               onClick={() => setTogglePassword(!togglePassword)}
             >
               {togglePassword ? <Eye /> : <EyeOff />}

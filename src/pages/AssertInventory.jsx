@@ -18,6 +18,7 @@ import { IoSearch } from "react-icons/io5";
 import NoDataFound from "@/components/NoDataFound";
 import Access from "@/components/role/Access";
 import { isCreateAccess, isDeleteAccess, isHaveAction, isModifyAccess, isViewAccess } from "@/utils/pageAccess";
+import { handleExcelFile } from "@/utils/CheckFileType";
 
 export default function TenantDashboard() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -27,12 +28,7 @@ export default function TenantDashboard() {
   const location = useLocation();
 
   const [model, setmodel] = useState(false);
-  const { token, authenticate,tenant } = useAuthContext();
-
-
-  console.log("tenant", tenant);
-
-
+  const { token, authenticate, tenant } = useAuthContext();
 
 
 
@@ -76,12 +72,13 @@ export default function TenantDashboard() {
     validationSchema: InfraAssetvalidation,
     enableReinitialize: true,
     onSubmit: (value) => {
-      if (!tenant  ) {
-        return alert("Please select a tenant");
-      }
+
       if (editable) {
         UpdateInfraAsset(editable._id, value);
       } else {
+        if (!tenant) {
+          return alert("Please select a tenant");
+        }
         CreateInfraAsset({ ...value, creator: tenant ? tenant : editable?.creator });
       }
       setmodel(false);
@@ -90,7 +87,22 @@ export default function TenantDashboard() {
   });
 
   const handleFileChange = (e) => {
-    setSelectedFiles(e.target.files[0]);
+    if (!e.target.files[0]) {
+      alert("file is required field");
+      return
+    };
+
+    if (e.target.files[0].size >= (10 * 1024 * 1024)) {
+      alert("File is too large")
+    }
+
+
+    const file = handleExcelFile(e.target.files[0])
+    if (file) {
+      setSelectedFiles(file);
+    } else {
+      e.target.value = ""
+    }
   };
 
   const handleDownload = () => {
@@ -115,9 +127,9 @@ export default function TenantDashboard() {
 
 
 
-   if (isViewAccess(authenticate,location)) {
-        return <Access />
-    }
+  if (isViewAccess(authenticate, location)) {
+    return <Access />
+  }
 
   return (
     <>
@@ -135,7 +147,7 @@ export default function TenantDashboard() {
             </div>
 
             {/* Buttons */}
-           {isCreateAccess() && <div className="flex flex-col sm:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
+            {isCreateAccess() && <div className="flex flex-col sm:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
               <button
                 onClick={() => setIsModalOpen(true)}
                 className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center justify-center gap-2"
@@ -210,7 +222,7 @@ export default function TenantDashboard() {
                           key={tenant._id}
                           className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
                         >
-                          <td className="px-4 py-3">{(currentPage -1 ) * 10 + 1+ index}</td>
+                          <td className="px-4 py-3">{(currentPage - 1) * 10 + 1 + index}</td>
                           <td className="px-4 py-3 ">
                             {tenant.asset_hostname || "-"}
                           </td>
@@ -264,7 +276,7 @@ export default function TenantDashboard() {
                               <FaRegTrashAlt className="w-5 h-5" />
                             </button>}
 
-                           {isModifyAccess() && <button
+                            {isModifyAccess() && <button
                               onClick={() => {
                                 setEditable(tenant);
                                 setmodel(!model);
@@ -327,6 +339,7 @@ export default function TenantDashboard() {
               </label>
               <input
                 type="file"
+                accept=".xlsx,.xls"
                 onChange={handleFileChange}
                 className="block w-full text-sm text-gray-300 bg-slate-800 border border-slate-700 rounded-lg cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 transition"
               />
