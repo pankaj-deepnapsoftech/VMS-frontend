@@ -31,7 +31,7 @@ const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
-  console.log(filteredProducts)
+  console.log(authenticate)
 
   const HandleClick = (item) => {
     if (
@@ -88,6 +88,32 @@ const Dashboard = () => {
       return;
     }
   };
+
+
+
+  const ActiveCards = () => {
+   const alllowed =  products
+      .filter(
+        (item) =>
+          !(
+            item.title.includes("AI-VA") ||
+            item.title.includes("Vulnerability Intelligence") ||
+            item.title.includes("GRC") ||
+            item.title.includes("TPRM") ||
+            item.title.includes("ROC")
+
+          )
+      )
+
+      if(authenticate?.role){
+        return alllowed.filter((item) => item.allowedPath.filter((allow) => authenticate?.allowed_path?.some((check) => check.value === allow.route)).length > 0);
+      }else {
+
+        return alllowed
+      }
+
+
+  }
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -211,35 +237,24 @@ const Dashboard = () => {
                   </Card>
                 </>
               ))
-              : products
-                .filter(
-                  (item) =>
-                    !(
-                      item.title.includes("AI-VA") ||
-                      item.title.includes("Vulnerability Intelligence") ||
-                      item.title.includes("GRC") ||
-                      item.title.includes("TPRM") ||
-                      item.title.includes("ROC")
-
-                    )
-                )
-                .map((item, index) => (
-                  <Card
-                    key={index}
-                    HandleClick={() => HandleClick(item.title)}
-                    borderColor={item.borderColor}
-                    title={item.title}
-                  >
-                    <div className="flex flex-col items-start  gap-3">
-                      <div className="w-10 h-10 bg-[#ffffff1c] rounded-full flex items-center justify-center text-white text-xl">
-                        <img src={item.icon} alt="icon" />
-                      </div>
-                      <h3 className="text-sm font-semibold text-white">
-                        {item.title}
-                      </h3>
+              :
+                ActiveCards().map((item, index) => (
+                <Card
+                  key={index}
+                  HandleClick={() => HandleClick(item.title)}
+                  borderColor={item.borderColor}
+                  title={item.title}
+                >
+                  <div className="flex flex-col items-start  gap-3">
+                    <div className="w-10 h-10 bg-[#ffffff1c] rounded-full flex items-center justify-center text-white text-xl">
+                      <img src={item.icon} alt="icon" />
                     </div>
-                  </Card>
-                ))}
+                    <h3 className="text-sm font-semibold text-white">
+                      {item.title}
+                    </h3>
+                  </div>
+                </Card>
+              ))}
           </div>
         </div>
       </div>

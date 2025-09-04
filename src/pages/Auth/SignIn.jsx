@@ -89,9 +89,7 @@ const SignIn = () => {
                 {isActive && (
                   <>
                     <p className="text-sm text-gray-300 mb-6">{card.desc}</p>
-                    <button className="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-md">
-                      Try Now
-                    </button>
+                   
                     <div className="absolute bottom-[1.5px] left-0 bg-gray-400 h-2 rounded-b-2xl  w-full overflow-hidden">
                       <div className="bg-yellow-300 h-full rounded-xl fill-animation"></div>
                     </div>
