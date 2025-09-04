@@ -22,25 +22,29 @@ import { RiEdit2Line } from "react-icons/ri";
 import Pagination from "./Pagination";
 import { IoClose, IoSearch } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
-import { isCreateAccess, isDeleteAccess, isHaveAction, isModifyAccess, isViewAccess } from "@/utils/pageAccess";
+import {
+  isCreateAccess,
+  isDeleteAccess,
+  isHaveAction,
+  isModifyAccess,
+  isViewAccess,
+} from "@/utils/pageAccess";
 import Access from "@/components/role/Access";
 
 const AllEmployee = () => {
   // all context api hooks
-  const { DeleteUser, GetUsers,
-    EmpData } = useAllEmployeeContext();
+  const { DeleteUser, GetUsers, EmpData } = useAllEmployeeContext();
   const { partners } = useDataContext();
   const { token, ChangeStatus, authenticate } = useAuthContext();
   const { TenantData } = useAllEmployeeContext();
   // use location hook
 
-  const location = useLocation()
+  const location = useLocation();
 
   // all useState
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editable, setEdiTable] = useState(null);
-
 
   const [RoleAllData, setRoleAllData] = useState([]);
   const [page, setPage] = useState(1);
@@ -59,18 +63,20 @@ const AllEmployee = () => {
     setFieldValue,
     resetForm,
   } = useFormik({
-    initialValues: editable ? {...editable,role:editable?.role?._id} : {
-      fname: "",
-      lname: "",
-      phone: "",
-      email: "",
-      password: "",
-      tenant: "",
-      role: "",
-      partner: "",
-      email_verification: true,
-      part_securend: null,
-    },
+    initialValues: editable
+      ? { ...editable, role: editable?.role?._id }
+      : {
+          fname: "",
+          lname: "",
+          phone: "",
+          email: "",
+          password: "",
+          tenant: "",
+          role: "",
+          partner: "",
+          email_verification: true,
+          part_securend: null,
+        },
     validationSchema: editable ? EditUser : BaseValidationSchema,
     enableReinitialize: true,
     onSubmit: async (value) => {
@@ -121,8 +127,6 @@ const AllEmployee = () => {
     );
   });
 
-
-
   const handleChangeStatus = async (type, id) => {
     if (window.confirm("Are you sure you want to change this user's status?")) {
       const deactivate = type === "activate";
@@ -157,7 +161,7 @@ const AllEmployee = () => {
   }, [token, page]);
 
   if (isViewAccess(authenticate, location)) {
-    return <Access />
+    return <Access />;
   }
 
   return (
@@ -176,16 +180,18 @@ const AllEmployee = () => {
             </div>
 
             {/* Right Side Button */}
-            {isCreateAccess() && <button
-              onClick={() => {
-                setIsModalOpen(true);
-                setEdiTable(null);
-              }}
-              className="flex items-center gap-2 px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium whitespace-nowrap"
-            >
-              <BiPlus className="h-5 w-5" />
-              Add User
-            </button>}
+            {isCreateAccess() && (
+              <button
+                onClick={() => {
+                  setIsModalOpen(true);
+                  setEdiTable(null);
+                }}
+                className="flex items-center gap-2 px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium whitespace-nowrap"
+              >
+                <BiPlus className="h-5 w-5" />
+                Add User
+              </button>
+            )}
           </div>
 
           <div className="w-full  min-h-screen p-6">
@@ -239,7 +245,9 @@ const AllEmployee = () => {
                           key={user._id}
                           className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
                         >
-                          <td className="px-4 py-3">{(page - 1) * 10 + 1 + index}</td>
+                          <td className="px-4 py-3">
+                            {(page - 1) * 10 + 1 + index}
+                          </td>
                           <td className="px-4 py-3 capitalize">{user.fname}</td>
                           <td className="px-4 py-3 capitalize">{user.lname}</td>
                           <td className="px-4 py-3">{user.email}</td>
@@ -254,51 +262,53 @@ const AllEmployee = () => {
                             {user.partner?.company_name || "—"}
                           </td>
                           <td className="px-4 py-3">
-                            {isModifyAccess() && (user.deactivate ? (
-                              <button
-                                onClick={() =>
-                                  handleChangeStatus("deactivate", user._id)
-                                }
-                                
-                                className="bg-[#3E212D] hover:bg-[#2b161e] text-[#EC6C6D] px-3 py-1 rounded-full text-xs"
-                              >
-                                Deactivate
-                              </button>
-                            ) : (
-                              <button
-                                onClick={() =>
-                                  handleChangeStatus("activate", user._id)
-                                }
+                            {isModifyAccess() &&
+                              (user.deactivate ? (
+                                <button
+                                  onClick={() =>
+                                    handleChangeStatus("deactivate", user._id)
+                                  }
+                                  className="bg-[#3E212D] hover:bg-[#2b161e] text-[#EC6C6D] px-3 py-1 rounded-full text-xs"
+                                >
+                                  Deactivate
+                                </button>
+                              ) : (
+                                <button
+                                  onClick={() =>
+                                    handleChangeStatus("activate", user._id)
+                                  }
                                   className="bg-[#395042] hover:bg-green-700 text-green-500 px-3 py-1 rounded-full text-xs"
-                              >
-                                   Activate
-                              </button>
-                            ))}
+                                >
+                                  Activate
+                                </button>
+                              ))}
                           </td>
                           <td className="px-4 py-3 flex gap-2">
-                            {isDeleteAccess() && <button
-                              onClick={() => {
-                                if (window.confirm("Delete this user?")) {
-                                  DeleteUser(user._id)
-                                }
-
-                              }
-                              }
-                              title="Delete"
-                              className="text-subtext hover:text-subTextHover"
-                            >
-                              <FaRegTrashAlt className="w-5 h-5" />
-                            </button>}
-                            {isModifyAccess() && <button
-                              onClick={() => {
-                                setEdiTable(user);
-                                setIsModalOpen(true);
-                              }}
-                              title="Edit"
-                              className="text-subtext hover:text-blue-700"
-                            >
-                              <RiEdit2Line className="w-5 h-5" />
-                            </button>}
+                            {isDeleteAccess() && (
+                              <button
+                                onClick={() => {
+                                  if (window.confirm("Delete this user?")) {
+                                    DeleteUser(user._id);
+                                  }
+                                }}
+                                title="Delete"
+                                className="text-subtext hover:text-subTextHover"
+                              >
+                                <FaRegTrashAlt className="w-5 h-5" />
+                              </button>
+                            )}
+                            {isModifyAccess() && (
+                              <button
+                                onClick={() => {
+                                  setEdiTable(user);
+                                  setIsModalOpen(true);
+                                }}
+                                title="Edit"
+                                className="text-subtext hover:text-blue-700"
+                              >
+                                <RiEdit2Line className="w-5 h-5" />
+                              </button>
+                            )}
                           </td>
                         </tr>
                       ))}
@@ -321,8 +331,9 @@ const AllEmployee = () => {
 
       {/* MODAL */}
       <div
-        className={`absolute top-0 left-0 z-50 min-h-screen bg-gradient-custom w-full text-white ${isModalOpen ? "opacity-100 visible" : "opacity-0 invisible"
-          } transition-opacity duration-500 ease-in-out`}
+        className={`absolute top-0 left-0 z-50 min-h-screen bg-gradient-custom w-full text-white ${
+          isModalOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        } transition-opacity duration-500 ease-in-out`}
       >
         <div className="w-full flex justify-between items-center py-6 px-10">
           <div className="text-2xl text-center w-full">Add Users</div>
@@ -359,7 +370,11 @@ const AllEmployee = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* First Name */}
                 <InputField
-                  label="First Name"
+                  label={
+                    <>
+                      First Name <span className="text-red-500">*</span>
+                    </>
+                  }
                   type="text"
                   showPassword={false}
                   icon={FaUser}
@@ -374,7 +389,11 @@ const AllEmployee = () => {
 
                 {/* Last Name */}
                 <InputField
-                  label="Last Name"
+                  label={
+                    <>
+                      Last Name <span className="text-red-500">*</span>
+                    </>
+                  }
                   type="text"
                   showPassword={false}
                   icon={FaUser}
@@ -389,7 +408,11 @@ const AllEmployee = () => {
 
                 {/* Email */}
                 <InputField
-                  label="Email Address"
+                  label={
+                    <>
+                      Email Address <span className="text-red-500">*</span>
+                    </>
+                  }
                   type="email"
                   showPassword={false}
                   icon={FaEnvelope}
@@ -428,8 +451,11 @@ const AllEmployee = () => {
                   )}
                 </div>
 
+                {/* Part of Securend */}
                 <div>
-                  <h3>Part of Securend</h3>
+                  <h3>
+                    Part of Securend <span className="text-red-500">*</span>
+                  </h3>
                   <div className="flex gap-4">
                     <label>
                       <input
@@ -454,9 +480,12 @@ const AllEmployee = () => {
                   </div>
                 </div>
 
+                {/* Part of Partner */}
                 {values.part_securend == false && (
                   <div>
-                    <h3>Part of Partner</h3>
+                    <h3>
+                      Part of Partner <span className="text-red-500">*</span>
+                    </h3>
                     <div className="flex gap-4">
                       <label>
                         <input
@@ -480,6 +509,7 @@ const AllEmployee = () => {
                   </div>
                 )}
 
+                {/* Tenant */}
                 {partOfPartner === "no" && (
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-1">
@@ -508,6 +538,7 @@ const AllEmployee = () => {
                   </div>
                 )}
 
+                {/* Partners */}
                 {partOfPartner === "yes" && (
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-1">
@@ -536,11 +567,13 @@ const AllEmployee = () => {
                   </div>
                 )}
 
-                {/* Tenant */}
-
                 {/* Phone Number */}
                 <InputField
-                  label="Phone Number"
+                  label={
+                    <>
+                      Phone Number <span className="text-red-500">*</span>
+                    </>
+                  }
                   type="number"
                   showPassword={false}
                   icon={FaPhone}
@@ -555,21 +588,23 @@ const AllEmployee = () => {
 
                 {/* Password - Only if not editing */}
                 {!editable && (
-                  <>
-                    <InputField
-                      label="Password"
-                      type="password"
-                      showPassword={true}
-                      icon={FaLock}
-                      value={values.password}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      placeholder="Enter your Password"
-                      name="password"
-                      isError={touched.password && errors.password}
-                      error={errors.password}
-                    />
-                  </>
+                  <InputField
+                    label={
+                      <>
+                        Password <span className="text-red-500">*</span>
+                      </>
+                    }
+                    type="password"
+                    showPassword={true}
+                    icon={FaLock}
+                    value={values.password}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    placeholder="Enter your Password"
+                    name="password"
+                    isError={touched.password && errors.password}
+                    error={errors.password}
+                  />
                 )}
               </div>
 

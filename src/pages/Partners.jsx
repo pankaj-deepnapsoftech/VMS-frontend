@@ -147,7 +147,7 @@ const Partners = () => {
             <div className="relative bg-tablecolor rounded-lg shadow-2xl w-full max-w-3xl mx-4 p-1 overflow-hidden"> 
               <div className="flex justify-between items-center border-b border-gray-700 p-4 bg-table">
                 <h2 className="text-xl font-semibold text-gray-100">
-                  {editTable ? "Edit Tenant" : "Add Tenant"}
+                  {editTable ? "Edit Partners" : "Add Partners"}
                 </h2>
                 <button
                   onClick={() => {
