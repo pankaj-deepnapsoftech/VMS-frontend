@@ -28,6 +28,7 @@ import { Link } from "react-router-dom";
 import { MdOutlineNotificationsActive } from "react-icons/md";
 import Select from "react-select";
 import { customStyles, darkTheme } from "@/constants/constants.data";
+import ChangePasswordModal from "@/modals/ChangePasswordModal";
 
 const MainLayout = () => {
   const { notificationData, NotificationsViewed } =
@@ -47,7 +48,7 @@ const MainLayout = () => {
   const { refreshTVMCardsData } = useTVMCardsContext();
 
 
-  const { openModal } = useChangePassword();
+  const { openModal,isOpen,closeModal } = useChangePassword();
 
   const [width, setWidth] = useState(window.innerWidth);
   const [temp, setTemp] = useState("");
@@ -316,7 +317,7 @@ const MainLayout = () => {
 
       {updateProfileModal && <UpdateProfileModal />}
 
-      {/* <ChangePasswordModal isOpen={isOpen} onClose={closeModal} /> */}
+      <ChangePasswordModal isOpen={isOpen} onClose={closeModal} />
     </Suspense>
   );
 };
