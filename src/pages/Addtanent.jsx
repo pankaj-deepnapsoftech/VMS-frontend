@@ -5,7 +5,9 @@ import { useFormik } from "formik";
 import { tenantValidator } from "@/Validation/TenantsValidations";
 import { AxiosHandler } from "@/config/AxiosConfig";
 import axios from "axios";
+import toast from "react-hot-toast";
 
+// eslint-disable-next-line react/prop-types
 const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
   const [riskScore, setRiskScore] = useState(600);
   const [countryData, setCountryData] = useState([]);
@@ -25,25 +27,31 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
       State: "",
       City: "",
       Industry: "",
-      Risk_Apetite: "",
+      Risk_Apetite: 600,
     },
     validationSchema: tenantValidator,
     enableReinitialize: true,
     onSubmit: async (values) => {
       try {
         if (editTable) {
-          await AxiosHandler.put(`/tenant/update/${values._id}`, values);
+          const res = await AxiosHandler.put(`/tenant/update/${values._id}`, values);
+          toast.success(res.data.message || "Tenant updated successfully");
         } else {
-          await AxiosHandler.post("/tenant/create", values);
+          const res = await AxiosHandler.post("/tenant/create", values);
+          toast.success(res.data.message || "Tenant updated successfully");
         }
         setIsModalOpen(false);
         formik.resetForm();
         getTenants();
       } catch (error) {
+        toast.error(error?.response?.data?.message || "Tenant creation failed")
         console.error("Tenant creation failed", error);
       }
     },
   });
+  
+
+  console.log(formik.errors)
 
   const getCountryData = async () => {
     try {

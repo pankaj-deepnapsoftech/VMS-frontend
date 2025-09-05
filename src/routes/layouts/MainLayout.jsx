@@ -109,7 +109,7 @@ const MainLayout = () => {
         return
       }
 
-      if (!authenticate?.role && filterData?.allowedPath?.length > 0) {
+      if (!authenticate?.role && filterData?.allowedPath?.length > 0 && window.location.pathname === "/") {
         navigate(filterData.allowedPath[0]?.route);
         return;
       }
@@ -120,7 +120,7 @@ const MainLayout = () => {
             (authItem) => authItem.value === pathItem.route
           )
         );
-        if (navList.length > 0) {
+        if (navList.length > 0 && window.location.pathname === "/") {
           navigate(navList[0]?.route);
         }
         return;
