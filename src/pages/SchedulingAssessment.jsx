@@ -25,16 +25,11 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
   const [file, setFile] = useState("");
   const formData = new FormData();
 
-
   // all useStates
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-
-  
-
-
   const {
-    values, 
+    values,
     errors,
     touched,
     handleBlur,
@@ -42,6 +37,7 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
     handleSubmit,
     setFieldValue,
     resetForm,
+    submitCount
   } = useFormik({
     initialValues: editable || {
       Tenant_id: "",
@@ -56,11 +52,7 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
     enableReinitialize: true,
     validationSchema: SchedulingAssessmentValidation,
     onSubmit: (value) => {
-
-
-      value = { ...value, Tenant_id: tenant ? tenant :editable?.Tenant_id }
-
-      
+      value = { ...value, Tenant_id: tenant ? tenant : editable?.Tenant_id };
 
       if (editable) {
         UpdateAssesment(editable._id, value);
@@ -77,8 +69,6 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
     },
   });
 
-
-
   useEffect(() => {
     if (token) {
       TesterForAssessment();
@@ -87,15 +77,20 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
     }
   }, [token, page]);
 
-
-
-
   return (
-    <div className={` ${editable && "fixed top-0 left-0 w-full z-50"} min-h-screen bg-gradient-to-br from-slate-900 via-blue-1000 to-slate-800 text-white px-6 py-8`}>
-
-      {editable && <div className="flex items-center justify-end w-full py-3 " >
-        <IoClose onClick={() => setEditable(null)} className="h-10 w-10 hover:bg-gray-900 cursor-pointer rounded-md px-2 py-1 " />
-      </div>}
+    <div
+      className={` ${
+        editable && "fixed top-0 left-0 w-full z-50"
+      } min-h-screen bg-gradient-to-br from-slate-900 via-blue-1000 to-slate-800 text-white px-6 py-8`}
+    >
+      {editable && (
+        <div className="flex items-center justify-end w-full py-3 ">
+          <IoClose
+            onClick={() => setEditable(null)}
+            className="h-10 w-10 hover:bg-gray-900 cursor-pointer rounded-md px-2 py-1 "
+          />
+        </div>
+      )}
       <div className="container mx-auto max-w-7xl">
         {/* Header Section */}
 
@@ -119,7 +114,8 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
                     htmlFor="Type_Of_Assesment"
                     className="block text-sm font-medium text-slate-200"
                   >
-                    Type of Assessment
+                    Type of Assessment{" "}
+                    <span className="text-red-500 ml-1">*</span>
                   </label>
                   <select
                     name="Type_Of_Assesment"
@@ -131,12 +127,12 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
                       }
                       if (
                         e.target.value === "Dynamic Application" ||
-                        e.target.value ===
-                        "Web Application Penetration Testing"
+                        e.target.value === "Web Application Penetration Testing"
                       ) {
                         setIsOpen(true);
                       }
                     }}
+                    onBlur={handleBlur}
                     className="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200"
                     id="Type_Of_Assesment"
                   >
@@ -162,9 +158,7 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
                     <option value="Mobile Application Penetration Test">
                       Mobile Application Penetration Test
                     </option>
-                    <option value="Red Team exercise">
-                      Red Team exercise
-                    </option>
+                    <option value="Red Team exercise">Red Team exercise</option>
                     <option value="Attack Simulation Exercise">
                       Attack Simulation Exercise
                     </option>
@@ -172,11 +166,12 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
                       Configuration Audits
                     </option>
                   </select>
-                  {touched.Type_Of_Assesment && errors.Type_Of_Assesment && (
-                    <p className="text-red-400 text-sm">
-                      {errors.Type_Of_Assesment}
-                    </p>
-                  )}
+                  {(touched.Type_Of_Assesment || submitCount > 0) &&
+                    errors.Type_Of_Assesment && (
+                      <p className="text-red-400 text-sm">
+                        {errors.Type_Of_Assesment}
+                      </p>
+                    )}
                 </div>
 
                 {/* Data Classification */}
@@ -185,12 +180,14 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
                     htmlFor="Data_Classification"
                     className="block text-sm font-medium text-slate-200"
                   >
-                    Data Classification
+                    Data Classification{" "}
+                    <span className="text-red-500 ml-1">*</span>
                   </label>
                   <select
                     name="Data_Classification"
                     value={values.Data_Classification}
                     onChange={handleChange}
+                    onBlur={handleBlur}
                     className="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200"
                     id="Data_Classification"
                   >
@@ -202,7 +199,7 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
                     <option value="Internal">Internal</option>
                     <option value="Public">Public</option>
                   </select>
-                  {touched.Data_Classification &&
+                  {(touched.Data_Classification || submitCount > 0) &&
                     errors.Data_Classification && (
                       <p className="text-red-400 text-sm">
                         {errors.Data_Classification}
@@ -216,63 +213,68 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
                     htmlFor="MFA_Enabled"
                     className="block text-sm font-medium text-slate-200"
                   >
-                    MFA Enabled
+                    MFA Enabled <span className="text-red-500 ml-1">*</span>
                   </label>
                   <select
                     name="MFA_Enabled"
                     value={values.MFA_Enabled}
                     onChange={handleChange}
+                    onBlur={handleBlur}
                     className="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200"
                     id="MFA_Enabled"
                   >
                     <option value="" disabled>
                       -- Select MFA --
                     </option>
-                    <option value={true}>Yes</option>
-                    <option value={false}>No</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
                   </select>
-                  {touched.MFA_Enabled && errors.MFA_Enabled && (
-                    <p className="text-red-400 text-sm">
-                      {errors.MFA_Enabled}
-                    </p>
-                  )}
+                  {(touched.MFA_Enabled || submitCount > 0) &&
+                    errors.MFA_Enabled && (
+                      <p className="text-red-400 text-sm">
+                        {errors.MFA_Enabled}
+                      </p>
+                    )}
                 </div>
 
                 {/* Preferred Task Start Date */}
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-slate-200">
-                    Preferred Task Start Date
+                    Preferred Task Start Date{" "}
+                    <span className="text-red-500 ml-1">*</span>
                   </label>
                   <input
                     type="date"
-                    name="task_start"
-                    value={values.task_start}
+                    name="Start_Date"
+                    value={values.Start_Date}
                     onBlur={handleBlur}
                     onChange={handleChange}
                     className="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200"
                   />
-                  {touched.task_start && errors.task_start && (
-                    <p className="text-red-400 text-sm">
-                      {errors.task_start}
-                    </p>
-                  )}
+                  {(touched.Start_Date || submitCount > 0) &&
+                    errors.Start_Date && (
+                      <p className="text-red-400 text-sm">
+                        {errors.Start_Date}
+                      </p>
+                    )}
                 </div>
 
                 {/* Preferred Task End Date */}
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-slate-200">
-                    Preferred Task End Date
+                    Preferred Task End Date{" "}
+                    <span className="text-red-500 ml-1">*</span>
                   </label>
                   <input
                     type="date"
-                    name="task_end"
-                    value={values.task_end}
+                    name="End_Date"
+                    value={values.End_Date}
                     onBlur={handleBlur}
                     onChange={handleChange}
                     className="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200"
                   />
-                  {touched.task_end && errors.task_end && (
-                    <p className="text-red-400 text-sm">{errors.task_end}</p>
+                  {(touched.End_Date || submitCount > 0) && errors.End_Date && (
+                    <p className="text-red-400 text-sm">{errors.End_Date}</p>
                   )}
                 </div>
               </div>
@@ -281,7 +283,7 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
               <div className="flex justify-end">
                 <button
                   type="submit"
-                  className=" bottom-2 left-10 px-8 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                  className="bottom-2 left-10 px-8 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
                 >
                   Submit Assessment Request
                 </button>
@@ -365,26 +367,24 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
                     htmlFor="codeFileUpLoad"
                     className="block text-sm font-medium text-slate-200"
                   >
-                    Upload Code File *   
+                    Upload Code File *
                   </label>
-                  <input  
+                  <input
                     type="file"
                     id="codeFileUpLoad"
                     onChange={(e) => {
                       const file = handleFileChange(e.target.files[0]);
-                      if(file){
+                      if (file) {
                         setFile(file);
-                      }else {
-                        e.target.value = ""
+                      } else {
+                        e.target.value = "";
                       }
                     }}
                     accept=".pdf"
                     className="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                   />
                   {touched.code_Upload && errors.code_Upload && (
-                    <p className="text-red-400 text-sm">
-                      {errors.code_Upload}
-                    </p>
+                    <p className="text-red-400 text-sm">{errors.code_Upload}</p>
                   )}
                 </div>
                 <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-slate-700">
@@ -397,24 +397,22 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
                   </button>
                   <button
                     type="submit"
-                    onClick={async ()=>{
+                    onClick={async () => {
                       const image = await ImageUploader(file);
-                      console.log(image)
-                      setFieldValue("code_Upload",image);
-                      setIsModalOpen(false)
+                      console.log(image);
+                      setFieldValue("code_Upload", image);
+                      setIsModalOpen(false);
                     }}
                     className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
                   >
-                    Save 
+                    Save
                   </button>
                 </div>
               </div>
             </div>
           </div>
         )}
-
       </div>
-
     </div>
   );
 }
