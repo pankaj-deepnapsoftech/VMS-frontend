@@ -36,7 +36,7 @@ export function InfrastructureData() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
-  const [exploitDetails, setExploitDetails] = useState([]);
+  const [exploitDetails, setExploitDetails] = useState(null);
   const [tenant, setTenant] = useState("");
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
   const [status, setStatus] = useState(null);
