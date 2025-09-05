@@ -331,7 +331,7 @@ const AllEmployee = () => {
 
       {/* MODAL */}
       <div
-        className={`absolute top-0 left-0 z-50 min-h-screen bg-gradient-custom w-full text-white ${
+        className={`fixed top-0 left-0 z-50 min-h-screen bg-gradient-custom w-full text-white ${
           isModalOpen ? "opacity-100 visible" : "opacity-0 invisible"
         } transition-opacity duration-500 ease-in-out`}
       >
