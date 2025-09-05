@@ -17,7 +17,7 @@ import Access from "@/components/role/Access";
 
 const PendingAssessment = () => {
   // all context api hooks
-  const { token,authenticate } = useAuthContext();
+  const { token,authenticate,tenant } = useAuthContext();
   const { getCompleteAssessment, completeAssessment, DeleteAssesment } =
     useScheduleAssessmentContext();
 
@@ -30,9 +30,9 @@ const PendingAssessment = () => {
 
   useEffect(() => {
     if (token) {
-      getCompleteAssessment();
+      getCompleteAssessment(page,tenant);
     }
-  }, [token]);
+  }, [token,tenant]);
 
     if(isViewAccess(authenticate, location)){
     return <Access/>
