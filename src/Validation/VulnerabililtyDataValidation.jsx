@@ -1,4 +1,4 @@
-import { string, number, object, date,mixed } from "yup";
+import { string, number, object, date, mixed } from "yup";
 
 export const WorkItemValidation = object({
 
@@ -26,5 +26,61 @@ export const Reportvalidation = object({
     }),
 
   Type_Of_Assesment: string().required("Type of Assessment is required")
-    
+
 });
+
+
+export const AddVulnerableData = object({
+  scan_type: string().required("Required"),
+  asset_type: string().required("Required"),
+  threat_type: string().required("Required"),
+  CVE: string().required("Required"),
+  CVE_ID: string().when("CVE", {
+    is: "Yes",
+    then: (schema) => schema.matches(/^CVE-\d{4}-\d{4,}$/, 'Invalid CVE ID format (e.g., CVE-2023-12345)').required("required"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+  exploit_complexity: string().when("CVE", {
+    is: "No",
+    then: (schema) => schema.required("required"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+  Location: string().required("Required"),
+  Title: string().required("Required"),
+  Description: string().required("Required"),
+  Severity: string().required("Required"),
+  CVSS: number()
+    .min(0, "Minimum is 0")
+    .max(10, "Maximum is 10")
+    .required("Required"),
+  Reference_URL: string().url("Invalid URL").required("Required"),
+  BusinessApplication: string().when("asset_type", {
+    is: "Application",
+    then: (schema) => schema.required("required"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+  InfraStructureAsset: string().when("asset_type", {
+    is: "Infrastructure",
+    then: (schema) => schema.required("required"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

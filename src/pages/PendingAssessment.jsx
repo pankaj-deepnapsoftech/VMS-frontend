@@ -19,7 +19,7 @@ import { useLocation } from "react-router-dom";
 
 const PendingAssessment = () => {
   // all context api hooks
-  const { token,authenticate } = useAuthContext();
+  const { token,authenticate,tenant } = useAuthContext();
   const { pendingAssessment, getPendingAssessments, DeleteAssesment ,UpdateAssesment} =
     useScheduleAssessmentContext();
 
@@ -38,9 +38,9 @@ const PendingAssessment = () => {
 
   useEffect(() => {
     if (token) {
-      getPendingAssessments();
+      getPendingAssessments(page,tenant);
     }
-  }, [token]);
+  }, [token,tenant]);
 
   if(isViewAccess(authenticate, location)){
     return <Access/>
