@@ -23,7 +23,6 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
 
   const [isOpen, setIsOpen] = useState(false);
   const [file, setFile] = useState("");
-  const formData = new FormData();
 
   // all useStates
   const [isModalOpen, setIsModalOpen] = useState(false);

@@ -92,6 +92,7 @@ export default function AllCustomer() {
     )
   );
 
+
   return (
     <>
       {isLoading ? (

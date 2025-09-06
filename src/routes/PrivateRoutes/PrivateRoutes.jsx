@@ -35,6 +35,7 @@ import ExecutiveDashboard from "@/pages/ExecutiveDashboard";
 import InProgressAssessment from "@/pages/InProgress";
 import CompleteAssessment from "@/pages/CompleteAssessment";
 import Severity from "@/pages/SLA-Configuration";
+import ErrorBoundary from "@/utils/Errorhandler";
 
 export const PrivateRoutes = [
   {
@@ -48,7 +49,7 @@ export const PrivateRoutes = [
 
   {
     path: "/pending-assesment",
-    element: <PendingAssessment />,
+    element: <ErrorBoundary><PendingAssessment /></ErrorBoundary>,
   },
   {
     path: "/vulnerability-data",
