@@ -192,7 +192,7 @@ const AuthContextProvider = ({ children }) => {
     setLoading(true);
     try {
       const res = await AxiosHandler.get("/auth/logout");
-      Cookies.remove("token", res.data.token);
+      Cookies.remove("AT", res.data.token);
       toast.dismiss(toastId);
       toast.success(res.data.message);
       setAuthenticate(null)
