@@ -109,6 +109,7 @@ export function InfrastructureData() {
     return <Access />;
   }
 
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
       {loading ? (

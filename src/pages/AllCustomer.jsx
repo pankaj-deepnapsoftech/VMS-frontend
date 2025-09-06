@@ -17,11 +17,17 @@ import NoDataFound from "@/components/NoDataFound";
 import { RiEdit2Line } from "react-icons/ri";
 import { useLocation } from "react-router-dom";
 import Access from "@/components/role/Access";
-import { isCreateAccess, isDeleteAccess, isHaveAction, isModifyAccess, isViewAccess } from "@/utils/pageAccess";
+import {
+  isCreateAccess,
+  isDeleteAccess,
+  isHaveAction,
+  isModifyAccess,
+  isViewAccess,
+} from "@/utils/pageAccess";
 
 export default function AllCustomer() {
   // context api hooks
-  const { token,authenticate } = useAuthContext();
+  const { token, authenticate } = useAuthContext();
   const { VerifyEmployee } = useAllEmployeeContext();
 
   // location hook
@@ -37,11 +43,8 @@ export default function AllCustomer() {
   const [isLoading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const { isOpen, closeModal, openModal } = useAccessPartner();
-  const [tenantId, setTenantId] = useState(null)
-  const [partnersData, setPartnersData] = useState("")
-
-
-
+  const [tenantId, setTenantId] = useState(null);
+  const [partnersData, setPartnersData] = useState("");
 
   const getTenants = async () => {
     try {
@@ -73,8 +76,8 @@ export default function AllCustomer() {
     }
   }, [token, page, VerifyEmployee]);
 
-  if(isViewAccess(authenticate,location)){
-    return <Access/>
+  if (isViewAccess(authenticate, location)) {
+    return <Access />;
   }
 
   const filteredTenants = tenants.filter((tenant) =>
@@ -87,9 +90,7 @@ export default function AllCustomer() {
       tenant.City,
       tenant.Industry,
       tenant.Risk_Apetite?.toString(),
-    ].some((field) =>
-      field?.toLowerCase().includes(searchQuery.toLowerCase())
-    )
+    ].some((field) => field?.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
   return (
@@ -101,25 +102,23 @@ export default function AllCustomer() {
           <div className="max-w-screen px-6 h-fit border-[#6B728033] flex items-center gap-4 backdrop-blur-md rounded-lg mx-5">
             <div className="w-full">
               <h2 className="text-2xl font-semibold text-white">All Tenants</h2>
-              <span className="text-subtext text-sm">
-                Manage all tenants
-              </span>
+              <span className="text-subtext text-sm">Manage all tenants</span>
             </div>
             <div className="flex w-full justify-end py-4">
-              {isCreateAccess() && <button
-                onClick={() => {
-                  setIsModalOpen(true);
-                  setEditTable(null);
-                }}
-                className="px-4 py-2 bg-button hover:bg-hoverbutton mr-5 rounded-md text-white font-medium flex items-center gap-2"
-              >
-                <BiPlus className="h-6 w-6 mr-1" />
-                Add Tenant
-              </button>}
+              {isCreateAccess() && (
+                <button
+                  onClick={() => {
+                    setIsModalOpen(true);
+                    setEditTable(null);
+                  }}
+                  className="px-4 py-2 bg-button hover:bg-hoverbutton mr-5 rounded-md text-white font-medium flex items-center gap-2"
+                >
+                  <BiPlus className="h-6 w-6 mr-1" />
+                  Add Tenant
+                </button>
+              )}
             </div>
           </div>
-
-
 
           <div className="w-full  min-h-screen p-6">
             <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
@@ -172,38 +171,40 @@ export default function AllCustomer() {
                           className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
                         >
                           <td className="px-4 py-3">{tenant.company_name}</td>
-                          <td className="px-4 py-3 capitalize">{tenant.Website_url}</td>
-                          <td className="px-4 py-3 capitalize">{tenant.Employee_count}</td>
+                          <td className="px-4 py-3 capitalize">
+                            {tenant.Website_url}
+                          </td>
+                          <td className="px-4 py-3 capitalize">
+                            {tenant.Employee_count}
+                          </td>
                           <td className="px-4 py-3">{tenant.Country}</td>
                           <td className="px-4 py-3">{tenant.State}</td>
-                          <td className="px-4 py-3">
-                            {tenant.City}
-                          </td>
-                          <td className="px-4 py-3">
-                            {tenant.Industry}
-                          </td>
-                          <td className="px-4 py-3">
-                            {tenant.Risk_Apetite}
-                          </td>
+                          <td className="px-4 py-3">{tenant.City}</td>
+                          <td className="px-4 py-3">{tenant.Industry}</td>
+                          <td className="px-4 py-3">{tenant.Risk_Apetite}</td>
 
                           <td className="px-4 py-3 flex gap-2">
-                          {isDeleteAccess() &&   <button
-                              onClick={() => DeleteData(tenant?._id)}
-                              title="Delete"
-                              className="text-subtext hover:text-subTextHover"
-                            >
-                              <FaRegTrashAlt className="w-5 h-5" />
-                            </button>}
-                            {isModifyAccess() && <button
-                              onClick={() => {
-                                setEditTable(tenant);
-                                setIsModalOpen(true);
-                              }}
-                              title="Edit"
-                              className="text-subtext hover:text-blue-700"
-                            >
-                              <RiEdit2Line className="w-5 h-5" />
-                            </button>}
+                            {isDeleteAccess() && (
+                              <button
+                                onClick={() => DeleteData(tenant?._id)}
+                                title="Delete"
+                                className="text-subtext hover:text-subTextHover"
+                              >
+                                <FaRegTrashAlt className="w-5 h-5" />
+                              </button>
+                            )}
+                            {isModifyAccess() && (
+                              <button
+                                onClick={() => {
+                                  setEditTable(tenant);
+                                  setIsModalOpen(true);
+                                }}
+                                title="Edit"
+                                className="text-subtext hover:text-blue-700"
+                              >
+                                <RiEdit2Line className="w-5 h-5" />
+                              </button>
+                            )}
                           </td>
                         </tr>
                       ))}
@@ -241,7 +242,13 @@ export default function AllCustomer() {
           editTable={editTable}
         />
       )}
-      {isOpen && <AccessPartner id={tenantId} closeModal={closeModal} preSet={partnersData} />}
+      {isOpen && (
+        <AccessPartner
+          id={tenantId}
+          closeModal={closeModal}
+          preSet={partnersData}
+        />
+      )}
     </>
   );
 }

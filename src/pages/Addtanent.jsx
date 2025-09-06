@@ -34,7 +34,10 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
     onSubmit: async (values) => {
       try {
         if (editTable) {
-          const res = await AxiosHandler.put(`/tenant/update/${values._id}`, values);
+          const res = await AxiosHandler.put(
+            `/tenant/update/${values._id}`,
+            values
+          );
           toast.success(res.data.message || "Tenant updated successfully");
         } else {
           const res = await AxiosHandler.post("/tenant/create", values);
@@ -44,14 +47,15 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
         formik.resetForm();
         getTenants();
       } catch (error) {
-        toast.error(error?.response?.data?.message || "Tenant creation failed")
+        toast.error(error?.response?.data?.message || "Tenant creation failed");
         console.error("Tenant creation failed", error);
       }
     },
   });
-  
 
-  console.log(formik.errors)
+  useEffect(() => {
+    setRiskScore(Number(formik.values.Risk_Apetite));
+  }, [formik.values.Risk_Apetite]);
 
   const getCountryData = async () => {
     try {
@@ -348,15 +352,15 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                       {riskScore}
                     </p>
                     <p>{getRiskLevel(riskScore)}</p>
-                  </div> 
+                  </div>
                 </div>
               </div>
 
               <div className="text-xs flex justify-between text-gray-500">
                 <span>0</span>
+                <span>250</span>
                 <span>500</span>
-                <span>700</span>
-                <span>850</span>
+                <span>750</span>
                 <span>1000</span>
               </div>
             </div>
