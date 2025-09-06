@@ -69,8 +69,11 @@ export const AddVulnerableData = object({
   Severity: string().required("Required"),
   CVSS: number()
     .min(0, "Minimum is 0")
-    .max(10, "Maximum is 10")
-    .required("Required"),
+    .max(10, "Maximum is 10").test(
+    'max-2-decimals',
+    'No more than 2 digits after the decimal point',
+    (value) => value === undefined || /^\d+(\.\d{1,2})?$/.test(value.toString())
+  ).required("Required"),
   Reference_URL: string().url("Invalid URL").required("Required"),
   BusinessApplication: string().when("asset_type", {
     is: "Application",

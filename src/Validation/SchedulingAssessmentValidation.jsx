@@ -1,13 +1,17 @@
-import { boolean,date, object, string, mixed } from 'yup';
+import { boolean, date, object, string } from 'yup';
 
 export const SchedulingAssessmentValidation = object({
-    Type_Of_Assesment: string().required('Type Of Assesment is Required'),
-    // Application_URL: string().required('Application URL is Required'),
-    Data_Classification: string().required('Data Classification is Required'),
-    // Select_Tester: string().required(' Select Tester is Required'),
-    // code_Upload: mixed().required('A file is required'),
-    MFA_Enabled: boolean().required('MFA Enabled is Required'),
-    Start_Date: date()
+  Type_Of_Assesment: string().required('Type Of Assesment is Required'),
+  Application_URL: string().when("Type_Of_Assesment",{
+    is: (val) => val === "Dynamic Application" || val === "Web Application Penetration Testing",
+     then: string().required("Application URL is required"),
+    otherwise: string().notRequired(),
+  }),
+  Data_Classification: string().required('Data Classification is Required'),
+  // Select_Tester: string().required(' Select Tester is Required'),
+  // code_Upload: mixed().required('A file is required'),
+  MFA_Enabled: boolean().required('MFA Enabled is Required'),
+  Start_Date: date()
     .required('Preferred Task Start Date Required')
     .min(new Date(), 'Start date cannot be in the past'),
 

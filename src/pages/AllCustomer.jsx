@@ -93,6 +93,7 @@ export default function AllCustomer() {
     ].some((field) => field?.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
+
   return (
     <>
       {isLoading ? (

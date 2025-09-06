@@ -34,6 +34,7 @@ const PendingAssessment = () => {
   const [selectedAssessmentId, setSelectedAssessmentId] = useState(null);
   const [newStatus, setNewStatus] = useState("");
 
+
   const filteredData = pendingAssessment;
 
   useEffect(() => {
@@ -45,6 +46,8 @@ const PendingAssessment = () => {
   if(isViewAccess(authenticate, location)){
     return <Access/>
   }
+
+
 
   return (
     <div className="w-full  pb-20 p-6">

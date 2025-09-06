@@ -10,7 +10,8 @@ export const SeverityContext = createContext({
     SeverityData: [],
     UpdateSeverity: () => { },
     DeleteSeverity: () => { },
-    SeverityOptions:[]
+    SeverityOptions:[],
+    GetSeverityDataByTenant:()=>{}
 });
 
 // eslint-disable-next-line react/prop-types
@@ -83,7 +84,7 @@ const SeverityContextProvider = ({ children }) => {
     },[token,tenant])
 
     return (
-        <SeverityContext.Provider value={{ CreateSeverity, GetSeverity, SeverityData, UpdateSeverity,DeleteSeverity,SeverityOptions }}>
+        <SeverityContext.Provider value={{ CreateSeverity, GetSeverity, SeverityData, UpdateSeverity,DeleteSeverity,SeverityOptions,GetSeverityDataByTenant }}>
             {children}
         </SeverityContext.Provider>
     );

@@ -4,6 +4,7 @@ import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
+import { decrypt } from "@/utils/EncryptAndDcrypt";
 
 export const authContext = createContext({ token: "", authenticate: null, tenant: "" });
 
@@ -283,6 +284,8 @@ const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     if (token) {
       getLogedInUser()
+      const data = decrypt(token);
+      console.log("this is actual token",data);
     }
   }, [token])
 
