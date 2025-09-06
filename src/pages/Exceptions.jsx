@@ -213,8 +213,6 @@ function Exceptions() {
               </div>
             </div>
           </div>
-
-
         </div>
       )}
     </>
