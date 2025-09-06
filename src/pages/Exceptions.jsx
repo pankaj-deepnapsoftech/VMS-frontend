@@ -62,12 +62,12 @@ function Exceptions() {
   const tableHeaders =
     []?.length > 0
       ? Object.keys(expectionData[0])?.filter(
-          (key) =>
-            key !== "_id" &&
-            key !== "__v" &&
-            key !== "updatedAt" &&
-            key !== "docs"
-        )
+        (key) =>
+          key !== "_id" &&
+          key !== "__v" &&
+          key !== "updatedAt" &&
+          key !== "docs"
+      )
       : [];
 
   const filteredData = expectionData?.filter((item) =>
@@ -99,7 +99,7 @@ function Exceptions() {
     ([key, value], index) => ({
       name:
         { "15 days": "14 Days", "30 days": "30 Days", "45 days": "45 Days" }[
-          key
+        key
         ] || key,
       requests: value,
       color: colorMapping[key] || defaultColors[index % 2], // Alternates Green & Blue
@@ -185,7 +185,7 @@ function Exceptions() {
                         {deferralData.map((entry) => (
                           <Cell key={entry.name} fill={entry.color} />
                         ))}
-                      </Bar>                                        
+                      </Bar>
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
@@ -211,131 +211,6 @@ function Exceptions() {
                   </ResponsiveContainer>
                 </div>
               </div>
-            </div>
-          </div>
- 
-          <div className="p-4 mb-20 md:p-6 max-w-[95%] mx-auto bg-[#2d333b] rounded-xl shadow-lg">
-            <div className="relative mt-4 py-5 md:mt-0">
-              <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white h-5 w-5" />
-              <input
-                type="text"
-                placeholder="Search Vulnerabilities ..."
-                className="pl-10 pr-4 py-2 border text-white bg-[#333333] border-gray-300 rounded-lg w-full md:w-80"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-
-            {paginatedData.length < 1 ? (
-              <NoDataFound />
-            ) : (
-              <div className="overflow-x-auto custom-scrollbar rounded-lg">
-                <table className="min-w-full divide-y divide-gray-200 text-white">
-                  <thead className="bg-gradient-to-bl from-[#333333] to-[#666666]">
-                    <tr>
-                      {tableHeaders?.map((header, index) => (
-                        <th
-                          key={index}
-                          className="px-3  text-left text-xs font-medium text-white uppercase"
-                        >
-                          {header === "createdAt"
-                            ? "Created Date"
-                            : header.replace(/_/g, " ")}
-                        </th>
-                      ))}
-                      <th className="px-3  text-left text-xs font-medium text-white uppercase">
-                        Actions
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200 bg-[#2d333b] text-white">
-                    {paginatedData?.map((item) => (
-                      <tr
-                        key={item._id}
-                        className="hover:bg-gray-500 text-white"
-                      >
-                        {tableHeaders?.map((field, i) => (
-                          <td
-                            key={i}
-                            className="px-4 py-2 whitespace-nowrap text-sm text-white"
-                          >
-                            {field === "createdAt" ||
-                            field === "Expection_time" ? (
-                              new Date(item[field]).toLocaleDateString(
-                                "en-IN",
-                                {
-                                  day: "2-digit",
-                                  month: "short",
-                                  year: "numeric",
-                                }
-                              )
-                            ) : field === "client_Approve" ? (
-                              item.client_Approve ? (
-                                <span className="px-2 py-1 text-sm font-semibold text-green-800 bg-green-100 rounded-full">
-                                  Approved
-                                </span>
-                              ) : (
-                                <button
-                                  onClick={() => {
-                                    const updatedItem = {
-                                      ...item, 
-                                      client_Approve: true,
-                                    };
-                                    UpdateData(updatedItem, item?._id);
-                                  }}
-                                  className="px-3 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700"
-                                >
-                                  Verify
-                                </button>
-                              )
-                            ) : field === "Remediated_Date" && item[field] ? (
-                              excelDateToJSDate(item.Remediated_Date)
-                            ) : (
-                              item[field]
-                            )}
-                          </td>
-                        ))}
-                        <td className="px-4 py-2 whitespace-nowrap flex justify-around gap-4">
-                          {/* <button onClick={() => openModal(item)} className="text-blue-600">
-                          <BiEditAlt className="h-5 w-5" />
-                        </button> */}
-                          <button
-                            onClick={() => handleDelete(item._id)}
-                            className="text-red-600"
-                          >
-                            <RiDeleteBinFill className="h-5 w-5" />
-                          </button>
-                          {/* <button onClick={() => {
-                          handleAssignTask(item)
-                        }} className="text-red-600">
-                          <BsPersonCheckFill className="h-5 w-5" />
-                        </button> */}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-                                                       
-            <div className="flex justify-between items-center my-16">
-              <button
-                className={`px-4 py-2 bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-white border rounded-md ${
-                  page === 1 ? "opacity-50 cursor-not-allowed" : ""
-                }`}
-                disabled={page === 1}
-                onClick={() => setPage(page - 1)}
-              >
-                Previous
-              </button>
-              <span className="text-white">Page {page}</span>
-              <button
-                className={`px-4 py-2 border rounded-md  text-white bg-gradient-to-tr from-[#1f1d1d] to-[#666666] `}
-                disabled={expectionData?.length < 10}
-                onClick={() => setPage(page + 1)}
-              >
-                Next
-              </button>
             </div>
           </div>
         </div>
