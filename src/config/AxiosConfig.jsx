@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 
 const token = Cookies.get('AT');
 
-const NewDecryptionToken = (tk) => {
+export const NewDecryptionToken = (tk) => {
     if (!tk) {
         return ""
     }
