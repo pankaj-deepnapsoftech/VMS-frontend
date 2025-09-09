@@ -1,4 +1,5 @@
-import { string, object, ref } from "yup";
+import { string, object } from "yup";
+import * as Yup from "yup";
 
 // export const SignUpValidation = object({
 //     full_name: string().min(2).max(25).required('Full Name is Required'),
@@ -9,58 +10,58 @@ import { string, object, ref } from "yup";
 //     role: string().oneOf(['ClientCISO', 'Assessor', 'Admin', 'ClientSME']).required('Role is Required'),
 
 // })
-
-export const BaseValidationSchema = object({
-  fname: string().min(2).max(25).required('Full Name is Required'),
-  lname: string().min(2).max(25).required('Last Name is Required'),
-  email: string().email().required('E-mail is Required'),
-  phone: string().matches(/^[0-9]+$/, "Phone Number must contain only digits").min(10,"Phone Number must be at least 10 characters").max(12,"Phone Number must be at most 12 characters").required('Phone No. is Required'),
-  password: string()
-    .required('Password is required')
-    .min(8, 'Minimum 8 characters required')
-    .max(20, 'Maximum 20 characters allowed')
-    .matches(/[A-Z]/, 'Must contain at least one uppercase letter')
-    .matches(/[a-z]/, 'Must contain at least one lowercase letter')
-    .matches(/[0-9]/, 'Must contain at least one number')
-    .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Must contain at least one special character [!@#$%^&*(),.?":{}|<>]'),  
-});
-
-export const EditUser = BaseValidationSchema.omit(['password']);
-
-export const SignUpValidation = BaseValidationSchema.omit(['department']);
-
-export const SignInValidation = object({
-  email: string().email().required("E-mail is Required"),
-  password: string().min(8).max(16).required("Password is Required")
-})
-export const ResetPasswordValidation = object({
-  password: string().min(8).max(16).required("Password is Required")
-})
-
-export const ForgotPasswordValidation = object({
-  email: string().email().required("E-mail is Required"),
-
-})
-
-export const VerifyOtpValidation = object({
-  otp: string().min(6).max(6).required("Otp is Required")
-})
-
-export const EditProfileValidation = object({
-  full_name: string()
-    .required('Full name is required')
-    .min(2, 'Full name must be at least 2 characters long')
-    .max(50, 'Full name must be less than 50 characters'),
-
-  email: string()
-    .required('Email is required')
-    .email('Invalid email format'),
-
-  phone: string()
-    .required('Phone number is required')
+export const BaseValidationSchema = Yup.object().shape({
+  fname: Yup.string().min(2).max(25).required("First Name is Required"),
+  lname: Yup.string().min(2).max(25).required("Last Name is Required"),
+  email: Yup.string().email().required("E-mail is Required"),
+  role: Yup.string().required("Role is required"), // ✅ FIXED
+  phone: Yup.string()
+    .matches(/^[0-9]+$/, "Phone Number must contain only digits")
+    .min(10, "Phone Number must be at least 10 characters")
+    .max(12, "Phone Number must be at most 12 characters")
+    .required("Phone No. is Required"),
+  password: Yup.string()
+    .required("Password is required")
+    .min(8, "Minimum 8 characters required")
+    .max(20, "Maximum 20 characters allowed")
+    .matches(/[A-Z]/, "Must contain at least one uppercase letter")
+    .matches(/[a-z]/, "Must contain at least one lowercase letter")
+    .matches(/[0-9]/, "Must contain at least one number")
     .matches(
-      /^[0-9]{10}$/,
-      'Phone number must be exactly 10 digits'
+      /[!@#$%^&*(),.?":{}|<>]/,
+      'Must contain at least one special character [!@#$%^&*(),.?":{}|<>]'
     ),
 });
 
+export const EditUser = BaseValidationSchema.omit(["password"]);
+
+export const SignUpValidation = BaseValidationSchema.omit(["department"]);
+
+export const SignInValidation = object({
+  email: string().email().required("E-mail is Required"),
+  password: string().min(8).max(16).required("Password is Required"),
+});
+export const ResetPasswordValidation = object({
+  password: string().min(8).max(16).required("Password is Required"),
+});
+
+export const ForgotPasswordValidation = object({
+  email: string().email().required("E-mail is Required"),
+});
+
+export const VerifyOtpValidation = object({
+  otp: string().min(6).max(6).required("Otp is Required"),
+});
+
+export const EditProfileValidation = object({
+  full_name: string()
+    .required("Full name is required")
+    .min(2, "Full name must be at least 2 characters long")
+    .max(50, "Full name must be less than 50 characters"),
+
+  email: string().required("Email is required").email("Invalid email format"),
+
+  phone: string()
+    .required("Phone number is required")
+    .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
+});

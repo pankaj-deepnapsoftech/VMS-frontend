@@ -40,41 +40,41 @@ const Partners = () => {
 
 
   const {
-    handleBlur,
-    handleChange,
-    handleSubmit,
-    resetForm,
-    touched,
-    errors,
-    values,
-  } = useFormik({
-    initialValues: editTable || {
-      company_name: "",
-      website_url: "",
-      country: "",
-      state: "",
-      city: "",
-    },
-    validationSchema: PartnersSchema,
-    enableReinitialize: true,
-    onSubmit: async (values) => {
-      setLoading(true);
-      try {
-        if (editTable) {
-          await AxiosHandler.put(`/partner/update/${values._id}`, values);
-        } else {
-          await AxiosHandler.post("/partner/create", values);
-        }
-        GetPartnerData();
-        resetForm();
-        setModal(false);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
+  handleBlur,
+  handleChange,
+  handleSubmit,
+  resetForm,
+  touched,
+  errors,
+  values,
+} = useFormik({
+  initialValues: editTable || {
+    company_name: "",
+    website_url: "",
+    country: "",
+    state: "",
+    city: "",
+  },
+  validationSchema: PartnersSchema(partnersData, editTable),
+  enableReinitialize: true,
+  onSubmit: async (values) => {
+    setLoading(true);
+    try {
+      if (editTable) {
+        await AxiosHandler.put(`/partner/update/${values._id}`, values);
+      } else {
+        await AxiosHandler.post("/partner/create", values);
       }
-    },
-  });
+      GetPartnerData();
+      resetForm();
+      setModal(false);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  },
+});
 
   const GetPartnerData = async (page = 1) => {
     setLoading(true);
