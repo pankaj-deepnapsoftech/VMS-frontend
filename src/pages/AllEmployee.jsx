@@ -447,7 +447,7 @@ const AllEmployee = () => {
                     ))}
                   </select>
                   {touched.role && errors.role && (
-                    <p className="text-red-400 text-sm">{errors.role}</p>
+                    <p className="text-red-500 text-sm">{errors.role}</p>
                   )}
                 </div>
 
