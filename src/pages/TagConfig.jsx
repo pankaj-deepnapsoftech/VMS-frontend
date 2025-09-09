@@ -19,7 +19,7 @@ export default function TagsPage() {
 
   // location hook
   const location = useLocation()
-
+  console.log(Tages)
   // all useStates
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editTag, setEditTag] = useState(null);
@@ -40,6 +40,7 @@ export default function TagsPage() {
       validationSchema: tagValidation,
       enableReinitialize: true,
       onSubmit: (value) => {
+        console.log(value)
         if (editTag) {
           UpdateTags(value);
         } else {
@@ -218,7 +219,7 @@ export default function TagsPage() {
 
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1">
-                Tag Name
+                Tag Name *
               </label>
               <input
                 type="text"
@@ -235,7 +236,7 @@ export default function TagsPage() {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1">
-                Description
+                Description *
               </label>
               <textarea
                 type="text"
@@ -252,7 +253,7 @@ export default function TagsPage() {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1">
-                Tag Score
+                Tag Score *
               </label>
               <input
                 type="number"
@@ -270,7 +271,7 @@ export default function TagsPage() {
 
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1">
-                Related
+                Related *
               </label>
               <select
                 className="w-full p-2 bg-[#1E293B] text-white rounded-md"
@@ -292,7 +293,7 @@ export default function TagsPage() {
             {values.related === "Data Sensitivity" && (
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-1">
-                  Amount
+                  Amount *
                 </label>
                 <div className="flex items-center">
                   <span className="px-3 py-2 bg-[#1E293B] text-white rounded-l-md border border-r-0 border-gray-600">
@@ -316,7 +317,7 @@ export default function TagsPage() {
 
             <div>
               <label htmlFor="tag_color" className="block text-sm font-medium text-gray-300 mb-1">
-                Tag Color
+                Tag Color *
                 <div className="w-full mt-1 h-10 rounded-md p-2 bg-[#1E293B] cursor-pointer" >{values.tag_color ? values.tag_color : "Select Color"}</div>
               </label>
               <input

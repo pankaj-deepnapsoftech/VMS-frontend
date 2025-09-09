@@ -401,7 +401,7 @@ export default function TenantDashboard() {
                 {/* Integration Type */}
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-slate-300">
-                    Asset IP
+                    Asset IP *
                   </label>
                   <input
                     type="text"
@@ -420,7 +420,7 @@ export default function TenantDashboard() {
                 {/* API Key */}
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-slate-300">
-                    Asset Hostname
+                    Asset Hostname *
                   </label>
                   <input
                     type="text"
@@ -438,7 +438,7 @@ export default function TenantDashboard() {
 
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-slate-300">
-                    Modify Criticality
+                    Modify Criticality *
                   </label>
                   <select
                     type="text"
@@ -464,7 +464,7 @@ export default function TenantDashboard() {
 
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-slate-300">
-                    Asset class
+                    Asset class *
                   </label>
                   <select
                     type="text"
@@ -487,7 +487,7 @@ export default function TenantDashboard() {
                 </div>
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-slate-300">
-                    Exposure
+                    Exposure *
                   </label>
                   <select
                     type="text"
@@ -510,7 +510,7 @@ export default function TenantDashboard() {
                 </div>
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-slate-300">
-                    Data Sensitivity
+                    Data Sensitivity *
                   </label>
                   <select
                     type="text"
@@ -539,7 +539,7 @@ export default function TenantDashboard() {
                 </div>
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-slate-300">
-                    Hosting
+                    Hosting *
                   </label>
                   <select
                     type="text"

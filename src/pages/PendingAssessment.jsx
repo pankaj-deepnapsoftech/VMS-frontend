@@ -111,7 +111,15 @@ const PendingAssessment = () => {
                     <td className="px-4 py-3">
                       {item?.Type_Of_Assesment || "-"}
                     </td>
-                    <td className="px-4 py-3">{item.code_Upload || "-"}</td>
+                    <td className="px-4 py-3">
+                      {item.code_Upload ? (
+                        <a href={item.code_Upload} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                          View Upload File
+                        </a>
+                      ) : (
+                        "-"
+                      )}
+                    </td>
                     <td className="px-4 py-3">{item?.status || "—"}</td>
                     <td className="px-4 py-3">{item?.task_start || "—"}</td>
                     <td className="px-4 py-3">{item?.task_end || "—"}</td>

@@ -47,6 +47,11 @@ const ExceptionTable = () => {
   const handleSaveApprovers = () => {
     const approverValues = [approvers.approver1, approvers.approver2, approvers.approver3].filter(Boolean);
     const hasDuplicates = new Set(approverValues).size !== approverValues.length;
+    
+    if (approverValues.length === 0) {
+      alert("Please select at least one approver.");
+      return;
+    }
 
     if (hasDuplicates) {
       alert("Approvers must be unique.");

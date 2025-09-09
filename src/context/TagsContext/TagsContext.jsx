@@ -18,7 +18,7 @@ const TagsContextProvider = ({ children }) => {
   const GetTages = async(page) => {
     try {
       const res = await AxiosHandler.get(`/tags/get-tags?page=${page}`);
-      setTags(res.data.data);
+      setTags(res?.data?.data);
     } catch (error) {
       console.error("Error fetching tags:", error);
     }
