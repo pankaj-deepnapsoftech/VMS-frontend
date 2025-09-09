@@ -50,23 +50,39 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
     },
     enableReinitialize: true,
     validationSchema: SchedulingAssessmentValidation,
-    onSubmit: (value) => {
-      value = { ...value, Tenant_id: tenant ? tenant : editable?.Tenant_id };
+    onSubmit: async (values, { setTouched }) => {
+      setTouched({
+        Type_Of_Assesment: true,
+        Application_URL: true,
+        Data_Classification: true,
+        MFA_Enabled: true,
+        task_start: true,
+        task_end: true,
+        code_Upload: true,
+      });
+      const finalValues = {
+        ...values,
+        Tenant_id: tenant || editable?.Tenant_id,
+      };
+
+      if (!tenant && !editable) {
+        alert('Please Select Tenant first');
+        return;
+      }
 
       if (editable) {
-        UpdateAssesment(editable._id, value);
+        UpdateAssesment(editable._id, finalValues);
         setEditable(null);
       } else {
-        if (!tenant) {
-          alert("Please Select Tenant first");
-          return;
-        }
-        SchedulingAssesment(value);
+        SchedulingAssesment(finalValues);
       }
 
       resetForm();
     },
+
   });
+
+  console.log("error formik",errors)  
 
   useEffect(() => {
     if (token) {
@@ -78,9 +94,8 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
 
   return (
     <div
-      className={` ${
-        editable && "fixed top-0 left-0 w-full z-50"
-      } min-h-screen bg-gradient-to-br from-slate-900 via-blue-1000 to-slate-800 text-white px-6 py-8`}
+      className={` ${editable && "fixed top-0 left-0 w-full z-50"
+        } min-h-screen bg-gradient-to-br from-slate-900 via-blue-1000 to-slate-800 text-white px-6 py-8`}
     >
       {editable && (
         <div className="flex items-center justify-end w-full py-3 ">
@@ -165,12 +180,11 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
                       Configuration Audits
                     </option>
                   </select>
-                  {(touched.Type_Of_Assesment || submitCount > 0) &&
-                    errors.Type_Of_Assesment && (
-                      <p className="text-red-400 text-sm">
-                        {errors.Type_Of_Assesment}
-                      </p>
-                    )}
+                  {errors.Type_Of_Assesment && (
+                    <p className="text-red-400 text-sm">{errors.Type_Of_Assesment}</p>
+                  )}
+
+
                 </div>
 
                 {/* Data Classification */}
@@ -244,16 +258,16 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
                   </label>
                   <input
                     type="date"
-                    name="Start_Date"
-                    value={values.Start_Date}
+                    name="task_start"
+                    value={values.task_start}
                     onBlur={handleBlur}
                     onChange={handleChange}
                     className="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200"
                   />
-                  {(touched.Start_Date || submitCount > 0) &&
-                    errors.Start_Date && (
+                  {(touched.task_start || submitCount > 0) &&
+                    errors.task_start && (
                       <p className="text-red-400 text-sm">
-                        {errors.Start_Date}
+                        {errors.task_start}
                       </p>
                     )}
                 </div>
@@ -266,14 +280,14 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
                   </label>
                   <input
                     type="date"
-                    name="End_Date"
-                    value={values.End_Date}
+                    name="task_end"
+                    value={values.task_end}
                     onBlur={handleBlur}
                     onChange={handleChange}
                     className="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200"
                   />
-                  {(touched.End_Date || submitCount > 0) && errors.End_Date && (
-                    <p className="text-red-400 text-sm">{errors.End_Date}</p>
+                  {(touched.task_end || submitCount > 0) && errors.task_end && (
+                    <p className="text-red-400 text-sm">{errors.task_end}</p>
                   )}
                 </div>
               </div>

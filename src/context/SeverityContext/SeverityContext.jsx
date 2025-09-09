@@ -21,14 +21,14 @@ const SeverityContextProvider = ({ children }) => {
     const [SeverityData, setSeverityData] = useState([]);
     const [SeverityOptions,setSeverityOption] = useState([]);
 
-
+   
     const CreateSeverity = async (data) => {
         try {
             const res = await AxiosHandler.post("/severity/create", data);
             setSeverityData(prevData => [res.data.data, ...prevData]);
             toast.success(res.data.message || "Severity created successfully");
         } catch (error) {
-            console.error("Error creating severity:", error);
+            toast.error(error?.response?.data?.message)    
         }
     };
 
@@ -68,12 +68,13 @@ const SeverityContextProvider = ({ children }) => {
     };
 
     const GetSeverityDataByTenant = async (tenant) => {
+        
         try {
             const res = await AxiosHandler.get(`/severity/get-by-tenant?tenant=${tenant}`);
-            setSeverityOption(res.data.data);
+            setSeverityOption(res?.data?.data);
         } catch (error) {
             console.error("Error fetching severity by tenant:", error);
-            toast.error("Failed to fetch severity data");
+            // toast.error("Failed to fetch severity data");
         }
     }
 
