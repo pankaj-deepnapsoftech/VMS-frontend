@@ -2,10 +2,12 @@
 import { createContext, useState } from "react";
 import { AxiosHandler } from "@/config/AxiosConfig";
 import toast from "react-hot-toast";
+import { useAuthContext } from "..";
 
 export const ExceptionContext = createContext();
 
 const ExceptionContextProvider = ({ children }) => {
+  const {tenant} = useAuthContext();
 
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -40,6 +42,20 @@ const ExceptionContextProvider = ({ children }) => {
     }
   };
 
+   const ExpectionPendingData = async (page,tenant) => {
+    setLoading(true);
+    try {
+      const res = await AxiosHandler.get(
+        `/expection/get?page=${page}&tenant=${tenant ? tenant : ""}`
+      );
+      setExpectionData(res.data?.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const ClientDeferredVulnerableItems = async () => {
     setLoading(true);
     try {
@@ -57,6 +73,7 @@ const ExceptionContextProvider = ({ children }) => {
     try {
       const res = await AxiosHandler.put(`/expection/update/${id}`,data);
       toast.success(res.data.message);
+      ExpectionPendingData(1,tenant)
     } catch (error) {
       console.log(error);
     } finally {
@@ -64,19 +81,7 @@ const ExceptionContextProvider = ({ children }) => {
     }
   };
 
-  const ExpectionPendingData = async (page,tenant) => {
-    setLoading(true);
-    try {
-      const res = await AxiosHandler.get(
-        `/expection/get?page=${page}&tenant=${tenant ? tenant : ""}`
-      );
-      setExpectionData(res.data?.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+ 
 
   const ExceptionCreate = async (data) => {
     setLoading(true);

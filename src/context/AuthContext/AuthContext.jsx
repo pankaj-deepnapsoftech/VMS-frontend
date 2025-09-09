@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 import { decrypt } from "@/utils/EncryptAndDcrypt";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const authContext = createContext({ token: "", authenticate: null, tenant: "" });
 
 // eslint-disable-next-line react/prop-types

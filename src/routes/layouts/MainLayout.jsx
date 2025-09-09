@@ -48,7 +48,7 @@ const MainLayout = () => {
   const { refreshTVMCardsData } = useTVMCardsContext();
 
 
-  const { openModal,isOpen,closeModal } = useChangePassword();
+  const { openModal, isOpen, closeModal } = useChangePassword();
 
   const [width, setWidth] = useState(window.innerWidth);
   const [temp, setTemp] = useState("");
@@ -109,8 +109,15 @@ const MainLayout = () => {
         return
       }
 
-      if (!authenticate?.role && filterData?.allowedPath?.length > 0 && window.location.pathname === "/") {
-        navigate(filterData.allowedPath[0]?.route);
+      if (!authenticate?.role && filterData?.allowedPath?.length > 0) {
+        const windowCurrectRoute = filterData.allowedPath.filter((pathItem) =>
+          window.location.pathname === pathItem.route
+        );
+
+        if (windowCurrectRoute.length === 0 || window.location.pathname === "/") {
+          navigate(filterData.allowedPath[0]?.route);
+        }
+
         return;
       }
 
@@ -120,10 +127,16 @@ const MainLayout = () => {
             (authItem) => authItem.value === pathItem.route
           )
         );
-        if (navList.length > 0 && window.location.pathname === "/") {
-          navigate(navList[0]?.route);
+        if (navList.length > 0 && (window.location.pathname === "/" || window.location.pathname !== navList[0]?.route)) {
+          const windowCurrectRoute = navList.filter((pathItem) =>
+            window.location.pathname === pathItem.route
+          );
+
+          if (windowCurrectRoute.length === 0 || window.location.pathname === "/") {
+            navigate(navList[0]?.route);
+          }
+          return;
         }
-        return;
       }
     }
   }, [getDataFromSession, authenticate]);
