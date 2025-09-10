@@ -11,7 +11,7 @@ import {
   FaCity,
   FaCompass,
   FaGlobe,
-  FaMapMarkedAlt,
+  FaMapMarkedAlt,     
   FaRegTrashAlt,
 } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
