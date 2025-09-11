@@ -51,7 +51,7 @@ const Roles = () => {
       setLoading(false);
     }
   };
-
+    
   const CreateRole = async (data) => {
     try {
       const res = await AxiosHandler.post(`/role/create`, data);

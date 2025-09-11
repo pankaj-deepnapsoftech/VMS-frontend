@@ -1,7 +1,11 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { BiSearch, BiEditAlt, BiPlus, BiSave } from "react-icons/bi";
 import { RiDeleteBinFill, RiUpload2Fill } from "react-icons/ri";
-import { MdClose, MdDeleteOutline, MdOutlineDeleteOutline } from "react-icons/md";
+import {
+  MdClose,
+  MdDeleteOutline,
+  MdOutlineDeleteOutline,
+} from "react-icons/md";
 import {
   useAllEmployeeContext,
   useAuthContext,
@@ -19,7 +23,14 @@ import { FaSms } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 export function EmployeeAllTasks() {
-  const { loading, UpdateData, orgnizationNotification, AddData, BulkDataDelete,DeleteData } = useVulnerabililtyDataContext();
+  const {
+    loading,
+    UpdateData,
+    orgnizationNotification,
+    AddData,
+    BulkDataDelete,
+    DeleteData,
+  } = useVulnerabililtyDataContext();
 
   const { authenticate, token } = useAuthContext();
   const {
@@ -30,10 +41,8 @@ export function EmployeeAllTasks() {
     EmployeeTasks,
     datafetchCount,
     setdatafetchCount,
-    allEmployeesData
+    allEmployeesData,
   } = useAllEmployeeContext();
-
-  //console.log("employeeTasksData", employeeTasksData)
 
   useEffect(() => {
     if (token && datafetchCount === 0) {
@@ -58,7 +67,6 @@ export function EmployeeAllTasks() {
   const [newData, setNewData] = useState([]);
   const [pdfReport, setPdfReport] = useState([]);
 
-
   const { UploadBulkData } = useDataContext();
 
   // Extract headers dynamically for table display
@@ -72,15 +80,15 @@ export function EmployeeAllTasks() {
     Severity: "",
     Priority: "",
     Status: "",
-  }
+  };
   const tableHeaders =
     employeeTasksData.length > 0
       ? Object.keys(employeeTasksData[0]).filter(
-        (key) => key !== "_id" && key !== "__v" && key !== "updatedAt"
-      )
+          (key) => key !== "_id" && key !== "__v" && key !== "updatedAt"
+        )
       : Object.keys(vulnerabilitiesItems).filter(
-        (key) => key !== "_id" && key !== "__v" && key !== "updatedAt"
-      );
+          (key) => key !== "_id" && key !== "__v" && key !== "updatedAt"
+        );
 
   // Headers for the Add form (show all fields)
   const addFormHeaders = tableHeaders.filter(
@@ -140,11 +148,11 @@ export function EmployeeAllTasks() {
     }
   };
 
-
   const handleBulkDeleteTask = () => {
-    index.length > 0 ? BulkDataDelete(index) : toast.error("Select Tasks For Delete");
-  }
-
+    index.length > 0
+      ? BulkDataDelete(index)
+      : toast.error("Select Tasks For Delete");
+  };
 
   const [status, setStatus] = useState("");
   const [expectionTime, setExpectionTime] = useState(new Date());
@@ -165,7 +173,7 @@ export function EmployeeAllTasks() {
 
   const handleDownload = (data) => {
     if (data.length < 1) {
-      return alert("Don't Have Enough Data to Download")
+      return alert("Don't Have Enough Data to Download");
     }
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
@@ -186,7 +194,6 @@ export function EmployeeAllTasks() {
 
   let statusList = ["Open", "Closed", "Fix", "Re-Open", "On-Hold", "Exception"];
 
-
   let navigate = useNavigate();
 
   const openVulnerablityModal = (data = null) => {
@@ -204,15 +211,11 @@ export function EmployeeAllTasks() {
     "Other",
   ];
 
-  
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this vulnerability?")) {
       DeleteData(id);
     }
   };
-
-
-
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -282,7 +285,6 @@ export function EmployeeAllTasks() {
               </button>
             </div>
 
-
             <Modal
               isOpen={isModalOpen}
               onClose={() => setIsModalOpen(false)}
@@ -293,95 +295,107 @@ export function EmployeeAllTasks() {
           </div>
 
           {/* 📊 Table */}
-          {paginatedData.length < 1 ? <NoDataFound /> : <div className="overflow-x-auto rounded-lg">
-            <table className="min-w-full divide-y divide-gray-200 bg-white">
-              <thead className="bg-gradient-to-r from-[#333333] to-[#666666]  ">
-                <tr>
-                  <th className="px-2  text-left text-xs font-medium text-white uppercase">
-                    <input
-                      type="checkbox"
-                      checked={selectAll}
-                      onChange={(e) => {
-                        setSelectAll(!selectAll);
-                        handleSelectAll(e)
-                      }} />
-                  </th>
-                  {tableHeaders.map((header, index) => (
-                    <th
-                      key={index}
-                      className="px-2 text-left text-xs font-medium text-white uppercase"
-                    >
-                      {header === "createdAt"
-                        ? "Created Date"
-                        : header.replace(/_/g, " ")}
-                    </th>
-                  ))}
-                  <th className="px-2 text-left text-xs font-medium text-white uppercase">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y bg-table">
-                {paginatedData?.map((item) => (
-                  <tr key={item._id} className="hover:bg-gray-500">
-                    <td className="px-4 py-4 whitespace-nowrap flex justify-around gap-4">
+          {paginatedData.length < 1 ? (
+            <NoDataFound />
+          ) : (
+            <div className="overflow-x-auto rounded-lg">
+              <table className="min-w-full divide-y divide-gray-200 bg-white">
+                <thead className="bg-gradient-to-r from-[#333333] to-[#666666]  ">
+                  <tr>
+                    <th className="px-2  text-left text-xs font-medium text-white uppercase">
                       <input
                         type="checkbox"
-                        value="bubbles"
-                        checked={index.filter((i) => i === item._id).length > 0}
-                        onChange={() => handleChecked(item._id)} />
-
-                    </td>
-                    {tableHeaders.map((field, i) => (
-                      <td
-                        key={i}
-                        className={`px-4  whitespace-nowrap text-sm text-white `}
+                        checked={selectAll}
+                        onChange={(e) => {
+                          setSelectAll(!selectAll);
+                          handleSelectAll(e);
+                        }}
+                      />
+                    </th>
+                    {tableHeaders.map((header, index) => (
+                      <th
+                        key={index}
+                        className="px-2 text-left text-xs font-medium text-white uppercase"
                       >
-                        {field === "createdAt"
-                          ? new Date(item[field]).toLocaleDateString("en-IN", {
-                            day: "2-digit",
-                            month: "short",
-                            year: "numeric",
-                          })
-                          : field === "Assigned_To"
+                        {header === "createdAt"
+                          ? "Created Date"
+                          : header.replace(/_/g, " ")}
+                      </th>
+                    ))}
+                    <th className="px-2 text-left text-xs font-medium text-white uppercase">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y bg-table">
+                  {paginatedData?.map((item) => (
+                    <tr key={item._id} className="hover:bg-gray-500">
+                      <td className="px-4 py-4 whitespace-nowrap flex justify-around gap-4">
+                        <input
+                          type="checkbox"
+                          value="bubbles"
+                          checked={
+                            index.filter((i) => i === item._id).length > 0
+                          }
+                          onChange={() => handleChecked(item._id)}
+                        />
+                      </td>
+                      {tableHeaders.map((field, i) => (
+                        <td
+                          key={i}
+                          className={`px-4  whitespace-nowrap text-sm text-white `}
+                        >
+                          {field === "createdAt"
+                            ? new Date(item[field]).toLocaleDateString(
+                                "en-IN",
+                                {
+                                  day: "2-digit",
+                                  month: "short",
+                                  year: "numeric",
+                                }
+                              )
+                            : field === "Assigned_To"
                             ? item[field]?.full_name
                             : item[field]}
-                      </td>
-                    ))}
-                    <td className="px-4 py-2 whitespace-nowrap flex justify-around gap-4">
-                      <button
-                        onClick={() => handleDelete(item._id)}
-                        className="text-red-600"
-                      >
-                        <MdOutlineDeleteOutline  className="h-5 w-5" />
-                      </button>
-                      <button
-                        onClick={() => openVulnerablityModal(item)}
-                        className="text-blue-600"
-                      >
-                        <BiEditAlt className="h-5 w-5" />
-                      </button>
-                      <button
-                        onClick={() => handleUpload(item)}
-                        className="text-red-600"
-                      >
-                        <RiUpload2Fill className="h-5 w-5" />
-                      </button>
-                      <button
-                        onClick={() => navigate(`/chat/${item._id}`, { state: { item } })}
-                        className="text-green-600 hover:text-green-800 transition"
-                      >
-                        <FaSms className="h-4 w-4" />
-                      </button>
-                      {/* <button onClick={() => handleAssignTask(item._id)} className="text-red-600">
+                        </td>
+                      ))}
+                      <td className="px-4 py-2 whitespace-nowrap flex justify-around gap-4">
+                        <button
+                          onClick={() => handleDelete(item._id)}
+                          className="text-red-600"
+                        >
+                          <MdOutlineDeleteOutline className="h-5 w-5" />
+                        </button>
+                        <button
+                          onClick={() => openVulnerablityModal(item)}
+                          className="text-blue-600"
+                        >
+                          <BiEditAlt className="h-5 w-5" />
+                        </button>
+                        <button
+                          onClick={() => handleUpload(item)}
+                          className="text-red-600"
+                        >
+                          <RiUpload2Fill className="h-5 w-5" />
+                        </button>
+                        <button
+                          onClick={() =>
+                            navigate(`/chat/${item._id}`, { state: { item } })
+                          }
+                          className="text-green-600 hover:text-green-800 transition"
+                        >
+                          <FaSms className="h-4 w-4" />
+                        </button>
+                        {/* <button onClick={() => handleAssignTask(item._id)} className="text-red-600">
 											<BsPersonCheckFill className="h-5 w-5" />
 										</button> */}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
 
           {/* 📝 Modal Form */}
           {isEditOpen && (
@@ -509,7 +523,6 @@ export function EmployeeAllTasks() {
             </div>
           )}
 
-
           {isModalOpen1 && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-10">
               <div className="bg-background rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
@@ -602,11 +615,19 @@ export function EmployeeAllTasks() {
                                   }
                                   defaultValue=""
                                 >
-                                  <option className="text-white" disabled value="">
+                                  <option
+                                    className="text-white"
+                                    disabled
+                                    value=""
+                                  >
                                     --- Select a Status ---
                                   </option>
                                   {statusList.map((item, idx) => (
-                                    <option key={idx} value={item} className="text-white" >
+                                    <option
+                                      key={idx}
+                                      value={item}
+                                      className="text-white"
+                                    >
                                       {item}
                                     </option>
                                   ))}
@@ -666,14 +687,15 @@ export function EmployeeAllTasks() {
 
           <div className="flex justify-between items-center py-16">
             <button
-              className={`px-4 py-2 bg-gradient-to-r from-[#333333] to-[#666666]   text-white border rounded-md ${taskPage === 1 ? "opacity-50 cursor-not-allowed" : ""
-                }`}
+              className={`px-4 py-2 bg-gradient-to-r from-[#333333] to-[#666666]   text-white border rounded-md ${
+                taskPage === 1 ? "opacity-50 cursor-not-allowed" : ""
+              }`}
               disabled={taskPage === 1}
               onClick={() => setTaskPage(taskPage - 1)}
             >
               Previous
             </button>
-            <span className="text-white" >
+            <span className="text-white">
               Page {taskPage}
               {/* of {totalPages} */}
             </span>
