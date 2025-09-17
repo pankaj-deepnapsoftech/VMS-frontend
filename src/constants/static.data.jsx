@@ -22,8 +22,9 @@ import {
 import { TbReport } from "react-icons/tb";
 import { GrVulnerability } from "react-icons/gr";
 import { SiWikimediafoundation } from "react-icons/si";
-import { GiProgression } from "react-icons/gi";
+import { GiProgression, GiTwirlCenter } from "react-icons/gi";
 import { PiHardHatFill } from "react-icons/pi";
+import { RiHome3Fill } from "react-icons/ri";
 
 export const AllowedPaths = [
   // --------------------Roc Pages-----------------------
@@ -302,7 +303,7 @@ export const products = [
           {
             title: "Schedule Assessment",
             route: "/assesment-schedule",
-            icon: MdScheduleSend ,
+            icon: MdScheduleSend,
           },
           {
             title: "Pending Assesment",
@@ -312,12 +313,12 @@ export const products = [
           {
             title: "In-Progress Assessment",
             route: "/in-progress-assessment",
-            icon: GiProgression ,
+            icon: GiProgression,
           },
           {
             title: "Completed Assessment",
             route: "/completed-assessment",
-            icon: FaCheckCircle ,
+            icon: FaCheckCircle,
           },
         ],
       },
@@ -370,7 +371,18 @@ export const products = [
     desc: "AI Virtual Analyst",
     borderColor: "#ee9ca7",
     icon: " /Icons/Vector.png",
-    allowedPath: [],
+    allowedPath: [
+      {
+        title: "Dashboard",
+        route: "/center-dashboard",
+        icon: RiHome3Fill ,
+      },
+      {
+        title: "Assessment Center",
+        route: "/assessment-center",
+        icon: GiTwirlCenter ,
+      },
+    ],
   },
   {
     title: "Vulnerability Intelligence",
@@ -446,7 +458,11 @@ export const products = [
       { title: "Role", route: "/roles", icon: LucideShield },
       { title: "Partners", route: "/partners", icon: Users },
       { title: "Tag Config", route: "/tags", icon: MdInventory2 },
-      { title: "SLA Configuration", route: "/sla-configuration", icon: PiHardHatFill },
+      {
+        title: "SLA Configuration",
+        route: "/sla-configuration",
+        icon: PiHardHatFill,
+      },
     ],
   },
   {
