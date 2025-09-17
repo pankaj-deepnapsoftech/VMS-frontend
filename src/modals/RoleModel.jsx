@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import RoleConfig from "@/components/role/Config";
 import RoleTable from "@/components/role/table";
+import { RoleSchema } from "@/Validation/RoleValidations";
 import { useFormik } from "formik";
-import { LucideShield } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 
 const RoleModel = ({ editable, handleClose, CreateRole, UpdateRole }) => {
   const [step, setStep] = useState(1);
@@ -23,6 +23,7 @@ const RoleModel = ({ editable, handleClose, CreateRole, UpdateRole }) => {
       allowed_path: null,
     },
     enableReinitialize: true,
+    validationSchema: RoleSchema,
     onSubmit: (value) => {
       if (step) {
         setStep(2);
@@ -63,17 +64,15 @@ const RoleModel = ({ editable, handleClose, CreateRole, UpdateRole }) => {
           </div>
           <div className="relative h-1 w-20 bg-white overflow-hidden">
             <div
-              className={`absolute top-0 left-0 h-full transition-all duration-700 ease-in-out ${
-                step > 1 ? "w-full bg-blue-500" : "w-0"
-              }`}
+              className={`absolute top-0 left-0 h-full transition-all duration-700 ease-in-out ${step > 1 ? "w-full bg-blue-500" : "w-0"
+                }`}
             />
           </div>
           <div
-            className={`${
-              step > 1
+            className={`${step > 1
                 ? "bg-blue-500 text-white delay-500"
                 : "bg-white text-black"
-            } h-10 w-10 rounded-full text-2xl  font-bold flex items-center justify-center transition-all duration-200 `}
+              } h-10 w-10 rounded-full text-2xl  font-bold flex items-center justify-center transition-all duration-200 `}
           >
             {" "}
             2
@@ -89,9 +88,8 @@ const RoleModel = ({ editable, handleClose, CreateRole, UpdateRole }) => {
       </div>
       <form
         onSubmit={handleSubmit}
-        className={`bg-[#182031] rounded-lg shadow-xl max-w-5xl ${
-          step === 2 ? "h-[90%]" : "h-fit"
-        } p-5 border border-[#293550] mx-auto overflow-auto custom-scrollbar`}
+        className={`bg-[#182031] rounded-lg shadow-xl max-w-5xl ${step === 2 ? "h-[90%]" : "h-fit"
+          } p-5 border border-[#293550] mx-auto overflow-auto custom-scrollbar`}
       >
         {/* Body */}
 
