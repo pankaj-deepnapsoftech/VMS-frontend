@@ -1,8 +1,11 @@
 import React from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { FaExternalLinkAlt, FaRegQuestionCircle } from "react-icons/fa";
 import {
   LineChart,
+  Bar,
+  BarChart,
   Line,
   XAxis,
   YAxis,
@@ -20,6 +23,84 @@ const ASMDashboard = () => {
     { month: "Aug", Critical: 0, High: 1, Medium: 2, Low: 2, Info: 1 },
     { month: "Sep", Critical: 0, High: 0, Medium: 3, Low: 4, Info: 2 },
   ];
+
+  const assetRiskData = [
+    { name: "High", value: 7 },
+    { name: "Medium", value: 3 },
+    { name: "Low", value: 1 },
+  ];
+
+  const threatScore = 66;
+
+  const vulnerabilities = [
+    {
+      vulnerability: "Content Security Policy (CSP) Header Not Set",
+      severity: "Medium",
+      endpoint: "https://secured.ai/",
+    },
+    {
+      vulnerability: "Missing Anti-clickjacking Header",
+      severity: "Medium",
+      endpoint: "https://secured.ai/",
+    },
+    {
+      vulnerability:
+        "Insufficient Site Isolation Against Spectre Vulnerability",
+      severity: "Low",
+      endpoint: "https://secured.ai/",
+    },
+    {
+      vulnerability: "Permissions Policy Header Not Set",
+      severity: "Low",
+      endpoint: "https://secured.ai/",
+    },
+    {
+      vulnerability:
+        "Server Leaks Version Information via 'Server' HTTP Response Header",
+      severity: "Low",
+      endpoint: "https://secured.ai/",
+    },
+  ];
+
+  const dataa = [
+    {
+      url: "https://secured.ai/",
+      vulnerability: "Content Security Policy (CSP) Header Not Set",
+      severity: "Medium",
+    },
+    {
+      url: "https://secured.ai/",
+      vulnerability: "Missing Anti-clickjacking Header",
+      severity: "Medium",
+    },
+    {
+      url: "https://secured.ai/",
+      vulnerability: "Incorrect Site Isolation Against Spectre Vulnerability",
+      severity: "Low",
+    },
+    {
+      url: "https://secured.ai/",
+      vulnerability: "Permissions Policy Header Not Set",
+      severity: "Low",
+    },
+    {
+      url: "https://secured.ai/",
+      vulnerability:
+        'Server Leaks Version Information via "Server" HTTP Response Header Field',
+      severity: "Low",
+    },
+  ];
+
+  const getSeverityColor = (severity) => {
+    switch (severity) {
+      case "Medium":
+        return "bg-yellow-600/20 text-yellow-400 border border-yellow-600";
+      case "Low":
+        return "bg-green-600/20 text-green-400 border border-green-600";
+      default:
+        return "bg-gray-600/20 text-gray-400 border border-gray-600";
+    }
+  };
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 p-6 space-y-6">
@@ -209,7 +290,7 @@ const ASMDashboard = () => {
                 labelStyle={{ color: "#fff" }}
               />
               <Legend />
-              <Line type="monotone" dataKey="Critical" stroke="#f87171" />
+              <Line type="monotone" dataKey="Critical" stroke="   #f87171" />
               <Line type="monotone" dataKey="High" stroke="#fb923c" />
               <Line type="monotone" dataKey="Medium" stroke="#facc15" />
               <Line type="monotone" dataKey="Low" stroke="#4ade80" />
@@ -219,7 +300,7 @@ const ASMDashboard = () => {
         </div>
 
         {/* Compliance Coverage */}
-        <div className="bg-slate-900 h-fit p-6 shadow-md rounded-xl border border-slate-800">
+        <div className="bg-slate-900 h-[300px] p-6 shadow-md rounded-xl border border-slate-800">
           <h2 className="text-lg font-semibold mb-4">Compliance Coverage</h2>
           <div className="grid grid-cols-2 gap-4">
             {/* OWASP Coverage */}
@@ -272,7 +353,7 @@ const ASMDashboard = () => {
       </div>
 
       {/* Third Row */}
-      <div className="grid grid-cols-1 mb-20 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Open Ports & Services */}
         <div className="bg-slate-900 p-6 shadow-md rounded-xl border border-slate-800">
           <h2 className="text-lg font-semibold mb-4">Open Ports & Services</h2>
@@ -301,7 +382,7 @@ const ASMDashboard = () => {
         </div>
 
         {/* Security Headers */}
-        <div className="bg-slate-900 -mt-32 p-6 shadow-md rounded-xl border border-slate-800">
+        <div className="bg-slate-900 -mt-20 p-6 shadow-md rounded-xl border border-slate-800 flex flex-col">
           <h2 className="text-lg font-semibold mb-4">Security Headers</h2>
           <div className="flex gap-3 mb-4">
             <button className="px-3 py-1 text-xs bg-blue-600 text-white rounded">
@@ -311,17 +392,353 @@ const ASMDashboard = () => {
               Missing (3)
             </button>
           </div>
-          <div className="text-sm">
-            <p className="border border-slate-700 p-2 rounded mb-2 bg-slate-800">
+          <div className="text-sm space-y-2">
+            <p className="border border-slate-700 p-2 rounded bg-slate-800">
               content-security-policy
             </p>
-            <p className="border border-slate-700 p-2 rounded mb-2 bg-slate-800">
+            <p className="border border-slate-700 p-2 rounded bg-slate-800">
               x-content-type-options
             </p>
             <p className="border border-slate-700 p-2 rounded bg-slate-800">
               strict-transport-security
             </p>
           </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 gap-6">
+        {/* First Row - Asset Risk & Threat Score */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Asset Risk by Severity */}
+          <div className="bg-slate-900 p-6 shadow-md rounded-xl border border-slate-800">
+            <h2 className="text-lg font-semibold mb-4">
+              Asset Risk by Severity
+            </h2>
+            <ResponsiveContainer width="100%" height={200}>
+              <BarChart data={assetRiskData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                <XAxis dataKey="name" stroke="#cbd5e1" />
+                <YAxis allowDecimals={false} stroke="#cbd5e1" />
+                <Tooltip
+                  contentStyle={{ backgroundColor: "#1e293b", border: "none" }}
+                  labelStyle={{ color: "#fff" }}
+                />
+                <Bar dataKey="value" fill="#ef4444" radius={[6, 6, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Threat Intelligence Score */}
+          <div className="bg-slate-900 p-6 shadow-md rounded-xl border border-slate-800 flex flex-col items-center justify-center">
+            <h2 className="text-lg font-semibold mb-4">
+              Threat Intelligence Score
+            </h2>
+            <div className="w-32 h-16">
+              <CircularProgressbar
+                value={threatScore}
+                maxValue={100}
+                text={`${threatScore}`}
+                circleRatio={0.5}
+                styles={buildStyles({
+                  rotation: 0.75,
+                  strokeLinecap: "round",
+                  pathColor: "#fbbf24", // amber
+                  textColor: "#fff",
+                  trailColor: "#1e293b",
+                  textSize: "20px",
+                })}
+              />
+            </div>
+            <p className="text-sm text-slate-400 mt-3">
+              Moderate concerns detected
+            </p>
+          </div>
+        </div>
+
+        {/* Second Row - Top Vulnerabilities Table */}
+        <div className="bg-slate-900 p-6 shadow-md rounded-xl border border-slate-800">
+          <h2 className="text-lg font-semibold mb-4">Top Vulnerabilities</h2>
+
+          {/* Filters */}
+          <div className="flex gap-2 mb-4">
+            {["All", "Critical", "High", "Medium", "Low"].map((filter) => (
+              <button
+                key={filter}
+                className={`px-3 py-1 text-xs rounded ${
+                  filter === "All"
+                    ? "bg-blue-600 text-white"
+                    : "bg-slate-800 text-slate-300 hover:bg-slate-700"
+                }`}
+              >
+                {filter}
+              </button>
+            ))}
+          </div>
+
+          {/* Table */}
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className="border-b border-slate-700 text-left">
+                <th className="py-2">Vulnerability</th>
+                <th>Severity</th>
+                <th>Endpoint</th>
+              </tr>
+            </thead>
+            <tbody>
+              {vulnerabilities.map((item, idx) => (
+                <tr key={idx} className="border-b border-slate-800">
+                  <td className="py-3">{item.vulnerability}</td>
+                  <td>
+                    <span
+                      className={`px-2 py-1 rounded text-xs font-medium ${
+                        item.severity === "High"
+                          ? "bg-orange-700 text-orange-200"
+                          : item.severity === "Medium"
+                          ? "bg-yellow-700 text-yellow-200"
+                          : "bg-green-700 text-green-200"
+                      }`}
+                    >
+                      {item.severity}
+                    </span>
+                  </td>
+                  <td className="text-blue-400 hover:underline">
+                    <a
+                      href={item.endpoint}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {item.endpoint}
+                    </a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          {/* Show More */}
+          <div className="text-center mt-4">
+            <button className="text-blue-400 hover:underline text-sm">
+              Show All
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Attack Surface Index */}
+      <div className="bg-slate-900 p-6 shadow-md rounded-xl border border-slate-800">
+        <h2 className="text-lg font-semibold mb-6 flex items-center gap-1">
+          Attack Surface Index <span className="text-slate-400">ⓘ</span>
+        </h2>
+
+        {/* Stats Row */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+          {/* Exposed Services */}
+          <div className="bg-slate-800 rounded-lg p-4 flex flex-col items-center justify-center shadow">
+            <span className="text-blue-400 text-xl font-bold">3</span>
+            <p className="text-xs text-slate-300 mt-1">Exposed Services</p>
+          </div>
+
+          {/* Public IPs */}
+          <div className="bg-slate-800 rounded-lg p-4 flex flex-col items-center justify-center shadow">
+            <span className="text-red-400 text-xl font-bold">1</span>
+            <p className="text-xs text-slate-300 mt-1">Public IPs</p>
+          </div>
+
+          {/* Open Ports */}
+          <div className="bg-slate-800 rounded-lg p-4 flex flex-col items-center justify-center shadow">
+            <span className="text-yellow-400 text-xl font-bold">3</span>
+            <p className="text-xs text-slate-300 mt-1">Open Ports</p>
+          </div>
+
+          {/* Subdomains */}
+          <div className="bg-slate-800 rounded-lg p-4 flex flex-col items-center justify-center shadow">
+            <span className="text-blue-400 text-xl font-bold">1</span>
+            <p className="text-xs text-slate-300 mt-1">Subdomains</p>
+          </div>
+        </div>
+
+        {/* Details Row */}
+        <div className="border border-slate-700 rounded-md p-3 text-center text-sm text-blue-400 hover:bg-slate-800 transition cursor-pointer">
+          Details
+        </div>
+      </div>
+
+      {/* Latest Security News */}
+      <div className="bg-slate-900 p-6 shadow-md rounded-xl border border-slate-800">
+        {/* Header */}
+        <div className="flex justify-between items-center mb-4">
+          <div>
+            <h2 className="text-lg font-semibold flex items-center gap-2">
+              Latest Security News
+              <span className="text-green-400 text-xs font-medium">LIVE</span>
+            </h2>
+            <p className="text-xs text-slate-400">
+              Real-time cybersecurity threats and updates •{" "}
+              <span className="italic">Last update: 2:11</span>
+            </p>
+          </div>
+          <button className="p-2 rounded-md hover:bg-slate-800">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-4 w-4 text-slate-300"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+          </button>
+        </div>
+
+        {/* News Items */}
+        <div className="space-y-4">
+          {/* Item 1 */}
+          <div className="flex items-start gap-3">
+            <div className="w-8 h-8 bg-red-100 text-red-600 flex items-center justify-center rounded-full font-bold">
+              C
+            </div>
+            <div className="flex-1">
+              <h3 className="text-sm font-semibold text-slate-100">
+                CISA Releases Security Advisory for Critical Infrastructure
+              </h3>
+              <p className="text-xs text-slate-400">
+                The Cybersecurity and Infrastructure Security Agency has issued
+                new guidance for protecting critical infrastructure from cyber
+                threats.
+              </p>
+              <div className="flex justify-between items-center mt-1">
+                <span className="text-xs text-slate-500">
+                  CISA • 3h ago • Read more
+                </span>
+                <span className="text-xs font-bold text-red-400">CRITICAL</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Item 2 */}
+          <div className="flex items-start gap-3">
+            <div className="w-8 h-8 bg-yellow-100 text-yellow-600 flex items-center justify-center rounded-full font-bold">
+              A
+            </div>
+            <div className="flex-1">
+              <h3 className="text-sm font-semibold text-slate-100">
+                Latest Cybersecurity Threats and Vulnerabilities
+              </h3>
+              <p className="text-xs text-slate-400">
+                Comprehensive coverage of the latest security risks, data
+                breaches, and vulnerability disclosures affecting organizations
+                worldwide.
+              </p>
+              <div className="flex justify-between items-center mt-1">
+                <span className="text-xs text-slate-500">
+                  BleepingComputer • 5h ago
+                </span>
+                <span className="text-xs font-bold text-orange-400">HIGH</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Item 3 */}
+          <div className="flex items-start gap-3">
+            <div className="w-8 h-8 bg-blue-100 text-blue-600 flex items-center justify-center rounded-full font-bold">
+              S
+            </div>
+            <div className="flex-1">
+              <h3 className="text-sm font-semibold text-slate-100">
+                Security Week - Latest Cybersecurity News
+              </h3>
+              <p className="text-xs text-slate-400">
+                Security news updates with a focus on cyber threats,
+                vulnerabilities, and industry developments from security
+                experts.
+              </p>
+              <div className="flex justify-between items-center mt-1">
+                <span className="text-xs text-slate-500">
+                  SecurityWeek • 8h ago
+                </span>
+                <span className="text-xs font-bold text-yellow-400">
+                  MEDIUM
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Item 4 */}
+          <div className="flex items-start gap-3">
+            <div className="w-8 h-8 bg-slate-100 text-slate-700 flex items-center justify-center rounded-full font-bold">
+              K
+            </div>
+            <div className="flex-1">
+              <h3 className="text-sm font-semibold text-slate-100">
+                Knobs on Security - In-depth Security Analysis
+              </h3>
+              <p className="text-xs text-slate-400">
+                In-depth cybersecurity reporting and analysis on the latest
+                threats from renowned security journalist Brian Krebs.
+              </p>
+              <div className="flex justify-between items-center mt-1">
+                <span className="text-xs text-slate-500">
+                  KrebsOnSecurity • 1d ago
+                </span>
+                <span className="text-xs font-bold text-orange-400">HIGH</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div className="bg-slate-900 shadow-md rounded-lg p-4 mb-10 w-full max-w-3xl border border-slate-800">
+          <h2 className="text-lg font-semibold mb-4 text-white">
+            Vulnerable Endpoints
+          </h2>
+          <div className="space-y-3">
+            {dataa.map((item, index) => (
+              <div
+                key={index}
+                className="flex items-start justify-between border border-slate-800 rounded-lg p-3 hover:bg-slate-800 transition"
+              >
+                <div>
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-blue-400 font-medium flex items-center gap-1"
+                  >
+                    GET {item.url}
+                    <FaExternalLinkAlt className="text-xs" />
+                  </a>
+                  <p className="text-sm text-slate-400">{item.vulnerability}</p>
+                </div>
+                <span
+                  className={`px-3 py-1 rounded-full text-xs font-medium self-center ${getSeverityColor(
+                    item.severity
+                  )}`}
+                >
+                  {item.severity}
+                </span>
+              </div>
+            ))}
+          </div>
+          <button className="w-full mt-4 text-blue-400 text-sm font-medium hover:underline">
+            Show All →
+          </button>
+        </div>
+
+        <div className="bg-white dark:bg-slate-900 mb-10 rounded-lg p-4">
+          <h2 className="text-base font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+            Assets Intelligence Graph
+            <FaRegQuestionCircle className="text-slate-400 text-sm cursor-pointer" />
+          </h2>
+          <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+            Visualizes your domain’s subdomains, WHOIS, SSL certificates, and
+            DNS resolution—helping you map external exposures and dependencies
+            at a glance.
+          </p>
         </div>
       </div>
     </div>
