@@ -29,6 +29,7 @@ import { MdOutlineNotificationsActive } from "react-icons/md";
 import Select from "react-select";
 import { customStyles, darkTheme } from "@/constants/constants.data";
 import ChangePasswordModal from "@/modals/ChangePasswordModal";
+import SecurityQuestions from "@/pages/Auth/Secuirity";
 
 const MainLayout = () => {
   const { notificationData, NotificationsViewed } =
@@ -41,12 +42,9 @@ const MainLayout = () => {
     showUserMenu,
     setShowUserMenu,
   } = useAuthContext();
-  const {
-    TenantAllData,
-  } = useDataContext();
+  const { TenantAllData } = useDataContext();
 
   const { refreshTVMCardsData } = useTVMCardsContext();
-
 
   const { openModal, isOpen, closeModal } = useChangePassword();
 
@@ -101,20 +99,24 @@ const MainLayout = () => {
 
   useEffect(() => {
     if (getDataFromSession) {
-
-      const filterData = products.filter((item) => item.title === getDataFromSession)[0];
+      const filterData = products.filter(
+        (item) => item.title === getDataFromSession
+      )[0];
 
       if (filterData?.allowedPath?.length === 0) {
-        alert(`${getDataFromSession} is comming soon`)
-        return
+        alert(`${getDataFromSession} is comming soon`);
+        return;
       }
 
       if (!authenticate?.role && filterData?.allowedPath?.length > 0) {
-        const windowCurrectRoute = filterData.allowedPath.filter((pathItem) =>
-          window.location.pathname === pathItem.route
+        const windowCurrectRoute = filterData.allowedPath.filter(
+          (pathItem) => window.location.pathname === pathItem.route
         );
 
-        if (windowCurrectRoute.length === 0 || window.location.pathname === "/") {
+        if (
+          windowCurrectRoute.length === 0 ||
+          window.location.pathname === "/"
+        ) {
           navigate(filterData.allowedPath[0]?.route);
         }
 
@@ -127,12 +129,19 @@ const MainLayout = () => {
             (authItem) => authItem.value === pathItem.route
           )
         );
-        if (navList.length > 0 && (window.location.pathname === "/" || window.location.pathname !== navList[0]?.route)) {
-          const windowCurrectRoute = navList.filter((pathItem) =>
-            window.location.pathname === pathItem.route
+        if (
+          navList.length > 0 &&
+          (window.location.pathname === "/" ||
+            window.location.pathname !== navList[0]?.route)
+        ) {
+          const windowCurrectRoute = navList.filter(
+            (pathItem) => window.location.pathname === pathItem.route
           );
 
-          if (windowCurrectRoute.length === 0 || window.location.pathname === "/") {
+          if (
+            windowCurrectRoute.length === 0 ||
+            window.location.pathname === "/"
+          ) {
             navigate(navList[0]?.route);
           }
           return;
@@ -157,10 +166,7 @@ const MainLayout = () => {
   // Detect outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        sidebarRef.current &&
-        !sidebarRef.current.contains(event.target)
-      ) {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
         setShowMenu(false); // close the sidebar
       }
     };
@@ -174,11 +180,18 @@ const MainLayout = () => {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const data = TenantAllData.filter((item) => item.value === params.get("tenant"))[0];
+    const data = TenantAllData.filter(
+      (item) => item.value === params.get("tenant")
+    )[0];
     if (data) {
       setTenant(data);
     }
   }, [location.search]);
+
+  // const m = true;
+  // if (m) {
+  //   return <SecurityQuestions />;
+  // }
 
   return !getDataFromSession ? (
     <FirstDashboard />
@@ -223,7 +236,6 @@ const MainLayout = () => {
                   />
                 )}
               </div>
-
             </div>
 
             <div className=" flex items-end justify-end">
@@ -250,7 +262,6 @@ const MainLayout = () => {
                 >
                   {authenticate.fname[0].toUpperCase()}
                 </button>
-
               </div>
             </div>
 
@@ -279,11 +290,6 @@ const MainLayout = () => {
         </div>
       </header>
 
-
-
-
-
-
       {/* sidebar */}
       {!AllowedPath(location.pathname.split("/")[1]) && (
         <aside
@@ -294,10 +300,11 @@ const MainLayout = () => {
     fixed top:24 md:top-14 z-10 flex flex-col justify-between h-full 
     bg-gradient-to-t from-[#151515] to-[#212224] 
     transition-all duration-500 ease-in-out 
-    ${showSidebar
-              ? "lg:w-[25%] xl:w-[20%] 2xl:w-[15%]"
-              : "lg:w-[5%] xl:w-[4%] 2xl:w-[3%]"
-            } 
+    ${
+      showSidebar
+        ? "lg:w-[25%] xl:w-[20%] 2xl:w-[15%]"
+        : "lg:w-[5%] xl:w-[4%] 2xl:w-[3%]"
+    } 
     ${showMenu ? `left-0 ` : "-left-full lg:left-0 "} 
     whitespace-nowrap
   `}
@@ -311,16 +318,16 @@ const MainLayout = () => {
         </aside>
       )}
 
-
       <div
         className={`ml-auto transition-all min-h-screen duration-500 ease-in-out 
      bg-gradient-custom bg-black 
-    ${AllowedPath(location.pathname.split("/")[1])
-            ? "w-full"
-            : showSidebar
-              ? "w-full lg:w-[75%] xl:w-[80%] 2xl:w-[85%]"
-              : "w-full lg:w-[95%] xl:w-[96%] 2xl:w-[97%]"
-          }`}
+    ${
+      AllowedPath(location.pathname.split("/")[1])
+        ? "w-full"
+        : showSidebar
+        ? "w-full lg:w-[75%] xl:w-[80%] 2xl:w-[85%]"
+        : "w-full lg:w-[95%] xl:w-[96%] 2xl:w-[97%]"
+    }`}
       >
         <Outlet />
       </div>
