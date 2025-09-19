@@ -730,11 +730,11 @@ const ASMDashboard = () => {
         </div>
 
         <div className="bg-slate-900 dark:bg-slate-900 mb-10 rounded-lg p-4">
-          <h2 className="text-base font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+          <h2 className="text-base font-semibold text-white dark:text-white flex items-center gap-2">
             Assets Intelligence Graph
             <FaRegQuestionCircle className="text-slate-400 text-sm cursor-pointer" />
           </h2>
-          <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+          <p className="text-sm text-slate-400 dark:text-slate-400 mt-1">
             Visualizes your domain’s subdomains, WHOIS, SSL certificates, and
             DNS resolution—helping you map external exposures and dependencies
             at a glance.
