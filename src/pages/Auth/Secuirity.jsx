@@ -15,9 +15,10 @@ const securityQuestions = [
   "What was your dream job as a child?",
 ];
 
-export default function SecurityQuestions({ values, setShowSecurityPage }) {
+export default function SecurityQuestions() {
   const [questions, setQuestions] = useState([{ question: "", answer: "" }]);
-  const { Signup } = useAuthContext();
+  const { UpdateProfile,authenticate } = useAuthContext();
+
 
   const handleQuestionChange = (index, field, value) => {
     const updated = [...questions];
@@ -33,7 +34,7 @@ export default function SecurityQuestions({ values, setShowSecurityPage }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    Signup({ ...values, security_questions: questions });
+    UpdateProfile({security_questions: questions },authenticate._id);
   };
 
   return (
@@ -45,12 +46,7 @@ export default function SecurityQuestions({ values, setShowSecurityPage }) {
       <div className="fixed inset-0 flex items-center justify-center z-50 px-4">
         <div className="w-full max-w-lg bg-gray-800 rounded-2xl shadow-2xl p-6 relative animate-fadeIn">
           {/* Close Button */}
-          <button
-            onClick={() => setShowSecurityPage(false)}
-            className="absolute top-4 right-4 text-gray-400 hover:text-gray-200 transition"
-          >
-            ✕
-          </button>
+        
 
           <h2 className="text-2xl font-bold text-blue-400 text-center mb-4">
             Security Questions

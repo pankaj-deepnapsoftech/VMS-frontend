@@ -237,6 +237,7 @@ const AuthContextProvider = ({ children }) => {
     try {
       const res = await AxiosHandler.put(`/auth/update/${id}`, data);
       toast.success(res.data.message);
+      getLogedInUser();
     } catch (error) {
       toast.error(error?.response?.data?.message);
     } finally {
