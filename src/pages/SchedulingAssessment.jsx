@@ -147,7 +147,7 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
                       }
                     }}
                     onBlur={handleBlur}
-                    className="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200"
+                    className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200"
                     id="Type_Of_Assesment"
                   >
                     <option value="" disabled>
@@ -201,7 +201,7 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
                     value={values.Data_Classification}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    className="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200"
+                    className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200"
                     id="Data_Classification"
                   >
                     <option value="" disabled>
@@ -233,7 +233,7 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
                     value={values.MFA_Enabled}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    className="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200"
+                    className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200"
                     id="MFA_Enabled"
                   >
                     <option value="" disabled>
@@ -262,7 +262,7 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
                     value={values.task_start}
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200"
+                    className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200"
                   />
                   {(touched.task_start || submitCount > 0) &&
                     errors.task_start && (
@@ -284,7 +284,7 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
                     value={values.task_end}
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200"
+                    className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200"
                   />
                   {(touched.task_end || submitCount > 0) && errors.task_end && (
                     <p className="text-red-400 text-sm">{errors.task_end}</p>
@@ -332,7 +332,7 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     placeholder="Enter your Application URL"
-                    className="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200"
+                    className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200"
                   />
                   {touched.Application_URL && errors.Application_URL && (
                     <p className="text-red-400 text-sm">
@@ -394,7 +394,7 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
                       }
                     }}
                     accept=".pdf"
-                    className="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                    className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-slate-600 text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                   />
                   {touched.code_Upload && errors.code_Upload && (
                     <p className="text-red-400 text-sm">{errors.code_Upload}</p>
