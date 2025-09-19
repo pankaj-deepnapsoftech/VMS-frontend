@@ -40,7 +40,7 @@ export default function AssessmentCenter() {
               </svg>
             </div>
             <h3 className="text-sm sm:text-base font-semibold">
-              Defendly AI-Powered Scan
+              Securend AI-Powered Scan
             </h3>
             <p className="text-slate-400 mt-1 leading-relaxed text-xs sm:text-sm">
               Run intelligent automated scans for vulnerabilities,
