@@ -3,7 +3,8 @@ import { EyeIcon, EyeOffIcon, LockIcon } from "lucide-react";
 import { useAuthContext } from "@/context";
 
 export default function PasswordChange() {
-  const { ChangePassword,GetSecuirityQuestion,authenticate } = useAuthContext();
+  const { ChangePassword, GetSecuirityQuestion, authenticate } =
+    useAuthContext();
 
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -211,8 +212,17 @@ export default function PasswordChange() {
           >
             Change Password
           </button>
-
-          <button type="button" onClick={()=>{GetSecuirityQuestion(authenticate.email)}} className="text-blue-300 flex justify-end">Change password via questions</button> 
+          <div className="flex justify-end">
+            <button
+              type="button"
+              onClick={() => {
+                GetSecuirityQuestion(authenticate.email);
+              }}
+              className="text-blue-300"
+            >
+              Change password via questions
+            </button>{" "}
+          </div>
         </form>
       </div>
     </div>
