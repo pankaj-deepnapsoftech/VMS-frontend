@@ -69,7 +69,10 @@ export default function PasswordChange() {
         >
           {/* Current Password */}
           <div className="space-y-2">
-            <label htmlFor="currentPassword" className="text-sm font-medium flex items-center gap-1.5">
+            <label
+              htmlFor="currentPassword"
+              className="text-sm font-medium flex items-center gap-1.5"
+            >
               <LockIcon className="w-4 h-4" /> Current Password
             </label>
             <div className="relative">
@@ -88,14 +91,21 @@ export default function PasswordChange() {
                 onClick={() => setShowCurrentPassword(!showCurrentPassword)}
                 className="absolute right-3 top-1/2 -translate-y-1/2"
               >
-                {showCurrentPassword ? <EyeOffIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" />}
+                {showCurrentPassword ? (
+                  <EyeOffIcon className="w-5 h-5" />
+                ) : (
+                  <EyeIcon className="w-5 h-5" />
+                )}
               </button>
             </div>
           </div>
 
           {/* New Password */}
           <div className="space-y-2">
-            <label htmlFor="newPassword" className="text-sm font-medium flex items-center gap-1.5">
+            <label
+              htmlFor="newPassword"
+              className="text-sm font-medium flex items-center gap-1.5"
+            >
               <LockIcon className="w-4 h-4" /> New Password
             </label>
             <div className="relative">
@@ -114,7 +124,11 @@ export default function PasswordChange() {
                 onClick={() => setShowNewPassword(!showNewPassword)}
                 className="absolute right-3 top-1/2 -translate-y-1/2"
               >
-                {showNewPassword ? <EyeOffIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" />}
+                {showNewPassword ? (
+                  <EyeOffIcon className="w-5 h-5" />
+                ) : (
+                  <EyeIcon className="w-5 h-5" />
+                )}
               </button>
             </div>
 
@@ -138,14 +152,19 @@ export default function PasswordChange() {
                     />
                   ))}
                 </div>
-                <p className="text-xs">Password must be at least 8 characters long</p>
+                <p className="text-xs">
+                  Password must be at least 8 characters long
+                </p>
               </div>
             )}
           </div>
 
           {/* Confirm Password */}
           <div className="space-y-2">
-            <label htmlFor="confirmPassword" className="text-sm font-medium flex items-center gap-1.5">
+            <label
+              htmlFor="confirmPassword"
+              className="text-sm font-medium flex items-center gap-1.5"
+            >
               <LockIcon className="w-4 h-4" /> Confirm New Password
             </label>
             <div className="relative">
@@ -170,12 +189,18 @@ export default function PasswordChange() {
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 className="absolute right-3 top-1/2 -translate-y-1/2"
               >
-                {showConfirmPassword ? <EyeOffIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" />}
+                {showConfirmPassword ? (
+                  <EyeOffIcon className="w-5 h-5" />
+                ) : (
+                  <EyeIcon className="w-5 h-5" />
+                )}
               </button>
             </div>
 
             {formData.confirmPassword && !passwordMatch && (
-              <p className="text-xs text-red-400 mt-1">Passwords do not match</p>
+              <p className="text-xs text-red-400 mt-1">
+                Passwords do not match
+              </p>
             )}
           </div>
 
@@ -186,6 +211,8 @@ export default function PasswordChange() {
           >
             Change Password
           </button>
+
+          <button type="button" className="text-blue-300 flex justify-end">Change password via questions</button> 
         </form>
       </div>
     </div>

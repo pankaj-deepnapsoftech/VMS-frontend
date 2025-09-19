@@ -7,15 +7,19 @@ import Cookies from "js-cookie";
 import { decrypt } from "@/utils/EncryptAndDcrypt";
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const authContext = createContext({ token: "", authenticate: null, tenant: "" });
+export const authContext = createContext({
+  token: "",
+  authenticate: null,
+  tenant: "",
+  GetSecuirityQuestion: () => {},
+});
 
 // eslint-disable-next-line react/prop-types
 const AuthContextProvider = ({ children }) => {
   let navigate = useNavigate();
 
-
   const [token, setToken] = useState(Cookies.get("AT"));
-  const [tenant, setTenant] = useState()
+  const [tenant, setTenant] = useState();
 
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -23,52 +27,52 @@ const AuthContextProvider = ({ children }) => {
   const [runner, setRunner] = useState(1);
   const [authenticate, setAuthenticate] = useState(null);
   const [updateProfileModal, setUpdateProfileModal] = useState(false);
-  const [UserViaTenant, setuserViaTenant] = useState([])
+  const [UserViaTenant, setuserViaTenant] = useState([]);
   const [getDataFromSession, setGetDataFromSession] = useState(() => {
     return sessionStorage.getItem("VROC");
-  })
+  });
 
-  const [OpenSideBar, setOpenSideBar] = useState(false)
-
-
+  const [OpenSideBar, setOpenSideBar] = useState(false);
 
   const getLogedInUser = async () => {
-    setUserLoading(true)
+    setUserLoading(true);
     try {
       const res = await AxiosHandler.get("/auth/logedin-user");
       setAuthenticate(res.data.data);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     } finally {
-      setUserLoading(false)
+      setUserLoading(false);
     }
-  }
+  };
 
   const Signin = async (data) => {
     const toastId = toast.loading("Loading...");
 
-
     setLoading(true);
     try {
       const res = await AxiosHandler.post("/auth/login", data);
-      AxiosHandler.defaults.headers.authorization = `Bearer ${NewDecryptionToken(res.data.token)}`;
+      AxiosHandler.defaults.headers.authorization = `Bearer ${NewDecryptionToken(
+        res.data.token
+      )}`;
       Cookies.set("AT", res.data.token, { expires: 1, secure: true });
       setToken(res.data.token);
       if (!res.data.user.email_verification) {
         navigate("/verify-otp");
-        ResendOtp()
+        ResendOtp();
       } else {
-
         navigate("/");
       }
       toast.dismiss(toastId);
       toast.success(res.data.message);
     } catch (error) {
-      console.log("error data", error)
+      console.log("error data", error);
 
       toast.dismiss(toastId);
-      toast.error(error?.response?.data?.message || "something went wrong please try again...");
-
+      toast.error(
+        error?.response?.data?.message ||
+          "something went wrong please try again..."
+      );
     } finally {
       setLoading(false);
     }
@@ -92,9 +96,9 @@ const AuthContextProvider = ({ children }) => {
         security_questions: data.security_questions,
         employee_approve: data.employee_approve,
         email_verification: data.email_verification,
-      }
+      };
     } else {
-      newData = data
+      newData = data;
     }
 
     setLoading(true);
@@ -110,7 +114,6 @@ const AuthContextProvider = ({ children }) => {
 
       toast.dismiss(toastId);
       toast.success(res.data.message);
-
     } catch (error) {
       toast.dismiss(toastId);
       toast.error(error?.response?.data?.message);
@@ -144,7 +147,7 @@ const AuthContextProvider = ({ children }) => {
       const res = await AxiosHandler.post("/auth/verify-otp", data);
       toast.dismiss(toastId);
       toast.success(res.data.message);
-      getLogedInUser()
+      getLogedInUser();
       navigate("/");
     } catch (error) {
       toast.dismiss(toastId);
@@ -159,10 +162,13 @@ const AuthContextProvider = ({ children }) => {
 
     setLoading(true);
     try {
-      const res = await AxiosHandler.post(`/auth/reset-password/${token}`, data);
+      const res = await AxiosHandler.post(
+        `/auth/reset-password/${token}`,
+        data
+      );
       toast.dismiss(toastId);
       toast.success(res.data.message);
-      navigate("/")
+      navigate("/");
     } catch (error) {
       //console.log(error)
       toast.dismiss(toastId);
@@ -196,9 +202,9 @@ const AuthContextProvider = ({ children }) => {
       Cookies.remove("AT", res.data.token);
       toast.dismiss(toastId);
       toast.success(res.data.message);
-      setAuthenticate(null)
-      setGetDataFromSession(null)
-      sessionStorage.removeItem("VROC")
+      setAuthenticate(null);
+      setGetDataFromSession(null);
+      sessionStorage.removeItem("VROC");
       navigate("/");
     } catch (error) {
       toast.dismiss(toastId);
@@ -211,26 +217,26 @@ const AuthContextProvider = ({ children }) => {
   const ChangePassword = async (data) => {
     try {
       const res = await AxiosHandler.put("/auth/change-password", data);
-      console.log(res)
+      console.log(res);
       toast.success(res.data.message);
       getLogedInUser();
     } catch (error) {
-      toast.error(error.response.data.message)
+      toast.error(error.response.data.message);
     }
-  }
+  };
 
   const ChangeStatus = async (data, id) => {
     setLoading(true);
     try {
       const res = await AxiosHandler.put(`/auth/deactivate/${id}`, data);
       toast.success(res.data.message);
-      setRunner(prev => prev + 1)
+      setRunner((prev) => prev + 1);
     } catch (error) {
       toast.error(error?.response?.data?.message);
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   const UpdateProfile = async (data, id) => {
     setLoading(true);
@@ -243,53 +249,67 @@ const AuthContextProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   const ResetWithQuestion = async (data) => {
     setLoading(true);
     try {
-      const res = await AxiosHandler.put(`/auth/reset-password-question/${data.email}`, data);
-      window.location.href = res.data.resetLink
+      const res = await AxiosHandler.put(
+        `/auth/reset-password-question/${data.email}`,
+        data
+      );
+      window.location.href = res.data.resetLink;
     } catch (error) {
       toast.error(error?.response?.data?.message);
-      console.log(error)
+      console.log(error);
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   const Verifyrecaptcha = async (token) => {
     setLoading(true);
     try {
       const res = await AxiosHandler.post(`/auth/verify-recaptcha`, { token });
-      console.log(res)
-      return res.data.success
+      console.log(res);
+      return res.data.success;
     } catch (error) {
-      console.log(error)
-      return false
+      console.log(error);
+      return false;
     } finally {
       setLoading(false);
     }
-  }
-
+  };
 
   const GetTenantData = async (tenant) => {
     try {
-      const res = await AxiosHandler.get(`/auth/user-by-tenant?tenant=${tenant ? tenant : ""}`);
+      const res = await AxiosHandler.get(
+        `/auth/user-by-tenant?tenant=${tenant ? tenant : ""}`
+      );
       setuserViaTenant(res.data.data);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
+  const GetSecuirityQuestion = async (email) => {
+    try {
+      const res = await AxiosHandler.get(
+        `/auth/change-password-question?email=${email}`
+      );
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     if (token) {
-      getLogedInUser()
+      getLogedInUser();
       const data = decrypt(token);
-      console.log("this is actual token",data);
+      console.log("this is actual token", data);
     }
-  }, [token])
+  }, [token]);
 
   useEffect(() => {
     if (!authenticate?.role || authenticate?.part_securend) {
@@ -301,36 +321,39 @@ const AuthContextProvider = ({ children }) => {
   }, [location.search, authenticate]);
 
   return (
-    <authContext.Provider value={{
-      loading,
-      userLoading,
-      verifyotp,
-      ResendOtp,
-      Forgotpassword,
-      Resetpassword,
-      Signin,
-      Signup,
-      Logout,
-      token,
-      authenticate,
-      ChangePassword,
-      ChangeStatus,
-      runner,
-      getDataFromSession,
-      setGetDataFromSession,
-      OpenSideBar,
-      setOpenSideBar,
-      showUserMenu,
-      setShowUserMenu,
-      UpdateProfile,
-      setUpdateProfileModal,
-      updateProfileModal,
-      ResetWithQuestion,
-      GetTenantData,
-      UserViaTenant,
-      Verifyrecaptcha,
-      tenant
-    }}>
+    <authContext.Provider
+      value={{
+        loading,
+        userLoading,
+        verifyotp,
+        ResendOtp,
+        Forgotpassword,
+        Resetpassword,
+        Signin,
+        Signup,
+        Logout,
+        token,
+        authenticate,
+        ChangePassword,
+        ChangeStatus,
+        runner,
+        getDataFromSession,
+        setGetDataFromSession,
+        OpenSideBar,
+        setOpenSideBar,
+        showUserMenu,
+        setShowUserMenu,
+        UpdateProfile,
+        setUpdateProfileModal,
+        updateProfileModal,
+        ResetWithQuestion,
+        GetTenantData,
+        UserViaTenant,
+        Verifyrecaptcha,
+        tenant,
+        GetSecuirityQuestion,
+      }}
+    >
       {children}
     </authContext.Provider>
   );
