@@ -212,7 +212,7 @@ export default function PasswordChange() {
             Change Password
           </button>
 
-          <a href="" className="text-blue-300 flex justify-end">Change password via questions</a>
+          <button type="button" className="text-blue-300 flex justify-end">Change password via questions</button> 
         </form>
       </div>
     </div>
