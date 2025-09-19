@@ -36,7 +36,7 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
     handleSubmit,
     setFieldValue,
     resetForm,
-    submitCount
+    submitCount,
   } = useFormik({
     initialValues: editable || {
       Tenant_id: "",
@@ -66,7 +66,7 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
       };
 
       if (!tenant && !editable) {
-        alert('Please Select Tenant first');
+        alert("Please Select Tenant first");
         return;
       }
 
@@ -79,10 +79,9 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
 
       resetForm();
     },
-
   });
 
-  console.log("error formik",errors)  
+  console.log("error formik", errors);
 
   useEffect(() => {
     if (token) {
@@ -94,8 +93,9 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
 
   return (
     <div
-      className={` ${editable && "fixed top-0 left-0 w-full z-50"
-        } min-h-screen bg-gradient-to-br from-slate-900 via-blue-1000 to-slate-800 text-white px-6 py-8`}
+      className={` ${
+        editable && "fixed top-0 left-0 w-full z-50"
+      } min-h-screen bg-gradient-to-br from-slate-900 via-blue-1000 to-slate-800 text-white px-6 py-8`}
     >
       {editable && (
         <div className="flex items-center justify-end w-full py-3 ">
@@ -181,10 +181,10 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
                     </option>
                   </select>
                   {errors.Type_Of_Assesment && (
-                    <p className="text-red-400 text-sm">{errors.Type_Of_Assesment}</p>
+                    <p className="text-red-400 text-sm">
+                      {errors.Type_Of_Assesment}
+                    </p>
                   )}
-
-
                 </div>
 
                 {/* Data Classification */}
