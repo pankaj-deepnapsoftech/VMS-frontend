@@ -85,21 +85,17 @@ const options = {
 };
 
 export default function ExecutiveSummaryPage() {
-  const { token } = useAuthContext();
+  const { token,tenant } = useAuthContext();
   const { GetRiskData, dasboardData, loading } = useReportContext();
 
-  const [tenant, setTenant] = useState("");
+
 
   useEffect(() => {
     if (token) {
       GetRiskData(tenant);
-    }
+    };
   }, [token, tenant]);
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    setTenant(params.get("tenant") || "");
-  }, [location.search]);
 
   return loading ? (
     <Loader />

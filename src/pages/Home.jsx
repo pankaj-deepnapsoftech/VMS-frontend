@@ -87,7 +87,7 @@ const DashboardCards = () => {
       },
       y: {
         min: 0,
-        max: 60,
+        max: tvmCardsData.totalVulnerabilities + 2,
         grid: { color: "rgba(255,255,255,0.05)" },
         ticks: { color: "#9CA3AF", stepSize: 15 },
       },
