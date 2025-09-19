@@ -15,9 +15,9 @@ const securityQuestions = [
   "What was your dream job as a child?",
 ];
 
-export default function SecurityQuestions({values,setShowSecurityPage}) {
+export default function SecurityQuestions({ values, setShowSecurityPage }) {
   const [questions, setQuestions] = useState([{ question: "", answer: "" }]);
-  const {Signup} = useAuthContext()
+  const { Signup } = useAuthContext();
 
   const handleQuestionChange = (index, field, value) => {
     const updated = [...questions];
@@ -33,77 +33,86 @@ export default function SecurityQuestions({values,setShowSecurityPage}) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    Signup({...values,security_questions:questions})
+    Signup({ ...values, security_questions: questions });
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 px-4">
-      <h1 className="text-4xl font-extrabold text-white mb-2">Security Setup</h1>
-      <p className="text-blue-300 text-sm">
-        Set your security questions for account recovery
-      </p>
+    <>
+      {/* Backdrop */}
+      <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-40" />
 
-      <div className="w-full max-w-md bg-gray-800 rounded-2xl shadow-lg p-8 mt-4">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-blue-400 mb-6">
+      {/* Modal */}
+      <div className="fixed inset-0 flex items-center justify-center z-50 px-4">
+        <div className="w-full max-w-lg bg-gray-800 rounded-2xl shadow-2xl p-6 relative animate-fadeIn">
+          {/* Close Button */}
+          <button
+            onClick={() => setShowSecurityPage(false)}
+            className="absolute top-4 right-4 text-gray-400 hover:text-gray-200 transition"
+          >
+            ✕
+          </button>
+
+          <h2 className="text-2xl font-bold text-blue-400 text-center mb-4">
             Security Questions
           </h2>
-        </div>
+          <p className="text-blue-300 text-sm text-center mb-6">
+            Set your security questions for account recovery
+          </p>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {questions.map((q, index) => (
-            <div key={index}>
-              <label className="block text-sm text-gray-400 mb-1">
-                Security Question {index + 1}
-              </label>
-              <select
-                value={q.question}
-                onChange={(e) =>
-                  handleQuestionChange(index, "question", e.target.value)
-                }
-                className="w-full bg-gray-900 text-white rounded-lg px-4 py-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {questions.map((q, index) => (
+              <div key={index}>
+                <label className="block text-sm text-gray-400 mb-1">
+                  Security Question {index + 1}
+                </label>
+                <select
+                  value={q.question}
+                  onChange={(e) =>
+                    handleQuestionChange(index, "question", e.target.value)
+                  }
+                  className="w-full bg-gray-900 text-white rounded-lg px-4 py-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                >
+                  <option value="">Select a question</option>
+                  {securityQuestions.map((question, idx) => (
+                    <option key={idx} value={question}>
+                      {question}
+                    </option>
+                  ))}
+                </select>
+
+                <input
+                  type="text"
+                  placeholder="Your Answer"
+                  value={q.answer}
+                  onChange={(e) =>
+                    handleQuestionChange(index, "answer", e.target.value)
+                  }
+                  required
+                  className="mt-2 w-full bg-gray-900 text-white rounded-lg px-4 py-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+            ))}
+
+            {questions.length < 3 && (
+              <button
+                type="button"
+                onClick={addQuestion}
+                className="text-blue-400 hover:underline text-sm"
               >
-                <option value="">Select a question</option>
-                {securityQuestions.map((question, idx) => (
-                  <option key={idx} value={question}>
-                    {question}
-                  </option>
-                ))}
-              </select>
+                + Add another question
+              </button>
+            )}
 
-              <input
-                type="text"
-                placeholder="Your Answer"
-                value={q.answer}
-                onChange={(e) =>
-                  handleQuestionChange(index, "answer", e.target.value)
-                }
-                required
-                className="mt-2 w-full bg-gray-900 text-white rounded-lg px-4 py-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-          ))}
-
-          {questions.length < 3 && (
             <button
-              type="button"
-              onClick={addQuestion}
-              className="text-blue-400 hover:underline text-sm"
+              type="submit"
+              className="w-full py-3 px-4 rounded-lg text-white font-medium transition-all duration-300 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600"
             >
-              + Add another question
+              Save Security Questions
             </button>
-          )}
-
-          <button
-            type="submit"
-            className="w-full py-3 px-4 rounded-lg text-white font-medium transition-all duration-300 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600"
-          >
-            Save Security Questions
-          </button>
-        </form>
-        <p onClick={()=>setShowSecurityPage(false)} className="text-blue-400 my-3 cursor-pointer text-center" >Back to login</p>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

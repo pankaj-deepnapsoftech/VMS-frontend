@@ -519,22 +519,23 @@ const ASMDashboard = () => {
             </div>
           </div>
 
-          <div className="bg-slate-900 shadow-md mt-6 -ml-6 w-[570px] h-[580px] rounded-lg p-4 max-w-3xl border border-slate-800">
+          <div className="bg-slate-900 shadow-md mt-6 -ml-6 mx-auto w-full max-w-[570px] h-auto sm:h-[580px] rounded-lg p-4 border border-slate-800">
             <h2 className="text-lg font-semibold mb-4 text-white">
               Vulnerable Endpoints
             </h2>
+
             <div className="space-y-3">
               {dataa.map((item, index) => (
                 <div
                   key={index}
-                  className="flex items-start justify-between border border-slate-800 rounded-lg p-3 hover:bg-slate-800 transition"
+                  className="flex flex-col sm:flex-row sm:items-start sm:justify-between border border-slate-800 rounded-lg p-3 hover:bg-slate-800 transition"
                 >
-                  <div>
+                  <div className="mb-2 sm:mb-0">
                     <a
                       href={item.url}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-blue-400 font-medium flex items-center gap-1"
+                      className="text-blue-400 font-medium flex items-center gap-1 break-all"
                     >
                       GET {item.url}
                       <FaExternalLinkAlt className="text-xs" />
@@ -543,8 +544,9 @@ const ASMDashboard = () => {
                       {item.vulnerability}
                     </p>
                   </div>
+
                   <span
-                    className={`px-3 py-1 rounded-full text-xs font-medium self-center ${getSeverityColor(
+                    className={`px-3 py-1 rounded-full text-xs font-medium self-start sm:self-center ${getSeverityColor(
                       item.severity
                     )}`}
                   >
@@ -553,6 +555,7 @@ const ASMDashboard = () => {
                 </div>
               ))}
             </div>
+
             <button className="w-full mt-4 text-blue-400 text-sm font-medium hover:underline">
               Show All →
             </button>
@@ -572,7 +575,7 @@ const ASMDashboard = () => {
         </div>
       </div>
 
-      <div className="bg-slate-900 p-6 w-[580px] shadow-md rounded-xl border border-slate-800">
+      <div className="bg-slate-900 p-6 w-full sm:max-w-[580px] max-w-[95%] shadow-md rounded-xl border border-slate-800">
         <h2 className="text-lg font-semibold mb-4">Top Vulnerabilities</h2>
 
         {/* Filters */}
