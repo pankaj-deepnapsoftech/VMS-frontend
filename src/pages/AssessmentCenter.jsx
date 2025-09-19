@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 
 const scans = [];
 
 export default function AssessmentCenter() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans p-4 sm:p-6 lg:p-8">
       {/* Header */}
@@ -20,9 +22,12 @@ export default function AssessmentCenter() {
       {/* Info Cards */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-8">
         {/* Card 1 */}
-        <div className="rounded-2xl bg-slate-800 border border-slate-700 p-5 sm:p-6 shadow-lg hover:shadow-xl transition-shadow">
-          <div className="flex items-start gap-4">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-slate-700 flex items-center justify-center shadow-inner">
+        <div
+          className="rounded-2xl bg-slate-800 border border-slate-700 p-4 shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
+          onClick={() => setIsModalOpen(true)}
+        >
+          <div className="flex flex-col items-start text-left">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-slate-700 flex items-center justify-center shadow-inner mb-3">
               <svg
                 className="w-5 h-5 sm:w-6 sm:h-6 text-cyan-300"
                 viewBox="0 0 24 24"
@@ -34,23 +39,21 @@ export default function AssessmentCenter() {
                 />
               </svg>
             </div>
-            <div>
-              <h3 className="text-base sm:text-lg font-semibold">
-                Defendly AI-Powered Scan
-              </h3>
-              <p className="text-slate-400 mt-1 leading-relaxed text-sm sm:text-base">
-                Run intelligent automated scans for vulnerabilities,
-                misconfigurations, and missing security controls across web
-                apps, APIs, IPs, and cloud assets.
-              </p>
-            </div>
+            <h3 className="text-sm sm:text-base font-semibold">
+              Defendly AI-Powered Scan
+            </h3>
+            <p className="text-slate-400 mt-1 leading-relaxed text-xs sm:text-sm">
+              Run intelligent automated scans for vulnerabilities,
+              misconfigurations, and missing security controls across web apps,
+              APIs, IPs, and cloud assets.
+            </p>
           </div>
         </div>
 
         {/* Card 2 */}
-        <div className="rounded-2xl bg-slate-800 border border-slate-700 p-5 sm:p-6 shadow-lg hover:shadow-xl transition-shadow">
-          <div className="flex items-start gap-4">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-slate-700 flex items-center justify-center shadow-inner">
+        <div className="rounded-2xl bg-slate-800 border border-slate-700 p-4 shadow-lg hover:shadow-xl transition-shadow">
+          <div className="flex flex-col items-start text-left">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-slate-700 flex items-center justify-center shadow-inner mb-3">
               <svg
                 className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-300"
                 viewBox="0 0 24 24"
@@ -66,15 +69,13 @@ export default function AssessmentCenter() {
                 />
               </svg>
             </div>
-            <div>
-              <h3 className="text-base sm:text-lg font-semibold">
-                Need Advanced Testing?
-              </h3>
-              <p className="text-slate-400 mt-1 leading-relaxed text-sm sm:text-base">
-                Looking for advanced assessment pentesting, cloud config audits,
-                or thick client assessments? Request our security experts now.
-              </p>
-            </div>
+            <h3 className="text-sm sm:text-base font-semibold">
+              Need Advanced Testing?
+            </h3>
+            <p className="text-slate-400 mt-1 leading-relaxed text-xs sm:text-sm">
+              Looking for advanced assessment pentesting, cloud config audits,
+              or thick client assessments? Request our security experts now.
+            </p>
           </div>
         </div>
       </section>
@@ -83,9 +84,7 @@ export default function AssessmentCenter() {
       <section className="rounded-2xl bg-slate-900 border border-slate-700 p-5 sm:p-6 shadow-lg">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
           <div>
-            <h2 className="text-lg sm:text-xl font-semibold">
-              Scans History
-            </h2>
+            <h2 className="text-lg sm:text-xl font-semibold">Scans History</h2>
             <p className="text-slate-400 text-xs sm:text-sm">
               View your latest scans and their security grades, issue counts,
               and compliance scores.
@@ -114,10 +113,7 @@ export default function AssessmentCenter() {
             <tbody>
               {scans.length === 0 ? (
                 <tr>
-                  <td
-                    colSpan="8"
-                    className="text-center py-6 text-slate-500"
-                  >
+                  <td colSpan="8" className="text-center py-6 text-slate-500">
                     No scans available. Start a new scan to see results here.
                   </td>
                 </tr>
@@ -128,15 +124,21 @@ export default function AssessmentCenter() {
                     className="border-b border-slate-800 hover:bg-slate-800/50 transition-colors"
                   >
                     <td className="py-4 px-3 sm:px-4">{s.target}</td>
-                    <td className="py-4 px-3 sm:px-4 text-slate-300">{s.org}</td>
+                    <td className="py-4 px-3 sm:px-4 text-slate-300">
+                      {s.org}
+                    </td>
                     <td className="py-4 px-3 sm:px-4 text-slate-400">—</td>
                     <td className="py-4 px-3 sm:px-4">
                       <span className="inline-flex items-center px-2 py-1 rounded-full bg-slate-700 border border-slate-600 text-xs">
                         {s.type}
                       </span>
                     </td>
-                    <td className="py-4 px-3 sm:px-4 text-slate-300">{s.start}</td>
-                    <td className="py-4 px-3 sm:px-4 text-slate-300">{s.end}</td>
+                    <td className="py-4 px-3 sm:px-4 text-slate-300">
+                      {s.start}
+                    </td>
+                    <td className="py-4 px-3 sm:px-4 text-slate-300">
+                      {s.end}
+                    </td>
                     <td className="py-4 px-3 sm:px-4">
                       <span
                         className={`px-3 py-1 rounded-full text-xs font-medium ${
@@ -158,6 +160,161 @@ export default function AssessmentCenter() {
           </table>
         </div>
       </section>
+
+      {/* MODAL */}
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50">
+          <div className="bg-slate-900 border border-slate-700 rounded-xl shadow-2xl w-full max-w-2xl p-6 relative">
+            {/* Header */}
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold">Start AI-Powered Scan</h2>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="text-slate-400 hover:text-slate-200"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Form */}
+            <form className="space-y-4">
+              {/* Org + Target in one row */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-slate-300">
+                    Organization Name
+                  </label>
+                  <input
+                    type="text"
+                    defaultValue="BIGMINT"
+                    className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-300">
+                    Target Name
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Enter Target Name"
+                    className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                  />
+                </div>
+              </div>
+
+              {/* Scan Targets */}
+              <div>
+                <label className="block text-sm font-medium text-slate-300">
+                  Scan Targets <span className="text-rose-400">*</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="Enter URL with http(s)://"
+                  className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                />
+                <p className="text-xs text-slate-400 mt-1">
+                  💡 Type a URL and press{" "}
+                  <span className="px-1 py-0.5 rounded bg-slate-700 text-slate-200">
+                    comma
+                  </span>
+                  ,{" "}
+                  <span className="px-1 py-0.5 rounded bg-slate-700 text-slate-200">
+                    space
+                  </span>{" "}
+                  or{" "}
+                  <span className="px-1 py-0.5 rounded bg-slate-700 text-slate-200">
+                    enter
+                  </span>{" "}
+                  to add multiple URLs. First URL becomes the primary target.
+                </p>
+              </div>
+
+              {/* Auth Scan */}
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-1">
+                  Auth Scan?
+                </label>
+                <div className="flex items-center gap-6">
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="auth"
+                      className="accent-cyan-500"
+                    />
+                    <span>Yes</span>
+                  </label>
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="auth"
+                      defaultChecked
+                      className="accent-cyan-500"
+                    />
+                    <span>No</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Label */}
+              <div>
+                <label className="block text-sm font-medium text-slate-300">
+                  Label (optional)
+                </label>
+                <input
+                  type="text"
+                  placeholder="Add a label for this scan"
+                  className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                />
+              </div>
+
+              {/* Schedule */}
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-1">
+                  Schedule
+                </label>
+                <div className="flex items-center gap-6">
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="schedule"
+                      defaultChecked
+                      className="accent-cyan-500"
+                    />
+                    <span>Now</span>
+                  </label>
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="schedule"
+                      className="accent-cyan-500"
+                    />
+                    <span>Later</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Confirm */}
+              <div className="flex items-start gap-2">
+                <input type="checkbox" className="mt-1 accent-cyan-500" />
+                <p className="text-xs text-slate-400">
+                  I confirm that I own or have authorization to scan the
+                  specified assets and that the information provided is
+                  accurate.
+                </p>
+              </div>
+
+              {/* Submit */}
+              <button
+                type="button"
+                className="w-full rounded-md bg-slate-700 hover:bg-slate-600 py-2.5 text-sm font-medium text-slate-200 mt-2"
+              >
+                Add at least one URL to continue
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

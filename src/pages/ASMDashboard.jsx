@@ -423,9 +423,9 @@ const ASMDashboard = () => {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-1 h-[340px] md:grid-cols-2 gap-14">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Open Ports & Services */}
-            <div className="bg-slate-900 border mt-14 -ml-6 w-[300px] border-slate-700 p-4 rounded-lg shadow">
+            <div className="bg-slate-900 border border-slate-700 mt-12 -ml-6 p-4 rounded-lg shadow">
               <h3 className="text-lg font-semibold mb-4">
                 Open Ports & Services
               </h3>
@@ -456,7 +456,7 @@ const ASMDashboard = () => {
             </div>
 
             {/* Security Headers */}
-            <div className="bg-slate-900 mt-14 border -mr-6 border-slate-700 p-4 rounded-lg shadow flex flex-col">
+            <div className="bg-slate-900 border mt-12 -mr-6 border-slate-700 p-4 rounded-lg shadow flex flex-col">
               <h3 className="text-lg font-semibold mb-4">Security Headers</h3>
               <div className="flex flex-wrap gap-3 mb-4">
                 <button className="px-3 py-1 text-xs bg-blue-600 text-white rounded">
@@ -480,13 +480,14 @@ const ASMDashboard = () => {
             </div>
           </div>
 
-          <div className="bg-slate-900 p-6 mt-6 w-[570px] -ml-6 shadow-md rounded-xl border border-slate-800">
+          {/* Attack Surface Index */}
+          <div className="bg-slate-900 p-6 mt-6 -ml-6 w-full min-w-[570px]  mx-auto shadow-md rounded-xl border border-slate-800">
             <h2 className="text-lg font-semibold mb-6 flex items-center gap-1">
               Attack Surface Index <span className="text-slate-400">ⓘ</span>
             </h2>
 
             {/* Stats Row */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-4">
               {/* Exposed Services */}
               <div className="bg-slate-800 rounded-lg p-4 flex flex-col items-center justify-center shadow">
                 <span className="text-blue-400 text-xl font-bold">3</span>
