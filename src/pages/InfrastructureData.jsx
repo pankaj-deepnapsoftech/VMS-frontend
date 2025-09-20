@@ -31,6 +31,11 @@ export function InfrastructureData() {
   const { token, authenticate } = useAuthContext();
   const navigate = useNavigate();
   const location = useLocation();
+  const showTitle = (header) => {
+    if (header === "ACS") {
+      return "Asset/Application Criticality Score";
+    }
+  };
 
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -62,7 +67,7 @@ export function InfrastructureData() {
       );
   });
 
-  const handleExpectionModal = (item) => {  
+  const handleExpectionModal = (item) => {
     if (!item.Expection) {
       setIsModalOpen(true);
       setSelectedId(item._id);
@@ -73,7 +78,7 @@ export function InfrastructureData() {
 
   const toggleMenu = (index, e) => {
     if (activeMenu === index) {
-      setActiveMenu(null); 
+      setActiveMenu(null);
       setMenuPosition(null);
     } else {
       const rect = e.currentTarget.getBoundingClientRect();
@@ -108,7 +113,6 @@ export function InfrastructureData() {
   if (isViewAccess(authenticate, location)) {
     return <Access />;
   }
-
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -161,6 +165,7 @@ export function InfrastructureData() {
                           isHaveAction() && "Actions",
                         ].map((header) => (
                           <th
+                            title={showTitle(header)}
                             key={header}
                             className="px-4 py-3 border-b border-gray-600 font-medium"
                           >

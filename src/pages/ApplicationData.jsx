@@ -27,6 +27,12 @@ export function ApplicationData() {
   const navigate = useNavigate();
   const location = useLocation();     
   const { closeModal, isOpen, openModal } = useAccessPartner();
+    const showTitle = (header) => {
+    if (header === "VRS") {
+      return "Vulnerability Risk Score";
+  };
+}
+
 
   // States
   const [searchTerm, setSearchTerm] = useState("");
@@ -38,6 +44,7 @@ export function ApplicationData() {
   // Popup Menu States
   const [activeMenu, setActiveMenu] = useState(null);
   const [menuPosition, setMenuPosition] = useState(null);
+
 
   // Modals
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -92,6 +99,9 @@ export function ApplicationData() {
     setActiveMenu(null);
     setMenuPosition(null);
   };
+
+   
+
 
   // Exception Modal Handler
   const handleExpectionModal = (item) => {
@@ -172,6 +182,7 @@ export function ApplicationData() {
                           isHaveAction() && "Actions",
                         ].map((header) => (
                           <th
+                           title={showTitle(header)}
                             key={header}
                             className="px-4 py-3 border-b border-gray-600 font-medium"
                           >
@@ -183,6 +194,7 @@ export function ApplicationData() {
                     <tbody className="divide-y divide-gray-700">
                       {filteredData.map((item, index) => (
                         <tr
+                       
                           key={index}
                           className="border-b border-slate-700 hover:bg-[#1E293B] transition"
                         >
