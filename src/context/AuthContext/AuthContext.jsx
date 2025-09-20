@@ -297,7 +297,9 @@ const AuthContextProvider = ({ children }) => {
       const res = await AxiosHandler.get(
         `/auth/change-password-question?email=${email}`
       );
-      console.log(res);
+      if(res?.data?.url){
+        window.location.href = res?.data?.url
+      }
     } catch (error) {
       console.log(error);
     }

@@ -24,6 +24,18 @@ const RiskOperation = () => {
     item?.InfraStructureAsset?.asset_hostname?.toLowerCase()?.includes(searchTerm.toLowerCase())
   );
 
+  const showTitle = (header)=> {
+    if(header === "VRS"){
+      return "Vulnerability Risk Score"
+    }else if(header === "ACS"){
+      return "Asset/Application Criticality Score"
+    } else if(header === "ARS"){
+      return "Aggregated Risk Score"
+    } else if(header === "ALE" ){
+      return "Annualized Loss Expectancy"
+    }
+  };
+
 
 
   useEffect(() => {
@@ -85,6 +97,7 @@ const RiskOperation = () => {
                       "ALE"
                     ].map((header) => (
                       <th
+                      title={showTitle(header)}
                         key={header}
                         className="px-4 py-3 border-b border-gray-600 font-medium"
                       >
