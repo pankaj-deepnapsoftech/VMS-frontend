@@ -428,7 +428,7 @@ export const products = [
     icon: "/Icons/Component 4.png",
     allowedPath: [
       {
-        title: "Remedition",
+        title: "Remediation",
         route: "/remedition",
         icon: SiWikimediafoundation,
       },

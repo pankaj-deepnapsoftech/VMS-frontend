@@ -1,9 +1,54 @@
 import React, { useState } from "react";
+import { ChevronRight, ChevronDown } from "lucide-react";
 
-const scans = [];
+const scans = [
+  {
+    id: 1,
+    target: "https://itsybizz.com/",
+    org: "SecurEnd",
+    type: "AI Scan",
+    start: "2025-09-22 05:59 AM",
+    end: "2025-09-22 11:29 AM",
+    status: "Completed",
+    details: {
+      description: "Security assessment for https://itsybizz.com/",
+      vulnerabilities: 12,
+      endpoints: 6,
+      severity: { high: 0, medium: 2, low: 6 },
+    },
+  },
+  {
+    id: 2,
+    target: "deepnap.com",
+    org: "SecurEnd",
+    type: "AI Scan",
+    start: "2025-09-15 17:46",
+    end: "-",
+    status: "Failed",
+    details: null,
+  },
+];
 
 export default function AssessmentCenter() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [expanded, setExpanded] = useState(null);
+
+  const [authScan, setAuthScan] = useState(false);
+  const [scheduleLater, setScheduleLater] = useState(false);
+  const [targets, setTargets] = useState([]);
+  const [targetInput, setTargetInput] = useState("");
+
+  const handleAddTarget = () => {
+    if (targetInput.trim() && !targets.includes(targetInput.trim())) {
+      setTargets([...targets, targetInput.trim()]);
+      setTargetInput("");
+    }
+  };
+
+  const getTodayDate = () => {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+  };
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans p-4 sm:p-6 lg:p-8">
@@ -100,9 +145,9 @@ export default function AssessmentCenter() {
           <table className="w-full min-w-[700px] table-auto text-xs sm:text-sm">
             <thead className="bg-slate-800 text-slate-300 text-left uppercase tracking-wide">
               <tr>
+                <th className="py-3 px-3 sm:px-4"></th>
                 <th className="py-3 px-3 sm:px-4">Scan Targets</th>
                 <th className="py-3 px-3 sm:px-4">Organization</th>
-                <th className="py-3 px-3 sm:px-4">Target Name</th>
                 <th className="py-3 px-3 sm:px-4">Type</th>
                 <th className="py-3 px-3 sm:px-4">Start</th>
                 <th className="py-3 px-3 sm:px-4">End</th>
@@ -111,51 +156,103 @@ export default function AssessmentCenter() {
               </tr>
             </thead>
             <tbody>
-              {scans.length === 0 ? (
-                <tr>
-                  <td colSpan="8" className="text-center py-6 text-slate-500">
-                    No scans available. Start a new scan to see results here.
-                  </td>
-                </tr>
-              ) : (
-                scans.map((s) => (
-                  <tr
-                    key={s.id}
-                    className="border-b border-slate-800 hover:bg-slate-800/50 transition-colors"
-                  >
-                    <td className="py-4 px-3 sm:px-4">{s.target}</td>
-                    <td className="py-4 px-3 sm:px-4 text-slate-300">
-                      {s.org}
+              {scans.map((scan) => (
+                <React.Fragment key={scan.id}>
+                  {/* Main Row */}
+                  <tr className="border-b border-slate-800 hover:bg-slate-800/50 transition-colors">
+                    <td
+                      className="px-4 cursor-pointer text-slate-400 hover:text-slate-200"
+                      onClick={() =>
+                        setExpanded(expanded === scan.id ? null : scan.id)
+                      }
+                    >
+                      {expanded === scan.id ? (
+                        <ChevronDown size={16} />
+                      ) : (
+                        <ChevronRight size={16} />
+                      )}
                     </td>
-                    <td className="py-4 px-3 sm:px-4 text-slate-400">—</td>
-                    <td className="py-4 px-3 sm:px-4">
+                    <td className="py-4 px-4">{scan.target}</td>
+                    <td className="py-4 px-4 text-slate-300">{scan.org}</td>
+                    <td className="py-4 px-4">
                       <span className="inline-flex items-center px-2 py-1 rounded-full bg-slate-700 border border-slate-600 text-xs">
-                        {s.type}
+                        {scan.type}
                       </span>
                     </td>
-                    <td className="py-4 px-3 sm:px-4 text-slate-300">
-                      {s.start}
-                    </td>
-                    <td className="py-4 px-3 sm:px-4 text-slate-300">
-                      {s.end}
-                    </td>
-                    <td className="py-4 px-3 sm:px-4">
+                    <td className="py-4 px-4 text-slate-300">{scan.start}</td>
+                    <td className="py-4 px-4 text-slate-300">{scan.end}</td>
+                    <td className="py-4 px-4">
                       <span
                         className={`px-3 py-1 rounded-full text-xs font-medium ${
-                          s.status === "Completed"
+                          scan.status === "Completed"
                             ? "bg-emerald-700 text-emerald-100"
                             : "bg-rose-700 text-rose-100"
                         }`}
                       >
-                        {s.status}
+                        {scan.status}
                       </span>
                     </td>
-                    <td className="py-4 px-3 sm:px-4 text-slate-300 cursor-pointer hover:text-slate-100">
+                    <td className="py-4 px-4 text-slate-300 cursor-pointer hover:text-slate-100">
                       Actions ▾
                     </td>
                   </tr>
-                ))
-              )}
+
+                  {/* Expanded Row */}
+                  {expanded === scan.id && (
+                    <tr>
+                      <td colSpan="8" className="bg-slate-900 p-5">
+                        {scan.details ? (
+                          <div className="space-y-4">
+                            <p className="text-slate-300 text-sm">
+                              {scan.details.description}
+                            </p>
+                            <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
+                              <div className="p-4 bg-slate-800 rounded-lg text-center">
+                                <p className="text-2xl font-bold text-cyan-400">
+                                  {scan.details.vulnerabilities}
+                                </p>
+                                <p className="text-xs text-slate-400">
+                                  Vulnerabilities
+                                </p>
+                              </div>
+                              <div className="p-4 bg-slate-800 rounded-lg text-center">
+                                <p className="text-2xl font-bold text-emerald-400">
+                                  {scan.details.endpoints}
+                                </p>
+                                <p className="text-xs text-slate-400">
+                                  Endpoints
+                                </p>
+                              </div>
+                              <div className="p-4 bg-slate-800 rounded-lg text-center">
+                                <p className="text-2xl font-bold text-red-400">
+                                  {scan.details.severity.high}
+                                </p>
+                                <p className="text-xs text-slate-400">High</p>
+                              </div>
+                              <div className="p-4 bg-slate-800 rounded-lg text-center">
+                                <p className="text-2xl font-bold text-yellow-400">
+                                  {scan.details.severity.medium}
+                                </p>
+                                <p className="text-xs text-slate-400">Medium</p>
+                              </div>
+                              <div className="p-4 bg-slate-800 rounded-lg text-center">
+                                <p className="text-2xl font-bold text-green-400">
+                                  {scan.details.severity.low}
+                                </p>
+                                <p className="text-xs text-slate-400">Low</p>
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          <p className="text-slate-500 flex justify-center text-sm">
+                            No details available
+                          </p>
+                        )}
+                      </td>
+                    </tr>
+                  )}
+                </React.Fragment>
+              ))}
             </tbody>
           </table>
         </div>
@@ -178,27 +275,38 @@ export default function AssessmentCenter() {
 
             {/* Form */}
             <form className="space-y-4">
-              {/* Org + Target in one row */}
+              {/* Organization + Target */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-slate-300">
-                    Organization Name
+                    Tenant Name
                   </label>
                   <input
                     type="text"
-                    defaultValue="BIGMINT"
+                    defaultValue="SECUREND"
+                    className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-300">
+                    User Name
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Enter User Name"
                     className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-slate-300">
-                    Target Name
+                    Target Name <span className="text-rose-400">*</span>
                   </label>
                   <input
                     type="text"
                     placeholder="Enter Target Name"
-                    className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                    className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
                   />
                 </div>
               </div>
@@ -208,26 +316,66 @@ export default function AssessmentCenter() {
                 <label className="block text-sm font-medium text-slate-300">
                   Scan Targets <span className="text-rose-400">*</span>
                 </label>
+                <div className="flex gap-2 mt-1">
+                  <input
+                    type="text"
+                    value={targetInput}
+                    onChange={(e) => setTargetInput(e.target.value)}
+                    placeholder="Enter URL with http(s)://"
+                    className="flex-1 rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleAddTarget}
+                    className="px-3 rounded-md bg-cyan-600 hover:bg-cyan-500 text-sm"
+                  >
+                    + Add
+                  </button>
+                </div>
+
+                {/* Show added targets */}
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {targets.map((url, i) => (
+                    <span
+                      key={i}
+                      className="px-3 py-1 bg-slate-700 text-slate-100 rounded-md flex items-center gap-2"
+                    >
+                      {url}{" "}
+                      {i === 0 && (
+                        <span className="text-xs bg-cyan-600 px-2 rounded-full">
+                          Primary
+                        </span>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setTargets(targets.filter((t) => t !== url))
+                        }
+                      >
+                        ✕
+                      </button>
+                    </span>
+                  ))}
+                </div>
+
+                {/* Tip / Warning */}
+                <p className="mt-2 text-xs text-slate-400">
+                  💡 Tip: You can scan multiple websites in one go. The first
+                  URL will be used as the primary target.
+                </p>
+              </div>
+
+              {/* Label Input */}
+              <div>
+                <label className="block text-sm font-medium text-slate-300">
+                  Label{" "}
+                  <span className="text-slate-400 text-xs">(optional)</span>
+                </label>
                 <input
                   type="text"
-                  placeholder="Enter URL with http(s)://"
-                  className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                  placeholder="Add a label for this scan (e.g. 'Quarterly PCI', 'Staging')"
+                  className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
                 />
-                <p className="text-xs text-slate-400 mt-1">
-                  💡 Type a URL and press{" "}
-                  <span className="px-1 py-0.5 rounded bg-slate-700 text-slate-200">
-                    comma
-                  </span>
-                  ,{" "}
-                  <span className="px-1 py-0.5 rounded bg-slate-700 text-slate-200">
-                    space
-                  </span>{" "}
-                  or{" "}
-                  <span className="px-1 py-0.5 rounded bg-slate-700 text-slate-200">
-                    enter
-                  </span>{" "}
-                  to add multiple URLs. First URL becomes the primary target.
-                </p>
               </div>
 
               {/* Auth Scan */}
@@ -241,6 +389,8 @@ export default function AssessmentCenter() {
                       type="radio"
                       name="auth"
                       className="accent-cyan-500"
+                      checked={authScan}
+                      onChange={() => setAuthScan(true)}
                     />
                     <span>Yes</span>
                   </label>
@@ -248,25 +398,50 @@ export default function AssessmentCenter() {
                     <input
                       type="radio"
                       name="auth"
-                      defaultChecked
                       className="accent-cyan-500"
+                      checked={!authScan}
+                      onChange={() => setAuthScan(false)}
                     />
                     <span>No</span>
                   </label>
                 </div>
               </div>
 
-              {/* Label */}
-              <div>
-                <label className="block text-sm font-medium text-slate-300">
-                  Label (optional)
-                </label>
-                <input
-                  type="text"
-                  placeholder="Add a label for this scan"
-                  className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
-                />
-              </div>
+              {/* Auth fields (only when Yes) */}
+              {authScan && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300">
+                      Email ID <span className="text-rose-400">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Enter email/username"
+                      className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300">
+                      Password <span className="text-rose-400">*</span>
+                    </label>
+                    <input
+                      type="password"
+                      placeholder="Enter password"
+                      className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
+                    />
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label className="block text-sm font-medium text-slate-300">
+                      Login URL <span className="text-rose-400">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Enter login page URL"
+                      className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
+                    />
+                  </div>
+                </div>
+              )}
 
               {/* Schedule */}
               <div>
@@ -278,8 +453,9 @@ export default function AssessmentCenter() {
                     <input
                       type="radio"
                       name="schedule"
-                      defaultChecked
                       className="accent-cyan-500"
+                      checked={!scheduleLater}
+                      onChange={() => setScheduleLater(false)}
                     />
                     <span>Now</span>
                   </label>
@@ -288,11 +464,38 @@ export default function AssessmentCenter() {
                       type="radio"
                       name="schedule"
                       className="accent-cyan-500"
+                      checked={scheduleLater}
+                      onChange={() => setScheduleLater(true)}
                     />
                     <span>Later</span>
                   </label>
                 </div>
               </div>
+
+              {/* Date + Time (only when Later) */}
+              {scheduleLater && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300">
+                      Date
+                    </label>
+                    <input
+                      type="date"
+                      className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
+                      min = {getTodayDate()}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300">
+                      Time
+                    </label>
+                    <input
+                      type="time"
+                      className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
+                    />
+                  </div>
+                </div>
+              )}
 
               {/* Confirm */}
               <div className="flex items-start gap-2">
@@ -306,10 +509,10 @@ export default function AssessmentCenter() {
 
               {/* Submit */}
               <button
-                type="button"
-                className="w-full rounded-md bg-slate-700 hover:bg-slate-600 py-2.5 text-sm font-medium text-slate-200 mt-2"
+                type="submit"
+                className="w-full rounded-md bg-cyan-800 hover:bg-cyan-900 py-2.5 text-sm font-medium text-slate-100 mt-2"
               >
-                Add at least one URL to continue
+                Start Scan
               </button>
             </form>
           </div>

@@ -30,6 +30,7 @@ import Select from "react-select";
 import { customStyles, darkTheme } from "@/constants/constants.data";
 import ChangePasswordModal from "@/modals/ChangePasswordModal";
 import SecurityQuestions from "@/pages/Auth/Secuirity";
+import ErrorBoundary from "@/utils/Errorhandler";
 
 const MainLayout = () => {
   const { notificationData, NotificationsViewed } =
@@ -299,10 +300,11 @@ const MainLayout = () => {
     fixed top:24 md:top-14 z-10 flex flex-col justify-between h-full 
     bg-gradient-to-t from-[#151515] to-[#212224] 
     transition-all duration-500 ease-in-out 
-    ${showSidebar
-              ? "lg:w-[25%] xl:w-[20%] 2xl:w-[15%]"
-              : "lg:w-[5%] xl:w-[4%] 2xl:w-[3%]"
-            } 
+    ${
+      showSidebar
+        ? "lg:w-[25%] xl:w-[20%] 2xl:w-[15%]"
+        : "lg:w-[5%] xl:w-[4%] 2xl:w-[3%]"
+    } 
     ${showMenu ? `left-0 ` : "-left-full lg:left-0 "} 
     whitespace-nowrap
   `}
@@ -315,18 +317,20 @@ const MainLayout = () => {
           />
         </aside>
       )}
-
       <div
         className={`ml-auto transition-all min-h-screen duration-500 ease-in-out 
      bg-gradient-custom bg-black 
-    ${AllowedPath(location.pathname.split("/")[1])
-            ? "w-full"
-            : showSidebar
-              ? "w-full lg:w-[75%] xl:w-[80%] 2xl:w-[85%]"
-              : "w-full lg:w-[95%] xl:w-[96%] 2xl:w-[97%]"
-          }`}
+    ${
+      AllowedPath(location.pathname.split("/")[1])
+        ? "w-full"
+        : showSidebar
+        ? "w-full lg:w-[75%] xl:w-[80%] 2xl:w-[85%]"
+        : "w-full lg:w-[95%] xl:w-[96%] 2xl:w-[97%]"
+    }`}
       >
-        <Outlet />
+        <ErrorBoundary>
+          <Outlet />
+        </ErrorBoundary>
       </div>
 
       <Footer />
