@@ -35,308 +35,157 @@ import ExecutiveDashboard from "@/pages/ExecutiveDashboard";
 import InProgressAssessment from "@/pages/InProgress";
 import CompleteAssessment from "@/pages/CompleteAssessment";
 import Severity from "@/pages/SLA-Configuration";
-import ErrorBoundary from "@/utils/Errorhandler";
-import { elements } from "chart.js";
 import ASMDashboard from "@/pages/ASMDashboard";
 import AssessmentCenter from "@/pages/AssessmentCenter";
 
 export const PrivateRoutes = [
   {
     path: "",
-    element: (
-      <ErrorBoundary>
-        <Home />
-      </ErrorBoundary>
-    ),
+    element: <Home />,
   },
   {
     path: "/assesment-schedule",
-    element: (
-      <ErrorBoundary>
-        <SchedulingAssessmentPage />
-      </ErrorBoundary>
-    ),
+    element: <SchedulingAssessmentPage />,
   },
-
   {
     path: "/pending-assesment",
-    element: (
-      <ErrorBoundary>
-        <PendingAssessment />
-      </ErrorBoundary>
-    ),
+    element: <PendingAssessment />,
   },
   {
     path: "/vulnerability-data",
-    element: (
-      <ErrorBoundary>
-        <VulnerabilityData />
-      </ErrorBoundary>
-    ),
+    element: <VulnerabilityData />,
   },
   {
     path: "/application-data",
-    element: (
-      <ErrorBoundary>
-        <ApplicationData />
-      </ErrorBoundary>
-    ),
+    element: <ApplicationData />,
   },
   {
     path: "/infrastructure-data",
-    element: (
-      <ErrorBoundary>
-        <InfrastructureData />
-      </ErrorBoundary>
-    ),
+    element: <InfrastructureData />,
   },
   {
     path: "/third-party-data",
-    element: (
-      <ErrorBoundary>
-        <JiraDataTable />
-      </ErrorBoundary>
-    ),
+    element: <JiraDataTable />,
   },
   {
     path: "/third-party-integrations",
-    element: (
-      <ErrorBoundary>
-        <ThirdPartyIntegrations />
-      </ErrorBoundary>
-    ),
+    element: <ThirdPartyIntegrations />,
   },
   {
     path: "/all-tenant",
-    element: (
-      <ErrorBoundary>
-        <AllCustomer />
-      </ErrorBoundary>
-    ),
+    element: <AllCustomer />,
   },
   {
     path: "/config-email",
-    element: (
-      <ErrorBoundary>
-        <EmailConfigPanel />
-      </ErrorBoundary>
-    ),
+    element: <EmailConfigPanel />,
   },
   {
     path: "/roles",
-    element: (
-      <ErrorBoundary>
-        <Roles />
-      </ErrorBoundary>
-    ),
+    element: <Roles />,
   },
   {
     path: "/partners",
-    element: (
-      <ErrorBoundary>
-        <Partners />
-      </ErrorBoundary>
-    ),
+    element: <Partners />,
   },
   {
     path: "/all-users",
-    element: (
-      <ErrorBoundary>
-        <AllEmployee />
-      </ErrorBoundary>
-    ),
+    element: <AllEmployee />,
   },
   {
     path: "/application-dashboard",
-    element: (
-      <ErrorBoundary>
-        <ApplicationVulnerability />
-      </ErrorBoundary>
-    ),
+    element: <ApplicationVulnerability />,
   },
   {
     path: "/infrastructure-dashboard",
-    element: (
-      <ErrorBoundary>
-        <InfraStructureVulnerability />
-      </ErrorBoundary>
-    ),
+    element: <InfraStructureVulnerability />,
   },
   {
     path: "/exceptions-dashboard",
-    element: (
-      <ErrorBoundary>
-        <Exceptions />
-      </ErrorBoundary>
-    ),
+    element: <Exceptions />,
   },
   {
     path: "/remedition",
-    element: (
-      <ErrorBoundary>
-        <Remediation />
-      </ErrorBoundary>
-    ),
+    element: <Remediation />,
   },
   {
     path: "/reports",
-    element: (
-      <ErrorBoundary>
-        <Reports />
-      </ErrorBoundary>
-    ),
+    element: <Reports />,
   },
   {
     path: "/chat/:chatId",
-    element: (
-      <ErrorBoundary>
-        <ChatPage />
-      </ErrorBoundary>
-    ),
+    element: <ChatPage />,
   },
   {
     path: "/infraStructure-asset",
-    element: (
-      <ErrorBoundary>
-        <AssertInventory />
-      </ErrorBoundary>
-    ),
+    element: <AssertInventory />,
   },
   {
     path: "/change-password",
-    element: (
-      <ErrorBoundary>
-        <ChangePassword />
-      </ErrorBoundary>
-    ),
+    element: <ChangePassword />,
   },
   {
     path: "/user-details",
-    element: (
-      <ErrorBoundary>
-        <UserProfile />
-      </ErrorBoundary>
-    ),
+    element: <UserProfile />,
   },
   {
     path: "/book-demo",
-    element: (
-      <ErrorBoundary>
-        <AdminBookDemo />
-      </ErrorBoundary>
-    ),
+    element: <AdminBookDemo />,
   },
   {
     path: "/application",
-    element: (
-      <ErrorBoundary>
-        <ApplicationSoftwareInventory />
-      </ErrorBoundary>
-    ),
+    element: <ApplicationSoftwareInventory />,
   },
   {
     path: "/client-Sme",
-    element: (
-      <ErrorBoundary>
-        <ClientCISO />
-      </ErrorBoundary>
-    ),
+    element: <ClientCISO />,
   },
   {
     path: "/newuser",
-    element: (
-      <ErrorBoundary>
-        <NewUser />
-      </ErrorBoundary>
-    ),
+    element: <NewUser />,
   },
   {
     path: "/business-applications",
-    element: (
-      <ErrorBoundary>
-        <BusinessApplications />
-      </ErrorBoundary>
-    ),
+    element: <BusinessApplications />,
   },
   {
     path: "/add-vulnerability-data",
-    element: (
-      <ErrorBoundary>
-        <VulnerabilityForm />
-      </ErrorBoundary>
-    ),
+    element: <VulnerabilityForm />,
   },
   {
     path: "/pending-exception",
-    element: (
-      <ErrorBoundary>
-        <ExceptionTable />
-      </ErrorBoundary>
-    ),
+    element: <ExceptionTable />,
   },
   {
     path: "/tags",
-    element: (
-      <ErrorBoundary>
-        <TagsPage />
-      </ErrorBoundary>
-    ),
+    element: <TagsPage />,
   },
   {
     path: "/demo",
-    element: (
-      <ErrorBoundary>
-        <DemoDashboard />
-      </ErrorBoundary>
-    ),
+    element: <DemoDashboard />,
   },
   {
     path: "/risk-operation",
-    element: (
-      <ErrorBoundary>
-        <RiskOperation />
-      </ErrorBoundary>
-    ),
+    element: <RiskOperation />,
   },
   {
     path: "/executive-dashboard",
-    element: (
-      <ErrorBoundary>
-        <ExecutiveDashboard />
-      </ErrorBoundary>
-    ),
+    element: <ExecutiveDashboard />,
   },
   {
     path: "/edit-vulnerability-data",
-    element: (
-      <ErrorBoundary>
-        <VulnerabilityForm />
-      </ErrorBoundary>
-    ),
+    element: <VulnerabilityForm />,
   },
   {
     path: "/in-progress-assessment",
-    element: (
-      <ErrorBoundary>
-        <InProgressAssessment />
-      </ErrorBoundary>
-    ),
+    element: <InProgressAssessment />,
   },
   {
     path: "/completed-assessment",
-    element: (
-      <ErrorBoundary>
-        <CompleteAssessment />
-      </ErrorBoundary>
-    ),
+    element: <CompleteAssessment />,
   },
   {
     path: "/sla-configuration",
-    element: (
-      <ErrorBoundary>
-        <Severity />
-      </ErrorBoundary>
-    ),
+    element: <Severity />,
   },
   {
     path: "/center-dashboard",

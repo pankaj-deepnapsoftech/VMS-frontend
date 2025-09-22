@@ -33,6 +33,23 @@ export default function AssessmentCenter() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [expanded, setExpanded] = useState(null);
 
+  const [authScan, setAuthScan] = useState(false);
+  const [scheduleLater, setScheduleLater] = useState(false);
+  const [targets, setTargets] = useState([]);
+  const [targetInput, setTargetInput] = useState("");
+
+  const handleAddTarget = () => {
+    if (targetInput.trim() && !targets.includes(targetInput.trim())) {
+      setTargets([...targets, targetInput.trim()]);
+      setTargetInput("");
+    }
+  };
+
+  const getTodayDate = () => {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+  };
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans p-4 sm:p-6 lg:p-8">
       {/* Header */}
@@ -258,27 +275,38 @@ export default function AssessmentCenter() {
 
             {/* Form */}
             <form className="space-y-4">
-              {/* Org + Target */}
+              {/* Organization + Target */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-slate-300">
-                    Organization Name
+                    Tenant Name
                   </label>
                   <input
                     type="text"
-                    defaultValue="BIGMINT"
+                    defaultValue="SECUREND"
+                    className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-300">
+                    User Name
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Enter User Name"
                     className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-slate-300">
-                    Target Name
+                    Target Name <span className="text-rose-400">*</span>
                   </label>
                   <input
                     type="text"
                     placeholder="Enter Target Name"
-                    className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                    className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
                   />
                 </div>
               </div>
@@ -288,26 +316,66 @@ export default function AssessmentCenter() {
                 <label className="block text-sm font-medium text-slate-300">
                   Scan Targets <span className="text-rose-400">*</span>
                 </label>
+                <div className="flex gap-2 mt-1">
+                  <input
+                    type="text"
+                    value={targetInput}
+                    onChange={(e) => setTargetInput(e.target.value)}
+                    placeholder="Enter URL with http(s)://"
+                    className="flex-1 rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleAddTarget}
+                    className="px-3 rounded-md bg-cyan-600 hover:bg-cyan-500 text-sm"
+                  >
+                    + Add
+                  </button>
+                </div>
+
+                {/* Show added targets */}
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {targets.map((url, i) => (
+                    <span
+                      key={i}
+                      className="px-3 py-1 bg-slate-700 text-slate-100 rounded-md flex items-center gap-2"
+                    >
+                      {url}{" "}
+                      {i === 0 && (
+                        <span className="text-xs bg-cyan-600 px-2 rounded-full">
+                          Primary
+                        </span>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setTargets(targets.filter((t) => t !== url))
+                        }
+                      >
+                        ✕
+                      </button>
+                    </span>
+                  ))}
+                </div>
+
+                {/* Tip / Warning */}
+                <p className="mt-2 text-xs text-slate-400">
+                  💡 Tip: You can scan multiple websites in one go. The first
+                  URL will be used as the primary target.
+                </p>
+              </div>
+
+              {/* Label Input */}
+              <div>
+                <label className="block text-sm font-medium text-slate-300">
+                  Label{" "}
+                  <span className="text-slate-400 text-xs">(optional)</span>
+                </label>
                 <input
                   type="text"
-                  placeholder="Enter URL with http(s)://"
-                  className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                  placeholder="Add a label for this scan (e.g. 'Quarterly PCI', 'Staging')"
+                  className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
                 />
-                <p className="text-xs text-slate-400 mt-1">
-                  💡 Type a URL and press{" "}
-                  <span className="px-1 py-0.5 rounded bg-slate-700 text-slate-200">
-                    comma
-                  </span>
-                  ,{" "}
-                  <span className="px-1 py-0.5 rounded bg-slate-700 text-slate-200">
-                    space
-                  </span>{" "}
-                  or{" "}
-                  <span className="px-1 py-0.5 rounded bg-slate-700 text-slate-200">
-                    enter
-                  </span>{" "}
-                  to add multiple URLs. First URL becomes the primary target.
-                </p>
               </div>
 
               {/* Auth Scan */}
@@ -321,6 +389,8 @@ export default function AssessmentCenter() {
                       type="radio"
                       name="auth"
                       className="accent-cyan-500"
+                      checked={authScan}
+                      onChange={() => setAuthScan(true)}
                     />
                     <span>Yes</span>
                   </label>
@@ -328,25 +398,50 @@ export default function AssessmentCenter() {
                     <input
                       type="radio"
                       name="auth"
-                      defaultChecked
                       className="accent-cyan-500"
+                      checked={!authScan}
+                      onChange={() => setAuthScan(false)}
                     />
                     <span>No</span>
                   </label>
                 </div>
               </div>
 
-              {/* Label */}
-              <div>
-                <label className="block text-sm font-medium text-slate-300">
-                  Label (optional)
-                </label>
-                <input
-                  type="text"
-                  placeholder="Add a label for this scan"
-                  className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
-                />
-              </div>
+              {/* Auth fields (only when Yes) */}
+              {authScan && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300">
+                      Email ID <span className="text-rose-400">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Enter email/username"
+                      className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300">
+                      Password <span className="text-rose-400">*</span>
+                    </label>
+                    <input
+                      type="password"
+                      placeholder="Enter password"
+                      className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
+                    />
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label className="block text-sm font-medium text-slate-300">
+                      Login URL <span className="text-rose-400">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Enter login page URL"
+                      className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
+                    />
+                  </div>
+                </div>
+              )}
 
               {/* Schedule */}
               <div>
@@ -358,8 +453,9 @@ export default function AssessmentCenter() {
                     <input
                       type="radio"
                       name="schedule"
-                      defaultChecked
                       className="accent-cyan-500"
+                      checked={!scheduleLater}
+                      onChange={() => setScheduleLater(false)}
                     />
                     <span>Now</span>
                   </label>
@@ -368,11 +464,38 @@ export default function AssessmentCenter() {
                       type="radio"
                       name="schedule"
                       className="accent-cyan-500"
+                      checked={scheduleLater}
+                      onChange={() => setScheduleLater(true)}
                     />
                     <span>Later</span>
                   </label>
                 </div>
               </div>
+
+              {/* Date + Time (only when Later) */}
+              {scheduleLater && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300">
+                      Date
+                    </label>
+                    <input
+                      type="date"
+                      className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
+                      min = {getTodayDate()}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300">
+                      Time
+                    </label>
+                    <input
+                      type="time"
+                      className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
+                    />
+                  </div>
+                </div>
+              )}
 
               {/* Confirm */}
               <div className="flex items-start gap-2">
@@ -386,10 +509,10 @@ export default function AssessmentCenter() {
 
               {/* Submit */}
               <button
-                type="button"
-                className="w-full rounded-md bg-slate-700 hover:bg-slate-600 py-2.5 text-sm font-medium text-slate-200 mt-2"
+                type="submit"
+                className="w-full rounded-md bg-cyan-800 hover:bg-cyan-900 py-2.5 text-sm font-medium text-slate-100 mt-2"
               >
-                Add at least one URL to continue
+                Start Scan
               </button>
             </form>
           </div>
