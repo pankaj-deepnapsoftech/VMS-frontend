@@ -309,7 +309,6 @@ const AuthContextProvider = ({ children }) => {
     if (token) {
       getLogedInUser();
       const data = decrypt(token);
-      console.log("this is actual token", data);
     }
   }, [token]);
 

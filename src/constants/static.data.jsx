@@ -342,11 +342,27 @@ export const products = [
         route: "/pending-exception",
         icon: MdInventory2,
       },
+      { title: "Vulnerability Data", route: "/vulnerability-data", icon: Bug },
       {
-        title: "Demo",
-        route: "/demo",
-        icon: MdSlowMotionVideo,
+        title: "Add Vulnerability Data",
+        route: "/add-vulnerability-data",
+        icon: FaBug,
       },
+      {
+        title: "Application Data",
+        route: "/application-data",
+        icon: MdSettingsApplications,
+      },
+      {
+        title: "Infrastructure Data",
+        route: "/infrastructure-data",
+        icon: IoIosInformationCircleOutline,
+      },
+      // {
+      //   title: "Demo",
+      //   route: "/demo",
+      //   icon: MdSlowMotionVideo,
+      // },
     ],
   },
   {
@@ -375,12 +391,12 @@ export const products = [
       {
         title: "Dashboard",
         route: "/center-dashboard",
-        icon: RiHome3Fill ,
+        icon: RiHome3Fill,
       },
       {
         title: "Assessment Center",
         route: "/assessment-center",
-        icon: GiTwirlCenter ,
+        icon: GiTwirlCenter,
       },
     ],
   },
