@@ -296,16 +296,13 @@ const MainLayout = () => {
           onMouseEnter={() => setShowSideBar(true)}
           onMouseLeave={() => setShowSideBar(false)}
           ref={sidebarRef}
-          className={` 
-    fixed top:24 md:top-14 z-10 flex flex-col justify-between h-full 
-    bg-gradient-to-t from-[#151515] to-[#212224] 
-    transition-all duration-500 ease-in-out 
+          className={`fixed top:24 md:top-14 z-10 flex flex-col justify-between h-full bg-gradient-to-t from-[#151515] to-[#212224] transition-all duration-500 ease-in-out 
     ${
       showSidebar
         ? "lg:w-[25%] xl:w-[20%] 2xl:w-[15%]"
         : "lg:w-[5%] xl:w-[4%] 2xl:w-[3%]"
     } 
-    ${showMenu ? `left-0 ` : "-left-full lg:left-0 "} 
+    ${showMenu ? `left-0 ` : "-left-full lg:left-0"}
     whitespace-nowrap
   `}
         >
