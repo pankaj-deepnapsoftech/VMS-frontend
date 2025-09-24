@@ -36,19 +36,21 @@ function Header({ setShowMenu, showSidebar }) {
         {products.map((item, index) => (
           <div key={index} className="py-1">
             {/* Main Section Title */}
-            <button
+            <div
               onClick={() => toggleMainDropdown(item.title)}
-              className="font-extrabold text-sm text-gray-300 pb-1 flex items-center justify-between w-full"
+              className="flex items-start gap-2 w-full px-3 py-2 rounded-lg hover:bg-[#3533cc] transition"
               title={item.ShownTitle}
             >
-              
-              {item.title}
+              <item.icon className="text-white w-5 h-5 mt-1" />
+              <span className="text-sm font-semibold text-white mt-1">
+                {item.title}
+              </span>
               <IoIosArrowDown
-                className={`ml-2 transition-transform duration-300 ${
+                className={`ml-auto mt-1 transition-transform duration-300 ${
                   openMainDropdown === item.title ? "rotate-0" : "-rotate-90"
                 }`}
               />
-            </button>
+            </div>
 
             {/* Main dropdown content */}
             {openMainDropdown === item.title &&
@@ -66,26 +68,22 @@ function Header({ setShowMenu, showSidebar }) {
                           : setShowMenu()
                       }
                       className={({ isActive }) =>
-                        `flex items-center px-2 py-2 space-x-2 rounded-lg transition duration-200 cursor-pointer ${
+                        `flex items-start gap-2 w-full px-4 py-2 rounded-lg cursor-pointer transition duration-200 ${
                           isActive && !hasChildren ? "bg-[#3533cc]" : ""
-                        } ${!hasChildren ? "hover:bg-[#3533cc]" : ""}`
+                        } hover:bg-[#3533cc]`
                       }
                     >
-                      <data.icon className="text-white w-5 h-5" />
-                      <p
-                        className={`text-sm font-semibold text-white flex items-center justify-between w-full ${
-                          showSidebar ? "" : "block lg:hidden"
-                        }`}
-                      >
+                      <data.icon className="text-white w-5 h-5 mt-1" />
+                      <span className="text-sm font-semibold text-white mt-1">
                         {data.title}
-                        {hasChildren && (
-                          <IoIosArrowDown
-                            className={`ml-2 transition-transform duration-300 ${
-                              isSubOpen ? "rotate-0" : "-rotate-90"
-                            }`}
-                          />
-                        )}
-                      </p>
+                      </span>
+                      {hasChildren && (
+                        <IoIosArrowDown
+                          className={`ml-auto mt-1 transition-transform duration-300 ${
+                            isSubOpen ? "rotate-0" : "-rotate-90"
+                          }`}
+                        />
+                      )}
                     </NavLink>
 
                     {/* Child Routes */}
