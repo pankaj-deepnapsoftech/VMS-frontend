@@ -278,7 +278,7 @@ export const products = [
     ShownTitle: "Dashboard",
     allowedPath: [
       {
-        title: "Executive Dashboards",
+        title: "Executive Dashboard",
         route: "/executive-dashboard",
         icon: BiSolidDashboard,
       },
@@ -367,21 +367,21 @@ export const products = [
         icon: MdInventory2,
       },
       // { title: "Vulnerability Data", route: "/vulnerability-data", icon: Bug },
-      // {
-      //   title: "Add Vulnerability Data",
-      //   route: "/add-vulnerability-data",
-      //   icon: FaBug,
-      // },
-      // {
-      //   title: "Application Data",
-      //   route: "/application-data",
-      //   icon: MdSettingsApplications,
-      // },
-      // {
-      //   title: "Infrastructure Data",
-      //   route: "/infrastructure-data",
-      //   icon: IoIosInformationCircleOutline,
-      // },
+      {
+        title: "Add Vulnerability",
+        route: "/add-vulnerability-data",
+        icon: FaBug,
+      },
+      {
+        title: "Application Vulnerabilities",
+        route: "/application-data",
+        icon: MdSettingsApplications,
+      },
+      {
+        title: "Infrastructure Vulnerabilities",
+        route: "/infrastructure-data",
+        icon: IoIosInformationCircleOutline,
+      },
       // {
       //   title: "Demo",
       //   route: "/demo",
