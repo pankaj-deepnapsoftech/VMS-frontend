@@ -4,22 +4,15 @@ import { IoClose } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
-  const {
-    setOpenSideBar,
-    setGetDataFromSession,
-    Logout,
-    OpenSideBar,
-  } = useAuthContext();
+  const { setOpenSideBar, setGetDataFromSession, Logout, OpenSideBar } =
+    useAuthContext();
   const navigate = useNavigate();
   const sidebarRef = useRef(null);
 
   // Detect outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        sidebarRef.current &&
-        !sidebarRef.current.contains(event.target)
-      ) {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
         setOpenSideBar(false);
       }
     };
@@ -32,7 +25,7 @@ const Sidebar = () => {
 
   return (
     <div
-     ref={sidebarRef}
+      ref={sidebarRef}
       className={`fixed top-0 ${
         OpenSideBar ? "right-0" : "-right-[300px]"
       } h-full w-64 z-50 transition-all duration-500 bg-gradient-custom text-white shadow-lg flex flex-col items-start p-6 space-y-4`}
@@ -53,7 +46,7 @@ const Sidebar = () => {
       >
         User Details
       </button>
-
+      {/* 
       <button
         className="w-full text-left px-4 py-2 rounded hover:bg-gray-800 transition"
         onClick={() => {
@@ -61,7 +54,7 @@ const Sidebar = () => {
         }}
       >
         Back to Module
-      </button>
+      </button> */}
       <button
         className="w-full text-left px-4 py-2 rounded hover:bg-gray-800 transition"
         onClick={() => {
