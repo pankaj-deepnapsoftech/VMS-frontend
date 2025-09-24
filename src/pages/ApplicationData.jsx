@@ -244,8 +244,8 @@ export function ApplicationData() {
               <Pagination
                 page={currentPage}
                 setPage={setCurrentPage}
-                hasNextPage={filteredData.length === 10}
-                total={filteredData.length}
+                hasNextPage={filteredData?.length === 10}
+                total={filteredData?.length}
               />
             </div>
           </div>
