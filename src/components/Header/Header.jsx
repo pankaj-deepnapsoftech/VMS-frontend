@@ -8,9 +8,7 @@ import { useAuthContext } from "@/context";
 function Header({ setShowMenu, showSidebar }) {
   const { Logout } = useAuthContext();
 
-  // track open main dropdown
   const [openMainDropdown, setOpenMainDropdown] = useState("");
-  // track open sub dropdowns
   const [openSubDropdown, setOpenSubDropdown] = useState({});
 
   const toggleMainDropdown = (title) => {
@@ -31,13 +29,13 @@ function Header({ setShowMenu, showSidebar }) {
   };
 
   return (
-    <div className="flex flex-col text-white h-[100%] hide-scrollbar bg-[#1f2937] overflow-y-auto transition-all duration-500 ease-in-out relative">
+    <div className="flex flex-col text-white h-full hide-scrollbar bg-[#1f2937] overflow-y-auto transition-all duration-500 ease-in-out relative">
       <hr className="border-gray-100 mx-10" />
 
       <nav className="flex-1 mx-2 py-5 space-y-1 hide-scrollbar overflow-scroll pb-72">
         {products.map((item, index) => (
           <div key={index} className="py-1">
-            {/* Section Title */}
+            {/* Main Section Title */}
             <button
               onClick={() => toggleMainDropdown(item.title)}
               className="font-extrabold text-sm text-gray-300 pb-1 flex items-center justify-between w-full"
@@ -53,22 +51,24 @@ function Header({ setShowMenu, showSidebar }) {
 
             {/* Main dropdown content */}
             {openMainDropdown === item.title &&
-              item?.allowedPath.map((data, ind) => {
+              item?.allowedPath?.map((data, ind) => {
                 const isSubOpen = openSubDropdown[data.route];
+                const hasChildren = data?.childRoutes?.length > 0;
 
                 return (
                   <div key={ind}>
-                    <NavLink to={data.route}
+                    <NavLink
+                      to={hasChildren ? "#" : data.route}
                       onClick={() =>
-                        data?.childRoutes?.length
+                        hasChildren
                           ? toggleSubDropdown(data.route)
                           : setShowMenu()
                       }
-                      className={`flex items-center px-2 py-2 space-x-2 rounded-lg transition duration-200 cursor-pointer ${
-                        !data?.childRoutes?.length
-                          ? "hover:bg-[#3533cc]"
-                          : ""
-                      }`}
+                      className={({ isActive }) =>
+                        `flex items-center px-2 py-2 space-x-2 rounded-lg transition duration-200 cursor-pointer ${
+                          isActive && !hasChildren ? "bg-[#3533cc]" : ""
+                        } ${!hasChildren ? "hover:bg-[#3533cc]" : ""}`
+                      }
                     >
                       <data.icon className="text-white w-5 h-5" />
                       <p
@@ -77,7 +77,7 @@ function Header({ setShowMenu, showSidebar }) {
                         }`}
                       >
                         {data.title}
-                        {data?.childRoutes?.length > 0 && (
+                        {hasChildren && (
                           <IoIosArrowDown
                             className={`ml-2 transition-transform duration-300 ${
                               isSubOpen ? "rotate-0" : "-rotate-90"
@@ -87,7 +87,7 @@ function Header({ setShowMenu, showSidebar }) {
                       </p>
                     </NavLink>
 
-                    {/* Sub dropdown */}
+                    {/* Child Routes */}
                     {isSubOpen &&
                       data?.childRoutes?.map((child) => (
                         <NavLink
@@ -120,7 +120,7 @@ function Header({ setShowMenu, showSidebar }) {
       </nav>
 
       {/* Logout */}
-      <hr className="border-gray-100 mx-8 " />
+      <hr className="border-gray-100 mx-8" />
       <div
         className={`h-20 fixed -bottom-16 p-2 flex w-full justify-start items-end bg-[#1f2937] ${
           showSidebar ? "" : "block lg:hidden"
