@@ -29,12 +29,12 @@ function Header({ setShowMenu, showSidebar }) {
 
   return (
     <div className="flex flex-col text-white h-[100%] hide-scrollbar bg-[#1f2937] overflow-y-auto transition-all duration-500 ease-in-out relative">
-      <hr className="border-gray-100 mx-8" />
+      <hr className="border-gray-100 mx-10" />
       <nav className="flex-1 mx-2 py-5 space-y-1 hide-scrollbar overflow-scroll pb-72">
         {products.map((item, index) => (
-          <div key={index} className="py-3">
+          <div key={index} className="py-4">
             {/* here is show title only */}
-            <p className="text-sm" title={item.ShownTitle} >{item.title}</p>
+            <p className="font-extrabold text-md" title={item.ShownTitle} >{item.title}</p>
 
             {item?.allowedPath.map((data,ind) => (
               <NavLink key={ind} to={data?.route}
