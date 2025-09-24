@@ -58,7 +58,7 @@ function Header({ setShowMenu, showSidebar }) {
 
                 return (
                   <div key={ind}>
-                    <div
+                    <NavLink to={data.route}
                       onClick={() =>
                         data?.childRoutes?.length
                           ? toggleSubDropdown(data.route)
@@ -85,7 +85,7 @@ function Header({ setShowMenu, showSidebar }) {
                           />
                         )}
                       </p>
-                    </div>
+                    </NavLink>
 
                     {/* Sub dropdown */}
                     {isSubOpen &&
