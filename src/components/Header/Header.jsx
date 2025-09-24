@@ -6,10 +6,11 @@ import { useAuthContext } from "@/context";
 
 // eslint-disable-next-line react/prop-types
 function Header({ setShowMenu, showSidebar }) {
-  
   const { Logout } = useAuthContext();
 
+  // track open main dropdown
   const [openMainDropdown, setOpenMainDropdown] = useState("");
+  // track open sub dropdowns
   const [openSubDropdown, setOpenSubDropdown] = useState({});
 
   const toggleMainDropdown = (title) => {
@@ -30,64 +31,63 @@ function Header({ setShowMenu, showSidebar }) {
   };
 
   return (
-    <div className="flex flex-col text-white h-full hide-scrollbar bg-[#1f2937] overflow-y-auto transition-all duration-500 ease-in-out relative">
+    <div className="flex flex-col text-white h-[100%] hide-scrollbar bg-[#1f2937] overflow-y-auto transition-all duration-500 ease-in-out relative">
       <hr className="border-gray-100 mx-10" />
 
       <nav className="flex-1 mx-2 py-5 space-y-1 hide-scrollbar overflow-scroll pb-72">
         {products.map((item, index) => (
           <div key={index} className="py-1">
-            {/* Main Section Title */}
-            <div
+            {/* Section Title */}
+            <button
               onClick={() => toggleMainDropdown(item.title)}
-              className="flex items-start gap-2 w-full px-3 py-2 rounded-lg hover:bg-[#3533cc] transition"
+              className="font-extrabold text-sm text-gray-300 pb-1 flex items-center justify-between w-full"
               title={item.ShownTitle}
             >
-              <item.icon className="text-white w-5 h-5 mt-1" />
-              <span className="text-sm font-semibold text-white mt-1">
-                {item.title}
-              </span>
+              {item.title}
               <IoIosArrowDown
-                className={`ml-auto mt-1 transition-transform duration-300 ${
+                className={`ml-2 transition-transform duration-300 ${
                   openMainDropdown === item.title ? "rotate-0" : "-rotate-90"
                 }`}
               />
-            </div>
+            </button>
 
             {/* Main dropdown content */}
             {openMainDropdown === item.title &&
-              item?.allowedPath?.map((data, ind) => {
+              item?.allowedPath.map((data, ind) => {
                 const isSubOpen = openSubDropdown[data.route];
-                const hasChildren = data?.childRoutes?.length > 0;
 
                 return (
                   <div key={ind}>
-                    <NavLink
-                      to={hasChildren ? "#" : data.route}
+                    <NavLink to={data.route}
                       onClick={() =>
-                        hasChildren
+                        data?.childRoutes?.length
                           ? toggleSubDropdown(data.route)
                           : setShowMenu()
                       }
-                      className={({ isActive }) =>
-                        `flex items-start gap-2 w-full px-4 py-2 rounded-lg cursor-pointer transition duration-200 ${
-                          isActive && !hasChildren ? "bg-[#3533cc]" : ""
-                        } hover:bg-[#3533cc]`
-                      }
+                      className={`flex items-center px-2 py-2 space-x-2 rounded-lg transition duration-200 cursor-pointer ${
+                        !data?.childRoutes?.length
+                          ? "hover:bg-[#3533cc]"
+                          : ""
+                      }`}
                     >
-                      <data.icon className="text-white w-5 h-5 mt-1" />
-                      <span className="text-sm font-semibold text-white mt-1">
+                      <data.icon className="text-white w-5 h-5" />
+                      <p
+                        className={`text-sm font-semibold text-white flex items-center justify-between w-full ${
+                          showSidebar ? "" : "block lg:hidden"
+                        }`}
+                      >
                         {data.title}
-                      </span>
-                      {hasChildren && (
-                        <IoIosArrowDown
-                          className={`ml-auto mt-1 transition-transform duration-300 ${
-                            isSubOpen ? "rotate-0" : "-rotate-90"
-                          }`}
-                        />
-                      )}
+                        {data?.childRoutes?.length > 0 && (
+                          <IoIosArrowDown
+                            className={`ml-2 transition-transform duration-300 ${
+                              isSubOpen ? "rotate-0" : "-rotate-90"
+                            }`}
+                          />
+                        )}
+                      </p>
                     </NavLink>
 
-                    {/* Child Routes */}
+                    {/* Sub dropdown */}
                     {isSubOpen &&
                       data?.childRoutes?.map((child) => (
                         <NavLink
@@ -120,7 +120,7 @@ function Header({ setShowMenu, showSidebar }) {
       </nav>
 
       {/* Logout */}
-      <hr className="border-gray-100 mx-8" />
+      <hr className="border-gray-100 mx-8 " />
       <div
         className={`h-20 fixed -bottom-16 p-2 flex w-full justify-start items-end bg-[#1f2937] ${
           showSidebar ? "" : "block lg:hidden"
@@ -132,7 +132,7 @@ function Header({ setShowMenu, showSidebar }) {
             className="flex w-full px-10 mb-52 md:mb-24 items-center text-indigo-600 hover:scale-95 transition bg-[#3533cc] rounded-lg justify-center"
           >
             <p className="text-base text-white p-2 font-medium">Log Out</p>
-            <IoIosLogOut className="w-6 h-6 text-white" />
+            <IoIosLogOut className="w-6 h-6 text-white " />
           </button>
         </div>
       </div>
