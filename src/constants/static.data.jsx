@@ -274,7 +274,7 @@ export const products = [
     title: "Dashboard",
     desc: "Centralized asset visibility and management",
     borderColor: "#9b1c4d",
-    icon: "/Icons/Component 1.png",
+    icon: BiSolidDashboard,
     ShownTitle: "Dashboard",
     allowedPath: [
       {
@@ -283,11 +283,13 @@ export const products = [
         icon: BiSolidDashboard,
       },
       {
-        title: "TVM Dashboard", route: "/", icon: BiSolidDashboard
+        title: "TVM Dashboard",
+        route: "/",
+        icon: BiSolidDashboard,
       },
       {
         title: "Risk Quantification",
-       route: "/risk-operation",
+        route: "/risk-operation",
         icon: AiOutlineException,
       },
       {
@@ -306,7 +308,7 @@ export const products = [
     title: "Asset Management",
     desc: "Centralized asset visibility and management",
     borderColor: "#9b1c4d",
-    icon: "/Icons/Component 1.png",
+    icon: MdInventory2,
     ShownTitle: "Asset Inventory",
     allowedPath: [
       {
@@ -325,10 +327,9 @@ export const products = [
     title: "Vulnerability Management",
     desc: "Threat and Vulnerability Management",
     borderColor: "#ff7e5f",
-    icon: "/Icons/Vector.png",
+    icon: MdOutlinePendingActions,
     ShownTitle: "Threat & Vulnerability Management",
     allowedPath: [
-     
       {
         title: "Manage Assessments",
         // route: "/assesment-schedule",
@@ -481,16 +482,18 @@ export const products = [
     title: "Reports",
     desc: "Generate reports & dashboards",
     borderColor: "#a1c4fd",
-    icon: "/Icons/Component 5.png",
+    icon: MdOutlineMiscellaneousServices,
     ShownTitle: "Reports",
-    allowedPath: [{ title: "Download Reports", route: "/reports", icon: TbReport }],
+    allowedPath: [
+      { title: "Download Reports", route: "/reports", icon: TbReport },
+    ],
   },
 
   {
     title: "Administration",
     desc: "Admin control panel",
     borderColor: "#f8b500",
-    icon: "/Icons/Component 6.png",
+    icon: LucideShield,
     ShownTitle: "Administration",
     allowedPath: [
       { title: "Manage Tenants", route: "/all-tenant", icon: UserCircle },
@@ -511,6 +514,4 @@ export const products = [
       // { title: "Config Email", route: "/config-email", icon: Settings },
     ],
   },
-  
-  
 ];
