@@ -115,6 +115,7 @@ const DataContextProvider = ({ children }) => {
     try {
       const res = await AxiosHandler.get(`/data/get-assign-data`)
       setAssignedData(res?.data?.data)
+      GetAllTenentData();
     } catch (error) {
       console.log(error)
     }

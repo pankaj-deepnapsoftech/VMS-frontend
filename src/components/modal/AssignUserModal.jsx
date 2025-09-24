@@ -7,10 +7,9 @@ import React, { useEffect, useState } from 'react'
 
 const AssignUserModal = ({ setAssignUserOpenModal, tenantId, selectedDataId }) => {
     const { GetUserDataByTenant, tenantData } = useAuthContext()
-    const { UpdatedOneData } = useDataContext()
-    const { GetInfrastructureData } = useVulnerabililtyDataContext();
+    const { GetInfrastructureData, UpdateData } = useVulnerabililtyDataContext();
 
-    const [selectedUserId, setSelectedUserId] = useState('') 
+    const [selectedUserId, setSelectedUserId] = useState('')
 
     useEffect(() => {
         GetUserDataByTenant(tenantId)
@@ -18,7 +17,7 @@ const AssignUserModal = ({ setAssignUserOpenModal, tenantId, selectedDataId }) =
 
     const handleSubmit = () => {
         if (selectedUserId) {
-            UpdatedOneData(selectedUserId, selectedDataId?._id)   
+            UpdateData({ assign:selectedUserId }, selectedDataId?._id)
             setAssignUserOpenModal(false)
             GetInfrastructureData()
         } else {
@@ -48,8 +47,8 @@ const AssignUserModal = ({ setAssignUserOpenModal, tenantId, selectedDataId }) =
                     <select
                         id="user-select"
                         value={selectedUserId || selectedDataId?.assign
-}
-                        onChange={(e) => setSelectedUserId(e.target.value)} 
+                        }
+                        onChange={(e) => setSelectedUserId(e.target.value)}
                         className="w-full px-4 py-2 rounded-lg bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                         <option value="">-- Select a user --</option>
@@ -63,7 +62,7 @@ const AssignUserModal = ({ setAssignUserOpenModal, tenantId, selectedDataId }) =
 
                 <div className='flex w-full justify-center px-8 mb-5'>
                     <button
-                        onClick={handleSubmit}  
+                        onClick={handleSubmit}
                         className="bg-sky-700 hover:bg-sky-600 text-white font-semibold py-2 px-4 rounded shadow"
                     >
                         Submit
