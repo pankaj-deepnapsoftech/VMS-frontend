@@ -101,14 +101,7 @@ const DataContextProvider = ({ children }) => {
     }
   };
 
-  const UpdatedOneData = async (selectedUserId, selectedDataId) => {
-    try {
-      const res = await AxiosHandler.patch(`/data/update/${selectedDataId}`, { assign: selectedUserId })
-      toast.success(res?.data?.message)
-    } catch (error) {
-      console.log(error)
-    }
-  }
+
 
 
   const GetAssignedByData = async () => {
@@ -143,7 +136,6 @@ const DataContextProvider = ({ children }) => {
         fourthChartData,
         ninthChartData,
         GetNinthChart,
-        UpdatedOneData,
         GetAssignedByData,
         AssignedData
       }}
