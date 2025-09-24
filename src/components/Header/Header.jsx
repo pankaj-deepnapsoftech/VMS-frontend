@@ -32,7 +32,7 @@ function Header({ setShowMenu, showSidebar }) {
       <hr className="border-gray-100 mx-8" />
       <nav className="flex-1 mx-2 py-5 space-y-1 hide-scrollbar overflow-scroll pb-72">
         {products.map((item, index) => (
-          <React.Fragment key={index}>
+          <div key={index} className="py-3">
             {/* here is show title only */}
             <p className="text-sm" title={item.ShownTitle} >{item.title}</p>
 
@@ -65,7 +65,7 @@ function Header({ setShowMenu, showSidebar }) {
             ))}
 
 
-          </React.Fragment>
+          </div>
         ))}
       </nav>
       <hr className="border-gray-100 mx-8 " />
