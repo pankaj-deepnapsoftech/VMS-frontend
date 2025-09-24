@@ -34,7 +34,7 @@ function Header({ setShowMenu, showSidebar }) {
         {products.map((item, index) => (
           <div key={index} className="py-4">
             {/* here is show title only */}
-            <p className="font-extrabold text-md" title={item.ShownTitle} >{item.title}</p>
+            <p className="font-extrabold text-sm" title={item.ShownTitle} >{item.title}</p>
 
             {item?.allowedPath.map((data,ind) => (
               <NavLink key={ind} to={data?.route}
