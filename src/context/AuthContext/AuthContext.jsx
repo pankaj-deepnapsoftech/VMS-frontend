@@ -11,7 +11,7 @@ export const authContext = createContext({
   token: "",
   authenticate: null,
   tenant: "",
-  GetSecuirityQuestion: () => {},
+  GetSecuirityQuestion: () => { },
 });
 
 // eslint-disable-next-line react/prop-types
@@ -33,7 +33,7 @@ const AuthContextProvider = ({ children }) => {
   });
 
   const [OpenSideBar, setOpenSideBar] = useState(false);
-
+  const [tenantData, setTenantData] = useState([])
   const getLogedInUser = async () => {
     setUserLoading(true);
     try {
@@ -71,7 +71,7 @@ const AuthContextProvider = ({ children }) => {
       toast.dismiss(toastId);
       toast.error(
         error?.response?.data?.message ||
-          "something went wrong please try again..."
+        "something went wrong please try again..."
       );
     } finally {
       setLoading(false);
@@ -297,13 +297,25 @@ const AuthContextProvider = ({ children }) => {
       const res = await AxiosHandler.get(
         `/auth/change-password-question?email=${email}`
       );
-      if(res?.data?.url){
+      if (res?.data?.url) {
         window.location.href = res?.data?.url
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+
+
+
+  const GetUserDataByTenant = async (tenantId) => {
+    try {
+      const res = await AxiosHandler.get(`/auth/user-by-tenant?tenant=${tenantId}`)
+      setTenantData(res?.data?.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   useEffect(() => {
     if (token) {
@@ -353,6 +365,8 @@ const AuthContextProvider = ({ children }) => {
         Verifyrecaptcha,
         tenant,
         GetSecuirityQuestion,
+        GetUserDataByTenant,
+        tenantData
       }}
     >
       {children}

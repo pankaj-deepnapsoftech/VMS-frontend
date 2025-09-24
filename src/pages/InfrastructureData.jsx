@@ -22,6 +22,8 @@ import {
   isViewAccess,
 } from "@/utils/pageAccess";
 import Access from "@/components/role/Access";
+import { CircleUser } from "lucide-react";
+import AssignUserModal from "@/components/modal/AssignUserModal";
 
 // Popup Menu Component using Portal
 
@@ -46,11 +48,12 @@ export function InfrastructureData() {
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
   const [status, setStatus] = useState(null);
   const { closeModal, isOpen, openModal } = useAccessPartner();
-
+  const [AssignUserOpenModal, setAssignUserOpenModal] = useState(false)
   // Popup state
   const [activeMenu, setActiveMenu] = useState(null);
   const [menuPosition, setMenuPosition] = useState(null);
-
+  const [tenantId,setTenantId] = useState(null)
+  const [selectedDataId,setselectedData ] = useState(null)
   const filteredData = allInfrastructureData?.filter((item) => {
     const valuesToSearch = [
       item.scan_type,
@@ -202,7 +205,7 @@ export function InfrastructureData() {
                             <td className="px-4 py-3 ">
                               <button
                                 className="hover:bg-gray-700 px-3 py-2 rounded-lg"
-                                onClick={(e) => toggleMenu(index, e)}
+                                onClick={(e) => { toggleMenu(index, e); setTenantId(item?.Severity?.tenant); setselectedData(item) }}
                               >
                                 <BsThreeDotsVertical />
                               </button>
@@ -276,6 +279,16 @@ export function InfrastructureData() {
                   <BiDetail />
                   View Details
                 </li>
+                <li
+                  className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
+                  onClick={() => {
+                   
+                    setAssignUserOpenModal(true)
+                  }}
+                >
+                  <CircleUser />
+                  Assign User
+                </li>
                 {isModifyAccess() && (
                   <li
                     className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
@@ -313,6 +326,12 @@ export function InfrastructureData() {
               defaultData={status}
             />
           )}
+
+
+          {AssignUserOpenModal && (
+              <AssignUserModal setAssignUserOpenModal={setAssignUserOpenModal} tenantId={tenantId} selectedDataId={selectedDataId} />
+          )
+          }
         </div>
       )}
     </Suspense>
