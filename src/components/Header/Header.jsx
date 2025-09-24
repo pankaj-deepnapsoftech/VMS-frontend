@@ -6,6 +6,7 @@ import { useAuthContext } from "@/context";
 
 // eslint-disable-next-line react/prop-types
 function Header({ setShowMenu, showSidebar }) {
+  
   const { Logout } = useAuthContext();
 
   const [openMainDropdown, setOpenMainDropdown] = useState("");
@@ -132,7 +133,7 @@ function Header({ setShowMenu, showSidebar }) {
             className="flex w-full px-10 mb-52 md:mb-24 items-center text-indigo-600 hover:scale-95 transition bg-[#3533cc] rounded-lg justify-center"
           >
             <p className="text-base text-white p-2 font-medium">Log Out</p>
-            <IoIosLogOut className="w-6 h-6 text-white " />
+            <IoIosLogOut className="w-6 h-6 text-white" />
           </button>
         </div>
       </div>
