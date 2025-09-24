@@ -220,14 +220,14 @@ const DashboardCards = () => {
                     <img src={card.icon} alt={card.title} className="w-7 h-7" />
                   </div>
                   <p
-                    className="text-sm font-medium whitespace-nowrap"
+                    className="text-sm font-medium truncate max-w-[120px]"
                     style={{ color: card.color }}
                   >
                     {card.title}
                   </p>
                 </div>
                 <p className="text-xl font-semibold text-white mt-3 ml-1">
-                  {card.value}
+                  {card.value}    
                 </p>
               </div>
             ))}
