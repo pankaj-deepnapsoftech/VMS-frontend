@@ -290,7 +290,7 @@ export const products = [
     ],
   },
   {
-    title: " (TVM)",
+    title: " Vulnerability Management",
     desc: "Threat and Vulnerability Management",
     borderColor: "#ff7e5f",
     icon: "/Icons/Vector.png",
