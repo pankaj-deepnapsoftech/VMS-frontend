@@ -275,6 +275,7 @@ export const products = [
     desc: "Centralized asset visibility and management",
     borderColor: "#9b1c4d",
     icon: "/Icons/Component 1.png",
+    ShownTitle:"Asset Inventory",
     allowedPath: [
       {
         title: "Infrastructure Asset",
@@ -289,10 +290,11 @@ export const products = [
     ],
   },
   {
-    title: "Threat & Vulnerability Management (TVM)",
+    title: " (TVM)",
     desc: "Threat and Vulnerability Management",
     borderColor: "#ff7e5f",
     icon: "/Icons/Vector.png",
+    ShownTitle:"Threat & Vulnerability Management",
     allowedPath: [
       { title: "Dashboard", route: "/", icon: BiSolidDashboard },
       {
@@ -365,28 +367,29 @@ export const products = [
       // },
     ],
   },
-  {
-    title: "Attack Surface Management (ASM)",
-    desc: "Attack Surface Monitoring",
-    borderColor: "#00c6ff",
-    bg: "from-[#126d83] to-[#22D3EE]",
-    icon: "/Icons/Component 2.png",
-    allowedPath: [],
-  },
-  {
-    title: "Risk and Compliances",
-    desc: "Risk and Compliances",
-    bg: "from-[#9b1c4d] to-[#df4156]",
-    borderColor: "#9b1c4d",
-    icon: "/Icons/Component 3.png",
-    allowedPath: [],
-  },
+  // {
+  //   title: "Attack Surface Management (ASM)",
+  //   desc: "Attack Surface Monitoring",
+  //   borderColor: "#00c6ff",
+  //   bg: "from-[#126d83] to-[#22D3EE]",
+  //   icon: "/Icons/Component 2.png",
+  //   allowedPath: [],
+  // },
+  // {
+  //   title: "Risk and Compliances",
+  //   desc: "Risk and Compliances",
+  //   bg: "from-[#9b1c4d] to-[#df4156]",
+  //   borderColor: "#9b1c4d",
+  //   icon: "/Icons/Component 3.png",
+  //   allowedPath: [],
+  // },
 
   {
     title: "AI-VA",
     desc: "AI Virtual Analyst",
     borderColor: "#ee9ca7",
     icon: " /Icons/Vector.png",
+    ShownTitle:"AI-VA",
     allowedPath: [
       {
         title: "Dashboard",
@@ -400,32 +403,33 @@ export const products = [
       },
     ],
   },
-  {
-    title: "Vulnerability Intelligence",
-    desc: "Insights on vulnerabilities",
-    borderColor: "#feb47b",
-    icon: "/Icons/Component 3.png",
-    allowedPath: [],
-  },
-  {
-    title: "GRC",
-    desc: "Governance, Risk & Compliance",
-    borderColor: "#f7971e",
-    icon: <Settings />,
-    allowedPath: [],
-  },
-  {
-    title: "TPRM",
-    desc: "Third-Party Risk Management",
-    borderColor: "#43cea2",
-    icon: <Users />,
-    allowedPath: [],
-  },
+  // {
+  //   title: "Vulnerability Intelligence",
+  //   desc: "Insights on vulnerabilities",
+  //   borderColor: "#feb47b",
+  //   icon: "/Icons/Component 3.png",
+  //   allowedPath: [],
+  // },
+  // {
+  //   title: "GRC",
+  //   desc: "Governance, Risk & Compliance",
+  //   borderColor: "#f7971e",
+  //   icon: <Settings />,
+  //   allowedPath: [],
+  // },
+  // {
+  //   title: "TPRM",
+  //   desc: "Third-Party Risk Management",
+  //   borderColor: "#43cea2",
+  //   icon: <Users />,
+  //   allowedPath: [],
+  // },
   {
     title: "Remediation Factory",
     desc: "Automated remediation of vulnerabilities",
     borderColor: "#6a11cb",
     icon: "/Icons/Component 4.png",
+    ShownTitle:"Remediation Factory",
     allowedPath: [
       {
         title: "Remediation",
@@ -455,6 +459,7 @@ export const products = [
     desc: "Generate reports & dashboards",
     borderColor: "#a1c4fd",
     icon: "/Icons/Component 5.png",
+    ShownTitle:"Reports",
     allowedPath: [{ title: "Reports", route: "/reports", icon: TbReport }],
   },
   {
@@ -462,6 +467,7 @@ export const products = [
     desc: "Admin control panel",
     borderColor: "#f8b500",
     icon: "/Icons/Component 6.png",
+    ShownTitle:"Administration",
     allowedPath: [
       { title: "Users", route: "/all-users", icon: Users },
       { title: "Tenant", route: "/all-tenant", icon: UserCircle },
@@ -483,7 +489,7 @@ export const products = [
   },
   {
     title: "ROC",
-    desc: "Risk Operation Center",
+    ShownTitle: "Risk Operation Center",
     allowedPath: [
       {
         title: "Executive Dashboard",

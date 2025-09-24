@@ -1,17 +1,25 @@
-/* eslint-disable react/prop-types */
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { useAuthContext } from "@/context";
 import { IoIosArrowDown, IoIosLogOut } from "react-icons/io";
 import { products } from "@/constants/static.data";
-import { UserCircle } from "lucide-react";
+import { useAuthContext } from "@/context";
 
+// eslint-disable-next-line react/prop-types
 function Header({ setShowMenu, showSidebar }) {
+  const { Logout } = useAuthContext();
+
+  // State to track which dropdown is open
+  const [openDropdown, setOpenDropdown] = useState(null);
 
 
-  const { Logout, getDataFromSession, authenticate } = useAuthContext();
+  const handleSidebard = (data) => {
+    !(data?.childRoutes && data?.childRoutes.length) &&
+      setShowMenu();
+    setOpenDropdown(
+      data?.childRoutes && data?.childRoutes.length && !openDropdown
+    );
+  }
 
-  const [dropDown, setDropDown] = useState(false);
 
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to log out?")) {
@@ -19,125 +27,53 @@ function Header({ setShowMenu, showSidebar }) {
     }
   };
 
-  let navList = [];
-
-  const selectedProduct = products.find(item => getDataFromSession === item.title);
-  if (!selectedProduct) return;
-
-  const { allowedPath } = selectedProduct;
-
-  if (!authenticate?.role) {
-    navList = allowedPath;
-  } else {
-    // Filter main allowed paths
-    navList = allowedPath.filter(pathItem =>
-      authenticate?.allowed_path.some(authItem => authItem.value === pathItem.route )
-    );
-
-    // Special case for TVM
-    if (getDataFromSession === "Threat & Vulnerability Management (TVM)" && allowedPath[1]?.childRoutes) {
-      const childRoutes = allowedPath[1].childRoutes.filter(child =>
-        authenticate?.allowed_path.some(authItem => authItem.value === child.route)
-      );
-
-      if (childRoutes.length) {
-        navList = [
-          ...navList,
-          { ...allowedPath[1], childRoutes }
-        ];
-      }
-    };
-
-    if(getDataFromSession === "Administration" && authenticate?.part_securend){
-      navList = [...navList, { title: "Tenant", route: "/all-tenant", icon: UserCircle }]
-    }
-  }
-
-
   return (
-    <div className=" flex flex-col text-white  h-[100%] hide-scrollbar bg-[#1f2937]   overflow-y-auto transition-all duration-500 ease-in-out ">
+    <div className="flex flex-col text-white h-[100%] hide-scrollbar bg-[#1f2937] overflow-y-auto transition-all duration-500 ease-in-out">
       <hr className="border-gray-100 mx-8" />
+      <nav className="flex-1 mx-2 py-5 space-y-1">
+        {products.map((item, index) => (
+          <React.Fragment key={index}>
+            {/* here is show title only */}
+            <p className="text-sm" title={item.ShownTitle} >{item.title}</p>
 
-      <nav className={`flex-1 mx-2 py-5 space-y-1 `}>
-        {navList?.map((data) => (
-          <React.Fragment key={data.route}>
-            <NavLink
-              to={data?.route}
-              onClick={() => {
-                !(data?.childRoutes && data?.childRoutes.length) &&
-                  setShowMenu();
-                setDropDown(
-                  data?.childRoutes && data?.childRoutes.length && !dropDown
-                );
-              }}
-              className={({ isActive }) =>
-                `flex items-center px-2 py-2 space-x-2 rounded-lg transition duration-200 ${isActive && !(data?.childRoutes && data?.childRoutes.length)
-                  ? "bg-[#3533cc]"
-                  : ""
-                }`
-              }
-            >
-              <data.icon className="text-white w-5 h-5" />
-              {
-                <p
-                  className={`text-sm font-semibold text-white flex items-center justify-center gap-2 ${showSidebar ? "" : "block lg:hidden"
-                    }`}
-                >
-                  {data.title}{" "}
-                  {data?.childRoutes && data?.childRoutes.length > 0 && (
-                    <IoIosArrowDown
-                      className={` transition-all duration-500 ${dropDown ? "rotate-0" : "rotate-180"
-                        } `}
-                    />
-                  )}{" "}
-                </p>
-              }
-            </NavLink>
-            {dropDown &&
-              data?.childRoutes &&
-              data?.childRoutes.length > 0 &&
-              data?.childRoutes.map((item) => (
-                <NavLink
-                  key={item.route}
-                  to={item.route}
-                  onClick={setShowMenu}
-                  className={({ isActive }) =>
-                    `flex items-center px-2 py-2 h-fit ${showSidebar && "mx-3"} space-x-2  rounded-lg transition duration-200 ${isActive ? "bg-[#3533cc]" : ""
-                    }`
-                  }
-                >
-                  <item.icon className="text-white w-5 h-5" />
-                  {
-                    <p
-                      className={`text-sm font-semibold text-white ${showSidebar ? "" : "block lg:hidden"
-                        }`}
-                    >
-                      {item.title}
-                    </p>
-                  }
-                </NavLink>
-              ))}
+            {item?.allowedPath.map((data,ind) => (
+              <NavLink key={ind} to={data?.route}
+                onClick={() => handleSidebard(data)}
+                className={({ isActive }) =>
+                  `flex items-center px-2 py-2 space-x-2 rounded-lg transition duration-200 ${isActive && !(data?.childRoutes && data?.childRoutes.length)
+                    ? "bg-[#3533cc]"
+                    : ""
+                  }`
+                }
+              >
+                <data.icon className="text-white w-5 h-5" />
+                {
+                  <p
+                    className={`text-sm font-semibold text-white flex items-center justify-center gap-2 ${showSidebar ? "" : "block lg:hidden"
+                      }`}
+                  >
+                    {data.title}{" "}
+                    {data?.childRoutes && data?.childRoutes.length > 0 && (
+                      <IoIosArrowDown
+                        className={` transition-all duration-500 ${openDropdown ? "rotate-0" : "rotate-180"
+                          } `}
+                      />
+                    )}{" "}
+                  </p>
+                }
+              </NavLink>
+            ))}
+
+
           </React.Fragment>
         ))}
       </nav>
       <hr className="border-gray-100 mx-8" />
-      <div
-        className={`h-full p-2 flex justify-start items-end  ${showSidebar ? "" : "block lg:hidden"
-          }`}
-      >
+      <div className={`h-full p-2 flex justify-start items-end ${showSidebar ? "" : "block lg:hidden"}`}>
         <div className="relative p-5 flex">
           <button
             onClick={handleLogout}
-            className="flex 
-              w-full
-              px-10
-              mb-52
-              md:mb-24
-              items-center  
-            text-indigo-600
-              hover:scale-95 
-             transition
-           bg-[#3533cc] rounded-lg justify-center"
+            className="flex w-full px-10 mb-52 md:mb-24 items-center text-indigo-600 hover:scale-95 transition bg-[#3533cc] rounded-lg justify-center"
           >
             <p className="text-base text-white p-2 font-medium">Log Out</p>
             <IoIosLogOut className="w-6 h-6 text-white " />
