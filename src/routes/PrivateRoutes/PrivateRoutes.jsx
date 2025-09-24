@@ -37,6 +37,8 @@ import CompleteAssessment from "@/pages/CompleteAssessment";
 import Severity from "@/pages/SLA-Configuration";
 import ASMDashboard from "@/pages/ASMDashboard";
 import AssessmentCenter from "@/pages/AssessmentCenter";
+import { elements } from "chart.js";
+import PendingVulnerability from "@/pages/PendingVulnerability";
 
 export const PrivateRoutes = [
   {
@@ -194,5 +196,9 @@ export const PrivateRoutes = [
   {
     path: "/assessment-center",
     element: <AssessmentCenter />,
+  },
+  {
+    path: "/pending-vulnerability",
+    element: <PendingVulnerability />,
   },
 ];
