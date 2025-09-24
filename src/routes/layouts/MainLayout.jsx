@@ -152,7 +152,7 @@ const MainLayout = () => {
   }, [getDataFromSession, authenticate]);
 
   const AllowedPath = (link) => {
-    const paths = ["reports"];
+    const paths = [];
     return paths.find((item) => item === link);
   };
 
@@ -193,9 +193,7 @@ const MainLayout = () => {
     return <SecurityQuestions />;
   }
 
-  return !getDataFromSession ? (
-    <FirstDashboard />
-  ) : (
+  return  (
     <Suspense fallback={<Loader />}>
       <Sidebar />
 
@@ -291,7 +289,7 @@ const MainLayout = () => {
       </header>
 
       {/* sidebar */}
-      {!AllowedPath(location.pathname.split("/")[1]) && (
+      { (
         <aside
           onMouseEnter={() => setShowSideBar(true)}
           onMouseLeave={() => setShowSideBar(false)}
