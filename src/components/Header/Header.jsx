@@ -11,15 +11,12 @@ function Header({ setShowMenu, showSidebar }) {
   // State to track which dropdown is open
   const [openDropdown, setOpenDropdown] = useState(null);
 
-
   const handleSidebard = (data) => {
-    !(data?.childRoutes && data?.childRoutes.length) &&
-      setShowMenu();
+    !(data?.childRoutes && data?.childRoutes.length) && setShowMenu();
     setOpenDropdown(
       data?.childRoutes && data?.childRoutes.length && !openDropdown
     );
-  }
-
+  };
 
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to log out?")) {
@@ -34,30 +31,40 @@ function Header({ setShowMenu, showSidebar }) {
         {products.map((item, index) => (
           <div key={index} className="py-4">
             {/* here is show title only */}
-            <p className="font-extrabold text-sm text-gray-300" title={item.ShownTitle} >{item.title}</p>
+            <p
+              className="font-extrabold text-sm text-gray-300"
+              title={item.ShownTitle}
+            >
+              {item.title}
+            </p>
 
             {item?.allowedPath.map((data, ind) => (
               <div key={ind}>
-                <NavLink to={data?.route}
+                <NavLink
+                  to={data?.route}
                   onClick={() => handleSidebard(data)}
                   className={({ isActive }) =>
-                    `flex items-center px-2 py-2 space-x-2 rounded-lg transition duration-200 ${isActive && !(data?.childRoutes && data?.childRoutes.length)
-                      ? "bg-[#3533cc]"
-                      : ""
+                    `flex items-center px-2 py-2 space-x-2 rounded-lg transition duration-200 ${
+                      isActive &&
+                      !(data?.childRoutes && data?.childRoutes.length)
+                        ? "bg-[#3533cc]"
+                        : ""
                     }`
                   }
                 >
                   <data.icon className="text-white w-5 h-5" />
                   {
                     <p
-                      className={`text-sm font-semibold text-white flex items-center justify-center gap-2 ${showSidebar ? "" : "block lg:hidden"
-                        }`}
+                      className={`text-sm font-semibold text-white flex items-center justify-center gap-2 ${
+                        showSidebar ? "" : "block lg:hidden"
+                      }`}
                     >
                       {data.title}{" "}
                       {data?.childRoutes && data?.childRoutes.length > 0 && (
                         <IoIosArrowDown
-                          className={` transition-all duration-500 ${openDropdown ? "rotate-0" : "rotate-180"
-                            } `}
+                          className={` transition-all duration-500 ${
+                            openDropdown ? "rotate-0" : "rotate-180"
+                          } `}
                         />
                       )}{" "}
                     </p>
@@ -73,30 +80,36 @@ function Header({ setShowMenu, showSidebar }) {
                       to={item.route}
                       onClick={setShowMenu}
                       className={({ isActive }) =>
-                        `flex items-center px-2 py-2 h-fit ${showSidebar && "mx-3"} space-x-2  rounded-lg transition duration-200 ${isActive ? "bg-[#3533cc]" : ""
+                        `flex items-center px-2 py-2 h-fit ${
+                          showSidebar && "mx-3"
+                        } space-x-2  rounded-lg transition duration-200 ${
+                          isActive ? "bg-[#3533cc]" : ""
                         }`
                       }
                     >
                       <item.icon className="text-white w-5 h-5" />
                       {
                         <p
-                          className={`text-sm font-semibold text-white ${showSidebar ? "" : "block lg:hidden"
-                            }`}
+                          className={`text-sm font-semibold text-white ${
+                            showSidebar ? "" : "block lg:hidden"
+                          }`}
                         >
                           {item.title}
                         </p>
                       }
-                    </NavLink>))}
-                
+                    </NavLink>
+                  ))}
               </div>
             ))}
-
-
           </div>
         ))}
       </nav>
       <hr className="border-gray-100 mx-8 " />
-      <div className={`h-20 fixed -bottom-16 p-2 flex w-full  justify-start items-end bg-[#1f2937] ${showSidebar ? "" : "block lg:hidden"}`}>
+      <div
+        className={`h-20 fixed -bottom-16 p-2 flex w-full  justify-start items-end bg-[#1f2937] ${
+          showSidebar ? "" : "block lg:hidden"
+        }`}
+      >
         <div className="p-5 flex bg-[#1f2937]">
           <button
             onClick={handleLogout}
