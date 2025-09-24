@@ -32,6 +32,7 @@ export function ApplicationData() {
   const navigate = useNavigate();
   const location = useLocation();
   const { closeModal, isOpen, openModal } = useAccessPartner();
+
   const showTitle = (header) => {
     if (header === "VRS") {
       return "Vulnerability Risk Score";
@@ -54,34 +55,23 @@ export function ApplicationData() {
   const [selectedId, setSelectedId] = useState(null);
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
 
-  // Filtered Data
-  const filteredData = allApplicationData?.filter((item) => {
-    const valuesToSearch = [
-      item.scan_type,
-      item.asset_type,
-      item.threat_type,
-      item.CVE,
-      item.CVE_ID,
-      item.Exploit_Availale,
-      item.Exploit_Details?.toString(),
-      item.exploit_complexity,
-      item.Location,
-      item.Title,
-      item.Description,
-      item.Severity,
-      item.CVSS?.toString(),
-      item.Reference_URL,
-      item.BusinessApplication?.name,
-      item.Proof_of_Concept?.toString(),
-      item.creator?.company_name,
-    ];
+  // 🔹 New states for Assign User Modal
+  const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState("");
 
-    return valuesToSearch
-      .filter(Boolean)
-      .some((field) =>
-        field.toString().toLowerCase().includes(searchTerm.toLowerCase())
-      );
-  });
+  // Fetch users API
+  const fetchUsers = async () => {
+    try {
+      const res = await fetch("/api/users", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      setUsers(data || []);
+    } catch (err) {
+      console.error("Failed to fetch users:", err);
+    }
+  };
 
   // Menu toggle logic
   const toggleMenu = (index, e) => {
@@ -136,13 +126,26 @@ export function ApplicationData() {
       ) : (
         <div className="bg-gradient-custom min-h-screen p-4 rounded-lg text-white">
           {/* HEADER */}
-          <div className="w-full px-6">
-            <h2 className="text-2xl font-semibold text-white">
-              All Application Data
-            </h2>
-            <span className="text-subtext text-sm">
-              Manage your Application Data
-            </span>
+          <div className="w-full px-6 mt-10 flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-semibold text-white">
+                All Application Data
+              </h2>
+              <span className="text-subtext text-sm">
+                Manage your Application Data
+              </span>
+            </div>
+
+            {/* 🔹 Assign User Button */}
+            <button
+              onClick={() => {
+                setIsAssignModalOpen(true);
+                fetchUsers();
+              }}
+              className="px-4 py-2 bg-blue-700 hover:bg-blue-900 text-white rounded-md"
+            >
+              Assign User
+            </button>
           </div>
 
           {/* TABLE WRAPPER */}
@@ -163,7 +166,7 @@ export function ApplicationData() {
               </div>
 
               {/* TABLE */}
-              {filteredData?.length < 1 ? (
+              {allApplicationData?.length < 1 ? (
                 <NoDataFound />
               ) : (
                 <div className="overflow-x-auto w-full custom-scrollbar">
@@ -192,7 +195,7 @@ export function ApplicationData() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-700">
-                      {filteredData.map((item, index) => (
+                      {allApplicationData.map((item, index) => (
                         <tr
                           key={index}
                           className="border-b border-slate-700 hover:bg-[#1E293B] transition"
@@ -241,97 +244,64 @@ export function ApplicationData() {
               <Pagination
                 page={currentPage}
                 setPage={setCurrentPage}
-                hasNextPage={filteredData.length === 10}
-                total={filteredData.length}
+                hasNextPage={allApplicationData.length === 10}
+                total={allApplicationData.length}
               />
             </div>
           </div>
 
-          {/* POPUP MENU USING PORTAL */}
-          <PopupMenu position={menuPosition} onClose={closeMenu}>
-            {activeMenu !== null && (
-              <>
-                {isModifyAccess() && (
-                  <li
-                    className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
-                    onClick={() =>
-                      navigate("/edit-vulnerability-data", {
-                        state: { data: filteredData[activeMenu] },
-                      })
-                    }
-                  >
-                    <MdModeEditOutline /> Edit
-                  </li>
-                )}
-                {isDeleteAccess() && (
-                  <li
-                    className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
-                    onClick={() => {
-                      if (window.confirm("Are you sure to delete?")) {
-                        DeleteData(filteredData[activeMenu]._id);
-                        closeMenu();
-                      }
-                    }}
-                  >
-                    <MdDelete /> Delete
-                  </li>
-                )}
-                {isModifyAccess() && (
-                  <li
-                    className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
-                    onClick={() => {
-                      handleExpectionModal(filteredData[activeMenu]);
-                      closeMenu();
-                    }}
-                  >
-                    <IoWarningOutline /> Add Exception
-                  </li>
-                )}
-                <li
-                  className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
-                  onClick={() => {
-                    setExploitDetails(filteredData[activeMenu]);
-                    openModal();
-                    closeMenu();
-                  }}
-                >
-                  <BiDetail /> View Details
-                </li>
-                {isModifyAccess() && (
-                  <li
-                    className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
-                    onClick={() => {
-                      setStatus({
-                        status: filteredData[activeMenu].status,
-                        _id: filteredData[activeMenu]._id,
-                      });
-                      setIsStatusModalOpen(true);
-                    }}
-                  >
-                    <GrStatusGood /> Change Status
-                  </li>
-                )}
-              </>
-            )}
-          </PopupMenu>
+          {/* 🔹 ASSIGN USER MODAL */}
+          {isAssignModalOpen && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+              <div className="bg-[#1a1f2e] p-6 rounded-lg w-[400px]">
+                <h2 className="text-xl font-semibold mb-4">Assign User</h2>
 
-          {/* EXCEPTION MODAL */}
+                <select
+                  value={selectedUser}
+                  onChange={(e) => setSelectedUser(e.target.value)}
+                  className="w-full p-2 rounded-md bg-gray-800 text-white mb-4"
+                >
+                  <option value="">Select a user</option>
+                  {users.map((user) => (
+                    <option key={user.id} value={user.id}>
+                      {user.name}
+                    </option>
+                  ))}
+                </select>
+
+                <div className="flex justify-end gap-3">
+                  <button
+                    onClick={() => setIsAssignModalOpen(false)}
+                    className="px-4 py-2 bg-gray-600 rounded-md"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => {
+                      console.log("Assigned User:", selectedUser);
+                      setIsAssignModalOpen(false);
+                    }}
+                    className="px-4 py-2 bg-blue-600 rounded-md"
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* EXISTING MODALS (untouched) */}
           {isModalOpen && (
             <ExpectionModal
               setIsModalOpen={setIsModalOpen}
               creator={selectedId}
             />
           )}
-
-          {/* EXPLOIT DETAIL MODAL */}
-
           <ExploitDetail
             data={exploitDetails}
             isOpen={isOpen}
             onClose={closeModal}
           />
-
-          {/* STATUS MODAL */}
           {isStatusModalOpen && (
             <StatusModal
               setIsModalOpen={setIsStatusModalOpen}

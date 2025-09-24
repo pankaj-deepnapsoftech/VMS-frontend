@@ -41,6 +41,7 @@ function Header({ setShowMenu, showSidebar }) {
               className="font-extrabold text-sm text-gray-300 pb-1 flex items-center justify-between w-full"
               title={item.ShownTitle}
             >
+              
               {item.title}
               <IoIosArrowDown
                 className={`ml-2 transition-transform duration-300 ${
