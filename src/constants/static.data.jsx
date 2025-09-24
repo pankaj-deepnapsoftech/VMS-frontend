@@ -290,7 +290,7 @@ export const products = [
     ],
   },
   {
-    title: " (TVM)",
+    title: "TVM",
     desc: "Threat and Vulnerability Management",
     borderColor: "#ff7e5f",
     icon: "/Icons/Vector.png",
@@ -454,14 +454,7 @@ export const products = [
       },
     ],
   },
-  {
-    title: "Reports",
-    desc: "Generate reports & dashboards",
-    borderColor: "#a1c4fd",
-    icon: "/Icons/Component 5.png",
-    ShownTitle:"Reports",
-    allowedPath: [{ title: "Reports", route: "/reports", icon: TbReport }],
-  },
+  
   {
     title: "Administration",
     desc: "Admin control panel",
@@ -502,5 +495,13 @@ export const products = [
         icon: AiOutlineException,
       },
     ],
+  },
+  {
+    title: "Reports",
+    desc: "Generate reports & dashboards",
+    borderColor: "#a1c4fd",
+    icon: "/Icons/Component 5.png",
+    ShownTitle:"Reports",
+    allowedPath: [{ title: "Reports", route: "/reports", icon: TbReport }],
   },
 ];
