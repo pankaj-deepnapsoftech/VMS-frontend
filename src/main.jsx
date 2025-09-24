@@ -26,8 +26,8 @@ createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <AuthContextProvider>
       <DataContextProvider>
-        <AllEmployeeContextProvider>
-          <VulnerabililtyDataContextProvider>
+        <VulnerabililtyDataContextProvider>
+          <AllEmployeeContextProvider>
             <AllCustomerContextProvider>
               <JiraContextProvider>
                 <SchedulingAssesmentContextProvider>
@@ -55,9 +55,9 @@ createRoot(document.getElementById("root")).render(
                 </SchedulingAssesmentContextProvider>
               </JiraContextProvider>
             </AllCustomerContextProvider>
-          </VulnerabililtyDataContextProvider>
-        </AllEmployeeContextProvider>
+          </AllEmployeeContextProvider>
+        </VulnerabililtyDataContextProvider>
       </DataContextProvider>
     </AuthContextProvider>
-  </BrowserRouter>
+  </BrowserRouter >
 );

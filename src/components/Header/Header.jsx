@@ -43,8 +43,7 @@ function Header({ setShowMenu, showSidebar }) {
             >
               <div className="flex gap-2" >
                 <item.icon className="text-white w-5 h-5" />
-                <div className={`${showSidebar ? "" : "block lg:hidden"
-                  }`}>
+                <div className={`${showSidebar ? "" : "block lg:hidden"}`}>
                   {item.title}
                 </div>
               </div>
