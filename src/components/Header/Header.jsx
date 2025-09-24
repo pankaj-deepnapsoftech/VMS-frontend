@@ -36,32 +36,59 @@ function Header({ setShowMenu, showSidebar }) {
             {/* here is show title only */}
             <p className="font-extrabold text-md" title={item.ShownTitle} >{item.title}</p>
 
-            {item?.allowedPath.map((data,ind) => (
-              <NavLink key={ind} to={data?.route}
-                onClick={() => handleSidebard(data)}
-                className={({ isActive }) =>
-                  `flex items-center px-2 py-2 space-x-2 rounded-lg transition duration-200 ${isActive && !(data?.childRoutes && data?.childRoutes.length)
-                    ? "bg-[#3533cc]"
-                    : ""
-                  }`
-                }
-              >
-                <data.icon className="text-white w-5 h-5" />
-                {
-                  <p
-                    className={`text-sm font-semibold text-white flex items-center justify-center gap-2 ${showSidebar ? "" : "block lg:hidden"
-                      }`}
-                  >
-                    {data.title}{" "}
-                    {data?.childRoutes && data?.childRoutes.length > 0 && (
-                      <IoIosArrowDown
-                        className={` transition-all duration-500 ${openDropdown ? "rotate-0" : "rotate-180"
-                          } `}
-                      />
-                    )}{" "}
-                  </p>
-                }
-              </NavLink>
+            {item?.allowedPath.map((data, ind) => (
+              <div key={ind}>
+                <NavLink to={data?.route}
+                  onClick={() => handleSidebard(data)}
+                  className={({ isActive }) =>
+                    `flex items-center px-2 py-2 space-x-2 rounded-lg transition duration-200 ${isActive && !(data?.childRoutes && data?.childRoutes.length)
+                      ? "bg-[#3533cc]"
+                      : ""
+                    }`
+                  }
+                >
+                  <data.icon className="text-white w-5 h-5" />
+                  {
+                    <p
+                      className={`text-sm font-semibold text-white flex items-center justify-center gap-2 ${showSidebar ? "" : "block lg:hidden"
+                        }`}
+                    >
+                      {data.title}{" "}
+                      {data?.childRoutes && data?.childRoutes.length > 0 && (
+                        <IoIosArrowDown
+                          className={` transition-all duration-500 ${openDropdown ? "rotate-0" : "rotate-180"
+                            } `}
+                        />
+                      )}{" "}
+                    </p>
+                  }
+                </NavLink>
+
+                {openDropdown &&
+                  data?.childRoutes &&
+                  data?.childRoutes.length > 0 &&
+                  data?.childRoutes.map((item) => (
+                    <NavLink
+                      key={item.route}
+                      to={item.route}
+                      onClick={setShowMenu}
+                      className={({ isActive }) =>
+                        `flex items-center px-2 py-2 h-fit ${showSidebar && "mx-3"} space-x-2  rounded-lg transition duration-200 ${isActive ? "bg-[#3533cc]" : ""
+                        }`
+                      }
+                    >
+                      <item.icon className="text-white w-5 h-5" />
+                      {
+                        <p
+                          className={`text-sm font-semibold text-white ${showSidebar ? "" : "block lg:hidden"
+                            }`}
+                        >
+                          {item.title}
+                        </p>
+                      }
+                    </NavLink>))}
+                
+              </div>
             ))}
 
 
