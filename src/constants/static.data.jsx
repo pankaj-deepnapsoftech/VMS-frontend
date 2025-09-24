@@ -275,7 +275,7 @@ export const products = [
     desc: "Centralized asset visibility and management",
     borderColor: "#9b1c4d",
     icon: "/Icons/Component 1.png",
-    ShownTitle:"Asset Inventory",
+    ShownTitle: "Asset Inventory",
     allowedPath: [
       {
         title: "Infrastructure Asset",
@@ -290,11 +290,30 @@ export const products = [
     ],
   },
   {
+    title: "AI-VA",
+    desc: "AI Virtual Analyst",
+    borderColor: "#ee9ca7",
+    icon: " /Icons/Vector.png",
+    ShownTitle: "AI-VA",
+    allowedPath: [
+      {
+        title: "Dashboard",
+        route: "/center-dashboard",
+        icon: RiHome3Fill,
+      },
+      {
+        title: "Assessment Center",
+        route: "/assessment-center",
+        icon: GiTwirlCenter,
+      },
+    ],
+  },
+  {
     title: "TVM",
     desc: "Threat and Vulnerability Management",
     borderColor: "#ff7e5f",
     icon: "/Icons/Vector.png",
-    ShownTitle:"Threat & Vulnerability Management",
+    ShownTitle: "Threat & Vulnerability Management",
     allowedPath: [
       { title: "Dashboard", route: "/", icon: BiSolidDashboard },
       {
@@ -383,26 +402,6 @@ export const products = [
   //   icon: "/Icons/Component 3.png",
   //   allowedPath: [],
   // },
-
-  {
-    title: "AI-VA",
-    desc: "AI Virtual Analyst",
-    borderColor: "#ee9ca7",
-    icon: " /Icons/Vector.png",
-    ShownTitle:"AI-VA",
-    allowedPath: [
-      {
-        title: "Dashboard",
-        route: "/center-dashboard",
-        icon: RiHome3Fill,
-      },
-      {
-        title: "Assessment Center",
-        route: "/assessment-center",
-        icon: GiTwirlCenter,
-      },
-    ],
-  },
   // {
   //   title: "Vulnerability Intelligence",
   //   desc: "Insights on vulnerabilities",
@@ -429,7 +428,7 @@ export const products = [
     desc: "Automated remediation of vulnerabilities",
     borderColor: "#6a11cb",
     icon: "/Icons/Component 4.png",
-    ShownTitle:"Remediation Factory",
+    ShownTitle: "Remediation Factory",
     allowedPath: [
       {
         title: "Remediation",
@@ -454,13 +453,13 @@ export const products = [
       },
     ],
   },
-  
+
   {
     title: "Administration",
     desc: "Admin control panel",
     borderColor: "#f8b500",
     icon: "/Icons/Component 6.png",
-    ShownTitle:"Administration",
+    ShownTitle: "Administration",
     allowedPath: [
       { title: "Users", route: "/all-users", icon: Users },
       { title: "Tenant", route: "/all-tenant", icon: UserCircle },
@@ -501,7 +500,7 @@ export const products = [
     desc: "Generate reports & dashboards",
     borderColor: "#a1c4fd",
     icon: "/Icons/Component 5.png",
-    ShownTitle:"Reports",
+    ShownTitle: "Reports",
     allowedPath: [{ title: "Reports", route: "/reports", icon: TbReport }],
   },
 ];
