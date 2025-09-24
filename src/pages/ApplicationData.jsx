@@ -24,6 +24,8 @@ import {
   isViewAccess,
 } from "@/utils/pageAccess";
 import Access from "@/components/role/Access";
+import { CircleUser } from "lucide-react";
+import AssignUserModal from "@/components/modal/AssignUserModal";
 
 export function ApplicationData() {
   const { loading, GetApplicationData, allApplicationData, DeleteData } =
@@ -44,12 +46,13 @@ export function ApplicationData() {
   const [tenant, setTenant] = useState("");
   const [exploitDetails, setExploitDetails] = useState([]);
   const [status, setStatus] = useState(null);
-
+  const [AssignUserOpenModal, setAssignUserOpenModal] = useState(false)
   // Popup Menu States
   const [activeMenu, setActiveMenu] = useState(null);
   const [menuPosition, setMenuPosition] = useState(null);
-
+  const [tenantId, setTenantId] = useState(null)
   // Modals
+  const [selectedDataId, setselectedData] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
@@ -224,7 +227,7 @@ export function ApplicationData() {
                             <td className="px-4 py-3">
                               <button
                                 className="hover:bg-gray-700 px-3 py-2 rounded-lg"
-                                onClick={(e) => toggleMenu(index, e)}
+                                onClick={(e) => { toggleMenu(index, e); setTenantId(item?.Severity?.tenant); setselectedData(item) }}
                               >
                                 <BsThreeDotsVertical />
                               </button>
@@ -297,6 +300,17 @@ export function ApplicationData() {
                 >
                   <BiDetail /> View Details
                 </li>
+                <li
+                  className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
+                  onClick={() => {
+
+                    setAssignUserOpenModal(true)
+                  }}
+                >
+                  <CircleUser />
+                  Assign User
+                </li>
+
                 {isModifyAccess() && (
                   <li
                     className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
@@ -338,6 +352,11 @@ export function ApplicationData() {
               defaultData={status}
             />
           )}
+
+          {AssignUserOpenModal && (
+            <AssignUserModal setAssignUserOpenModal={setAssignUserOpenModal} tenantId={tenantId} selectedDataId={selectedDataId} />
+          )
+          }
         </div>
       )}
     </Suspense>

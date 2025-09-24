@@ -13,12 +13,12 @@ const DataContextProvider = ({ children }) => {
   // useState
   const [loading, setLoading] = useState(false);
   const [TenantAllData, setTenantAllData] = useState([]);
-  const [firstChartData,setFirstChartData] = useState(null);
+  const [firstChartData, setFirstChartData] = useState(null);
   const [partners, setPartners] = useState([]);
-  const [secondChartData,setSecondChartData] = useState(null);
-  const [fourthChartData,setFourthChartData] = useState(null);
-  const [ninthChartData,setNinthChartData] = useState(null)
-
+  const [secondChartData, setSecondChartData] = useState(null);
+  const [fourthChartData, setFourthChartData] = useState(null);
+  const [ninthChartData, setNinthChartData] = useState(null)
+  const [AssignedData, setAssignedData] = useState(null)
 
   const UploadBulkData = async (data) => {
     const toastId = toast.loading("Loading...");
@@ -73,7 +73,7 @@ const DataContextProvider = ({ children }) => {
   };
 
 
-   const GetSecondChart = async (tenant) => {
+  const GetSecondChart = async (tenant) => {
     try {
       const res = await AxiosHandler.get(`/data/tvm-second-chart?tenant=${tenant ? tenant : ""}`);
       setSecondChartData(res?.data);
@@ -82,39 +82,49 @@ const DataContextProvider = ({ children }) => {
     }
   };
 
-   const GetFourthChart = async (tenant) => {
-     try {
-       const res = await AxiosHandler.get(`/BusinessApplication/tvm-forth-chart?tenant=${tenant ? tenant : ""}`);
-       setFourthChartData(res?.data);
-     } catch (error) {
-       console.error(error);
-     }
-   };
+  const GetFourthChart = async (tenant) => {
+    try {
+      const res = await AxiosHandler.get(`/BusinessApplication/tvm-forth-chart?tenant=${tenant ? tenant : ""}`);
+      setFourthChartData(res?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
 
-   const GetNinthChart = async (tenant) => {
-     try {
-       const res = await AxiosHandler.get(`/data/tvm-nine-chart?tenant=${tenant ? tenant : ""}`);
-       setNinthChartData(res?.data);
-     } catch (error) {
-       console.error(error);
-     }
-   };
+  const GetNinthChart = async (tenant) => {
+    try {
+      const res = await AxiosHandler.get(`/data/tvm-nine-chart?tenant=${tenant ? tenant : ""}`);
+      setNinthChartData(res?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const UpdatedOneData = async (selectedUserId, selectedDataId) => {
     try {
-      const res = await AxiosHandler.patch(`/data/update/${selectedDataId}`,{assign:selectedUserId})
+      const res = await AxiosHandler.patch(`/data/update/${selectedDataId}`, { assign: selectedUserId })
       toast.success(res?.data?.message)
     } catch (error) {
       console.log(error)
     }
-   }
+  }
 
+
+  const GetAssignedByData = async () => {
+    try {
+      const res = await AxiosHandler.get(`/data/get-assign-data`)
+      setAssignedData(res?.data?.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   useEffect(() => {
     if (token) {
       GetAllTenentData();
       GetAllPartnerData()
+
     }
   }, [token]);
   return (
@@ -132,8 +142,9 @@ const DataContextProvider = ({ children }) => {
         fourthChartData,
         ninthChartData,
         GetNinthChart,
-         UpdatedOneData
-
+        UpdatedOneData,
+        GetAssignedByData,
+        AssignedData
       }}
     >
       {children}

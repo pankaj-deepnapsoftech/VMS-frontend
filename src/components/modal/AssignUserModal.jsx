@@ -28,7 +28,7 @@ const AssignUserModal = ({ setAssignUserOpenModal, tenantId, selectedDataId }) =
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
-            <div className="bg-[#1a1f2e] rounded-xl w-full max-w-4xl shadow-xl overflow-hidden">
+            <div className="bg-[#1a1f2e] rounded-xl w-full max-w-xl shadow-xl overflow-hidden">
                 <div className="flex justify-between items-center px-6 py-4 border-b border-gray-700">
                     <h2 id="modal-title" className="text-xl font-semibold text-white">
                         Assign User
