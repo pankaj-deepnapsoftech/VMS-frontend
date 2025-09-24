@@ -271,11 +271,43 @@ export const ChartsColor = {
 // products.js
 export const products = [
   {
-    title: "Asset Inventory",
+    title: "Dashboard",
     desc: "Centralized asset visibility and management",
     borderColor: "#9b1c4d",
     icon: "/Icons/Component 1.png",
-    ShownTitle:"Asset Inventory",
+    ShownTitle: "Dashboard",
+    allowedPath: [
+      {
+        title: "Executive Dashboards",
+        route: "/executive-dashboard",
+        icon: BiSolidDashboard,
+      },
+      {
+        title: "TVM Dashboard", route: "/", icon: BiSolidDashboard
+      },
+      {
+        title: "Risk Quantification",
+       route: "/risk-operation",
+        icon: AiOutlineException,
+      },
+      {
+        title: "Application Dashboard",
+        route: "/application-dashboard",
+        icon: MdOutlineMiscellaneousServices,
+      },
+      {
+        title: "Infrastructure Dashboard",
+        route: "/infrastructure-dashboard",
+        icon: GrVulnerability,
+      },
+    ],
+  },
+  {
+    title: "Asset Management",
+    desc: "Centralized asset visibility and management",
+    borderColor: "#9b1c4d",
+    icon: "/Icons/Component 1.png",
+    ShownTitle: "Asset Inventory",
     allowedPath: [
       {
         title: "Infrastructure Asset",
@@ -290,13 +322,13 @@ export const products = [
     ],
   },
   {
-    title: "TVM",
+    title: "Vulnerability Management",
     desc: "Threat and Vulnerability Management",
     borderColor: "#ff7e5f",
     icon: "/Icons/Vector.png",
-    ShownTitle:"Threat & Vulnerability Management",
+    ShownTitle: "Threat & Vulnerability Management",
     allowedPath: [
-      { title: "Dashboard", route: "/", icon: BiSolidDashboard },
+     
       {
         title: "Manage Assessments",
         // route: "/assesment-schedule",
@@ -324,42 +356,32 @@ export const products = [
           },
         ],
       },
-      {
-        title: "Application Dashboard",
-        route: "/application-dashboard",
-        icon: MdOutlineMiscellaneousServices,
-      },
-      {
-        title: "Infrastructure Dashboard",
-        route: "/infrastructure-dashboard",
-        icon: GrVulnerability,
-      },
-      {
-        title: "Exceptions Dashboard",
-        route: "/exceptions-dashboard",
-        icon: AiOutlineException,
-      },
+      // {
+      //   title: "Exceptions Dashboard",
+      //   route: "/exceptions-dashboard",
+      //   icon: AiOutlineException,
+      // },
       {
         title: "Pending Exceptions",
         route: "/pending-exception",
         icon: MdInventory2,
       },
-      { title: "Vulnerability Data", route: "/vulnerability-data", icon: Bug },
-      {
-        title: "Add Vulnerability Data",
-        route: "/add-vulnerability-data",
-        icon: FaBug,
-      },
-      {
-        title: "Application Data",
-        route: "/application-data",
-        icon: MdSettingsApplications,
-      },
-      {
-        title: "Infrastructure Data",
-        route: "/infrastructure-data",
-        icon: IoIosInformationCircleOutline,
-      },
+      // { title: "Vulnerability Data", route: "/vulnerability-data", icon: Bug },
+      // {
+      //   title: "Add Vulnerability Data",
+      //   route: "/add-vulnerability-data",
+      //   icon: FaBug,
+      // },
+      // {
+      //   title: "Application Data",
+      //   route: "/application-data",
+      //   icon: MdSettingsApplications,
+      // },
+      // {
+      //   title: "Infrastructure Data",
+      //   route: "/infrastructure-data",
+      //   icon: IoIosInformationCircleOutline,
+      // },
       // {
       //   title: "Demo",
       //   route: "/demo",
@@ -384,25 +406,25 @@ export const products = [
   //   allowedPath: [],
   // },
 
-  {
-    title: "AI-VA",
-    desc: "AI Virtual Analyst",
-    borderColor: "#ee9ca7",
-    icon: " /Icons/Vector.png",
-    ShownTitle:"AI-VA",
-    allowedPath: [
-      {
-        title: "Dashboard",
-        route: "/center-dashboard",
-        icon: RiHome3Fill,
-      },
-      {
-        title: "Assessment Center",
-        route: "/assessment-center",
-        icon: GiTwirlCenter,
-      },
-    ],
-  },
+  // {
+  //   title: "AI-VA",
+  //   desc: "AI Virtual Analyst",
+  //   borderColor: "#ee9ca7",
+  //   icon: " /Icons/Vector.png",
+  //   ShownTitle: "AI-VA",
+  //   allowedPath: [
+  //     {
+  //       title: "Dashboard",
+  //       route: "/center-dashboard",
+  //       icon: RiHome3Fill,
+  //     },
+  //     {
+  //       title: "Assessment Center",
+  //       route: "/assessment-center",
+  //       icon: GiTwirlCenter,
+  //     },
+  //   ],
+  // },
   // {
   //   title: "Vulnerability Intelligence",
   //   desc: "Insights on vulnerabilities",
@@ -424,84 +446,71 @@ export const products = [
   //   icon: <Users />,
   //   allowedPath: [],
   // },
-  {
-    title: "Remediation Factory",
-    desc: "Automated remediation of vulnerabilities",
-    borderColor: "#6a11cb",
-    icon: "/Icons/Component 4.png",
-    ShownTitle:"Remediation Factory",
-    allowedPath: [
-      {
-        title: "Remediation",
-        route: "/remedition",
-        icon: SiWikimediafoundation,
-      },
-      { title: "Vulnerability Data", route: "/vulnerability-data", icon: Bug },
-      {
-        title: "Add Vulnerability Data",
-        route: "/add-vulnerability-data",
-        icon: FaBug,
-      },
-      {
-        title: "Application Data",
-        route: "/application-data",
-        icon: MdSettingsApplications,
-      },
-      {
-        title: "Infrastructure Data",
-        route: "/infrastructure-data",
-        icon: IoIosInformationCircleOutline,
-      },
-    ],
-  },
-  
-  {
-    title: "Administration",
-    desc: "Admin control panel",
-    borderColor: "#f8b500",
-    icon: "/Icons/Component 6.png",
-    ShownTitle:"Administration",
-    allowedPath: [
-      { title: "Users", route: "/all-users", icon: Users },
-      { title: "Tenant", route: "/all-tenant", icon: UserCircle },
-      {
-        title: "Third Party Integrations",
-        route: "/third-party-integrations",
-        icon: MdWifiTetheringErrorRounded,
-      },
-      { title: "Config Email", route: "/config-email", icon: Settings },
-      { title: "Role", route: "/roles", icon: LucideShield },
-      { title: "Partners", route: "/partners", icon: Users },
-      { title: "Tag Config", route: "/tags", icon: MdInventory2 },
-      {
-        title: "SLA Configuration",
-        route: "/sla-configuration",
-        icon: PiHardHatFill,
-      },
-    ],
-  },
-  {
-    title: "ROC",
-    ShownTitle: "Risk Operation Center",
-    allowedPath: [
-      {
-        title: "Executive Dashboard",
-        route: "/executive-dashboard",
-        icon: BiSolidDashboard,
-      },
-      {
-        title: "Risk Quantification",
-        route: "/risk-operation",
-        icon: AiOutlineException,
-      },
-    ],
-  },
+  // {
+  //   title: "Remediation Factory",
+  //   desc: "Automated remediation of vulnerabilities",
+  //   borderColor: "#6a11cb",
+  //   icon: "/Icons/Component 4.png",
+  //   ShownTitle: "Remediation Factory",
+  //   allowedPath: [
+  //     {
+  //       title: "Remediation",
+  //       route: "/remedition",
+  //       icon: SiWikimediafoundation,
+  //     },
+  //     { title: "Vulnerability Data", route: "/vulnerability-data", icon: Bug },
+  //     {
+  //       title: "Add Vulnerability Data",
+  //       route: "/add-vulnerability-data",
+  //       icon: FaBug,
+  //     },
+  //     {
+  //       title: "Application Data",
+  //       route: "/application-data",
+  //       icon: MdSettingsApplications,
+  //     },
+  //     {
+  //       title: "Infrastructure Data",
+  //       route: "/infrastructure-data",
+  //       icon: IoIosInformationCircleOutline,
+  //     },
+  //   ],
+  // },
+
   {
     title: "Reports",
     desc: "Generate reports & dashboards",
     borderColor: "#a1c4fd",
     icon: "/Icons/Component 5.png",
-    ShownTitle:"Reports",
-    allowedPath: [{ title: "Reports", route: "/reports", icon: TbReport }],
+    ShownTitle: "Reports",
+    allowedPath: [{ title: "Download Reports", route: "/reports", icon: TbReport }],
   },
+
+  {
+    title: "Administration",
+    desc: "Admin control panel",
+    borderColor: "#f8b500",
+    icon: "/Icons/Component 6.png",
+    ShownTitle: "Administration",
+    allowedPath: [
+      { title: "Manage Tenants", route: "/all-tenant", icon: UserCircle },
+      { title: "Manage Partners", route: "/partners", icon: Users },
+      { title: "Manage Users", route: "/all-users", icon: Users },
+      { title: "Manage Roles", route: "/roles", icon: LucideShield },
+      { title: "Manage Tags", route: "/tags", icon: MdInventory2 },
+      {
+        title: "Manage SLA",
+        route: "/sla-configuration",
+        icon: PiHardHatFill,
+      },
+      {
+        title: "Integrations",
+        route: "/third-party-integrations",
+        icon: MdWifiTetheringErrorRounded,
+      },
+      // { title: "Config Email", route: "/config-email", icon: Settings },
+    ],
+  },
+  
+  
 ];
