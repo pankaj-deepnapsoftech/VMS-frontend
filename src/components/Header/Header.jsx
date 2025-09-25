@@ -1,15 +1,19 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { IoIosArrowDown, IoIosLogOut } from "react-icons/io";
 import { products } from "@/constants/static.data";
 import { useAuthContext } from "@/context";
 
 // eslint-disable-next-line react/prop-types
 function Header({ setShowMenu, showSidebar }) {
-  const { Logout } = useAuthContext();
+  const { Logout, authenticate } = useAuthContext();
+  const naviagte = useNavigate();
+  const location = useLocation();
 
   const [openMainDropdown, setOpenMainDropdown] = useState("");
   const [openSubDropdown, setOpenSubDropdown] = useState({});
+
+  const [navLinks, setnavLinks] = useState([]);
 
   const toggleMainDropdown = (title) => {
     setOpenMainDropdown((prev) => (prev === title ? "" : title));
@@ -28,12 +32,76 @@ function Header({ setShowMenu, showSidebar }) {
     }
   };
 
+  useEffect(() => {
+    if (!authenticate?.role) {
+      setnavLinks(products);
+    } else if (authenticate?.role) {
+      const filter = products
+        .map((product) => {
+          // Filter allowedPath by matching routes
+          const filteredPaths = product.allowedPath
+            ?.map((path) => {
+              // Check direct route match
+              const directAllowed = authenticate?.allowed_path?.some(
+                (allow) => allow.value === path.route
+              );
+
+              // Check childRoutes if available
+              const filteredChildRoutes = path.childRoutes?.filter((child) =>
+                authenticate?.allowed_path?.some((allow) => allow.value === child.route)
+              );
+
+              // Case 1: path has direct route access
+              if (directAllowed) {
+                return { ...path, childRoutes: filteredChildRoutes ?? [] };
+              }
+
+              // Case 2: path has childRoutes access but no direct route
+              if (filteredChildRoutes && filteredChildRoutes.length > 0) {
+                return { ...path, childRoutes: filteredChildRoutes };
+              }
+
+              // Case 3: no access → skip
+              return null;
+            })
+            .filter(Boolean); // remove nulls
+
+          // Only return product if it has at least one allowedPath
+          if (filteredPaths && filteredPaths.length > 0) {
+            return { ...product, allowedPath: filteredPaths };
+          }
+          return null;
+        })
+        .filter(Boolean); // remove nulls
+
+      setnavLinks(filter)
+    }
+
+  }, [authenticate])
+
+  useEffect(() => {
+    if (navLinks?.length > 0) {
+      // flatten all routes (including childRoutes)
+      const allRoutes = navLinks.flatMap((link) =>
+        link.allowedPath.flatMap((path) => [
+          path.route,
+          ...(path.childRoutes?.map((child) => child.route) || []),
+        ])
+      );
+
+      // if current path not allowed, redirect to first allowed route
+      if (!allRoutes.includes(location.pathname)) {
+        naviagte(allRoutes[0]);
+      }
+    }
+  }, [navLinks, location.pathname, naviagte]);
+
   return (
     <div className="flex flex-col text-white h-full hide-scrollbar bg-[#1f2937] overflow-y-auto transition-all duration-500 ease-in-out relative">
       <hr className="border-gray-100 mx-10" />
 
       <nav className="flex-1 mx-2 py-5 space-y-1 hide-scrollbar overflow-scroll pb-72">
-        {products.map((item, index) => (
+        {navLinks.map((item, index) => (
           <div key={index} className="py-1">
             {/* Main Section Title */}
             <button
