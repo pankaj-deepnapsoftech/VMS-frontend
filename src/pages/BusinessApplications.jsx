@@ -17,7 +17,7 @@ import { handleExcelFile } from "@/utils/CheckFileType";
 export default function BusinessApplications() {
 
   // context api hooks
-  const { token,authenticate,tenant } = useAuthContext();
+  const { token, authenticate, tenant } = useAuthContext();
   const {
     CreateBussinerssApplcation,
     GetBussinerssApplcation,
@@ -31,7 +31,7 @@ export default function BusinessApplications() {
 
   // location hook
   const location = useLocation()
-  
+
   // use States 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [model, setmodel] = useState(false);
@@ -47,24 +47,30 @@ export default function BusinessApplications() {
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
-      initialValues: editable || {
-        name: "",
-        description: "",
-        country: "",
-        state: "",
-        city: "",
-        type: "",
-        applicationUrl: "",
-        modifyCriticality: "",
-        asset: "",
-      },
+      initialValues: editable
+        ? {
+          ...editable,
+          asset: editable.asset?._id || "",
+        }
+        : {
+          name: "",
+          description: "",
+          country: "",
+          state: "",
+          city: "",
+          type: "",
+          applicationUrl: "",
+          modifyCriticality: "",
+          asset: "",
+        },
+
       validationSchema: BusinessApplicationValidation,
       enableReinitialize: true,
       onSubmit: (value) => {
         if (!tenant && !editable) {
           return alert("Please select a tenant");
         }
-        
+
         if (editable) {
           UpdateBussinerssApplcation(editable._id, value);
         } else {
@@ -104,22 +110,24 @@ export default function BusinessApplications() {
     }
   };
 
+  console.log(editable)
+
   const handleFileChange = (e) => {
-      if(!e.target.files[0]){
-          alert("file is required field");
-          return
-        };
+    if (!e.target.files[0]) {
+      alert("file is required field");
+      return
+    };
 
-        if(e.target.files[0].size >= (10 * 1024 * 1024)){
-          alert("File is too large")
-        }
+    if (e.target.files[0].size >= (10 * 1024 * 1024)) {
+      alert("File is too large")
+    }
 
-        const file = handleExcelFile(e.target.files[0])
-        if(file){
-          setSelectedFiles(file);
-        }else{
-          e.target.value = ""
-        };
+    const file = handleExcelFile(e.target.files[0])
+    if (file) {
+      setSelectedFiles(file);
+    } else {
+      e.target.value = ""
+    };
   };
 
   useEffect(() => {
@@ -133,10 +141,10 @@ export default function BusinessApplications() {
     if (token) {
       GetAllInfraAssetData(tenant);
     }
-  }, [tenant,token]);
+  }, [tenant, token]);
 
-  if(isViewAccess(authenticate,location)){
-    return <Access/>
+  if (isViewAccess(authenticate, location)) {
+    return <Access />
   }
 
   return (
@@ -155,7 +163,7 @@ export default function BusinessApplications() {
           </div>
 
           {/* Buttons */}
-         {isCreateAccess() &&  <div className="flex flex-col sm:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
+          {isCreateAccess() && <div className="flex flex-col sm:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
             <button
               onClick={() => setIsModalOpen(true)}
               className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center justify-center gap-2"
@@ -251,7 +259,7 @@ export default function BusinessApplications() {
                             {/* <button className="p-1 text-blue-400 hover:text-blue-300">
                               <ExternalLink className="w-4 h-4" />
                             </button> */}
-                           {isDeleteAccess() && <button
+                            {isDeleteAccess() && <button
                               onClick={() => {
                                 const confirmDelete = window.confirm(
                                   "Are you sure you want to delete this business application?"
