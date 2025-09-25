@@ -206,28 +206,27 @@ const DashboardCards = () => {
             ))}
           </div>
         ) : (
-          <div
-            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8 min-w-[300px] sm:min-w-0"
-            style={{ minWidth: "fit-content" }}
-          >
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
             {CardsData(tvmCardsData).map((card, index) => (
               <div
                 key={index}
-                className="bg-[#161e3e] rounded-xl px-4 py-4 shadow-md border border-gray-800 hover:shadow-lg transition-shadow flex flex-col items-start min-w-[200px] sm:min-w-0"
+                className="bg-[#161e3e] rounded-xl px-4 py-4 shadow-md border border-gray-800 hover:shadow-lg transition-shadow flex flex-col items-start"
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 min-w-0 w-full">
                   <div className="w-8 h-8 flex items-center justify-center rounded-md">
                     <img src={card.icon} alt={card.title} className="w-7 h-7" />
                   </div>
                   <p
-                    className="text-sm font-medium truncate max-w-[120px]"
+                    className="text-sm font-medium whitespace-nowrap max-sm:truncate overflow-hidden min-w-0"
                     style={{ color: card.color }}
+                    title={card.title}
                   >
                     {card.title}
                   </p>
                 </div>
+
                 <p className="text-xl font-semibold text-white mt-3 ml-1">
-                  {card.value}    
+                  {card.value}
                 </p>
               </div>
             ))}
