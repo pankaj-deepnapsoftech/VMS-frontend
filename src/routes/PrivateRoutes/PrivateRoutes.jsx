@@ -39,6 +39,7 @@ import ASMDashboard from "@/pages/ASMDashboard";
 import AssessmentCenter from "@/pages/AssessmentCenter";
 import { elements } from "chart.js";
 import PendingVulnerability from "@/pages/PendingVulnerability";
+import SecurendDashboardCards from "@/pages/ThreeCards";
 
 export const PrivateRoutes = [
   {
@@ -200,5 +201,9 @@ export const PrivateRoutes = [
   {
     path: "/pending-vulnerability",
     element: <PendingVulnerability />,
+  },
+  {
+    path: "/Three-cards",
+    element: <SecurendDashboardCards />,
   },
 ];

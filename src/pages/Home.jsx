@@ -18,6 +18,7 @@ import {
   firstChartDatady,
   SecondChartDatady,
 } from "@/constants/dynomic.data";
+import SecurendDashboardCards from "./ThreeCards";
 
 // Register Chart.js components once
 ChartJS.register(
@@ -161,7 +162,7 @@ const DashboardCards = () => {
   const greenData = [1, 5, 9, 12];
   const yellowData = [4, 6, 12, 14];
   const redData = [0.5, 2, 4, 6];
-   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const maxY = 16;
 
@@ -891,6 +892,8 @@ const DashboardCards = () => {
             </div>
           </div>
         </div>
+
+        <SecurendDashboardCards />
       </div>
     </div>
   );
