@@ -1,5 +1,3 @@
-
-
 export const summaryData = (data) => {
     return  [
   {
@@ -46,17 +44,19 @@ export const firstChartDatady = (data) => {
 
 export const CardsData = (tvmCardsData) => {
 return   [
-    {
+     {
       title: "Applications",
       value: tvmCardsData.applications.toString(),
       icon: "/Icons/TVM1.png",
       color: "#3B82F6",
+      url: "/business-applications",
     },
     {
       title: "Infrastructure IPs",
       value: tvmCardsData.infrastructureIPs.toString(),
       icon: "/Icons/TVM2.png",
       color: "#22C55E",
+      url: "/infraStructure-asset",
     },
     {
       title: "Total Vulnerabilities",
@@ -75,6 +75,7 @@ return   [
       value: tvmCardsData.exceptions.toString(),
       icon: "/Icons/TVM5.png",
       color: "#F59E0B",
+      url: "/pending-exception",
     },
   ];
 };

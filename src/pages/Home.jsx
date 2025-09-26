@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Doughnut, Line } from "react-chartjs-2";
+import { useNavigate } from "react-router-dom";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -160,6 +161,7 @@ const DashboardCards = () => {
   const greenData = [1, 5, 9, 12];
   const yellowData = [4, 6, 12, 14];
   const redData = [0.5, 2, 4, 6];
+   const navigate = useNavigate();
 
   const maxY = 16;
 
@@ -210,6 +212,7 @@ const DashboardCards = () => {
             {CardsData(tvmCardsData).map((card, index) => (
               <div
                 key={index}
+                onClick={() => navigate(card.url)}
                 className="bg-[#161e3e] rounded-xl px-4 py-4 shadow-md border border-gray-800 hover:shadow-lg transition-shadow flex flex-col items-start"
               >
                 <div className="flex items-center gap-2 min-w-0 w-full">
