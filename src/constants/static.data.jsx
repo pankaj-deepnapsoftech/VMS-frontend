@@ -367,11 +367,15 @@ export const products = [
         route: "/pending-exception",
         icon: MdInventory2,
       },
-      // { title: "Vulnerability Data", route: "/vulnerability-data", icon: Bug },
       {
         title: "Add Vulnerability",
         route: "/add-vulnerability-data",
         icon: FaBug,
+      },
+      {
+        title: "All Vulnerability",
+        route: "/vulnerability-data",
+        icon: Bug,
       },
       {
         title: "Application Vulnerabilities",
