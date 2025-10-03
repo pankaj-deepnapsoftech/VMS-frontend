@@ -20,7 +20,7 @@ import { GrStatusGood } from "react-icons/gr";
 import {
   isDeleteAccess,
   isHaveAction,
-  isModifyAccess,
+  isModifyAccess,     
   isViewAccess,
 } from "@/utils/pageAccess";
 import Access from "@/components/role/Access";
