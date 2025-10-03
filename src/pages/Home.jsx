@@ -72,8 +72,6 @@ const DashboardCards = () => {
     ],
   };
 
-  // Line Chart Data
-
   // Line Chart Options
   const lineOptions = {
     responsive: true,
@@ -180,17 +178,11 @@ const DashboardCards = () => {
     setTenant(params.get("tenant") || "");
   }, [location.search]);
 
-  const [selectedYear, setSelectedYear] = useState("current");
+  const currentYear = new Date().getFullYear();
+  const [selectedYear, setSelectedYear] = useState(currentYear);
 
-  const getYearData = (yearKey) => {
-    const currentYear = new Date().getFullYear();
-
-    let targetYear;
-    if (yearKey === "current") targetYear = currentYear;
-    else if (yearKey === "last") targetYear = currentYear - 1;
-    else if (yearKey === "2years") targetYear = currentYear - 2;
-
-    return secondChartData.find((item) => item.year === targetYear)?.data || [];
+  const getYearData = (year) => {
+    return secondChartData.find((item) => item.year === year)?.data || [];
   };
 
   return (
@@ -334,11 +326,11 @@ const DashboardCards = () => {
               <select
                 className="bg-[#0E1430] text-gray-300 text-sm px-2 sm:px-3 py-1 rounded-lg border border-gray-700 focus:outline-none"
                 value={selectedYear}
-                onChange={(e) => setSelectedYear(e.target.value)}
+                onChange={(e) => setSelectedYear(Number(e.target.value))}
               >
-                <option value="current">Current Year</option>
-                <option value="last">Last Year</option>
-                <option value="2years">2 Years Ago</option>
+                <option value={currentYear}>{currentYear} </option>
+                <option value={currentYear - 1}>{currentYear - 1}</option>
+                <option value={currentYear - 2}>{currentYear - 2}</option>
               </select>
 
               <button className="text-gray-400 hover:text-gray-200 text-sm">
