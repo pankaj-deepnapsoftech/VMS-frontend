@@ -180,6 +180,19 @@ const DashboardCards = () => {
     setTenant(params.get("tenant") || "");
   }, [location.search]);
 
+  const [selectedYear, setSelectedYear] = useState("current");
+
+  const getYearData = (yearKey) => {
+    const currentYear = new Date().getFullYear();
+
+    let targetYear;
+    if (yearKey === "current") targetYear = currentYear;
+    else if (yearKey === "last") targetYear = currentYear - 1;
+    else if (yearKey === "2years") targetYear = currentYear - 2;
+
+    return secondChartData.find((item) => item.year === targetYear)?.data || [];
+  };
+
   return (
     <div className="w-full px-4 sm:px-6">
       {/* Search bar */}
@@ -318,11 +331,16 @@ const DashboardCards = () => {
               Vulnerable Items by Risk Rating
             </h2>
             <div className="flex items-center gap-2 flex-shrink-0">
-              <select className="bg-[#0E1430] text-gray-300 text-sm px-2 sm:px-3 py-1 rounded-lg border border-gray-700 focus:outline-none">
-                <option>Last 30 days</option>
-                <option>Last 60 days</option>
-                <option>Last 90 days</option>
+              <select
+                className="bg-[#0E1430] text-gray-300 text-sm px-2 sm:px-3 py-1 rounded-lg border border-gray-700 focus:outline-none"
+                value={selectedYear}
+                onChange={(e) => setSelectedYear(e.target.value)}
+              >
+                <option value="current">Current Year</option>
+                <option value="last">Last Year</option>
+                <option value="2years">2 Years Ago</option>
               </select>
+
               <button className="text-gray-400 hover:text-gray-200 text-sm">
                 •••
               </button>
