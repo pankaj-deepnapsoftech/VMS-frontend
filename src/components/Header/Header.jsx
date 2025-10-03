@@ -107,7 +107,7 @@ function Header({ setShowMenu, showSidebar }) {
             key={index}
             className={`py-1 ${
               openMainDropdown === item.title &&
-              "bg-gray-700 rounded-lg pl-1 pr-1"
+              "bg-gray-700 rounded-lg py-2 px-1"
             }`}
           >
             {/* Main Section Title */}
