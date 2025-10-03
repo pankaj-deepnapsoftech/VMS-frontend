@@ -73,9 +73,9 @@ const DataContextProvider = ({ children }) => {
   };
 
 
-  const GetSecondChart = async (tenant) => {
+  const GetSecondChart = async (tenant,year) => {
     try {
-      const res = await AxiosHandler.get(`/data/tvm-second-chart?tenant=${tenant ? tenant : ""}`);
+      const res = await AxiosHandler.get(`/data/tvm-second-chart?tenant=${tenant ? tenant : ""}&year=${year}`);
       setSecondChartData(res?.data);
     } catch (error) {
       console.error(error);

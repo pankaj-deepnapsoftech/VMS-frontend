@@ -13,6 +13,7 @@ function Header({ setShowMenu, showSidebar }) {
   const [openMainDropdown, setOpenMainDropdown] = useState("");
   const [openSubDropdown, setOpenSubDropdown] = useState({});
 
+
   const [navLinks, setnavLinks] = useState([]);
 
   const toggleMainDropdown = (title) => {
@@ -102,7 +103,7 @@ function Header({ setShowMenu, showSidebar }) {
 
       <nav className="flex-1 mx-2 py-5 space-y-1 hide-scrollbar overflow-scroll pb-72">
         {navLinks.map((item, index) => (
-          <div key={index} className="py-1">
+          <div key={index}  className={`py-1 ${openMainDropdown === item.title && "bg-green-200"}`}>
             {/* Main Section Title */}
             <button
               onClick={() => toggleMainDropdown(item.title)}
