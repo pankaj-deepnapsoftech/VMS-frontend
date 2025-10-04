@@ -227,7 +227,7 @@ export function ApplicationData() {
                             <td className="px-4 py-3">
                               <button
                                 className="hover:bg-gray-700 px-3 py-2 rounded-lg"
-                                onClick={(e) => { toggleMenu(index, e); setTenantId(item?.Severity?.tenant); setselectedData(item) }}
+                                onClick={(e) => { toggleMenu(index, e);setTenantId(item?.Severity?.tenant); setselectedData(item) }}
                               >
                                 <BsThreeDotsVertical />
                               </button>

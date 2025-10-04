@@ -128,21 +128,21 @@ export function VulnerabilityData() {
                           <td className="px-4 py-3 flex items-center gap-3">
                             <button
                               title="View"
-                              className="hover:text-blue-400 transition"
+                              className="text-green-500 hover:text-green-600 transition"
                               onClick={() => console.log("View", item.id)}
                             >
                               <FaEye />
                             </button>
                             <button
                               title="Edit"
-                              className="hover:text-yellow-400 transition"
+                              className=" text-blue-500 hover:text-blue-600 transition"
                               onClick={() => console.log("Edit", item.id)}
                             >
                               <FaEdit />
                             </button>
                             <button
                               title="Delete"
-                              className="hover:text-red-500 transition"
+                              className= " text-red-500 hover:text-red-600 transition"
                               onClick={() => console.log("Delete", item.id)}
                             >
                               <FaTrash />
