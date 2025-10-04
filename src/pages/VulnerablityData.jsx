@@ -1,12 +1,12 @@
 import { Suspense, useEffect, useState } from "react";
 import { useVulnerabililtyDataContext } from "@/context";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoSearch } from "react-icons/io5";
 import Loader from "@/components/Loader/Loader";
 import Pagination from "./Pagination";
 import { calculateVRS } from "@/utils/vulnerableOperations";
 import NoDataFound from "@/components/NoDataFound";
 import { isHaveAction } from "@/utils/pageAccess";
+import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 
 export function VulnerabilityData() {
   const { loading, topVulnerabliltyData, TopVulnerablilty } =
@@ -113,9 +113,27 @@ export function VulnerabilityData() {
                         <td className="px-4 py-3">{item?.status || "-"}</td>
 
                         {isHaveAction() && (
-                          <td className="px-4 py-3">
-                            <button className="hover:bg-gray-700 px-3 py-2 rounded-lg">
-                              <BsThreeDotsVertical />
+                          <td className="px-4 py-3 flex items-center gap-3">
+                            <button
+                              title="View"
+                              className="hover:text-blue-400 transition"
+                              onClick={() => console.log("View", item.id)}
+                            >
+                              <FaEye />
+                            </button>
+                            <button
+                              title="Edit"
+                              className="hover:text-yellow-400 transition"
+                              onClick={() => console.log("Edit", item.id)}
+                            >
+                              <FaEdit />
+                            </button>
+                            <button
+                              title="Delete"
+                              className="hover:text-red-500 transition"
+                              onClick={() => console.log("Delete", item.id)}
+                            >
+                              <FaTrash />
                             </button>
                           </td>
                         )}
