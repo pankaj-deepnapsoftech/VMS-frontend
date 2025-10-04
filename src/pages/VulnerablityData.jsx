@@ -1,5 +1,6 @@
 import { Suspense, useEffect, useState } from "react";
-import { useVulnerabililtyDataContext } from "@/context";
+import { useAuthContext, useNessusContext, useVulnerabililtyDataContext } from "@/context";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoSearch } from "react-icons/io5";
 import Loader from "@/components/Loader/Loader";
 import Pagination from "./Pagination";
@@ -11,6 +12,11 @@ import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 export function VulnerabilityData() {
   const { loading, topVulnerabliltyData, TopVulnerablilty } =
     useVulnerabililtyDataContext();
+  const { token, tenant } = useAuthContext();
+
+  const { NessusData, getNessusData } = useNessusContext();
+
+  console.log("this is just testing",NessusData)
 
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
@@ -25,14 +31,20 @@ export function VulnerabilityData() {
   };
 
   useEffect(() => {
-    TopVulnerablilty();
-  }, []);
+    if (token) {
+      getNessusData();
+    };
+  }, [token,tenant]);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedData = topVulnerabliltyData?.slice(
     startIndex,
     startIndex + itemsPerPage
   );
+
+  useEffect(() => {
+
+  }, [])
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -93,13 +105,13 @@ export function VulnerabilityData() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-700">
-                    {paginatedData.map((item, index) => (
+                    {NessusData?.map((item, index) => (
                       <tr
                         key={index}
                         className="border-b border-slate-700 hover:bg-[#1E293B] transition"
                       >
                         <td className="px-4 py-3">{startIndex + index + 1}</td>
-                        <td className="px-4 py-3">{item?.Title || "-"}</td>
+                        <td className="px-4 py-3">{item?.Title || item?.plugin_name || "-"}</td>
                         <td className="px-4 py-3">{item?.scan_type || "-"}</td>
                         <td className="px-4 py-3">
                           {item?.threat_type || "-"}
