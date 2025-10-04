@@ -43,10 +43,10 @@ export function VulnerabilityData() {
           {/* Heading */}
           <div className="w-full pt-4 px-6">
             <h2 className="text-2xl font-semibold text-white">
-              All Application Data
+              All Vulnerability Data
             </h2>
             <span className="text-subtext text-sm">
-              Manage your Application Data
+              Manage your Vulnerability Data
             </span>
           </div>
 
@@ -67,76 +67,63 @@ export function VulnerabilityData() {
               </div>
 
               {/* TABLE */}
-                <div className="overflow-x-auto w-full custom-scrollbar">
-                  <table className="table-fixed min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
-                    <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
-                      <tr>
-                        {[
-                          "S No.",
-                          "Title",
-                          "Scan Type",
-                          "Threat Type",
-                          "Severity",
-                          "Asset",
-                          "VRS",
-                          "Status",
-                        ]
-                          .concat(isHaveAction() ? ["Actions"] : [])
-                          .map((header) => (
-                            <th
-                              title={showTitle(header)}
-                              key={header}
-                              className="px-4 py-3 border-b border-gray-600 font-medium"
-                            >
-                              {header}
-                            </th>
-                          ))}
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-700">
-                      {paginatedData.map((item, index) => (
-                        <tr
-                          key={index}
-                          className="border-b border-slate-700 hover:bg-[#1E293B] transition"
-                        >
-                          <td className="px-4 py-3">
-                            {startIndex + index + 1}
-                          </td>
-                          <td className="px-4 py-3">{item?.Title || "-"}</td>
-                          <td className="px-4 py-3">
-                            {item?.scan_type || "-"}
-                          </td>
-                          <td className="px-4 py-3">
-                            {item?.threat_type || "-"}
-                          </td>
-                          <td className="px-4 py-3">
-                            {item?.Severity?.name || "-"}
-                          </td>
-                          <td className="px-4 py-3">
-                            {item?.BusinessApplication?.name || "-"}
-                          </td>
-                          <td className="px-4 py-3">
-                            {calculateVRS(
-                              item?.EPSS,
-                              item?.exploit_complexity,
-                              item?.Exploit_Availale,
-                              item?.threat_type
-                            ) || "-"}
-                          </td>
-                          <td className="px-4 py-3">{item?.status || "-"}</td>
+              <div className="overflow-x-auto w-full custom-scrollbar">
+                <table className="table-fixed min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+                  <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
+                    <tr>
+                      {[
+                        "S No.",
+                        "Title",
+                        "Scan Type",
+                        "Threat Type",
+                        "Severity",
+                        "Asset",
+                        "Status",
+                      ]
+                        .concat(isHaveAction() ? ["Actions"] : [])
+                        .map((header) => (
+                          <th
+                            title={showTitle(header)}
+                            key={header}
+                            className="px-4 py-3 border-b border-gray-600 font-medium"
+                          >
+                            {header}
+                          </th>
+                        ))}
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-700">
+                    {paginatedData.map((item, index) => (
+                      <tr
+                        key={index}
+                        className="border-b border-slate-700 hover:bg-[#1E293B] transition"
+                      >
+                        <td className="px-4 py-3">{startIndex + index + 1}</td>
+                        <td className="px-4 py-3">{item?.Title || "-"}</td>
+                        <td className="px-4 py-3">{item?.scan_type || "-"}</td>
+                        <td className="px-4 py-3">
+                          {item?.threat_type || "-"}
+                        </td>
+                        <td className="px-4 py-3">
+                          {item?.Severity?.name || "-"}
+                        </td>
+                        <td className="px-4 py-3">
+                          {item?.BusinessApplication?.name || "-"}
+                        </td>
+                        <td className="px-4 py-3">{item?.status || "-"}</td>
 
-                          {isHaveAction() && (
-                            <td className="px-4 py-3">
-                              <button className="hover:bg-gray-700 px-3 py-2 rounded-lg">
-                                <BsThreeDotsVertical />
-                              </button>
-                            </td>
-                          )}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                        {isHaveAction() && (
+                          <td className="px-4 py-3">
+                            <button className="hover:bg-gray-700 px-3 py-2 rounded-lg">
+                              <BsThreeDotsVertical />
+                            </button>
+                          </td>
+                        )}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
 
               {/* PAGINATION */}
               <Pagination
