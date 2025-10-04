@@ -1,72 +1,155 @@
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useVulnerabililtyDataContext } from "@/context";
-import { FaExclamationTriangle } from "react-icons/fa";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { IoSearch } from "react-icons/io5";
 import Loader from "@/components/Loader/Loader";
+import Pagination from "./Pagination";
+import { calculateVRS } from "@/utils/vulnerableOperations";
+import NoDataFound from "@/components/NoDataFound";
+import { isHaveAction } from "@/utils/pageAccess";
 
 export function VulnerabilityData() {
+  const { loading, topVulnerabliltyData, TopVulnerablilty } =
+    useVulnerabililtyDataContext();
 
-  const {
-    loading,
-    topVulnerabliltyData,
-    TopVulnerablilty,
-  } = useVulnerabililtyDataContext();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
 
+  const itemsPerPage = 10;
 
-
-  const getRowColor = (rank) => {
-    return rank % 2 === 0 ? "bg-[#0c1120]" : "bg-[#101b3d]";
+  const showTitle = (header) => {
+    if (header === "VRS") {
+      return "Vulnerability Risk Score";
+    }
+    return "";
   };
-
 
   useEffect(() => {
     TopVulnerablilty();
   }, []);
 
-
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedData = topVulnerabliltyData?.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
       {loading ? (
         <Loader />
       ) : (
-        <div className="p-4 md:p-6 max-w-[100%] mx-auto bg-gradient-custom min-h-screen">
-          {/* top 5 Vulnerability */}
-
-
-          <h2 className="text-white text-3xl font-semibold pb-5" >Top 5 Vulnerabilities</h2>
-          <div className="overflow-x-auto custom-scrollbar">
-            <table className="min-w-full divide-y divide-gray-700 shadow-md">
-              <thead className="h-8">
-                <tr className="bg-[#0c1120] text-gray-100 uppercase text-sm ">
-                  <th className=" border-b">Top Vulnerabilities </th>
-                  <th className=" border-b">Vulnerability Name</th>
-                  <th className=" border-b">
-                    Total Vulnerability Instances{" "}
-                  </th>
-                  <th className=" border-b">Exploitability </th>
-                </tr>
-              </thead>
-              <tbody>
-                {topVulnerabliltyData?.map((product, index) => (
-                  <tr
-                    key={index}
-                    className={`text-center text-gray-300 border-b  hover:bg-gray-500 ${getRowColor(
-                      index
-                    )}`}
-                  >
-                    <td className="  flex items-center justify-center gap-2">
-                      <FaExclamationTriangle className="text-red-500" />{" "}
-                      {index + 1}
-                    </td>
-                    <td className=" ">{product.name}</td>
-                    <td className=" ">{product.count}</td>
-                    <td className=" ">{product.exploitability}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        <>
+          {/* Heading */}
+          <div className="w-full pt-4 px-6">
+            <h2 className="text-2xl font-semibold text-white">
+              All Application Data
+            </h2>
+            <span className="text-subtext text-sm">
+              Manage your Application Data
+            </span>
           </div>
-        </div>
+
+          <div className="w-full min-h-screen p-6">
+            <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
+              {/* SEARCH */}
+              <div className="px-6 py-4 border-b border-gray-700 relative">
+                <div className="relative">
+                  <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
+                  <input
+                    type="search"
+                    placeholder="Search data..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="bg-input backdrop-blur-md py-2 w-1/3 text-white ps-7 pe-3 rounded-md "
+                  />
+                </div>
+              </div>
+
+              {/* TABLE */}
+                <div className="overflow-x-auto w-full custom-scrollbar">
+                  <table className="table-fixed min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+                    <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
+                      <tr>
+                        {[
+                          "S No.",
+                          "Title",
+                          "Scan Type",
+                          "Threat Type",
+                          "Severity",
+                          "Asset",
+                          "VRS",
+                          "Status",
+                        ]
+                          .concat(isHaveAction() ? ["Actions"] : [])
+                          .map((header) => (
+                            <th
+                              title={showTitle(header)}
+                              key={header}
+                              className="px-4 py-3 border-b border-gray-600 font-medium"
+                            >
+                              {header}
+                            </th>
+                          ))}
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-700">
+                      {paginatedData.map((item, index) => (
+                        <tr
+                          key={index}
+                          className="border-b border-slate-700 hover:bg-[#1E293B] transition"
+                        >
+                          <td className="px-4 py-3">
+                            {startIndex + index + 1}
+                          </td>
+                          <td className="px-4 py-3">{item?.Title || "-"}</td>
+                          <td className="px-4 py-3">
+                            {item?.scan_type || "-"}
+                          </td>
+                          <td className="px-4 py-3">
+                            {item?.threat_type || "-"}
+                          </td>
+                          <td className="px-4 py-3">
+                            {item?.Severity?.name || "-"}
+                          </td>
+                          <td className="px-4 py-3">
+                            {item?.BusinessApplication?.name || "-"}
+                          </td>
+                          <td className="px-4 py-3">
+                            {calculateVRS(
+                              item?.EPSS,
+                              item?.exploit_complexity,
+                              item?.Exploit_Availale,
+                              item?.threat_type
+                            ) || "-"}
+                          </td>
+                          <td className="px-4 py-3">{item?.status || "-"}</td>
+
+                          {isHaveAction() && (
+                            <td className="px-4 py-3">
+                              <button className="hover:bg-gray-700 px-3 py-2 rounded-lg">
+                                <BsThreeDotsVertical />
+                              </button>
+                            </td>
+                          )}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+              {/* PAGINATION */}
+              <Pagination
+                page={currentPage}
+                setPage={setCurrentPage}
+                hasNextPage={
+                  startIndex + itemsPerPage < topVulnerabliltyData?.length
+                }
+                total={topVulnerabliltyData?.length}
+              />
+            </div>
+          </div>
+        </>
       )}
     </Suspense>
   );
