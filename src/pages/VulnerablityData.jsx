@@ -1,13 +1,9 @@
 import { Suspense, useEffect, useState } from "react";
-<<<<<<< HEAD
-import { useAuthContext, useNessusContext, useVulnerabililtyDataContext } from "@/context";
-=======
 import {
   useAuthContext,
   useNessusContext,
   useVulnerabililtyDataContext,
 } from "@/context";
->>>>>>> caae0add0897377d499d0c789339c3af718acf4a
 import { IoSearch } from "react-icons/io5";
 import Loader from "@/components/Loader/Loader";
 import Pagination from "./Pagination";
@@ -23,12 +19,8 @@ export function VulnerabilityData() {
 
   const { NessusData, getNessusData,deleteNessusData } = useNessusContext();
 
-<<<<<<< HEAD
 
     const { closeModal, isOpen, openModal } = useAccessPartner();
-=======
-  console.log("this is just testing", NessusData);
->>>>>>> caae0add0897377d499d0c789339c3af718acf4a
 
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
@@ -47,18 +39,10 @@ export function VulnerabilityData() {
   useEffect(() => {
     if (token) {
       getNessusData();
-<<<<<<< HEAD
-    };
-  }, [token, tenant]);
-
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  
-=======
     }
   }, [token, tenant]);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
->>>>>>> caae0add0897377d499d0c789339c3af718acf4a
 
   useEffect(() => {}, []);
 
@@ -161,11 +145,7 @@ export function VulnerabilityData() {
                             <button
                               title="Delete"
                               className=" text-red-500 hover:text-red-600 transition"
-<<<<<<< HEAD
                               onClick={() => deleteNessusData(item._id)}
-=======
-                              onClick={() => console.log("Delete", item.id)}
->>>>>>> caae0add0897377d499d0c789339c3af718acf4a
                             >
                               <FaTrash />
                             </button>
