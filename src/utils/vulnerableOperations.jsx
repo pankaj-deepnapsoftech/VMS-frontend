@@ -55,3 +55,40 @@ console.log(data)
 }
 
 
+
+
+
+
+export const handlerSeverity = (val) => {
+    if (val == '0') {
+      return "Informational";
+    } else if (val == "1") {
+      return "Low";
+    } else if (val == "2") {
+      return "Medium";
+    } else if (val == "3") {
+      return "High";
+    }else if (val == "4") {
+      return "Critical";
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

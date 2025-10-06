@@ -1,25 +1,28 @@
 import { Suspense, useEffect, useState } from "react";
 import { useAuthContext, useNessusContext, useVulnerabililtyDataContext } from "@/context";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoSearch } from "react-icons/io5";
 import Loader from "@/components/Loader/Loader";
 import Pagination from "./Pagination";
-import { calculateVRS } from "@/utils/vulnerableOperations";
-import NoDataFound from "@/components/NoDataFound";
 import { isHaveAction } from "@/utils/pageAccess";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
+import EnhancedDetailsModal from "@/modals/ExploitDetail";
+import useAccessPartner from "@/hooks/AccessPartner";
+import { handlerSeverity } from "@/utils/vulnerableOperations";
 
 export function VulnerabilityData() {
   const { loading, topVulnerabliltyData, TopVulnerablilty } =
     useVulnerabililtyDataContext();
   const { token, tenant } = useAuthContext();
 
-  const { NessusData, getNessusData } = useNessusContext();
+  const { NessusData, getNessusData,deleteNessusData } = useNessusContext();
 
-  console.log("this is just testing",NessusData)
+
+    const { closeModal, isOpen, openModal } = useAccessPartner();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
+
+  const [exploitDetails,setExploitDetails] = useState(null)
 
   const itemsPerPage = 10;
 
@@ -34,13 +37,10 @@ export function VulnerabilityData() {
     if (token) {
       getNessusData();
     };
-  }, [token,tenant]);
+  }, [token, tenant]);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedData = topVulnerabliltyData?.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  );
+  
 
   useEffect(() => {
 
@@ -117,7 +117,7 @@ export function VulnerabilityData() {
                           {item?.threat_type || "-"}
                         </td>
                         <td className="px-4 py-3">
-                          {item?.Severity?.name || "-"}
+                          {item?.Severity?.name || handlerSeverity(item?.severity) ||  "-"}
                         </td>
                         <td className="px-4 py-3">
                           {item?.BusinessApplication?.name || "-"}
@@ -129,21 +129,21 @@ export function VulnerabilityData() {
                             <button
                               title="View"
                               className="text-green-500 hover:text-green-600 transition"
-                              onClick={() => console.log("View", item.id)}
+                              onClick={()=>{openModal();setExploitDetails(item)}}
                             >
                               <FaEye />
                             </button>
                             <button
                               title="Edit"
                               className=" text-blue-500 hover:text-blue-600 transition"
-                              onClick={() => console.log("Edit", item.id)}
+                              onClick={()=>{openModal();setExploitDetails(item)}}
                             >
                               <FaEdit />
                             </button>
                             <button
                               title="Delete"
-                              className= " text-red-500 hover:text-red-600 transition"
-                              onClick={() => console.log("Delete", item.id)}
+                              className=" text-red-500 hover:text-red-600 transition"
+                              onClick={() => deleteNessusData(item._id)}
                             >
                               <FaTrash />
                             </button>
@@ -166,6 +166,12 @@ export function VulnerabilityData() {
               />
             </div>
           </div>
+
+          <EnhancedDetailsModal
+            data={exploitDetails}
+            isOpen={isOpen}
+            onClose={closeModal}
+          />
         </>
       )}
     </Suspense>
