@@ -1,5 +1,13 @@
 import { Suspense, useEffect, useState } from "react";
+<<<<<<< HEAD
 import { useAuthContext, useNessusContext, useVulnerabililtyDataContext } from "@/context";
+=======
+import {
+  useAuthContext,
+  useNessusContext,
+  useVulnerabililtyDataContext,
+} from "@/context";
+>>>>>>> caae0add0897377d499d0c789339c3af718acf4a
 import { IoSearch } from "react-icons/io5";
 import Loader from "@/components/Loader/Loader";
 import Pagination from "./Pagination";
@@ -10,14 +18,17 @@ import useAccessPartner from "@/hooks/AccessPartner";
 import { handlerSeverity } from "@/utils/vulnerableOperations";
 
 export function VulnerabilityData() {
-  const { loading, topVulnerabliltyData, TopVulnerablilty } =
-    useVulnerabililtyDataContext();
+  const { loading, topVulnerabliltyData } = useVulnerabililtyDataContext();
   const { token, tenant } = useAuthContext();
 
   const { NessusData, getNessusData,deleteNessusData } = useNessusContext();
 
+<<<<<<< HEAD
 
     const { closeModal, isOpen, openModal } = useAccessPartner();
+=======
+  console.log("this is just testing", NessusData);
+>>>>>>> caae0add0897377d499d0c789339c3af718acf4a
 
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
@@ -36,15 +47,20 @@ export function VulnerabilityData() {
   useEffect(() => {
     if (token) {
       getNessusData();
+<<<<<<< HEAD
     };
   }, [token, tenant]);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   
+=======
+    }
+  }, [token, tenant]);
 
-  useEffect(() => {
+  const startIndex = (currentPage - 1) * itemsPerPage;
+>>>>>>> caae0add0897377d499d0c789339c3af718acf4a
 
-  }, [])
+  useEffect(() => {}, []);
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -111,7 +127,9 @@ export function VulnerabilityData() {
                         className="border-b border-slate-700 hover:bg-[#1E293B] transition"
                       >
                         <td className="px-4 py-3">{startIndex + index + 1}</td>
-                        <td className="px-4 py-3">{item?.Title || item?.plugin_name || "-"}</td>
+                        <td className="px-4 py-3">
+                          {item?.Title || item?.plugin_name || "-"}
+                        </td>
                         <td className="px-4 py-3">{item?.scan_type || "-"}</td>
                         <td className="px-4 py-3">
                           {item?.threat_type || "-"}
@@ -143,7 +161,11 @@ export function VulnerabilityData() {
                             <button
                               title="Delete"
                               className=" text-red-500 hover:text-red-600 transition"
+<<<<<<< HEAD
                               onClick={() => deleteNessusData(item._id)}
+=======
+                              onClick={() => console.log("Delete", item.id)}
+>>>>>>> caae0add0897377d499d0c789339c3af718acf4a
                             >
                               <FaTrash />
                             </button>
