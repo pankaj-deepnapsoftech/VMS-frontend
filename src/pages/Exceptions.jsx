@@ -121,7 +121,6 @@ function Exceptions() {
     })
   );
 
-  console.log(vulnerabilityData);
 
   return (
     <>
