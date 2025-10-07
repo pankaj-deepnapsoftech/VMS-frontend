@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import { useContext } from "react";
 import { IoClose } from "react-icons/io5";
 
+// eslint-disable-next-line react/prop-types
 const DevicesData = ({ showModal, setShowModal, editableData }) => {
   const { DevicesSendData, DeviceUpdateData, loading } =
     useContext(DeviceContext);
@@ -39,7 +40,6 @@ const DevicesData = ({ showModal, setShowModal, editableData }) => {
     enableReinitialize: true,
 
     onSubmit: async (values) => {
-      console.log(values);
       if (editableData) {
         await DeviceUpdateData(values);
       } else {

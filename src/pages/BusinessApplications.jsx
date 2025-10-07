@@ -110,8 +110,6 @@ export default function BusinessApplications() {
     }
   };
 
-  console.log(editable)
-
   const handleFileChange = (e) => {
     if (!e.target.files[0]) {
       alert("file is required field");
@@ -355,7 +353,6 @@ export default function BusinessApplications() {
                     return alert("Please select a tenant");
                   }
                   const formData = new FormData();
-                  console.log(selectedFiles);
                   formData.append("excel", selectedFiles);
                   formData.append("creator", tenant);
                   CreateBulkBussinerssApplcation(formData);

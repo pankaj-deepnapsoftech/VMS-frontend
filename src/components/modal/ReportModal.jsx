@@ -7,6 +7,7 @@ import "react-pdf/dist/esm/Page/TextLayer.css"; // Optional: for text layer supp
 // Set up the PDF worker
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
+// eslint-disable-next-line react/prop-types
 const ReportModal = ({ file, close }) => {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
@@ -14,7 +15,9 @@ const ReportModal = ({ file, close }) => {
   if (!file) return null;
 
   // Determine file type
+  // eslint-disable-next-line react/prop-types
   const isPDF = file.toLowerCase().endsWith(".pdf");
+  // eslint-disable-next-line react/prop-types
   const isImage = file.toLowerCase().match(/\.(jpg|jpeg|png|gif|bmp|webp)$/);
 
   // Handle PDF load success

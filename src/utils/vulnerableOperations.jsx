@@ -43,7 +43,6 @@ export const calculateLM = (cost,acs)=>{
 
 export const calculateALE = (data) => {
 
-console.log(data)
   const vrs = calculateVRS(data.EPSS, data.exploit_complexity, data.Exploit_Availale, data.threat_type);
   const acs = data?.BusinessApplication ? calculateACS(data?.BusinessApplication) : calculateACS(data?.InfraStructureAsset);
   // const ars = calculateARS(vrs, acs);
