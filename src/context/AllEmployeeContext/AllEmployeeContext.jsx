@@ -89,10 +89,10 @@ const AllEmployeeContextProvider = ({ children }) => {
 		}
 	}
 
-	const GetUsers = async (page = 1) => {
+	const GetUsers = async (page = 1,tenant) => {
 		try {
 			const res = await AxiosHandler.get(
-				`/auth/all-users?page=${page}&limit=10`
+				`/auth/all-users?page=${page}&tenant=${tenant ? tenant : ""}`
 			);
 			setEmpData(res?.data.data);
 		} catch (error) {

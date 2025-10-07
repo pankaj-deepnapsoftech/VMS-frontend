@@ -1,10 +1,12 @@
 import { AxiosHandler } from "@/config/AxiosConfig";
 import { createContext, useState } from "react";
+import toast from "react-hot-toast";
 
 
 export const NessusContext = createContext({
     getNessusData: () => { },
-    NessusData: []
+    NessusData: [],
+    deleteNessusData:() => {},
 
 });
 
@@ -23,8 +25,21 @@ const NessusContextProvider = ({ children }) => {
         };
     };
 
+    const deleteNessusData = async (id) => {
+        if(!window.confirm("are you sure you want to delete")){
+            return ;
+        }
+        try {
+            const res = await AxiosHandler.delete(`/nessus/delete-nessus/${id}`);
+            toast.success(res.data.message || "nessus data delete")
+            getNessusData();
+        } catch (error) {
+            console.log(error);
+        };
+    };
+
     return (
-        <NessusContext.Provider value={{ getNessusData, NessusData }}>
+        <NessusContext.Provider value={{ getNessusData, NessusData, deleteNessusData }}>
             {children}
         </NessusContext.Provider>
     );

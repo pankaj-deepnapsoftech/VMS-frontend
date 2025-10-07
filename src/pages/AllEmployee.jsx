@@ -35,7 +35,7 @@ const AllEmployee = () => {
   // all context api hooks
   const { DeleteUser, GetUsers, EmpData } = useAllEmployeeContext();
   const { partners } = useDataContext();
-  const { token, ChangeStatus, authenticate } = useAuthContext();
+  const { token, ChangeStatus, authenticate,tenant } = useAuthContext();
   const { TenantData } = useAllEmployeeContext();
   // use location hook
 
@@ -155,10 +155,10 @@ const AllEmployee = () => {
 
   useEffect(() => {
     if (token) {
-      GetUsers(page);
+      GetUsers(page,tenant);
       GetAllRoleData();
     }
-  }, [token, page]);
+  }, [token, page,tenant]);
 
   if (isViewAccess(authenticate, location)) {
     return <Access />;
