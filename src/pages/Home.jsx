@@ -74,6 +74,7 @@ const DashboardCards = () => {
     ],
   };
 
+
   // Line Chart Options
   const lineOptions = {
     responsive: true,

@@ -216,14 +216,14 @@ const ExceptionTable = () => {
                     <td className="px-6 py-4">
                       {item.proof ? (
                         <a
-                          href={item.proof}
+                          href={item.proof?.image_url}
                           download
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-2 hover:text-blue-300 transition"
                         >
                           <img
-                            src={item.proof}
+                            src={item?.proof?.image_url}
                             alt="Proof"
                             className="w-10 h-10 object-cover rounded-md border border-slate-600 shadow-sm hover:scale-105 transition-transform"
                           />
