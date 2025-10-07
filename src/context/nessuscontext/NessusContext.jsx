@@ -16,9 +16,9 @@ const NessusContextProvider = ({ children }) => {
 
     const [NessusData, SetNessusData] = useState([]);
 
-    const getNessusData = async () => {
+    const getNessusData = async (page,tenant) => {
         try {
-            const res = await AxiosHandler.get("/nessus/getNessusData");
+            const res = await AxiosHandler.get(`/nessus/getNessusData?page=${page}`);
             SetNessusData(res?.data?.data || []);
         } catch (error) {
             console.log(error);
