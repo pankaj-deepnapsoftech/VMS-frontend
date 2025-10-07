@@ -19,12 +19,16 @@ import { useLocation } from "react-router-dom";
 
 const PendingAssessment = () => {
   // all context api hooks
-  const { token,authenticate,tenant } = useAuthContext();
-  const { pendingAssessment, getPendingAssessments, DeleteAssesment ,UpdateAssesment} =
-    useScheduleAssessmentContext();
+  const { token, authenticate, tenant } = useAuthContext();
+  const {
+    pendingAssessment,
+    getPendingAssessments,
+    DeleteAssesment,
+    UpdateAssesment,
+  } = useScheduleAssessmentContext();
 
-    // location 
-    const location = useLocation();
+  // location
+  const location = useLocation();
 
   // all useState hooks
   const [page, setPage] = useState(1);
@@ -34,20 +38,17 @@ const PendingAssessment = () => {
   const [selectedAssessmentId, setSelectedAssessmentId] = useState(null);
   const [newStatus, setNewStatus] = useState("");
 
-
   const filteredData = pendingAssessment;
 
   useEffect(() => {
     if (token) {
-      getPendingAssessments(page,tenant);
+      getPendingAssessments(page, tenant);
     }
-  }, [token,tenant]);
+  }, [token, tenant]);
 
-  if(isViewAccess(authenticate, location)){
-    return <Access/>
+  if (isViewAccess(authenticate, location)) {
+    return <Access />;
   }
-
-
 
   return (
     <div className="w-full  pb-20 p-6">
@@ -101,7 +102,7 @@ const PendingAssessment = () => {
                     key={item._id}
                     className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
                   >
-                    <td className="px-4 py-3">{(page -1 ) * 10 + 1+ index}</td>
+                    <td className="px-4 py-3">{(page - 1) * 10 + 1 + index}</td>
                     <td className="px-4 py-3 capitalize">
                       {item?.Data_Classification || "-"}
                     </td>
@@ -113,7 +114,12 @@ const PendingAssessment = () => {
                     </td>
                     <td className="px-4 py-3">
                       {item.code_Upload ? (
-                        <a href={item.code_Upload} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                        <a
+                          href={item.code_Upload}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:underline"
+                        >
                           View Upload File
                         </a>
                       ) : (
@@ -155,17 +161,19 @@ const PendingAssessment = () => {
                           <RiEdit2Line className="w-5 h-5" />
                         </button>
                       )}
-                      {isModifyAccess() && <button
-                        title="Change Status"
-                        className="text-subtext hover:text-blue-700"
-                        onClick={() => {
-                          setSelectedAssessmentId(item._id);
-                          setNewStatus(item.status); 
-                          setIsStatusModalOpen(true);
-                        }}
-                      >
-                        <TbStatusChange className="w-5 h-5" />
-                      </button>}
+                      {isModifyAccess() && (
+                        <button
+                          title="Change Status"
+                          className="text-subtext hover:text-blue-700"
+                          onClick={() => {
+                            setSelectedAssessmentId(item._id);
+                            setNewStatus(item.status);
+                            setIsStatusModalOpen(true);
+                          }}
+                        >
+                          <TbStatusChange className="w-5 h-5" />
+                        </button>
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -177,7 +185,9 @@ const PendingAssessment = () => {
         {isStatusModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
             <div className="bg-modalBg rounded-lg shadow-lg w-[500px] h-[200px] p-6 text-black">
-              <h2 className="text-lg text-white font-semibold mb-4">Change Status</h2>
+              <h2 className="text-lg text-white font-semibold mb-4">
+                Change Status
+              </h2>
 
               <select
                 value={newStatus}
@@ -200,10 +210,9 @@ const PendingAssessment = () => {
                 <button
                   onClick={async () => {
                     if (!newStatus) return;
-                    await UpdateAssesment(
-                      selectedAssessmentId,
-                      {status:newStatus}
-                    );
+                    await UpdateAssesment(selectedAssessmentId, {
+                      status: newStatus,
+                    });
                     getPendingAssessments();
                     setIsStatusModalOpen(false);
                   }}
