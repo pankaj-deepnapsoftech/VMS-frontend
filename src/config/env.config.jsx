@@ -14,13 +14,19 @@ class Config {
     ENCRYPTION_KEY;
 
     // firebase 
-    API_KEY ;
-    AUTH_DOMAIN ;
-    PROJECT_ID ;
-    STORAGE_BUCKET ;
-    APP_ID ;
-    MESSAGING_SENDER_ID ;
-    MEASUREMENT_ID ;
+    API_KEY;
+    AUTH_DOMAIN;
+    PROJECT_ID;
+    STORAGE_BUCKET;
+    APP_ID;
+    MESSAGING_SENDER_ID;
+    MEASUREMENT_ID;
+
+    // file folder names
+    SECUREND_FILE;
+    DEMO_FILE;
+    VAPT_FILE;
+    LOCAL_FILE;
 
     constructor() {
         this.REACT_ENV = ENVLoad.VITE_REACT_ENV;
@@ -38,12 +44,16 @@ class Config {
         this.APP_ID = ENVLoad.VITE_APP_ID;
         this.MESSAGING_SENDER_ID = ENVLoad.VITE_MESSAGING_SENDER_ID;
         this.MEASUREMENT_ID = ENVLoad.VITE_MEASUREMENT_ID;
+        this.SECUREND_FILE = ENVLoad.VITE_SECUREND_FILE;
+        this.DEMO_FILE = ENVLoad.VITE_DEMO_FILE;
+        this.VAPT_FILE = ENVLoad.VITE_VAPT_FILE;
+        this.LOCAL_FILE = ENVLoad.VITE_LOCAL_FILE;
     }
 };
 
 
 
-export const config = new Config(); 
+export const config = new Config();
 
 
 

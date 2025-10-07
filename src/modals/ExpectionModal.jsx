@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useExceptionContext } from "@/context";
-import { ImageUploader } from "@/utils/ImagesUploader";
+import { Imageuploader } from "@/utils/firebaseImageUploader";
 import { ExpectionValidation } from "@/Validation/Expection.Validation";
 import { Formik } from "formik";
 
@@ -32,7 +32,7 @@ const ExpectionModal = ({ setIsModalOpen, creator }) => {
           }}
           validationSchema={ExpectionValidation}
           onSubmit={async (value) => {
-            const proof = await ImageUploader(value.approvalFile);
+            const proof = await Imageuploader(value.approvalFile);
             ExceptionCreate({ ...value, proof, vulnerable_data: creator });
             setIsModalOpen(false);
           }}
