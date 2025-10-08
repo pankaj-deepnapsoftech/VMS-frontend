@@ -69,7 +69,6 @@ export function InfrastructureData() {
         field.toString().toLowerCase().includes(searchTerm.toLowerCase())
       );
   });
-
   const handleExpectionModal = (item) => {
     if (!item.Expection) {
       setIsModalOpen(true);
