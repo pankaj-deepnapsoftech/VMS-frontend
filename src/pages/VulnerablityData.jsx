@@ -38,9 +38,9 @@ export function VulnerabilityData() {
 
   useEffect(() => {
     if (token) {
-      getNessusData();
+      getNessusData(currentPage,tenant);
     }
-  }, [token, tenant]);
+  }, [token, tenant,currentPage]);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
 
@@ -162,9 +162,9 @@ export function VulnerabilityData() {
                 page={currentPage}
                 setPage={setCurrentPage}
                 hasNextPage={
-                  startIndex + itemsPerPage < topVulnerabliltyData?.length
+                   itemsPerPage <= NessusData?.length
                 }
-                total={topVulnerabliltyData?.length}
+                total={NessusData?.length}
               />
             </div>
           </div>
