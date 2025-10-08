@@ -19,7 +19,6 @@ import {
 import UserProfile from "@/pages/UserProfile";
 // import ChangePasswordModal from "@/modals/ChangePasswordModal";
 import useChangePassword from "@/hooks/changePassword";
-import FirstDashboard from "@/pages/FirstDashboard";
 import Loader from "@/components/Loader/Loader";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { products } from "@/constants/static.data";
@@ -35,6 +34,7 @@ import ErrorBoundary from "@/utils/Errorhandler";
 const MainLayout = () => {
   const { notificationData, NotificationsViewed } =
     useVulnerabililtyDataContext();
+
   const {
     authenticate,
     updateProfileModal,

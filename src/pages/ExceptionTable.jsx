@@ -15,9 +15,9 @@ const ExceptionTable = () => {
   const { ExpectionPendingData, expectionData, UpdateExpectionData } = useExceptionContext();
   const { TenantData } = useAllEmployeeContext();
   const { allInfrastructureData } = useVulnerabililtyDataContext();
-  const { token, GetTenantData, UserViaTenant } = useAuthContext();
+  const { token, GetTenantData, UserViaTenant, tenant } = useAuthContext();
 
-  const [tenant, setTenant] = useState('');
+ 
   const location = useLocation();
 
   const [selectedId, setSelectedId] = useState(null);
@@ -116,9 +116,14 @@ const ExceptionTable = () => {
   }, []);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    setTenant(params.get('tenant') || '');
-  }, [location.search]);
+    if (token) {
+      ExpectionPendingData(1, tenant);
+      
+    }
+    
+  }, [tenant])
+
+
 
   useEffect(() => {
     if (token) {
