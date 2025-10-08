@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { FaTimesCircle, FaBell } from "react-icons/fa";
 
 export function NotificationSidebar({ notifications, isOpen, onClose, notificationsViewed }) {
@@ -10,28 +10,28 @@ export function NotificationSidebar({ notifications, isOpen, onClose, notificati
 
 	const sidebarRef = useRef(null);
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        sidebarRef.current &&
-        !sidebarRef.current.contains(event.target)
-      ) {
-        onClose(); // Call parent handler to close the sidebar
-      }
-    };
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+			if (
+				sidebarRef.current &&
+				!sidebarRef.current.contains(event.target)
+			) {
+				onClose(); // Call parent handler to close the sidebar
+			}
+		};
 
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
+		if (isOpen) {
+			document.addEventListener("mousedown", handleClickOutside);
+		}
 
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen, onClose]);
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
+	}, [isOpen, onClose]);
 
 	return (
 		<div
-		ref={sidebarRef}
+			ref={sidebarRef}
 			className={`fixed top-0 right-0 h-full w-80 bg-cards shadow-lg z-10 transform transition-transform duration-300 ${isOpen ? "translate-x-0" : "translate-x-full"
 				}`}
 		>
@@ -48,44 +48,41 @@ export function NotificationSidebar({ notifications, isOpen, onClose, notificati
 			<div className="p-4 space-y-3 overflow-y-auto max-h-[80vh]">
 				{notifications?.length > 0 ? (
 					notifications.map((notification, index) => {
-						const isViewed = notification?.view; 
+						const isViewed = notification?.view;
 						return (
-							<div
-								key={index}
-								onClick={() => {
-									notificationsViewed(notification?._id);
-								}}
-								className={`p-3 rounded-lg flex items-center gap-3 shadow-md cursor-pointer transition-all ${isViewed ? "bg-modalBg text-white border border-gray-800" : "bg-modalBg text-white"
-									} hover:bg-gray-800`}
-							>
-								{/* Icon based on type */}
-								{/* <span className="text-lg">
-                  {notification.type === "success" ? (
-                    <FaCheckCircle className="text-green-500" />
-                  ) : notification.type === "warning" ? (
-                    <FaExclamationTriangle className="text-yellow-500" />
-                  ) : notification.type === "error" ? (
-                    <FaTimesCircle className="text-red-500" />
-                  ) : (
-                    <FaBell className="text-blue-500" />
-                  )}
-                </span> */}
 
-								{/* Notification Title */}
-								<div>
-									<h2 className="font-semibold text-sm">{notification?.title}</h2>
+							<div key={index} className="bg-modalBg hover:bg-gray-800 border border-gray-800 p-3 rounded-lg shadow-md cursor-pointer transition-all text-gray-200" >
+
+								<div
+									
+									onClick={() => {
+										notificationsViewed(notification?._id);
+									}}
+									className={` flex items-center gap-3  `}
+								>
+
+									{/* Notification Title */}
+									<div>
+										<h2 className="font-semibold text-sm">{notification?.title}</h2>
+
+									</div>
+
+									{/* Viewed Badge */}
+									{!isViewed ? (
+										<span className="ml-auto text-xs font-base text-red-400  rounded-full">
+											New
+										</span>
+									) : <span className="ml-auto text-xs font-base text-blue-400  rounded-full">
+										Viewed
+									</span>
+									}
+
 
 								</div>
-
-								{/* Viewed Badge */}
-								{!isViewed ? (
-									<span className="ml-auto text-xs font-base text-red-400  rounded-full">
-										New
-									</span>
-								) : <span className="ml-auto text-xs font-base text-blue-400  rounded-full">
-									Viewed
-								</span>
-								}
+								<div>
+									<button>Approve</button>
+									<button>Reject</button>
+								</div>
 							</div>
 						);
 					})
