@@ -1,11 +1,14 @@
 /* eslint-disable react/prop-types */
-import { useExceptionContext } from "@/context";
+import { useAuthContext, useExceptionContext } from "@/context";
 import { Imageuploader } from "@/utils/firebaseImageUploader";
 import { ExpectionValidation } from "@/Validation/Expection.Validation";
-import { Formik } from "formik";
+import { ErrorMessage, Field, Formik } from "formik";
+import { useState } from "react";
 
 const ExpectionModal = ({ setIsModalOpen, creator }) => {
   const { ExceptionCreate } = useExceptionContext();
+  const { UserViaTenant } = useAuthContext();
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-modalBg rounded-lg w-full max-w-xl p-6 shadow-lg">
@@ -29,14 +32,34 @@ const ExpectionModal = ({ setIsModalOpen, creator }) => {
             compensatory_control: "No",
             detail: "",
             approvalFile: null,
+
           }}
+
           validationSchema={ExpectionValidation}
           onSubmit={async (value) => {
             const proof = await Imageuploader(value.approvalFile);
-            ExceptionCreate({ ...value, proof, vulnerable_data: creator });
+           
+            const payload = {
+              ...value,
+              proof,
+              vulnerable_data: creator,
+              aprove_1: {
+                approver: value.aprove_1,
+              },
+              aprove_2: {
+                approver: value.aprove_2,
+              },
+              aprove_3: {
+                approver: value.aprove_3,
+              },
+            };
+
+            ExceptionCreate(payload);
             setIsModalOpen(false);
           }}
+
         >
+
           {({
             values,
             handleChange,
@@ -65,6 +88,8 @@ const ExpectionModal = ({ setIsModalOpen, creator }) => {
                     </p>
                   )}
               </div>
+
+
 
               {/* End Date */}
               <div>
@@ -97,6 +122,32 @@ const ExpectionModal = ({ setIsModalOpen, creator }) => {
                   <p className="text-red-500 text-sm">{errors.reason}</p>
                 )}
               </div>
+
+              {["aprove_1", "aprove_2", "aprove_3"].map((key, index) => (
+                <div key={key}>
+                  <label className="block font-medium mb-1">
+                    {`${index + 1}st Approver`}
+                  </label>
+                  <Field
+                    as="select"
+                    name={key}
+                    className="w-full bg-input rounded px-3 py-2 text-white border border-gray-300"
+                  >
+                    <option value="">Select User</option>
+                    {UserViaTenant.map((user) => (
+                      <option key={user._id} value={user._id}>
+                        {user.email}
+                      </option>
+                    ))}
+                  </Field>
+                  <ErrorMessage name={key}>
+                    {(msg) => <p className="text-red-500 text-sm">{msg}</p>}
+                  </ErrorMessage>
+                </div>
+              ))}
+
+
+
 
               {/* Compensatory Control - Radio */}
               <div>
@@ -192,3 +243,5 @@ const ExpectionModal = ({ setIsModalOpen, creator }) => {
 };
 
 export default ExpectionModal;
+
+

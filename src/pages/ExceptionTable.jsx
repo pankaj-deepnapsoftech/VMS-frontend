@@ -140,7 +140,7 @@ const ExceptionTable = () => {
                   ))}
                 </select>
               </div>
-            ))}
+            ))} 
 
             <div className="flex justify-end gap-2 mt-8">
               <button
