@@ -55,8 +55,8 @@ export function NotificationSidebar({ notifications, isOpen, onClose, notificati
 								onClick={() => {
 									notificationsViewed(notification?._id);
 								}}
-								className={`p-3 rounded-lg flex items-center gap-3 shadow-md cursor-pointer transition-all ${isViewed ? "bg-gray-200 text-gray-600" : "bg-blue-100 text-blue-900"
-									} hover:bg-blue-200`}
+								className={`p-3 rounded-lg flex items-center gap-3 shadow-md cursor-pointer transition-all ${isViewed ? "bg-modalBg text-white border border-gray-800" : "bg-modalBg text-white"
+									} hover:bg-gray-800`}
 							>
 								{/* Icon based on type */}
 								{/* <span className="text-lg">
@@ -79,7 +79,7 @@ export function NotificationSidebar({ notifications, isOpen, onClose, notificati
 
 								{/* Viewed Badge */}
 								{!isViewed ? (
-									<span className="ml-auto text-xs font-bold text-white bg-red-500 px-2 py-1 rounded-full">
+									<span className="ml-auto text-xs font-base text-red-400  rounded-full">
 										New
 									</span>
 								) : <span className="ml-auto text-xs font-base text-blue-400  rounded-full">
