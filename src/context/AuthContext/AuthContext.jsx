@@ -333,6 +333,12 @@ const AuthContextProvider = ({ children }) => {
     }
   }, [location.search, authenticate]);
 
+  useEffect(()=>{
+    if(token){
+      GetTenantData(tenant);
+    }
+  },[tenant,token])
+
   return (
     <authContext.Provider
       value={{

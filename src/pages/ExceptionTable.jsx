@@ -2,16 +2,13 @@ import { useAllEmployeeContext, useAuthContext, useExceptionContext } from "@/co
 import { dateFormaterWithDate } from "@/utils/dateFormate";
 import { useEffect, useState, useRef } from "react";
 import { FaUserCheck } from "react-icons/fa";
-import { useLocation } from "react-router-dom";
 
 const ExceptionTable = () => {
   const { ExpectionPendingData, expectionData, UpdateExpectionData } = useExceptionContext();
   const { TenantData } = useAllEmployeeContext();
-  const { token, GetTenantData, UserViaTenant } = useAuthContext();
+  const { token,  UserViaTenant,tenant } = useAuthContext();
 
 
-  const [tenant, setTenant] = useState('');
-  const location = useLocation();
 
   const hasData = Array.isArray(expectionData) && expectionData.length > 0;
 
@@ -98,15 +95,10 @@ const ExceptionTable = () => {
       ExpectionPendingData(1, tenant);
       
     }
-    if(tenant) {
-      GetTenantData(tenant);
-    }
+    
   }, [tenant])
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    setTenant(params.get('tenant') || '');
-  }, [location.search]);
+
 
   return (
     <div className="min-h-screen bg-[#0F172A] p-8 text-gray-400">
