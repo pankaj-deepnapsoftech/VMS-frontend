@@ -10,7 +10,6 @@ import { EmptyFieldRemover } from "@/utils/RemoveEmptyField";
 import { useEffect, useState, useRef } from "react";
 import { FaUserCheck } from "react-icons/fa";
 import { GrEdit } from "react-icons/gr";
-import { useLocation } from "react-router-dom";
 
 const ExceptionTable = () => {
   const { ExpectionPendingData, expectionData, UpdateExpectionData } = useExceptionContext();
@@ -19,7 +18,6 @@ const ExceptionTable = () => {
   const { token, GetTenantData, UserViaTenant, tenant } = useAuthContext();
   const [editTable,setEditTable] = useState(null)
  
-  const location = useLocation();
 
   const [selectedId, setSelectedId] = useState(null);
   const [selectedRow, setSelectedRow] = useState(null);
