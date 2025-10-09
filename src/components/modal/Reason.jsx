@@ -47,20 +47,6 @@ export function ReasonModal({ isOpen, onClose, onSubmit }) {
               }}
               className="space-y-4"
             >
-              {/* Title Input */}
-              <div>
-                <label className="block text-sm text-gray-400 mb-1">
-                  Title
-                </label>
-                <input
-                  name="title"
-                  type="text"
-                  placeholder="Enter title"
-                  className="w-full px-3 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-              </div>
-
               {/* Reason Textarea */}
               <div>
                 <label className="block text-sm text-gray-400 mb-1">
