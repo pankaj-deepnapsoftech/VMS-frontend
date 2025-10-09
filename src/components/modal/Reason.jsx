@@ -72,7 +72,7 @@ export function ReasonModal({ isOpen, onClose, onSubmit }) {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 text-sm font-semibold rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 hover:opacity-90 transition-all shadow-md"
+                  className="px-4 py-2 text-sm font-semibold rounded-lg bg-blue-700 hover:opacity-90 transition-all shadow-md"
                 >
                   Submit
                 </button>
