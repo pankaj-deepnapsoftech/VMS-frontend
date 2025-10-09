@@ -88,7 +88,7 @@ export function NotificationSidebar({
                   <button className="px-2 py-1.5 text-sm font-medium rounded-lg bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md hover:opacity-90 transition-all duration-200 transform hover:scale-105 active:scale-95">
                     Approve
                   </button>
-                  <button className="px-2 py-1.5 text-sm font-medium rounded-lg bg-gradient-to-r from-rose-500 to-red-600 text-white shadow-md hover:opacity-90 transition-all duration-200 transform hover:scale-105 active:scale-95">
+                  <button className="px-2    py-1.5 text-sm font-medium rounded-lg bg-gradient-to-r from-rose-500 to-red-600 text-white shadow-md hover:opacity-90 transition-all duration-200 transform hover:scale-105 active:scale-95">
                     Reject
                   </button>
                 </div>
