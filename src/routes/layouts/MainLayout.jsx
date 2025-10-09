@@ -30,6 +30,7 @@ import { customStyles, darkTheme } from "@/constants/constants.data";
 import ChangePasswordModal from "@/modals/ChangePasswordModal";
 import SecurityQuestions from "@/pages/Auth/Secuirity";
 import ErrorBoundary from "@/utils/Errorhandler";
+import { ReasonModal } from "@/components/modal/Reason";
 
 const MainLayout = () => {
   const { notificationData, NotificationsViewed } =
@@ -55,6 +56,8 @@ const MainLayout = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [showSidebar, setShowSideBar] = useState(false);
+  const [rejectionReasion,setRejectionReasion] = useState(false);
+  console.log(rejectionReasion)
   const navigate = useNavigate();
 
   const [tenant, setTenant] = useState("Select Value");
@@ -268,8 +271,11 @@ const MainLayout = () => {
               notifications={notificationData}
               isOpen={isSidebarOpen}
               onClose={() => setSidebarOpen(false)}
+              setRejectionReasion={setRejectionReasion}
             />
           </div>
+
+           <ReasonModal isOpen={rejectionReasion} onClose={()=>setRejectionReasion(false)}/>
 
           <div className="md:hidden">
             {!authenticate?.role && (

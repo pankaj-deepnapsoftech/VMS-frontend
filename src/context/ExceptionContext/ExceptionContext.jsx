@@ -43,11 +43,14 @@ const ExceptionContextProvider = ({ children }) => {
   };
 
    const ExpectionPendingData = async (page,tenant) => {
+    console.log()
     setLoading(true);
     try {
       const res = await AxiosHandler.get(
         `/expection/get?page=${page}&tenant=${tenant ? tenant : ""}`
       );
+
+      console.log(res);
       setExpectionData(res.data?.data);
     } catch (error) {
       console.log(error);

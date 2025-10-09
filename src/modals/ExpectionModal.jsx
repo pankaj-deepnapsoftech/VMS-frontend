@@ -6,8 +6,16 @@ import { ErrorMessage, Field, Formik } from "formik";
 import { useState } from "react";
 
 const ExpectionModal = ({ setIsModalOpen, creator }) => {
+  const {tenant} = useAuthContext();
   const { ExceptionCreate } = useExceptionContext();
   const { UserViaTenant } = useAuthContext();
+
+  const [handleImageLoading,setImageLoading] = useState(false)
+
+  if(!tenant){
+    alert("please select tenant first !")
+   setIsModalOpen(false)
+  }
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -32,11 +40,12 @@ const ExpectionModal = ({ setIsModalOpen, creator }) => {
             compensatory_control: "No",
             detail: "",
             approvalFile: null,
-
+            tenant:tenant
           }}
 
           validationSchema={ExpectionValidation}
           onSubmit={async (value) => {
+            setImageLoading(true)
             const proof = await Imageuploader(value.approvalFile);
            
             const payload = {
@@ -56,6 +65,7 @@ const ExpectionModal = ({ setIsModalOpen, creator }) => {
 
             ExceptionCreate(payload);
             setIsModalOpen(false);
+            setImageLoading(false)
           }}
 
         >
@@ -229,9 +239,10 @@ const ExpectionModal = ({ setIsModalOpen, creator }) => {
               <div className="flex justify-end">
                 <button
                   type="submit"
+                  disabled={handleImageLoading}
                   className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
                 >
-                  Submit
+                  {handleImageLoading ? "Submiting..." :"Submit"}
                 </button>
               </div>
             </form>
