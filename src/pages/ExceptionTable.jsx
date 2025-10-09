@@ -127,6 +127,14 @@ const ExceptionTable = () => {
     }
   };
 
+  useEffect(()=>{
+    if(isApproverModalOpen && approveArray.length <= 0){
+      setIsApproverModalOpen(false);
+      alert("not any rejection")
+    }
+
+  },[isApproverModalOpen]);
+
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     document.addEventListener("keydown", handleEscapeKey);
