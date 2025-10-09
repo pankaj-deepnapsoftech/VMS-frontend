@@ -11,7 +11,7 @@ export function NotificationSidebar({
 	setRejectionReasion
 }) {
 
-	const {tenant,token} =  useAuthContext();
+	const { tenant, token } = useAuthContext();
 	const { UpdateExpectionData, ExpectionPendingData, expectionData } = useExceptionContext();
 	let notificationcount =
 		notifications?.filter((notification) => !notification.view).length || 0;
@@ -21,25 +21,25 @@ export function NotificationSidebar({
 
 	const HandleUpdateExpection = (data) => {
 
-		
+
 		const filterExpectionData = expectionData.filter((item) => item._id === data.expection_id)[0];
 		let UpdatedData = null;
 		let key = "";
-		if(filterExpectionData?.aprove_1?.approver === data.reciver_id){
+		if (filterExpectionData?.aprove_1?.approver === data.reciver_id) {
 			UpdatedData = filterExpectionData?.aprove_1;
 			key = "aprove_1";
-		} 
+		}
 
-		if(filterExpectionData?.aprove_2?.approver === data.reciver_id){
+		if (filterExpectionData?.aprove_2?.approver === data.reciver_id) {
 			UpdatedData = filterExpectionData?.aprove_2;
 			key = "aprove_2";
-		} 
+		}
 
-		if(filterExpectionData?.aprove_3?.approver === data.reciver_id){
+		if (filterExpectionData?.aprove_3?.approver === data.reciver_id) {
 			UpdatedData = filterExpectionData?.aprove_3;
 			key = "aprove_3";
-		} 
-		UpdateExpectionData(data.expection_id,{[key]:{...UpdatedData,aproved:true,status:"Approved"}});
+		}
+		UpdateExpectionData(data.expection_id, { [key]: { ...UpdatedData, aproved: true, status: "Approved" } });
 		notificationsViewed(data?._id)
 	}
 
@@ -61,7 +61,7 @@ export function NotificationSidebar({
 
 	useEffect(() => {
 		if (token) {
-			ExpectionPendingData(1,tenant);
+			ExpectionPendingData(1, tenant);
 		}
 	}, [token, tenant])
 
@@ -120,10 +120,10 @@ export function NotificationSidebar({
 									)}
 								</div>
 								{notification?.options && <div className="flex justify-end gap-2 mt-3">
-									<button onClick={()=>HandleUpdateExpection(notification)} className="px-2 py-1.5 text-sm font-medium rounded-lg bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md hover:opacity-90 transition-all duration-200 transform hover:scale-105 active:scale-95">
+									<button onClick={() => HandleUpdateExpection(notification)} className="px-2 py-1.5 text-sm font-medium rounded-lg bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md hover:opacity-90 transition-all duration-200 transform hover:scale-105 active:scale-95">
 										Approve
 									</button>
-									<button onClick={()=>setRejectionReasion(true)}  className="px-2 py-1.5 text-sm font-medium rounded-lg bg-gradient-to-r from-rose-500 to-red-600 text-white shadow-md hover:opacity-90 transition-all duration-200 transform hover:scale-105 active:scale-95">
+									<button onClick={() => setRejectionReasion(true)} className="px-2 py-1.5 text-sm font-medium rounded-lg bg-gradient-to-r from-rose-500 to-red-600 text-white shadow-md hover:opacity-90 transition-all duration-200 transform hover:scale-105 active:scale-95">
 										Reject
 									</button>
 								</div>}
@@ -136,4 +136,5 @@ export function NotificationSidebar({
 			</div>
 		</div>
 	);
+
 }
