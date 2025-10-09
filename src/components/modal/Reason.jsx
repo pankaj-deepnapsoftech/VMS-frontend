@@ -39,10 +39,9 @@ export function ReasonModal({ isOpen, onClose, onSubmit }) {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                const title = e.target.title.value.trim();
                 const reason = e.target.reason.value.trim();
-                if (!title || !reason) return;
-                onSubmit({ title, reason });
+                if (!reason) return;
+                onSubmit(reason);
                 onClose();
               }}
               className="space-y-4"

@@ -15,6 +15,7 @@ import {
   useDataContext,
   useVulnerabililtyDataContext,
   useTVMCardsContext,
+  useExceptionContext,
 } from "@/context";
 import UserProfile from "@/pages/UserProfile";
 // import ChangePasswordModal from "@/modals/ChangePasswordModal";
@@ -49,6 +50,7 @@ const MainLayout = () => {
   const { refreshTVMCardsData } = useTVMCardsContext();
 
   const { openModal, isOpen, closeModal } = useChangePassword();
+  const { UpdateExpectionData } = useExceptionContext();
 
   const [width, setWidth] = useState(window.innerWidth);
   const [temp, setTemp] = useState("");
@@ -57,12 +59,24 @@ const MainLayout = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [showSidebar, setShowSideBar] = useState(false);
   const [rejectionReasion,setRejectionReasion] = useState(false);
-  console.log(rejectionReasion)
+  
   const navigate = useNavigate();
 
   const [tenant, setTenant] = useState("Select Value");
   const [tenantId, setTenantId] = useState("");
   const [searchParams] = useSearchParams();
+
+  const [editableNotification,setNotificationData] = useState(null)
+
+
+  const HandleRejection = (description) =>  {
+    const keys = Object.keys(editableNotification.data);
+    UpdateExpectionData(editableNotification.id,{[keys[0]]:{...editableNotification.data[keys[0]],description}});
+    NotificationsViewed(editableNotification.nid)
+  };
+
+
+
 
   let notificationcount =
     notificationData?.filter((notification) => !notification.view).length || 0;
@@ -272,10 +286,11 @@ const MainLayout = () => {
               isOpen={isSidebarOpen}
               onClose={() => setSidebarOpen(false)}
               setRejectionReasion={setRejectionReasion}
+              setNotificationData={setNotificationData}
             />
           </div>
 
-           <ReasonModal isOpen={rejectionReasion} onClose={()=>setRejectionReasion(false)}/>
+           <ReasonModal isOpen={rejectionReasion} onClose={()=>setRejectionReasion(false)} onSubmit={HandleRejection}/>
 
           <div className="md:hidden">
             {!authenticate?.role && (
