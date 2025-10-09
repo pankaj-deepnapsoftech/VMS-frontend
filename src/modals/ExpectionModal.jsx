@@ -5,7 +5,8 @@ import { ExpectionValidation } from "@/Validation/Expection.Validation";
 import { ErrorMessage, Field, Formik } from "formik";
 import { useState } from "react";
 
-const ExpectionModal = ({ setIsModalOpen, creator }) => {
+const ExpectionModal = ({ setIsModalOpen, creator, editTable }) => {
+ 
   const {tenant} = useAuthContext();
   const { ExceptionCreate } = useExceptionContext();
   const { UserViaTenant } = useAuthContext();
@@ -34,15 +35,24 @@ const ExpectionModal = ({ setIsModalOpen, creator }) => {
 
         <Formik
           initialValues={{
-            exception_start_data: "",
-            exception_end_data: "",
-            reason: "",
-            compensatory_control: "No",
-            detail: "",
-            approvalFile: null,
-            tenant:tenant
+            exception_start_data: editTable?.exception_start_data
+              ? editTable.exception_start_data.split('T')[0]
+              : "",
+            exception_end_data: editTable?.exception_end_data
+              ? editTable.exception_end_data.split('T')[0]
+              : "",
+            reason: editTable?.reason || "",
+            compensatory_control: editTable?.compensatory_control || "No",
+            detail: editTable?.detail || "",
+            approvalFile: editTable?.proof?._id || null,
+            tenant: editTable?.tenant || tenant,
+            aprove_1: editTable?.aprove_1?.approver || "",
+            aprove_2: editTable?.aprove_2?.approver || "",
+            aprove_3: editTable?.aprove_3?.approver || "",
           }}
 
+
+          enableReinitialize
           validationSchema={ExpectionValidation}
           onSubmit={async (value) => {
             setImageLoading(true)

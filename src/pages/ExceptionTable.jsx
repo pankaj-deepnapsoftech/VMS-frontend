@@ -16,7 +16,7 @@ const ExceptionTable = () => {
   const { TenantData } = useAllEmployeeContext();
   const { allInfrastructureData } = useVulnerabililtyDataContext();
   const { token, GetTenantData, UserViaTenant, tenant } = useAuthContext();
-
+  const [editTable,setEditTable] = useState(null)
  
   const location = useLocation();
 
@@ -61,7 +61,7 @@ const ExceptionTable = () => {
       alert("Please select a tenant to proceed.");
       return;
     }
-    const creatorIds = allInfrastructureData.map(item => item.creator?._id);
+    const creatorIds = expectionData.map(item => item.creator);
     setSelectedId(creatorIds[0]);
     setIsExpectionModalOpen(true);
   };
@@ -134,6 +134,7 @@ const ExceptionTable = () => {
     }
   }, [tenant]);
 
+  console.log(editTable)
   return (
     <div className="min-h-screen bg-[#0F172A] p-8 text-gray-400">
       <h1 className="text-3xl font-bold mb-6">Pending Exception</h1>
@@ -250,7 +251,7 @@ const ExceptionTable = () => {
                     </td>
                     <td className="px-6 py-4 text-start flex gap-2">
                       <button
-                        onClick={openExpectionModal}
+                        onClick={()=>{openExpectionModal(); setEditTable(item)}}
                         className="p-2 rounded-md hover:bg-slate-600/30 transition"
                         title="Open Expection Modal"
                       >
@@ -281,6 +282,7 @@ const ExceptionTable = () => {
         <ExpectionModal
           setIsModalOpen={setIsExpectionModalOpen}
           creator={selectedId}
+           editTable={editTable} 
         />
       )}
     </div>
