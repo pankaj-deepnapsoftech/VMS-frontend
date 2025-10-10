@@ -412,7 +412,6 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
                     type="submit"
                     onClick={async () => {
                       const image = await ImageUploader(file);
-                      console.log(image);
                       setFieldValue("code_Upload", image);
                       setIsModalOpen(false);
                     }}

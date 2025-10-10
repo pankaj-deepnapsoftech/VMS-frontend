@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import "./../Css/SignInAnimation.css";
 import { SignInValidation } from "@/Validation/AuthValidation";
+import { config } from "@/config/env.config";
 
 const SignIn = () => {
   const { Signin, Verifyrecaptcha } = useAuthContext();
@@ -22,7 +23,7 @@ const SignIn = () => {
 
   const handleCaptcha = async (token) => {
     const data = await Verifyrecaptcha(token);
-    setDisable(import.meta.env.VITE_REACT_ENV === "development" ? data : !data);
+    setDisable(config.REACT_ENV === "development" ? data : !data);
   };
 
   const cards = [
@@ -233,7 +234,7 @@ const SignIn = () => {
 
           <div className="pt-1">
             <ReCAPTCHA
-              sitekey={import.meta.env.VITE_HUMAN_VERIFICATION}
+              sitekey={config.REACT_ENV === "development" ? config.LOCAL_HUMAN_VERIFICATION : config.HUMAN_VERIFICATION}
               onChange={handleCaptcha}
             />
           </div>

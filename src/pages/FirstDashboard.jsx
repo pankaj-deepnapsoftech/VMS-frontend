@@ -31,8 +31,6 @@ const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
-  console.log(authenticate)
-
   const HandleClick = (item) => {
     if (
       item !== "Attack Surface Management (ASM)" &&

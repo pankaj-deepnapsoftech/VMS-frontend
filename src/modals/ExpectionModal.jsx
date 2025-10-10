@@ -1,11 +1,23 @@
 /* eslint-disable react/prop-types */
-import { useExceptionContext } from "@/context";
-import { ImageUploader } from "@/utils/ImagesUploader";
+import { useAuthContext, useExceptionContext } from "@/context";
+import { Imageuploader } from "@/utils/firebaseImageUploader";
 import { ExpectionValidation } from "@/Validation/Expection.Validation";
-import { Formik } from "formik";
+import { ErrorMessage, Field, Formik } from "formik";
+import { useState } from "react";
 
-const ExpectionModal = ({ setIsModalOpen, creator }) => {
+const ExpectionModal = ({ setIsModalOpen, creator, editTable }) => {
+ 
+  const {tenant} = useAuthContext();
   const { ExceptionCreate } = useExceptionContext();
+  const { UserViaTenant } = useAuthContext();
+
+  const [handleImageLoading,setImageLoading] = useState(false)
+
+  if(!tenant){
+    alert("please select tenant first !")
+   setIsModalOpen(false)
+  }
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-modalBg rounded-lg w-full max-w-xl p-6 shadow-lg">
@@ -23,20 +35,51 @@ const ExpectionModal = ({ setIsModalOpen, creator }) => {
 
         <Formik
           initialValues={{
-            exception_start_data: "",
-            exception_end_data: "",
-            reason: "",
-            compensatory_control: "No",
-            detail: "",
-            approvalFile: null,
+            exception_start_data: editTable?.exception_start_data
+              ? editTable.exception_start_data.split('T')[0]
+              : "",
+            exception_end_data: editTable?.exception_end_data
+              ? editTable.exception_end_data.split('T')[0]
+              : "",
+            reason: editTable?.reason || "",
+            compensatory_control: editTable?.compensatory_control || "No",
+            detail: editTable?.detail || "",
+            approvalFile: editTable?.proof?._id || null,
+            tenant: editTable?.tenant || tenant,
+            aprove_1: editTable?.aprove_1?.approver || "",
+            aprove_2: editTable?.aprove_2?.approver || "",
+            aprove_3: editTable?.aprove_3?.approver || "",
           }}
+
+
+          enableReinitialize
           validationSchema={ExpectionValidation}
           onSubmit={async (value) => {
-            const proof = await ImageUploader(value.approvalFile);
-            ExceptionCreate({ ...value, proof, vulnerable_data: creator });
+            setImageLoading(true)
+            const proof = await Imageuploader(value.approvalFile);
+           
+            const payload = {
+              ...value,
+              proof,
+              vulnerable_data: creator,
+              aprove_1: {
+                approver: value.aprove_1,
+              },
+              aprove_2: {
+                approver: value.aprove_2,
+              },
+              aprove_3: {
+                approver: value.aprove_3,
+              },
+            };
+
+            ExceptionCreate(payload);
             setIsModalOpen(false);
+            setImageLoading(false)
           }}
+
         >
+
           {({
             values,
             handleChange,
@@ -65,6 +108,8 @@ const ExpectionModal = ({ setIsModalOpen, creator }) => {
                     </p>
                   )}
               </div>
+
+
 
               {/* End Date */}
               <div>
@@ -97,6 +142,32 @@ const ExpectionModal = ({ setIsModalOpen, creator }) => {
                   <p className="text-red-500 text-sm">{errors.reason}</p>
                 )}
               </div>
+
+              {["aprove_1", "aprove_2", "aprove_3"].map((key, index) => (
+                <div key={key}>
+                  <label className="block font-medium mb-1">
+                    {`${index + 1}st Approver`}
+                  </label>
+                  <Field
+                    as="select"
+                    name={key}
+                    className="w-full bg-input rounded px-3 py-2 text-white border border-gray-300"
+                  >
+                    <option value="">Select User</option>
+                    {UserViaTenant.map((user) => (
+                      <option key={user._id} value={user._id}>
+                        {user.email}
+                      </option>
+                    ))}
+                  </Field>
+                  <ErrorMessage name={key}>
+                    {(msg) => <p className="text-red-500 text-sm">{msg}</p>}
+                  </ErrorMessage>
+                </div>
+              ))}
+
+
+
 
               {/* Compensatory Control - Radio */}
               <div>
@@ -178,9 +249,10 @@ const ExpectionModal = ({ setIsModalOpen, creator }) => {
               <div className="flex justify-end">
                 <button
                   type="submit"
+                  disabled={handleImageLoading}
                   className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
                 >
-                  Submit
+                  {handleImageLoading ? "Submiting..." :"Submit"}
                 </button>
               </div>
             </form>
@@ -192,3 +264,5 @@ const ExpectionModal = ({ setIsModalOpen, creator }) => {
 };
 
 export default ExpectionModal;
+
+

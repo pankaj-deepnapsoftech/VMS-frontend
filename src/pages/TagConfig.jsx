@@ -19,7 +19,6 @@ export default function TagsPage() {
 
   // location hook
   const location = useLocation()
-  console.log(Tages)
   // all useStates
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editTag, setEditTag] = useState(null);

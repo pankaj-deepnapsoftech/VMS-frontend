@@ -1,7 +1,8 @@
+import { config } from '@/config/env.config';
 import CryptoJS from 'crypto-js';
 
 // Must be 256-bit (32 bytes) key for AES-256
-const secretKey = CryptoJS.enc.Hex.parse(import.meta.env.VITE_ENCRYPTION_KEY); // 64-char hex = 32 bytes
+const secretKey = CryptoJS.enc.Hex.parse(config.ENCRYPTION_KEY); // 64-char hex = 32 bytes
 
 export function encrypt(data) {
   const iv = CryptoJS.lib.WordArray.random(16); // 16-byte IV

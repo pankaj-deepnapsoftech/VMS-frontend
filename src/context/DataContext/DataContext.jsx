@@ -17,8 +17,8 @@ const DataContextProvider = ({ children }) => {
   const [partners, setPartners] = useState([]);
   const [secondChartData, setSecondChartData] = useState(null);
   const [fourthChartData, setFourthChartData] = useState(null);
-  const [ninthChartData, setNinthChartData] = useState(null)
-  const [AssignedData, setAssignedData] = useState(null)
+  const [ninthChartData, setNinthChartData] = useState(null);
+  const [AssignedData, setAssignedData] = useState(null);
 
   const UploadBulkData = async (data) => {
     const toastId = toast.loading("Loading...");
@@ -29,14 +29,13 @@ const DataContextProvider = ({ children }) => {
       toast.dismiss(toastId);
       toast.success(res?.data?.message);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast.dismiss(toastId);
       toast.error(error?.response?.data?.message);
     } finally {
       setLoading(false);
     }
   };
-
 
   const GetAllTenentData = async () => {
     try {
@@ -47,10 +46,8 @@ const DataContextProvider = ({ children }) => {
         label: item.company_name,
       }));
       setTenantAllData([{ value: "", label: "All" }, ...transformedData]);
-
     } catch (error) {
       console.error(error);
-
     }
   };
 
@@ -65,17 +62,20 @@ const DataContextProvider = ({ children }) => {
 
   const GetFirstChart = async (tenant) => {
     try {
-      const res = await AxiosHandler.get(`/data/tvm-first-chart?tenant=${tenant ? tenant : ""}`);
+      const res = await AxiosHandler.get(
+        `/data/tvm-first-chart?tenant=${tenant ? tenant : ""}`
+      );
       setFirstChartData(res?.data);
     } catch (error) {
       console.error(error);
     }
   };
 
-
-  const GetSecondChart = async (tenant) => {
+  const GetSecondChart = async (tenant, year) => {
     try {
-      const res = await AxiosHandler.get(`/data/tvm-second-chart?tenant=${tenant ? tenant : ""}`);
+      const res = await AxiosHandler.get(
+        `/data/tvm-second-chart?tenant=${tenant ? tenant : ""}&year=${year}`
+      );
       setSecondChartData(res?.data);
     } catch (error) {
       console.error(error);
@@ -84,41 +84,40 @@ const DataContextProvider = ({ children }) => {
 
   const GetFourthChart = async (tenant) => {
     try {
-      const res = await AxiosHandler.get(`/BusinessApplication/tvm-forth-chart?tenant=${tenant ? tenant : ""}`);
+      const res = await AxiosHandler.get(
+        `/BusinessApplication/tvm-forth-chart?tenant=${tenant ? tenant : ""}`
+      );
       setFourthChartData(res?.data);
     } catch (error) {
       console.error(error);
     }
   };
 
-
   const GetNinthChart = async (tenant) => {
     try {
-      const res = await AxiosHandler.get(`/data/tvm-nine-chart?tenant=${tenant ? tenant : ""}`);
+      const res = await AxiosHandler.get(
+        `/data/tvm-nine-chart?tenant=${tenant ? tenant : ""}`
+      );
       setNinthChartData(res?.data);
     } catch (error) {
       console.error(error);
     }
   };
 
-
-
-
   const GetAssignedByData = async () => {
     try {
-      const res = await AxiosHandler.get(`/data/get-assign-data`)
-      setAssignedData(res?.data?.data)
+      const res = await AxiosHandler.get(`/data/get-assign-data`);
+      setAssignedData(res?.data?.data);
       GetAllTenentData();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     if (token) {
       GetAllTenentData();
-      GetAllPartnerData()
-
+      GetAllPartnerData();
     }
   }, [token]);
   return (
@@ -137,7 +136,7 @@ const DataContextProvider = ({ children }) => {
         ninthChartData,
         GetNinthChart,
         GetAssignedByData,
-        AssignedData
+        AssignedData,
       }}
     >
       {children}

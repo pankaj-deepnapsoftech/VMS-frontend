@@ -36,8 +36,6 @@ export const JiraDataTable = () => {
     DeleteData,
   } = useJiraContext();
 
-  console.log("this is jira data", jiraData);
-
   const { token } = useAuthContext();
   const [selectedRows, setSelectedRows] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");

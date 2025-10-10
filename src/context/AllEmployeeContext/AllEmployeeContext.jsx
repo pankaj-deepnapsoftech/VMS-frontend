@@ -75,7 +75,6 @@ const AllEmployeeContextProvider = ({ children }) => {
 	}
 
 	const UploadDetailedReport = async (id, data) => {
-		//console.log(data, "pdf data")
 		const toastId = toast.loading("Loading...");
 		try {
 			const res = await AxiosHandler.post(`/data/upload-pdf/${id}`, data);
@@ -90,10 +89,10 @@ const AllEmployeeContextProvider = ({ children }) => {
 		}
 	}
 
-	const GetUsers = async (page = 1) => {
+	const GetUsers = async (page = 1,tenant) => {
 		try {
 			const res = await AxiosHandler.get(
-				`/auth/all-users?page=${page}&limit=10`
+				`/auth/all-users?page=${page}&tenant=${tenant ? tenant : ""}`
 			);
 			setEmpData(res?.data.data);
 		} catch (error) {

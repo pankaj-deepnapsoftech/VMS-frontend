@@ -15,6 +15,7 @@
     "axios": "^1.7.9",
     "chart.js": "^4.5.0",
     "crypto-js": "^4.2.0",
+    "firebase": "^12.3.0",
     "formik": "^2.4.6",
     "framer-motion": "^12.12.1",
     "hover-effect": "^1.2.1",
@@ -37,6 +38,7 @@
     "recharts": "^2.15.0",
     "slick-carousel": "^1.8.1",
     "swiper": "^11.2.8",
+    "uuid": "^13.0.0",
     "xlsx": "^0.18.5",
     "yup": "^1.6.1"
   },

@@ -43,7 +43,6 @@ export const calculateLM = (cost,acs)=>{
 
 export const calculateALE = (data) => {
 
-console.log(data)
   const vrs = calculateVRS(data.EPSS, data.exploit_complexity, data.Exploit_Availale, data.threat_type);
   const acs = data?.BusinessApplication ? calculateACS(data?.BusinessApplication) : calculateACS(data?.InfraStructureAsset);
   // const ars = calculateARS(vrs, acs);
@@ -53,5 +52,42 @@ console.log(data)
 
   return epss_annual*lm;
 }
+
+
+
+
+
+
+export const handlerSeverity = (val) => {
+    if (val == '0') {
+      return "Informational";
+    } else if (val == "1") {
+      return "Low";
+    } else if (val == "2") {
+      return "Medium";
+    } else if (val == "3") {
+      return "High";
+    }else if (val == "4") {
+      return "Critical";
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

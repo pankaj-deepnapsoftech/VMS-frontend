@@ -1,6 +1,7 @@
 import { decrypt, encrypt } from "@/utils/EncryptAndDcrypt";
 import axios from "axios";
 import Cookies from 'js-cookie';
+import { config } from "./env.config";
 
 
 const token = Cookies.get('AT');
@@ -16,13 +17,26 @@ export const NewDecryptionToken = (tk) => {
 
 export const AxiosHandler = axios.create({
 
-    baseURL: import.meta.env.VITE_BACKEND_BASE_URL,
+    baseURL: HandleBaseUser(config.REACT_ENV),
     withCredentials: true,
     headers: {
         Authorization: `Bearer ${NewDecryptionToken(token)}`
     }
+});
 
-})
+
+function HandleBaseUser(env) {
+    switch (env) {
+        case "development":
+            return config.LOCAL_BACKEND_BASE_URL;
+        case "Demo":
+            return config.DEMO_BACKEND_BASE_URL;
+        case "vapt":
+            return config.VAPT_BACKEND_BASE_URL;
+        case "securend":
+            return config.SECUREND_BACKEND_BASE_URL;
+    }
+}
 
 
 

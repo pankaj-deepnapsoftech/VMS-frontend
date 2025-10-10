@@ -359,7 +359,6 @@ export default function TenantDashboard() {
                     return alert("Please select a tenant");
                   }
                   const formData = new FormData();
-                  console.log(selectedFiles);
                   formData.append("excel", selectedFiles);
                   formData.append("creator", tenant);
                   CreateBulkInfraAsset(formData);

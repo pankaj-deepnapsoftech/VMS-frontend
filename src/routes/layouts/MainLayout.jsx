@@ -15,11 +15,11 @@ import {
   useDataContext,
   useVulnerabililtyDataContext,
   useTVMCardsContext,
+  useExceptionContext,
 } from "@/context";
 import UserProfile from "@/pages/UserProfile";
 // import ChangePasswordModal from "@/modals/ChangePasswordModal";
 import useChangePassword from "@/hooks/changePassword";
-import FirstDashboard from "@/pages/FirstDashboard";
 import Loader from "@/components/Loader/Loader";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { products } from "@/constants/static.data";
@@ -31,10 +31,12 @@ import { customStyles, darkTheme } from "@/constants/constants.data";
 import ChangePasswordModal from "@/modals/ChangePasswordModal";
 import SecurityQuestions from "@/pages/Auth/Secuirity";
 import ErrorBoundary from "@/utils/Errorhandler";
+import { ReasonModal } from "@/components/modal/Reason";
 
 const MainLayout = () => {
   const { notificationData, NotificationsViewed } =
     useVulnerabililtyDataContext();
+
   const {
     authenticate,
     updateProfileModal,
@@ -48,6 +50,7 @@ const MainLayout = () => {
   const { refreshTVMCardsData } = useTVMCardsContext();
 
   const { openModal, isOpen, closeModal } = useChangePassword();
+  const { UpdateExpectionData } = useExceptionContext();
 
   const [width, setWidth] = useState(window.innerWidth);
   const [temp, setTemp] = useState("");
@@ -55,11 +58,25 @@ const MainLayout = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [showSidebar, setShowSideBar] = useState(false);
+  const [rejectionReasion,setRejectionReasion] = useState(false);
+  
   const navigate = useNavigate();
 
   const [tenant, setTenant] = useState("Select Value");
   const [tenantId, setTenantId] = useState("");
   const [searchParams] = useSearchParams();
+
+  const [editableNotification,setNotificationData] = useState(null)
+
+
+  const HandleRejection = (description) =>  {
+    const keys = Object.keys(editableNotification.data);
+    UpdateExpectionData(editableNotification.id,{[keys[0]]:{...editableNotification.data[keys[0]],description}});
+    NotificationsViewed(editableNotification.nid)
+  };
+
+
+
 
   let notificationcount =
     notificationData?.filter((notification) => !notification.view).length || 0;
@@ -268,8 +285,12 @@ const MainLayout = () => {
               notifications={notificationData}
               isOpen={isSidebarOpen}
               onClose={() => setSidebarOpen(false)}
+              setRejectionReasion={setRejectionReasion}
+              setNotificationData={setNotificationData}
             />
           </div>
+
+           <ReasonModal isOpen={rejectionReasion} onClose={()=>setRejectionReasion(false)} onSubmit={HandleRejection}/>
 
           <div className="md:hidden">
             {!authenticate?.role && (

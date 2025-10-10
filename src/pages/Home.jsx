@@ -55,6 +55,8 @@ const DashboardCards = () => {
 
   // usestats
   const [tenant, setTenant] = useState("");
+  const currentYear = new Date().getFullYear();
+  const [selectedYear, setSelectedYear] = useState(currentYear);
 
   const totall = InventoryData.reduce((sum, item) => sum + item.value, 0);
 
@@ -72,7 +74,6 @@ const DashboardCards = () => {
     ],
   };
 
-  // Line Chart Data
 
   // Line Chart Options
   const lineOptions = {
@@ -169,16 +170,25 @@ const DashboardCards = () => {
   useEffect(() => {
     if (token) {
       GetFirstChart(tenant);
-      GetSecondChart(tenant);
       GetFourthChart(tenant);
       GetNinthChart(tenant);
     }
   }, [token, tenant]);
 
   useEffect(() => {
+    if (token) {
+      GetSecondChart(tenant, selectedYear);
+    }
+  }, [token, tenant, selectedYear])
+
+  useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     setTenant(params.get("tenant") || "");
   }, [location.search]);
+
+
+
+
 
   return (
     <div className="w-full px-4 sm:px-6">
@@ -318,11 +328,16 @@ const DashboardCards = () => {
               Vulnerable Items by Risk Rating
             </h2>
             <div className="flex items-center gap-2 flex-shrink-0">
-              <select className="bg-[#0E1430] text-gray-300 text-sm px-2 sm:px-3 py-1 rounded-lg border border-gray-700 focus:outline-none">
-                <option>Last 30 days</option>
-                <option>Last 60 days</option>
-                <option>Last 90 days</option>
+              <select
+                className="bg-[#0E1430] text-gray-300 text-sm px-2 sm:px-3 py-1 rounded-lg border border-gray-700 focus:outline-none"
+                value={selectedYear}
+                onChange={(e) => setSelectedYear(Number(e.target.value))}
+              >
+                <option value={currentYear}>{currentYear} </option>
+                <option value={currentYear - 1}>{currentYear - 1}</option>
+                <option value={currentYear - 2}>{currentYear - 2}</option>
               </select>
+
               <button className="text-gray-400 hover:text-gray-200 text-sm">
                 •••
               </button>

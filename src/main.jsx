@@ -12,6 +12,7 @@ import {
   InfraAssetContextProvider,
   InfrastructureVulnerabilityContextProvider,
   JiraContextProvider,
+  NessusContextProvider,
   RemeditionContextProvider,
   ReportContextProvider,
   SchedulingAssesmentContextProvider,
@@ -41,7 +42,9 @@ createRoot(document.getElementById("root")).render(
                                 <TVMCardsContextProvider>
                                   <ReportContextProvider>
                                     <SeverityContextProvider>
-                                      <App />
+                                      <NessusContextProvider>
+                                        <App />
+                                      </NessusContextProvider>
                                     </SeverityContextProvider>
                                   </ReportContextProvider>
                                 </TVMCardsContextProvider>

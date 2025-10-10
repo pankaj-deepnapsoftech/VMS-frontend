@@ -132,7 +132,6 @@ const Reports = () => {
   };
 
   const handleDelete = async (id) => {
-    console.log(id);
     try {
       const response = await AxiosHandler.delete(`/report/delete-report/${id}`);
       toast.success(response.data.message || "Report removed successfully!");
