@@ -192,14 +192,6 @@ const DashboardCards = () => {
 
   return (
     <div className="w-full px-4 sm:px-6">
-      {/* Search bar */}
-      <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
-        <input
-          type="text"
-          placeholder="Search..."
-          className="bg-[#161e3e] text-white mt-8 px-4 py-2 rounded-lg w-full sm:w-64 focus:outline-none border border-gray-700"
-        />
-      </div>
 
       {/* Cards */}
       <div className="w-full">
@@ -224,7 +216,7 @@ const DashboardCards = () => {
               <div
                 key={index}
                 onClick={() => navigate(card.url)}
-                className="bg-[#161e3e] rounded-xl px-4 py-4 shadow-md border border-gray-800 hover:shadow-lg transition-shadow flex flex-col items-start"
+                className="bg-[#161e3e] rounded-xl px-4 mt-10 py-4 shadow-md border border-gray-800 hover:shadow-lg transition-shadow flex flex-col items-start"
               >
                 <div className="flex items-center gap-2 min-w-0 w-full">
                   <div className="w-8 h-8 flex items-center justify-center rounded-md">
