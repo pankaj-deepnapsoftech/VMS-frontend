@@ -226,7 +226,7 @@ const ApplicationSoftwareInventoryTable = () => {
           }`}
           disabled={page === 1}
           onClick={() => setPage(page - 1)}
-        >                   
+        >
           Previous
         </button>
         <span className="text-white">Page {page}</span>
@@ -236,7 +236,7 @@ const ApplicationSoftwareInventoryTable = () => {
           onClick={() => setPage(page + 1)}
         >
           Next
-        </button> 
+        </button>
       </div>
 
       <ApplicationSoftwareInventory
