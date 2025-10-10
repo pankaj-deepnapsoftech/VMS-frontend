@@ -6,16 +6,16 @@ import { ErrorMessage, Field, Formik } from "formik";
 import { useState } from "react";
 
 const ExpectionModal = ({ setIsModalOpen, creator, editTable }) => {
- 
-  const {tenant} = useAuthContext();
+
+  const { tenant } = useAuthContext();
   const { ExceptionCreate } = useExceptionContext();
   const { UserViaTenant } = useAuthContext();
 
-  const [handleImageLoading,setImageLoading] = useState(false)
+  const [handleImageLoading, setImageLoading] = useState(false)
 
-  if(!tenant){
+  if (!tenant) {
     alert("please select tenant first !")
-   setIsModalOpen(false)
+    setIsModalOpen(false)
   }
 
   return (
@@ -57,7 +57,7 @@ const ExpectionModal = ({ setIsModalOpen, creator, editTable }) => {
           onSubmit={async (value) => {
             setImageLoading(true)
             const proof = await Imageuploader(value.approvalFile);
-           
+
             const payload = {
               ...value,
               proof,
@@ -98,6 +98,7 @@ const ExpectionModal = ({ setIsModalOpen, creator, editTable }) => {
                   type="date"
                   name="exception_start_data"
                   value={values.exception_start_data}
+                  min={new Date().toISOString().split("T")[0]}
                   onChange={handleChange}
                   className="w-full border bg-input border-gray-300 rounded p-2 text-white"
                 />
@@ -118,6 +119,7 @@ const ExpectionModal = ({ setIsModalOpen, creator, editTable }) => {
                   type="date"
                   name="exception_end_data"
                   value={values.exception_end_data}
+                  min={values.exception_start_data}
                   onChange={handleChange}
                   className="w-full border bg-input border-gray-300 rounded p-2 text-white"
                 />
@@ -252,7 +254,7 @@ const ExpectionModal = ({ setIsModalOpen, creator, editTable }) => {
                   disabled={handleImageLoading}
                   className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
                 >
-                  {handleImageLoading ? "Submiting..." :"Submit"}
+                  {handleImageLoading ? "Submiting..." : "Submit"}
                 </button>
               </div>
             </form>

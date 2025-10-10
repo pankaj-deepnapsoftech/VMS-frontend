@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useAuthContext, useExceptionContext } from "@/context";
+import { Checkhariqui } from "@/utils/checkHarirqui";
 import React, { useEffect, useRef } from "react";
 import { FaTimesCircle, FaBell } from "react-icons/fa";
 
@@ -11,7 +12,7 @@ export function NotificationSidebar({
   setRejectionReasion,
   setNotificationData,
 }) {
-  const { tenant, token } = useAuthContext();
+  const { tenant, token, authenticate } = useAuthContext();
   const { UpdateExpectionData, ExpectionPendingData, expectionData } =
     useExceptionContext();
   let notificationcount =
@@ -135,7 +136,7 @@ export function NotificationSidebar({
                 className="bg-slate-800 backdrop-blur-xl border border-gray-700 p-4 rounded-2xl shadow-lg cursor-pointer transition-transform duration-200 hover:scale-105 text-gray-100"
               >
                 <div
-                  onClick={() => notificationsViewed(notification?._id)}
+                  onClick={() => !notification.options &&  notificationsViewed(notification?._id)}
                   className="flex items-center gap-3"
                 >
                   <div>
@@ -153,7 +154,8 @@ export function NotificationSidebar({
                   )}
                 </div>
 
-                {notification?.options && (
+
+                {notification?.options && Checkhariqui(expectionData.filter((item)=>item._id === notification.expection_id)[0] || null,authenticate) && (
                   <div className="flex justify-end gap-2 mt-3">
                     <button
                       onClick={() => HandleUpdateExpection(notification)}
