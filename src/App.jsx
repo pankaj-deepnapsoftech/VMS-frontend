@@ -5,6 +5,7 @@ import { useAuthContext } from "./context";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const App = () => {
+
   const { userLoading } = useAuthContext();
 
   if (userLoading) {

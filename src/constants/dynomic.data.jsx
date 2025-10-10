@@ -34,10 +34,11 @@ export const summaryData = (data) => {
 
 export const firstChartDatady = (data) => {
 
+
   return  [
   { label: "Open", value: data?.Open, color: "#EF4444" },
   { label: "Closed", value: data?.Closed, color: "#22C55E" },
-  { label: "Re Open", value: data?.Re_Open, color: "#F97316" },
+  { label: "Exception", value: data?.exception, color: "#F97316" },
   { label: "False Positive", value: data?.False_Positive, color: "#3B82F6" },
 ];
 }
