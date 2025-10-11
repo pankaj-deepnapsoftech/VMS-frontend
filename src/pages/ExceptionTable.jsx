@@ -164,7 +164,7 @@ const ExceptionTable = () => {
   console.log(editTable)
   return (
     <div className="min-h-screen bg-[#0F172A] p-8 text-gray-400">
-      <h1 className="text-3xl font-bold mb-6">Pending Exception</h1>
+      <h1 className="text-3xl text-white font-bold mb-6">Pending Exception</h1>
 
 
       {isApproverModalOpen && (
