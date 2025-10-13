@@ -41,7 +41,7 @@ const InventoryData = [
 
 const DashboardCards = () => {
   const { token, selectedYear } = useAuthContext();
-  const { tvmCardsData, loading ,refreshTVMCardsData} = useTVMCardsContext();
+  const { tvmCardsData, loading, refreshTVMCardsData } = useTVMCardsContext();
   const {
     GetFirstChart,
     firstChartData,
@@ -51,12 +51,16 @@ const DashboardCards = () => {
     fourthChartData,
     ninthChartData,
     GetNinthChart,
+    GetthirdChart,
+    thirdChartData
   } = useDataContext();
+
+  console.log("this is third chart ",thirdChartData)
 
 
   // usestats
   const [tenant, setTenant] = useState("");
-  
+
 
   const totall = InventoryData.reduce((sum, item) => sum + item.value, 0);
 
@@ -166,18 +170,16 @@ const DashboardCards = () => {
 
   const maxY = 16;
 
-  useEffect(() => {
-    if (token) {
-      GetFirstChart(tenant);
-      GetFourthChart(tenant);
-      GetNinthChart(tenant);
-    }
-  }, [token, tenant]);
+
 
   useEffect(() => {
     if (token) {
+      GetthirdChart(tenant, selectedYear)
+      GetFourthChart(tenant, selectedYear);
       GetSecondChart(tenant, selectedYear);
       refreshTVMCardsData(tenant, selectedYear);
+      GetFirstChart(tenant, selectedYear);
+      GetNinthChart(tenant, selectedYear);
     }
   }, [token, tenant, selectedYear]);
 
@@ -316,7 +318,7 @@ const DashboardCards = () => {
               Vulnerable Items by Risk Rating
             </h2>
             <div className="flex items-center gap-2 flex-shrink-0">
-             
+
 
               <button className="text-gray-400 hover:text-gray-200 text-sm">
                 •••
@@ -481,27 +483,27 @@ const DashboardCards = () => {
               data={
                 fourthChartData
                   ? {
-                      labels: Object.keys(fourthChartData || {}),
-                      datasets: [
-                        {
-                          data: Object.values(fourthChartData || {}),
-                          backgroundColor: ["#EF4444", "#22C55E"],
-                          borderWidth: 0,
-                        },
-                      ],
-                    }
+                    labels: Object.keys(fourthChartData || {}),
+                    datasets: [
+                      {
+                        data: Object.values(fourthChartData || {}),
+                        backgroundColor: ["#EF4444", "#22C55E"],
+                        borderWidth: 0,
+                      },
+                    ],
+                  }
                   : {
-                      labels: InventoryData.map((item) => item.label),
-                      datasets: [
-                        {
-                          data: InventoryData.map((item) => item.value),
-                          backgroundColor: InventoryData.map(
-                            (item) => item.color
-                          ),
-                          borderWidth: 0,
-                        },
-                      ],
-                    }
+                    labels: InventoryData.map((item) => item.label),
+                    datasets: [
+                      {
+                        data: InventoryData.map((item) => item.value),
+                        backgroundColor: InventoryData.map(
+                          (item) => item.color
+                        ),
+                        borderWidth: 0,
+                      },
+                    ],
+                  }
               }
               options={{
                 cutout: "70%",
@@ -516,9 +518,9 @@ const DashboardCards = () => {
               <p className="text-white text-lg font-bold">
                 {fourthChartData
                   ? Object.values(fourthChartData).reduce(
-                      (sum, val) => sum + (val || 0),
-                      0
-                    )
+                    (sum, val) => sum + (val || 0),
+                    0
+                  )
                   : totall}
               </p>
               <p className="text-gray-400 text-xs">Total</p>
@@ -529,30 +531,30 @@ const DashboardCards = () => {
           <div className="flex justify-center gap-8 mt-3">
             {fourthChartData
               ? Object.entries(fourthChartData).map(([label, value], idx) => (
-                  <div key={idx} className="flex items-center gap-2 mt-0.5">
-                    <span
-                      className="w-2.5 h-2.5 rounded-full"
-                      style={{
-                        backgroundColor: idx === 0 ? "#EF4444" : "#22C55E",
-                      }}
-                    ></span>
-                    <p className="text-white text-xs">
-                      {label} <span className="text-gray-400">{value}</span>
-                    </p>
-                  </div>
-                ))
+                <div key={idx} className="flex items-center gap-2 mt-0.5">
+                  <span
+                    className="w-2.5 h-2.5 rounded-full"
+                    style={{
+                      backgroundColor: idx === 0 ? "#EF4444" : "#22C55E",
+                    }}
+                  ></span>
+                  <p className="text-white text-xs">
+                    {label} <span className="text-gray-400">{value}</span>
+                  </p>
+                </div>
+              ))
               : InventoryData.map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2 mt-0.5">
-                    <span
-                      className="w-2.5 h-2.5 rounded-full"
-                      style={{ backgroundColor: item.color }}
-                    ></span>
-                    <p className="text-white text-xs">
-                      {item.label}{" "}
-                      <span className="text-gray-400">{item.value}</span>
-                    </p>
-                  </div>
-                ))}
+                <div key={idx} className="flex items-center gap-2 mt-0.5">
+                  <span
+                    className="w-2.5 h-2.5 rounded-full"
+                    style={{ backgroundColor: item.color }}
+                  ></span>
+                  <p className="text-white text-xs">
+                    {item.label}{" "}
+                    <span className="text-gray-400">{item.value}</span>
+                  </p>
+                </div>
+              ))}
           </div>
         </div>
 
@@ -617,148 +619,148 @@ const DashboardCards = () => {
           </div>
           {secondChartData
             ? (() => {
-                // Calculate total sum for percentage calculation
-                const criticalSum = secondChartData.Critical
-                  ? secondChartData.Critical.reduce(
-                      (sum, val) => sum + (val || 0),
-                      0
-                    )
-                  : 0;
-                const highSum = secondChartData.High
-                  ? secondChartData.High.reduce(
-                      (sum, val) => sum + (val || 0),
-                      0
-                    )
-                  : 0;
-                const mediumSum = secondChartData.Medium
-                  ? secondChartData.Medium.reduce(
-                      (sum, val) => sum + (val || 0),
-                      0
-                    )
-                  : 0;
-                const lowSum = secondChartData.Low
-                  ? secondChartData.Low.reduce(
-                      (sum, val) => sum + (val || 0),
-                      0
-                    )
-                  : 0;
-                const informationalSum = secondChartData.Informational
-                  ? secondChartData.Informational.reduce(
-                      (sum, val) => sum + (val || 0),
-                      0
-                    )
-                  : 0;
+              // Calculate total sum for percentage calculation
+              const criticalSum = secondChartData.Critical
+                ? secondChartData.Critical.reduce(
+                  (sum, val) => sum + (val || 0),
+                  0
+                )
+                : 0;
+              const highSum = secondChartData.High
+                ? secondChartData.High.reduce(
+                  (sum, val) => sum + (val || 0),
+                  0
+                )
+                : 0;
+              const mediumSum = secondChartData.Medium
+                ? secondChartData.Medium.reduce(
+                  (sum, val) => sum + (val || 0),
+                  0
+                )
+                : 0;
+              const lowSum = secondChartData.Low
+                ? secondChartData.Low.reduce(
+                  (sum, val) => sum + (val || 0),
+                  0
+                )
+                : 0;
+              const informationalSum = secondChartData.Informational
+                ? secondChartData.Informational.reduce(
+                  (sum, val) => sum + (val || 0),
+                  0
+                )
+                : 0;
 
-                const totalSum =
-                  criticalSum + highSum + mediumSum + lowSum + informationalSum;
+              const totalSum =
+                criticalSum + highSum + mediumSum + lowSum + informationalSum;
 
-                // Calculate percentages
-                const criticalPercent =
-                  totalSum > 0 ? Math.round((criticalSum / totalSum) * 100) : 0;
-                const highPercent =
-                  totalSum > 0 ? Math.round((highSum / totalSum) * 100) : 0;
-                const mediumPercent =
-                  totalSum > 0 ? Math.round((mediumSum / totalSum) * 100) : 0;
-                const lowPercent =
-                  totalSum > 0 ? Math.round((lowSum / totalSum) * 100) : 0;
+              // Calculate percentages
+              const criticalPercent =
+                totalSum > 0 ? Math.round((criticalSum / totalSum) * 100) : 0;
+              const highPercent =
+                totalSum > 0 ? Math.round((highSum / totalSum) * 100) : 0;
+              const mediumPercent =
+                totalSum > 0 ? Math.round((mediumSum / totalSum) * 100) : 0;
+              const lowPercent =
+                totalSum > 0 ? Math.round((lowSum / totalSum) * 100) : 0;
 
-                return (
-                  <>
-                    {/* Critical Vulnerabilities */}
-                    <div className="mb-5">
-                      <div className="flex justify-between items-center mb-2">
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm">
-                            Critical Vulnerable Items
-                          </span>
-                        </div>
-                        <span className="text-sm font-medium">
-                          {criticalPercent}%
+              return (
+                <>
+                  {/* Critical Vulnerabilities */}
+                  <div className="mb-5">
+                    <div className="flex justify-between items-center mb-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm">
+                          Critical Vulnerable Items
                         </span>
                       </div>
-                      <div className="w-full bg-[#1B2B45] h-2 rounded-full overflow-hidden">
-                        <div
-                          className="bg-red-500 h-2 rounded-full"
-                          style={{ width: `${criticalPercent}%` }}
-                        ></div>
-                      </div>
+                      <span className="text-sm font-medium">
+                        {criticalPercent}%
+                      </span>
                     </div>
+                    <div className="w-full bg-[#1B2B45] h-2 rounded-full overflow-hidden">
+                      <div
+                        className="bg-red-500 h-2 rounded-full"
+                        style={{ width: `${criticalPercent}%` }}
+                      ></div>
+                    </div>
+                  </div>
 
-                    {/* High Vulnerabilities */}
-                    <div className="mb-5">
-                      <div className="flex justify-between items-center mb-2">
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm">High Vulnerable Items</span>
-                        </div>
-                        <span className="text-sm font-medium">
-                          {highPercent}%
+                  {/* High Vulnerabilities */}
+                  <div className="mb-5">
+                    <div className="flex justify-between items-center mb-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm">High Vulnerable Items</span>
+                      </div>
+                      <span className="text-sm font-medium">
+                        {highPercent}%
+                      </span>
+                    </div>
+                    <div className="w-full bg-[#1B2B45] h-2 rounded-full overflow-hidden">
+                      <div
+                        className="bg-orange-500 h-2 rounded-full"
+                        style={{ width: `${highPercent}%` }}
+                      ></div>
+                    </div>
+                  </div>
+
+                  {/* Medium Vulnerabilities */}
+                  <div className="mb-5">
+                    <div className="flex justify-between items-center mb-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm">Medium Priority Items</span>
+                      </div>
+                      <span className="text-sm font-medium">
+                        {mediumPercent}%
+                      </span>
+                    </div>
+                    <div className="w-full bg-[#1B2B45] h-2 rounded-full overflow-hidden">
+                      <div
+                        className="bg-yellow-400 h-2 rounded-full"
+                        style={{ width: `${mediumPercent}%` }}
+                      ></div>
+                    </div>
+                  </div>
+
+                  {/* Low Vulnerabilities */}
+                  <div className="mb-5">
+                    <div className="flex justify-between items-center mb-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm">
+                          Low Priority Completed
                         </span>
                       </div>
-                      <div className="w-full bg-[#1B2B45] h-2 rounded-full overflow-hidden">
-                        <div
-                          className="bg-orange-500 h-2 rounded-full"
-                          style={{ width: `${highPercent}%` }}
-                        ></div>
-                      </div>
+                      <span className="text-sm font-medium">
+                        {lowPercent}%
+                      </span>
                     </div>
-
-                    {/* Medium Vulnerabilities */}
-                    <div className="mb-5">
-                      <div className="flex justify-between items-center mb-2">
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm">Medium Priority Items</span>
-                        </div>
-                        <span className="text-sm font-medium">
-                          {mediumPercent}%
-                        </span>
-                      </div>
-                      <div className="w-full bg-[#1B2B45] h-2 rounded-full overflow-hidden">
-                        <div
-                          className="bg-yellow-400 h-2 rounded-full"
-                          style={{ width: `${mediumPercent}%` }}
-                        ></div>
-                      </div>
+                    <div className="w-full bg-[#1B2B45] h-2 rounded-full overflow-hidden">
+                      <div
+                        className="bg-green-500 h-2 rounded-full"
+                        style={{ width: `${lowPercent}%` }}
+                      ></div>
                     </div>
-
-                    {/* Low Vulnerabilities */}
-                    <div className="mb-5">
-                      <div className="flex justify-between items-center mb-2">
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm">
-                            Low Priority Completed
-                          </span>
-                        </div>
-                        <span className="text-sm font-medium">
-                          {lowPercent}%
-                        </span>
-                      </div>
-                      <div className="w-full bg-[#1B2B45] h-2 rounded-full overflow-hidden">
-                        <div
-                          className="bg-green-500 h-2 rounded-full"
-                          style={{ width: `${lowPercent}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                  </>
-                );
-              })()
+                  </div>
+                </>
+              );
+            })()
             : // Fallback to original data if API data is not available
-              vulnerableData.map((item, index) => (
-                <div key={index} className="mb-5">
-                  <div className="flex justify-between items-center mb-2">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm">{item.label}</span>
-                    </div>
-                    <span className="text-sm font-medium">{item.value}%</span>
+            vulnerableData.map((item, index) => (
+              <div key={index} className="mb-5">
+                <div className="flex justify-between items-center mb-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm">{item.label}</span>
                   </div>
-                  <div className="w-full bg-[#1B2B45] h-2 rounded-full overflow-hidden">
-                    <div
-                      className={`${item.color} h-2 rounded-full`}
-                      style={{ width: `${item.value}%` }}
-                    ></div>
-                  </div>
+                  <span className="text-sm font-medium">{item.value}%</span>
                 </div>
-              ))}
+                <div className="w-full bg-[#1B2B45] h-2 rounded-full overflow-hidden">
+                  <div
+                    className={`${item.color} h-2 rounded-full`}
+                    style={{ width: `${item.value}%` }}
+                  ></div>
+                </div>
+              </div>
+            ))}
         </div>
 
         {/* Card 2: Vulnerable Items by Age */}
