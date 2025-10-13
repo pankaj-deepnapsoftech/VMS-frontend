@@ -74,7 +74,6 @@ const DashboardCards = () => {
     ],
   };
 
-
   // Line Chart Options
   const lineOptions = {
     responsive: true,
@@ -179,20 +178,15 @@ const DashboardCards = () => {
     if (token) {
       GetSecondChart(tenant, selectedYear);
     }
-  }, [token, tenant, selectedYear])
+  }, [token, tenant, selectedYear]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     setTenant(params.get("tenant") || "");
   }, [location.search]);
 
-
-
-
-
   return (
     <div className="w-full px-4 sm:px-6">
-
       {/* Cards */}
       <div className="w-full">
         {loading ? (
@@ -274,11 +268,11 @@ const DashboardCards = () => {
             </div>
           </div>
 
-          {/* Legend */}
+          {/* Legend with Counts */}
           <div className="grid grid-cols-2 gap-y-2 mt-3">
             {/* Column 1 */}
             <div className="flex flex-col items-start gap-2 pl-4 sm:pl-6">
-              {firstChartDatady()
+              {firstChartDatady(firstChartData)
                 .slice(0, 2)
                 .map((item, idx) => (
                   <div key={idx} className="flex items-center gap-2">
@@ -287,15 +281,16 @@ const DashboardCards = () => {
                       style={{ backgroundColor: item.color }}
                     ></span>
                     <p className="text-white text-xs">
-                      {item.label}{" "}
-                      <span className="text-gray-400">{item.value}</span>
+                      {item.label} {" "}
+                      <span className="text-gray-400">{item.value ?? 0}</span>
                     </p>
                   </div>
                 ))}
             </div>
+
             {/* Column 2 */}
             <div className="flex flex-col items-start gap-2">
-              {firstChartDatady()
+              {firstChartDatady(firstChartData)
                 .slice(2, 4)
                 .map((item, idx) => (
                   <div key={idx} className="flex items-center gap-2">
@@ -304,8 +299,8 @@ const DashboardCards = () => {
                       style={{ backgroundColor: item.color }}
                     ></span>
                     <p className="text-white text-xs">
-                      {item.label}{" "}
-                      <span className="text-gray-400">{item.value}</span>
+                      {item.label} {" "}
+                      <span className="text-gray-400">{item.value ?? 0}</span>
                     </p>
                   </div>
                 ))}
@@ -366,31 +361,114 @@ const DashboardCards = () => {
       {/* Second Row  */}
       <div className="flex flex-col lg:flex-row lg:flex-wrap gap-4 mt-4 w-full">
         {/* Exploitability */}
-        <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full md:w-[360px] lg:flex-1">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold">Exploitability</h2>
+        {/* Exploitability (matches Inventory Status) */}
+        <div className="bg-[#161e3e] border border-gray-800 rounded-xl p-4 w-full md:w-[360px] lg:flex-1 h-auto shadow-md">
+          <div className="flex justify-between items-center mb-2">
+            <h2 className="text-white text-base font-semibold">
+              Exploitability
+            </h2>
             <button className="text-gray-400 hover:text-gray-200 text-sm">
               •••
             </button>
           </div>
 
-          {data.map((item, index) => (
-            <div key={index} className="mb-5">
-              <div className="flex justify-between h-[30px] items-center mb-2">
-                <div className="flex items-center gap-2">
-                  <img src={item.icon} alt={item.label} className="w-5 h-5" />
-                  <span className="text-sm">{item.label}</span>
+          {/* Doughnut Chart */}
+          {(() => {
+            // Normalize data into two categories
+            const normalizeData = (raw = []) => {
+              if (raw.length === 2) {
+                const a = raw[0];
+                const b = raw[1];
+                const aIsExploit = /exploit/i.test(a.label || "");
+                const bIsExploit = /exploit/i.test(b.label || "");
+                if (aIsExploit && !bIsExploit) return [a, b];
+                if (bIsExploit && !aIsExploit) return [b, a];
+                return [a, b];
+              }
+
+              // If more than two items, sum values
+              let exploit = 0;
+              let notExploit = 0;
+              raw.forEach((item) => {
+                const label = (item.label || "").toLowerCase();
+                const val = Number(item.value || 0);
+                if (label.includes("exploit")) exploit += val;
+                else notExploit += val;
+              });
+
+              if (exploit === 0 && raw.length > 0) {
+                exploit = Number(raw[0].value || 0);
+                notExploit = raw
+                  .slice(1)
+                  .reduce((sum, item) => sum + Number(item.value || 0), 0);
+              }
+
+              return [
+                { label: "Exploitability", value: exploit },
+                { label: "Not Exploitability", value: notExploit },
+              ];
+            };
+
+            const chartDataArray = normalizeData(data || []);
+            const chartData = {
+              labels: chartDataArray.map((i) => i.label),
+              datasets: [
+                {
+                  data: chartDataArray.map((i) => i.value),
+                  backgroundColor: ["#EF4444", "#22C55E"], // Red, Green
+                  borderWidth: 0,
+                },
+              ],
+            };
+
+            const total = chartDataArray.reduce(
+              (sum, i) => sum + (i.value || 0),
+              0
+            );
+
+            return (
+              <>
+                {/* Doughnut */}
+                <div className="relative flex justify-center items-center h-[200px] sm:h-[240px]">
+                  <Doughnut
+                    data={chartData}
+                    options={{
+                      cutout: "70%",
+                      maintainAspectRatio: false,
+                      plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: false },
+                      },
+                    }}
+                  />
+
+                  {/* Center Total */}
+                  <div className="absolute flex flex-col items-center">
+                    <p className="text-white text-lg font-bold">{total}</p>
+                    <p className="text-gray-400 text-xs">Total</p>
+                  </div>
                 </div>
-                <span className="text-sm font-medium">{item.value}%</span>
-              </div>
-              <div className="w-full bg-[#1B2B45] h-2 rounded-full overflow-hidden">
-                <div
-                  className={`${item.color} h-2 rounded-full`}
-                  style={{ width: `${item.value}%` }}
-                ></div>
-              </div>
-            </div>
-          ))}
+
+                {/* Legend */}
+                <div className="flex justify-center gap-8 mt-3">
+                  {chartDataArray.map((item, index) => (
+                    <div key={index} className="flex items-center gap-2 mt-0.5">
+                      <span
+                        className="w-2.5 h-2.5 rounded-full"
+                        style={{
+                          backgroundColor: index === 0 ? "#EF4444" : "#22C55E",
+                        }}
+                      ></span>
+                      <p className="text-white text-xs">
+                        {item.label}{" "}
+                        <span className="text-gray-400">{item.value}</span>
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </>
+            );
+          })()}
         </div>
 
         {/* Inventory Status */}
