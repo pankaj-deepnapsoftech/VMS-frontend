@@ -14,6 +14,7 @@ const DataContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [TenantAllData, setTenantAllData] = useState([]);
   const [firstChartData, setFirstChartData] = useState(null);
+  const [thirdChartData, setThirdChartData] = useState(null);
   const [partners, setPartners] = useState([]);
   const [secondChartData, setSecondChartData] = useState(null);
   const [fourthChartData, setFourthChartData] = useState(null);
@@ -60,10 +61,10 @@ const DataContextProvider = ({ children }) => {
     }
   };
 
-  const GetFirstChart = async (tenant) => {
+  const GetFirstChart = async (tenant,year) => {
     try {
       const res = await AxiosHandler.get(
-        `/data/tvm-first-chart?tenant=${tenant ? tenant : ""}`
+        `/data/tvm-first-chart?tenant=${tenant ? tenant : ""}&year=${year}`
       );
       setFirstChartData(res?.data);
     } catch (error) {
@@ -82,10 +83,21 @@ const DataContextProvider = ({ children }) => {
     }
   };
 
-  const GetFourthChart = async (tenant) => {
+    const GetthirdChart = async (tenant,year) => {
     try {
       const res = await AxiosHandler.get(
-        `/BusinessApplication/tvm-forth-chart?tenant=${tenant ? tenant : ""}`
+        `/data/tvm-third-data?tenant=${tenant ? tenant : ""}&year=${year}`
+      );
+      setThirdChartData(res?.data?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const GetFourthChart = async (tenant,year) => {
+    try {
+      const res = await AxiosHandler.get(
+        `/BusinessApplication/tvm-forth-chart?tenant=${tenant ? tenant : ""}&year=${year}`
       );
       setFourthChartData(res?.data);
     } catch (error) {
@@ -93,10 +105,10 @@ const DataContextProvider = ({ children }) => {
     }
   };
 
-  const GetNinthChart = async (tenant) => {
+  const GetNinthChart = async (tenant,year) => {
     try {
       const res = await AxiosHandler.get(
-        `/data/tvm-nine-chart?tenant=${tenant ? tenant : ""}`
+        `/data/tvm-nine-chart?tenant=${tenant ? tenant : ""}&year=${year}`
       );
       setNinthChartData(res?.data);
     } catch (error) {
@@ -137,6 +149,8 @@ const DataContextProvider = ({ children }) => {
         GetNinthChart,
         GetAssignedByData,
         AssignedData,
+        GetthirdChart,
+        thirdChartData
       }}
     >
       {children}
