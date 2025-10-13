@@ -61,7 +61,7 @@ import { useState } from "react";
             </div> */}
 
             <div className="text-end" >
-              <button className="text-lg bg-button py-1 px-3 rounded-lg "  onClick={handleSubmit}> submit</button>
+              <button className="text-lg bg-blue-700 hover:bg-blue-800     py-1 px-3 rounded-lg "  onClick={handleSubmit}> submit</button>
             </div>
           </div>
         </div>

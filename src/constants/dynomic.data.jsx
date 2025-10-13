@@ -34,7 +34,7 @@ export const summaryData = (data) => {
 
 export const firstChartDatady = (data) => {
 
-
+  console.log(data);
   return  [
   { label: "Open", value: data?.Open, color: "#EF4444" },
   { label: "Closed", value: data?.Closed, color: "#22C55E" },
