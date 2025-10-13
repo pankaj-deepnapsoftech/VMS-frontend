@@ -1,51 +1,49 @@
 export const summaryData = (data) => {
-    return  [
-  {
-    title: "Risk Score",
-    value: data?.risk_score ? data?.risk_score : '0',
-    change: "-12%",
-    trendColor: "text-red-400",
-    icon: "/Icons/executive1.png",
-    backgroundColor: "blue",
-  },
-  {
-    title: "Financial Exposure",
-    value: data?.financial ? `${(data?.financial/10000000)} M `: '0 M',
-    change: "-8%",
-    trendColor: "text-orange-400",
-    icon: "/Icons/executive2.png",
-  },
-  {
-    title: "MTTR",
-    value: "4.2 days",
-    change: "+15%",
-    trendColor: "text-green-400",
-    icon: "/Icons/executive3.png",
-  },
-  {
-    title: "Compliance Score",
-    value: "94%",
-    change: "+3%",
-    trendColor: "text-blue-400",
-    icon: "/Icons/executive4.png",
-  },
-];
-}
+  return [
+    {
+      title: "Risk Score",
+      value: data?.risk_score ? data?.risk_score : "0",
+      change: "-12%",
+      trendColor: "text-red-400",
+      icon: "/Icons/executive1.png",
+      backgroundColor: "blue",
+    },
+    {
+      title: "Financial Exposure",
+      value: data?.financial ? `${data?.financial / 10000000} M ` : "0 M",
+      change: "-8%",
+      trendColor: "text-orange-400",
+      icon: "/Icons/executive2.png",
+    },
+    {
+      title: "MTTR",
+      value: "4.2 days",
+      change: "+15%",
+      trendColor: "text-green-400",
+      icon: "/Icons/executive3.png",
+    },
+    {
+      title: "Compliance Score",
+      value: "94%",
+      change: "+3%",
+      trendColor: "text-blue-400",
+      icon: "/Icons/executive4.png",
+    },
+  ];
+};
 
 export const firstChartDatady = (data) => {
-
-  console.log(data);
-  return  [
-  { label: "Open", value: data?.Open, color: "#EF4444" },
-  { label: "Closed", value: data?.Closed, color: "#22C55E" },
-  { label: "Exception", value: data?.exception, color: "#F97316" },
-  { label: "False Positive", value: data?.False_Positive, color: "#3B82F6" },
-];
-}
+  return [
+    { label: "Open", value: data?.Open, color: "#EF4444" },
+    { label: "Closed", value: data?.Closed, color: "#22C55E" },
+    { label: "Exception", value: data?.exception, color: "#F97316" },
+    { label: "False Positive", value: data?.False_Positive, color: "#3B82F6" },
+  ];
+};
 
 export const CardsData = (tvmCardsData) => {
-return   [
-     {
+  return [
+    {
       title: "Applications",
       value: tvmCardsData.applications.toString(),
       icon: "/Icons/TVM1.png",
@@ -81,11 +79,9 @@ return   [
   ];
 };
 
-
 export const SecondChartDatady = (data) => {
-   
- return {
-    labels:data?.label,
+  return {
+    labels: data?.label,
     datasets: [
       {
         label: "Critical",
@@ -129,4 +125,4 @@ export const SecondChartDatady = (data) => {
       },
     ],
   };
-}
+};

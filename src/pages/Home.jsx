@@ -354,7 +354,6 @@ const DashboardCards = () => {
       {/* Second Row  */}
       <div className="flex flex-col lg:flex-row lg:flex-wrap gap-4 mt-4 w-full">
         {/* Exploitability */}
-        {/* Exploitability (matches Inventory Status) */}
         <div className="bg-[#161e3e] border border-gray-800 rounded-xl p-4 w-full md:w-[360px] lg:flex-1 h-auto shadow-md">
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-white text-base font-semibold">
