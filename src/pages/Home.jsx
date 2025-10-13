@@ -41,7 +41,7 @@ const InventoryData = [
 
 const DashboardCards = () => {
   const { token, selectedYear } = useAuthContext();
-  const { tvmCardsData, loading, refreshTVMCardsData } = useTVMCardsContext();
+  const { tvmCardsData, loading, refreshTVMCardsData, tenthChart,topFiveRisk } = useTVMCardsContext();
   const {
     GetFirstChart,
     firstChartData,

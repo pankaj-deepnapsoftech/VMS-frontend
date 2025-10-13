@@ -19,6 +19,7 @@ const RiskOperation = () => {
   const [page, setPage] = useState(1);
   const [tenant, setTenant] = useState("");
 
+
   const filteredData = riskQuantificationData.filter(
     (item) =>
       item.Title.toLowerCase().includes(searchTerm.toLowerCase()) ||

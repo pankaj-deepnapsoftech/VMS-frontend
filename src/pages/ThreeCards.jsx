@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Bar, Doughnut } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -10,6 +10,7 @@ import {
   Legend,
   ArcElement,
 } from "chart.js";
+import { useAuthContext, useTVMCardsContext } from "@/context";
 
 ChartJS.register(
   CategoryScale,
@@ -258,7 +259,22 @@ const doughnutOptions = {
   },
 };
 
+
 const Dashboard = () => {
+
+  const { token, tenant, selectedYear } = useAuthContext();
+  const { tenthChart, topFiveRisk } = useTVMCardsContext();
+
+  console.log("this is just testing", topFiveRisk)
+
++
+  useEffect(() => {
+    if (token) {
+      tenthChart(tenant, selectedYear);
+    }
+  }, [token, tenant, selectedYear]);
+
+
   return (
     <div className="min-h-screen bg-gray-900 p-8">
       <h1 className="text-3xl font-bold text-center mb-8 text-white">
@@ -283,27 +299,23 @@ const Dashboard = () => {
             <div className="grid grid-cols-12 gap-4 px-4 py-2 border-b border-[#1B2B45] text-gray-400">
               <div className="col-span-6">Risk Name</div>
               <div className="col-span-3">Score</div>
-              <div className="col-span-3">Year</div>
             </div>
 
             {/* Data Rows */}
-            {mockTop5Risks.labels.map((label, idx) => (
+            {topFiveRisk.map((label, idx) => (
               <div
                 key={idx}
                 className="grid grid-cols-12 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-gray-800 transition-colors"
               >
                 {/* Risk Name */}
-                <div className="col-span-6 truncate">{label}</div>
+                <div className="col-span-6 truncate">{label?.title || "-"}</div>
 
                 {/* Score */}
                 <div className="col-span-3 font-semibold text-gray-200">
-                  {mockTop5Risks.datasets[0].data[idx]}
+                  {label?.RAS || "-"}
                 </div>
 
-                {/* Years*/}
-                <div className="col-span-3 text-gray-300">
-                  {mockTop5Risks.years[idx]}
-                </div>
+
               </div>
             ))}
           </div>

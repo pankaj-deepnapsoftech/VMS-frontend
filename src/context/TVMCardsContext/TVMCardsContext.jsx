@@ -10,6 +10,7 @@ const TVMCardsContextProvider = ({ children }) => {
 
   const {selectedYear} = useAuthContext();
   const [loading, setLoading] = useState(false);
+  const [topFiveRisk,setTopFiveRisk] = useState([])
   const [tvmCardsData, setTvmCardsData] = useState({
     applications: 0,
     infrastructureIPs: 0,
@@ -44,6 +45,16 @@ const TVMCardsContextProvider = ({ children }) => {
     }
   };
 
+   const tenthChart = async (tenant,year) => {
+    try {
+      const res = await AxiosHandler.get(`/tenant/tvm-thenth-data?tenant=${tenant ? tenant : ""}&year=${year}`);
+      console.log("===========================>>>>>>>>>>>>>>>>>>>>this is check response",res)
+      setTopFiveRisk(res?.data?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     if (token) {
       getTVMCardsData(selectedYear);
@@ -61,6 +72,8 @@ const TVMCardsContextProvider = ({ children }) => {
         loading,
         refreshTVMCardsData,
         currentTenantId,
+        tenthChart,
+        topFiveRisk
       }}
     >
       {children}
