@@ -44,6 +44,8 @@ const MainLayout = () => {
     setOpenSideBar,
     showUserMenu,
     setShowUserMenu,
+    selectedYear,
+    setSelectedYear
   } = useAuthContext();
   const { TenantAllData } = useDataContext();
 
@@ -51,6 +53,8 @@ const MainLayout = () => {
 
   const { openModal, isOpen, closeModal } = useChangePassword();
   const { UpdateExpectionData } = useExceptionContext();
+
+   const currentYear = new Date().getFullYear();
 
   const [width, setWidth] = useState(window.innerWidth);
   const [temp, setTemp] = useState("");
@@ -254,6 +258,18 @@ const MainLayout = () => {
             </div>
 
             <div className=" flex items-end justify-end">
+
+              <select
+                className="bg-[#0E1430] text-gray-300 text-sm px-2 sm:px-3 py-1 rounded-lg border border-gray-700 focus:outline-none"
+                value={selectedYear}
+                onChange={(e) => setSelectedYear(Number(e.target.value))}
+              >
+                <option value={currentYear}>{currentYear} </option>
+                <option value={currentYear - 1}>{currentYear - 1}</option>
+                <option value={currentYear - 2}>{currentYear - 2}</option>
+              </select> 
+
+              
               <button
                 onClick={() => setSidebarOpen(true)}
                 className="relative flex items-center gap-2  text-white px-4 py-2 rounded-lg hover:bg-blue-600"
@@ -267,6 +283,8 @@ const MainLayout = () => {
                   ""
                 )}
               </button>
+
+               
 
               <div className="relative ml-4 flex text-white items-center gap-1 md:gap-3">
                 <button

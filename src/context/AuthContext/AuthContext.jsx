@@ -12,6 +12,8 @@ export const authContext = createContext({
   authenticate: null,
   tenant: "",
   GetSecuirityQuestion: () => { },
+  selectedYear:new Date().getFullYear(),
+  setSelectedYear:()=>{}
 });
 
 // eslint-disable-next-line react/prop-types
@@ -20,6 +22,8 @@ const AuthContextProvider = ({ children }) => {
 
   const [token, setToken] = useState(Cookies.get("AT"));
   const [tenant, setTenant] = useState();
+  const currentYear = new Date().getFullYear();
+  const [selectedYear, setSelectedYear] = useState(currentYear);
 
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -372,7 +376,9 @@ const AuthContextProvider = ({ children }) => {
         tenant,
         GetSecuirityQuestion,
         GetUserDataByTenant,
-        tenantData
+        tenantData,
+        selectedYear,
+        setSelectedYear
       }}
     >
       {children}

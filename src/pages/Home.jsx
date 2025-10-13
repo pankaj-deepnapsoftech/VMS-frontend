@@ -40,8 +40,8 @@ const InventoryData = [
 ];
 
 const DashboardCards = () => {
-  const { token } = useAuthContext();
-  const { tvmCardsData, loading } = useTVMCardsContext();
+  const { token, selectedYear } = useAuthContext();
+  const { tvmCardsData, loading ,refreshTVMCardsData} = useTVMCardsContext();
   const {
     GetFirstChart,
     firstChartData,
@@ -53,10 +53,10 @@ const DashboardCards = () => {
     GetNinthChart,
   } = useDataContext();
 
+
   // usestats
   const [tenant, setTenant] = useState("");
-  const currentYear = new Date().getFullYear();
-  const [selectedYear, setSelectedYear] = useState(currentYear);
+  
 
   const totall = InventoryData.reduce((sum, item) => sum + item.value, 0);
 
@@ -178,6 +178,7 @@ const DashboardCards = () => {
   useEffect(() => {
     if (token) {
       GetSecondChart(tenant, selectedYear);
+      refreshTVMCardsData(tenant, selectedYear);
     }
   }, [token, tenant, selectedYear])
 
@@ -320,15 +321,7 @@ const DashboardCards = () => {
               Vulnerable Items by Risk Rating
             </h2>
             <div className="flex items-center gap-2 flex-shrink-0">
-              <select
-                className="bg-[#0E1430] text-gray-300 text-sm px-2 sm:px-3 py-1 rounded-lg border border-gray-700 focus:outline-none"
-                value={selectedYear}
-                onChange={(e) => setSelectedYear(Number(e.target.value))}
-              >
-                <option value={currentYear}>{currentYear} </option>
-                <option value={currentYear - 1}>{currentYear - 1}</option>
-                <option value={currentYear - 2}>{currentYear - 2}</option>
-              </select>
+             
 
               <button className="text-gray-400 hover:text-gray-200 text-sm">
                 •••

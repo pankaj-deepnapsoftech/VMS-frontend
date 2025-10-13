@@ -5,7 +5,10 @@ import toast from "react-hot-toast";
 
 export const TVMCardsContext = createContext();
 
+// eslint-disable-next-line react/prop-types
 const TVMCardsContextProvider = ({ children }) => {
+
+  const {selectedYear} = useAuthContext();
   const [loading, setLoading] = useState(false);
   const [tvmCardsData, setTvmCardsData] = useState({
     applications: 0,
@@ -21,7 +24,7 @@ const TVMCardsContextProvider = ({ children }) => {
     setLoading(true);
     try {
       const params = tenantId ? { tenant: tenantId } : {};
-      const res = await AxiosHandler.get("/data/tvm-cards", { params });
+      const res = await AxiosHandler.get(`/data/tvm-cards?year=${selectedYear}`, { params });
       const data = res.data;
 
       // Transform the API response to match the frontend structure
@@ -43,7 +46,7 @@ const TVMCardsContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (token) {
-      getTVMCardsData();
+      getTVMCardsData(selectedYear);
     }
   }, [token]);
 
