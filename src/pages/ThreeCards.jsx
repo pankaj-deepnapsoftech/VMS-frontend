@@ -33,67 +33,6 @@ const chartColors = {
   quinary: "rgba(255, 159, 64, 0.8)", // Orange for closed/exploitable
 };
 
-const mockTop5VulnerableAssets = {
-  labels: ["Asset 1", "Asset 2", "Asset 3", "Asset 4", "Asset 5"],
-  datasets: [
-    {
-      label: "Vulnerability Count",
-      data: [50, 45, 40, 35, 30],
-    },
-  ],
-  years: [2025, 2024, 2023, 2022, 2021],
-};
-
-const mockTop5HighValueAssets = {
-  labels: ["Server X", "Database Y", "Endpoint Z", "Cloud VM1", "Firewall 5"],
-  datasets: [
-    {
-      label: "Importance Score",
-      data: [98, 92, 89, 85, 80],
-    },
-  ],
-  years: [2025, 2024, 2023, 2022, 2021],
-};
-
-const mockTop5OpenVulnerabilities = {
-  labels: ["Vuln-001", "Vuln-002", "Vuln-003", "Vuln-004", "Vuln-005"],
-  datasets: [
-    {
-      label: "Severity",
-      data: [9.8, 8.5, 7.2, 6.9, 5.4],
-      backgroundColor: chartColors.quaternary,
-      borderColor: "rgba(153, 102, 255, 1)",
-      borderWidth: 1,
-    },
-  ],
-};
-
-const mockTop5ClosedVulnerabilities = {
-  labels: ["Vuln-006", "Vuln-007", "Vuln-008", "Vuln-009", "Vuln-010"],
-  datasets: [
-    {
-      label: "Severity",
-      data: [9.0, 8.0, 7.0, 6.0, 5.0],
-      backgroundColor: chartColors.quinary,
-      borderColor: "rgba(255, 159, 64, 1)",
-      borderWidth: 1,
-    },
-  ],
-};
-
-const mockTop5UniqueVulnerabilities = {
-  labels: ["Unique-1", "Unique-2", "Unique-3", "Unique-4", "Unique-5"],
-  datasets: [
-    {
-      label: "Occurrences",
-      data: [20, 18, 15, 12, 10],
-      backgroundColor: chartColors.quaternary,
-      borderColor: "rgba(153, 102, 255, 1)",
-      borderWidth: 1,
-    },
-  ],
-};
-
 const mockSLABreachedCount = {
   labels: ["SLA Breached"],
   datasets: [
@@ -197,7 +136,8 @@ const total = critical + high;
 const Dashboard = () => {
   const { token, tenant, selectedYear } = useAuthContext();
   const { tenthChart, topFiveRisk,elaventhChart,topFiveinfraAssetCount,topHighValue,
-        twelfthChart, TharteenthChart,topOpenVulnerabilities, fourteenthChart, topClosedVulnerabilities } = useTVMCardsContext();
+        twelfthChart, TharteenthChart,topOpenVulnerabilities, fourteenthChart, topClosedVulnerabilities,fifthteenthChart,
+        topUniqueVulnerabilities } = useTVMCardsContext();
 
 
   useEffect(() => {
@@ -207,6 +147,7 @@ const Dashboard = () => {
       twelfthChart(tenant, selectedYear);
       TharteenthChart(tenant, selectedYear);
       fourteenthChart(tenant, selectedYear);
+      fifthteenthChart(tenant, selectedYear);
     }
   }, [token, tenant, selectedYear]);
 
@@ -436,14 +377,14 @@ const Dashboard = () => {
             </div>
 
             {/* Data Rows */}
-            {mockTop5UniqueVulnerabilities.labels.map((vuln, idx) => (
+            {topUniqueVulnerabilities.map((vuln, idx) => (
               <div
                 key={idx}
                 className="grid grid-cols-9 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-gray-800 transition-colors"
               >
-                <div className="col-span-6 truncate">{vuln}</div>
+                <div className="col-span-6 truncate">{vuln.name}</div>
                 <div className="col-span-3 text-right font-semibold text-gray-200">
-                  {mockTop5UniqueVulnerabilities.datasets[0].data[idx]}
+                  {vuln.count}
                 </div>
               </div>
             ))}
