@@ -12,6 +12,9 @@ const TVMCardsContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [topFiveRisk, setTopFiveRisk] = useState([])
   const [topFiveinfraAssetCount, setTopFiveInfraAssertCount] = useState([]);
+  const [topOpenVulnerabilities,setTopOpenVulnerabilities] = useState([])
+  const [topClosedVulnerabilities,setTopClosedVulnerabilities] = useState([])
+  const [topHighValue, setTopHighValue] = useState([]);
   const [tvmCardsData, setTvmCardsData] = useState({
     applications: 0,
     infrastructureIPs: 0,
@@ -66,6 +69,34 @@ const TVMCardsContextProvider = ({ children }) => {
     }
   };
 
+
+  const twelfthChart = async (tenant, year) => {
+    try {
+      const res = await AxiosHandler.get(`/data/tvm-twelfth-data?tenant=${tenant ? tenant : ""}&year=${year}`);
+      setTopHighValue(res?.data?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const TharteenthChart = async (tenant, year) => {
+    try {
+      const res = await AxiosHandler.get(`/data/tvm-tharteenth-data?tenant=${tenant ? tenant : ""}&year=${year}`);
+      setTopOpenVulnerabilities(res?.data?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fourteenthChart = async (tenant, year) => {
+    try {
+      const res = await AxiosHandler.get(`/data/tvm-fourteenth-data?tenant=${tenant ? tenant : ""}&year=${year}`);
+      setTopClosedVulnerabilities(res?.data?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     if (token) {
       getTVMCardsData(selectedYear);
@@ -86,7 +117,14 @@ const TVMCardsContextProvider = ({ children }) => {
         tenthChart,
         topFiveRisk,
         elaventhChart,
-        topFiveinfraAssetCount
+        topFiveinfraAssetCount,
+        topHighValue,
+        twelfthChart,
+        TharteenthChart,
+        topOpenVulnerabilities,
+        fourteenthChart,
+        topClosedVulnerabilities
+
       }}
     >
       {children}

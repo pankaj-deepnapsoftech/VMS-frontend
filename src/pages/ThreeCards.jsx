@@ -22,18 +22,7 @@ ChartJS.register(
   ArcElement
 );
 
-// Gradient background utility for charts
-const createGradient = (ctx, chartArea) => {
-  const gradient = ctx.createLinearGradient(
-    0,
-    chartArea.bottom,
-    0,
-    chartArea.top
-  );
-  gradient.addColorStop(0, "rgba(255, 99, 132, 0.8)");
-  gradient.addColorStop(1, "rgba(255, 99, 132, 0.3)");
-  return gradient;
-};
+
 
 // Mock data for all charts with consistent dark theme colors
 const chartColors = {
@@ -225,16 +214,18 @@ const doughnutOptions = {
 const Dashboard = () => {
 
   const { token, tenant, selectedYear } = useAuthContext();
-  const { tenthChart, topFiveRisk,elaventhChart,
-        topFiveinfraAssetCount } = useTVMCardsContext();
+  const { tenthChart, topFiveRisk,elaventhChart,topFiveinfraAssetCount,topHighValue,
+        twelfthChart, TharteenthChart,topOpenVulnerabilities, fourteenthChart, topClosedVulnerabilities } = useTVMCardsContext();
 
-  console.log("this is just testing", topFiveinfraAssetCount)
+console.log("this is just testing",topHighValue)
 
-+
   useEffect(() => {
     if (token) {
       tenthChart(tenant, selectedYear);
       elaventhChart(tenant, selectedYear);
+      twelfthChart(tenant, selectedYear);
+      TharteenthChart(tenant, selectedYear);
+      fourteenthChart(tenant, selectedYear);
     }
   }, [token, tenant, selectedYear]);
 
@@ -290,7 +281,7 @@ const Dashboard = () => {
           <div className="flex justify-between items-start mb-2">
             <div>
               <div className="text-lg font-semibold mb-1">
-                Top 5 Vulnerable Assets
+                Top 5 Vulnerable Infrastructor Assets
               </div>
               <div className="text-xs text-gray-400">
                 by Vulnerability Count
@@ -306,29 +297,23 @@ const Dashboard = () => {
             <div className="grid grid-cols-12 gap-4 px-4 py-2 border-b border-[#1B2B45] text-gray-400">
               <div className="col-span-6">Asset Name</div>
               <div className="col-span-3">Count</div>
-              <div className="col-span-3">Year</div>
             </div>
 
             {/* Data Rows */}
-            {mockTop5VulnerableAssets.labels.map((asset, idx) => (
+            {topFiveinfraAssetCount?.map((asset, idx) => (
               <div
                 key={idx}
                 className="grid grid-cols-12 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-gray-800 transition-colors"
               >
                 {/* Asset Name */}
-                <div className="col-span-6 truncate">{asset}</div>
+                <div className="col-span-6 truncate">{asset.name}</div>
 
                 {/* Count */}
                 <div className="col-span-3 font-semibold text-gray-200">
-                  {mockTop5VulnerableAssets.datasets[0].data[idx]}
+                  {asset.count}
                 </div>
 
-                {/* Year */}
-                <div className="col-span-3 text-gray-300">
-                  {mockTop5VulnerableAssets.years
-                    ? mockTop5VulnerableAssets.years[idx]
-                    : 2025 - idx}
-                </div>
+              
               </div>
             ))}
           </div>
@@ -353,29 +338,22 @@ const Dashboard = () => {
             <div className="grid grid-cols-12 gap-4 px-4 py-2 border-b border-[#1B2B45] text-gray-400">
               <div className="col-span-6">Asset Name</div>
               <div className="col-span-3">Score</div>
-              <div className="col-span-3">Year</div>
             </div>
 
             {/* Data Rows */}
-            {mockTop5HighValueAssets.labels.map((asset, idx) => (
+            {topHighValue.map((asset, idx) => (
               <div
                 key={idx}
                 className="grid grid-cols-12 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-gray-800 transition-colors"
               >
                 {/* Asset Name */}
-                <div className="col-span-6 truncate">{asset}</div>
+                <div className="col-span-6 truncate">{asset?.name}</div>
 
                 {/* Score */}
                 <div className="col-span-3 font-semibold text-gray-200">
-                  {mockTop5HighValueAssets.datasets[0].data[idx]}
+                  {asset?.count}
                 </div>
 
-                {/* Year */}
-                <div className="col-span-3 text-gray-300">
-                  {mockTop5HighValueAssets.years
-                    ? mockTop5HighValueAssets.years[idx]
-                    : 2025 - idx}
-                </div>
               </div>
             ))}
           </div>
@@ -388,7 +366,7 @@ const Dashboard = () => {
               <div className="text-lg font-semibold mb-1">
                 Top 5 Open Vulnerabilities
               </div>
-              <div className="text-xs text-gray-400">by Severity</div>
+              <div className="text-xs text-gray-400">by VRS</div>
             </div>
             <button className="text-gray-400 text-sm hover:text-gray-200">
               •••
@@ -403,17 +381,17 @@ const Dashboard = () => {
             </div>
 
             {/* Data Rows */}
-            {mockTop5OpenVulnerabilities.labels.map((vuln, idx) => (
+            {topOpenVulnerabilities.map((vuln, idx) => (
               <div
                 key={idx}
                 className="grid grid-cols-9 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-gray-800 transition-colors"
               >
                 {/* Vulnerability ID */}
-                <div className="col-span-6 truncate">{vuln}</div>
+                <div className="col-span-6 truncate">{vuln.name}</div>
 
                 {/* Severity */}
                 <div className="col-span-3 text-right font-semibold text-gray-200">
-                  {mockTop5OpenVulnerabilities.datasets[0].data[idx]}
+                  {vuln.count}
                 </div>
               </div>
             ))}
@@ -427,7 +405,7 @@ const Dashboard = () => {
               <div className="text-lg font-semibold mb-1">
                 Top 5 Closed Vulnerabilities
               </div>
-              <div className="text-xs text-gray-400">by Severity</div>
+              <div className="text-xs text-gray-400">by VRS</div>
             </div>
             <button className="text-gray-400 text-sm hover:text-gray-200">
               •••
@@ -442,14 +420,14 @@ const Dashboard = () => {
             </div>
 
             {/* Data Rows */}
-            {mockTop5ClosedVulnerabilities.labels.map((vuln, idx) => (
+            {topClosedVulnerabilities.map((vuln, idx) => (
               <div
                 key={idx}
                 className="grid grid-cols-9 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-gray-800 transition-colors"
               >
-                <div className="col-span-6 truncate">{vuln}</div>
+                <div className="col-span-6 truncate">{vuln?.name}</div>
                 <div className="col-span-3 text-right font-semibold text-gray-200">
-                  {mockTop5ClosedVulnerabilities.datasets[0].data[idx]}
+                  {vuln?.count}
                 </div>
               </div>
             ))}
