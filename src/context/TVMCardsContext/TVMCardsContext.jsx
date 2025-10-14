@@ -8,9 +8,10 @@ export const TVMCardsContext = createContext();
 // eslint-disable-next-line react/prop-types
 const TVMCardsContextProvider = ({ children }) => {
 
-  const {selectedYear} = useAuthContext();
+  const { selectedYear } = useAuthContext();
   const [loading, setLoading] = useState(false);
-  const [topFiveRisk,setTopFiveRisk] = useState([])
+  const [topFiveRisk, setTopFiveRisk] = useState([])
+  const [topFiveinfraAssetCount, setTopFiveInfraAssertCount] = useState([]);
   const [tvmCardsData, setTvmCardsData] = useState({
     applications: 0,
     infrastructureIPs: 0,
@@ -45,11 +46,21 @@ const TVMCardsContextProvider = ({ children }) => {
     }
   };
 
-   const tenthChart = async (tenant,year) => {
+  const tenthChart = async (tenant, year) => {
+
     try {
-      const res = await AxiosHandler.get(`/tenant/tvm-thenth-data?tenant=${tenant ? tenant : ""}&year=${year}`);
-      console.log("===========================>>>>>>>>>>>>>>>>>>>>this is check response",res)
+      const res = await AxiosHandler.get(`/data/tvm-thenth-data?tenant=${tenant ? tenant : ""}&year=${year}`);
       setTopFiveRisk(res?.data?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const elaventhChart = async (tenant, year) => {
+
+    try {
+      const res = await AxiosHandler.get(`/data/tvm-elaventh-data?tenant=${tenant ? tenant : ""}&year=${year}`);
+      setTopFiveInfraAssertCount(res?.data?.data);
     } catch (error) {
       console.error(error);
     }
@@ -73,7 +84,9 @@ const TVMCardsContextProvider = ({ children }) => {
         refreshTVMCardsData,
         currentTenantId,
         tenthChart,
-        topFiveRisk
+        topFiveRisk,
+        elaventhChart,
+        topFiveinfraAssetCount
       }}
     >
       {children}

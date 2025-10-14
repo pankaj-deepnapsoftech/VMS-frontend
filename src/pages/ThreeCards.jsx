@@ -44,16 +44,7 @@ const chartColors = {
   quinary: "rgba(255, 159, 64, 0.8)", // Orange for closed/exploitable
 };
 
-const mockTop5Risks = {
-  labels: ["Risk A", "Risk B", "Risk C", "Risk D", "Risk E"],
-  datasets: [
-    {
-      label: "Risk Score",
-      data: [95, 85, 75, 65, 55],
-    },
-  ],
-  years: [2024, 2023, 2022, 2021, 2020],
-};
+
 
 const mockTop5VulnerableAssets = {
   labels: ["Asset 1", "Asset 2", "Asset 3", "Asset 4", "Asset 5"],
@@ -207,35 +198,6 @@ const mockTop5ExploitableVulnerabilities = {
   ],
 };
 
-// Chart options for Bar charts
-const barOptions = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: {
-      position: "top",
-      labels: { color: "#e5e7eb" }, // Light gray for legend text
-    },
-    title: { display: false },
-    tooltip: {
-      backgroundColor: "rgba(31, 41, 55, 0.9)", // Dark tooltip background
-      titleColor: "#e5e7eb",
-      bodyColor: "#e5e7eb",
-    },
-  },
-  scales: {
-    x: { ticks: { color: "#e5e7eb" }, grid: { display: false } },
-    y: {
-      beginAtZero: true,
-      ticks: { color: "#e5e7eb" },
-      grid: { color: "rgba(255, 255, 255, 0.1)" },
-    },
-  },
-  animation: {
-    duration: 1000,
-    easing: "easeOutQuart",
-  },
-};
 
 // Chart options for Doughnut charts
 const doughnutOptions = {
@@ -263,14 +225,16 @@ const doughnutOptions = {
 const Dashboard = () => {
 
   const { token, tenant, selectedYear } = useAuthContext();
-  const { tenthChart, topFiveRisk } = useTVMCardsContext();
+  const { tenthChart, topFiveRisk,elaventhChart,
+        topFiveinfraAssetCount } = useTVMCardsContext();
 
-  console.log("this is just testing", topFiveRisk)
+  console.log("this is just testing", topFiveinfraAssetCount)
 
 +
   useEffect(() => {
     if (token) {
       tenthChart(tenant, selectedYear);
+      elaventhChart(tenant, selectedYear);
     }
   }, [token, tenant, selectedYear]);
 

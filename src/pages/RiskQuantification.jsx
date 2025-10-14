@@ -153,7 +153,7 @@ const RiskOperation = () => {
                       </td>
                       <td className="px-4 py-3">{calculateARS(user) || "0"}</td>
                       <td className="px-4 py-3">
-                        $ {calculateALE(user) || "—"}
+                        $ {calculateALE(user) || "0"}
                       </td>
                     </tr>
                   ))}
