@@ -15,6 +15,7 @@ const TVMCardsContextProvider = ({ children }) => {
   const [topOpenVulnerabilities, setTopOpenVulnerabilities] = useState([])
   const [topClosedVulnerabilities, setTopClosedVulnerabilities] = useState([])
   const [topUniqueVulnerabilities, setTopUniqueVulnerabilities] = useState([])
+  const [exceptionVulnerabilities , setExceptionVulnerabilities] = useState([])
   const [creticalHighVulnrable, setCreticalHighVulnrable] = useState([])
   const [topHighValue, setTopHighValue] = useState([]);
   const [tvmCardsData, setTvmCardsData] = useState({
@@ -119,6 +120,15 @@ const TVMCardsContextProvider = ({ children }) => {
     }
   };
 
+  const ninteenthChart = async (tenant, year) => {
+    try {
+      const res = await AxiosHandler.get(`/data/tvm-ninteen-data?tenant=${tenant ? tenant : ""}&year=${year}`);
+      setExceptionVulnerabilities(res?.data?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     if (token) {
       getTVMCardsData(selectedYear);
@@ -149,8 +159,9 @@ const TVMCardsContextProvider = ({ children }) => {
         fifthteenthChart,
         topUniqueVulnerabilities,
         SixteenthChart,
-        creticalHighVulnrable
-
+        creticalHighVulnrable,
+        ninteenthChart,
+        exceptionVulnerabilities
       }}
     >
       {children}
