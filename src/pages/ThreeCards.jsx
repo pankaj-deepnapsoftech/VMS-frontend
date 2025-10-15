@@ -128,21 +128,22 @@ const Dashboard = () => {
     topUniqueVulnerabilities, SixteenthChart, creticalHighVulnrable } = useTVMCardsContext();
 
 
-  const combinedVulnerabilities = (data) => {
-    return {
-      labels: ["Critical","High"],
-      datasets: [
-        {
-          label: "Open Vulnerabilities",
-          data: [data.High, data.Critical],
-          backgroundColor: ["#ef4444", "#3b82f6"],
-          borderColor: "#1f2937",
-          borderWidth: 2,
-          hoverOffset: 8,
-        },
-      ],
-    }
+ const combinedVulnerabilities = (data) => {
+  return {
+    labels: ["Critical", "High"],
+    datasets: [
+      {
+        label: "Open Vulnerabilities",
+        data: [data.High, data.Critical],
+        backgroundColor: ["#3b82f6", "#ef4444"],
+        borderColor: "#1f2937",
+        borderWidth: 2,
+        hoverOffset: 8,
+      },
+    ],
   };
+};
+
 
 
   useEffect(() => {
@@ -239,8 +240,6 @@ const Dashboard = () => {
                 <div className="col-span-3 font-semibold text-gray-200">
                   {asset.count}
                 </div>
-
-
               </div>
             ))}
           </div>
