@@ -22,8 +22,6 @@ ChartJS.register(
   ArcElement
 );
 
-
-
 // Mock data for all charts with consistent dark theme colors
 const chartColors = {
   primary: "rgba(255, 99, 132, 0.8)", // Red for critical
@@ -101,8 +99,6 @@ const centerTextPlugin = {
   },
 };
 
-
-
 const doughnutOptions = {
   responsive: true,
   maintainAspectRatio: false,
@@ -119,32 +115,40 @@ const doughnutOptions = {
   },
 };
 
-
-
 const Dashboard = () => {
   const { token, tenant, selectedYear } = useAuthContext();
-  const { tenthChart, topFiveRisk, elaventhChart, topFiveinfraAssetCount, topHighValue,
-    twelfthChart, TharteenthChart, topOpenVulnerabilities, fourteenthChart, topClosedVulnerabilities, fifthteenthChart,
-    topUniqueVulnerabilities, SixteenthChart, creticalHighVulnrable } = useTVMCardsContext();
+  const {
+    tenthChart,
+    topFiveRisk,
+    elaventhChart,
+    topFiveinfraAssetCount,
+    topHighValue,
+    twelfthChart,
+    TharteenthChart,
+    topOpenVulnerabilities,
+    fourteenthChart,
+    topClosedVulnerabilities,
+    fifthteenthChart,
+    topUniqueVulnerabilities,
+    SixteenthChart,
+    creticalHighVulnrable,
+  } = useTVMCardsContext();
 
-
- const combinedVulnerabilities = (data) => {
-  return {
-    labels: ["Critical", "High"],
-    datasets: [
-      {
-        label: "Open Vulnerabilities",
-        data: [data.High, data.Critical],
-        backgroundColor: ["#3b82f6", "#ef4444"],
-        borderColor: "#1f2937",
-        borderWidth: 2,
-        hoverOffset: 8,
-      },
-    ],
+  const combinedVulnerabilities = (data) => {
+    return {
+      labels: ["Critical", "High"],
+      datasets: [
+        {
+          label: "Open Vulnerabilities",
+          data: [data.High, data.Critical],
+          backgroundColor: ["#3b82f6", "#ef4444"],
+          borderColor: "#1f2937",
+          borderWidth: 2,
+          hoverOffset: 8,
+        },
+      ],
+    };
   };
-};
-
-
 
   useEffect(() => {
     if (token) {
@@ -157,8 +161,6 @@ const Dashboard = () => {
       SixteenthChart(tenant, selectedYear);
     }
   }, [token, tenant, selectedYear]);
-
-
 
   return (
     <div className="min-h-screen bg-gray-900 p-8">
@@ -279,7 +281,6 @@ const Dashboard = () => {
                 <div className="col-span-3 font-semibold text-gray-200">
                   {asset?.count}
                 </div>
-
               </div>
             ))}
           </div>
@@ -411,7 +412,9 @@ const Dashboard = () => {
               {/* Center total label */}
               <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
                 <p className="text-sm text-gray-400">Total</p>
-                <p className="text-3xl font-bold">{creticalHighVulnrable.Critical + creticalHighVulnrable.High}</p>
+                <p className="text-3xl font-bold">
+                  {creticalHighVulnrable.Critical + creticalHighVulnrable.High}
+                </p>
               </div>
             </div>
 
@@ -419,11 +422,17 @@ const Dashboard = () => {
             <div className="flex items-center justify-center gap-8 mt-6 text-white">
               <div className="flex items-center text-lg font-medium">
                 <span className="inline-block w-4 h-4 bg-[#ef4444] rounded-full mr-2"></span>
-                Critical: <span className="font-semibold ml-1">{creticalHighVulnrable.Critical}</span>
+                Critical:{" "}
+                <span className="font-semibold ml-1">
+                  {creticalHighVulnrable.Critical}
+                </span>
               </div>
               <div className="flex items-center text-lg font-medium">
                 <span className="inline-block w-4 h-4 bg-[#3b82f6] rounded-full mr-2"></span>
-                High: <span className="font-semibold ml-1">{creticalHighVulnrable.High}</span>
+                High:{" "}
+                <span className="font-semibold ml-1">
+                  {creticalHighVulnrable.High}
+                </span>
               </div>
             </div>
           </div>
