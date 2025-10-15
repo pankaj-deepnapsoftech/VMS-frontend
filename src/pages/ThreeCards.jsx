@@ -85,21 +85,6 @@ const mockTop5ExploitableVulnerabilities = {
   ],
 };
 
-const centerTextPlugin = {
-  id: "centerText",
-  beforeDraw(chart) {
-    const { width } = chart;
-    const { ctx } = chart;
-    const dataset = chart.data.datasets[0].data;
-    const total = dataset.reduce((a, b) => a + b, 0);
-    ctx.save();
-    ctx.font = "bold 22px sans-serif";
-    ctx.fillStyle = "#fff";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText(total, width / 2, chart._metasets[0].data[0].y);
-  },
-};
 
 
 
@@ -125,7 +110,8 @@ const Dashboard = () => {
   const { token, tenant, selectedYear } = useAuthContext();
   const { tenthChart, topFiveRisk, elaventhChart, topFiveinfraAssetCount, topHighValue,
     twelfthChart, TharteenthChart, topOpenVulnerabilities, fourteenthChart, topClosedVulnerabilities, fifthteenthChart,
-    topUniqueVulnerabilities, SixteenthChart, creticalHighVulnrable } = useTVMCardsContext();
+    topUniqueVulnerabilities, SixteenthChart, creticalHighVulnrable, ninteenthChart,
+        exceptionVulnerabilities } = useTVMCardsContext();
 
 
  const combinedVulnerabilities = (data) => {
@@ -155,6 +141,7 @@ const Dashboard = () => {
       fourteenthChart(tenant, selectedYear);
       fifthteenthChart(tenant, selectedYear);
       SixteenthChart(tenant, selectedYear);
+      ninteenthChart(tenant, selectedYear);
     }
   }, [token, tenant, selectedYear]);
 
@@ -492,14 +479,14 @@ const Dashboard = () => {
               <div className="col-span-3 text-right">Severity</div>
             </div>
 
-            {mockExceptionVulnerabilities.labels.map((vuln, idx) => (
+            {exceptionVulnerabilities?.map((vuln, idx) => (
               <div
                 key={idx}
                 className="grid grid-cols-9 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-gray-800 transition-colors"
               >
-                <div className="col-span-6 truncate">{vuln}</div>
+                <div className="col-span-6 truncate">{vuln.name}</div>
                 <div className="col-span-3 text-right font-semibold text-gray-200">
-                  {mockExceptionVulnerabilities.datasets[0].data[idx]}
+                  {vuln.severity}
                 </div>
               </div>
             ))}
