@@ -100,19 +100,9 @@ const centerTextPlugin = {
     ctx.fillText(total, width / 2, chart._metasets[0].data[0].y);
   },
 };
-const combinedVulnerabilities = {
-  labels: ["Critical", "High"],
-  datasets: [
-    {
-      label: "Open Vulnerabilities",
-      data: [12, 8],
-      backgroundColor: ["#ef4444", "#3b82f6"],
-      borderColor: "#1f2937",
-      borderWidth: 2,
-      hoverOffset: 8,
-    },
-  ],
-};
+
+
+
 const doughnutOptions = {
   responsive: true,
   maintainAspectRatio: false,
@@ -129,15 +119,30 @@ const doughnutOptions = {
   },
 };
 
-const critical = combinedVulnerabilities.datasets[0].data[0];
-const high = combinedVulnerabilities.datasets[0].data[1];
-const total = critical + high;
+
 
 const Dashboard = () => {
   const { token, tenant, selectedYear } = useAuthContext();
-  const { tenthChart, topFiveRisk,elaventhChart,topFiveinfraAssetCount,topHighValue,
-        twelfthChart, TharteenthChart,topOpenVulnerabilities, fourteenthChart, topClosedVulnerabilities,fifthteenthChart,
-        topUniqueVulnerabilities } = useTVMCardsContext();
+  const { tenthChart, topFiveRisk, elaventhChart, topFiveinfraAssetCount, topHighValue,
+    twelfthChart, TharteenthChart, topOpenVulnerabilities, fourteenthChart, topClosedVulnerabilities, fifthteenthChart,
+    topUniqueVulnerabilities, SixteenthChart, creticalHighVulnrable } = useTVMCardsContext();
+
+
+  const combinedVulnerabilities = (data) => {
+    return {
+      labels: ["Critical","High"],
+      datasets: [
+        {
+          label: "Open Vulnerabilities",
+          data: [data.High, data.Critical],
+          backgroundColor: ["#ef4444", "#3b82f6"],
+          borderColor: "#1f2937",
+          borderWidth: 2,
+          hoverOffset: 8,
+        },
+      ],
+    }
+  };
 
 
   useEffect(() => {
@@ -148,6 +153,7 @@ const Dashboard = () => {
       TharteenthChart(tenant, selectedYear);
       fourteenthChart(tenant, selectedYear);
       fifthteenthChart(tenant, selectedYear);
+      SixteenthChart(tenant, selectedYear);
     }
   }, [token, tenant, selectedYear]);
 
@@ -234,7 +240,7 @@ const Dashboard = () => {
                   {asset.count}
                 </div>
 
-              
+
               </div>
             ))}
           </div>
@@ -400,13 +406,13 @@ const Dashboard = () => {
             {/* Chart */}
             <div className="relative w-64 h-64">
               <Doughnut
-                data={combinedVulnerabilities}
+                data={combinedVulnerabilities(creticalHighVulnrable)}
                 options={doughnutOptions}
               />
               {/* Center total label */}
               <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
                 <p className="text-sm text-gray-400">Total</p>
-                <p className="text-3xl font-bold">{total}</p>
+                <p className="text-3xl font-bold">{creticalHighVulnrable.Critical + creticalHighVulnrable.High}</p>
               </div>
             </div>
 
@@ -414,11 +420,11 @@ const Dashboard = () => {
             <div className="flex items-center justify-center gap-8 mt-6 text-white">
               <div className="flex items-center text-lg font-medium">
                 <span className="inline-block w-4 h-4 bg-[#ef4444] rounded-full mr-2"></span>
-                Critical: <span className="font-semibold ml-1">{critical}</span>
+                Critical: <span className="font-semibold ml-1">{creticalHighVulnrable.Critical}</span>
               </div>
               <div className="flex items-center text-lg font-medium">
                 <span className="inline-block w-4 h-4 bg-[#3b82f6] rounded-full mr-2"></span>
-                High: <span className="font-semibold ml-1">{high}</span>
+                High: <span className="font-semibold ml-1">{creticalHighVulnrable.High}</span>
               </div>
             </div>
           </div>
