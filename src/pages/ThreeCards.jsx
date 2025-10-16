@@ -31,17 +31,35 @@ const chartColors = {
   quinary: "rgba(255, 159, 64, 0.8)", // Orange for closed/exploitable
 };
 
-const mockSLABreachedCount = {
-  labels: ["SLA Breached"],
+const metCount = 30;
+const notMetCount = 20;
+const totalCount = metCount + notMetCount;
+
+const data = {
+  labels: ["Met", "Not Met"],
   datasets: [
     {
-      label: "Count",
-      data: [15],
-      backgroundColor: [chartColors.primary],
-      borderColor: ["rgba(255, 99, 132, 1)"],
-      borderWidth: 1,
+      label: "SLA Breached",
+      data: [metCount, notMetCount],
+      backgroundColor: ["#22c55e", "#ef4444"], // green & red
+      borderColor: ["#1a1a1a"],
+      borderWidth: 2,
+      cutout: "75%", // makes the hole in the middle
     },
   ],
+};
+
+const options = {
+  plugins: {
+    legend: {
+      display: false, // Hide legend if you’re showing counts below
+    },
+    tooltip: {
+      callbacks: {
+        label: (context) => `${context.label}: ${context.formattedValue}`,
+      },
+    },
+  },
 };
 
 const mockBreachVulnerabilities = {
@@ -83,7 +101,6 @@ const mockTop5ExploitableVulnerabilities = {
   ],
 };
 
-
 const doughnutOptions = {
   responsive: true,
   maintainAspectRatio: false,
@@ -102,10 +119,24 @@ const doughnutOptions = {
 
 const Dashboard = () => {
   const { token, tenant, selectedYear } = useAuthContext();
-  const { tenthChart, topFiveRisk, elaventhChart, topFiveinfraAssetCount, topHighValue,
-    twelfthChart, TharteenthChart, topOpenVulnerabilities, fourteenthChart, topClosedVulnerabilities, fifthteenthChart,
-    topUniqueVulnerabilities, SixteenthChart, creticalHighVulnrable, ninteenthChart,
-        exceptionVulnerabilities } = useTVMCardsContext();
+  const {
+    tenthChart,
+    topFiveRisk,
+    elaventhChart,
+    topFiveinfraAssetCount,
+    topHighValue,
+    twelfthChart,
+    TharteenthChart,
+    topOpenVulnerabilities,
+    fourteenthChart,
+    topClosedVulnerabilities,
+    fifthteenthChart,
+    topUniqueVulnerabilities,
+    SixteenthChart,
+    creticalHighVulnrable,
+    ninteenthChart,
+    exceptionVulnerabilities,
+  } = useTVMCardsContext();
 
   const combinedVulnerabilities = (data) => {
     return {
@@ -412,12 +443,30 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="bg-[#161e3e] p-6 rounded-lg shadow-xl">
-          <h2 className="text-xl font-semibold mb-4 text-white">
+        <div className="bg-[#161e3e] p-6 rounded-lg shadow-xl text-white">
+          <h2 className="text-xl font-semibold mb-4">
             SLA Breached Vulnerabilities Count
           </h2>
-          <div className="h-64">
-            <Doughnut data={mockSLABreachedCount} options={doughnutOptions} />
+
+          <div className="relative h-64 w-64 mx-auto">
+            <Doughnut data={data} options={options} />
+
+            {/* Center Text (Total Count) */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="text-2xl font-bold">{totalCount}</span>
+            </div>
+          </div>
+
+          {/* Counts below chart */}
+          <div className="flex justify-around mt-4">
+            <div className="flex items-center gap-2">
+              <span className="w-4 h-4 bg-green-500 rounded-full"></span>
+              <span>Met: {metCount}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-4 h-4 bg-red-500 rounded-full"></span>
+              <span>Not Met: {notMetCount}</span>
+            </div>
           </div>
         </div>
 
