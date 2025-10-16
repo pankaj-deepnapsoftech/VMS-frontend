@@ -105,6 +105,7 @@ const RiskOperation = () => {
                       "Business Application",
                       "Infrastructure Asset",
                       "Vulnerability Title",
+                      "SLA",
                       "VRS",
                       "ACS",
                       "ARS",
@@ -138,6 +139,7 @@ const RiskOperation = () => {
                           "-"}
                       </td>
                       <td className="px-4 py-3">{user.Title || "-"}</td>
+                      <td className="px-4 py-3">{user.SLA || "-"}</td>
                       <td className="px-4 py-3">
                         {calculateVRS(
                           user.EPSS,
