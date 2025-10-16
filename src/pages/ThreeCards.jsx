@@ -35,19 +35,7 @@ const metCount = 30;
 const notMetCount = 20;
 const totalCount = metCount + notMetCount;
 
-const data = {
-  labels: ["Met", "Not Met"],
-  datasets: [
-    {
-      label: "SLA Breached",
-      data: [metCount, notMetCount],
-      backgroundColor: ["#22c55e", "#ef4444"], // green & red
-      borderColor: ["#1a1a1a"],
-      borderWidth: 2,
-      cutout: "75%", // makes the hole in the middle
-    },
-  ],
-};
+
 
 const options = {
   plugins: {
@@ -62,44 +50,7 @@ const options = {
   },
 };
 
-const mockBreachVulnerabilities = {
-  labels: ["Breach-1", "Breach-2", "Breach-3", "Breach-4", "Breach-5"],
-  datasets: [
-    {
-      label: "Severity",
-      data: [9.5, 8.8, 7.9, 6.5, 5.2],
-      backgroundColor: chartColors.primary,
-      borderColor: "rgba(255, 99, 132, 1)",
-      borderWidth: 1,
-    },
-  ],
-};
 
-const mockExceptionVulnerabilities = {
-  labels: ["Except-1", "Except-2", "Except-3", "Except-4", "Except-5"],
-  datasets: [
-    {
-      label: "Severity",
-      data: [8.0, 7.5, 6.8, 5.9, 4.7],
-      backgroundColor: chartColors.tertiary,
-      borderColor: "rgba(75, 192, 192, 1)",
-      borderWidth: 1,
-    },
-  ],
-};
-
-const mockTop5ExploitableVulnerabilities = {
-  labels: ["Exploit-1", "Exploit-2", "Exploit-3", "Exploit-4", "Exploit-5"],
-  datasets: [
-    {
-      label: "Exploitability Score",
-      data: [9.9, 9.2, 8.5, 7.8, 7.0],
-      backgroundColor: chartColors.quinary,
-      borderColor: "rgba(255, 159, 64, 1)",
-      borderWidth: 1,
-    },
-  ],
-};
 
 const doughnutOptions = {
   responsive: true,
@@ -136,7 +87,13 @@ const Dashboard = () => {
     creticalHighVulnrable,
     ninteenthChart,
     exceptionVulnerabilities,
+    seventeenthChart,
+    eightteenthChart,
+    breachVulnerableList,
+    slaBreached
   } = useTVMCardsContext();
+
+
 
   const combinedVulnerabilities = (data) => {
     return {
@@ -154,6 +111,21 @@ const Dashboard = () => {
     };
   };
 
+  const SLABreached =(data) => { 
+    return {
+  labels: ["Met", "Not Met"],
+  datasets: [
+    {
+      label: "SLA Breached",
+      data: [data.MET, data.NOT_MET],
+      backgroundColor: ["#22c55e", "#ef4444"], // green & red
+      borderColor: ["#1a1a1a"],
+      borderWidth: 2,
+      cutout: "75%", // makes the hole in the middle
+    },
+  ],
+}};
+
   useEffect(() => {
     if (token) {
       tenthChart(tenant, selectedYear);
@@ -164,6 +136,8 @@ const Dashboard = () => {
       fifthteenthChart(tenant, selectedYear);
       SixteenthChart(tenant, selectedYear);
       ninteenthChart(tenant, selectedYear);
+      seventeenthChart(tenant, selectedYear);
+      eightteenthChart(tenant, selectedYear);
     }
   }, [token, tenant, selectedYear]);
 
@@ -449,11 +423,11 @@ const Dashboard = () => {
           </h2>
 
           <div className="relative h-64 w-64 mx-auto">
-            <Doughnut data={data} options={options} />
+            <Doughnut data={SLABreached(slaBreached)} options={options} />
 
             {/* Center Text (Total Count) */}
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-2xl font-bold">{totalCount}</span>
+              <span className="text-2xl font-bold">{slaBreached.MET + slaBreached.NOT_MET}</span>
             </div>
           </div>
 
@@ -461,11 +435,11 @@ const Dashboard = () => {
           <div className="flex justify-around mt-4">
             <div className="flex items-center gap-2">
               <span className="w-4 h-4 bg-green-500 rounded-full"></span>
-              <span>Met: {metCount}</span>
+              <span>Met: {slaBreached.MET}</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="w-4 h-4 bg-red-500 rounded-full"></span>
-              <span>Not Met: {notMetCount}</span>
+              <span>Not Met: {slaBreached.NOT_MET}</span>
             </div>
           </div>
         </div>
@@ -477,7 +451,7 @@ const Dashboard = () => {
               <div className="text-lg font-semibold mb-1">
                 Breach Vulnerabilities List
               </div>
-              <div className="text-xs text-gray-400">by Severity</div>
+              <div className="text-xs text-gray-400">by VRS</div>
             </div>
             <button className="text-gray-400 text-sm hover:text-gray-200">
               •••
@@ -490,14 +464,14 @@ const Dashboard = () => {
               <div className="col-span-3 text-right">Severity</div>
             </div>
 
-            {mockBreachVulnerabilities.labels.map((vuln, idx) => (
+            {breachVulnerableList?.map((vuln, idx) => (
               <div
                 key={idx}
                 className="grid grid-cols-9 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-gray-800 transition-colors"
               >
-                <div className="col-span-6 truncate">{vuln}</div>
+                <div className="col-span-6 truncate">{vuln?.name}</div>
                 <div className="col-span-3 text-right font-semibold text-gray-200">
-                  {mockBreachVulnerabilities.datasets[0].data[idx]}
+                  {vuln?.VRS}
                 </div>
               </div>
             ))}
