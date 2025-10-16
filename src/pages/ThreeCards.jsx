@@ -511,14 +511,14 @@ const Dashboard = () => {
               <div className="col-span-3 text-right">Score</div>
             </div>
 
-            {mockTop5ExploitableVulnerabilities.labels.map((vuln, idx) => (
+            {exceptionVulnerabilities?.map((vuln, idx) => (
               <div
                 key={idx}
                 className="grid grid-cols-9 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-gray-800 transition-colors"
               >
-                <div className="col-span-6 truncate">{vuln}</div>
+                <div className="col-span-6 truncate">{vuln.name}</div>
                 <div className="col-span-3 text-right font-semibold text-gray-200">
-                  {mockTop5ExploitableVulnerabilities.datasets[0].data[idx]}
+                  {vuln.VRS}
                 </div>
               </div>
             ))}
