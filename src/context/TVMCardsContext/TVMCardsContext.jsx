@@ -12,11 +12,13 @@ const TVMCardsContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [topFiveRisk, setTopFiveRisk] = useState([])
   const [topFiveinfraAssetCount, setTopFiveInfraAssertCount] = useState([]);
-  const [topOpenVulnerabilities, setTopOpenVulnerabilities] = useState([])
-  const [topClosedVulnerabilities, setTopClosedVulnerabilities] = useState([])
-  const [topUniqueVulnerabilities, setTopUniqueVulnerabilities] = useState([])
-  const [exceptionVulnerabilities , setExceptionVulnerabilities] = useState([])
-  const [creticalHighVulnrable, setCreticalHighVulnrable] = useState([])
+  const [topOpenVulnerabilities, setTopOpenVulnerabilities] = useState([]);
+  const [topClosedVulnerabilities, setTopClosedVulnerabilities] = useState([]);
+  const [topUniqueVulnerabilities, setTopUniqueVulnerabilities] = useState([]);
+  const [exceptionVulnerabilities, setExceptionVulnerabilities] = useState([]);
+  const [creticalHighVulnrable, setCreticalHighVulnrable] = useState([]);
+  const [slaBreached, setSlaBreached] = useState([]);
+  const [breachVulnerableList, setBreachVulnerableList] = useState([]);
   const [topHighValue, setTopHighValue] = useState([]);
   const [tvmCardsData, setTvmCardsData] = useState({
     applications: 0,
@@ -129,6 +131,24 @@ const TVMCardsContextProvider = ({ children }) => {
     }
   };
 
+  const seventeenthChart = async (tenant, year) => {
+    try {
+      const res = await AxiosHandler.get(`/data/tvm-seventeen-data?tenant=${tenant ? tenant : ""}&year=${year}`);
+      setSlaBreached(res?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+   const eightteenthChart = async (tenant, year) => {
+    try {
+      const res = await AxiosHandler.get(`/data/tvm-eighteen-data?tenant=${tenant ? tenant : ""}&year=${year}`);
+      setBreachVulnerableList(res?.data?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     if (token) {
       getTVMCardsData(selectedYear);
@@ -161,7 +181,11 @@ const TVMCardsContextProvider = ({ children }) => {
         SixteenthChart,
         creticalHighVulnrable,
         ninteenthChart,
-        exceptionVulnerabilities
+        exceptionVulnerabilities,
+        seventeenthChart,
+        eightteenthChart,
+        breachVulnerableList,
+        slaBreached
       }}
     >
       {children}
