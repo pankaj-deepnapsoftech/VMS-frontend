@@ -1,4 +1,3 @@
-import  { useEffect } from 'react';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { useAllEmployeeContext, useAuthContext } from '@/context';
 import Card from '@/components/Card';
@@ -6,12 +5,7 @@ import { IoShieldCheckmarkOutline, IoShieldOutline } from 'react-icons/io5';
 
 function EmployeeDashboard() {
 
-  const {
-    employeeCardData,
-    EmployeeData,
-    datafetchCount,
-    setdatafetchCount,
-  } = useAllEmployeeContext();
+  const {employeeCardData  } = useAllEmployeeContext();
 
   const { token } = useAuthContext();
 

@@ -12,10 +12,6 @@ const AllEmployeeContextProvider = ({ children }) => {
 
 
 	const [datafetchCount, setdatafetchCount] = useState(0)
-
-	const [loading, setLoading] = useState(false);
-	const [employeeTasksData, setEmployeeTasksData] = useState([]);
-	const [employeeCardData, setEmployeeCardData] = useState([]);
 	const [EmpData, setEmpData] = useState([]);
 
 	const [TenantData, setTenantData] = useState([]);
@@ -28,34 +24,6 @@ const AllEmployeeContextProvider = ({ children }) => {
 
 
 
-	const EmployeeTasks = async () => {
-		setLoading(true);
-		try {
-			const res = await AxiosHandler.get(`employee/get-employee-task?page=${taskPage}&limit=10`);
-			setEmployeeTasksData(res.data.data);
-
-		} catch (error) {
-			console.log(error)
-
-		} finally {
-			setLoading(false);
-		}
-	}
-
-	const EmployeeData = async () => {
-		setLoading(true);
-		try {
-			const res = await AxiosHandler.get(`employee/emp-data`);
-			//console.log("employee Data ", res.data)
-			setEmployeeCardData(res.data);
-
-		} catch (error) {
-			console.log(error)
-
-		} finally {
-			setLoading(false);
-		}
-	}
 
 	const VerifyEmployee = async (id) => {
 
@@ -64,7 +32,6 @@ const AllEmployeeContextProvider = ({ children }) => {
 			const res = await AxiosHandler.patch(`/auth/verify-employee/${id}`);
 			toast.dismiss(toastId);
 			toast.success(res.data.message);
-			EmployeeData();
 
 		} catch (error) {
 			//console.log(error)
@@ -123,8 +90,6 @@ const AllEmployeeContextProvider = ({ children }) => {
 
 	useEffect(() => {
 		if (token) {
-			EmployeeTasks();
-			EmployeeData();
 			GetAllTenentData()
 		}
 	}, [token, page, taskPage, authenticate?.role])
@@ -132,17 +97,12 @@ const AllEmployeeContextProvider = ({ children }) => {
 
 	return (
 		<AllEmployeeContext.Provider value={{
-			loading,
-			employeeTasksData,
-			EmployeeTasks,
 			VerifyEmployee,
-			employeeCardData,
 			page,
 			setPage,
 			taskPage,
 			setTaskPage,
 			UploadDetailedReport,
-			EmployeeData,
 			datafetchCount,
 			setdatafetchCount,
 			DeleteUser,

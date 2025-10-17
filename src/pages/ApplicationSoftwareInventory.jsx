@@ -2,11 +2,12 @@ import Loader from "@/components/Loader/Loader";
 import { ApplicationSoftwareInventoryContext } from "@/context/ApplicationSoftwareInventoryContext/ApplicationSoftwareInventoryContext";
 import { ApplicationSoftwareSchema } from "@/Validation/ApplicationSoftwareInventoryValidation";
 import { useFormik } from "formik";
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { IoClose } from "react-icons/io5";
 
+// eslint-disable-next-line react/prop-types
 const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }) => {
-  const { AppSoftSendData, AppSoftGetData, AppSoftUpdate, loading } = useContext(ApplicationSoftwareInventoryContext)
+  const { AppSoftSendData,  AppSoftUpdate, loading } = useContext(ApplicationSoftwareInventoryContext)
 
   const {
     handleBlur,

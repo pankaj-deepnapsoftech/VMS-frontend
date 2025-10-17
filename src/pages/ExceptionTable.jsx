@@ -1,8 +1,6 @@
 import {
-  useAllEmployeeContext,
   useAuthContext,
   useExceptionContext,
-  useVulnerabililtyDataContext
 } from "@/context";
 import ExpectionModal from "@/modals/ExpectionModal";
 import { dateFormaterWithDate } from "@/utils/dateFormate";
@@ -13,8 +11,6 @@ import { GrEdit } from "react-icons/gr";
 
 const ExceptionTable = () => {
   const { ExpectionPendingData, expectionData, UpdateExpectionData } = useExceptionContext();
-  const { TenantData } = useAllEmployeeContext();
-  const { allInfrastructureData } = useVulnerabililtyDataContext();
   const { token, GetTenantData, UserViaTenant, tenant } = useAuthContext();
   const [editTable,setEditTable] = useState(null)
  

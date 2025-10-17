@@ -2,7 +2,6 @@ import {
   Bug,
   CalendarClock,
   LucideShield,
-  Settings,
   UserCircle,
   Users,
 } from "lucide-react";
@@ -16,15 +15,12 @@ import {
   MdOutlinePendingActions,
   MdScheduleSend,
   MdSettingsApplications,
-  MdSlowMotionVideo,
   MdWifiTetheringErrorRounded,
 } from "react-icons/md";
 import { TbReport } from "react-icons/tb";
 import { GrVulnerability } from "react-icons/gr";
-import { SiWikimediafoundation } from "react-icons/si";
-import { GiProgression, GiTwirlCenter } from "react-icons/gi";
+import { GiProgression } from "react-icons/gi";
 import { PiHardHatFill } from "react-icons/pi";
-import { RiHome3Fill } from "react-icons/ri";
 
 export const AllowedPaths = [
   // --------------------Roc Pages-----------------------
