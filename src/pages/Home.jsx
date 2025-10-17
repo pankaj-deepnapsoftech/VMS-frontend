@@ -123,7 +123,7 @@ const DashboardCards = () => {
   const tableData = [
     { name: "webApplication", june: 1, trend: "/Icons/SVG1.png" },
     { name: "mobileApplication", june: 0, trend: null },
-    { name: "ApiServer", june: 0, trend: "/Icons/SVG2.png" },
+    { name: "apiServer", june: 0, trend: "/Icons/SVG2.png" },
   ];
 
   const tableDataa = [
