@@ -8,7 +8,7 @@ function handleFileStorage (env) {
     switch (env) {
         case "development":
             return config.LOCAL_FILE;
-        case "Demo":
+        case "demo":
             return config.DEMO_FILE;
         case "vapt":
             return config.VAPT_FILE;

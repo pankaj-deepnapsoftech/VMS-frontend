@@ -16,6 +16,7 @@ const TVMCardsContextProvider = ({ children }) => {
   const [topClosedVulnerabilities, setTopClosedVulnerabilities] = useState([]);
   const [topUniqueVulnerabilities, setTopUniqueVulnerabilities] = useState([]);
   const [exceptionVulnerabilities, setExceptionVulnerabilities] = useState([]);
+  const [exploitableVulnerabilities, setExploitableVulnerabilities] = useState([]);
   const [creticalHighVulnrable, setCreticalHighVulnrable] = useState([]);
   const [slaBreached, setSlaBreached] = useState([]);
   const [breachVulnerableList, setBreachVulnerableList] = useState([]);
@@ -105,7 +106,7 @@ const TVMCardsContextProvider = ({ children }) => {
 
   const fifthteenthChart = async (tenant, year) => {
     try {
-      const res = await AxiosHandler.get(`/data/tvm-fourteenth-data?tenant=${tenant ? tenant : ""}&year=${year}`);
+      const res = await AxiosHandler.get(`/data/tvm-fifteen-data?tenant=${tenant ? tenant : ""}&year=${year}`);
       setTopUniqueVulnerabilities(res?.data?.data);
     } catch (error) {
       console.error(error);
@@ -149,6 +150,15 @@ const TVMCardsContextProvider = ({ children }) => {
     }
   };
 
+   const twntythChart = async (tenant, year) => {
+    try {
+      const res = await AxiosHandler.get(`/data/tvm-twntyth-data?tenant=${tenant ? tenant : ""}&year=${year}`);
+      setExploitableVulnerabilities(res?.data?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     if (token) {
       getTVMCardsData(selectedYear);
@@ -185,7 +195,9 @@ const TVMCardsContextProvider = ({ children }) => {
         seventeenthChart,
         eightteenthChart,
         breachVulnerableList,
-        slaBreached
+        slaBreached,
+        twntythChart,
+        exploitableVulnerabilities
       }}
     >
       {children}

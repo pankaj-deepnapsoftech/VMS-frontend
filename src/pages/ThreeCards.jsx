@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Bar, Doughnut } from "react-chartjs-2";
+import { useEffect } from "react";
+import { Doughnut } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -22,18 +22,8 @@ ChartJS.register(
   ArcElement
 );
 
-// Mock data for all charts with consistent dark theme colors
-const chartColors = {
-  primary: "rgba(255, 99, 132, 0.8)", // Red for critical
-  secondary: "rgba(54, 162, 235, 0.8)", // Blue for assets
-  tertiary: "rgba(75, 192, 192, 0.8)", // Teal for high value
-  quaternary: "rgba(153, 102, 255, 0.8)", // Purple for vulnerabilities
-  quinary: "rgba(255, 159, 64, 0.8)", // Orange for closed/exploitable
-};
 
-const metCount = 30;
-const notMetCount = 20;
-const totalCount = metCount + notMetCount;
+
 
 const options = {
   plugins: {
@@ -87,6 +77,8 @@ const Dashboard = () => {
     eightteenthChart,
     breachVulnerableList,
     slaBreached,
+    twntythChart,
+    exploitableVulnerabilities
   } = useTVMCardsContext();
 
   const combinedVulnerabilities = (data) => {
@@ -133,6 +125,7 @@ const Dashboard = () => {
       ninteenthChart(tenant, selectedYear);
       seventeenthChart(tenant, selectedYear);
       eightteenthChart(tenant, selectedYear);
+      twntythChart(tenant, selectedYear);
     }
   }, [token, tenant, selectedYear]);
 
@@ -532,7 +525,7 @@ const Dashboard = () => {
               <div className="col-span-3 text-right">Score</div>
             </div>
 
-            {exceptionVulnerabilities?.map((vuln, idx) => (
+            {exploitableVulnerabilities?.map((vuln, idx) => (
               <div
                 key={idx}
                 className="grid grid-cols-9 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-gray-800 transition-colors"
