@@ -419,7 +419,7 @@ const Dashboard = () => {
 
         <div className="bg-[#161e3e] p-6 rounded-lg shadow-xl text-white">
           <h2 className="text-xl font-semibold mb-4">
-            SLA Breached Vulnerabilities Count
+            SLA Breached Vulnerabilities
           </h2>
 
           <div className="relative h-64 w-64 mx-auto">
