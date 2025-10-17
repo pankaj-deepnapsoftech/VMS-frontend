@@ -35,8 +35,6 @@ const metCount = 30;
 const notMetCount = 20;
 const totalCount = metCount + notMetCount;
 
-
-
 const options = {
   plugins: {
     legend: {
@@ -49,8 +47,6 @@ const options = {
     },
   },
 };
-
-
 
 const doughnutOptions = {
   responsive: true,
@@ -90,10 +86,8 @@ const Dashboard = () => {
     seventeenthChart,
     eightteenthChart,
     breachVulnerableList,
-    slaBreached
+    slaBreached,
   } = useTVMCardsContext();
-
-
 
   const combinedVulnerabilities = (data) => {
     return {
@@ -111,20 +105,21 @@ const Dashboard = () => {
     };
   };
 
-  const SLABreached =(data) => { 
+  const SLABreached = (data) => {
     return {
-  labels: ["Met", "Not Met"],
-  datasets: [
-    {
-      label: "SLA Breached",
-      data: [data.MET, data.NOT_MET],
-      backgroundColor: ["#22c55e", "#ef4444"], // green & red
-      borderColor: ["#1a1a1a"],
-      borderWidth: 2,
-      cutout: "75%", // makes the hole in the middle
-    },
-  ],
-}};
+      labels: ["Met", "Not Met"],
+      datasets: [
+        {
+          label: "SLA Breached",
+          data: [data.MET, data.NOT_MET],
+          backgroundColor: ["#22c55e", "#ef4444"], // green & red
+          borderColor: ["#1a1a1a"],
+          borderWidth: 2,
+          cutout: "75%", // makes the hole in the middle
+        },
+      ],
+    };
+  };
 
   useEffect(() => {
     if (token) {
@@ -376,70 +371,73 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="bg-[#161e3e]  p-6 rounded-lg shadow-xl">
+        {/* Critical / High Vulnerabilities */}
+        <div className="bg-[#161e3e] p-6 rounded-lg shadow-xl flex flex-col items-center justify-center">
           <h2 className="text-xl font-semibold mb-6 text-white text-center">
             Critical / High Vulnerabilities
           </h2>
 
-          <div className="flex flex-col items-center justify-center">
-            {/* Chart */}
-            <div className="relative w-64 h-64">
-              <Doughnut
-                data={combinedVulnerabilities(creticalHighVulnrable)}
-                options={doughnutOptions}
-              />
-              {/* Center total label */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
-                <p className="text-sm text-gray-400">Total</p>
-                <p className="text-3xl font-bold">
-                  {creticalHighVulnrable.Critical + creticalHighVulnrable.High}
-                </p>
-              </div>
+          <div className="relative w-64 h-64">
+            <Doughnut
+              data={combinedVulnerabilities(creticalHighVulnrable)}
+              options={doughnutOptions}
+            />
+            {/* Center total label */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
+              <p className="text-sm text-gray-400">Total</p>
+              <p className="text-3xl font-bold">
+                {creticalHighVulnrable.Critical + creticalHighVulnrable.High}
+              </p>
             </div>
+          </div>
 
-            {/* Labels below chart */}
-            <div className="flex items-center justify-center gap-8 mt-6 text-white">
-              <div className="flex items-center text-lg font-medium">
-                <span className="inline-block w-4 h-4 bg-[#ef4444] rounded-full mr-2"></span>
-                Critical:{" "}
-                <span className="font-semibold ml-1">
-                  {creticalHighVulnrable.Critical}
-                </span>
-              </div>
-              <div className="flex items-center text-lg font-medium">
-                <span className="inline-block w-4 h-4 bg-[#3b82f6] rounded-full mr-2"></span>
-                High:{" "}
-                <span className="font-semibold ml-1">
-                  {creticalHighVulnrable.High}
-                </span>
-              </div>
+          {/* Labels below chart */}
+          <div className="flex items-center justify-center gap-8 mt-6 text-white">
+            <div className="flex items-center text-lg font-medium">
+              <span className="inline-block w-4 h-4 bg-[#ef4444] rounded-full mr-2"></span>
+              Critical:
+              <span className="font-semibold ml-1">
+                {creticalHighVulnrable.Critical}
+              </span>
+            </div>
+            <div className="flex items-center text-lg font-medium">
+              <span className="inline-block w-4 h-4 bg-[#3b82f6] rounded-full mr-2"></span>
+              High:
+              <span className="font-semibold ml-1">
+                {creticalHighVulnrable.High}
+              </span>
             </div>
           </div>
         </div>
 
-        <div className="bg-[#161e3e] p-6 rounded-lg shadow-xl text-white">
-          <h2 className="text-xl font-semibold mb-4">
+        {/* SLA Breached Vulnerabilities */}
+        <div className="bg-[#161e3e] p-6 rounded-lg shadow-xl flex flex-col items-center justify-center">
+          <h2 className="text-xl font-semibold mb-6 text-white text-center">
             SLA Breached Vulnerabilities
           </h2>
 
-          <div className="relative h-64 w-64 mx-auto">
+          <div className="relative w-64 h-64">
             <Doughnut data={SLABreached(slaBreached)} options={options} />
-
-            {/* Center Text (Total Count) */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-2xl font-bold">{slaBreached.MET + slaBreached.NOT_MET}</span>
+            {/* Center total label */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
+              <p className="text-sm text-gray-400">Total</p>
+              <p className="text-3xl font-bold">
+                {slaBreached.MET + slaBreached.NOT_MET}
+              </p>
             </div>
           </div>
 
-          {/* Counts below chart */}
-          <div className="flex justify-around mt-4">
-            <div className="flex items-center gap-2">
-              <span className="w-4 h-4 bg-green-500 rounded-full"></span>
-              <span>Met: {slaBreached.MET}</span>
+          {/* Labels below chart */}
+          <div className="flex items-center justify-center gap-8 mt-6 text-white">
+            <div className="flex items-center text-lg font-medium">
+              <span className="inline-block w-4 h-4 bg-green-500 rounded-full mr-2"></span>
+              Met:
+              <span className="font-semibold ml-1">{slaBreached.MET}</span>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="w-4 h-4 bg-red-500 rounded-full"></span>
-              <span>Not Met: {slaBreached.NOT_MET}</span>
+            <div className="flex items-center text-lg font-medium">
+              <span className="inline-block w-4 h-4 bg-red-500 rounded-full mr-2"></span>
+              Not Met:
+              <span className="font-semibold ml-1">{slaBreached.NOT_MET}</span>
             </div>
           </div>
         </div>

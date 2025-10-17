@@ -115,9 +115,7 @@ const Partners = () => {
 
   return (
     <>
-      {isLoading ? (
-        <Loader className="mx-auto my-20 text-white" />
-      ) : (
+       (
         <section className="p-4 sm:p-6 md:p-8 h-auto md:h-screen shadow-lg">
           {/* Header */}
           <div className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-md backdrop-blur-md p-4 mb-6 bg-gray-800/30">
@@ -386,7 +384,7 @@ const Partners = () => {
             </div>
           </div>
         </section>
-      )}
+      )
     </>
   );
 };
