@@ -40,8 +40,9 @@ const InventoryData = [
 ];
 
 const DashboardCards = () => {
-  const { token, selectedYear } = useAuthContext();
-  const { tvmCardsData, loading, refreshTVMCardsData, tenthChart,topFiveRisk } = useTVMCardsContext();
+  const { token, selectedYear,tenant } = useAuthContext();
+  const { tvmCardsData, loading, refreshTVMCardsData,} = useTVMCardsContext();
+
   const {
     GetFirstChart,
     firstChartData,
@@ -56,8 +57,18 @@ const DashboardCards = () => {
   } = useDataContext();
 
 
+  const [lineValue,setLinevalue] = useState(0)
+
+  const handleChartLine = () => {
+    const data = [...secondChartData.Critical,...secondChartData.High,...secondChartData.Informational,...secondChartData.Low,...secondChartData.Medium];
+    const maxvalue = Math.max(...data);
+
+    setLinevalue(maxvalue + 2)
+
+  }
+
+
   // usestats
-  const [tenant, setTenant] = useState("");
 
   const totall = InventoryData.reduce((sum, item) => sum + item.value, 0);
 
@@ -90,7 +101,7 @@ const DashboardCards = () => {
       },
       y: {
         min: 0,
-        max: tvmCardsData.totalVulnerabilities + 2,
+        max: lineValue,
         grid: { color: "rgba(255,255,255,0.05)" },
         ticks: { color: "#9CA3AF", stepSize: 15 },
       },
@@ -149,12 +160,15 @@ const DashboardCards = () => {
       GetFirstChart(tenant, selectedYear);
       GetNinthChart(tenant, selectedYear);
     }
+
+    
   }, [token, tenant, selectedYear]);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    setTenant(params.get("tenant") || "");
-  }, [location.search]);
+    if(secondChartData){
+      handleChartLine()
+    }
+  }, [secondChartData]);
 
   return (
     <div className="w-full px-4 sm:px-6">

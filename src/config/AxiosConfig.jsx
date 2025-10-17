@@ -29,7 +29,7 @@ function HandleBaseUser(env) {
     switch (env) {
         case "development":
             return config.LOCAL_BACKEND_BASE_URL;
-        case "Demo":
+        case "demo":
             return config.DEMO_BACKEND_BASE_URL;
         case "vapt":
             return config.VAPT_BACKEND_BASE_URL;
