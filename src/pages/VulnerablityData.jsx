@@ -14,7 +14,7 @@ import useAccessPartner from "@/hooks/AccessPartner";
 import { handlerSeverity } from "@/utils/vulnerableOperations";
 
 export function VulnerabilityData() {
-  const { loading, topVulnerabliltyData } = useVulnerabililtyDataContext();
+  const { loading } = useVulnerabililtyDataContext();
   const { token, tenant } = useAuthContext();
 
   const { NessusData, getNessusData,deleteNessusData } = useNessusContext();
@@ -122,7 +122,7 @@ export function VulnerabilityData() {
                           {item?.Severity?.name || handlerSeverity(item?.severity) ||  "-"}
                         </td>
                         <td className="px-4 py-3">
-                          {item?.BusinessApplication?.name || "-"}
+                          {item?.BusinessApplication?.name || item?.InfraStructureAsset?.asset_hostname || "-"}
                         </td>
                         <td className="px-4 py-3">{item?.status || "-"}</td>
 

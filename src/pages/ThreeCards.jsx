@@ -130,10 +130,8 @@ const Dashboard = () => {
   }, [token, tenant, selectedYear]);
 
   return (
-    <div className="min-h-screen bg-gray-900 p-8">
-      <h1 className="text-3xl font-bold text-center mb-8 text-white">
-        Vulnerability Dashboard
-      </h1>
+    <div className="min-h-screen">
+     
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           {/* Header */}
@@ -177,9 +175,9 @@ const Dashboard = () => {
         <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
-              <div className="text-lg font-semibold mb-1">
+              <h2 className="text-lg font-semibold mb-1">
                 Top 5 Vulnerable Infrastructor Assets
-              </div>
+              </h2>
               <div className="text-xs text-gray-400">
                 by Vulnerability Count
               </div>
@@ -218,9 +216,9 @@ const Dashboard = () => {
         <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
-              <div className="text-lg font-semibold mb-1">
+              <h2 className="text-lg font-semibold mb-1">
                 Top 5 High Value Assets
-              </div>
+              </h2>
               <div className="text-xs text-gray-400">by Importance Score</div>
             </div>
             <button className="text-gray-400 text-sm hover:text-gray-200">
@@ -257,9 +255,9 @@ const Dashboard = () => {
         <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
-              <div className="text-lg font-semibold mb-1">
+              <h2 className="text-lg font-semibold mb-1">
                 Top 5 Open Vulnerabilities
-              </div>
+              </h2>
               <div className="text-xs text-gray-400">by VRS</div>
             </div>
             <button className="text-gray-400 text-sm hover:text-gray-200">
@@ -296,9 +294,9 @@ const Dashboard = () => {
         <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
-              <div className="text-lg font-semibold mb-1">
+              <h2 className="text-lg font-semibold mb-1">
                 Top 5 Closed Vulnerabilities
-              </div>
+              </h2>
               <div className="text-xs text-gray-400">by VRS</div>
             </div>
             <button className="text-gray-400 text-sm hover:text-gray-200">
@@ -332,9 +330,9 @@ const Dashboard = () => {
         <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
-              <div className="text-lg font-semibold mb-1">
+              <h2 className="text-lg font-semibold mb-1">
                 Top 5 Unique Vulnerabilities
-              </div>
+              </h2>
               <div className="text-xs text-gray-400">by Occurrences</div>
             </div>
             <button className="text-gray-400 text-sm hover:text-gray-200">
@@ -366,7 +364,7 @@ const Dashboard = () => {
 
         {/* Critical / High Vulnerabilities */}
         <div className="bg-[#161e3e] p-6 rounded-lg shadow-xl flex flex-col items-center justify-center">
-          <h2 className="text-xl font-semibold mb-6 text-white text-center">
+          <h2 className="text-lg font-semibold mb-6 text-white text-center">
             Critical / High Vulnerabilities
           </h2>
 
@@ -385,15 +383,15 @@ const Dashboard = () => {
           </div>
 
           {/* Labels below chart */}
-          <div className="flex items-center justify-center gap-8 mt-6 text-white">
-            <div className="flex items-center text-lg font-medium">
+          <div className="flex items-center text-xs justify-center gap-8 mt-6 text-white">
+            <div className="flex items-center font-medium">
               <span className="inline-block w-4 h-4 bg-[#ef4444] rounded-full mr-2"></span>
               Critical:
-              <span className="font-semibold ml-1">
+              <span className="font-semibold  ml-1">
                 {creticalHighVulnrable.Critical}
               </span>
             </div>
-            <div className="flex items-center text-lg font-medium">
+            <div className="flex items-center font-medium">
               <span className="inline-block w-4 h-4 bg-[#3b82f6] rounded-full mr-2"></span>
               High:
               <span className="font-semibold ml-1">
@@ -405,8 +403,8 @@ const Dashboard = () => {
 
         {/* SLA Breached Vulnerabilities */}
         <div className="bg-[#161e3e] p-6 rounded-lg shadow-xl flex flex-col items-center justify-center">
-          <h2 className="text-xl font-semibold mb-6 text-white text-center">
-            SLA Breached Vulnerabilities
+          <h2 className="text-lg font-semibold mb-6 text-white text-center">
+            SLA Details
           </h2>
 
           <div className="relative w-64 h-64">
@@ -421,13 +419,13 @@ const Dashboard = () => {
           </div>
 
           {/* Labels below chart */}
-          <div className="flex items-center justify-center gap-8 mt-6 text-white">
-            <div className="flex items-center text-lg font-medium">
+          <div className="flex items-center text-xs justify-center gap-8 mt-6 text-white">
+            <div className="flex items-center font-medium">
               <span className="inline-block w-4 h-4 bg-green-500 rounded-full mr-2"></span>
               Met:
               <span className="font-semibold ml-1">{slaBreached.MET}</span>
             </div>
-            <div className="flex items-center text-lg font-medium">
+            <div className="flex items-center font-medium">
               <span className="inline-block w-4 h-4 bg-red-500 rounded-full mr-2"></span>
               Not Met:
               <span className="font-semibold ml-1">{slaBreached.NOT_MET}</span>
@@ -439,9 +437,9 @@ const Dashboard = () => {
         <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
-              <div className="text-lg font-semibold mb-1">
-                Breach Vulnerabilities List
-              </div>
+              <h2 className="text-lg font-semibold mb-1">
+               SLA Breach List
+              </h2>
               <div className="text-xs text-gray-400">by VRS</div>
             </div>
             <button className="text-gray-400 text-sm hover:text-gray-200">
@@ -538,6 +536,8 @@ const Dashboard = () => {
             ))}
           </div>
         </div>
+
+
       </div>
     </div>
   );

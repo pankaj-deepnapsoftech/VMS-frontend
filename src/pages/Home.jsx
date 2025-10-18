@@ -40,8 +40,8 @@ const InventoryData = [
 ];
 
 const DashboardCards = () => {
-  const { token, selectedYear,tenant } = useAuthContext();
-  const { tvmCardsData, loading, refreshTVMCardsData,} = useTVMCardsContext();
+  const { token, selectedYear, tenant } = useAuthContext();
+  const { tvmCardsData, loading, refreshTVMCardsData, } = useTVMCardsContext();
 
   const {
     GetFirstChart,
@@ -57,10 +57,10 @@ const DashboardCards = () => {
   } = useDataContext();
 
 
-  const [lineValue,setLinevalue] = useState(0)
+  const [lineValue, setLinevalue] = useState(0)
 
   const handleChartLine = () => {
-    const data = [...secondChartData.Critical,...secondChartData.High,...secondChartData.Informational,...secondChartData.Low,...secondChartData.Medium];
+    const data = [...secondChartData.Critical, ...secondChartData.High, ...secondChartData.Informational, ...secondChartData.Low, ...secondChartData.Medium];
     const maxvalue = Math.max(...data);
 
     setLinevalue(maxvalue + 2)
@@ -161,11 +161,11 @@ const DashboardCards = () => {
       GetNinthChart(tenant, selectedYear);
     }
 
-    
+
   }, [token, tenant, selectedYear]);
 
   useEffect(() => {
-    if(secondChartData){
+    if (secondChartData) {
       handleChartLine()
     }
   }, [secondChartData]);
@@ -381,7 +381,7 @@ const DashboardCards = () => {
               <p className="text-white text-lg font-bold">
                 {thirdChartData
                   ? (thirdChartData.exploitable || 0) +
-                    (thirdChartData.not_exploitable || 0)
+                  (thirdChartData.not_exploitable || 0)
                   : 0}
               </p>
               <p className="text-gray-400 text-xs">Total</p>
@@ -428,27 +428,28 @@ const DashboardCards = () => {
               data={
                 fourthChartData
                   ? {
-                      labels: Object.keys(fourthChartData || {}),
-                      datasets: [
-                        {
-                          data: Object.values(fourthChartData || {}),
-                          backgroundColor: ["#EF4444", "#22C55E"],
-                          borderWidth: 0,
-                        },
-                      ],
-                    }
-                  : {
-                      labels: InventoryData.map((item) => item.label),
-                      datasets: [
-                        {
-                          data: InventoryData.map((item) => item.value),
-                          backgroundColor: InventoryData.map(
-                            (item) => item.color
-                          ),
-                          borderWidth: 0,
-                        },
-                      ],
-                    }
+                    labels: Object.keys(fourthChartData || {}),
+                    datasets: [
+                      {
+                        data: Object.values(fourthChartData || {}),
+                        backgroundColor: ["#EF4444", "#22C55E"],
+                        borderWidth: 0,
+                      },
+                    ],
+                  }
+                  :
+                  {
+                    labels: InventoryData.map((item) => item.label),
+                    datasets: [
+                      {
+                        data: InventoryData.map((item) => item.value),
+                        backgroundColor: InventoryData.map(
+                          (item) => item.color
+                        ),
+                        borderWidth: 0,
+                      },
+                    ],
+                  }
               }
               options={{
                 cutout: "70%",
@@ -463,9 +464,9 @@ const DashboardCards = () => {
               <p className="text-white text-lg font-bold">
                 {fourthChartData
                   ? Object.values(fourthChartData).reduce(
-                      (sum, val) => sum + (val || 0),
-                      0
-                    )
+                    (sum, val) => sum + (val || 0),
+                    0
+                  )
                   : totall}
               </p>
               <p className="text-gray-400 text-xs">Total</p>
@@ -476,237 +477,33 @@ const DashboardCards = () => {
           <div className="flex justify-center gap-8 mt-3">
             {fourthChartData
               ? Object.entries(fourthChartData).map(([label, value], idx) => (
-                  <div key={idx} className="flex items-center gap-2 mt-0.5">
-                    <span
-                      className="w-2.5 h-2.5 rounded-full"
-                      style={{
-                        backgroundColor: idx === 0 ? "#EF4444" : "#22C55E",
-                      }}
-                    ></span>
-                    <p className="text-white text-xs">
-                      {label} <span className="text-gray-400">{value}</span>
-                    </p>
-                  </div>
-                ))
-              : InventoryData.map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2 mt-0.5">
-                    <span
-                      className="w-2.5 h-2.5 rounded-full"
-                      style={{ backgroundColor: item.color }}
-                    ></span>
-                    <p className="text-white text-xs">
-                      {item.label}{" "}
-                      <span className="text-gray-400">{item.value}</span>
-                    </p>
-                  </div>
-                ))}
-          </div>
-        </div>
-
-        {/* Critical / High Vulnerable Items */}
-        <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
-          <div className="flex justify-between items-start mb-2">
-            <div>
-              <div className="text-lg font-semibold mb-1">
-                Critical / High Vulnerable Items
-              </div>
-              <div className="text-xs text-gray-400">by Assignment Group</div>
-            </div>
-            <button className="text-gray-400 text-sm hover:text-gray-200">
-              •••
-            </button>
-          </div>
-
-          <div className="bg-[#121F3A] rounded-md overflow-hidden text-sm">
-            {/* Header Row */}
-            <div className="grid grid-cols-12 gap-4 px-4 py-2 border-b border-[#1B2B45] text-gray-400">
-              <div className="col-span-6">Name</div>
-              <div className="col-span-3">June</div>
-              <div className="col-span-3">Trend</div>
-            </div>
-
-            {/* Data Rows */}
-            {tableData.map((row, idx) => (
-              <div
-                key={idx}
-                className="grid grid-cols-12 gap-4 px-4 py-1 border-b border-[#1B2B45] items-center"
-              >
-                <div className="col-span-6 truncate">{row.name}</div>
-                <div className="col-span-3">{row.june}</div>
-                <div className="col-span-3">
-                  {row.trend ? (
-                    <img
-                      src={row.trend}
-                      alt="trend"
-                      className="w-4 h-4 inline-block"
-                    />
-                  ) : (
-                    <span className="text-gray-500">—</span>
-                  )}
+                <div key={idx} className="flex items-center gap-2 mt-0.5">
+                  <span
+                    className="w-2.5 h-2.5 rounded-full"
+                    style={{
+                      backgroundColor: idx === 0 ? "#EF4444" : "#22C55E",
+                    }}
+                  ></span>
+                  <p className="text-white text-xs">
+                    {label === "businessApplication" ? "Business Application" : "Infrastructure IP"} <span className="text-gray-400">{value}</span>
+                  </p>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Third Row  */}
-      <div className="flex flex-col lg:flex-row lg:flex-wrap gap-4 mt-4 w-full">
-        {/* Card 1: Closed Vulnerable Items */}
-        <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full md:w-[360px] lg:flex-1">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold">
-              Vulnerable Items by Risk Rating - Full Data
-            </h2>
-            <button className="text-gray-400 text-sm hover:text-gray-200 transition-colors">
-              •••
-            </button>
-          </div>
-          {secondChartData
-            ? (() => {
-                // Calculate total sum for percentage calculation
-                const criticalSum = secondChartData.Critical
-                  ? secondChartData.Critical.reduce(
-                      (sum, val) => sum + (val || 0),
-                      0
-                    )
-                  : 0;
-                const highSum = secondChartData.High
-                  ? secondChartData.High.reduce(
-                      (sum, val) => sum + (val || 0),
-                      0
-                    )
-                  : 0;
-                const mediumSum = secondChartData.Medium
-                  ? secondChartData.Medium.reduce(
-                      (sum, val) => sum + (val || 0),
-                      0
-                    )
-                  : 0;
-                const lowSum = secondChartData.Low
-                  ? secondChartData.Low.reduce(
-                      (sum, val) => sum + (val || 0),
-                      0
-                    )
-                  : 0;
-                const informationalSum = secondChartData.Informational
-                  ? secondChartData.Informational.reduce(
-                      (sum, val) => sum + (val || 0),
-                      0
-                    )
-                  : 0;
-
-                const totalSum =
-                  criticalSum + highSum + mediumSum + lowSum + informationalSum;
-
-                // Calculate percentages
-                const criticalPercent =
-                  totalSum > 0 ? Math.round((criticalSum / totalSum) * 100) : 0;
-                const highPercent =
-                  totalSum > 0 ? Math.round((highSum / totalSum) * 100) : 0;
-                const mediumPercent =
-                  totalSum > 0 ? Math.round((mediumSum / totalSum) * 100) : 0;
-                const lowPercent =
-                  totalSum > 0 ? Math.round((lowSum / totalSum) * 100) : 0;
-
-                return (
-                  <>
-                    {/* Critical Vulnerabilities */}
-                    <div className="mb-5">
-                      <div className="flex justify-between items-center mb-2">
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm">
-                            Critical Vulnerable Items
-                          </span>
-                        </div>
-                        <span className="text-sm font-medium">
-                          {criticalPercent}%
-                        </span>
-                      </div>
-                      <div className="w-full bg-[#1B2B45] h-2 rounded-full overflow-hidden">
-                        <div
-                          className="bg-red-500 h-2 rounded-full"
-                          style={{ width: `${criticalPercent}%` }}
-                        ></div>
-                      </div>
-                    </div>
-
-                    {/* High Vulnerabilities */}
-                    <div className="mb-5">
-                      <div className="flex justify-between items-center mb-2">
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm">High Vulnerable Items</span>
-                        </div>
-                        <span className="text-sm font-medium">
-                          {highPercent}%
-                        </span>
-                      </div>
-                      <div className="w-full bg-[#1B2B45] h-2 rounded-full overflow-hidden">
-                        <div
-                          className="bg-orange-500 h-2 rounded-full"
-                          style={{ width: `${highPercent}%` }}
-                        ></div>
-                      </div>
-                    </div>
-
-                    {/* Medium Vulnerabilities */}
-                    <div className="mb-5">
-                      <div className="flex justify-between items-center mb-2">
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm">Medium Priority Items</span>
-                        </div>
-                        <span className="text-sm font-medium">
-                          {mediumPercent}%
-                        </span>
-                      </div>
-                      <div className="w-full bg-[#1B2B45] h-2 rounded-full overflow-hidden">
-                        <div
-                          className="bg-yellow-400 h-2 rounded-full"
-                          style={{ width: `${mediumPercent}%` }}
-                        ></div>
-                      </div>
-                    </div>
-
-                    {/* Low Vulnerabilities */}
-                    <div className="mb-5">
-                      <div className="flex justify-between items-center mb-2">
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm">
-                            Low Priority Completed
-                          </span>
-                        </div>
-                        <span className="text-sm font-medium">
-                          {lowPercent}%
-                        </span>
-                      </div>
-                      <div className="w-full bg-[#1B2B45] h-2 rounded-full overflow-hidden">
-                        <div
-                          className="bg-green-500 h-2 rounded-full"
-                          style={{ width: `${lowPercent}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                  </>
-                );
-              })()
-            : // Fallback to original data if API data is not available
-              vulnerableData.map((item, index) => (
-                <div key={index} className="mb-5">
-                  <div className="flex justify-between items-center mb-2">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm">{item.label}</span>
-                    </div>
-                    <span className="text-sm font-medium">{item.value}%</span>
-                  </div>
-                  <div className="w-full bg-[#1B2B45] h-2 rounded-full overflow-hidden">
-                    <div
-                      className={`${item.color} h-2 rounded-full`}
-                      style={{ width: `${item.value}%` }}
-                    ></div>
-                  </div>
+              ))
+              : InventoryData.map((item, idx) => (
+                <div key={idx} className="flex items-center gap-2 mt-0.5">
+                  <span
+                    className="w-2.5 h-2.5 rounded-full"
+                    style={{ backgroundColor: item.color }}
+                  ></span>
+                  <p className="text-white text-xs">
+                    {item.label}{" "}
+                    <span className="text-gray-400">{item.value}</span>
+                  </p>
                 </div>
               ))}
+          </div>
         </div>
+
 
         {/* Card 2: Vulnerable Items by Age */}
         <div className="bg-[#161e3e] rounded-xl p-4 w-full md:w-[360px] lg:flex-1 text-white shadow-lg border border-gray-800">
@@ -790,55 +587,12 @@ const DashboardCards = () => {
           </div>
         </div>
 
-        {/* Card 3: Overdue Critical / High Vulnerable Items */}
-        <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold">
-              Overdue Critical / High Vulnerable Items
-            </h2>
-            <button className="text-gray-400 text-sm hover:text-gray-200 transition-colors">
-              •••
-            </button>
-          </div>
-          <div className="text-xs text-gray-400 mb-4">by Assignment Group</div>
-
-          <div className="bg-[#121F3A] rounded-md overflow-hidden text-sm">
-            {/* Header Row */}
-            <div className="grid grid-cols-12 gap-4 px-4 py-2 border-b border-[#1B2B45] text-gray-400">
-              <div className="col-span-6">Name</div>
-              <div className="col-span-3">June</div>
-              <div className="col-span-3">Trend</div>
-            </div>
-
-            {/* Data Rows */}
-            {tableDataa.map((row, idx) => (
-              <div
-                key={idx}
-                className="grid grid-cols-12 gap-4 px-4 py-1 border-b border-[#1B2B45] items-center"
-              >
-                <div className="col-span-6 truncate">{row.name}</div>
-                <div className="col-span-3">{row.june}</div>
-                <div className="col-span-3">
-                  {row.trend ? (
-                    <img
-                      src={row.trend}
-                      alt="trend"
-                      className="w-4 h-4 inline-block"
-                    />
-                  ) : (
-                    <span className="text-gray-500">—</span>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
 
       {/* Fourth Row  */}
       <div className="flex flex-col gap-4 mt-4 w-full">
-        <div className="bg-[#161e3e] rounded-xl p-4 w-full text-white shadow-lg border mb-20 border-gray-800">
-          <div className="flex justify-between items-center mb-4">
+        <div className="bg-[#161e3e] rounded-xl p-4 w-full text-white shadow-lg border mb-5 border-gray-800">
+          <div className="flex justify-between items-center ">
             <h2 className="text-lg font-semibold">
               Open and Closed Vulnerable Items
             </h2>
@@ -918,8 +672,11 @@ const DashboardCards = () => {
           </div>
         </div>
 
-        <SecurendDashboardCards />
       </div>
+
+
+
+        <SecurendDashboardCards />
     </div>
   );
 };
