@@ -58,7 +58,6 @@ const DashboardCards = () => {
         itemsByAge
   } = useDataContext();
 
-  console.log(itemsByAge)
 
 
   const [lineValue, setLinevalue] = useState(0)
@@ -140,27 +139,28 @@ const [maxY, setMaxY] = useState(10); // default max height scale
   }, [token, tenant, selectedYear]);
 
   useEffect(() => {
-  if (itemsByAge?.data) {
+
+  if (itemsByAge) {
     const categories = ["Critical", "High", "Medium", "Low"];
 
     // Map API data dynamically into arrays
     const green = categories.map(cat => {
-      const match = itemsByAge.data.first?.find(item => item.severity === cat);
+      const match = itemsByAge.first?.find(item => item.severity === cat);
       return match ? match.count : 0;
     });
 
     const yellow = categories.map(cat => {
-      const match = itemsByAge.data.second?.find(item => item.severity === cat);
+      const match = itemsByAge.second?.find(item => item.severity === cat);
       return match ? match.count : 0;
     });
 
     const red = categories.map(cat => {
-      const match = itemsByAge.data.third?.find(item => item.severity === cat);
+      const match = itemsByAge.third?.find(item => item.severity === cat);
       return match ? match.count : 0;
     });
 
-    // Compute max value dynamically for bar scaling 
-    const maxVal = Math.max(...green, ...yellow, ...red, 10);
+    // Compute max value dynamically for bar scaling
+    const maxVal = Math.max(...green, ...yellow, ...red, 10) + 2;
 
     // Update state
     setGreenData(green);
