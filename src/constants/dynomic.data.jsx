@@ -22,13 +22,6 @@ export const summaryData = (data) => {
       trendColor: "text-green-400",
       icon: "/Icons/executive3.png",
     },
-    {
-      title: "Compliance Score",
-      value: "94%",
-      change: "+3%",
-      trendColor: "text-blue-400",
-      icon: "/Icons/executive4.png",
-    },
   ];
 };
 

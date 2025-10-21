@@ -99,230 +99,35 @@ export default function ExecutiveSummaryPage() {
   ) : (
     <div className="min-h-screen bg-background p-4 sm:p-6 font-sans">
       <div className="flex flex-col mb-10 gap-3 max-w-full xl:max-w-7xl mx-auto">
-        {/* First Row */}
-        <div className="flex flex-col xl:flex-row gap-4 lg:gap-6 w-full">
-          {/* Executive Summary */}
-          <div className="bg-[#161d3d] rounded-2xl p-4 sm:p-5 w-full xl:w-[65%] shadow-md border border-gray-800">
-            {/* Header */}
-            <div className="flex justify-between items-start mb-3">
-              <h2 className="text-lg sm:text-xl text-white font-semibold">
-                Executive Summary
-              </h2>
-              <button className="text-white/50 hover:text-white text-lg leading-none">
-                ⋯
-              </button>
-            </div>
-
-            {/* Summary Cards */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mt-10">
-              {summaryData(dasboardData).map((item, idx) => (
-                <div
-                  key={idx}
-                  className="rounded-xl bg-[#1C2543] px-3 py-2 text-white shadow-sm border border-[#303A60] flex flex-col justify-between h-[100px]"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs sm:text-sm text-gray-300">
-                      {item.title}
-                    </span>
-                    <img
-                      src={item.icon}
-                      alt="icon"
-                      className="w-7 h-7 sm:w-8 sm:h-8"
-                    />
-                  </div>
-                  <div className="text-sm sm:text-base font-semibold">
-                    {item.value}
-                  </div>
-                  <div className={`${item.trendColor} text-xs sm:text-sm`}>
-                    {item.change}
-                  </div>
+          {/* Summary Cards */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-3 mt-10">
+            {summaryData(dasboardData).map((item, idx) => (
+              <div
+                key={idx}
+                className="rounded-xl bg-[#1C2543] px-3 py-2 text-white shadow-sm border border-[#303A60] flex flex-col justify-between h-[100px]"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs sm:text-sm text-gray-300">
+                    {item.title}
+                  </span>
+                  <img
+                    src={item.icon}
+                    alt="icon"
+                    className="w-7 h-7 sm:w-8 sm:h-8"
+                  />
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Compliance Status */}
-          <div className="bg-[#161d3d] text-white rounded-xl p-4 sm:p-5 w-full xl:w-[35%] shadow-lg border border-[#1A233A] flex flex-col">
-            {/* Header */}
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg sm:text-xl font-semibold">
-                Compliance Status
-              </h2>
-              <button className="text-white/50 hover:text-white text-lg leading-none">
-                ⋯
-              </button>
-            </div>
-
-            <div className="flex flex-col md:flex-row gap-4">
-              {/* Left: Progress Bars */}
-              <div className="flex flex-col gap-4 w-full md:w-2/3">
-                {complianceData.map((item, idx) => (
-                  <div key={idx}>
-                    <div className="flex justify-between text-xs sm:text-sm mb-1 text-white/80">
-                      <span>{item.title}</span>
-                      <span>{item.percent}%</span>
-                    </div>
-                    <div className="w-full h-2 bg-[#2B3348] rounded-full">
-                      <div
-                        className="h-2 rounded-full"
-                        style={{
-                          width: `${item.percent}%`,
-                          backgroundColor: item.color,
-                        }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Right: Circular Chart */}
-              <div className="w-full md:w-1/3 flex flex-col items-center justify-center">
-                <div className="w-20 h-20 sm:w-24 sm:h-24 relative">
-                  <CircularProgressbarWithChildren
-                    value={85.5}
-                    strokeWidth={10}
-                    styles={buildStyles({
-                      pathColor: "#1DC37E",
-                      trailColor: "#2B3348",
-                    })}
-                  >
-                    <div className="flex flex-col items-center">
-                      <p className="text-base sm:text-xl font-semibold text-white">
-                        85.5%
-                      </p>
-                    </div>
-                  </CircularProgressbarWithChildren>
+                <div className="text-sm sm:text-base font-semibold">
+                  {item.value}
                 </div>
-                <p className="text-[10px] sm:text-xs text-gray-400 mt-2">
-                  Overall Compliance
-                </p>
+                <div className={`${item.trendColor} text-xs sm:text-sm`}>
+                  {item.change}
+                </div>
               </div>
-            </div>
+            ))}
           </div>
-        </div>
 
         {/* Second Row */}
         <div className="flex flex-col gap-4 w-full">
-          {/* First Row: Risk Score, SOC vs ROC, Risk Heat Map */}
-          <div className="flex flex-col lg:flex-row gap-4 w-full">
-            {/* Risk Score Overview */}
-            <div className="bg-[#161d3d] text-white rounded-2xl p-4 w-full lg:w-1/4 shadow-md border border-gray-800">
-              <div className="flex justify-between items-start mb-4">
-                <h2 className="text-base sm:text-lg font-semibold">
-                  Risk Score Overview
-                </h2>
-                <button className="text-white/50 hover:text-white text-lg sm:text-xl leading-none">
-                  ⋯
-                </button>
-              </div>
-              <div className="w-24 h-24 mx-auto my-2">
-                <CircularProgressbarWithChildren
-                  value={
-                    dasboardData?.risk_score
-                      ? (dasboardData?.risk_score / 1000) * 100
-                      : "0"
-                  }
-                  strokeWidth={10}
-                  styles={buildStyles({
-                    pathColor: "#FF7F0E",
-                    trailColor: "#1E2A3E",
-                  })}
-                >
-                  <p className="text-lg font-bold">
-                    {dasboardData?.risk_score ? dasboardData?.risk_score : "0"}
-                  </p>
-                  <p className="text-xs text-gray-400">/ 1000</p>
-                </CircularProgressbarWithChildren>
-              </div>
-
-              <p className="text-xs text-center text-white mt-1">
-                Current Risk Score
-              </p>
-              <div className="flex items-center justify-center mt-2">
-                <p className="text-green-400 text-xs">↓ 12%</p>
-              </div>
-            </div>
-
-            {/* SOC vs ROC Coverage */}
-            <div className="bg-[#161d3d] text-white rounded-2xl p-4 w-full lg:w-1/4 shadow-md border border-gray-800">
-              <div className="flex justify-between items-start mb-4">
-                <h2 className="text-base sm:text-lg font-semibold">
-                  SOC vs ROC Coverage
-                </h2>
-                <button className="text-white/50 hover:text-white text-lg sm:text-xl leading-none">
-                  ⋯
-                </button>
-              </div>
-              <div className="h-40 sm:h-44">
-                <Radar data={data} options={options} />
-              </div>
-              <div className="flex flex-wrap gap-4 justify-center mt-2 text-xs text-white/80">
-                <div className="flex items-center gap-1">
-                  <span className="w-2 h-2 rounded-full bg-[#4F7FFF]" /> SOC
-                </div>
-                <div className="flex items-center gap-1">
-                  <span className="w-2 h-2 rounded-full bg-[#1DC37E]" /> ROC
-                </div>
-              </div>
-            </div>
-
-            {/* Risk Heat Map */}
-            <div className="bg-[#161d3d] border border-gray-800 p-4 rounded-2xl w-full lg:w-2/4 text-white overflow-x-auto">
-              <div className="flex justify-between items-start mb-4">
-                <h2 className="text-base sm:text-lg font-semibold">
-                  Risk Heat Map
-                </h2>
-                <button className="text-white/50 hover:text-white text-lg sm:text-xl leading-none">
-                  ⋯
-                </button>
-              </div>
-
-              <div className="min-w-[400px]">
-                <div className="grid grid-cols-6 gap-1 text-[10px] sm:text-xs md:text-sm">
-                  <div></div>
-                  <div className="text-center text-white/70">VL</div>
-                  <div className="text-center text-white/70">Low</div>
-                  <div className="text-center text-white/70">Med</div>
-                  <div className="text-center text-white/70">High</div>
-                  <div className="text-center text-white/70">Crit</div>
-
-                  {["VL", "Low", "Med", "High", "Crit"].map((row, rIdx) => (
-                    <React.Fragment key={rIdx}>
-                      <div className="text-white/70">{row}</div>
-                      {[...Array(5)].map((_, cIdx) => (
-                        <div
-                          key={cIdx}
-                          className={`h-8 rounded ${
-                            rIdx === 0 || rIdx === 1
-                              ? cIdx < 2
-                                ? "bg-green-500"
-                                : cIdx === 2
-                                ? "bg-yellow-400"
-                                : cIdx === 3
-                                ? "bg-orange-500"
-                                : "bg-red-500"
-                              : rIdx === 2
-                              ? cIdx < 2
-                                ? "bg-yellow-400"
-                                : cIdx < 4
-                                ? "bg-orange-500"
-                                : "bg-red-500"
-                              : "bg-red-500"
-                          }`}
-                        ></div>
-                      ))}
-                    </React.Fragment>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex justify-between text-xs text-white/60 mt-4">
-                <span>↑ Impact</span>
-                <span>Likelihood →</span>
-              </div>
-            </div>
-          </div>
-
           {/* Third Row */}
           <div className="bg-[#161d3d] border border-gray-800 p-4 sm:p-6 rounded-2xl w-full text-white font-sans overflow-x-auto">
             <div className="flex justify-between items-start mb-4">

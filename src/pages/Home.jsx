@@ -159,7 +159,7 @@ const [maxY, setMaxY] = useState(10); // default max height scale
       return match ? match.count : 0;
     });
 
-    // Compute max value dynamically for bar scaling
+    // Compute max value dynamically for bar scaling 
     const maxVal = Math.max(...green, ...yellow, ...red, 10);
 
     // Update state
