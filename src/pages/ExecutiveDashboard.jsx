@@ -35,7 +35,7 @@ export default function ExecutiveSummaryPage() {
 
   useEffect(() => {
     if (token) {
-      GetRiskData(tenant);
+      GetRiskData(tenant,selectedYear);
       GetAssetInventory(selectedYear);
     }
   }, [token, tenant, selectedYear]);

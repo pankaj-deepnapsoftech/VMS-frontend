@@ -33,11 +33,13 @@ const ReportContextProvider = ({ children }) => {
     }
   };
 
-  const GetRiskData = async (tenant) => {
+  const GetRiskData = async (tenant,selectedYear) => {
     setLoading(true);
     try {
       const res = await AxiosHandler.get(
-        `/vroc/risk-score?tenant=${tenant ? tenant : ""}`
+        `/vroc/risk-score?tenant=${tenant ? tenant : ""}&year=${
+          selectedYear ? selectedYear : ""
+        }`
       );
       setDashboardData(res.data);
     } catch (error) {
@@ -51,7 +53,7 @@ const ReportContextProvider = ({ children }) => {
     setLoading(true);
     try {
       const res = await AxiosHandler.get(
-        `/vroc/assert-inventory?selectedYear=${
+        `/vroc/assert-inventory?year=${
           selectedYear ? selectedYear : ""
         }`
       );
