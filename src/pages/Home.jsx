@@ -113,14 +113,17 @@ const DashboardCards = () => {
   };
 
 
+  const [greenData, setGreenData] = useState([]);
+const [yellowData, setYellowData] = useState([]);
+const [redData, setRedData] = useState([]);
+const [maxY, setMaxY] = useState(10); // default max height scale
+
+
 
   const categories = ["Critical", "High", "Medium", "Low"];
-  const greenData = [1, 5, 9, 12];
-  const yellowData = [4, 6, 12, 14];
-  const redData = [0.5, 2, 4, 6];
+ 
   const navigate = useNavigate();
 
-  const maxY = 16;
 
   useEffect(() => {
     if (token) {
@@ -135,6 +138,38 @@ const DashboardCards = () => {
 
 
   }, [token, tenant, selectedYear]);
+
+  useEffect(() => {
+  if (itemsByAge?.data) {
+    const categories = ["Critical", "High", "Medium", "Low"];
+
+    // Map API data dynamically into arrays
+    const green = categories.map(cat => {
+      const match = itemsByAge.data.first?.find(item => item.severity === cat);
+      return match ? match.count : 0;
+    });
+
+    const yellow = categories.map(cat => {
+      const match = itemsByAge.data.second?.find(item => item.severity === cat);
+      return match ? match.count : 0;
+    });
+
+    const red = categories.map(cat => {
+      const match = itemsByAge.data.third?.find(item => item.severity === cat);
+      return match ? match.count : 0;
+    });
+
+    // Compute max value dynamically for bar scaling
+    const maxVal = Math.max(...green, ...yellow, ...red, 10);
+
+    // Update state
+    setGreenData(green);
+    setYellowData(yellow);
+    setRedData(red);
+    setMaxY(maxVal);
+  }
+}, [itemsByAge]);
+
 
   useEffect(() => {
     if (secondChartData) {
