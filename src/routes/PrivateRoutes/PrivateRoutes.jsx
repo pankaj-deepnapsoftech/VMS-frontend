@@ -43,7 +43,7 @@ import SecurendDashboardCards from "@/pages/ThreeCards";
 
 export const PrivateRoutes = [
   {
-    path: "",
+    path: "/",
     element: <Home />,
   },
   {
