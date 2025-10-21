@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {
-  CircularProgressbarWithChildren,
-  buildStyles,
-} from "react-circular-progressbar";
+
 import "react-circular-progressbar/dist/styles.css";
-import { Radar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   RadialLinearScale,
@@ -16,14 +12,7 @@ import {
 } from "chart.js";
 import { useAuthContext, useReportContext } from "@/context";
 import Loader from "@/components/Loader/Loader";
-import { summaryData } from "@/constants/dynomic.data";
-
-const complianceData = [
-  { title: "HIPAA", percent: 87, color: "#4F7FFF" },
-  { title: "PCI-DSS", percent: 55, color: "#28C4B9" },
-  { title: "SOC", percent: 78, color: "#F29C1F" },
-  { title: "GDPR", percent: 85, color: "#A259FF" },
-];
+import { assetData, summaryData } from "@/constants/dynomic.data";
 
 ChartJS.register(
   RadialLinearScale,
@@ -34,97 +23,54 @@ ChartJS.register(
   Legend
 );
 
-const data = {
-  labels: [
-    "Threat Detection",
-    "Incident Response",
-    "Vulnerability Mgmt",
-    "Compliance",
-    "Risk Assessment",
-    "Security Monitoring",
-  ],
-  datasets: [
-    {
-      label: "SOC Coverage",
-      data: [85, 70, 75, 60, 65, 80],
-      backgroundColor: "rgba(79, 127, 255, 0.1)",
-      borderColor: "#4F7FFF",
-      pointBackgroundColor: "#4F7FFF",
-      borderWidth: 2,
-    },
-    {
-      label: "ROC Coverage",
-      data: [90, 80, 85, 75, 70, 85],
-      backgroundColor: "rgba(29, 195, 126, 0.1)",
-      borderColor: "#1DC37E",
-      pointBackgroundColor: "#1DC37E",
-      borderWidth: 2,
-    },
-  ],
-};
-
-const options = {
-  scales: {
-    r: {
-      angleLines: { color: "#2B3348" },
-      grid: { color: "#2B3348" },
-      pointLabels: {
-        color: "#FFFFFF",
-        font: { size: 12 },
-      },
-      ticks: {
-        display: false,
-      },
-    },
-  },
-  plugins: {
-    legend: { display: false },
-  },
-  responsive: true,
-  maintainAspectRatio: false,
-};
-
 export default function ExecutiveSummaryPage() {
-  const { token, tenant } = useAuthContext();
-  const { GetRiskData, dasboardData, loading } = useReportContext();
+  const { token, tenant, selectedYear } = useAuthContext();
+  const {
+    GetRiskData,
+    dasboardData,
+    loading,
+    GetAssetInventory,
+    assetInventory,
+  } = useReportContext();
 
   useEffect(() => {
     if (token) {
       GetRiskData(tenant);
+      GetAssetInventory(selectedYear);
     }
-  }, [token, tenant]);
+  }, [token, tenant, selectedYear]);
 
   return loading ? (
     <Loader />
   ) : (
     <div className="min-h-screen bg-background p-4 sm:p-6 font-sans">
       <div className="flex flex-col mb-10 gap-3 max-w-full xl:max-w-7xl mx-auto">
-          {/* Summary Cards */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-3 mt-10">
-            {summaryData(dasboardData).map((item, idx) => (
-              <div
-                key={idx}
-                className="rounded-xl bg-[#1C2543] px-3 py-2 text-white shadow-sm border border-[#303A60] flex flex-col justify-between h-[100px]"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-xs sm:text-sm text-gray-300">
-                    {item.title}
-                  </span>
-                  <img
-                    src={item.icon}
-                    alt="icon"
-                    className="w-7 h-7 sm:w-8 sm:h-8"
-                  />
-                </div>
-                <div className="text-sm sm:text-base font-semibold">
-                  {item.value}
-                </div>
-                <div className={`${item.trendColor} text-xs sm:text-sm`}>
-                  {item.change}
-                </div>
+        {/* Summary Cards */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-3 mt-10">
+          {summaryData(dasboardData).map((item, idx) => (
+            <div
+              key={idx}
+              className="rounded-xl bg-[#1C2543] px-3 py-2 text-white shadow-sm border border-[#303A60] flex flex-col justify-between h-[100px]"
+            >
+              <div className="flex items-center justify-between">
+                <span className="text-xs sm:text-sm text-gray-300">
+                  {item.title}
+                </span>
+                <img
+                  src={item.icon}
+                  alt="icon"
+                  className="w-7 h-7 sm:w-8 sm:h-8"
+                />
               </div>
-            ))}
-          </div>
+              <div className="text-sm sm:text-base font-semibold">
+                {item.value}
+              </div>
+              <div className={`${item.trendColor} text-xs sm:text-sm`}>
+                {item.change}
+              </div>
+            </div>
+          ))}
+        </div>
 
         {/* Second Row */}
         <div className="flex flex-col gap-4 w-full">
@@ -214,80 +160,74 @@ export default function ExecutiveSummaryPage() {
         {/* Fourth Row  */}
         <div className="flex flex-wrap gap-4 w-full">
           {/* Asset Inventory */}
-          <div className="bg-[#161d3d] p-4 border border-gray-800 rounded-xl text-white font-sans flex flex-col w-full sm:w-[48%] xl:w-[23.5%]">
+          <div className="bg-gradient-to-b from-[#1A1F3F] to-[#141833] p-5 rounded-2xl text-white border border-[#2C3564] shadow-[0_4px_15px_rgba(0,0,0,0.3)] w-full sm:w-[48%] xl:w-[23.5%] ">
             {/* Header */}
-            <div className="flex justify-between items-start mb-2">
-              <h2 className="text-base font-semibold">Asset Inventory</h2>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-sm font-semibold tracking-wide text-white/90">
+                Asset Inventory
+              </h2>
               <button className="text-white/50 hover:text-white text-lg leading-none">
                 ⋯
               </button>
             </div>
 
-            {/* Circle Graph */}
-            <div className="flex justify-center items-center mb-1">
-              <div className="relative w-20 h-20">
+            {/* Circle */}
+            <div className="flex justify-center items-center mb-4">
+              <div className="relative w-24 h-24">
                 <svg className="w-full h-full" viewBox="0 0 100 100">
                   <circle
                     cx="50"
                     cy="50"
-                    r="46"
-                    stroke="#8B5CF6"
+                    r="45"
+                    stroke="rgba(255,255,255,0.1)"
                     strokeWidth="8"
                     fill="none"
                   />
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="45"
+                    stroke="#8B5CF6"
+                    strokeWidth="8"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeDasharray="282.6"
+                    strokeDashoffset="0"
+                    className="animate-[dash_2s_ease-in-out]"
+                  />
                 </svg>
-                <div className="absolute inset-0 flex flex-col justify-center items-center text-center">
-                  <p className="text-lg font-bold">691</p>
-                  <p className="text-[10px] text-white/60">Total Assets</p>
+
+                <div className="absolute inset-0 flex flex-col justify-center items-center">
+                  <p className="text-2xl font-bold">
+                    {(assetInventory?.infrastructor?.totalCount?.count || 0) +
+                      (assetInventory?.businessApplication?.totalCount?.count ||
+                        0)}
+                  </p>
+                  <p className="text-[9px] text-white/60 tracking-wide">
+                    Total Assets
+                  </p>
                 </div>
               </div>
             </div>
 
             {/* Asset Details */}
-            <div className="space-y-2 text-xs mt-auto">
-              {[
-                {
-                  color: "bg-blue-500",
-                  name: "Cloud Assets",
-                  total: "145",
-                  critical: "23",
-                },
-                {
-                  color: "bg-red-500",
-                  name: "IoT Devices",
-                  total: "89",
-                  critical: "12",
-                },
-                {
-                  color: "bg-yellow-400",
-                  name: "Endpoints",
-                  total: "234",
-                  critical: "45",
-                },
-                {
-                  color: "bg-green-400",
-                  name: "Network Infra",
-                  total: "67",
-                  critical: "8",
-                },
-                {
-                  color: "bg-purple-400",
-                  name: "Mobile Devices",
-                  total: "156",
-                  critical: "19",
-                },
-              ].map((item, idx) => (
-                <div key={idx} className="flex justify-between items-center">
+            <div className="space-y-3 text-sm mt-auto">
+              {assetData(assetInventory).map((item, idx) => (
+                <div
+                  key={idx}
+                  className="flex justify-between items-center text-white/80 hover:text-white transition"
+                >
                   <div className="flex items-center gap-2">
                     <span
-                      className={`w-2 h-2 rounded-full ${item.color}`}
+                      className={`w-2.5 h-2.5 rounded-full ${item.color}`}
                     ></span>
-                    <span>{item.name}</span>
+                    <span className="font-medium">{item.name}</span>
                   </div>
-                  <div className="text-right">
-                    <span>{item.total}</span>
-                    <br />
-                    <span className="text-red-500 text-[10px]">
+                  <div className="text-right leading-tight">
+                    <span className="block font-semibold text-base">
+                      {item.total}
+                    </span>
+                    <span className="text-red-400 text-[11px] font-medium">
                       {item.critical} critical
                     </span>
                   </div>
@@ -410,70 +350,6 @@ export default function ExecutiveSummaryPage() {
                   </div>
                 </div>
               ))}
-            </div>
-          </div>
-
-          {/* Threat Intelligence Feed */}
-          <div className="bg-[#161d3d] p-4 border border-gray-800 rounded-xl text-white shadow-lg font-sans flex flex-col w-full sm:w-[48%] xl:w-[23.5%]">
-            <div className="flex justify-between items-start mb-2">
-              <h2 className="text-base font-semibold">
-                Threat Intelligence Feed
-              </h2>
-              <button className="text-white/50 hover:text-white text-lg leading-none">
-                ⋯
-              </button>
-            </div>
-
-            <div className="flex-1 space-y-2">
-              {[
-                {
-                  title: "APT29",
-                  severity: "Critical",
-                  color: "text-red-500",
-                  desc: "Active campaign targeting financial institutions",
-                  time: "2 min ago",
-                },
-                {
-                  title: "Ransomware",
-                  severity: "High",
-                  color: "text-orange-400",
-                  desc: "New LockBit variant detected in the wild",
-                  time: "15 min ago",
-                },
-                {
-                  title: "Phishing",
-                  severity: "Medium",
-                  color: "text-yellow-300",
-                  desc: "Credential harvesting campaign via email",
-                  time: "32 min ago",
-                },
-                {
-                  title: "Malware",
-                  severity: "High",
-                  color: "text-orange-400",
-                  desc: "Banking trojan with new evasion techniques",
-                  time: "45 min ago",
-                },
-              ].map((feed, idx) => (
-                <div
-                  key={idx}
-                  className="border-l-2 border-gray-600 pl-2 space-y-0.5"
-                >
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs font-medium">{feed.title}</span>
-                    <span className={`text-xs ${feed.color}`}>
-                      {feed.severity}
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-white/70">{feed.desc}</p>
-                  <p className="text-[10px] text-white/50">{feed.time}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="flex items-center gap-2 pt-1 text-green-400 text-xs">
-              <span className="w-2 h-2 bg-green-400 rounded-full inline-block" />
-              <span>Live Feed Active</span>
             </div>
           </div>
         </div>

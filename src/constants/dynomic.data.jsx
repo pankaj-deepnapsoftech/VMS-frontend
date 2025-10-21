@@ -26,14 +26,13 @@ export const summaryData = (data) => {
 };
 
 export const firstChartDatady = (data) => {
-
-  return  [
-  { label: "Open", value: data?.Open, color: "#EF4444" },
-  { label: "Closed", value: data?.Closed, color: "#22C55E" },
-  { label: "Exception", value: data?.exception, color: "#F97316" },
-  { label: "False Positive", value: data?.False_Positive, color: "#3B82F6" },
-];
-}
+  return [
+    { label: "Open", value: data?.Open, color: "#EF4444" },
+    { label: "Closed", value: data?.Closed, color: "#22C55E" },
+    { label: "Exception", value: data?.exception, color: "#F97316" },
+    { label: "False Positive", value: data?.False_Positive, color: "#3B82F6" },
+  ];
+};
 
 export const CardsData = (tvmCardsData) => {
   return [
@@ -119,4 +118,22 @@ export const SecondChartDatady = (data) => {
       },
     ],
   };
+};
+
+export const assetData = (asset) => {
+  console.log("dhfcgbjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjja bscjin", asset);
+  return [
+    {
+      color: "bg-blue-500",
+      name: "Infrastructure Asset",
+      total: asset?.infrastructor?.totalCount?.count || 0,
+      critical: asset?.infrastructor?.critical?.count || 0,
+    },
+    {
+      color: "bg-red-500",
+      name: "Business Application",
+      total: asset?.businessApplication?.totalCount?.count || 0,
+      critical: asset?.businessApplication?.critical?.count || 0,
+    },
+  ];
 };
