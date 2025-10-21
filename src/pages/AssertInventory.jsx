@@ -201,8 +201,6 @@ export default function TenantDashboard() {
                           "Asset IP",
                           "Modify Criticality",
                           "Asset Class",
-                          "Exposure",
-                          "Hosting",
                           "Data Sensitivity",
                           "Service Role",
                           isHaveAction() && "Actions",
@@ -233,16 +231,10 @@ export default function TenantDashboard() {
                             {tenant.modify_criticality || "-"}
                           </td>
                           <td className="px-4 py-3">
-                            {tenant.asset_class || "0"}
+                            {tenant.asset_class == 6 ? "Server" : "Endpoint" || "0"}
                           </td>
                           <td className="px-4 py-3">
-                            {tenant.exposure || "0"}{" "}
-                          </td>
-                          <td className="px-4 py-3">
-                            {tenant.hosting || "0"}{" "}
-                          </td>
-                          <td className="px-4 py-3">
-                            {tenant?.data_sensitivity?.tag_score || "0"}{" "}
+                            {tenant?.data_sensitivity?.tag_name || "-"}{" "}
                           </td>
 
                           <td className="py-4 px-6 text-white flex flex-wrap gap-2 w-40">
