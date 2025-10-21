@@ -85,25 +85,22 @@ const options = {
 };
 
 export default function ExecutiveSummaryPage() {
-  const { token,tenant } = useAuthContext();
+  const { token, tenant } = useAuthContext();
   const { GetRiskData, dasboardData, loading } = useReportContext();
-
-
 
   useEffect(() => {
     if (token) {
       GetRiskData(tenant);
-    };
+    }
   }, [token, tenant]);
-
 
   return loading ? (
     <Loader />
   ) : (
-    <div className="min-h-screen bg-background p-6 font-sans">
-      <div className="flex flex-col mb-10 gap-3 max-w-7xl mx-auto">
+    <div className="min-h-screen bg-background p-4 sm:p-6 font-sans">
+      <div className="flex flex-col mb-10 gap-3 max-w-full xl:max-w-7xl mx-auto">
         {/* First Row */}
-        <div className="flex flex-col xl:flex-row gap-4 lg:gap-6">
+        <div className="flex flex-col xl:flex-row gap-4 lg:gap-6 w-full">
           {/* Executive Summary */}
           <div className="bg-[#161d3d] rounded-2xl p-4 sm:p-5 w-full xl:w-[65%] shadow-md border border-gray-800">
             {/* Header */}
@@ -117,7 +114,7 @@ export default function ExecutiveSummaryPage() {
             </div>
 
             {/* Summary Cards */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-10">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mt-10">
               {summaryData(dasboardData).map((item, idx) => (
                 <div
                   key={idx}
@@ -156,7 +153,6 @@ export default function ExecutiveSummaryPage() {
               </button>
             </div>
 
-            {/* Body */}
             <div className="flex flex-col md:flex-row gap-4">
               {/* Left: Progress Bars */}
               <div className="flex flex-col gap-4 w-full md:w-2/3">
@@ -257,7 +253,7 @@ export default function ExecutiveSummaryPage() {
                   ⋯
                 </button>
               </div>
-              <div className="h-36 sm:h-40">
+              <div className="h-40 sm:h-44">
                 <Radar data={data} options={options} />
               </div>
               <div className="flex flex-wrap gap-4 justify-center mt-2 text-xs text-white/80">
@@ -271,18 +267,18 @@ export default function ExecutiveSummaryPage() {
             </div>
 
             {/* Risk Heat Map */}
-            <div className="bg-[#161d3d] border border-gray-800 p-4 rounded-2xl w-full lg:w-2/4 text-white">
+            <div className="bg-[#161d3d] border border-gray-800 p-4 rounded-2xl w-full lg:w-2/4 text-white overflow-x-auto">
               <div className="flex justify-between items-start mb-4">
                 <h2 className="text-base sm:text-lg font-semibold">
-                  Risk Heat Map 
+                  Risk Heat Map
                 </h2>
                 <button className="text-white/50 hover:text-white text-lg sm:text-xl leading-none">
                   ⋯
                 </button>
               </div>
 
-              <div className="overflow-x-auto">
-                <div className="grid grid-cols-6 gap-1 text-[10px] sm:text-xs md:text-sm min-w-[400px]">
+              <div className="min-w-[400px]">
+                <div className="grid grid-cols-6 gap-1 text-[10px] sm:text-xs md:text-sm">
                   <div></div>
                   <div className="text-center text-white/70">VL</div>
                   <div className="text-center text-white/70">Low</div>
@@ -290,7 +286,6 @@ export default function ExecutiveSummaryPage() {
                   <div className="text-center text-white/70">High</div>
                   <div className="text-center text-white/70">Crit</div>
 
-                  {/* Rows */}
                   {["VL", "Low", "Med", "High", "Crit"].map((row, rIdx) => (
                     <React.Fragment key={rIdx}>
                       <div className="text-white/70">{row}</div>
@@ -329,7 +324,7 @@ export default function ExecutiveSummaryPage() {
           </div>
 
           {/* Third Row */}
-          <div className="bg-[#161d3d] border border-gray-800 p-4 sm:p-6 rounded-2xl w-full text-white font-sans">
+          <div className="bg-[#161d3d] border border-gray-800 p-4 sm:p-6 rounded-2xl w-full text-white font-sans overflow-x-auto">
             <div className="flex justify-between items-start mb-4">
               <h2 className="text-base sm:text-lg md:text-xl font-semibold">
                 Top 10 Risk Indicators
@@ -374,7 +369,7 @@ export default function ExecutiveSummaryPage() {
                   key={idx}
                   className="bg-[#242f49] rounded-md p-3 sm:p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center"
                 >
-                  <div className="mb-2 sm:mb-0">
+                  <div className="mb-2 sm:mb-0 w-full sm:w-auto">
                     <p className="font-medium text-sm sm:text-base">
                       {item.title}
                     </p>
@@ -388,7 +383,7 @@ export default function ExecutiveSummaryPage() {
                       </span>
                     </p>
                   </div>
-                  <div className="text-right">
+                  <div className="text-right w-full sm:w-auto">
                     <span
                       className={`px-2 py-1 text-xs rounded ${
                         item.level === "Critical"

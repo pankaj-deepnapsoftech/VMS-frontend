@@ -22,9 +22,6 @@ ChartJS.register(
   ArcElement
 );
 
-
-
-
 const options = {
   plugins: {
     legend: {
@@ -78,7 +75,7 @@ const Dashboard = () => {
     breachVulnerableList,
     slaBreached,
     twntythChart,
-    exploitableVulnerabilities
+    exploitableVulnerabilities,
   } = useTVMCardsContext();
 
   const combinedVulnerabilities = (data) => {
@@ -178,7 +175,7 @@ const Dashboard = () => {
           <div className="flex justify-between items-start mb-2">
             <div>
               <div className="text-lg font-semibold mb-1">
-                Top 5 Vulnerable Infrastructor Assets
+                Top 5 Vulnerable Infrastructure Assets
               </div>
               <div className="text-xs text-gray-400">
                 by Vulnerability Count
@@ -386,15 +383,15 @@ const Dashboard = () => {
 
           {/* Labels below chart */}
           <div className="flex items-center justify-center gap-8 mt-6 text-white">
-            <div className="flex items-center text-lg font-medium">
-              <span className="inline-block w-4 h-4 bg-[#ef4444] rounded-full mr-2"></span>
+            <div className="flex items-center text-xs font-medium">
+              <span className="inline-block w-3 h-3 bg-[#ef4444] rounded-full mr-2"></span>
               Critical:
               <span className="font-semibold ml-1">
                 {creticalHighVulnrable.Critical}
               </span>
             </div>
-            <div className="flex items-center text-lg font-medium">
-              <span className="inline-block w-4 h-4 bg-[#3b82f6] rounded-full mr-2"></span>
+            <div className="flex items-center text-xs font-medium">
+              <span className="inline-block w-3 h-3 bg-[#3b82f6] rounded-full mr-2"></span>
               High:
               <span className="font-semibold ml-1">
                 {creticalHighVulnrable.High}
@@ -406,7 +403,7 @@ const Dashboard = () => {
         {/* SLA Breached Vulnerabilities */}
         <div className="bg-[#161e3e] p-6 rounded-lg shadow-xl flex flex-col items-center justify-center">
           <h2 className="text-xl font-semibold mb-6 text-white text-center">
-            SLA Breached Vulnerabilities
+            SLA Detail
           </h2>
 
           <div className="relative w-64 h-64">
@@ -422,13 +419,13 @@ const Dashboard = () => {
 
           {/* Labels below chart */}
           <div className="flex items-center justify-center gap-8 mt-6 text-white">
-            <div className="flex items-center text-lg font-medium">
-              <span className="inline-block w-4 h-4 bg-green-500 rounded-full mr-2"></span>
+            <div className="flex items-center text-xs font-medium">
+              <span className="inline-block w-3 h-3 bg-green-500 rounded-full mr-3"></span>
               Met:
               <span className="font-semibold ml-1">{slaBreached.MET}</span>
             </div>
-            <div className="flex items-center text-lg font-medium">
-              <span className="inline-block w-4 h-4 bg-red-500 rounded-full mr-2"></span>
+            <div className="flex items-center text-xs font-medium">
+              <span className="inline-block w-3 h-3 bg-red-500 rounded-full mr-2"></span>
               Not Met:
               <span className="font-semibold ml-1">{slaBreached.NOT_MET}</span>
             </div>
@@ -439,9 +436,7 @@ const Dashboard = () => {
         <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
-              <div className="text-lg font-semibold mb-1">
-                Breach Vulnerabilities List
-              </div>
+              <div className="text-lg font-semibold mb-1">SLA Breach List</div>
               <div className="text-xs text-gray-400">by VRS</div>
             </div>
             <button className="text-gray-400 text-sm hover:text-gray-200">
