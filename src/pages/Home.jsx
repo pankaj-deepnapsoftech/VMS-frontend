@@ -54,7 +54,11 @@ const DashboardCards = () => {
     GetNinthChart,
     GetthirdChart,
     thirdChartData,
+      GetFiveChart,
+        itemsByAge
   } = useDataContext();
+
+  console.log(itemsByAge)
 
 
   const [lineValue, setLinevalue] = useState(0)
@@ -108,40 +112,7 @@ const DashboardCards = () => {
     },
   };
 
-  const vulnerableData = [
-    {
-      label: "Critical Vulnerable Items",
-      value: 85,
-      color: "bg-red-500",
-    },
-    {
-      label: "High Vulnerable Items",
-      value: 65,
-      color: "bg-orange-500",
-    },
-    {
-      label: "Medium Priority Items",
-      value: 45,
-      color: "bg-yellow-400",
-    },
-    {
-      label: "Low Priority Completed",
-      value: 25,
-      color: "bg-green-500",
-    },
-  ];
 
-  const tableData = [
-    { name: "webApplication", june: 1, trend: "/Icons/SVG1.png" },
-    { name: "mobileApplication", june: 0, trend: null },
-    { name: "apiServer", june: 0, trend: "/Icons/SVG2.png" },
-  ];
-
-  const tableDataa = [
-    { name: "webApplication", june: 1, trend: "/Icons/SVG1.png" },
-    { name: "mobileApplication", june: 0, trend: null },
-    { name: "ApiServer", june: 0, trend: null },
-  ];
 
   const categories = ["Critical", "High", "Medium", "Low"];
   const greenData = [1, 5, 9, 12];
@@ -159,6 +130,7 @@ const DashboardCards = () => {
       refreshTVMCardsData(tenant, selectedYear);
       GetFirstChart(tenant, selectedYear);
       GetNinthChart(tenant, selectedYear);
+      GetFiveChart(tenant, selectedYear);
     }
 
 

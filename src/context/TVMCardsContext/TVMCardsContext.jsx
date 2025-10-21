@@ -49,7 +49,6 @@ const TVMCardsContextProvider = ({ children }) => {
       setCurrentTenantId(tenantId);
     } catch (error) {
       console.error("Error fetching TVM cards data:", error);
-      toast.error("Failed to load dashboard data");
     } finally {
       setLoading(false);
     }

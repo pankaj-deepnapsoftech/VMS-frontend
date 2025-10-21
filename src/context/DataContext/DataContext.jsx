@@ -20,6 +20,7 @@ const DataContextProvider = ({ children }) => {
   const [fourthChartData, setFourthChartData] = useState(null);
   const [ninthChartData, setNinthChartData] = useState(null);
   const [AssignedData, setAssignedData] = useState(null);
+  const [itemsByAge,setTtemsByAge] = useState(null)
 
   const UploadBulkData = async (data) => {
     const toastId = toast.loading("Loading...");
@@ -61,7 +62,7 @@ const DataContextProvider = ({ children }) => {
     }
   };
 
-  const GetFirstChart = async (tenant,year) => {
+  const GetFirstChart = async (tenant, year) => {
     try {
       const res = await AxiosHandler.get(
         `/data/tvm-first-chart?tenant=${tenant ? tenant : ""}&year=${year}`
@@ -83,7 +84,7 @@ const DataContextProvider = ({ children }) => {
     }
   };
 
-    const GetthirdChart = async (tenant,year) => {
+  const GetthirdChart = async (tenant, year) => {
     try {
       const res = await AxiosHandler.get(
         `/data/tvm-third-data?tenant=${tenant ? tenant : ""}&year=${year}`
@@ -94,7 +95,7 @@ const DataContextProvider = ({ children }) => {
     }
   };
 
-  const GetFourthChart = async (tenant,year) => {
+  const GetFourthChart = async (tenant, year) => {
     try {
       const res = await AxiosHandler.get(
         `/BusinessApplication/tvm-forth-chart?tenant=${tenant ? tenant : ""}&year=${year}`
@@ -105,7 +106,7 @@ const DataContextProvider = ({ children }) => {
     }
   };
 
-  const GetNinthChart = async (tenant,year) => {
+  const GetNinthChart = async (tenant, year) => {
     try {
       const res = await AxiosHandler.get(
         `/data/tvm-nine-chart?tenant=${tenant ? tenant : ""}&year=${year}`
@@ -113,6 +114,20 @@ const DataContextProvider = ({ children }) => {
       setNinthChartData(res?.data);
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const GetFiveChart = async (tenant, year) => {
+    setLoading(true)
+    try {
+      const res = await AxiosHandler.get(
+        `/data/tvm-five-data?tenant=${tenant ? tenant : ""}&year=${year}`
+      );
+      setTtemsByAge(res?.data?.data);
+    } catch (error) {
+      console.error(error);
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -150,7 +165,9 @@ const DataContextProvider = ({ children }) => {
         GetAssignedByData,
         AssignedData,
         GetthirdChart,
-        thirdChartData
+        thirdChartData,
+        GetFiveChart,
+        itemsByAge
       }}
     >
       {children}
