@@ -80,6 +80,12 @@ const MainLayout = () => {
   };
 
 
+  const viewOnlyAllowed = (path) => {
+    const alloweds = ['/',"/infrastructure-dashboard","/application-dashboard","/executive-dashboard"];
+    return alloweds.includes(path)
+  }
+
+
 
 
   let notificationcount =
@@ -259,7 +265,7 @@ const MainLayout = () => {
 
             <div className=" flex items-end justify-end">
 
-              <select
+              { viewOnlyAllowed(window.location.pathname)  && <select
                 className="bg-[#0E1430] text-gray-300 text-sm px-2 sm:px-3 py-1 rounded-lg border border-gray-700 focus:outline-none"
                 value={selectedYear}
                 onChange={(e) => setSelectedYear(Number(e.target.value))}
@@ -267,7 +273,7 @@ const MainLayout = () => {
                 <option value={currentYear}>{currentYear} </option>
                 <option value={currentYear - 1}>{currentYear - 1}</option>
                 <option value={currentYear - 2}>{currentYear - 2}</option>
-              </select> 
+              </select> }
 
               
               <button
