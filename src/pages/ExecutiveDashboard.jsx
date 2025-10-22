@@ -35,7 +35,7 @@ export default function ExecutiveSummaryPage() {
 
   useEffect(() => {
     if (token) {
-      GetRiskData(tenant,selectedYear);
+      GetRiskData(tenant, selectedYear);
       GetAssetInventory(selectedYear);
     }
   }, [token, tenant, selectedYear]);
@@ -46,27 +46,36 @@ export default function ExecutiveSummaryPage() {
     <div className="min-h-screen bg-background p-4 sm:p-6 font-sans">
       <div className="flex flex-col mb-10 gap-3 max-w-full xl:max-w-7xl mx-auto">
         {/* Summary Cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-3 mt-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
           {summaryData(dasboardData).map((item, idx) => (
             <div
               key={idx}
-              className="rounded-xl bg-[#1C2543] px-3 py-2 text-white shadow-sm border border-[#303A60] flex flex-col justify-between h-[100px]"
+              className="relative rounded-2xl bg-[#1C2543] p-5 text-white shadow-md border border-[#303A60] flex flex-col justify-center hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out h-[120px] sm:h-[130px] md:h-[140px]"
             >
-              <div className="flex items-center justify-between">
-                <span className="text-xs sm:text-sm text-gray-300">
-                  {item.title}
-                </span>
+              {/* ICON — always stays fixed, vertically centered */}
+              <div className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-2xl backdrop-blur-md">
                 <img
                   src={item.icon}
                   alt="icon"
-                  className="w-7 h-7 sm:w-8 sm:h-8"
+                  className="w-10 h-10 sm:w-12 sm:h-12 object-contain"
                 />
               </div>
-              <div className="text-sm sm:text-base font-semibold">
-                {item.value}
-              </div>
-              <div className={`${item.trendColor} text-xs sm:text-sm`}>
-                {item.change}
+
+              {/* TEXT SECTION */}
+              <div className="flex flex-col justify-center h-full pr-16 sm:pr-20">
+                <span className="text-xs sm:text-sm md:text-base text-gray-300 font-medium tracking-wide truncate">
+                  {item.title}
+                </span>
+
+                <div className="text-base sm:text-lg md:text-xl font-semibold mt-2 tracking-tight">
+                  {item.value}
+                </div>
+
+                <div
+                  className={`${item.trendColor} text-xs sm:text-sm mt-1 font-medium tracking-wide`}
+                >
+                  {item.change}
+                </div>
               </div>
             </div>
           ))}

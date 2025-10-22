@@ -53,7 +53,7 @@ export function VulnerabilityData() {
       ) : (
         <>
           {/* Heading */}
-          <div className="w-full pt-4 px-6">
+          <div className="w-full pt-6 px-6">
             <h2 className="text-2xl font-semibold text-white">
               All Vulnerability Data
             </h2>
@@ -63,7 +63,7 @@ export function VulnerabilityData() {
           </div>
 
           <div className="w-full min-h-screen p-6">
-            <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
+            <div className="bg-[#1a1f2e] mb-12 rounded-lg shadow-xl overflow-hidden">
               {/* SEARCH */}
               <div className="px-6 py-4 border-b border-gray-700 relative">
                 <div className="relative">

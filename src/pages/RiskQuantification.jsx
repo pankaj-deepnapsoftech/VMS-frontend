@@ -19,7 +19,6 @@ const RiskOperation = () => {
   const [page, setPage] = useState(1);
   const [tenant, setTenant] = useState("");
 
-
   const filteredData = riskQuantificationData.filter(
     (item) =>
       item.Title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -66,7 +65,7 @@ const RiskOperation = () => {
     <div>
       <div className="flex items-center justify-between px-6 py-4">
         {/* Optional Left Side Heading */}
-        <div className="w-full">
+        <div className="w-full mt-4">
           <h2 className="text-2xl font-semibold text-white">
             Risk Quantification
           </h2>
@@ -76,8 +75,8 @@ const RiskOperation = () => {
         </div>
       </div>
 
-      <div className="w-full  min-h-screen p-6">
-        <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
+      <div className="w-full min-h-screen p-6">
+        <div className="bg-[#1a1f2e] rounded-lg mb-12 shadow-xl overflow-hidden">
           {/* Header */}
           <div className="px-6 py-4 border-b border-gray-700 relative">
             <div className="relative">
