@@ -45,9 +45,8 @@ export default function ExecutiveSummaryPage() {
     GetRiskTrend,
     riskTrendChart,
     GetFinanceExposureTrend,
-    financeTrendChart
+    financeTrendChart,
   } = useReportContext();
-
 
   useEffect(() => {
     if (token && tenant) {
@@ -69,13 +68,12 @@ export default function ExecutiveSummaryPage() {
     <div className="min-h-screen bg-background p-4 sm:p-6 font-sans">
       <div className="flex flex-col mb-10 gap-3 max-w-full xl:max-w-7xl mx-auto">
         {/* Summary Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mb-2 gap-4">
           {summaryData(dasboardData).map((item, idx) => (
             <div
               key={idx}
               className="relative rounded-2xl bg-[#1C2543] p-5 text-white shadow-md border border-[#303A60] flex flex-col justify-center hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out h-[120px] sm:h-[130px] md:h-[140px]"
             >
-              {/* ICON — always stays fixed, vertically centered */}
               <div className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-2xl backdrop-blur-md">
                 <img
                   src={item.icon}
@@ -104,10 +102,167 @@ export default function ExecutiveSummaryPage() {
           ))}
         </div>
 
+        {/* First Row – Trend Charts */}
+        <div className="flex flex-col xl:flex-row gap-4 w-full">
+          {/* Risk Trend Chart */}
+          <div className="bg-[#161d3d] border border-gray-800 rounded-xl p-4 flex-1 shadow-md overflow-hidden">
+            <div className="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-2">
+              <h2 className="text-white text-base sm:text-lg font-semibold truncate">
+                Risk Trend
+              </h2>
+              <button className="text-gray-400 hover:text-gray-200 text-sm">
+                •••
+              </button>
+            </div>
+
+            <div className="w-full h-[180px] sm:h-[220px]">
+              {riskTrendChart && (
+                <Line
+                  data={{
+                    labels: Object.keys(riskTrendChart) || [
+                      "Jan",
+                      "Feb",
+                      "Mar",
+                      "Apr",
+                      "May",
+                      "Jun",
+                    ],
+                    datasets: [
+                      {
+                        label: "Risk Index",
+                        data: Object.keys(riskTrendChart).map(
+                          (item) =>
+                            (riskTrendChart[item].score /
+                              riskTrendChart[item].total) *
+                            10
+                        ) || [0, 0, 0, 0, 0, 0],
+                        borderColor: "#4F46E5",
+                        backgroundColor: "rgba(79,70,229,0.2)",
+                        tension: 0.4,
+                        fill: true,
+                      },
+                    ],
+                  }}
+                  options={{
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                      legend: {
+                        display: false,
+                      },
+                    },
+                    scales: {
+                      x: {
+                        ticks: {
+                          color: "#9CA3AF",
+                        },
+                        grid: {
+                          color: "rgba(255,255,255,0.05)",
+                        },
+                      },
+                      y: {
+                        ticks: {
+                          color: "#9CA3AF",
+                        },
+                        grid: {
+                          color: "rgba(255,255,255,0.05)",
+                        },
+                      },
+                    },
+                  }}
+                />
+              )}
+            </div>
+
+            {/* Legend */}
+            <div className="flex justify-center gap-3 sm:gap-6 mt-4">
+              <div className="flex items-center gap-2">
+                <span
+                  className="w-3 h-3 rounded-full"
+                  style={{ backgroundColor: "#4F46E5" }}
+                ></span>
+                <p className="text-white text-xs sm:text-sm">Risk Index</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Financial Exposure Trend Chart */}
+          <div className="bg-[#161d3d] border border-gray-800 rounded-xl p-4 flex-1 shadow-md overflow-hidden">
+            <div className="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-2">
+              <h2 className="text-white text-base sm:text-lg font-semibold truncate">
+                Financial Exposure Trend
+              </h2>
+              <button className="text-gray-400 hover:text-gray-200 text-sm">
+                •••
+              </button>
+            </div>
+
+            <div className="w-full h-[180px] sm:h-[220px]">
+              {financeTrendChart && (
+                <Line
+                  data={{
+                    labels: Object.keys(financeTrendChart),
+                    datasets: [
+                      {
+                        label: "Exposure ($M)",
+                        data: Object.keys(financeTrendChart).map((item) =>
+                          (financeTrendChart[item] / 1000000).toFixed(5)
+                        ),
+                        borderColor: "#22C55E",
+                        backgroundColor: "rgba(34,197,94,0.2)",
+                        tension: 0.4,
+                        fill: true,
+                      },
+                    ],
+                  }}
+                  options={{
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                      legend: {
+                        display: false,
+                      },
+                    },
+                    scales: {
+                      x: {
+                        ticks: {
+                          color: "#9CA3AF",
+                        },
+                        grid: {
+                          color: "rgba(255,255,255,0.05)",
+                        },
+                      },
+                      y: {
+                        ticks: {
+                          color: "#9CA3AF",
+                        },
+                        grid: {
+                          color: "rgba(255,255,255,0.05)",
+                        },
+                      },
+                    },
+                  }}
+                />
+              )}
+            </div>
+
+            {/* Legend */}
+            <div className="flex justify-center gap-3 sm:gap-6 mt-4">
+              <div className="flex items-center gap-2">
+                <span
+                  className="w-3 h-3 rounded-full"
+                  style={{ backgroundColor: "#22C55E" }}
+                ></span>
+                <p className="text-white text-xs sm:text-sm">Exposure ($M)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Second Row */}
-        <div className="flex flex-wrap gap-4 w-full">
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {/* Asset Inventory */}
-          <div className="bg-gradient-to-b from-[#1A1F3F] to-[#141833] p-5 rounded-2xl text-white border border-[#2C3564] shadow-[0_4px_15px_rgba(0,0,0,0.3)] w-full sm:w-[48%] xl:w-[23.5%] ">
+          <div className="bg-[#161d3d] p-5 rounded-2xl text-white border border-gray-800 flex flex-col justify-between">
             {/* Header */}
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-sm font-semibold tracking-wide text-white/90">
@@ -184,8 +339,7 @@ export default function ExecutiveSummaryPage() {
           </div>
 
           {/* Financial Exposure */}
-          <div className="bg-[#161d3d] p-4 border border-gray-800 rounded-xl text-white shadow-lg font-sans flex flex-col w-full sm:w-[48%] xl:w-[23.5%]">
-            {/* Header */}
+          <div className="bg-[#161d3d] p-5 rounded-2xl text-white border border-gray-800 flex flex-col justify-between">
             <div className="flex justify-between items-start mb-3">
               <h2 className="text-lg font-semibold">Financial Exposure</h2>
               <button className="text-white/50 hover:text-white text-lg leading-none">
@@ -193,23 +347,21 @@ export default function ExecutiveSummaryPage() {
               </button>
             </div>
 
-            {/* Values */}
             <div className="flex items-end gap-4 mb-4">
               <div>
                 <p className="text-[20px] font-bold text-[#FF5C5C]">
                   {financialExposure
                     ? `${(
-                      Object.keys(financialExposure)
-                        .map((item) => financialExposure[item])
-                        .reduce((i, r) => i + r, 0) / 1000000
-                    ).toFixed(5)} M` || "0"
+                        Object.keys(financialExposure)
+                          .map((item) => financialExposure[item])
+                          .reduce((i, r) => i + r, 0) / 1000000
+                      ).toFixed(5)} M` || "0"
                     : "0"}
                 </p>
                 <p className="text-xs text-white/70">Value at Risk (VaR)</p>
               </div>
             </div>
 
-            {/* Bars */}
             <div className="flex flex-col justify-center gap-4 mt-auto">
               {FinancialExposure(financialExposure).map((bar, idx) => (
                 <div key={idx}>
@@ -229,7 +381,7 @@ export default function ExecutiveSummaryPage() {
           </div>
 
           {/* Remediation Workflow */}
-          <div className="bg-[#161d3d] p-4 border border-gray-800 rounded-xl text-white shadow-lg font-sans flex flex-col w-full sm:w-[48%] xl:w-[23.5%]">
+          <div className="bg-[#161d3d] p-5 rounded-2xl text-white border border-gray-800 flex flex-col justify-between">
             <div className="flex justify-between items-start mb-3">
               <h2 className="text-lg font-semibold">Remediation Workflow</h2>
               <button className="text-white/50 hover:text-white text-lg leading-none">
@@ -319,10 +471,11 @@ export default function ExecutiveSummaryPage() {
                     </div>
                     <div className="text-right w-full sm:w-auto">
                       <span
-                        className={`px-2 py-1 text-xs rounded ${item.level === "Critical"
-                          ? "bg-red-600/20 text-red-400"
-                          : "bg-orange-600/20 text-orange-400"
-                          }`}
+                        className={`px-2 py-1 text-xs rounded ${
+                          item.level === "Critical"
+                            ? "bg-red-600/20 text-red-400"
+                            : "bg-orange-600/20 text-orange-400"
+                        }`}
                       >
                         {item.level}
                       </span>
@@ -339,146 +492,7 @@ export default function ExecutiveSummaryPage() {
             </div>
           </div>
         </div>
-
-        {/* Fourth Row – Trend Charts */}
-        <div className="flex flex-col xl:flex-row gap-4 w-full">
-          {/* Risk Trend Chart */}
-          <div className="bg-[#161d3d] border border-gray-800 rounded-xl p-4 flex-1 shadow-md overflow-hidden">
-            <div className="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-2">
-              <h2 className="text-white text-base sm:text-lg font-semibold truncate">
-                Risk Trend
-              </h2>
-              <button className="text-gray-400 hover:text-gray-200 text-sm">
-                •••
-              </button>
-            </div>
-
-            <div className="w-full h-[180px] sm:h-[220px]">
-              {riskTrendChart && <Line
-                data={{
-                  labels: Object.keys(riskTrendChart) || ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-                  datasets: [
-                    {
-                      label: "Risk Index",
-                      data: Object.keys(riskTrendChart).map((item) => (riskTrendChart[item].score / riskTrendChart[item].total) * 10) || [0, 0, 0, 0, 0, 0],
-                      borderColor: "#4F46E5",
-                      backgroundColor: "rgba(79,70,229,0.2)",
-                      tension: 0.4,
-                      fill: true,
-                    },
-                  ],
-                }}
-                options={{
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  plugins: {
-                    legend: {
-                      display: false,
-                    },
-                  },
-                  scales: {
-                    x: {
-                      ticks: {
-                        color: "#9CA3AF",
-                      },
-                      grid: {
-                        color: "rgba(255,255,255,0.05)",
-                      },
-                    },
-                    y: {
-                      ticks: {
-                        color: "#9CA3AF",
-                      },
-                      grid: {
-                        color: "rgba(255,255,255,0.05)",
-                      },
-                    },
-                  },
-                }}
-              />}
-            </div>
-
-            {/* Legend */}
-            <div className="flex justify-center gap-3 sm:gap-6 mt-4">
-              <div className="flex items-center gap-2">
-                <span
-                  className="w-3 h-3 rounded-full"
-                  style={{ backgroundColor: "#4F46E5" }}
-                ></span>
-                <p className="text-white text-xs sm:text-sm">Risk Index</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Financial Exposure Trend Chart */}
-          <div className="bg-[#161d3d] border border-gray-800 rounded-xl p-4 flex-1 shadow-md overflow-hidden">
-            <div className="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-2">
-              <h2 className="text-white text-base sm:text-lg font-semibold truncate">
-                Financial Exposure Trend
-              </h2>
-              <button className="text-gray-400 hover:text-gray-200 text-sm">
-                •••
-              </button>
-            </div>
-
-            <div className="w-full h-[180px] sm:h-[220px]">
-              {financeTrendChart && <Line
-                data={{
-                  labels: Object.keys(financeTrendChart),
-                  datasets: [
-                    {
-                      label: "Exposure ($M)",
-                      data: Object.keys(financeTrendChart).map((item) => (financeTrendChart[item] / 1000000).toFixed(5)),
-                      borderColor: "#22C55E",
-                      backgroundColor: "rgba(34,197,94,0.2)",
-                      tension: 0.4,
-                      fill: true,
-                    },
-                  ],
-                }}
-                options={{
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  plugins: {
-                    legend: {
-                      display: false,
-                    },
-                  },
-                  scales: {
-                    x: {
-                      ticks: {
-                        color: "#9CA3AF",
-                      },
-                      grid: {
-                        color: "rgba(255,255,255,0.05)",
-                      },
-                    },
-                    y: {
-                      ticks: {
-                        color: "#9CA3AF",
-                      },
-                      grid: {
-                        color: "rgba(255,255,255,0.05)",
-                      },
-                    },
-                  },
-                }}
-              />}
-            </div>
-
-            {/* Legend */}
-            <div className="flex justify-center gap-3 sm:gap-6 mt-4">
-              <div className="flex items-center gap-2">
-                <span
-                  className="w-3 h-3 rounded-full"
-                  style={{ backgroundColor: "#22C55E" }}
-                ></span>
-                <p className="text-white text-xs sm:text-sm">Exposure ($M)</p>
-              </div>
-            </div>
-          </div>
-        </div>
-          </div>
-        </div>
+      </div>
+    </div>
   );
 }
