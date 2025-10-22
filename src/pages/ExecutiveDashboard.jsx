@@ -478,17 +478,6 @@ export default function ExecutiveSummaryPage() {
             </div>
           </div>
         </div>
-
-            {/* Legend */}
-            <div className="flex justify-center gap-3 sm:gap-6 mt-4">
-              <div className="flex items-center gap-2">
-                <span
-                  className="w-3 h-3 rounded-full"
-                  style={{ backgroundColor: "#22C55E" }}
-                ></span>
-                <p className="text-white text-xs sm:text-sm">Exposure ($M)</p>
-              </div>
-            </div>
           </div>
         </div>
   );
