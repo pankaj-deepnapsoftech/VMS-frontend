@@ -11,8 +11,13 @@ export const ReportContext = createContext({
   assetInventory: null,
   GetFinancialExposure:()=>{},
   GetTopRiskIndicator:()=>{},
+  GetRiskTrend:()=>{},
+  GetFinanceExposureTrend:()=>{},
   financialExposure:null,
   topFiveRiskIndicatorData:[],
+  riskTrendChart:null,
+  financeTrendChart:null,
+
 
 });
 
@@ -24,6 +29,8 @@ const ReportContextProvider = ({ children }) => {
   const [assetInventory, setAssetInventory] = useState(null);
   const [financialExposure,setFinancialExposure] = useState(null);
   const [topFiveRiskIndicatorData,setTopFiveRiskIndicator] = useState([]);
+  const [riskTrendChart,setRiskTrendChart] = useState(null);
+  const [financeTrendChart,setFinanceTrendChart] = useState(null);
 
   const [page, setPage] = useState(1);
 
@@ -97,6 +104,30 @@ const ReportContextProvider = ({ children }) => {
     }
   };
 
+  const GetRiskTrend = async (tenant,selectedYear) => {
+    setLoading(true);
+    try {
+      const res = await AxiosHandler.get(`/vroc/risk-trand?year=${selectedYear ? selectedYear : ""}&tenant=${tenant ? tenant : ""}`);
+      setRiskTrendChart(res.data?.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+   const GetFinanceExposureTrend = async (tenant,selectedYear) => {
+    setLoading(true);
+    try {
+      const res = await AxiosHandler.get(`/vroc/finance-exposure-trand?year=${selectedYear ? selectedYear : ""}&tenant=${tenant ? tenant : ""}`);
+      setFinanceTrendChart(res.data?.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <ReportContext.Provider
       value={{
@@ -112,7 +143,11 @@ const ReportContextProvider = ({ children }) => {
         GetFinancialExposure,
         financialExposure,
         GetTopRiskIndicator,
-        topFiveRiskIndicatorData
+        topFiveRiskIndicatorData,
+        GetRiskTrend,
+        riskTrendChart,
+        GetFinanceExposureTrend,
+        financeTrendChart
       }}
     >
       {children}
