@@ -32,7 +32,9 @@ export default function ExecutiveSummaryPage() {
     GetAssetInventory,
     assetInventory,
     GetFinancialExposure,
-    financialExposure
+    financialExposure,
+    GetTopRiskIndicator,
+    topFiveRiskIndicatorData
   } = useReportContext();
 
 
@@ -40,6 +42,7 @@ export default function ExecutiveSummaryPage() {
     if (token) {
       GetRiskData(tenant, selectedYear);
       GetFinancialExposure(tenant, selectedYear);
+      GetTopRiskIndicator(tenant, selectedYear);
       GetAssetInventory(selectedYear);
     }
   }, [token, tenant, selectedYear]);
@@ -77,61 +80,6 @@ export default function ExecutiveSummaryPage() {
         </div>
 
         {/* Second Row */}
-        <div className="flex flex-col gap-4 w-full">
-          {/* Third Row */}
-          <div className="bg-[#161d3d] border border-gray-800 p-4 sm:p-6 rounded-2xl w-full text-white font-sans overflow-x-auto">
-            <div className="flex justify-between items-start mb-4">
-              <h2 className="text-base sm:text-lg md:text-xl font-semibold">
-                Top 5 Risk Indicators
-              </h2>
-              <button className="text-white/50 hover:text-white text-lg sm:text-xl leading-none">
-                ⋯
-              </button>
-            </div>
-
-            <div className="space-y-3">
-              {TopFiveRiskIndicator().map((item, idx) => (
-                <div
-                  key={idx}
-                  className="bg-[#242f49] rounded-md p-3 sm:p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center"
-                >
-                  <div className="mb-2 sm:mb-0 w-full sm:w-auto">
-                    <p className="font-medium text-sm sm:text-base">
-                      {item.title}
-                    </p>
-                    <p className="text-xs sm:text-sm text-white/60">
-                      {item.system}
-                    </p>
-                    <p className="text-xs sm:text-sm text-white/60">
-                      Likelihood:{" "}
-                      <span className="text-white font-semibold">
-                        {item.likelihood}
-                      </span>
-                    </p>
-                  </div>
-                  <div className="text-right w-full sm:w-auto">
-                    <span
-                      className={`px-2 py-1 text-xs rounded ${item.level === "Critical"
-                          ? "bg-red-600/20 text-red-400"
-                          : "bg-orange-600/20 text-orange-400"
-                        }`}
-                    >
-                      {item.level}
-                    </span>
-                    <p className="text-xs sm:text-sm text-white/60 mt-1">
-                      Exposure:{" "}
-                      <span className="text-white font-semibold">
-                        {item.exposure}
-                      </span>
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Fourth Row  */}
         <div className="flex flex-wrap gap-4 w-full">
           {/* Asset Inventory */}
           <div className="bg-gradient-to-b from-[#1A1F3F] to-[#141833] p-5 rounded-2xl text-white border border-[#2C3564] shadow-[0_4px_15px_rgba(0,0,0,0.3)] w-full sm:w-[48%] xl:w-[23.5%] ">
@@ -299,6 +247,59 @@ export default function ExecutiveSummaryPage() {
                       className="h-2 rounded-full"
                       style={{ width: bar.width, background: bar.color }}
                     />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* third row */}
+
+         <div className="flex flex-col gap-4 w-full">
+          {/* Third Row */}
+          <div className="bg-[#161d3d] border border-gray-800 p-4 sm:p-6 rounded-2xl w-full text-white font-sans overflow-x-auto">
+            <div className="flex justify-between items-start mb-4">
+              <h2 className="text-base sm:text-lg md:text-xl font-semibold">
+                Top 5 Risk Indicators
+              </h2>
+              <button className="text-white/50 hover:text-white text-lg sm:text-xl leading-none">
+                ⋯
+              </button>
+            </div>
+
+            <div className="space-y-3">
+              {TopFiveRiskIndicator(topFiveRiskIndicatorData).map((item, idx) => (
+                <div
+                  key={idx}
+                  className="bg-[#242f49] rounded-md p-3 sm:p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center"
+                >
+                  <div className="mb-2 sm:mb-0 w-full sm:w-auto">
+                    <p className="font-medium text-sm sm:text-base">
+                      {item.title}
+                    </p>
+                    <p className="text-xs sm:text-sm text-white/60">
+                      Score:{" "}
+                      <span className="text-white font-semibold">
+                        {item.score}
+                      </span>
+                    </p>
+                  </div>
+                  <div className="text-right w-full sm:w-auto">
+                    <span
+                      className={`px-2 py-1 text-xs rounded ${item.level === "Critical"
+                          ? "bg-red-600/20 text-red-400"
+                          : "bg-orange-600/20 text-orange-400"
+                        }`}
+                    >
+                      {item.level}
+                    </span>
+                    <p className="text-xs sm:text-sm text-white/60 mt-1">
+                      Exposure:{" "}
+                      <span className="text-white font-semibold">
+                        {item.exposure}
+                      </span>
+                    </p>
                   </div>
                 </div>
               ))}

@@ -10,7 +10,10 @@ export const ReportContext = createContext({
   dasboardData: null,
   assetInventory: null,
   GetFinancialExposure:()=>{},
-  financialExposure:null
+  GetTopRiskIndicator:()=>{},
+  financialExposure:null,
+  topFiveRiskIndicatorData:[],
+
 });
 
 // eslint-disable-next-line react/prop-types
@@ -20,6 +23,7 @@ const ReportContextProvider = ({ children }) => {
   const [dasboardData, setDashboardData] = useState(null);
   const [assetInventory, setAssetInventory] = useState(null);
   const [financialExposure,setFinancialExposure] = useState(null);
+  const [topFiveRiskIndicatorData,setTopFiveRiskIndicator] = useState([]);
 
   const [page, setPage] = useState(1);
 
@@ -57,7 +61,7 @@ const ReportContextProvider = ({ children }) => {
     setLoading(true);
     try {
       const res = await AxiosHandler.get(
-        `/vroc/financial-exposure?year=${
+        `/vroc/assert-inventory?year=${
           selectedYear ? selectedYear : ""
         }`
       );
@@ -81,6 +85,18 @@ const ReportContextProvider = ({ children }) => {
     }
   };
 
+  const GetTopRiskIndicator = async (tenant,selectedYear) => {
+    setLoading(true);
+    try {
+      const res = await AxiosHandler.get(`/vroc/top-risk-indicator?year=${selectedYear ? selectedYear : ""}&tenant=${tenant ? tenant : ""}`);
+      setTopFiveRiskIndicator(res.data?.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <ReportContext.Provider
       value={{
@@ -94,7 +110,9 @@ const ReportContextProvider = ({ children }) => {
         GetAssetInventory,
         assetInventory,
         GetFinancialExposure,
-        financialExposure
+        financialExposure,
+        GetTopRiskIndicator,
+        topFiveRiskIndicatorData
       }}
     >
       {children}

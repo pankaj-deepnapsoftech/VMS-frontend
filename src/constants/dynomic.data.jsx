@@ -165,37 +165,9 @@ export const FinancialExposure = (data) => {
   }
 };
 
-export const TopFiveRiskIndicator = () => {
-  return [
-    {
-      title: "Unpatched Critical CVE-2024-1234",
-      system: "Web Server",
-      likelihood: "95%",
-      level: "Critical",
-      exposure: "$2.4M",
-    },
-    {
-      title: "Weak Authentication Controls",
-      system: "Database",
-      likelihood: "78%",
-      level: "High",
-      exposure: "$1.8M",
-    },
-    {
-      title: "Outdated SSL Certificates",
-      system: "Load Balancer",
-      likelihood: "85%",
-      level: "High",
-      exposure: "$950K",
-    },
-    {
-      title: "Privileged Account Misuse",
-      system: "Domain Controller",
-      likelihood: "67%",
-      level: "Critical",
-      exposure: "$3.2M",
-    },
-  ]
+export const TopFiveRiskIndicator = (data) => {
+  return data ?  data.map((item)=> ({title:item?.title,score:`${item?.RAS}`,level:item?.severity,exposure:`${item?.exposure} M`})) : [];
+
 }
 
 
