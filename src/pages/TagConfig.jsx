@@ -106,7 +106,7 @@ export default function TagsPage() {
           </div>
 
           {/* Table Section */}
-          <div className="w-full mt-6 bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
+          <div className="w-full mt-6 mb-12 bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
             {/* Search Bar */}
             <div className="px-4 md:px-6 py-4 border-b border-gray-700">
               <div className="relative w-full md:w-1/3">

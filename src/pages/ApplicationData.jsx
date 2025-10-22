@@ -139,7 +139,7 @@ export function ApplicationData() {
       ) : (
         <div className="bg-gradient-custom min-h-screen p-4 rounded-lg text-white">
           {/* HEADER */}
-          <div className="w-full px-6">
+          <div className="w-full mt-4 px-6">
             <h2 className="text-2xl font-semibold text-white">
               All Application Data
             </h2>
@@ -150,7 +150,7 @@ export function ApplicationData() {
 
           {/* TABLE WRAPPER */}
           <div className="w-full min-h-screen p-6">
-            <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
+            <div className="bg-[#1a1f2e] mb-12 rounded-lg shadow-xl overflow-hidden">
               {/* SEARCH */}
               <div className="px-6 py-4 border-b border-gray-700 relative">
                 <div className="relative">

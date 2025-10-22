@@ -66,7 +66,7 @@ const UserRow = ({ user }) => {
 export default function UserManagement() {
   return (
     <div className="bg-[#2a2c2f] min-h-screen text-white p-6">
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-between items-center mt-2 mb-4">
         <h2 className="text-lg font-semibold">Manage Users</h2>
         <div className="flex items-center gap-4">
           <input
