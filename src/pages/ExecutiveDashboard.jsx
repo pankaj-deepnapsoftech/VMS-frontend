@@ -343,7 +343,7 @@ export default function ExecutiveSummaryPage() {
         {/* Fourth Row – Trend Charts */}
         <div className="flex flex-col xl:flex-row gap-4 w-full">
           {/* Risk Trend Chart */}
-          <div className="bg-[#161e3e] border border-gray-800 rounded-xl p-4 flex-1 shadow-md overflow-hidden">
+          <div className="bg-[#161d3d] border border-gray-800 rounded-xl p-4 flex-1 shadow-md overflow-hidden">
             <div className="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-2">
               <h2 className="text-white text-base sm:text-lg font-semibold truncate">
                 Risk Trend
@@ -411,7 +411,7 @@ export default function ExecutiveSummaryPage() {
           </div>
 
           {/* Financial Exposure Trend Chart */}
-          <div className="bg-[#161e3e] border border-gray-800 rounded-xl p-4 flex-1 shadow-md overflow-hidden">
+          <div className="bg-[#161d3d] border border-gray-800 rounded-xl p-4 flex-1 shadow-md overflow-hidden">
             <div className="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-2">
               <h2 className="text-white text-base sm:text-lg font-semibold truncate">
                 Financial Exposure Trend
