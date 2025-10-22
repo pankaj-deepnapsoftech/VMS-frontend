@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect } from "react";
 
 import "react-circular-progressbar/dist/styles.css";
 import {
@@ -12,7 +12,7 @@ import {
 } from "chart.js";
 import { useAuthContext, useReportContext } from "@/context";
 import Loader from "@/components/Loader/Loader";
-import { assetData, summaryData } from "@/constants/dynomic.data";
+import { assetData, FinancialExposure, summaryData, TopFiveRiskIndicator } from "@/constants/dynomic.data";
 
 ChartJS.register(
   RadialLinearScale,
@@ -31,11 +31,15 @@ export default function ExecutiveSummaryPage() {
     loading,
     GetAssetInventory,
     assetInventory,
+    GetFinancialExposure,
+    financialExposure
   } = useReportContext();
+
 
   useEffect(() => {
     if (token) {
-      GetRiskData(tenant,selectedYear);
+      GetRiskData(tenant, selectedYear);
+      GetFinancialExposure(tenant, selectedYear);
       GetAssetInventory(selectedYear);
     }
   }, [token, tenant, selectedYear]);
@@ -78,7 +82,7 @@ export default function ExecutiveSummaryPage() {
           <div className="bg-[#161d3d] border border-gray-800 p-4 sm:p-6 rounded-2xl w-full text-white font-sans overflow-x-auto">
             <div className="flex justify-between items-start mb-4">
               <h2 className="text-base sm:text-lg md:text-xl font-semibold">
-                Top 10 Risk Indicators
+                Top 5 Risk Indicators
               </h2>
               <button className="text-white/50 hover:text-white text-lg sm:text-xl leading-none">
                 ⋯
@@ -86,36 +90,7 @@ export default function ExecutiveSummaryPage() {
             </div>
 
             <div className="space-y-3">
-              {[
-                {
-                  title: "Unpatched Critical CVE-2024-1234",
-                  system: "Web Server",
-                  likelihood: "95%",
-                  level: "Critical",
-                  exposure: "$2.4M",
-                },
-                {
-                  title: "Weak Authentication Controls",
-                  system: "Database",
-                  likelihood: "78%",
-                  level: "High",
-                  exposure: "$1.8M",
-                },
-                {
-                  title: "Outdated SSL Certificates",
-                  system: "Load Balancer",
-                  likelihood: "85%",
-                  level: "High",
-                  exposure: "$950K",
-                },
-                {
-                  title: "Privileged Account Misuse",
-                  system: "Domain Controller",
-                  likelihood: "67%",
-                  level: "Critical",
-                  exposure: "$3.2M",
-                },
-              ].map((item, idx) => (
+              {TopFiveRiskIndicator().map((item, idx) => (
                 <div
                   key={idx}
                   className="bg-[#242f49] rounded-md p-3 sm:p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center"
@@ -136,11 +111,10 @@ export default function ExecutiveSummaryPage() {
                   </div>
                   <div className="text-right w-full sm:w-auto">
                     <span
-                      className={`px-2 py-1 text-xs rounded ${
-                        item.level === "Critical"
+                      className={`px-2 py-1 text-xs rounded ${item.level === "Critical"
                           ? "bg-red-600/20 text-red-400"
                           : "bg-orange-600/20 text-orange-400"
-                      }`}
+                        }`}
                     >
                       {item.level}
                     </span>
@@ -249,37 +223,15 @@ export default function ExecutiveSummaryPage() {
             {/* Values */}
             <div className="flex items-end gap-4 mb-4">
               <div>
-                <p className="text-[20px] font-bold text-[#FF5C5C]">$12.8M</p>
+                <p className="text-[20px] font-bold text-[#FF5C5C]">{ financialExposure ? `${(Object.keys(financialExposure).map((item)=> financialExposure[item]).reduce((i,r)=>i +r,0) / 1000000).toFixed(5)} M` || '0' : "0"}</p>
                 <p className="text-xs text-white/70">Value at Risk (VaR)</p>
               </div>
-              <div>
-                <p className="text-[20px] font-bold text-[#FFA93B]">$4.2M</p>
-                <p className="text-xs text-white/70">Potential Impact</p>
-              </div>
+
             </div>
 
             {/* Bars */}
             <div className="flex flex-col justify-center gap-4 mt-auto">
-              {[
-                {
-                  label: "Data Breach Risk",
-                  value: "$8.4M",
-                  color: "#FF5C5C",
-                  width: "100%",
-                },
-                {
-                  label: "System Downtime",
-                  value: "$2.8M",
-                  color: "#FFA93B",
-                  width: "33%",
-                },
-                {
-                  label: "Compliance Fines",
-                  value: "$1.6M",
-                  color: "#FFD233",
-                  width: "20%",
-                },
-              ].map((bar, idx) => (
+              {FinancialExposure(financialExposure).map((bar, idx) => (
                 <div key={idx}>
                   <div className="flex justify-between text-xs mb-1">
                     <span>{bar.label}</span>

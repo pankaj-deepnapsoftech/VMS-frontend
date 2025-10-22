@@ -121,7 +121,6 @@ export const SecondChartDatady = (data) => {
 };
 
 export const assetData = (asset) => {
-  console.log("dhfcgbjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjja bscjin", asset);
   return [
     {
       color: "bg-blue-500",
@@ -137,3 +136,67 @@ export const assetData = (asset) => {
     },
   ];
 };
+
+export const FinancialExposure = (data) => {
+  if (data) {
+    const keys = Object.keys(data);
+    return [
+      {
+        label: keys[0],
+        value: `${(data[keys[0]] / 1000000).toFixed(5) || 0}M`,
+        color: "#FF5C5C",
+        width: "100%",
+      },
+      {
+        label: keys[1],
+        value: `${(data[keys[1]] / 1000000).toFixed(5) || 0}M`,
+        color: "#FFA93B",
+        width: "33%",
+      },
+      {
+        label: keys[2],
+        value: `${(data[keys[2]] / 1000000).toFixed(5) || 0}M`,
+        color: "#FFD233",
+        width: "20%",
+      },
+    ]
+  } else {
+    return []
+  }
+};
+
+export const TopFiveRiskIndicator = () => {
+  return [
+    {
+      title: "Unpatched Critical CVE-2024-1234",
+      system: "Web Server",
+      likelihood: "95%",
+      level: "Critical",
+      exposure: "$2.4M",
+    },
+    {
+      title: "Weak Authentication Controls",
+      system: "Database",
+      likelihood: "78%",
+      level: "High",
+      exposure: "$1.8M",
+    },
+    {
+      title: "Outdated SSL Certificates",
+      system: "Load Balancer",
+      likelihood: "85%",
+      level: "High",
+      exposure: "$950K",
+    },
+    {
+      title: "Privileged Account Misuse",
+      system: "Domain Controller",
+      likelihood: "67%",
+      level: "Critical",
+      exposure: "$3.2M",
+    },
+  ]
+}
+
+
+

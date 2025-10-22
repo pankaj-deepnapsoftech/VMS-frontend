@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 import { AxiosHandler } from "@/config/AxiosConfig";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const ReportContext = createContext({
   riskQuantification: () => {},
   GetRiskData: () => {},
@@ -8,6 +9,8 @@ export const ReportContext = createContext({
   loading: false,
   dasboardData: null,
   assetInventory: null,
+  GetFinancialExposure:()=>{},
+  financialExposure:null
 });
 
 // eslint-disable-next-line react/prop-types
@@ -16,6 +19,7 @@ const ReportContextProvider = ({ children }) => {
   const [riskQuantificationData, setRiskQuantificationData] = useState([]);
   const [dasboardData, setDashboardData] = useState(null);
   const [assetInventory, setAssetInventory] = useState(null);
+  const [financialExposure,setFinancialExposure] = useState(null);
 
   const [page, setPage] = useState(1);
 
@@ -53,11 +57,23 @@ const ReportContextProvider = ({ children }) => {
     setLoading(true);
     try {
       const res = await AxiosHandler.get(
-        `/vroc/assert-inventory?year=${
+        `/vroc/financial-exposure?year=${
           selectedYear ? selectedYear : ""
         }`
       );
       setAssetInventory(res.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+   const GetFinancialExposure = async (tenant,selectedYear) => {
+    setLoading(true);
+    try {
+      const res = await AxiosHandler.get(`/vroc/financial-exposure?year=${selectedYear ? selectedYear : ""}&tenant=${tenant ? tenant : ""}`);
+      setFinancialExposure(res.data?.data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -77,6 +93,8 @@ const ReportContextProvider = ({ children }) => {
         dasboardData,
         GetAssetInventory,
         assetInventory,
+        GetFinancialExposure,
+        financialExposure
       }}
     >
       {children}
