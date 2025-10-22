@@ -1,4 +1,6 @@
-import  { useEffect } from "react";
+import { useEffect } from "react";
+import { Line } from "react-chartjs-2";
+
 
 import "react-circular-progressbar/dist/styles.css";
 import {
@@ -12,7 +14,12 @@ import {
 } from "chart.js";
 import { useAuthContext, useReportContext } from "@/context";
 import Loader from "@/components/Loader/Loader";
-import { assetData, FinancialExposure, summaryData, TopFiveRiskIndicator } from "@/constants/dynomic.data";
+import {
+  assetData,
+  FinancialExposure,
+  summaryData,
+  TopFiveRiskIndicator,
+} from "@/constants/dynomic.data";
 
 ChartJS.register(
   RadialLinearScale,
@@ -34,9 +41,8 @@ export default function ExecutiveSummaryPage() {
     GetFinancialExposure,
     financialExposure,
     GetTopRiskIndicator,
-    topFiveRiskIndicatorData
+    topFiveRiskIndicatorData,
   } = useReportContext();
-
 
   useEffect(() => {
     if (token) {
@@ -180,10 +186,17 @@ export default function ExecutiveSummaryPage() {
             {/* Values */}
             <div className="flex items-end gap-4 mb-4">
               <div>
-                <p className="text-[20px] font-bold text-[#FF5C5C]">{ financialExposure ? `${(Object.keys(financialExposure).map((item)=> financialExposure[item]).reduce((i,r)=>i +r,0) / 1000000).toFixed(5)} M` || '0' : "0"}</p>
+                <p className="text-[20px] font-bold text-[#FF5C5C]">
+                  {financialExposure
+                    ? `${(
+                        Object.keys(financialExposure)
+                          .map((item) => financialExposure[item])
+                          .reduce((i, r) => i + r, 0) / 1000000
+                      ).toFixed(5)} M` || "0"
+                    : "0"}
+                </p>
                 <p className="text-xs text-white/70">Value at Risk (VaR)</p>
               </div>
-
             </div>
 
             {/* Bars */}
@@ -264,8 +277,7 @@ export default function ExecutiveSummaryPage() {
         </div>
 
         {/* third row */}
-
-         <div className="flex flex-col gap-4 w-full">
+        <div className="flex flex-col gap-4 w-full">
           {/* Third Row */}
           <div className="bg-[#161d3d] border border-gray-800 p-4 sm:p-6 rounded-2xl w-full text-white font-sans overflow-x-auto">
             <div className="flex justify-between items-start mb-4">
@@ -278,43 +290,187 @@ export default function ExecutiveSummaryPage() {
             </div>
 
             <div className="space-y-3">
-              {TopFiveRiskIndicator(topFiveRiskIndicatorData).map((item, idx) => (
-                <div
-                  key={idx}
-                  className="bg-[#242f49] rounded-md p-3 sm:p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center"
-                >
-                  <div className="mb-2 sm:mb-0 w-full sm:w-auto">
-                    <p className="font-medium text-sm sm:text-base">
-                      {item.title}
-                    </p>
-                    <p className="text-xs sm:text-sm text-white/60">
-                      Score:{" "}
-                      <span className="text-white font-semibold">
-                        {item.score}
-                      </span>
-                    </p>
-                  </div>
-                  <div className="text-right w-full sm:w-auto">
-                    <span
-                      className={`px-2 py-1 text-xs rounded ${item.level === "Critical"
-                          ? "bg-red-600/20 text-red-400"
-                          : "bg-orange-600/20 text-orange-400"
+              {TopFiveRiskIndicator(topFiveRiskIndicatorData).map(
+                (item, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-[#242f49] rounded-md p-3 sm:p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center"
+                  >
+                    <div className="mb-2 sm:mb-0 w-full sm:w-auto">
+                      <p className="font-medium text-sm sm:text-base">
+                        {item.title}
+                      </p>
+                      <p className="text-xs sm:text-sm text-white/60">
+                        Score:{" "}
+                        <span className="text-white font-semibold">
+                          {item.score}
+                        </span>
+                      </p>
+                    </div>
+                    <div className="text-right w-full sm:w-auto">
+                      <span
+                        className={`px-2 py-1 text-xs rounded ${
+                          item.level === "Critical"
+                            ? "bg-red-600/20 text-red-400"
+                            : "bg-orange-600/20 text-orange-400"
                         }`}
-                    >
-                      {item.level}
-                    </span>
-                    <p className="text-xs sm:text-sm text-white/60 mt-1">
-                      Exposure:{" "}
-                      <span className="text-white font-semibold">
-                        {item.exposure}
+                      >
+                        {item.level}
                       </span>
-                    </p>
+                      <p className="text-xs sm:text-sm text-white/60 mt-1">
+                        Exposure:{" "}
+                        <span className="text-white font-semibold">
+                          {item.exposure}
+                        </span>
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                )
+              )}
             </div>
           </div>
         </div>
+
+
+        {/* Fourth Row – Trend Charts */}
+<div className="flex flex-col xl:flex-row gap-4 w-full mt-6">
+  {/* Risk Trend Chart */}
+  <div className="bg-[#161e3e] border border-gray-800 rounded-xl p-4 flex-1 shadow-md overflow-hidden">
+    <div className="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-2">
+      <h2 className="text-white text-base sm:text-lg font-semibold truncate">
+        Risk Trend
+      </h2>
+      <button className="text-gray-400 hover:text-gray-200 text-sm">
+        •••
+      </button>
+    </div>
+
+    <div className="w-full h-[180px] sm:h-[220px]">
+      <Line
+        data={{
+          labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+          datasets: [
+            {
+              label: "Risk Index",
+              data: [12, 9, 14, 10, 16, 13],
+              borderColor: "#4F46E5",
+              backgroundColor: "rgba(79,70,229,0.2)",
+              tension: 0.4,
+              fill: true,
+            },
+          ],
+        }}
+        options={{
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false,
+            },
+          },
+          scales: {
+            x: {
+              ticks: {
+                color: "#9CA3AF",
+              },
+              grid: {
+                color: "rgba(255,255,255,0.05)",
+              },
+            },
+            y: {
+              ticks: {
+                color: "#9CA3AF",
+              },
+              grid: {
+                color: "rgba(255,255,255,0.05)",
+              },
+            },
+          },
+        }}
+      />
+    </div>
+
+    {/* Legend */}
+    <div className="flex justify-center gap-3 sm:gap-6 mt-4">
+      <div className="flex items-center gap-2">
+        <span
+          className="w-3 h-3 rounded-full"
+          style={{ backgroundColor: "#4F46E5" }}
+        ></span>
+        <p className="text-white text-xs sm:text-sm">Risk Index</p>
+      </div>
+    </div>
+  </div>
+
+  {/* Financial Exposure Trend Chart */}
+  <div className="bg-[#161e3e] border border-gray-800 rounded-xl p-4 flex-1 shadow-md overflow-hidden">
+    <div className="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-2">
+      <h2 className="text-white text-base sm:text-lg font-semibold truncate">
+        Financial Exposure Trend
+      </h2>
+      <button className="text-gray-400 hover:text-gray-200 text-sm">
+        •••
+      </button>
+    </div>
+
+    <div className="w-full h-[180px] sm:h-[220px]">
+      <Line
+        data={{
+          labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+          datasets: [
+            {
+              label: "Exposure ($M)",
+              data: [5.2, 4.8, 6.1, 7.0, 6.6, 7.4],
+              borderColor: "#22C55E",
+              backgroundColor: "rgba(34,197,94,0.2)",
+              tension: 0.4,
+              fill: true,
+            },
+          ],
+        }}
+        options={{
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false,
+            },
+          },
+          scales: {
+            x: {
+              ticks: {
+                color: "#9CA3AF",
+              },
+              grid: {
+                color: "rgba(255,255,255,0.05)",
+              },
+            },
+            y: {
+              ticks: {
+                color: "#9CA3AF",
+              },
+              grid: {
+                color: "rgba(255,255,255,0.05)",
+              },
+            },
+          },
+        }}
+      />
+    </div>
+
+    {/* Legend */}
+    <div className="flex justify-center gap-3 sm:gap-6 mt-4">
+      <div className="flex items-center gap-2">
+        <span
+          className="w-3 h-3 rounded-full"
+          style={{ backgroundColor: "#22C55E" }}
+        ></span>
+        <p className="text-white text-xs sm:text-sm">Exposure ($M)</p>
+      </div>
+    </div>
+  </div>
+</div>
+
       </div>
     </div>
   );
