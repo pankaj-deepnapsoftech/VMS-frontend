@@ -119,27 +119,22 @@ export default function ExecutiveSummaryPage() {
               {riskTrendChart && (
                 <Line
                   data={{
-                    labels: Object.keys(riskTrendChart) || [
-                      "Jan",
-                      "Feb",
-                      "Mar",
-                      "Apr",
-                      "May",
-                      "Jun",
-                    ],
+                    labels: Object.keys(riskTrendChart),
                     datasets: [
                       {
                         label: "Risk Index",
-                        data: Object.keys(riskTrendChart).map(
-                          (item) =>
-                            (riskTrendChart[item].score /
-                              riskTrendChart[item].total) *
-                            10
-                        ) || [0, 0, 0, 0, 0, 0],
+                        data: Object.keys(riskTrendChart).map((item) => {
+                          const { score, total } = riskTrendChart[item];
+                          // Avoid divide-by-zero and keep consistent data points
+                          return total > 0 ? (score / total) * 10 : 0;
+                        }),
                         borderColor: "#4F46E5",
                         backgroundColor: "rgba(79,70,229,0.2)",
                         tension: 0.4,
                         fill: true,
+                        spanGaps: true, // 🔹 Ensures line connects over null/zero points
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
                       },
                     ],
                   }}
@@ -153,26 +148,20 @@ export default function ExecutiveSummaryPage() {
                     },
                     scales: {
                       x: {
-                        ticks: {
-                          color: "#9CA3AF",
-                        },
-                        grid: {
-                          color: "rgba(255,255,255,0.05)",
-                        },
+                        ticks: { color: "#9CA3AF" },
+                        grid: { color: "rgba(255,255,255,0.05)" },
                       },
                       y: {
-                        ticks: {
-                          color: "#9CA3AF",
-                        },
-                        grid: {
-                          color: "rgba(255,255,255,0.05)",
-                        },
+                        beginAtZero: true,
+                        ticks: { color: "#9CA3AF" },
+                        grid: { color: "rgba(255,255,255,0.05)" },
                       },
                     },
                   }}
                 />
               )}
             </div>
+
 
             {/* Legend */}
             <div className="flex justify-center gap-3 sm:gap-6 mt-4">
@@ -352,10 +341,10 @@ export default function ExecutiveSummaryPage() {
                 <p className="text-[20px] font-bold text-[#FF5C5C]">
                   {financialExposure
                     ? `${(
-                        Object.keys(financialExposure)
-                          .map((item) => financialExposure[item])
-                          .reduce((i, r) => i + r, 0) / 1000000
-                      ).toFixed(5)} M` || "0"
+                      Object.keys(financialExposure)
+                        .map((item) => financialExposure[item])
+                        .reduce((i, r) => i + r, 0) / 1000000
+                    ).toFixed(5)} M` || "0"
                     : "0"}
                 </p>
                 <p className="text-xs text-white/70">Value at Risk (VaR)</p>
@@ -471,11 +460,10 @@ export default function ExecutiveSummaryPage() {
                     </div>
                     <div className="text-right w-full sm:w-auto">
                       <span
-                        className={`px-2 py-1 text-xs rounded ${
-                          item.level === "Critical"
+                        className={`px-2 py-1 text-xs rounded ${item.level === "Critical"
                             ? "bg-red-600/20 text-red-400"
                             : "bg-orange-600/20 text-orange-400"
-                        }`}
+                          }`}
                       >
                         {item.level}
                       </span>
