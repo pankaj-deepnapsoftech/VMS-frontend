@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Line } from "react-chartjs-2";
 
-
 import "react-circular-progressbar/dist/styles.css";
 import {
   Chart as ChartJS,
@@ -277,7 +276,7 @@ export default function ExecutiveSummaryPage() {
         </div>
 
         {/* third row */}
-        <div className="flex flex-col gap-4 w-full">
+        <div className="flex flex-col xl:flex-row gap-4 w-full">
           {/* Third Row */}
           <div className="bg-[#161d3d] border border-gray-800 p-4 sm:p-6 rounded-2xl w-full text-white font-sans overflow-x-auto">
             <div className="flex justify-between items-start mb-4">
@@ -331,146 +330,144 @@ export default function ExecutiveSummaryPage() {
           </div>
         </div>
 
-
         {/* Fourth Row – Trend Charts */}
-<div className="flex flex-col xl:flex-row gap-4 w-full mt-6">
-  {/* Risk Trend Chart */}
-  <div className="bg-[#161e3e] border border-gray-800 rounded-xl p-4 flex-1 shadow-md overflow-hidden">
-    <div className="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-2">
-      <h2 className="text-white text-base sm:text-lg font-semibold truncate">
-        Risk Trend
-      </h2>
-      <button className="text-gray-400 hover:text-gray-200 text-sm">
-        •••
-      </button>
-    </div>
+        <div className="flex flex-col xl:flex-row gap-4 w-full">
+          {/* Risk Trend Chart */}
+          <div className="bg-[#161e3e] border border-gray-800 rounded-xl p-4 flex-1 shadow-md overflow-hidden">
+            <div className="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-2">
+              <h2 className="text-white text-base sm:text-lg font-semibold truncate">
+                Risk Trend
+              </h2>
+              <button className="text-gray-400 hover:text-gray-200 text-sm">
+                •••
+              </button>
+            </div>
 
-    <div className="w-full h-[180px] sm:h-[220px]">
-      <Line
-        data={{
-          labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-          datasets: [
-            {
-              label: "Risk Index",
-              data: [12, 9, 14, 10, 16, 13],
-              borderColor: "#4F46E5",
-              backgroundColor: "rgba(79,70,229,0.2)",
-              tension: 0.4,
-              fill: true,
-            },
-          ],
-        }}
-        options={{
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              display: false,
-            },
-          },
-          scales: {
-            x: {
-              ticks: {
-                color: "#9CA3AF",
-              },
-              grid: {
-                color: "rgba(255,255,255,0.05)",
-              },
-            },
-            y: {
-              ticks: {
-                color: "#9CA3AF",
-              },
-              grid: {
-                color: "rgba(255,255,255,0.05)",
-              },
-            },
-          },
-        }}
-      />
-    </div>
+            <div className="w-full h-[180px] sm:h-[220px]">
+              <Line
+                data={{
+                  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+                  datasets: [
+                    {
+                      label: "Risk Index",
+                      data: [12, 9, 14, 10, 16, 13],
+                      borderColor: "#4F46E5",
+                      backgroundColor: "rgba(79,70,229,0.2)",
+                      tension: 0.4,
+                      fill: true,
+                    },
+                  ],
+                }}
+                options={{
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                    legend: {
+                      display: false,
+                    },
+                  },
+                  scales: {
+                    x: {
+                      ticks: {
+                        color: "#9CA3AF",
+                      },
+                      grid: {
+                        color: "rgba(255,255,255,0.05)",
+                      },
+                    },
+                    y: {
+                      ticks: {
+                        color: "#9CA3AF",
+                      },
+                      grid: {
+                        color: "rgba(255,255,255,0.05)",
+                      },
+                    },
+                  },
+                }}
+              />
+            </div>
 
-    {/* Legend */}
-    <div className="flex justify-center gap-3 sm:gap-6 mt-4">
-      <div className="flex items-center gap-2">
-        <span
-          className="w-3 h-3 rounded-full"
-          style={{ backgroundColor: "#4F46E5" }}
-        ></span>
-        <p className="text-white text-xs sm:text-sm">Risk Index</p>
-      </div>
-    </div>
-  </div>
+            {/* Legend */}
+            <div className="flex justify-center gap-3 sm:gap-6 mt-4">
+              <div className="flex items-center gap-2">
+                <span
+                  className="w-3 h-3 rounded-full"
+                  style={{ backgroundColor: "#4F46E5" }}
+                ></span>
+                <p className="text-white text-xs sm:text-sm">Risk Index</p>
+              </div>
+            </div>
+          </div>
 
-  {/* Financial Exposure Trend Chart */}
-  <div className="bg-[#161e3e] border border-gray-800 rounded-xl p-4 flex-1 shadow-md overflow-hidden">
-    <div className="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-2">
-      <h2 className="text-white text-base sm:text-lg font-semibold truncate">
-        Financial Exposure Trend
-      </h2>
-      <button className="text-gray-400 hover:text-gray-200 text-sm">
-        •••
-      </button>
-    </div>
+          {/* Financial Exposure Trend Chart */}
+          <div className="bg-[#161e3e] border border-gray-800 rounded-xl p-4 flex-1 shadow-md overflow-hidden">
+            <div className="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-2">
+              <h2 className="text-white text-base sm:text-lg font-semibold truncate">
+                Financial Exposure Trend
+              </h2>
+              <button className="text-gray-400 hover:text-gray-200 text-sm">
+                •••
+              </button>
+            </div>
 
-    <div className="w-full h-[180px] sm:h-[220px]">
-      <Line
-        data={{
-          labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-          datasets: [
-            {
-              label: "Exposure ($M)",
-              data: [5.2, 4.8, 6.1, 7.0, 6.6, 7.4],
-              borderColor: "#22C55E",
-              backgroundColor: "rgba(34,197,94,0.2)",
-              tension: 0.4,
-              fill: true,
-            },
-          ],
-        }}
-        options={{
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              display: false,
-            },
-          },
-          scales: {
-            x: {
-              ticks: {
-                color: "#9CA3AF",
-              },
-              grid: {
-                color: "rgba(255,255,255,0.05)",
-              },
-            },
-            y: {
-              ticks: {
-                color: "#9CA3AF",
-              },
-              grid: {
-                color: "rgba(255,255,255,0.05)",
-              },
-            },
-          },
-        }}
-      />
-    </div>
+            <div className="w-full h-[180px] sm:h-[220px]">
+              <Line
+                data={{
+                  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+                  datasets: [
+                    {
+                      label: "Exposure ($M)",
+                      data: [5.2, 4.8, 6.1, 7.0, 6.6, 7.4],
+                      borderColor: "#22C55E",
+                      backgroundColor: "rgba(34,197,94,0.2)",
+                      tension: 0.4,
+                      fill: true,
+                    },
+                  ],
+                }}
+                options={{
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                    legend: {
+                      display: false,
+                    },
+                  },
+                  scales: {
+                    x: {
+                      ticks: {
+                        color: "#9CA3AF",
+                      },
+                      grid: {
+                        color: "rgba(255,255,255,0.05)",
+                      },
+                    },
+                    y: {
+                      ticks: {
+                        color: "#9CA3AF",
+                      },
+                      grid: {
+                        color: "rgba(255,255,255,0.05)",
+                      },
+                    },
+                  },
+                }}
+              />
+            </div>
 
-    {/* Legend */}
-    <div className="flex justify-center gap-3 sm:gap-6 mt-4">
-      <div className="flex items-center gap-2">
-        <span
-          className="w-3 h-3 rounded-full"
-          style={{ backgroundColor: "#22C55E" }}
-        ></span>
-        <p className="text-white text-xs sm:text-sm">Exposure ($M)</p>
-      </div>
-    </div>
-  </div>
-</div>
-
+            {/* Legend */}
+            <div className="flex justify-center gap-3 sm:gap-6 mt-4">
+              <div className="flex items-center gap-2">
+                <span
+                  className="w-3 h-3 rounded-full"
+                  style={{ backgroundColor: "#22C55E" }}
+                ></span>
+                <p className="text-white text-xs sm:text-sm">Exposure ($M)</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
