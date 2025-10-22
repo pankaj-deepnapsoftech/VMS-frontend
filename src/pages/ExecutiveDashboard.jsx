@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect } from "react";
 
 import "react-circular-progressbar/dist/styles.css";
 import {
@@ -12,7 +12,7 @@ import {
 } from "chart.js";
 import { useAuthContext, useReportContext } from "@/context";
 import Loader from "@/components/Loader/Loader";
-import { assetData, summaryData } from "@/constants/dynomic.data";
+import { assetData, FinancialExposure, summaryData, TopFiveRiskIndicator } from "@/constants/dynomic.data";
 
 ChartJS.register(
   RadialLinearScale,
@@ -31,11 +31,18 @@ export default function ExecutiveSummaryPage() {
     loading,
     GetAssetInventory,
     assetInventory,
+    GetFinancialExposure,
+    financialExposure,
+    GetTopRiskIndicator,
+    topFiveRiskIndicatorData
   } = useReportContext();
+
 
   useEffect(() => {
     if (token) {
       GetRiskData(tenant, selectedYear);
+      GetFinancialExposure(tenant, selectedYear);
+      GetTopRiskIndicator(tenant, selectedYear);
       GetAssetInventory(selectedYear);
     }
   }, [token, tenant, selectedYear]);
@@ -82,91 +89,6 @@ export default function ExecutiveSummaryPage() {
         </div>
 
         {/* Second Row */}
-        <div className="flex flex-col gap-4 w-full">
-          {/* Third Row */}
-          <div className="bg-[#161d3d] border border-gray-800 p-4 sm:p-6 rounded-2xl w-full text-white font-sans overflow-x-auto">
-            <div className="flex justify-between items-start mb-4">
-              <h2 className="text-base sm:text-lg md:text-xl font-semibold">
-                Top 10 Risk Indicators
-              </h2>
-              <button className="text-white/50 hover:text-white text-lg sm:text-xl leading-none">
-                ⋯
-              </button>
-            </div>
-
-            <div className="space-y-3">
-              {[
-                {
-                  title: "Unpatched Critical CVE-2024-1234",
-                  system: "Web Server",
-                  likelihood: "95%",
-                  level: "Critical",
-                  exposure: "$2.4M",
-                },
-                {
-                  title: "Weak Authentication Controls",
-                  system: "Database",
-                  likelihood: "78%",
-                  level: "High",
-                  exposure: "$1.8M",
-                },
-                {
-                  title: "Outdated SSL Certificates",
-                  system: "Load Balancer",
-                  likelihood: "85%",
-                  level: "High",
-                  exposure: "$950K",
-                },
-                {
-                  title: "Privileged Account Misuse",
-                  system: "Domain Controller",
-                  likelihood: "67%",
-                  level: "Critical",
-                  exposure: "$3.2M",
-                },
-              ].map((item, idx) => (
-                <div
-                  key={idx}
-                  className="bg-[#242f49] rounded-md p-3 sm:p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center"
-                >
-                  <div className="mb-2 sm:mb-0 w-full sm:w-auto">
-                    <p className="font-medium text-sm sm:text-base">
-                      {item.title}
-                    </p>
-                    <p className="text-xs sm:text-sm text-white/60">
-                      {item.system}
-                    </p>
-                    <p className="text-xs sm:text-sm text-white/60">
-                      Likelihood:{" "}
-                      <span className="text-white font-semibold">
-                        {item.likelihood}
-                      </span>
-                    </p>
-                  </div>
-                  <div className="text-right w-full sm:w-auto">
-                    <span
-                      className={`px-2 py-1 text-xs rounded ${
-                        item.level === "Critical"
-                          ? "bg-red-600/20 text-red-400"
-                          : "bg-orange-600/20 text-orange-400"
-                      }`}
-                    >
-                      {item.level}
-                    </span>
-                    <p className="text-xs sm:text-sm text-white/60 mt-1">
-                      Exposure:{" "}
-                      <span className="text-white font-semibold">
-                        {item.exposure}
-                      </span>
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Fourth Row  */}
         <div className="flex flex-wrap gap-4 w-full">
           {/* Asset Inventory */}
           <div className="bg-gradient-to-b from-[#1A1F3F] to-[#141833] p-5 rounded-2xl text-white border border-[#2C3564] shadow-[0_4px_15px_rgba(0,0,0,0.3)] w-full sm:w-[48%] xl:w-[23.5%] ">
@@ -258,37 +180,15 @@ export default function ExecutiveSummaryPage() {
             {/* Values */}
             <div className="flex items-end gap-4 mb-4">
               <div>
-                <p className="text-[20px] font-bold text-[#FF5C5C]">$12.8M</p>
+                <p className="text-[20px] font-bold text-[#FF5C5C]">{ financialExposure ? `${(Object.keys(financialExposure).map((item)=> financialExposure[item]).reduce((i,r)=>i +r,0) / 1000000).toFixed(5)} M` || '0' : "0"}</p>
                 <p className="text-xs text-white/70">Value at Risk (VaR)</p>
               </div>
-              <div>
-                <p className="text-[20px] font-bold text-[#FFA93B]">$4.2M</p>
-                <p className="text-xs text-white/70">Potential Impact</p>
-              </div>
+
             </div>
 
             {/* Bars */}
             <div className="flex flex-col justify-center gap-4 mt-auto">
-              {[
-                {
-                  label: "Data Breach Risk",
-                  value: "$8.4M",
-                  color: "#FF5C5C",
-                  width: "100%",
-                },
-                {
-                  label: "System Downtime",
-                  value: "$2.8M",
-                  color: "#FFA93B",
-                  width: "33%",
-                },
-                {
-                  label: "Compliance Fines",
-                  value: "$1.6M",
-                  color: "#FFD233",
-                  width: "20%",
-                },
-              ].map((bar, idx) => (
+              {FinancialExposure(financialExposure).map((bar, idx) => (
                 <div key={idx}>
                   <div className="flex justify-between text-xs mb-1">
                     <span>{bar.label}</span>
@@ -356,6 +256,59 @@ export default function ExecutiveSummaryPage() {
                       className="h-2 rounded-full"
                       style={{ width: bar.width, background: bar.color }}
                     />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* third row */}
+
+         <div className="flex flex-col gap-4 w-full">
+          {/* Third Row */}
+          <div className="bg-[#161d3d] border border-gray-800 p-4 sm:p-6 rounded-2xl w-full text-white font-sans overflow-x-auto">
+            <div className="flex justify-between items-start mb-4">
+              <h2 className="text-base sm:text-lg md:text-xl font-semibold">
+                Top 5 Risk Indicators
+              </h2>
+              <button className="text-white/50 hover:text-white text-lg sm:text-xl leading-none">
+                ⋯
+              </button>
+            </div>
+
+            <div className="space-y-3">
+              {TopFiveRiskIndicator(topFiveRiskIndicatorData).map((item, idx) => (
+                <div
+                  key={idx}
+                  className="bg-[#242f49] rounded-md p-3 sm:p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center"
+                >
+                  <div className="mb-2 sm:mb-0 w-full sm:w-auto">
+                    <p className="font-medium text-sm sm:text-base">
+                      {item.title}
+                    </p>
+                    <p className="text-xs sm:text-sm text-white/60">
+                      Score:{" "}
+                      <span className="text-white font-semibold">
+                        {item.score}
+                      </span>
+                    </p>
+                  </div>
+                  <div className="text-right w-full sm:w-auto">
+                    <span
+                      className={`px-2 py-1 text-xs rounded ${item.level === "Critical"
+                          ? "bg-red-600/20 text-red-400"
+                          : "bg-orange-600/20 text-orange-400"
+                        }`}
+                    >
+                      {item.level}
+                    </span>
+                    <p className="text-xs sm:text-sm text-white/60 mt-1">
+                      Exposure:{" "}
+                      <span className="text-white font-semibold">
+                        {item.exposure}
+                      </span>
+                    </p>
                   </div>
                 </div>
               ))}
