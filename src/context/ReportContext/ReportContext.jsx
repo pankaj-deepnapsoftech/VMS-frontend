@@ -3,22 +3,23 @@ import { AxiosHandler } from "@/config/AxiosConfig";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const ReportContext = createContext({
-  riskQuantification: () => {},
-  GetRiskData: () => {},
+  riskQuantification: () => { },
+  GetRiskData: () => { },
   riskQuantificationData: [],
   loading: false,
   dasboardData: null,
   assetInventory: null,
-  GetFinancialExposure:()=>{},
-  GetTopRiskIndicator:()=>{},
-  GetRiskTrend:()=>{},
-  GetFinanceExposureTrend:()=>{},
-  GetRemediationWorkflow:()=>{},
-  financialExposure:null,
-  topFiveRiskIndicatorData:[],
-  riskTrendChart:null,
-  financeTrendChart:null,
-  remidationWorkflow:null,
+  GetFinancialExposure: () => { },
+  GetTopRiskIndicator: () => { },
+  GetRiskTrend: () => { },
+  GetFinanceExposureTrend: () => { },
+  GetRemediationWorkflow: () => { },
+  GetAttackExposure: () => { },
+  financialExposure: null,
+  topFiveRiskIndicatorData: [],
+  riskTrendChart: null,
+  financeTrendChart: null,
+  remidationWorkflow: null,
 });
 
 // eslint-disable-next-line react/prop-types
@@ -27,11 +28,12 @@ const ReportContextProvider = ({ children }) => {
   const [riskQuantificationData, setRiskQuantificationData] = useState([]);
   const [dasboardData, setDashboardData] = useState(null);
   const [assetInventory, setAssetInventory] = useState(null);
-  const [financialExposure,setFinancialExposure] = useState(null);
-  const [topFiveRiskIndicatorData,setTopFiveRiskIndicator] = useState([]);
-  const [riskTrendChart,setRiskTrendChart] = useState(null);
-  const [financeTrendChart,setFinanceTrendChart] = useState(null);
-  const [remidationWorkflow,setRemidationWorkflow] = useState(null);
+  const [financialExposure, setFinancialExposure] = useState(null);
+  const [topFiveRiskIndicatorData, setTopFiveRiskIndicator] = useState([]);
+  const [riskTrendChart, setRiskTrendChart] = useState(null);
+  const [financeTrendChart, setFinanceTrendChart] = useState(null);
+  const [remidationWorkflow, setRemidationWorkflow] = useState(null);
+  const [attackExposureData, setAttackExposureData] = useState(null);
 
   const [page, setPage] = useState(1);
 
@@ -49,12 +51,11 @@ const ReportContextProvider = ({ children }) => {
     }
   };
 
-  const GetRiskData = async (tenant,selectedYear) => {
+  const GetRiskData = async (tenant, selectedYear) => {
     setLoading(true);
     try {
       const res = await AxiosHandler.get(
-        `/vroc/risk-score?tenant=${tenant ? tenant : ""}&year=${
-          selectedYear ? selectedYear : ""
+        `/vroc/risk-score?tenant=${tenant ? tenant : ""}&year=${selectedYear ? selectedYear : ""
         }`
       );
       setDashboardData(res.data);
@@ -69,8 +70,7 @@ const ReportContextProvider = ({ children }) => {
     setLoading(true);
     try {
       const res = await AxiosHandler.get(
-        `/vroc/assert-inventory?year=${
-          selectedYear ? selectedYear : ""
+        `/vroc/assert-inventory?year=${selectedYear ? selectedYear : ""
         }`
       );
       setAssetInventory(res.data);
@@ -81,7 +81,7 @@ const ReportContextProvider = ({ children }) => {
     }
   };
 
-   const GetFinancialExposure = async (tenant,selectedYear) => {
+  const GetFinancialExposure = async (tenant, selectedYear) => {
     setLoading(true);
     try {
       const res = await AxiosHandler.get(`/vroc/financial-exposure?year=${selectedYear ? selectedYear : ""}&tenant=${tenant ? tenant : ""}`);
@@ -93,7 +93,7 @@ const ReportContextProvider = ({ children }) => {
     }
   };
 
-  const GetTopRiskIndicator = async (tenant,selectedYear) => {
+  const GetTopRiskIndicator = async (tenant, selectedYear) => {
     setLoading(true);
     try {
       const res = await AxiosHandler.get(`/vroc/top-risk-indicator?year=${selectedYear ? selectedYear : ""}&tenant=${tenant ? tenant : ""}`);
@@ -105,7 +105,7 @@ const ReportContextProvider = ({ children }) => {
     }
   };
 
-  const GetRiskTrend = async (tenant,selectedYear) => {
+  const GetRiskTrend = async (tenant, selectedYear) => {
     setLoading(true);
     try {
       const res = await AxiosHandler.get(`/vroc/risk-trand?year=${selectedYear ? selectedYear : ""}&tenant=${tenant ? tenant : ""}`);
@@ -117,7 +117,7 @@ const ReportContextProvider = ({ children }) => {
     }
   };
 
-   const GetFinanceExposureTrend = async (tenant,selectedYear) => {
+  const GetFinanceExposureTrend = async (tenant, selectedYear) => {
     setLoading(true);
     try {
       const res = await AxiosHandler.get(`/vroc/finance-exposure-trand?year=${selectedYear ? selectedYear : ""}&tenant=${tenant ? tenant : ""}`);
@@ -129,11 +129,24 @@ const ReportContextProvider = ({ children }) => {
     }
   };
 
-    const GetRemediationWorkflow= async (tenant,selectedYear) => {
+  const GetRemediationWorkflow = async (tenant, selectedYear) => {
     setLoading(true);
     try {
       const res = await AxiosHandler.get(`/vroc/remediation-workflow?year=${selectedYear ? selectedYear : ""}&tenant=${tenant ? tenant : ""}`);
       setRemidationWorkflow(res.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+  const GetAttackExposure = async (tenant, selectedYear) => {
+    setLoading(true);
+    try {
+      const res = await AxiosHandler.get(`/vroc/attack-exposure?year=${selectedYear ? selectedYear : ""}&tenant=${tenant ? tenant : ""}`);
+      setAttackExposureData(res.data?.data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -162,7 +175,9 @@ const ReportContextProvider = ({ children }) => {
         GetFinanceExposureTrend,
         financeTrendChart,
         GetRemediationWorkflow,
-        remidationWorkflow
+        remidationWorkflow,
+        GetAttackExposure,
+        attackExposureData
       }}
     >
       {children}

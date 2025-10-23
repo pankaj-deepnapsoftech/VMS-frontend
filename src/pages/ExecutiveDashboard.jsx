@@ -47,17 +47,21 @@ export default function ExecutiveSummaryPage() {
     riskTrendChart,
     GetFinanceExposureTrend,
     financeTrendChart,
-     GetRemediationWorkflow,
-        remidationWorkflow
+    GetRemediationWorkflow,
+    remidationWorkflow,
+     GetAttackExposure,
+        attackExposureData
   } = useReportContext();
 
-  console.log("================>>>>>>>>>>>",remidationWorkflow);
+  console.log("================>>>>",attackExposureData)
+
 
   useEffect(() => {
     if (token && tenant) {
       GetRiskData(tenant, selectedYear);
       GetFinancialExposure(tenant, selectedYear);
       GetRemediationWorkflow(tenant, selectedYear);
+      GetAttackExposure(tenant, selectedYear);
       GetRiskTrend(tenant, selectedYear);
       GetAssetInventory(selectedYear);
     }
@@ -429,49 +433,19 @@ export default function ExecutiveSummaryPage() {
               <div className="grid grid-cols-12 gap-4 px-4 py-2 border-b border-[#1B2B45] text-gray-400">
                 <div className="col-span-6">Threat Type</div>
                 <div className="col-span-3 text-right">Exposure</div>
-                <div className="col-span-3 text-right">Risk Level</div>
               </div>
 
               {/* Static Data Rows */}
-              {[
-                {
-                  name: "Phishing Attack",
-                  exposure: "42%",
-                  risk: "High",
-                  color: "text-[#FF5C5C]",
-                },
-                {
-                  name: "Ransomware",
-                  exposure: "28%",
-                  risk: "Medium",
-                  color: "text-[#FFA93B]",
-                },
-                {
-                  name: "Data Breach",
-                  exposure: "18%",
-                  risk: "Low",
-                  color: "text-[#27D27D]",
-                },
-                {
-                  name: "Insider Threat",
-                  exposure: "12%",
-                  risk: "Medium",
-                  color: "text-[#FFA93B]",
-                },
-              ].map((item, idx) => (
+              {attackExposureData && Object.keys(attackExposureData).map((item, idx) => (
                 <div
                   key={idx}
                   className="grid grid-cols-12 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-[#1a2748] transition-colors"
                 >
-                  <div className="col-span-6 truncate">{item.name}</div>
+                  <div className="col-span-6 truncate">{item}</div>
                   <div className="col-span-3 text-right font-semibold text-gray-200">
-                    {item.exposure}
+                    {attackExposureData[item]}
                   </div>
-                  <div
-                    className={`col-span-3 text-right font-medium ${item.color}`}
-                  >
-                    {item.risk}
-                  </div>
+                  
                 </div>
               ))}
             </div>
