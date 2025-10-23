@@ -162,7 +162,6 @@ export default function ExecutiveSummaryPage() {
               )}
             </div>
 
-
             {/* Legend */}
             <div className="flex justify-center gap-3 sm:gap-6 mt-4">
               <div className="flex items-center gap-2">
@@ -249,7 +248,7 @@ export default function ExecutiveSummaryPage() {
         </div>
 
         {/* Second Row */}
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
           {/* Asset Inventory */}
           <div className="bg-[#161d3d] p-5 rounded-2xl text-white border border-gray-800 flex flex-col justify-between">
             {/* Header */}
@@ -284,10 +283,8 @@ export default function ExecutiveSummaryPage() {
                     strokeLinecap="round"
                     strokeDasharray="282.6"
                     strokeDashoffset="0"
-                    className="animate-[dash_2s_ease-in-out]"
                   />
                 </svg>
-
                 <div className="absolute inset-0 flex flex-col justify-center items-center">
                   <p className="text-2xl font-bold">
                     {(assetInventory?.infrastructor?.totalCount?.count || 0) +
@@ -341,10 +338,10 @@ export default function ExecutiveSummaryPage() {
                 <p className="text-[20px] font-bold text-[#FF5C5C]">
                   {financialExposure
                     ? `${(
-                      Object.keys(financialExposure)
-                        .map((item) => financialExposure[item])
-                        .reduce((i, r) => i + r, 0) / 1000000
-                    ).toFixed(5)} M` || "0"
+                        Object.keys(financialExposure)
+                          .map((item) => financialExposure[item])
+                          .reduce((i, r) => i + r, 0) / 1000000
+                      ).toFixed(5)} M`
                     : "0"}
                 </p>
                 <p className="text-xs text-white/70">Value at Risk (VaR)</p>
@@ -425,6 +422,73 @@ export default function ExecutiveSummaryPage() {
               ))}
             </div>
           </div>
+
+          {/* Attack Exposure */}
+          <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl flex flex-col justify-between">
+            {/* Header */}
+            <div className="flex justify-between items-start mb-2">
+              <div>
+                <h2 className="text-lg font-semibold mb-1">Attack Exposure</h2>
+                <div className="text-xs text-gray-400">by Threat Type</div>
+              </div>
+              <button className="text-gray-400 text-sm hover:text-gray-200">
+                •••
+              </button>
+            </div>
+
+            {/* Static Data Table */}
+            <div className="bg-[#121F3A] rounded-md overflow-hidden text-sm">
+              {/* Header Row */}
+              <div className="grid grid-cols-12 gap-4 px-4 py-2 border-b border-[#1B2B45] text-gray-400">
+                <div className="col-span-6">Threat Type</div>
+                <div className="col-span-3 text-right">Exposure</div>
+                <div className="col-span-3 text-right">Risk Level</div>
+              </div>
+
+              {/* Static Data Rows */}
+              {[
+                {
+                  name: "Phishing Attack",
+                  exposure: "42%",
+                  risk: "High",
+                  color: "text-[#FF5C5C]",
+                },
+                {
+                  name: "Ransomware",
+                  exposure: "28%",
+                  risk: "Medium",
+                  color: "text-[#FFA93B]",
+                },
+                {
+                  name: "Data Breach",
+                  exposure: "18%",
+                  risk: "Low",
+                  color: "text-[#27D27D]",
+                },
+                {
+                  name: "Insider Threat",
+                  exposure: "12%",
+                  risk: "Medium",
+                  color: "text-[#FFA93B]",
+                },
+              ].map((item, idx) => (
+                <div
+                  key={idx}
+                  className="grid grid-cols-12 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-[#1a2748] transition-colors"
+                >
+                  <div className="col-span-6 truncate">{item.name}</div>
+                  <div className="col-span-3 text-right font-semibold text-gray-200">
+                    {item.exposure}
+                  </div>
+                  <div
+                    className={`col-span-3 text-right font-medium ${item.color}`}
+                  >
+                    {item.risk}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* third row */}
@@ -460,10 +524,11 @@ export default function ExecutiveSummaryPage() {
                     </div>
                     <div className="text-right w-full sm:w-auto">
                       <span
-                        className={`px-2 py-1 text-xs rounded ${item.level === "Critical"
+                        className={`px-2 py-1 text-xs rounded ${
+                          item.level === "Critical"
                             ? "bg-red-600/20 text-red-400"
                             : "bg-orange-600/20 text-orange-400"
-                          }`}
+                        }`}
                       >
                         {item.level}
                       </span>
