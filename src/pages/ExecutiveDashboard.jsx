@@ -17,6 +17,7 @@ import Loader from "@/components/Loader/Loader";
 import {
   assetData,
   FinancialExposure,
+  RemidationWorkflowDynomic,
   summaryData,
   TopFiveRiskIndicator,
 } from "@/constants/dynomic.data";
@@ -46,12 +47,17 @@ export default function ExecutiveSummaryPage() {
     riskTrendChart,
     GetFinanceExposureTrend,
     financeTrendChart,
+     GetRemediationWorkflow,
+        remidationWorkflow
   } = useReportContext();
+
+  console.log("================>>>>>>>>>>>",remidationWorkflow);
 
   useEffect(() => {
     if (token && tenant) {
       GetRiskData(tenant, selectedYear);
       GetFinancialExposure(tenant, selectedYear);
+      GetRemediationWorkflow(tenant, selectedYear);
       GetRiskTrend(tenant, selectedYear);
       GetAssetInventory(selectedYear);
     }
@@ -380,36 +386,17 @@ export default function ExecutiveSummaryPage() {
 
             <div className="flex items-end gap-6 mb-5">
               <div>
-                <p className="text-[20px] font-bold">156</p>
+                <p className="text-[20px] font-bold">{remidationWorkflow?.total || '0'}</p>
                 <p className="text-xs text-white/70">Total Tasks</p>
               </div>
               <div>
-                <p className="text-[20px] font-bold text-[#27D27D]">4.2 days</p>
+                <p className="text-[20px] font-bold text-[#27D27D]">{dasboardData?.mttr?.averageDays?.toFixed() || '0'} days</p>
                 <p className="text-xs text-white/70">MTTR</p>
               </div>
             </div>
 
             <div className="flex flex-col justify-center gap-4 mt-auto">
-              {[
-                {
-                  label: "Assigned",
-                  value: 89,
-                  color: "#4D9EFF",
-                  width: "57%",
-                },
-                {
-                  label: "In Progress",
-                  value: 34,
-                  color: "#FFA93B",
-                  width: "22%",
-                },
-                {
-                  label: "Completed",
-                  value: 67,
-                  color: "#27D27D",
-                  width: "43%",
-                },
-              ].map((bar, idx) => (
+              {RemidationWorkflowDynomic(remidationWorkflow).map((bar, idx) => (
                 <div key={idx}>
                   <div className="flex justify-between text-xs mb-1">
                     <span>{bar.label}</span>

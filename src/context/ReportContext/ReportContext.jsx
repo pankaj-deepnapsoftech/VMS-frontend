@@ -13,12 +13,12 @@ export const ReportContext = createContext({
   GetTopRiskIndicator:()=>{},
   GetRiskTrend:()=>{},
   GetFinanceExposureTrend:()=>{},
+  GetRemediationWorkflow:()=>{},
   financialExposure:null,
   topFiveRiskIndicatorData:[],
   riskTrendChart:null,
   financeTrendChart:null,
-
-
+  remidationWorkflow:null,
 });
 
 // eslint-disable-next-line react/prop-types
@@ -31,6 +31,7 @@ const ReportContextProvider = ({ children }) => {
   const [topFiveRiskIndicatorData,setTopFiveRiskIndicator] = useState([]);
   const [riskTrendChart,setRiskTrendChart] = useState(null);
   const [financeTrendChart,setFinanceTrendChart] = useState(null);
+  const [remidationWorkflow,setRemidationWorkflow] = useState(null);
 
   const [page, setPage] = useState(1);
 
@@ -128,6 +129,18 @@ const ReportContextProvider = ({ children }) => {
     }
   };
 
+    const GetRemediationWorkflow= async (tenant,selectedYear) => {
+    setLoading(true);
+    try {
+      const res = await AxiosHandler.get(`/vroc/remediation-workflow?year=${selectedYear ? selectedYear : ""}&tenant=${tenant ? tenant : ""}`);
+      setRemidationWorkflow(res.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <ReportContext.Provider
       value={{
@@ -147,7 +160,9 @@ const ReportContextProvider = ({ children }) => {
         GetRiskTrend,
         riskTrendChart,
         GetFinanceExposureTrend,
-        financeTrendChart
+        financeTrendChart,
+        GetRemediationWorkflow,
+        remidationWorkflow
       }}
     >
       {children}
