@@ -47,11 +47,11 @@ export default function ExecutiveSummaryPage() {
     riskTrendChart,
     GetFinanceExposureTrend,
     financeTrendChart,
-    GetRemediationWorkflow,
-    remidationWorkflow,
+     GetRemediationWorkflow,
+        remidationWorkflow
   } = useReportContext();
 
-  console.log("================>>>>>>>>>>>", remidationWorkflow);
+  console.log("================>>>>>>>>>>>",remidationWorkflow);
 
   useEffect(() => {
     if (token && tenant) {
@@ -331,48 +331,40 @@ export default function ExecutiveSummaryPage() {
           </div>
 
           {/* Financial Exposure */}
-          <div className="bg-[#161d3d] p-6 rounded-2xl text-white border border-white/10 shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
-            {/* Header */}
-            <div className="flex justify-between items-start mb-4">
-              <h2 className="text-lg font-semibold tracking-wide">
-                Financial Exposure
-              </h2>
-              <button className="text-white/50 hover:text-white transition-colors text-xl leading-none">
+          <div className="bg-[#161d3d] p-5 rounded-2xl text-white border border-gray-800 flex flex-col justify-between">
+            <div className="flex justify-between items-start mb-3">
+              <h2 className="text-lg font-semibold">Financial Exposure</h2>
+              <button className="text-white/50 hover:text-white text-lg leading-none">
                 ⋯
               </button>
             </div>
 
-            {/* Centered Main Metric */}
-            <div className="text-center mb-6">
-              <p className="text-3xl font-bold text-[#FF5C5C] drop-shadow-sm">
-                {financialExposure
-                  ? `${(
-                      Object.keys(financialExposure)
-                        .map((item) => financialExposure[item])
-                        .reduce((i, r) => i + r, 0) / 1000000
-                    ).toFixed(2)} M`
-                  : "0.00 M"}
-              </p>
-              <p className="text-sm text-white/60 mt-1">Value at Risk (VaR)</p>
+            <div className="flex items-end gap-4 mb-4">
+              <div>
+                <p className="text-[20px] font-bold text-[#FF5C5C]">
+                  {financialExposure
+                    ? `${(
+                        Object.keys(financialExposure)
+                          .map((item) => financialExposure[item])
+                          .reduce((i, r) => i + r, 0) / 1000000
+                      ).toFixed(5)} M`
+                    : "0"}
+                </p>
+                <p className="text-xs text-white/70">Value at Risk (VaR)</p>
+              </div>
             </div>
 
-            {/* Dynamic Bars */}
             <div className="flex flex-col justify-center gap-4 mt-auto">
               {FinancialExposure(financialExposure).map((bar, idx) => (
                 <div key={idx}>
                   <div className="flex justify-between text-xs mb-1">
-                    <span className="text-white/70">{bar.label}</span>
-                    <span className="font-semibold text-white/80">
-                      {bar.value}
-                    </span>
+                    <span>{bar.label}</span>
+                    <span>{bar.value}</span>
                   </div>
-                  <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                  <div className="w-full h-2 bg-gray-700 rounded-full">
                     <div
-                      className="h-2 rounded-full transition-all duration-700 ease-in-out"
-                      style={{
-                        width: bar.width,
-                        background: `linear-gradient(to right, ${bar.color}, ${bar.color}90)`,
-                      }}
+                      className="h-2 rounded-full"
+                      style={{ width: bar.width, background: bar.color }}
                     />
                   </div>
                 </div>
@@ -381,53 +373,36 @@ export default function ExecutiveSummaryPage() {
           </div>
 
           {/* Remediation Workflow */}
-          <div className="bg-[#161d3d] p-6 rounded-2xl text-white border border-white/10 shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between">
-            {/* Header */}
-            <div className="flex justify-between items-start mb-4">
-              <h2 className="text-lg font-semibold tracking-wide">
-                Remediation Workflow
-              </h2>
-              <button className="text-white/50 hover:text-white transition-colors text-xl leading-none">
+          <div className="bg-[#161d3d] p-5 rounded-2xl text-white border border-gray-800 flex flex-col justify-between">
+            <div className="flex justify-between items-start mb-3">
+              <h2 className="text-lg font-semibold">Remediation Workflow</h2>
+              <button className="text-white/50 hover:text-white text-lg leading-none">
                 ⋯
               </button>
             </div>
 
-            {/* Stats */}
-            <div className="flex items-end justify-between mb-6">
+            <div className="flex items-end gap-6 mb-5">
               <div>
-                <p className="text-3xl font-bold">
-                  {remidationWorkflow?.total || "0"}
-                </p>
-                <p className="text-sm text-white/60 mt-1">Total Tasks</p>
+                <p className="text-[20px] font-bold">{remidationWorkflow?.total || '0'}</p>
+                <p className="text-xs text-white/70">Total Tasks</p>
               </div>
-              <div className="text-right">
-                <p className="text-3xl font-bold text-[#27D27D]">
-                  {dasboardData?.mttr || "0"}d
-                </p>
-                <p className="text-sm text-white/60 mt-1">MTTR</p>
+              <div>
+                <p className="text-[20px] font-bold text-[#27D27D]">{dasboardData?.mttr || '0'} days</p>
+                <p className="text-xs text-white/70">MTTR</p>
               </div>
             </div>
 
-            {/* Dynamic Progress Bars */}
             <div className="flex flex-col justify-center gap-4 mt-auto">
               {RemidationWorkflowDynomic(remidationWorkflow).map((bar, idx) => (
                 <div key={idx}>
                   <div className="flex justify-between text-xs mb-1">
-                    <span className="text-white/70">{bar.label}</span>
-                    <span
-                      className="font-semibold"
-                      style={{ color: bar.color }}
-                    >
-                      {bar.value}
-                    </span>
+                    <span>{bar.label}</span>
+                    <span style={{ color: bar.color }}>{bar.value}</span>
                   </div>
-                  <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                  <div className="w-full h-2 bg-gray-700 rounded-full">
                     <div
-                      className="h-2 rounded-full transition-all duration-700 ease-in-out"
-                      style={{
-                        width: bar.width,
-                        background: `linear-gradient(to right, ${bar.color}, ${bar.color}90)`,
-                      }}
+                      className="h-2 rounded-full"
+                      style={{ width: bar.width, background: bar.color }}
                     />
                   </div>
                 </div>
