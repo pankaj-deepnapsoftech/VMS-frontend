@@ -17,7 +17,7 @@ export const summaryData = (data) => {
     },
     {
       title: "MTTR",
-      value: "4.2 days",
+      value: `${data?.mttr ? data?.mttr : '0'} days`,
       change: "+15%",
       trendColor: "text-green-400",
       icon: "/Icons/executive3.png",
@@ -171,4 +171,20 @@ export const TopFiveRiskIndicator = (data) => {
 }
 
 
+
+export const RemidationWorkflowDynomic = (data) => {
+
+  const color = ['#4D9EFF','#FFA93B','#27D27D']
+  if(!data){
+    return [];
+  }else {
+    return data?.data?.map((item,i) => ({
+                  label: item.name,
+                  value: item.count,
+                  color: color[i],
+                  width: `${  item.count / data.total  * 100}%`,
+            }))
+  }
+
+}
 

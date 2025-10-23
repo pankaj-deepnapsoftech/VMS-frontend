@@ -19,7 +19,7 @@ import {
 } from "react-icons/md";
 import { TbReport } from "react-icons/tb";
 import { GrVulnerability } from "react-icons/gr";
-import { GiProgression } from "react-icons/gi";
+import { GiCyberEye, GiProgression } from "react-icons/gi";
 import { PiHardHatFill } from "react-icons/pi";
 
 export const AllowedPaths = [
@@ -275,29 +275,25 @@ export const products = [
     allowedPath: [
       {
         title: "Executive Dashboard",
-        route: "/executive-dashboard",
-        icon: BiSolidDashboard,
-      },
-      {
-        title: "TVM Dashboard",
         route: "/",
         icon: BiSolidDashboard,
       },
       {
-        title: "Risk Quantification",
-        route: "/risk-operation",
-        icon: AiOutlineException,
+        title: "TVM Dashboard",
+        route: "/tvm-dashboard",
+        icon: BiSolidDashboard,
       },
-      {
-        title: "Application Dashboard",
-        route: "/application-dashboard",
-        icon: MdOutlineMiscellaneousServices,
-      },
-      {
-        title: "Infrastructure Dashboard",
-        route: "/infrastructure-dashboard",
-        icon: GrVulnerability,
-      },
+      
+      // {
+      //   title: "Application Dashboard",
+      //   route: "/application-dashboard",
+      //   icon: MdOutlineMiscellaneousServices,
+      // },
+      // {
+      //   title: "Infrastructure Dashboard",
+      //   route: "/infrastructure-dashboard",
+      //   icon: GrVulnerability,
+      // },
     ],
   },
   {
@@ -512,6 +508,20 @@ export const products = [
         icon: MdWifiTetheringErrorRounded,
       },
       // { title: "Config Email", route: "/config-email", icon: Settings },
+    ],
+  },
+   {
+    title: "Cyber Risk Quantification",
+    desc: "Admin control panel",
+    borderColor: "#f8b500",
+    icon: GiCyberEye,
+    ShownTitle: "Administration",
+    allowedPath: [
+      {
+        title: "Risk Quantification",
+        route: "/risk-operation",
+        icon: AiOutlineException,
+      },
     ],
   },
 ];

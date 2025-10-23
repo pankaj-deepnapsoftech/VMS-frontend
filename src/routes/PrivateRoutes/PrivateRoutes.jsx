@@ -37,13 +37,12 @@ import CompleteAssessment from "@/pages/CompleteAssessment";
 import Severity from "@/pages/SLA-Configuration";
 import ASMDashboard from "@/pages/ASMDashboard";
 import AssessmentCenter from "@/pages/AssessmentCenter";
-import { elements } from "chart.js";
 import PendingVulnerability from "@/pages/PendingVulnerability";
 import SecurendDashboardCards from "@/pages/ThreeCards";
 
 export const PrivateRoutes = [
   {
-    path: "/",
+    path: "/tvm-dashboard",
     element: <Home />,
   },
   {
@@ -171,7 +170,7 @@ export const PrivateRoutes = [
     element: <RiskOperation />,
   },
   {
-    path: "/executive-dashboard",
+    path: "/",
     element: <ExecutiveDashboard />,
   },
   {
