@@ -17,22 +17,21 @@ export default function DownloadReports() {
   ];
 
   return (
-    <div className="w-full p-6 text-white bg-[#0e1529] min-h-screen">
+    <div className="w-full min-h-screen bg-[#0e1529] text-white p-6 md:p-8">
       {/* Page Header */}
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-xl font-semibold flex items-center gap-2">
-          Reports
-          <span className="bg-[#1a2140] text-gray-300 text-sm px-2 py-0.5 rounded-lg">
-            {reports.length}
-          </span>
+      <div>
+        <h1 className="text-2xl md:text-3xl font-semibold tracking-wide text-white">
+          Download Reports
         </h1>
+        <p className="text-sm text-gray-400 mt-1">
+          Download all vulnerability assessment reports
+        </p>
       </div>
-
       {/* Table Container */}
-      <div className="overflow-hidden rounded-lg border border-[#1e2746] bg-[#131b33]">
+      <div className="overflow-hidden rounded-xl border mt-8 border-[#1e2746] bg-[#131b33] shadow-lg shadow-black/20">
         <table className="w-full text-sm">
           {/* Table Header */}
-          <thead className="bg-[#1a2342] text-gray-300 uppercase text-xs">
+          <thead className="bg-[#1a2342] text-gray-300 uppercase text-xs tracking-wider">
             <tr>
               <th className="text-left px-6 py-3 font-medium">Name</th>
               <th className="text-right px-6 py-3 font-medium">Actions</th>
@@ -44,26 +43,36 @@ export default function DownloadReports() {
             {reports.map((report, idx) => (
               <tr
                 key={idx}
-                className="border-t border-[#1e2746] hover:bg-[#192240] transition-colors"
+                className="border-t border-[#1e2746] hover:bg-[#1c2546] transition duration-200 ease-in-out"
               >
+                {/* Name & Description */}
                 <td className="px-6 py-4">
                   <div>
-                    <div className="font-semibold text-gray-100">
+                    <div className="font-semibold text-gray-100 text-base">
                       {report.name}
                     </div>
-                    <div className="text-gray-400 text-xs">
+                    <div className="text-gray-400 text-xs mt-0.5">
                       {report.description}
                     </div>
                   </div>
                 </td>
 
-                <td className="px-6 py-4 text-right flex justify-end gap-3">
-                  <button className="text-green-400 hover:text-green-300 transition">
-                    <Download size={18} />
-                  </button>
-                  <button className="text-blue-400 hover:text-blue-300 transition">
-                    <Eye size={18} />
-                  </button>
+                {/* Actions */}
+                <td className="px-6 py-4">
+                  <div className="flex justify-end gap-3">
+                    <button
+                      className="p-2 rounded-md bg-[#12203a] text-green-400 hover:text-green-300 hover:bg-[#1b2b4e] transition duration-200"
+                      title="Download Report"
+                    >
+                      <Download size={18} />
+                    </button>
+                    <button
+                      className="p-2 rounded-md bg-[#12203a] text-blue-400 hover:text-blue-300 hover:bg-[#1b2b4e] transition duration-200"
+                      title="View Report"
+                    >
+                      <Eye size={18} />
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
@@ -71,7 +80,7 @@ export default function DownloadReports() {
         </table>
 
         {/* Footer */}
-        <div className="text-gray-400 text-xs px-6 py-3 border-t border-[#1e2746]">
+        <div className="text-gray-400 text-xs px-6 py-3 border-t border-[#1e2746] bg-[#0f162d]">
           Showing {reports.length} reports
         </div>
       </div>

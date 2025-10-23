@@ -101,7 +101,7 @@ const Reports = () => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
         <div>
           <h1 className="text-2xl md:text-3xl font-semibold tracking-wide text-white">
-            Detailed Reports
+            Upload Reports
           </h1>
           <p className="text-sm text-gray-400 mt-1">
             Manage, upload, and view all vulnerability assessment reports
