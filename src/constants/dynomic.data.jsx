@@ -17,7 +17,7 @@ export const summaryData = (data) => {
     },
     {
       title: "MTTR",
-      value: `${data?.mttr?.averageDays ? data?.mttr?.averageDays?.toFixed() : '0'} days`,
+      value: `${data?.mttr ? data?.mttr : '0'} days`,
       change: "+15%",
       trendColor: "text-green-400",
       icon: "/Icons/executive3.png",

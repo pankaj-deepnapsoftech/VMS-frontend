@@ -390,7 +390,7 @@ export default function ExecutiveSummaryPage() {
                 <p className="text-xs text-white/70">Total Tasks</p>
               </div>
               <div>
-                <p className="text-[20px] font-bold text-[#27D27D]">{dasboardData?.mttr?.averageDays?.toFixed() || '0'} days</p>
+                <p className="text-[20px] font-bold text-[#27D27D]">{dasboardData?.mttr || '0'} days</p>
                 <p className="text-xs text-white/70">MTTR</p>
               </div>
             </div>
