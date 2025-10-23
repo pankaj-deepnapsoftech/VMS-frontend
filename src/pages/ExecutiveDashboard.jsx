@@ -1,4 +1,3 @@
-/* eslint-disable no-constant-binary-expression */
 import { useEffect } from "react";
 import { Line } from "react-chartjs-2";
 
@@ -53,7 +52,6 @@ export default function ExecutiveSummaryPage() {
         attackExposureData
   } = useReportContext();
 
-  console.log("================>>>>",attackExposureData)
 
 
   useEffect(() => {
