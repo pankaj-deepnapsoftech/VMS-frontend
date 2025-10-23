@@ -1,6 +1,7 @@
 import {
   Bug,
   CalendarClock,
+  FileUp,
   LucideShield,
   UserCircle,
   Users,
@@ -481,7 +482,8 @@ export const products = [
     icon: MdOutlineMiscellaneousServices,
     ShownTitle: "Reports",
     allowedPath: [
-      { title: "Download Reports", route: "/reports", icon: TbReport },
+      { title: "Upload Reports", route: "/reports", icon: TbReport },
+      { title: "Download Reports", route: "/download-report", icon: FileUp },
     ],
   },
 

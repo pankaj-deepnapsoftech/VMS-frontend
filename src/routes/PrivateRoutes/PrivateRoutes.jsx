@@ -39,6 +39,7 @@ import ASMDashboard from "@/pages/ASMDashboard";
 import AssessmentCenter from "@/pages/AssessmentCenter";
 import PendingVulnerability from "@/pages/PendingVulnerability";
 import SecurendDashboardCards from "@/pages/ThreeCards";
+import DownloadReports from "@/pages/DownloadReport";
 
 export const PrivateRoutes = [
   {
@@ -205,8 +206,8 @@ export const PrivateRoutes = [
     path: "/Three-cards",
     element: <SecurendDashboardCards />,
   },
-  // {
-  //   path: "/Download-report",
-  //   element: <DownloadReports/>,
-  // }
+  {
+    path: "/download-report",
+    element: <DownloadReports/>,
+  },
 ];

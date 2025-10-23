@@ -167,7 +167,7 @@ const Reports = () => {
       </div>
 
       {/* Filter Inputs */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4 px-4 sm:px-6">
+      {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4 px-4 sm:px-6">
         <input
           type="text"
           placeholder="Filter by Creator Name"
@@ -191,7 +191,7 @@ const Reports = () => {
           value={dateFilter}
           onChange={(e) => setDateFilter(e.target.value)}
         />
-      </div>
+      </div> */}
 
       {/* Table */}
       {filterData.length < 1 ? (
