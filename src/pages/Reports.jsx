@@ -21,30 +21,17 @@ const Reports = () => {
   const { token } = useAuthContext();
   const [file, setFile] = useState("");
   const [isEdit, setIsEdit] = useState(false);
-  const [editData, setEditData] = useState(null); // State for edit data
-
-  const [creatorFilter, setCreatorFilter] = useState("");
-  const [orgFilter, setOrgFilter] = useState("");
-  const [dateFilter, setDateFilter] = useState("");
+  const [editData, setEditData] = useState(null);
 
   const fetchReportData = async () => {
     if (!token) return;
 
     let query = "";
-
-    // if (authenticate.role === "Admin") {
-    //   query = "/report/get-report";
-    // } else if (authenticate.role === "Assessor") {
-    //   query = "/report/get-report-assesor";
-    // } else {
-    //   query = "/report/get-report-org";
-    // }
-
     setLoading(true);
     try {
       const response = await AxiosHandler.get(query);
       setReportData(response.data?.data || []);
-      setFilterData(response.data?.data || []); // Initialize filterData with the fetched data
+      setFilterData(response.data?.data || []);
     } catch (error) {
       console.error("Error fetching reports:", error);
     } finally {
@@ -56,35 +43,6 @@ const Reports = () => {
     fetchReportData();
   }, []);
 
-  // Filtering logic
-  useEffect(() => {
-    let filteredData = reportData;
-    if (creatorFilter) {
-      filteredData = filteredData.filter((report) =>
-        report.creator?.full_name
-          .toLowerCase()
-          .includes(creatorFilter.toLowerCase())
-      );
-    }
-
-    if (orgFilter) {
-      filteredData = filteredData.filter((report) =>
-        report.Organization?.Organization.toLowerCase().includes(
-          orgFilter.toLowerCase()
-        )
-      );
-    }
-
-    if (dateFilter) {
-      filteredData = filteredData.filter((report) => {
-        const reportDate = new Date(report.createdAt).toLocaleDateString();
-        return reportDate === new Date(dateFilter).toLocaleDateString();
-      });
-    }
-
-    setFilterData(filteredData);
-  }, [creatorFilter, orgFilter, dateFilter, reportData]);
-
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     if (!values.report && !isEdit) {
       toast.error("Please upload a report file.");
@@ -94,36 +52,26 @@ const Reports = () => {
     const formData = new FormData();
     formData.append("Organization", values.Organization);
     formData.append("Type_Of_Assesment", values.Type_Of_Assesment);
-    if (values.report) {
-      formData.append("report", values.report);
-    }
+    if (values.report) formData.append("report", values.report);
 
     setLoading(true);
     try {
       let response;
       if (isEdit) {
-        // Update report
         response = await AxiosHandler.put(
           `/report/update-report/${editData._id}`,
           formData
         );
-        toast.success(response.data?.message || "Report updated successfully!");
+        toast.success("Report updated successfully!");
       } else {
-        // Create new report
         response = await AxiosHandler.post("/report/detailed-report", formData);
-        toast.success(
-          response.data?.message || "Report uploaded successfully!"
-        );
+        toast.success("Report uploaded successfully!");
       }
       setIsModalOpen(false);
       resetForm();
       fetchReportData();
     } catch (error) {
-      toast.error(
-        `Failed to ${
-          isEdit ? "update" : "upload"
-        } the report. Please try again: ${error}`
-      );
+      toast.error(`Failed to ${isEdit ? "update" : "upload"} the report.`);
       console.log(error);
     } finally {
       setLoading(false);
@@ -148,166 +96,128 @@ const Reports = () => {
   };
 
   return (
-    <div className="p-4 md:p-6 mx-auto bg-gradient-custom shadow-lg">
-      {/* Search Bar & Buttons */}
-      <div className="mb-4 w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-        <div className="w-full sm:w-auto flex justify-start sm:justify-end">
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              setIsEdit(false);
-              setIsModalOpen(true);
-            }}
-            className="w-full sm:w-auto px-4 py-2 bg-button hover:bg-hoverbutton text-white text-sm font-medium rounded-md flex items-center justify-center"
-          >
-            <BiUpload className="h-4 w-4 mr-2" />
-            Detailed Report
-          </button>
+    <div className="p-6 md:p-8 bg-[#0f172a] min-h-screen text-white">
+      {/* Header Section */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+        <div>
+          <h1 className="text-2xl md:text-3xl font-semibold tracking-wide text-white">
+            Detailed Reports
+          </h1>
+          <p className="text-sm text-gray-400 mt-1">
+            Manage, upload, and view all vulnerability assessment reports
+          </p>
         </div>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            setIsEdit(false);
+            setIsModalOpen(true);
+          }}
+          className="mt-4 sm:mt-0 flex items-center gap-2 bg-gradient-to-r from-[#2563eb] to-[#1e40af] hover:from-[#1e40af] hover:to-[#2563eb] px-5 py-2 rounded-lg text-sm font-medium shadow-md transition duration-300"
+        >
+          <BiUpload className="w-4 h-4" />
+          Upload Detailed Report
+        </button>
       </div>
 
-      {/* Filter Inputs */}
-      {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4 px-4 sm:px-6">
-        <input
-          type="text"
-          placeholder="Filter by Creator Name"
-          className="p-2 border border-gray-300 rounded-lg text-white bg-input w-full"
-          value={creatorFilter}
-          onChange={(e) => setCreatorFilter(e.target.value)}
-        />
-
-        <input
-          type="text"
-          placeholder="Filter by Organization Name"
-          className="p-2 border border-gray-300 text-white rounded-lg bg-input w-full"
-          value={orgFilter}
-          onChange={(e) => setOrgFilter(e.target.value)}
-        />
-
-        <input
-          type="date"
-          placeholder="Filter by Date"
-          className="p-2 border border-gray-300 text-white rounded-lg bg-input w-full"
-          value={dateFilter}
-          onChange={(e) => setDateFilter(e.target.value)}
-        />
-      </div> */}
-
-      {/* Table */}
-      {filterData.length < 1 ? (
-        <NoDataFound />
-      ) : (
-        <div className="overflow-x-auto rounded-md">
-          <table className="min-w-full divide-y divide-gray-200 bg-[#2d333b]">
-            <thead className="bg-gradient-to-bl from-[#333333] to-[#666666] rounded-e-lg text-white">
-              <tr>
-                {[
-                  "S NO.",
-                  "Date",
-                  "Creator",
-                  "Type Of Assesment",
-                  "Organization",
-                  "Report",
-                  "Actions",
-                ].map((header, idx) => (
-                  <th
-                    key={idx}
-                    className="px-4 py-3 text-center text-xs font-medium uppercase"
+      {/* Data Table */}
+      <div className="mt-4 bg-[#1e293b] rounded-xl shadow-lg overflow-hidden border border-gray-700">
+        {filterData.length < 1 ? (
+          <NoDataFound />
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="min-w-full text-sm">
+              <thead className="bg-[#334155] text-gray-200 uppercase tracking-wider text-xs">
+                <tr>
+                  {[
+                    "S.No",
+                    "Date",
+                    "Creator",
+                    "Type Of Assessment",
+                    "Organization",
+                    "Report",
+                    "Actions",
+                  ].map((head, idx) => (
+                    <th
+                      key={idx}
+                      className="px-5 py-3 text-center font-medium whitespace-nowrap"
+                    >
+                      {head}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-700">
+                {filterData.map((report, index) => (
+                  <tr
+                    key={report?._id}
+                    className="hover:bg-[#2a3447] transition duration-200"
                   >
-                    {header}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {filterData.length > 0 ? (
-                filterData.map((report, index) => (
-                  <tr key={report?._id} className="hover:bg-gray-500 border-b">
-                    {/* Serial Number */}
-                    <td className="px-4 py-1 text-center whitespace-nowrap text-sm text-white">
-                      {index + 1}
-                    </td>
-
-                    {/* Date (Formatted) */}
-                    <td className="px-4 py-1 text-center whitespace-nowrap text-sm text-white">
+                    <td className="px-4 py-3 text-center">{index + 1}</td>
+                    <td className="px-4 py-3 text-center">
                       {new Date(report?.createdAt).toLocaleDateString()}
                     </td>
-
-                    {/* Creator Name */}
-                    <td className="px-4 py-1 te-center whitespace-nowrap text-sm text-white">
+                    <td className="px-4 py-3 text-center">
                       {report.creator?.full_name || "-"}
                     </td>
-
-                    <td className="px-4 py-1 te-center whitespace-nowrap text-sm text-white">
+                    <td className="px-4 py-3 text-center">
                       {report.Type_Of_Assesment || "-"}
                     </td>
-
-                    {/* Organization */}
-                    <td className="px-4 py-1 text-center whitespace-nowrap text-sm text-white">
+                    <td className="px-4 py-3 text-center">
                       {report.Organization?.Organization || "-"}
                     </td>
-                    {/* View Report Button */}
-                    <td className="px-4 py-1 text-center whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-4 py-3 text-center">
                       <a
                         href={report?.file}
                         target="_blank"
-                        className="bg-gradient-to-tr from-[#1f1d1d] to-[#666666]  text-gray-50 px-4 py-1 rounded  "
+                        rel="noreferrer"
+                        className="bg-[#2563eb] hover:bg-[#1e40af] text-white px-4 py-1.5 rounded-md shadow transition duration-300"
                       >
-                        Download Report
+                        Download
                       </a>
                     </td>
-
-                    {/* Actions */}
-                    <td className="px-4 py-2 whitespace-nowrap text-center flex justify-center gap-2 items-start">
-                      <>
-                        <button
-                          onClick={() => handleEdit(report)} // Open modal in edit mode
-                          className="text-blue-600 hover:text-blue-800"
-                          title="Edit"
-                        >
-                          <BiEditAlt className="h-5 w-5" />
-                        </button>
-                        <button
-                          onClick={() => handleDelete(report._id)}
-                          className="text-red-600 hover:text-red-800"
-                          title="Delete"
-                        >
-                          <RiDeleteBinFill className="h-5 w-5" />
-                        </button>
-                      </>
+                    <td className="px-4 py-3 flex justify-center gap-3">
+                      <button
+                        onClick={() => handleEdit(report)}
+                        className="text-blue-400 hover:text-blue-600 transition"
+                        title="Edit"
+                      >
+                        <BiEditAlt className="w-5 h-5" />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(report._id)}
+                        className="text-red-500 hover:text-red-700 transition"
+                        title="Delete"
+                      >
+                        <RiDeleteBinFill className="w-5 h-5" />
+                      </button>
                     </td>
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="6" className="text-center py-4 text-gray-500">
-                    No reports available.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      )}
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
 
       {/* Modal Form */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-10">
-          <div className="bg-modalBg rounded-lg shadow-lg w-full max-w-md md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50">
+          <div className="bg-[#1e293b] w-full max-w-2xl rounded-xl shadow-lg overflow-hidden border border-gray-700">
             {/* Header */}
-            <div className="flex justify-between items-center border-b p-4 bg-table ">
-              <h2 className="text-lg font-semibold text-gray-200">
+            <div className="flex justify-between items-center px-6 py-4 border-b border-gray-700 bg-[#0f172a]">
+              <h2 className="text-lg font-semibold text-white">
                 {isEdit ? "Edit Detailed Report" : "Add Detailed Report"}
               </h2>
               <button
                 onClick={() => {
                   setIsModalOpen(false);
-                  setIsEdit(false); // Reset edit mode
-                  setEditData(null); // Clear edit data
+                  setIsEdit(false);
+                  setEditData(null);
                 }}
-                className="text-gray-100 hover:text-gray-500 transition"
+                className="text-gray-400 hover:text-gray-200 transition"
               >
-                <MdClose className="h-6 w-6" />
+                <MdClose className="w-6 h-6" />
               </button>
             </div>
 
@@ -327,10 +237,9 @@ const Reports = () => {
                 errors,
                 touched,
               }) => (
-                <Form className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
-                  {/* Report Field */}
+                <Form className="grid bg-modalBg grid-cols-1 md:grid-cols-2 gap-4 p-6">
                   <InputField
-                    label="Report"
+                    label="Upload Report"
                     name="report"
                     type="file"
                     onBlur={handleBlur}
@@ -343,79 +252,58 @@ const Reports = () => {
                   />
 
                   <div className="col-span-1 md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-200">
-                      Type of assesment
+                    <label className="block text-sm font-medium mb-1 text-gray-300">
+                      Type of Assessment
                     </label>
                     <select
                       name="Type_Of_Assesment"
                       value={values.Type_Of_Assesment}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      className="w-full px-4 py-3 rounded-md text-gray-200 bg-input focus:ring-2 focus:ring-gray-500 text-sm focus:border-transparent outline-none transition"
-                      id="Type_Of_Assesment"
+                      className="w-full px-4 py-3 rounded-md bg-[#0f172a] border border-gray-700 focus:ring-2 focus:ring-blue-600 text-gray-200 text-sm"
                     >
                       <option value="" disabled>
-                        {" "}
-                        -- Select Type of Assesment --{" "}
+                        -- Select Type of Assessment --
                       </option>
-
-                      <option value={"Secure Code Scan"}>
-                        Secure Code Scan
-                      </option>
-
-                      <option value={"Dynamic Application"}>
-                        Dynamic Application{" "}
-                      </option>
-
-                      <option value={"Web Application Penetration Testing"}>
-                        Web Application Penetration Testing
-                      </option>
-
-                      <option value={"Api Penetration Testing"}>
-                        Api Penetration Testing
-                      </option>
-
-                      <option value={"Infrastructure Vulnerability Scan"}>
-                        Infrastructure Vulnerability Scan
-                      </option>
-
-                      <option value={"Infrastructure Penetration Testing"}>
-                        Infrastructure Penetration Testing
-                      </option>
-                      <option value={"Mobile Application Penetration Test"}>
-                        Mobile Application Penetration Test
-                      </option>
-                      <option value={"Red Team exercise"}>
-                        Red Team exercise
-                      </option>
-                      <option value={"Attack Simulation Exercise"}>
-                        Attack Simulation Exercise
-                      </option>
-                      <option value={"Configuration Audits"}>
-                        Configuration Audits
-                      </option>
+                      {[
+                        "Secure Code Scan",
+                        "Dynamic Application",
+                        "Web Application Penetration Testing",
+                        "Api Penetration Testing",
+                        "Infrastructure Vulnerability Scan",
+                        "Infrastructure Penetration Testing",
+                        "Mobile Application Penetration Test",
+                        "Red Team exercise",
+                        "Attack Simulation Exercise",
+                        "Configuration Audits",
+                      ].map((type) => (
+                        <option key={type} value={type}>
+                          {type}
+                        </option>
+                      ))}
                     </select>
                     {touched.Type_Of_Assesment && errors.Type_Of_Assesment && (
-                      <p className="text-red-500">{errors.Type_Of_Assesment}</p>
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.Type_Of_Assesment}
+                      </p>
                     )}
                   </div>
 
-                  {/* Buttons */}
-                  <div className="col-span-1 md:col-span-2 flex justify-end gap-2 mt-4 border-t pt-4">
+                  <div className="col-span-2 flex justify-end gap-3 mt-4 pt-4 border-t border-gray-700">
                     <button
                       type="button"
                       onClick={() => {
                         setIsModalOpen(false);
-                        setIsEdit(false); // Reset edit mode
-                        setEditData(null); // Clear edit data
+                        setIsEdit(false);
+                        setEditData(null);
                       }}
-                      className="px-4 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400 transition"
+                      className="px-4 py-2 bg-gray-400 hover:bg-gray-600 text-gray-800 hover:text-white rounded-md transition"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
-                      className="px-4 py-2 bg-blue-800 hover:bg-blue-600 text-white rounded-md transition"
+                      className="px-5 py-2 bg-blue-700 hover:bg-blue-600 text-white font-medium rounded-md shadow transition"
                     >
                       {isEdit ? "Update" : "Save"}
                     </button>
