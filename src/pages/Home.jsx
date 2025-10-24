@@ -229,7 +229,7 @@ const [maxY, setMaxY] = useState(10); // default max height scale
       {/* First Row */}
       <div className="flex flex-col lg:flex-row gap-4 w-full">
         {/* Vulnerability Status Card */}
-        <div className="bg-[#161e3e] border border-gray-800 rounded-xl p-4 w-full md:w-[360px] lg:w-[360px] h-auto shadow-md">
+        <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl p-4 w-full md:w-[360px] lg:w-[360px] h-auto shadow-md">
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-white text-base font-semibold">
               Vulnerability Status
@@ -301,7 +301,7 @@ const [maxY, setMaxY] = useState(10); // default max height scale
         </div>
 
         {/* Line Chart Card */}
-        <div className="bg-[#161e3e] border border-gray-800 rounded-xl p-4 flex-1 h-auto shadow-md overflow-hidden">
+        <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl p-4 flex-1 h-auto shadow-md overflow-hidden">
           <div className="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-2">
             <h2 className="text-white text-base sm:text-lg font-semibold truncate">
               Vulnerable Items by Risk Rating
@@ -343,7 +343,7 @@ const [maxY, setMaxY] = useState(10); // default max height scale
       {/* Second Row  */}
       <div className="flex flex-col lg:flex-row lg:flex-wrap gap-4 mt-4 w-full">
         {/* Exploitability */}
-        <div className="bg-[#161e3e] border border-gray-800 rounded-xl p-4 w-full md:w-[360px] lg:flex-1 h-auto shadow-md">
+        <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl p-4 w-full md:w-[360px] lg:flex-1 h-auto shadow-md">
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-white text-base font-semibold">
               Exploitability
@@ -419,7 +419,7 @@ const [maxY, setMaxY] = useState(10); // default max height scale
         </div>
 
         {/* Inventory Status */}
-        <div className="bg-[#161e3e] border border-gray-800 rounded-xl p-4 w-full md:w-[360px] lg:flex-1 h-auto shadow-md">
+        <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl p-4 w-full md:w-[360px] lg:flex-1 h-auto shadow-md">
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-white text-base font-semibold">
               Inventory Status
@@ -513,7 +513,7 @@ const [maxY, setMaxY] = useState(10); // default max height scale
 
 
         {/* Card 2: Vulnerable Items by Age */}
-        <div className="bg-[#161e3e] rounded-xl p-4 w-full md:w-[360px] lg:flex-1 text-white shadow-lg border border-gray-800">
+        <div className="bg-[#161e3e] rounded-xl p-4 w-full md:w-[360px] lg:flex-1 text-white shadow-lg border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-semibold">Vulnerable Items by Age</h2>
             <button className="text-gray-400 text-sm hover:text-gray-200 transition-colors">
@@ -598,7 +598,7 @@ const [maxY, setMaxY] = useState(10); // default max height scale
 
       {/* Fourth Row  */}
       <div className="flex flex-col gap-4 mt-4 w-full">
-        <div className="bg-[#161e3e] rounded-xl p-4 w-full text-white shadow-lg border mb-5 border-gray-800">
+        <div className="bg-[#161e3e] rounded-xl p-4 w-full hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white shadow-lg border mb-5 border-gray-800">
           <div className="flex justify-between items-center ">
             <h2 className="text-lg font-semibold">
               Open and Closed Vulnerable Items

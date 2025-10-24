@@ -111,7 +111,7 @@ export default function ExecutiveSummaryPage() {
         {/* First Row – Trend Charts */}
         <div className="flex flex-col xl:flex-row gap-4 w-full">
           {/* Risk Trend Chart */}
-          <div className="bg-[#161d3d] border border-gray-800 rounded-xl p-4 flex-1 shadow-md overflow-hidden">
+          <div className="bg-[#161d3d] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl p-4 flex-1 shadow-md overflow-hidden">
             <div className="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-2">
               <h2 className="text-white text-base sm:text-lg font-semibold truncate">
                 Risk Trend
@@ -181,7 +181,7 @@ export default function ExecutiveSummaryPage() {
           </div>
 
           {/* Financial Exposure Trend Chart */}
-          <div className="bg-[#161d3d] border border-gray-800 rounded-xl p-4 flex-1 shadow-md overflow-hidden">
+          <div className="bg-[#161d3d] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl p-4 flex-1 shadow-md overflow-hidden">
             <div className="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-2">
               <h2 className="text-white text-base sm:text-lg font-semibold truncate">
                 Financial Exposure Trend
@@ -256,7 +256,7 @@ export default function ExecutiveSummaryPage() {
         {/* Second Row */}
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
           {/* Asset Inventory */}
-          <div className="bg-[#161d3d] p-5 rounded-2xl text-white border border-gray-800 flex flex-col justify-between">
+          <div className="bg-[#161d3d] p-5 rounded-2xl hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white border border-gray-800 flex flex-col justify-between">
             {/* Header */}
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-sm font-semibold tracking-wide text-white/90">
@@ -331,7 +331,7 @@ export default function ExecutiveSummaryPage() {
           </div>
 
           {/* Financial Exposure */}
-          <div className="bg-[#161d3d] p-5 rounded-2xl text-white border border-gray-800 flex flex-col justify-between">
+          <div className="bg-[#161d3d] hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out p-5 rounded-2xl text-white border border-gray-800 flex flex-col justify-between">
             <div className="flex justify-between items-start mb-3">
               <h2 className="text-lg font-semibold">Financial Exposure</h2>
               <button className="text-white/50 hover:text-white text-lg leading-none">
@@ -373,7 +373,7 @@ export default function ExecutiveSummaryPage() {
           </div>
 
           {/* Remediation Workflow */}
-          <div className="bg-[#161d3d] p-5 rounded-2xl text-white border border-gray-800 flex flex-col justify-between">
+          <div className="bg-[#161d3d] p-5 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-2xl text-white border border-gray-800 flex flex-col justify-between">
             <div className="flex justify-between items-start mb-3">
               <h2 className="text-lg font-semibold">Remediation Workflow</h2>
               <button className="text-white/50 hover:text-white text-lg leading-none">
@@ -415,7 +415,7 @@ export default function ExecutiveSummaryPage() {
           </div>
 
           {/* Attack Exposure */}
-          <div className="bg-[#161e3e] border border-gray-800 text-white p-5 rounded-xl flex flex-col">
+          <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-5 rounded-xl flex flex-col">
             {/* Header */}
             <div className="flex justify-between items-start">
               <div>
@@ -457,7 +457,7 @@ export default function ExecutiveSummaryPage() {
         {/* third row */}
         <div className="flex flex-col xl:flex-row gap-4 w-full">
           {/* Third Row */}
-          <div className="bg-[#161d3d] border border-gray-800 p-4 sm:p-6 rounded-2xl w-full text-white font-sans overflow-x-auto">
+          <div className="bg-[#161d3d] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out p-4 sm:p-6 rounded-2xl w-full text-white font-sans overflow-x-auto">
             <div className="flex justify-between items-start mb-4">
               <h2 className="text-base sm:text-lg md:text-xl font-semibold">
                 Top 5 Risk Indicators

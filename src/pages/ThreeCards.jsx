@@ -129,7 +129,7 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
+        <div className="bg-[#161e3e] border hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           {/* Header */}
           <div className="flex justify-between items-start mb-2">
             <div>
@@ -168,7 +168,7 @@ const Dashboard = () => {
         </div>
 
         {/* Top 5 Vulnerable Assets */}
-        <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
+        <div className="bg-[#161e3e] border hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
               <h2 className="text-lg font-semibold mb-1">
@@ -209,7 +209,7 @@ const Dashboard = () => {
         </div>
 
         {/* Top 5 High Value Assets */}
-        <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
+        <div className="bg-[#161e3e] border hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
               <h2 className="text-lg font-semibold mb-1">
@@ -248,7 +248,7 @@ const Dashboard = () => {
         </div>
 
         {/* Top 5 Open Vulnerabilities */}
-        <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
+        <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
               <h2 className="text-lg font-semibold mb-1">
@@ -287,7 +287,7 @@ const Dashboard = () => {
         </div>
 
         {/* Top 5 Closed Vulnerabilities */}
-        <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
+        <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
               <h2 className="text-lg font-semibold mb-1">
@@ -323,7 +323,7 @@ const Dashboard = () => {
         </div>
 
         {/* Top 5 Unique Vulnerabilities */}
-        <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
+        <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
               <h2 className="text-lg font-semibold mb-1">
@@ -359,7 +359,7 @@ const Dashboard = () => {
         </div>
 
         {/* Critical / High Vulnerabilities */}
-        <div className="bg-[#161e3e] p-6 rounded-lg shadow-xl flex flex-col items-center justify-center">
+        <div className="bg-[#161e3e] p-6 rounded-lg shadow-xl hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out flex flex-col items-center justify-center">
           <h2 className="text-lg font-semibold mb-6 text-white text-center">
             Critical / High Vulnerabilities
           </h2>
@@ -398,7 +398,7 @@ const Dashboard = () => {
         </div>
 
         {/* SLA Breached Vulnerabilities */}
-        <div className="bg-[#161e3e] p-6 rounded-lg shadow-xl flex flex-col items-center justify-center">
+        <div className="bg-[#161e3e] p-6 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-lg shadow-xl flex flex-col items-center justify-center">
           <h2 className="text-lg font-semibold mb-6 text-white text-center">
             SLA Details
           </h2>
@@ -430,7 +430,7 @@ const Dashboard = () => {
         </div>
 
         {/* Breach Vulnerabilities List */}
-        <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
+        <div className="bg-[#161e3e] border hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
               <h2 className="text-lg font-semibold mb-1">SLA Breach List</h2>
@@ -462,7 +462,7 @@ const Dashboard = () => {
         </div>
 
         {/* Exception Vulnerabilities List */}
-        <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full mb-20 lg:flex-1">
+        <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-6 rounded-xl h-auto w-full mb-20 lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
               <div className="text-lg font-semibold mb-1">
@@ -496,7 +496,7 @@ const Dashboard = () => {
         </div>
 
         {/* Top 5 Exploitable Vulnerabilities */}
-        <div className="bg-[#161e3e] border mb-20 border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
+        <div className="bg-[#161e3e] border mb-20 border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
               <div className="text-lg font-semibold mb-1">
