@@ -279,7 +279,7 @@ const Dashboard = () => {
         </div>
 
         {/* Critical / High Vulnerabilities */}
-        <div className="bg-[#161e3e] p-6 rounded-lg shadow-xl hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out flex flex-col items-center justify-center">
+        <div className="bg-[#161e3e] p-6 border border-gray-800 rounded-lg shadow-xl hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out flex flex-col items-center justify-center">
           <h2 className="text-lg font-semibold mb-6 text-white text-center">
             Critical / High Vulnerabilities
           </h2>
@@ -318,7 +318,7 @@ const Dashboard = () => {
         </div>
 
         {/* SLA Breached Vulnerabilities */}
-        <div className="bg-[#161e3e] p-6 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-lg shadow-xl flex flex-col items-center justify-center">
+        <div className="bg-[#161e3e] border border-gray-800 p-6 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-lg shadow-xl flex flex-col items-center justify-center">
           <h2 className="text-lg font-semibold mb-6 text-white text-center">
             SLA Details
           </h2>
