@@ -92,94 +92,79 @@ const Reports = () => {
       </div>
 
       {/* Data Table */}
-      <div className="mt-4 bg-[#1e293b] rounded-xl shadow-lg overflow-hidden border border-gray-700">
-        {filterData.length < 1 ? (
+      <div className="mt-6 bg-table rounded-2xl shadow-lg border border-gray-700/50 backdrop-blur-sm overflow-hidden">
+        {!reportsData || reportsData.length === 0 ? (
           <NoDataFound />
         ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-sm">
-              <thead className="bg-[#334155] text-gray-200 uppercase tracking-wider text-xs">
+          <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent">
+            <table className="min-w-full text-sm text-gray-300">
+              {/* Sticky Table Header */}
+              <thead className="bg-gradient-to-r from-[#23314f] to-[#1c2740] text-gray-100 uppercase text-xs tracking-wider sticky top-0 z-10 shadow-md">
                 <tr>
                   {[
                     "S.No",
-                    "Date",
+                    "Report Name",
                     "Type Of Assessment",
-                    "Report",
+                    "Report File",
                     "Actions",
                   ].map((head, idx) => (
                     <th
                       key={idx}
-                      className="px-5 py-3 text-center font-medium whitespace-nowrap"
+                      className="px-6 py-4 text-center font-semibold whitespace-nowrap"
                     >
                       {head}
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-700">
-                {!reportsData || reportsData.length === 0 ? (
-                  <NoDataFound />
-                ) : (
-                  <div className="overflow-x-auto">
-                    <table className="min-w-full text-sm">
-                      <thead className="bg-[#334155] text-gray-200 uppercase tracking-wider text-xs">
-                        <tr>
-                          {[
-                            "Sr.No",
-                            "Report Name",
-                            "Type Of Assessment",
-                            "Report",
-                            "Actions",
-                          ].map((head, idx) => (
-                            <th
-                              key={idx}
-                              className="px-5 py-3 text-center font-medium whitespace-nowrap"
-                            >
-                              {head}
-                            </th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-gray-700">
-                        {reportsData.map((report, index) => (
-                          <tr
-                            key={report?._id}
-                            className="hover:bg-[#2a3447] transition duration-200"
-                          >
-                            <td className="px-4 py-3 text-center">
-                              {index + 1}
-                            </td>
-                            <td className="px-4 py-3 text-center">
-                              {report?.report_name || "-"}
-                            </td>
-                            <td className="px-4 py-3 text-center">
-                              {report?.Type_Of_Assesment?.Type_Of_Assesment ||
-                                "-"}
-                            </td>
-                            <td className="px-4 py-3 text-center">
-                              {report?.file?.image_url || "-"}
-                            </td>
-                            <td className="px-4 py-3 flex justify-center gap-3">
-                              <button
-                                onClick={() => handleEdit(report)}
-                                className="text-blue-400 hover:text-blue-600 transition"
-                                title="Edit"
-                              >
-                                <BiEditAlt className="w-5 h-5" />
-                              </button>
-                              <button
-                                className="text-red-500 hover:text-red-700 transition"
-                                title="Delete"
-                              >
-                                <RiDeleteBinFill className="w-5 h-5" />
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
+
+              {/* Table Body */}
+              <tbody className="divide-y divide-gray-700/70">
+                {reportsData.map((report, index) => (
+                  <tr
+                    key={report?._id || index}
+                    className="hover:bg-[#24314e] transition-colors duration-200 odd:bg-[#1b253f] even:bg-[#1e2943]"
+                  >
+                    <td className="px-6 py-3 text-center text-gray-400">
+                      {index + 1}
+                    </td>
+                    <td className="px-6 py-3 text-center font-medium text-gray-200">
+                      {report?.report_name || "-"}
+                    </td>
+                    <td className="px-6 py-3 text-center text-gray-400">
+                      {report?.Type_Of_Assesment?.Type_Of_Assesment || "-"}
+                    </td>
+                    <td className="px-6 py-3 text-center">
+                      {report?.file ? (
+                        <a
+                          href={report.file}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-block bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white px-4 py-1.5 rounded-lg shadow-md text-xs font-medium transition-all duration-200"
+                        >
+                          View
+                        </a>
+                      ) : (
+                        <span className="text-gray-500">-</span>
+                      )}
+                    </td>
+                    <td className="px-6 py-3 text-center flex justify-center gap-4">
+                      <button
+                        onClick={() => handleEdit(report)}
+                        className="p-2 rounded-md bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 hover:text-blue-300 transition-all"
+                        title="Edit"
+                      >
+                        <BiEditAlt className="w-5 h-5" />
+                      </button>
+                      <button
+                        className="p-2 rounded-md bg-red-500/10 hover:bg-red-500/20 text-red-500 hover:text-red-400 transition-all"
+                        title="Delete"
+                      >
+                        <RiDeleteBinFill className="w-5 h-5" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
