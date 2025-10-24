@@ -128,7 +128,6 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen">
-     
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           {/* Header */}
@@ -173,7 +172,7 @@ const Dashboard = () => {
           <div className="flex justify-between items-start mb-2">
             <div>
               <h2 className="text-lg font-semibold mb-1">
-                Top 5 Vulnerable Infrastructor Assets
+                Top 5 Vulnerable Infrastructure Assets
               </h2>
               <div className="text-xs text-gray-400">
                 by Vulnerability Count
@@ -434,9 +433,7 @@ const Dashboard = () => {
         <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
-              <h2 className="text-lg font-semibold mb-1">
-               SLA Breach List
-              </h2>
+              <h2 className="text-lg font-semibold mb-1">SLA Breach List</h2>
               <div className="text-xs text-gray-400">by VRS</div>
             </div>
             <button className="text-gray-400 text-sm hover:text-gray-200">
@@ -533,8 +530,6 @@ const Dashboard = () => {
             ))}
           </div>
         </div>
-
-
       </div>
     </div>
   );

@@ -48,11 +48,9 @@ export default function ExecutiveSummaryPage() {
     financeTrendChart,
     GetRemediationWorkflow,
     remidationWorkflow,
-     GetAttackExposure,
-        attackExposureData
+    GetAttackExposure,
+    attackExposureData,
   } = useReportContext();
-
-
 
   useEffect(() => {
     if (token && tenant) {
@@ -385,11 +383,15 @@ export default function ExecutiveSummaryPage() {
 
             <div className="flex items-end gap-6 mb-5">
               <div>
-                <p className="text-[20px] font-bold">{remidationWorkflow?.total || '0'}</p>
+                <p className="text-[20px] font-bold">
+                  {remidationWorkflow?.total || "0"}
+                </p>
                 <p className="text-xs text-white/70">Total Tasks</p>
               </div>
               <div>
-                <p className="text-[20px] font-bold text-[#27D27D]">{dasboardData?.mttr || '0'} days</p>
+                <p className="text-[20px] font-bold text-[#27D27D]">
+                  {dasboardData?.mttr || "0"} days
+                </p>
                 <p className="text-xs text-white/70">MTTR</p>
               </div>
             </div>
@@ -413,11 +415,13 @@ export default function ExecutiveSummaryPage() {
           </div>
 
           {/* Attack Exposure */}
-          <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl flex flex-col justify-between">
+          <div className="bg-[#161e3e] border border-gray-800 text-white p-5 rounded-xl flex flex-col">
             {/* Header */}
-            <div className="flex justify-between items-start mb-2">
+            <div className="flex justify-between items-start">
               <div>
-                <h2 className="text-lg font-semibold mb-1">Attack Exposure</h2>
+                <h2 className="text-lg font-semibold leading-tight">
+                  Attack Exposure
+                </h2>
                 <div className="text-xs text-gray-400">by Threat Type</div>
               </div>
               <button className="text-gray-400 text-sm hover:text-gray-200">
@@ -426,7 +430,7 @@ export default function ExecutiveSummaryPage() {
             </div>
 
             {/* Static Data Table */}
-            <div className="bg-[#121F3A] rounded-md overflow-hidden text-sm">
+            <div className="bg-[#121F3A] rounded-md overflow-hidden text-sm mt-2">
               {/* Header Row */}
               <div className="grid grid-cols-12 gap-4 px-4 py-2 border-b border-[#1B2B45] text-gray-400">
                 <div className="col-span-6">Threat Type</div>
@@ -434,18 +438,18 @@ export default function ExecutiveSummaryPage() {
               </div>
 
               {/* Static Data Rows */}
-              {attackExposureData && Object.keys(attackExposureData).map((item, idx) => (
-                <div
-                  key={idx}
-                  className="grid grid-cols-12 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-[#1a2748] transition-colors"
-                >
-                  <div className="col-span-6 truncate">{item}</div>
-                  <div className="col-span-3 text-right font-semibold text-gray-200">
-                    {attackExposureData[item]}
+              {attackExposureData &&
+                Object.keys(attackExposureData).map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="grid grid-cols-12 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-[#1a2748] transition-colors"
+                  >
+                    <div className="col-span-6 truncate">{item}</div>
+                    <div className="col-span-3 text-right font-semibold text-gray-200">
+                      {attackExposureData[item]}
+                    </div>
                   </div>
-                  
-                </div>
-              ))}
+                ))}
             </div>
           </div>
         </div>

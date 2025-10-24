@@ -4,15 +4,15 @@ export default function DownloadReports() {
   const reports = [
     {
       name: "All Vulnerabilities",
-      description: "A report containing a summary of case-related details",
+      description: "A report containing a summary of vulnerabilities in CSV Format",
     },
     {
       name: "Executive Report",
-      description: "A report containing deep statistics on playbooks",
+      description: "A high level Executive Report",
     },
     {
       name: "TVM Report",
-      description: "A report containing MTTD/MTTA/MTTR related case details",
+      description: "A high level Threat & Vulnerability Management Report",
     },
   ];
 
