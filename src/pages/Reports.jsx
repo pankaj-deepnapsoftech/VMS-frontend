@@ -2,7 +2,11 @@ import InputField from "@/components/InputField";
 import ReportModal from "@/components/modal/ReportModal";
 import NoDataFound from "@/components/NoDataFound";
 import { AxiosHandler } from "@/config/AxiosConfig";
-import { useAuthContext, useMainReportContext, useScheduleAssessmentContext } from "@/context";
+import {
+  useAuthContext,
+  useMainReportContext,
+  useScheduleAssessmentContext,
+} from "@/context";
 import { Imageuploader } from "@/utils/firebaseImageUploader";
 import { Reportvalidation } from "@/Validation/VulnerabililtyDataValidation";
 import { Form, Formik } from "formik";
@@ -23,19 +27,18 @@ const Reports = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [editData, setEditData] = useState(null);
 
-
   const { getAllInProgress, allOption } = useScheduleAssessmentContext();
 
-  const {GetAllReports,reportsData} = useMainReportContext();
+  const { GetAllReports, reportsData } = useMainReportContext();
 
-  console.log(reportsData)
+  console.log(reportsData);
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     let file;
 
     if (values?.report) {
       file = await Imageuploader(values?.report);
-    };
+    }
 
     const data = { ...values, file, creator: tenant };
 
@@ -44,54 +47,9 @@ const Reports = () => {
       resetForm();
       setSubmitting();
       setIsModalOpen(false);
-      console.log(res)
+      console.log(res);
     } catch (error) {
-      console.log(error)
-    }
-
-    // if (!values.report && !isEdit) {
-    //   toast.error("Please upload a report file.");
-    //   return;
-    // }
-
-    // const formData = new FormData();
-    // formData.append("Organization", values.Organization);
-    // formData.append("Type_Of_Assesment", values.Type_Of_Assesment);
-    // if (values.report) formData.append("report", values.report);
-
-    // setLoading(true);
-    // try {
-    //   let response;
-    //   if (isEdit) {
-    //     response = await AxiosHandler.put(
-    //       `/report/update-report/${editData._id}`,
-    //       formData
-    //     );
-    //     toast.success("Report updated successfully!");
-    //   } else {
-    //     response = await AxiosHandler.post("/report/detailed-report", formData);
-    //     toast.success("Report uploaded successfully!");
-    //   }
-    //   setIsModalOpen(false);
-    //   resetForm();
-    //   fetchReportData();
-    // } catch (error) {
-    //   toast.error(`Failed to ${isEdit ? "update" : "upload"} the report.`);
-    //   console.log(error);
-    // } finally {
-    //   setLoading(false);
-    //   setSubmitting(false);
-    // }
-
-  };
-
-  const handleDelete = async (id) => {
-    try {
-      const response = await AxiosHandler.delete(`/report/delete-report/${id}`);
-      toast.success(response.data.message || "Report removed successfully!");
-      fetchReportData();
-    } catch (error) {
-      toast.error(error);
+      console.log(error);
     }
   };
 
@@ -104,7 +62,7 @@ const Reports = () => {
   useEffect(() => {
     if (token) {
       getAllInProgress(tenant);
-      GetAllReports(tenant)
+      GetAllReports(tenant);
     }
   }, [token, tenant]);
 
@@ -145,9 +103,7 @@ const Reports = () => {
                   {[
                     "S.No",
                     "Date",
-                    "Creator",
                     "Type Of Assessment",
-                    "Organization",
                     "Report",
                     "Actions",
                   ].map((head, idx) => (
@@ -161,52 +117,69 @@ const Reports = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-700">
-                {filterData.map((report, index) => (
-                  <tr
-                    key={report?._id}
-                    className="hover:bg-[#2a3447] transition duration-200"
-                  >
-                    <td className="px-4 py-3 text-center">{index + 1}</td>
-                    <td className="px-4 py-3 text-center">
-                      {new Date(report?.createdAt).toLocaleDateString()}
-                    </td>
-                    <td className="px-4 py-3 text-center">
-                      {report.creator?.full_name || "-"}
-                    </td>
-                    <td className="px-4 py-3 text-center">
-                      {report.Type_Of_Assesment || "-"}
-                    </td>
-                    <td className="px-4 py-3 text-center">
-                      {report.Organization?.Organization || "-"}
-                    </td>
-                    <td className="px-4 py-3 text-center">
-                      <a
-                        href={report?.file}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="bg-[#2563eb] hover:bg-[#1e40af] text-white px-4 py-1.5 rounded-md shadow transition duration-300"
-                      >
-                        Download
-                      </a>
-                    </td>
-                    <td className="px-4 py-3 flex justify-center gap-3">
-                      <button
-                        onClick={() => handleEdit(report)}
-                        className="text-blue-400 hover:text-blue-600 transition"
-                        title="Edit"
-                      >
-                        <BiEditAlt className="w-5 h-5" />
-                      </button>
-                      <button
-                        onClick={() => handleDelete(report._id)}
-                        className="text-red-500 hover:text-red-700 transition"
-                        title="Delete"
-                      >
-                        <RiDeleteBinFill className="w-5 h-5" />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                {!reportsData || reportsData.length === 0 ? (
+                  <NoDataFound />
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="min-w-full text-sm">
+                      <thead className="bg-[#334155] text-gray-200 uppercase tracking-wider text-xs">
+                        <tr>
+                          {[
+                            "Sr.No",
+                            "Report Name",
+                            "Type Of Assessment",
+                            "Report",
+                            "Actions",
+                          ].map((head, idx) => (
+                            <th
+                              key={idx}
+                              className="px-5 py-3 text-center font-medium whitespace-nowrap"
+                            >
+                              {head}
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-700">
+                        {reportsData.map((report, index) => (
+                          <tr
+                            key={report?._id}
+                            className="hover:bg-[#2a3447] transition duration-200"
+                          >
+                            <td className="px-4 py-3 text-center">
+                              {index + 1}
+                            </td>
+                            <td className="px-4 py-3 text-center">
+                              {report?.report_name || "-"}
+                            </td>
+                            <td className="px-4 py-3 text-center">
+                              {report?.Type_Of_Assesment?.Type_Of_Assesment ||
+                                "-"}
+                            </td>
+                            <td className="px-4 py-3 text-center">
+                              {report?.file?.image_url || "-"}
+                            </td>
+                            <td className="px-4 py-3 flex justify-center gap-3">
+                              <button
+                                onClick={() => handleEdit(report)}
+                                className="text-blue-400 hover:text-blue-600 transition"
+                                title="Edit"
+                              >
+                                <BiEditAlt className="w-5 h-5" />
+                              </button>
+                              <button
+                                className="text-red-500 hover:text-red-700 transition"
+                                title="Delete"
+                              >
+                                <RiDeleteBinFill className="w-5 h-5" />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
               </tbody>
             </table>
           </div>
@@ -238,7 +211,7 @@ const Reports = () => {
               initialValues={{
                 report: "",
                 Type_Of_Assesment: isEdit ? editData.Type_Of_Assesment : "",
-                report_name: ""
+                report_name: "",
               }}
               validationSchema={Reportvalidation}
               onSubmit={handleSubmit}
