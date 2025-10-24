@@ -41,7 +41,7 @@ const InventoryData = [
 
 const DashboardCards = () => {
   const { token, selectedYear, tenant } = useAuthContext();
-  const { tvmCardsData, loading, refreshTVMCardsData, } = useTVMCardsContext();
+  const { tvmCardsData, loading, refreshTVMCardsData } = useTVMCardsContext();
 
   const {
     GetFirstChart,
@@ -54,22 +54,24 @@ const DashboardCards = () => {
     GetNinthChart,
     GetthirdChart,
     thirdChartData,
-      GetFiveChart,
-        itemsByAge
+    GetFiveChart,
+    itemsByAge,
   } = useDataContext();
 
-
-
-  const [lineValue, setLinevalue] = useState(0)
+  const [lineValue, setLinevalue] = useState(0);
 
   const handleChartLine = () => {
-    const data = [...secondChartData.Critical, ...secondChartData.High, ...secondChartData.Informational, ...secondChartData.Low, ...secondChartData.Medium];
+    const data = [
+      ...secondChartData.Critical,
+      ...secondChartData.High,
+      ...secondChartData.Informational,
+      ...secondChartData.Low,
+      ...secondChartData.Medium,
+    ];
     const maxvalue = Math.max(...data);
 
-    setLinevalue(maxvalue + 2)
-
-  }
-
+    setLinevalue(maxvalue + 2);
+  };
 
   // usestats
 
@@ -111,18 +113,14 @@ const DashboardCards = () => {
     },
   };
 
-
   const [greenData, setGreenData] = useState([]);
-const [yellowData, setYellowData] = useState([]);
-const [redData, setRedData] = useState([]);
-const [maxY, setMaxY] = useState(10); // default max height scale
-
-
+  const [yellowData, setYellowData] = useState([]);
+  const [redData, setRedData] = useState([]);
+  const [maxY, setMaxY] = useState(10); // default max height scale
 
   const categories = ["Critical", "High", "Medium", "Low"];
- 
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (token) {
@@ -134,46 +132,42 @@ const [maxY, setMaxY] = useState(10); // default max height scale
       GetNinthChart(tenant, selectedYear);
       GetFiveChart(tenant, selectedYear);
     }
-
-
   }, [token, tenant, selectedYear]);
 
   useEffect(() => {
+    if (itemsByAge) {
+      const categories = ["Critical", "High", "Medium", "Low"];
 
-  if (itemsByAge) {
-    const categories = ["Critical", "High", "Medium", "Low"];
+      // Map API data dynamically into arrays
+      const green = categories.map((cat) => {
+        const match = itemsByAge.first?.find((item) => item.severity === cat);
+        return match ? match.count : 0;
+      });
 
-    // Map API data dynamically into arrays
-    const green = categories.map(cat => {
-      const match = itemsByAge.first?.find(item => item.severity === cat);
-      return match ? match.count : 0;
-    });
+      const yellow = categories.map((cat) => {
+        const match = itemsByAge.second?.find((item) => item.severity === cat);
+        return match ? match.count : 0;
+      });
 
-    const yellow = categories.map(cat => {
-      const match = itemsByAge.second?.find(item => item.severity === cat);
-      return match ? match.count : 0;
-    });
+      const red = categories.map((cat) => {
+        const match = itemsByAge.third?.find((item) => item.severity === cat);
+        return match ? match.count : 0;
+      });
 
-    const red = categories.map(cat => {
-      const match = itemsByAge.third?.find(item => item.severity === cat);
-      return match ? match.count : 0;
-    });
+      // Compute max value dynamically for bar scaling
+      const maxVal = Math.max(...green, ...yellow, ...red, 10) + 2;
 
-    // Compute max value dynamically for bar scaling
-    const maxVal = Math.max(...green, ...yellow, ...red, 10) + 2;
-
-    // Update state
-    setGreenData(green);
-    setYellowData(yellow);
-    setRedData(red);
-    setMaxY(maxVal);
-  }
-}, [itemsByAge]);
-
+      // Update state
+      setGreenData(green);
+      setYellowData(yellow);
+      setRedData(red);
+      setMaxY(maxVal);
+    }
+  }, [itemsByAge]);
 
   useEffect(() => {
     if (secondChartData) {
-      handleChartLine()
+      handleChartLine();
     }
   }, [secondChartData]);
 
@@ -186,7 +180,7 @@ const [maxY, setMaxY] = useState(10); // default max height scale
             {[...Array(5)].map((_, index) => (
               <div
                 key={index}
-                className="bg-[#161e3e] rounded-xl px-4 py-4 shadow-md border border-gray-800 animate-pulse"
+                className="bg-[#161e3e] hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl px-4 py-4 shadow-md border border-gray-800 animate-pulse"
               >
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 bg-gray-600 rounded-md"></div>
@@ -202,7 +196,7 @@ const [maxY, setMaxY] = useState(10); // default max height scale
               <div
                 key={index}
                 onClick={() => navigate(card.url)}
-                className="bg-[#161e3e] rounded-xl px-4 mt-10 py-4 shadow-md border border-gray-800 hover:shadow-lg transition-shadow flex flex-col items-start"
+                className="bg-[#161e3e] hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl px-4 mt-10 py-4 shadow-md border border-gray-800  flex flex-col items-start"
               >
                 <div className="flex items-center gap-2 min-w-0 w-full">
                   <div className="w-8 h-8 flex items-center justify-center rounded-md">
@@ -388,7 +382,7 @@ const [maxY, setMaxY] = useState(10); // default max height scale
               <p className="text-white text-lg font-bold">
                 {thirdChartData
                   ? (thirdChartData.exploitable || 0) +
-                  (thirdChartData.not_exploitable || 0)
+                    (thirdChartData.not_exploitable || 0)
                   : 0}
               </p>
               <p className="text-gray-400 text-xs">Total</p>
@@ -435,28 +429,27 @@ const [maxY, setMaxY] = useState(10); // default max height scale
               data={
                 fourthChartData
                   ? {
-                    labels: Object.keys(fourthChartData || {}),
-                    datasets: [
-                      {
-                        data: Object.values(fourthChartData || {}),
-                        backgroundColor: ["#EF4444", "#22C55E"],
-                        borderWidth: 0,
-                      },
-                    ],
-                  }
-                  :
-                  {
-                    labels: InventoryData.map((item) => item.label),
-                    datasets: [
-                      {
-                        data: InventoryData.map((item) => item.value),
-                        backgroundColor: InventoryData.map(
-                          (item) => item.color
-                        ),
-                        borderWidth: 0,
-                      },
-                    ],
-                  }
+                      labels: Object.keys(fourthChartData || {}),
+                      datasets: [
+                        {
+                          data: Object.values(fourthChartData || {}),
+                          backgroundColor: ["#EF4444", "#22C55E"],
+                          borderWidth: 0,
+                        },
+                      ],
+                    }
+                  : {
+                      labels: InventoryData.map((item) => item.label),
+                      datasets: [
+                        {
+                          data: InventoryData.map((item) => item.value),
+                          backgroundColor: InventoryData.map(
+                            (item) => item.color
+                          ),
+                          borderWidth: 0,
+                        },
+                      ],
+                    }
               }
               options={{
                 cutout: "70%",
@@ -471,9 +464,9 @@ const [maxY, setMaxY] = useState(10); // default max height scale
               <p className="text-white text-lg font-bold">
                 {fourthChartData
                   ? Object.values(fourthChartData).reduce(
-                    (sum, val) => sum + (val || 0),
-                    0
-                  )
+                      (sum, val) => sum + (val || 0),
+                      0
+                    )
                   : totall}
               </p>
               <p className="text-gray-400 text-xs">Total</p>
@@ -484,33 +477,35 @@ const [maxY, setMaxY] = useState(10); // default max height scale
           <div className="flex justify-center gap-8 mt-3">
             {fourthChartData
               ? Object.entries(fourthChartData).map(([label, value], idx) => (
-                <div key={idx} className="flex items-center gap-2 mt-0.5">
-                  <span
-                    className="w-2.5 h-2.5 rounded-full"
-                    style={{
-                      backgroundColor: idx === 0 ? "#EF4444" : "#22C55E",
-                    }}
-                  ></span>
-                  <p className="text-white text-xs">
-                    {label === "businessApplication" ? "Business Application" : "Infrastructure IP"} <span className="text-gray-400">{value}</span>
-                  </p>
-                </div>
-              ))
+                  <div key={idx} className="flex items-center gap-2 mt-0.5">
+                    <span
+                      className="w-2.5 h-2.5 rounded-full"
+                      style={{
+                        backgroundColor: idx === 0 ? "#EF4444" : "#22C55E",
+                      }}
+                    ></span>
+                    <p className="text-white text-xs">
+                      {label === "businessApplication"
+                        ? "Business Application"
+                        : "Infrastructure IP"}{" "}
+                      <span className="text-gray-400">{value}</span>
+                    </p>
+                  </div>
+                ))
               : InventoryData.map((item, idx) => (
-                <div key={idx} className="flex items-center gap-2 mt-0.5">
-                  <span
-                    className="w-2.5 h-2.5 rounded-full"
-                    style={{ backgroundColor: item.color }}
-                  ></span>
-                  <p className="text-white text-xs">
-                    {item.label}{" "}
-                    <span className="text-gray-400">{item.value}</span>
-                  </p>
-                </div>
-              ))}
+                  <div key={idx} className="flex items-center gap-2 mt-0.5">
+                    <span
+                      className="w-2.5 h-2.5 rounded-full"
+                      style={{ backgroundColor: item.color }}
+                    ></span>
+                    <p className="text-white text-xs">
+                      {item.label}{" "}
+                      <span className="text-gray-400">{item.value}</span>
+                    </p>
+                  </div>
+                ))}
           </div>
         </div>
-
 
         {/* Card 2: Vulnerable Items by Age */}
         <div className="bg-[#161e3e] rounded-xl p-4 w-full md:w-[360px] lg:flex-1 text-white shadow-lg border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out">
@@ -593,7 +588,6 @@ const [maxY, setMaxY] = useState(10); // default max height scale
             </div>
           </div>
         </div>
-
       </div>
 
       {/* Fourth Row  */}
@@ -678,12 +672,9 @@ const [maxY, setMaxY] = useState(10); // default max height scale
             </div>
           </div>
         </div>
-
       </div>
 
-
-
-        <SecurendDashboardCards />
+      <SecurendDashboardCards />
     </div>
   );
 };
