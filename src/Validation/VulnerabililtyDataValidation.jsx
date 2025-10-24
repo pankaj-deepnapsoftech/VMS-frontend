@@ -35,6 +35,7 @@ export const Reportvalidation = object({
     }),
 
   Type_Of_Assesment: string().required("Type of Assessment is required"),
+  report_name: string().required("Report name is required"),
 });
 
 export const AddVulnerableData = object({

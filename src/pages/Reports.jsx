@@ -2,7 +2,8 @@ import InputField from "@/components/InputField";
 import ReportModal from "@/components/modal/ReportModal";
 import NoDataFound from "@/components/NoDataFound";
 import { AxiosHandler } from "@/config/AxiosConfig";
-import { useAuthContext } from "@/context";
+import { useAuthContext, useMainReportContext, useScheduleAssessmentContext } from "@/context";
+import { Imageuploader } from "@/utils/firebaseImageUploader";
 import { Reportvalidation } from "@/Validation/VulnerabililtyDataValidation";
 import { Form, Formik } from "formik";
 import { useEffect, useState } from "react";
@@ -15,68 +16,73 @@ const Reports = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [reportData, setReportData] = useState([]);
   const [filterData, setFilterData] = useState([]);
 
-  const { token } = useAuthContext();
+  const { token, tenant } = useAuthContext();
   const [file, setFile] = useState("");
   const [isEdit, setIsEdit] = useState(false);
   const [editData, setEditData] = useState(null);
 
-  const fetchReportData = async () => {
-    if (!token) return;
 
-    let query = "";
-    setLoading(true);
-    try {
-      const response = await AxiosHandler.get(query);
-      setReportData(response.data?.data || []);
-      setFilterData(response.data?.data || []);
-    } catch (error) {
-      console.error("Error fetching reports:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { getAllInProgress, allOption } = useScheduleAssessmentContext();
 
-  useEffect(() => {
-    fetchReportData();
-  }, []);
+  const {GetAllReports,reportsData} = useMainReportContext();
+
+  console.log(reportsData)
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    if (!values.report && !isEdit) {
-      toast.error("Please upload a report file.");
-      return;
-    }
+    let file;
 
-    const formData = new FormData();
-    formData.append("Organization", values.Organization);
-    formData.append("Type_Of_Assesment", values.Type_Of_Assesment);
-    if (values.report) formData.append("report", values.report);
+    if (values?.report) {
+      file = await Imageuploader(values?.report);
+    };
 
-    setLoading(true);
+    const data = { ...values, file, creator: tenant };
+
     try {
-      let response;
-      if (isEdit) {
-        response = await AxiosHandler.put(
-          `/report/update-report/${editData._id}`,
-          formData
-        );
-        toast.success("Report updated successfully!");
-      } else {
-        response = await AxiosHandler.post("/report/detailed-report", formData);
-        toast.success("Report uploaded successfully!");
-      }
-      setIsModalOpen(false);
+      const res = await AxiosHandler.post("/report/detailed-report", data);
       resetForm();
-      fetchReportData();
+      setSubmitting();
+      setIsModalOpen(false);
+      console.log(res)
     } catch (error) {
-      toast.error(`Failed to ${isEdit ? "update" : "upload"} the report.`);
-      console.log(error);
-    } finally {
-      setLoading(false);
-      setSubmitting(false);
+      console.log(error)
     }
+
+    // if (!values.report && !isEdit) {
+    //   toast.error("Please upload a report file.");
+    //   return;
+    // }
+
+    // const formData = new FormData();
+    // formData.append("Organization", values.Organization);
+    // formData.append("Type_Of_Assesment", values.Type_Of_Assesment);
+    // if (values.report) formData.append("report", values.report);
+
+    // setLoading(true);
+    // try {
+    //   let response;
+    //   if (isEdit) {
+    //     response = await AxiosHandler.put(
+    //       `/report/update-report/${editData._id}`,
+    //       formData
+    //     );
+    //     toast.success("Report updated successfully!");
+    //   } else {
+    //     response = await AxiosHandler.post("/report/detailed-report", formData);
+    //     toast.success("Report uploaded successfully!");
+    //   }
+    //   setIsModalOpen(false);
+    //   resetForm();
+    //   fetchReportData();
+    // } catch (error) {
+    //   toast.error(`Failed to ${isEdit ? "update" : "upload"} the report.`);
+    //   console.log(error);
+    // } finally {
+    //   setLoading(false);
+    //   setSubmitting(false);
+    // }
+
   };
 
   const handleDelete = async (id) => {
@@ -94,6 +100,13 @@ const Reports = () => {
     setIsEdit(true);
     setIsModalOpen(true);
   };
+
+  useEffect(() => {
+    if (token) {
+      getAllInProgress(tenant);
+      GetAllReports(tenant)
+    }
+  }, [token, tenant]);
 
   return (
     <div className="p-6 md:p-8 bg-[#0f172a] min-h-screen text-white">
@@ -225,6 +238,7 @@ const Reports = () => {
               initialValues={{
                 report: "",
                 Type_Of_Assesment: isEdit ? editData.Type_Of_Assesment : "",
+                report_name: ""
               }}
               validationSchema={Reportvalidation}
               onSubmit={handleSubmit}
@@ -239,6 +253,17 @@ const Reports = () => {
               }) => (
                 <Form className="grid bg-modalBg grid-cols-1 md:grid-cols-2 gap-4 p-6">
                   <InputField
+                    label="Report Name"
+                    name="report_name"
+                    placeholder="Report name"
+                    type="text"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    isError={errors.report_name && touched.report_name}
+                    error={errors.report_name}
+                  />
+
+                  <InputField
                     label="Upload Report"
                     name="report"
                     type="file"
@@ -250,7 +275,6 @@ const Reports = () => {
                     isError={errors.report && touched.report}
                     error={errors.report}
                   />
-
                   <div className="col-span-1 md:col-span-2">
                     <label className="block text-sm font-medium mb-1 text-gray-300">
                       Type of Assessment
@@ -265,20 +289,9 @@ const Reports = () => {
                       <option value="" disabled>
                         -- Select Type of Assessment --
                       </option>
-                      {[
-                        "Secure Code Scan",
-                        "Dynamic Application",
-                        "Web Application Penetration Testing",
-                        "Api Penetration Testing",
-                        "Infrastructure Vulnerability Scan",
-                        "Infrastructure Penetration Testing",
-                        "Mobile Application Penetration Test",
-                        "Red Team exercise",
-                        "Attack Simulation Exercise",
-                        "Configuration Audits",
-                      ].map((type) => (
-                        <option key={type} value={type}>
-                          {type}
+                      {allOption.map((type) => (
+                        <option key={type._id} value={type._id}>
+                          {type?.Data_Classification}
                         </option>
                       ))}
                     </select>
