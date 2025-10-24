@@ -17,6 +17,10 @@ import { TagsContext } from "./TagsContext/TagsContext";
 import { TVMCardsContext } from "./TVMCardsContext/TVMCardsContext";
 import { SeverityContext } from "./SeverityContext/SeverityContext";
 import { NessusContext } from "./nessuscontext/NessusContext";
+import {MainReportContext} from "./MainReportContext/MainReportContext"
+
+
+
 
 export { default as AuthContextProvider } from "./AuthContext/AuthContext";
 export { default as DataContextProvider } from "./DataContext/DataContext";
@@ -37,6 +41,11 @@ export { default as ReportContextProvider } from "./ReportContext/ReportContext"
 export { default as TVMCardsContextProvider } from "./TVMCardsContext/TVMCardsContext";
 export { default as SeverityContextProvider } from "./SeverityContext/SeverityContext";
 export { default as NessusContextProvider } from "./nessuscontext/NessusContext";
+export {default as MainReportContextProvider} from "./MainReportContext/MainReportContext"
+
+
+
+
 
 export const useAuthContext = () => useContext(authContext);
 export const useDataContext = () => useContext(DataContext);
@@ -58,3 +67,5 @@ export const useReportContext = () => useContext(ReportContext);
 export const useTVMCardsContext = () => useContext(TVMCardsContext);
 export const useSeverityContext = () => useContext(SeverityContext);
 export const useNessusContext = () => useContext(NessusContext);
+export const useMainReportContext = () => useContext(MainReportContext)
+
