@@ -11,7 +11,11 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { useAuthContext, useReportContext } from "@/context";
+import {
+  useAuthContext,
+  useReportContext,
+  useTVMCardsContext,
+} from "@/context";
 import Loader from "@/components/Loader/Loader";
 import {
   assetData,
@@ -51,6 +55,9 @@ export default function ExecutiveSummaryPage() {
     GetAttackExposure,
     attackExposureData,
   } = useReportContext();
+
+  const { topFiveRisk, topHighValue, exploitableVulnerabilities } =
+    useTVMCardsContext();
 
   useEffect(() => {
     if (token && tenant) {
@@ -111,7 +118,7 @@ export default function ExecutiveSummaryPage() {
         {/* First Row – Trend Charts */}
         <div className="flex flex-col xl:flex-row gap-4 w-full">
           {/* Risk Trend Chart */}
-          <div className="bg-[#161d3d] border border-gray-800 rounded-xl p-4 flex-1 shadow-md overflow-hidden">
+          <div className="bg-[#161d3d] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl p-4 flex-1 shadow-md overflow-hidden">
             <div className="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-2">
               <h2 className="text-white text-base sm:text-lg font-semibold truncate">
                 Risk Trend
@@ -181,7 +188,7 @@ export default function ExecutiveSummaryPage() {
           </div>
 
           {/* Financial Exposure Trend Chart */}
-          <div className="bg-[#161d3d] border border-gray-800 rounded-xl p-4 flex-1 shadow-md overflow-hidden">
+          <div className="bg-[#161d3d] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl p-4 flex-1 shadow-md overflow-hidden">
             <div className="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-2">
               <h2 className="text-white text-base sm:text-lg font-semibold truncate">
                 Financial Exposure Trend
@@ -256,7 +263,7 @@ export default function ExecutiveSummaryPage() {
         {/* Second Row */}
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
           {/* Asset Inventory */}
-          <div className="bg-[#161d3d] p-5 rounded-2xl text-white border border-gray-800 flex flex-col justify-between">
+          <div className="bg-[#161d3d] p-5 rounded-2xl hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white border border-gray-800 flex flex-col justify-between">
             {/* Header */}
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-sm font-semibold tracking-wide text-white/90">
@@ -331,7 +338,7 @@ export default function ExecutiveSummaryPage() {
           </div>
 
           {/* Financial Exposure */}
-          <div className="bg-[#161d3d] p-5 rounded-2xl text-white border border-gray-800 flex flex-col justify-between">
+          <div className="bg-[#161d3d] hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out p-5 rounded-2xl text-white border border-gray-800 flex flex-col justify-between">
             <div className="flex justify-between items-start mb-3">
               <h2 className="text-lg font-semibold">Financial Exposure</h2>
               <button className="text-white/50 hover:text-white text-lg leading-none">
@@ -373,7 +380,7 @@ export default function ExecutiveSummaryPage() {
           </div>
 
           {/* Remediation Workflow */}
-          <div className="bg-[#161d3d] p-5 rounded-2xl text-white border border-gray-800 flex flex-col justify-between">
+          <div className="bg-[#161d3d] p-5 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-2xl text-white border border-gray-800 flex flex-col justify-between">
             <div className="flex justify-between items-start mb-3">
               <h2 className="text-lg font-semibold">Remediation Workflow</h2>
               <button className="text-white/50 hover:text-white text-lg leading-none">
@@ -415,7 +422,7 @@ export default function ExecutiveSummaryPage() {
           </div>
 
           {/* Attack Exposure */}
-          <div className="bg-[#161e3e] border border-gray-800 text-white p-5 rounded-xl flex flex-col">
+          <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-5 rounded-xl flex flex-col">
             {/* Header */}
             <div className="flex justify-between items-start">
               <div>
@@ -454,10 +461,129 @@ export default function ExecutiveSummaryPage() {
           </div>
         </div>
 
-        {/* third row */}
+        {/* Third row  */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Top 5 Risks */}
+          <div className="bg-[#161e3e] border hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
+            {/* Header */}
+            <div className="flex justify-between items-start mb-2">
+              <div>
+                <div className="text-lg font-semibold mb-1">Top 5 Risks</div>
+                <div className="text-xs text-gray-400">by Risk Score</div>
+              </div>
+              <button className="text-gray-400 text-sm hover:text-gray-200">
+                •••
+              </button>
+            </div>
+
+            {/* Table Container */}
+            <div className="bg-[#121F3A] rounded-md overflow-hidden text-sm">
+              {/* Header Row */}
+              <div className="grid grid-cols-12 gap-4 px-4 py-2 border-b border-[#1B2B45] text-gray-400">
+                <div className="col-span-6">Risk Name</div>
+                <div className="col-span-3">Score</div>
+              </div>
+
+              {/* Data Rows */}
+              {topFiveRisk.map((label, idx) => (
+                <div
+                  key={idx}
+                  className="grid grid-cols-12 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-gray-800 transition-colors"
+                >
+                  {/* Risk Name */}
+                  <div className="col-span-6 truncate">
+                    {label?.title || "-"}
+                  </div>
+
+                  {/* Score */}
+                  <div className="col-span-3 font-semibold text-gray-200">
+                    {label?.RAS || "-"}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Top 5 High Value Assets */}
+          <div className="bg-[#161e3e] border hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
+            <div className="flex justify-between items-start mb-2">
+              <div>
+                <h2 className="text-lg font-semibold mb-1">
+                  Top 5 High Value Assets
+                </h2>
+                <div className="text-xs text-gray-400">by Importance Score</div>
+              </div>
+              <button className="text-gray-400 text-sm hover:text-gray-200">
+                •••
+              </button>
+            </div>
+
+            <div className="bg-[#121F3A] rounded-md overflow-hidden text-sm">
+              {/* Header Row */}
+              <div className="grid grid-cols-12 gap-4 px-4 py-2 border-b border-[#1B2B45] text-gray-400">
+                <div className="col-span-6">Asset Name</div>
+                <div className="col-span-3">Score</div>
+              </div>
+
+              {/* Data Rows */}
+              {topHighValue.map((asset, idx) => (
+                <div
+                  key={idx}
+                  className="grid grid-cols-12 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-gray-800 transition-colors"
+                >
+                  {/* Asset Name */}
+                  <div className="col-span-6 truncate">{asset?.name}</div>
+
+                  {/* Score */}
+                  <div className="col-span-3 font-semibold text-gray-200">
+                    {asset?.count}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Top 5 Exploitable Vulnerabilities */}
+          <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-6 rounded-xl h-auto w-full lg:flex-1">
+            <div className="flex justify-between items-start mb-2">
+              <div>
+                <div className="text-lg font-semibold mb-1">
+                  Top 5 Exploitable Vulnerabilities
+                </div>
+                <div className="text-xs text-gray-400">
+                  by Exploitability Score
+                </div>
+              </div>
+              <button className="text-gray-400 text-sm hover:text-gray-200">
+                •••
+              </button>
+            </div>
+
+            <div className="bg-[#121F3A] rounded-md overflow-hidden text-sm">
+              <div className="grid grid-cols-9 gap-4 px-4 py-2 border-b border-[#1B2B45] text-gray-400">
+                <div className="col-span-6">Vulnerability ID</div>
+                <div className="col-span-3 text-right">Score</div>
+              </div>
+
+              {exploitableVulnerabilities?.map((vuln, idx) => (
+                <div
+                  key={idx}
+                  className="grid grid-cols-9 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-gray-800 transition-colors"
+                >
+                  <div className="col-span-6 truncate">{vuln.name}</div>
+                  <div className="col-span-3 text-right font-semibold text-gray-200">
+                    {vuln.VRS}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Fourth row */}
         <div className="flex flex-col xl:flex-row gap-4 w-full">
           {/* Third Row */}
-          <div className="bg-[#161d3d] border border-gray-800 p-4 sm:p-6 rounded-2xl w-full text-white font-sans overflow-x-auto">
+          <div className="bg-[#161d3d] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out p-4 sm:p-6 rounded-2xl w-full text-white font-sans overflow-x-auto">
             <div className="flex justify-between items-start mb-4">
               <h2 className="text-base sm:text-lg md:text-xl font-semibold">
                 Top 5 Risk Indicators

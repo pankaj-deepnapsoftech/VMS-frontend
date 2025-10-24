@@ -55,10 +55,8 @@ const Dashboard = () => {
   const { token, tenant, selectedYear } = useAuthContext();
   const {
     tenthChart,
-    topFiveRisk,
     elaventhChart,
     topFiveinfraAssetCount,
-    topHighValue,
     twelfthChart,
     TharteenthChart,
     topOpenVulnerabilities,
@@ -75,7 +73,6 @@ const Dashboard = () => {
     breachVulnerableList,
     slaBreached,
     twntythChart,
-    exploitableVulnerabilities,
   } = useTVMCardsContext();
 
   const combinedVulnerabilities = (data) => {
@@ -129,46 +126,8 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
-          {/* Header */}
-          <div className="flex justify-between items-start mb-2">
-            <div>
-              <div className="text-lg font-semibold mb-1">Top 5 Risks</div>
-              <div className="text-xs text-gray-400">by Risk Score</div>
-            </div>
-            <button className="text-gray-400 text-sm hover:text-gray-200">
-              •••
-            </button>
-          </div>
-
-          {/* Table Container */}
-          <div className="bg-[#121F3A] rounded-md overflow-hidden text-sm">
-            {/* Header Row */}
-            <div className="grid grid-cols-12 gap-4 px-4 py-2 border-b border-[#1B2B45] text-gray-400">
-              <div className="col-span-6">Risk Name</div>
-              <div className="col-span-3">Score</div>
-            </div>
-
-            {/* Data Rows */}
-            {topFiveRisk.map((label, idx) => (
-              <div
-                key={idx}
-                className="grid grid-cols-12 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-gray-800 transition-colors"
-              >
-                {/* Risk Name */}
-                <div className="col-span-6 truncate">{label?.title || "-"}</div>
-
-                {/* Score */}
-                <div className="col-span-3 font-semibold text-gray-200">
-                  {label?.RAS || "-"}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* Top 5 Vulnerable Assets */}
-        <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
+        <div className="bg-[#161e3e] border hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
               <h2 className="text-lg font-semibold mb-1">
@@ -208,47 +167,8 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Top 5 High Value Assets */}
-        <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
-          <div className="flex justify-between items-start mb-2">
-            <div>
-              <h2 className="text-lg font-semibold mb-1">
-                Top 5 High Value Assets
-              </h2>
-              <div className="text-xs text-gray-400">by Importance Score</div>
-            </div>
-            <button className="text-gray-400 text-sm hover:text-gray-200">
-              •••
-            </button>
-          </div>
-
-          <div className="bg-[#121F3A] rounded-md overflow-hidden text-sm">
-            {/* Header Row */}
-            <div className="grid grid-cols-12 gap-4 px-4 py-2 border-b border-[#1B2B45] text-gray-400">
-              <div className="col-span-6">Asset Name</div>
-              <div className="col-span-3">Score</div>
-            </div>
-
-            {/* Data Rows */}
-            {topHighValue.map((asset, idx) => (
-              <div
-                key={idx}
-                className="grid grid-cols-12 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-gray-800 transition-colors"
-              >
-                {/* Asset Name */}
-                <div className="col-span-6 truncate">{asset?.name}</div>
-
-                {/* Score */}
-                <div className="col-span-3 font-semibold text-gray-200">
-                  {asset?.count}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* Top 5 Open Vulnerabilities */}
-        <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
+        <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
               <h2 className="text-lg font-semibold mb-1">
@@ -287,7 +207,7 @@ const Dashboard = () => {
         </div>
 
         {/* Top 5 Closed Vulnerabilities */}
-        <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
+        <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
               <h2 className="text-lg font-semibold mb-1">
@@ -323,7 +243,7 @@ const Dashboard = () => {
         </div>
 
         {/* Top 5 Unique Vulnerabilities */}
-        <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
+        <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
               <h2 className="text-lg font-semibold mb-1">
@@ -359,7 +279,7 @@ const Dashboard = () => {
         </div>
 
         {/* Critical / High Vulnerabilities */}
-        <div className="bg-[#161e3e] p-6 rounded-lg shadow-xl flex flex-col items-center justify-center">
+        <div className="bg-[#161e3e] p-6 rounded-lg shadow-xl hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out flex flex-col items-center justify-center">
           <h2 className="text-lg font-semibold mb-6 text-white text-center">
             Critical / High Vulnerabilities
           </h2>
@@ -398,7 +318,7 @@ const Dashboard = () => {
         </div>
 
         {/* SLA Breached Vulnerabilities */}
-        <div className="bg-[#161e3e] p-6 rounded-lg shadow-xl flex flex-col items-center justify-center">
+        <div className="bg-[#161e3e] p-6 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-lg shadow-xl flex flex-col items-center justify-center">
           <h2 className="text-lg font-semibold mb-6 text-white text-center">
             SLA Details
           </h2>
@@ -430,7 +350,7 @@ const Dashboard = () => {
         </div>
 
         {/* Breach Vulnerabilities List */}
-        <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
+        <div className="bg-[#161e3e] border hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out border-gray-800 text-white p-6 rounded-xl h-auto w-full mb-20 lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
               <h2 className="text-lg font-semibold mb-1">SLA Breach List</h2>
@@ -462,7 +382,7 @@ const Dashboard = () => {
         </div>
 
         {/* Exception Vulnerabilities List */}
-        <div className="bg-[#161e3e] border border-gray-800 text-white p-6 rounded-xl h-auto w-full mb-20 lg:flex-1">
+        <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-6 rounded-xl h-auto w-full mb-20 lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
               <div className="text-lg font-semibold mb-1">
@@ -489,42 +409,6 @@ const Dashboard = () => {
                 <div className="col-span-6 truncate">{vuln.name}</div>
                 <div className="col-span-3 text-right font-semibold text-gray-200">
                   {vuln.severity}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Top 5 Exploitable Vulnerabilities */}
-        <div className="bg-[#161e3e] border mb-20 border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
-          <div className="flex justify-between items-start mb-2">
-            <div>
-              <div className="text-lg font-semibold mb-1">
-                Top 5 Exploitable Vulnerabilities
-              </div>
-              <div className="text-xs text-gray-400">
-                by Exploitability Score
-              </div>
-            </div>
-            <button className="text-gray-400 text-sm hover:text-gray-200">
-              •••
-            </button>
-          </div>
-
-          <div className="bg-[#121F3A] rounded-md overflow-hidden text-sm">
-            <div className="grid grid-cols-9 gap-4 px-4 py-2 border-b border-[#1B2B45] text-gray-400">
-              <div className="col-span-6">Vulnerability ID</div>
-              <div className="col-span-3 text-right">Score</div>
-            </div>
-
-            {exploitableVulnerabilities?.map((vuln, idx) => (
-              <div
-                key={idx}
-                className="grid grid-cols-9 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-gray-800 transition-colors"
-              >
-                <div className="col-span-6 truncate">{vuln.name}</div>
-                <div className="col-span-3 text-right font-semibold text-gray-200">
-                  {vuln.VRS}
                 </div>
               </div>
             ))}
