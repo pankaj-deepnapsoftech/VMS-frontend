@@ -81,7 +81,7 @@ const MainLayout = () => {
 
 
   const viewOnlyAllowed = (path) => {
-    const alloweds = ['/',"/infrastructure-dashboard","/application-dashboard","/executive-dashboard"];
+    const alloweds = ['/',"/infrastructure-dashboard","/application-dashboard","/tvm-dashboard"];
     return alloweds.includes(path)
   }
 

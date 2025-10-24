@@ -297,6 +297,20 @@ export const products = [
       // },
     ],
   },
+   {
+    title: "Cyber Risk Quantification",
+    desc: "Admin control panel",
+    borderColor: "#f8b500",
+    icon: GiCyberEye,
+    ShownTitle: "Administration",
+    allowedPath: [
+      {
+        title: "Risk Details",
+        route: "/risk-details",
+        icon: AiOutlineException,
+      },
+    ],
+  },
   {
     title: "Asset Management",
     desc: "Centralized asset visibility and management",
@@ -512,18 +526,5 @@ export const products = [
       // { title: "Config Email", route: "/config-email", icon: Settings },
     ],
   },
-   {
-    title: "Cyber Risk Quantification",
-    desc: "Admin control panel",
-    borderColor: "#f8b500",
-    icon: GiCyberEye,
-    ShownTitle: "Administration",
-    allowedPath: [
-      {
-        title: "Risk Quantification",
-        route: "/risk-operation",
-        icon: AiOutlineException,
-      },
-    ],
-  },
+  
 ];

@@ -167,7 +167,7 @@ export const PrivateRoutes = [
     element: <DemoDashboard />,
   },
   {
-    path: "/risk-operation",
+    path: "/risk-details",
     element: <RiskOperation />,
   },
   {
