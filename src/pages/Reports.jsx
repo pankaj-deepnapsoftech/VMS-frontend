@@ -137,7 +137,7 @@ const Reports = () => {
                     <td className="px-6 py-3 text-center">
                       {report?.file ? (
                         <a
-                          href={report.file}
+                          href={report.file?.image_url}
                           target="_blank"
                           rel="noreferrer"
                           className="inline-block bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white px-4 py-1.5 rounded-lg shadow-md text-xs font-medium transition-all duration-200"

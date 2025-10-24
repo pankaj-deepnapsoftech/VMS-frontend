@@ -16,7 +16,6 @@ const MainReportContextProvider = ({children}) => {
     const GetAllReports = async(tenant) => {
         try {
             const res = await AxiosHandler(`/report/get-report?tenat=${tenant ? tenant : ""}`);
-            console.log("this is just testing ============>>",res)
             setReportsData(res.data?.data)
         } catch (error) {
             console.log(error);
