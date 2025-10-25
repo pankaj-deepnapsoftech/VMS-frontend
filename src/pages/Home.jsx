@@ -676,18 +676,12 @@ const DashboardCards = () => {
               ))}
             </div>
 
-            {/* Chart Wrapper (no scrollbar now) */}
-            <div className="relative flex-1">
+            {/* Scrollable Chart Wrapper */}
+            <div className="relative flex-1 overflow-hidden">
               <div
                 className="relative flex justify-between items-end h-full z-10 px-2"
                 style={{
-                  display: "grid",
-                  gridTemplateColumns: `repeat(${
-                    ninthChartData?.label?.length || 12
-                  }, 1fr)`,
-                  gap: "10px",
-                  alignItems: "end",
-                  height: "100%",
+                  width: "100%", // full width of parent, no scroll
                 }}
               >
                 {/* Dotted Grid Lines */}
@@ -695,42 +689,51 @@ const DashboardCards = () => {
                   <div
                     key={i}
                     className="absolute w-full border-t border-dotted border-gray-600"
-                    style={{
-                      top: `${(i * 100) / 4}%`,
-                    }}
+                    style={{ top: `${i * 36}px` }}
                   />
                 ))}
 
                 {/* Bars */}
-                {ninthChartData?.label?.map((month, i) => {
-                  const openVal = (ninthChartData?.Open || [])[i];
-                  const closedVal = (ninthChartData?.Closed || [])[i];
-                  const exceptionVal = (ninthChartData?.Exception || [])[i];
-                  return (
-                    <div
-                      key={month}
-                      className="flex flex-col items-center justify-end"
-                    >
-                      <div className="flex items-end space-x-[2px] sm:space-x-[3px]">
-                        <div
-                          className="w-2 sm:w-2.5 rounded-sm bg-red-500"
-                          style={{ height: `${(openVal / 32) * 180}px` }}
-                        />
-                        <div
-                          className="w-2 sm:w-2.5 rounded-sm bg-blue-500"
-                          style={{ height: `${(closedVal / 32) * 180}px` }}
-                        />
-                        <div
-                          className="w-2 sm:w-2.5 rounded-sm bg-green-400"
-                          style={{ height: `${(exceptionVal / 32) * 180}px` }}
-                        />
+                <div
+                  className="flex justify-between items-end w-full"
+                  style={{
+                    gap: `${Math.max(
+                      2,
+                      8 - (ninthChartData?.label?.length || 12) / 2
+                    )}px`, // auto adjust gap based on count
+                  }}
+                >
+                  {ninthChartData?.label?.map((month, i) => {
+                    const openVal = (ninthChartData?.Open || [])[i];
+                    const closedVal = (ninthChartData?.Closed || [])[i];
+                    const exceptionVal = (ninthChartData?.Exception || [])[i];
+
+                    return (
+                      <div
+                        key={month}
+                        className="flex flex-col items-center flex-1"
+                      >
+                        <div className="flex items-end space-x-[2px] sm:space-x-[3px]">
+                          <div
+                            className="w-2 sm:w-2.5 rounded-sm bg-red-500"
+                            style={{ height: `${(openVal / 32) * 180}px` }}
+                          />
+                          <div
+                            className="w-2 sm:w-2.5 rounded-sm bg-blue-500"
+                            style={{ height: `${(closedVal / 32) * 180}px` }}
+                          />
+                          <div
+                            className="w-2 sm:w-2.5 rounded-sm bg-green-400"
+                            style={{ height: `${(exceptionVal / 32) * 180}px` }}
+                          />
+                        </div>
+                        <div className="text-[8px] sm:text-[9px] text-gray-300 mt-1 rotate-[-35deg] origin-top whitespace-nowrap">
+                          {month}
+                        </div>
                       </div>
-                      <div className="text-[8px] sm:text-[9px] text-gray-300 mt-1 rotate-[-35deg] origin-top whitespace-nowrap">
-                        {month}
-                      </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>

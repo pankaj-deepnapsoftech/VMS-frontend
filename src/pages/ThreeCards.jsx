@@ -216,7 +216,8 @@ const Dashboard = () => {
         </div>
 
         {/* Breach Vulnerabilities List */}
-        <div className="bg-[#161e3e] border hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out border-gray-800 text-white p-6 rounded-xl h-auto w-full mb-20 lg:flex-1">
+        <div className="bg-[#161e3e] border hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out border-gray-800 text-white p-6 rounded-xl h-auto w-full
+         lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
               <h2 className="text-lg font-semibold mb-1">SLA Breach List</h2>
@@ -248,7 +249,8 @@ const Dashboard = () => {
         </div>
 
         {/* Exception Vulnerabilities List */}
-        <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-6 rounded-xl h-auto w-full mb-20 lg:flex-1">
+        <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-6 rounded-xl h-auto w-full
+         lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
               <div className="text-lg font-semibold mb-1">
