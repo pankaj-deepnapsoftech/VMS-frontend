@@ -22,35 +22,6 @@ ChartJS.register(
   ArcElement
 );
 
-const options = {
-  plugins: {
-    legend: {
-      display: false, // Hide legend if you’re showing counts below
-    },
-    tooltip: {
-      callbacks: {
-        label: (context) => `${context.label}: ${context.formattedValue}`,
-      },
-    },
-  },
-};
-
-const doughnutOptions = {
-  responsive: true,
-  maintainAspectRatio: false,
-  cutout: "70%",
-  plugins: {
-    legend: { display: false },
-    tooltip: {
-      backgroundColor: "#1f2937",
-      titleColor: "#fff",
-      bodyColor: "#d1d5db",
-      borderColor: "#374151",
-      borderWidth: 1,
-    },
-  },
-};
-
 const Dashboard = () => {
   const { token, tenant, selectedYear } = useAuthContext();
   const {
@@ -65,47 +36,13 @@ const Dashboard = () => {
     fifthteenthChart,
     topUniqueVulnerabilities,
     SixteenthChart,
-    creticalHighVulnrable,
     ninteenthChart,
     exceptionVulnerabilities,
     seventeenthChart,
     eightteenthChart,
     breachVulnerableList,
-    slaBreached,
     twntythChart,
   } = useTVMCardsContext();
-
-  const combinedVulnerabilities = (data) => {
-    return {
-      labels: ["Critical", "High"],
-      datasets: [
-        {
-          label: "Open Vulnerabilities",
-          data: [data.High, data.Critical],
-          backgroundColor: ["#3b82f6", "#ef4444"],
-          borderColor: "#1f2937",
-          borderWidth: 2,
-          hoverOffset: 8,
-        },
-      ],
-    };
-  };
-
-  const SLABreached = (data) => {
-    return {
-      labels: ["Met", "Not Met"],
-      datasets: [
-        {
-          label: "SLA Breached",
-          data: [data.MET, data.NOT_MET],
-          backgroundColor: ["#22c55e", "#ef4444"], // green & red
-          borderColor: ["#1a1a1a"],
-          borderWidth: 2,
-          cutout: "75%", // makes the hole in the middle
-        },
-      ],
-    };
-  };
 
   useEffect(() => {
     if (token) {
@@ -275,77 +212,6 @@ const Dashboard = () => {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-
-        {/* Critical / High Vulnerabilities */}
-        <div className="bg-[#161e3e] p-6 border border-gray-800 rounded-lg shadow-xl hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out flex flex-col items-center justify-center">
-          <h2 className="text-lg font-semibold mb-6 text-white text-center">
-            Critical / High Vulnerabilities
-          </h2>
-
-          <div className="relative w-64 h-64">
-            <Doughnut
-              data={combinedVulnerabilities(creticalHighVulnrable)}
-              options={doughnutOptions}
-            />
-            {/* Center total label */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
-              <p className="text-sm text-gray-400">Total</p>
-              <p className="text-3xl font-bold">
-                {creticalHighVulnrable.Critical + creticalHighVulnrable.High}
-              </p>
-            </div>
-          </div>
-
-          {/* Labels below chart */}
-          <div className="flex items-center text-xs justify-center gap-8 mt-6 text-white">
-            <div className="flex items-center font-medium">
-              <span className="inline-block w-4 h-4 bg-[#ef4444] rounded-full mr-2"></span>
-              Critical:
-              <span className="font-semibold  ml-1">
-                {creticalHighVulnrable.Critical}
-              </span>
-            </div>
-            <div className="flex items-center font-medium">
-              <span className="inline-block w-4 h-4 bg-[#3b82f6] rounded-full mr-2"></span>
-              High:
-              <span className="font-semibold ml-1">
-                {creticalHighVulnrable.High}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* SLA Breached Vulnerabilities */}
-        <div className="bg-[#161e3e] border border-gray-800 p-6 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-lg shadow-xl flex flex-col items-center justify-center">
-          <h2 className="text-lg font-semibold mb-6 text-white text-center">
-            SLA Details
-          </h2>
-
-          <div className="relative w-64 h-64">
-            <Doughnut data={SLABreached(slaBreached)} options={options} />
-            {/* Center total label */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
-              <p className="text-sm text-gray-400">Total</p>
-              <p className="text-3xl font-bold">
-                {slaBreached.MET + slaBreached.NOT_MET}
-              </p>
-            </div>
-          </div>
-
-          {/* Labels below chart */}
-          <div className="flex items-center text-xs justify-center gap-8 mt-6 text-white">
-            <div className="flex items-center font-medium">
-              <span className="inline-block w-4 h-4 bg-green-500 rounded-full mr-2"></span>
-              Met:
-              <span className="font-semibold ml-1">{slaBreached.MET}</span>
-            </div>
-            <div className="flex items-center font-medium">
-              <span className="inline-block w-4 h-4 bg-red-500 rounded-full mr-2"></span>
-              Not Met:
-              <span className="font-semibold ml-1">{slaBreached.NOT_MET}</span>
-            </div>
           </div>
         </div>
 

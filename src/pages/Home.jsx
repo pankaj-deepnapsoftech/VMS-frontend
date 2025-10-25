@@ -43,6 +43,37 @@ const DashboardCards = () => {
   const { token, selectedYear, tenant } = useAuthContext();
   const { tvmCardsData, loading, refreshTVMCardsData } = useTVMCardsContext();
 
+  const options = {
+    plugins: {
+      legend: {
+        display: false,
+      },
+      tooltip: {
+        callbacks: {
+          label: (context) => `${context.label}: ${context.formattedValue}`,
+        },
+      },
+    },
+  };
+
+  const doughnutOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    cutout: "70%",
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: "#1f2937",
+        titleColor: "#fff",
+        bodyColor: "#d1d5db",
+        borderColor: "#374151",
+        borderWidth: 1,
+      },
+    },
+  };
+
+  const { creticalHighVulnrable, slaBreached } = useTVMCardsContext();
+
   const {
     GetFirstChart,
     firstChartData,
@@ -170,6 +201,38 @@ const DashboardCards = () => {
       handleChartLine();
     }
   }, [secondChartData]);
+
+  const combinedVulnerabilities = (data) => {
+    return {
+      labels: ["Critical", "High"],
+      datasets: [
+        {
+          label: "Open Vulnerabilities",
+          data: [data.High, data.Critical],
+          backgroundColor: ["#3b82f6", "#ef4444"],
+          borderColor: "#1f2937",
+          borderWidth: 2,
+          hoverOffset: 8,
+        },
+      ],
+    };
+  };
+
+  const SLABreached = (data) => {
+    return {
+      labels: ["Met", "Not Met"],
+      datasets: [
+        {
+          label: "SLA Breached",
+          data: [data.MET, data.NOT_MET],
+          backgroundColor: ["#22c55e", "#ef4444"], // green & red
+          borderColor: ["#1a1a1a"],
+          borderWidth: 2,
+          cutout: "75%", // makes the hole in the middle
+        },
+      ],
+    };
+  };
 
   return (
     <div className="w-full px-4 sm:px-6 xl:max-w-7xl mx-auto">
@@ -589,11 +652,11 @@ const DashboardCards = () => {
           </div>
         </div>
       </div>
-
-      {/* Fourth Row  */}
-      <div className="flex flex-col gap-4 mt-4 w-full">
-        <div className="bg-[#161e3e] rounded-xl p-4 w-full hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white shadow-lg border mb-5 border-gray-800">
-          <div className="flex justify-between items-center ">
+      {/* Third row  */}
+      <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr_1fr] mb-4 gap-6 mt-4 w-full">
+        {/* === Open and Closed Vulnerable Items === */}
+        <div className="bg-[#161e3e] rounded-xl p-6 border border-gray-800 shadow-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white flex flex-col justify-between overflow-hidden">
+          <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-semibold">
               Open and Closed Vulnerable Items
             </h2>
@@ -613,40 +676,56 @@ const DashboardCards = () => {
               ))}
             </div>
 
-            {/* Grid + Bars */}
-            <div className="relative flex-1 overflow-hidden">
-              {/* Horizontal Dotted Lines */}
-              {[...Array(5)].map((_, i) => (
-                <div
-                  key={i}
-                  className="absolute w-full border-t border-dotted border-gray-600"
-                  style={{ top: `${i * 36}px` }}
-                />
-              ))}
+            {/* Chart Wrapper (no scrollbar now) */}
+            <div className="relative flex-1">
+              <div
+                className="relative flex justify-between items-end h-full z-10 px-2"
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: `repeat(${
+                    ninthChartData?.label?.length || 12
+                  }, 1fr)`,
+                  gap: "10px",
+                  alignItems: "end",
+                  height: "100%",
+                }}
+              >
+                {/* Dotted Grid Lines */}
+                {[...Array(5)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="absolute w-full border-t border-dotted border-gray-600"
+                    style={{
+                      top: `${(i * 100) / 4}%`,
+                    }}
+                  />
+                ))}
 
-              {/* Bars */}
-              <div className="flex justify-around items-end h-full relative z-10">
+                {/* Bars */}
                 {ninthChartData?.label?.map((month, i) => {
                   const openVal = (ninthChartData?.Open || [])[i];
                   const closedVal = (ninthChartData?.Closed || [])[i];
                   const exceptionVal = (ninthChartData?.Exception || [])[i];
                   return (
-                    <div key={month} className="flex flex-col items-center">
-                      <div className="flex items-end space-x-[3px] sm:space-x-[4px]">
+                    <div
+                      key={month}
+                      className="flex flex-col items-center justify-end"
+                    >
+                      <div className="flex items-end space-x-[2px] sm:space-x-[3px]">
                         <div
-                          className="w-3 sm:w-4 rounded-sm bg-red-500"
+                          className="w-2 sm:w-2.5 rounded-sm bg-red-500"
                           style={{ height: `${(openVal / 32) * 180}px` }}
                         />
                         <div
-                          className="w-3 sm:w-4 rounded-sm bg-blue-500"
+                          className="w-2 sm:w-2.5 rounded-sm bg-blue-500"
                           style={{ height: `${(closedVal / 32) * 180}px` }}
                         />
                         <div
-                          className="w-3 sm:w-4 rounded-sm bg-green-400"
+                          className="w-2 sm:w-2.5 rounded-sm bg-green-400"
                           style={{ height: `${(exceptionVal / 32) * 180}px` }}
                         />
                       </div>
-                      <div className="text-[9px] sm:text-[10px] text-gray-300 mt-1">
+                      <div className="text-[8px] sm:text-[9px] text-gray-300 mt-1 rotate-[-35deg] origin-top whitespace-nowrap">
                         {month}
                       </div>
                     </div>
@@ -657,18 +736,70 @@ const DashboardCards = () => {
           </div>
 
           {/* Legend */}
-          <div className="flex flex-wrap justify-center text-[10px] sm:text-xs text-gray-400 gap-3 sm:space-x-4 mt-3">
+          <div className="flex flex-wrap justify-center text-[10px] sm:text-xs text-gray-400 gap-3 sm:space-x-4 mt-4">
             <div className="flex items-center gap-1">
-              <div className="w-2 h-2 rounded-full bg-red-500" />
-              Open
+              <div className="w-2 h-2 rounded-full bg-red-500" /> Open
             </div>
             <div className="flex items-center gap-1">
-              <div className="w-2 h-2 rounded-full bg-blue-500" />
-              Closed
+              <div className="w-2 h-2 rounded-full bg-blue-500" /> Closed
             </div>
             <div className="flex items-center gap-1">
-              <div className="w-2 h-2 rounded-full bg-green-400" />
-              Exception
+              <div className="w-2 h-2 rounded-full bg-green-400" /> Exception
+            </div>
+          </div>
+        </div>
+
+        {/* === Critical / High Vulnerabilities === */}
+        <div className="bg-[#161e3e] p-6 border border-gray-800 rounded-xl shadow-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out flex flex-col items-center justify-between text-white">
+          <h2 className="text-lg font-semibold mb-4 text-center">
+            Critical / High Vulnerabilities
+          </h2>
+          <div className="relative w-48 h-48 sm:w-56 sm:h-56">
+            <Doughnut
+              data={combinedVulnerabilities(creticalHighVulnrable)}
+              options={doughnutOptions}
+            />
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
+              <p className="text-sm text-gray-400">Total</p>
+              <p className="text-3xl font-bold">
+                {creticalHighVulnrable.Critical + creticalHighVulnrable.High}
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center text-xs justify-center gap-6 mt-4">
+            <div className="flex items-center font-medium">
+              <span className="inline-block w-3 h-3 bg-[#ef4444] rounded-full mr-2"></span>
+              Critical: {creticalHighVulnrable.Critical}
+            </div>
+            <div className="flex items-center font-medium">
+              <span className="inline-block w-3 h-3 bg-[#3b82f6] rounded-full mr-2"></span>
+              High: {creticalHighVulnrable.High}
+            </div>
+          </div>
+        </div>
+
+        {/* === SLA Details === */}
+        <div className="bg-[#161e3e] p-6 border border-gray-800 rounded-xl shadow-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out flex flex-col items-center justify-between text-white">
+          <h2 className="text-lg font-semibold mb-4 text-center">
+            SLA Details
+          </h2>
+          <div className="relative w-48 h-48 sm:w-56 sm:h-56">
+            <Doughnut data={SLABreached(slaBreached)} options={options} />
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
+              <p className="text-sm text-gray-400">Total</p>
+              <p className="text-3xl font-bold">
+                {slaBreached.MET + slaBreached.NOT_MET}
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center text-xs justify-center gap-6 mt-4">
+            <div className="flex items-center font-medium">
+              <span className="inline-block w-3 h-3 bg-green-500 rounded-full mr-2"></span>
+              Met: {slaBreached.MET}
+            </div>
+            <div className="flex items-center font-medium">
+              <span className="inline-block w-3 h-3 bg-red-500 rounded-full mr-2"></span>
+              Not Met: {slaBreached.NOT_MET}
             </div>
           </div>
         </div>
