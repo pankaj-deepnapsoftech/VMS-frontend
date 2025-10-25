@@ -20,7 +20,6 @@ const Reports = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [filterData, setFilterData] = useState([]);
 
   const { token, tenant } = useAuthContext();
   const [file, setFile] = useState("");
@@ -29,11 +28,11 @@ const Reports = () => {
 
   const { getAllInProgress, allOption } = useScheduleAssessmentContext();
 
-  const { GetAllReports, reportsData } = useMainReportContext();
+  const { GetAllReports, reportsData,uploadReports,DeleteReport} = useMainReportContext();
 
-  console.log(reportsData);
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    setLoading(true)
     let file;
 
     if (values?.report) {
@@ -42,15 +41,12 @@ const Reports = () => {
 
     const data = { ...values, file, creator: tenant };
 
-    try {
-      const res = await AxiosHandler.post("/report/detailed-report", data);
-      resetForm();
-      setSubmitting();
-      setIsModalOpen(false);
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
+    await uploadReports(data);
+
+    resetForm();
+    setSubmitting();
+    setLoading(false);
+    setIsModalOpen(false);
   };
 
   const handleEdit = (report) => {
@@ -150,7 +146,7 @@ const Reports = () => {
                     </td>
                     <td className="px-6 py-3 text-center flex justify-center gap-4">
                       <button
-                        onClick={() => handleEdit(report)}
+                        onClick={() => DeleteReport(report)}
                         className="p-2 rounded-md bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 hover:text-blue-300 transition-all"
                         title="Edit"
                       >
@@ -159,6 +155,7 @@ const Reports = () => {
                       <button
                         className="p-2 rounded-md bg-red-500/10 hover:bg-red-500/20 text-red-500 hover:text-red-400 transition-all"
                         title="Delete"
+                        onClick={()=>DeleteReport(report._id)}
                       >
                         <RiDeleteBinFill className="w-5 h-5" />
                       </button>
@@ -249,7 +246,7 @@ const Reports = () => {
                       </option>
                       {allOption.map((type) => (
                         <option key={type._id} value={type._id}>
-                          {type?.Data_Classification}
+                          {type?.Type_Of_Assesment}
                         </option>
                       ))}
                     </select>
@@ -274,9 +271,10 @@ const Reports = () => {
                     </button>
                     <button
                       type="submit"
+                      disabled={loading}
                       className="px-5 py-2 bg-blue-700 hover:bg-blue-600 text-white font-medium rounded-md shadow transition"
                     >
-                      {isEdit ? "Update" : "Save"}
+                      {isEdit ? "Update" : loading ? "saving..." :  "Save"}
                     </button>
                   </div>
                 </Form>

@@ -67,5 +67,5 @@ export const useReportContext = () => useContext(ReportContext);
 export const useTVMCardsContext = () => useContext(TVMCardsContext);
 export const useSeverityContext = () => useContext(SeverityContext);
 export const useNessusContext = () => useContext(NessusContext);
-export const useMainReportContext = () => useContext(MainReportContext)
+export const useMainReportContext = () => useContext(MainReportContext);
 
