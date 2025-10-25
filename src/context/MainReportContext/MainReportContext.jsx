@@ -8,6 +8,7 @@ export const MainReportContext = createContext({
     GetAllReports: () => { },
     uploadReports: () => { },
     DeleteReport: () => { },
+    UpdateReport: () => { },
     reportsData: []
 });
 
@@ -45,7 +46,18 @@ const MainReportContextProvider = ({ children }) => {
     const DeleteReport = async (id) => {
         if (!window.confirm("Are you sure you want to delete ")) return;
         try {
-            const res = await AxiosHandler(`/report/get-report/${id}`);
+            const res = await AxiosHandler.delete(`/report/delete-report/${id}`);
+            toast.success(res.data.message || "Report delete Successfully");
+            GetAllReports(tenant)
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    const UpdateReport = async (id,data) => {
+        try {
+            const res = await AxiosHandler.put(`/report/update-report/${id}`,data);
             toast.success(res.data.message || "Report delete Successfully");
             GetAllReports(tenant)
         } catch (error) {
@@ -55,7 +67,7 @@ const MainReportContextProvider = ({ children }) => {
     }
 
     return (
-        <MainReportContext.Provider value={{ GetAllReports, reportsData, uploadReports, DeleteReport }}>
+        <MainReportContext.Provider value={{ GetAllReports, reportsData, uploadReports, DeleteReport,UpdateReport }}>
             {children}
         </MainReportContext.Provider>
     )

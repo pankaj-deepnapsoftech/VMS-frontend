@@ -7,11 +7,10 @@ import {
   useMainReportContext,
   useScheduleAssessmentContext,
 } from "@/context";
-import { Imageuploader } from "@/utils/firebaseImageUploader";
+import { DeleteImage, Imageuploader, UpdateImage } from "@/utils/firebaseImageUploader";
 import { Reportvalidation } from "@/Validation/VulnerabililtyDataValidation";
 import { Form, Formik } from "formik";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import { BiEditAlt, BiUpload } from "react-icons/bi";
 import { MdClose } from "react-icons/md";
 import { RiDeleteBinFill } from "react-icons/ri";
@@ -28,20 +27,31 @@ const Reports = () => {
 
   const { getAllInProgress, allOption } = useScheduleAssessmentContext();
 
-  const { GetAllReports, reportsData,uploadReports,DeleteReport} = useMainReportContext();
+  const { GetAllReports, reportsData,uploadReports,DeleteReport,UpdateReport} = useMainReportContext();
 
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     setLoading(true)
     let file;
 
-    if (values?.report) {
+    if (values?.report && !editData) {
       file = await Imageuploader(values?.report);
-    }
+    }else if(values?.report?.type && editData) {
+      file = await UpdateImage(values?.report,editData?.file?.image_id)
+    };
+
+    
+
 
     const data = { ...values, file, creator: tenant };
 
-    await uploadReports(data);
+    if(editData){
+      await UpdateReport(editData.id,data);
+    }else {
+      await uploadReports(data);
+    }
+
+    setEditData(null)
 
     resetForm();
     setSubmitting();
@@ -50,9 +60,10 @@ const Reports = () => {
   };
 
   const handleEdit = (report) => {
-    setEditData(report);
+    setEditData({id:report._id,report:report.file,Type_Of_Assesment:report?.Type_Of_Assesment?._id,report_name:report?.report_name});
     setIsEdit(true);
     setIsModalOpen(true);
+    getAllInProgress(report?.creator?._id);
   };
 
   useEffect(() => {
@@ -146,7 +157,7 @@ const Reports = () => {
                     </td>
                     <td className="px-6 py-3 text-center flex justify-center gap-4">
                       <button
-                        onClick={() => DeleteReport(report)}
+                        onClick={() => handleEdit(report)}
                         className="p-2 rounded-md bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 hover:text-blue-300 transition-all"
                         title="Edit"
                       >
@@ -155,7 +166,7 @@ const Reports = () => {
                       <button
                         className="p-2 rounded-md bg-red-500/10 hover:bg-red-500/20 text-red-500 hover:text-red-400 transition-all"
                         title="Delete"
-                        onClick={()=>DeleteReport(report._id)}
+                        onClick={()=>{DeleteReport(report._id);DeleteImage(report?.file?.image_id)}}
                       >
                         <RiDeleteBinFill className="w-5 h-5" />
                       </button>
@@ -190,12 +201,13 @@ const Reports = () => {
             </div>
 
             <Formik
-              initialValues={{
+              initialValues={editData || {
                 report: "",
-                Type_Of_Assesment: isEdit ? editData.Type_Of_Assesment : "",
+                Type_Of_Assesment:"",
                 report_name: "",
               }}
               validationSchema={Reportvalidation}
+              enableReinitialize={true}
               onSubmit={handleSubmit}
             >
               {({
@@ -212,6 +224,7 @@ const Reports = () => {
                     name="report_name"
                     placeholder="Report name"
                     type="text"
+                    value={values.report_name}
                     onBlur={handleBlur}
                     onChange={handleChange}
                     isError={errors.report_name && touched.report_name}

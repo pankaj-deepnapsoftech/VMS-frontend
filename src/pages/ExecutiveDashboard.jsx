@@ -56,7 +56,7 @@ export default function ExecutiveSummaryPage() {
     attackExposureData,
   } = useReportContext();
 
-  const { topFiveRisk, topHighValue, exploitableVulnerabilities } =
+  const { topFiveRisk,tenthChart, topHighValue,twelfthChart, exploitableVulnerabilities,twntythChart } =
     useTVMCardsContext();
 
   useEffect(() => {
@@ -64,6 +64,9 @@ export default function ExecutiveSummaryPage() {
       GetRiskData(tenant, selectedYear);
       GetFinancialExposure(tenant, selectedYear);
       GetRemediationWorkflow(tenant, selectedYear);
+      tenthChart(tenant, selectedYear);
+      twelfthChart(tenant, selectedYear);
+      twntythChart(tenant, selectedYear);
       GetAttackExposure(tenant, selectedYear);
       GetRiskTrend(tenant, selectedYear);
       GetAssetInventory(selectedYear);
