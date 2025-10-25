@@ -235,7 +235,7 @@ const DashboardCards = () => {
   };
 
   return (
-    <div className="w-full px-4 sm:px-6">
+    <div className="w-full px-4 sm:px-6 xl:max-w-7xl mx-auto">
       {/* Cards */}
       <div className="w-full">
         {loading ? (

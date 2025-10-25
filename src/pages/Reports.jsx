@@ -7,11 +7,10 @@ import {
   useMainReportContext,
   useScheduleAssessmentContext,
 } from "@/context";
-import { Imageuploader } from "@/utils/firebaseImageUploader";
+import { DeleteImage, Imageuploader, UpdateImage } from "@/utils/firebaseImageUploader";
 import { Reportvalidation } from "@/Validation/VulnerabililtyDataValidation";
 import { Form, Formik } from "formik";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import { BiEditAlt, BiUpload } from "react-icons/bi";
 import { MdClose } from "react-icons/md";
 import { RiDeleteBinFill } from "react-icons/ri";
@@ -20,7 +19,6 @@ const Reports = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [filterData, setFilterData] = useState([]);
 
   const { token, tenant } = useAuthContext();
   const [file, setFile] = useState("");
@@ -29,34 +27,43 @@ const Reports = () => {
 
   const { getAllInProgress, allOption } = useScheduleAssessmentContext();
 
-  const { GetAllReports, reportsData } = useMainReportContext();
+  const { GetAllReports, reportsData,uploadReports,DeleteReport,UpdateReport} = useMainReportContext();
 
-  console.log(reportsData);
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    setLoading(true)
     let file;
 
-    if (values?.report) {
+    if (values?.report && !editData) {
       file = await Imageuploader(values?.report);
-    }
+    }else if(values?.report?.type && editData) {
+      file = await UpdateImage(values?.report,editData?.file?.image_id)
+    };
+
+    
+
 
     const data = { ...values, file, creator: tenant };
 
-    try {
-      const res = await AxiosHandler.post("/report/detailed-report", data);
-      resetForm();
-      setSubmitting();
-      setIsModalOpen(false);
-      console.log(res);
-    } catch (error) {
-      console.log(error);
+    if(editData){
+      await UpdateReport(editData.id,data);
+    }else {
+      await uploadReports(data);
     }
+
+    setEditData(null)
+
+    resetForm();
+    setSubmitting();
+    setLoading(false);
+    setIsModalOpen(false);
   };
 
   const handleEdit = (report) => {
-    setEditData(report);
+    setEditData({id:report._id,report:report.file,Type_Of_Assesment:report?.Type_Of_Assesment?._id,report_name:report?.report_name});
     setIsEdit(true);
     setIsModalOpen(true);
+    getAllInProgress(report?.creator?._id);
   };
 
   useEffect(() => {
@@ -159,6 +166,7 @@ const Reports = () => {
                       <button
                         className="p-2 rounded-md bg-red-500/10 hover:bg-red-500/20 text-red-500 hover:text-red-400 transition-all"
                         title="Delete"
+                        onClick={()=>{DeleteReport(report._id);DeleteImage(report?.file?.image_id)}}
                       >
                         <RiDeleteBinFill className="w-5 h-5" />
                       </button>
@@ -193,12 +201,13 @@ const Reports = () => {
             </div>
 
             <Formik
-              initialValues={{
+              initialValues={editData || {
                 report: "",
-                Type_Of_Assesment: isEdit ? editData.Type_Of_Assesment : "",
+                Type_Of_Assesment:"",
                 report_name: "",
               }}
               validationSchema={Reportvalidation}
+              enableReinitialize={true}
               onSubmit={handleSubmit}
             >
               {({
@@ -215,6 +224,7 @@ const Reports = () => {
                     name="report_name"
                     placeholder="Report name"
                     type="text"
+                    value={values.report_name}
                     onBlur={handleBlur}
                     onChange={handleChange}
                     isError={errors.report_name && touched.report_name}
@@ -249,7 +259,7 @@ const Reports = () => {
                       </option>
                       {allOption.map((type) => (
                         <option key={type._id} value={type._id}>
-                          {type?.Data_Classification}
+                          {type?.Type_Of_Assesment}
                         </option>
                       ))}
                     </select>
@@ -274,9 +284,10 @@ const Reports = () => {
                     </button>
                     <button
                       type="submit"
+                      disabled={loading}
                       className="px-5 py-2 bg-blue-700 hover:bg-blue-600 text-white font-medium rounded-md shadow transition"
                     >
-                      {isEdit ? "Update" : "Save"}
+                      {isEdit ? "Update" : loading ? "saving..." :  "Save"}
                     </button>
                   </div>
                 </Form>
