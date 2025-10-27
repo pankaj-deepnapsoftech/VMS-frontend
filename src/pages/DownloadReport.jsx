@@ -6,7 +6,7 @@ import Select from "react-select"; // ✅ import React Select
 
 export default function DownloadReports() {
   const { DownloadReport, downloadData } = useMainReportContext();
-    const { token,tenant } = useAuthContext();
+  const { token, tenant } = useAuthContext();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -15,12 +15,13 @@ export default function DownloadReports() {
   // Example users (can be replaced with API)
   const users = ["Admin", "Manager", "Security Lead", "Auditor"];
 
+  // ✅ Handle Excel Download
   const handleDownloadExcel = (data) => {
-
-    if(!tenant){
-      alert("Please Select tenant first");
+    if (!tenant) {
+      alert("Please select tenant first");
       return;
     }
+
     if (!data || !Array.isArray(data)) return;
 
     const exclude = new Set(["Proof_of_Concept", "Exploit_Details"]);
@@ -45,13 +46,13 @@ export default function DownloadReports() {
     XLSX.writeFile(workbook, "vulnerabilities.xlsx");
   };
 
-
-  
+  // ✅ Report List
   const reports = [
     {
       name: "All Vulnerabilities",
-      description: "A report containing a summary of vulnerabilities in CSV Format",
-      func: ()=>handleDownloadExcel(downloadData),
+      description:
+        "A report containing a summary of vulnerabilities in CSV Format",
+      func: () => handleDownloadExcel(downloadData),
     },
     {
       name: "Executive Report",
@@ -65,11 +66,12 @@ export default function DownloadReports() {
     },
   ];
 
+  // ✅ Fetch reports when token or tenant changes
   useEffect(() => {
-    if (token) {
-      DownloadReport();
+    if (token && tenant) {
+      DownloadReport(tenant);
     }
-  }, [token]);
+  }, [token, tenant, DownloadReport]);
 
   const handleOpenModal = (report) => {
     setCurrentReport(report);
@@ -90,7 +92,7 @@ export default function DownloadReports() {
     handleCloseModal();
   };
 
-  // === Style Config for React Select ===
+  // ✅ Custom React Select Styles
   const customSelectStyles = {
     control: (base) => ({
       ...base,
@@ -125,7 +127,6 @@ export default function DownloadReports() {
       ...base,
       color: "white",
     }),
-    // ✅ CROSS BUTTON COLOR FIX
     multiValueRemove: (base) => ({
       ...base,
       color: "#6B7280", // gray-500 default
@@ -136,10 +137,6 @@ export default function DownloadReports() {
       },
     }),
   };
-    if (token && tenant) {
-      DownloadReport(tenant)
-    }
-  }, [token,tenant])
 
   return (
     <div className="w-full min-h-screen bg-[#0e1529] text-white p-6 md:p-8">
