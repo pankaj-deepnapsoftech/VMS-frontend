@@ -1,7 +1,4 @@
-import {
-  useAuthContext,
-  useExceptionContext,
-} from "@/context";
+import { useAuthContext, useExceptionContext } from "@/context";
 import ExpectionModal from "@/modals/ExpectionModal";
 import { dateFormaterWithDate } from "@/utils/dateFormate";
 import { EmptyFieldRemover } from "@/utils/RemoveEmptyField";
@@ -10,17 +7,17 @@ import { FaUserCheck } from "react-icons/fa";
 import { GrEdit } from "react-icons/gr";
 
 const ExceptionTable = () => {
-  const { ExpectionPendingData, expectionData, UpdateExpectionData } = useExceptionContext();
+  const { ExpectionPendingData, expectionData, UpdateExpectionData } =
+    useExceptionContext();
   const { token, GetTenantData, UserViaTenant, tenant } = useAuthContext();
-  const [editTable,setEditTable] = useState(null)
- 
+  const [editTable, setEditTable] = useState(null);
 
   const [selectedId, setSelectedId] = useState(null);
   const [selectedRow, setSelectedRow] = useState(null);
 
   const [isApproverModalOpen, setIsApproverModalOpen] = useState(false);
   const [isExpectionModalOpen, setIsExpectionModalOpen] = useState(false);
-  const [approveArray,setApproveArray] = useState([])
+  const [approveArray, setApproveArray] = useState([]);
 
   const [approvers, setApprovers] = useState({
     approver1: "",
@@ -57,14 +54,19 @@ const ExceptionTable = () => {
       alert("Please select a tenant to proceed.");
       return;
     }
-    const creatorIds = expectionData.map(item => item.creator);
+    const creatorIds = expectionData.map((item) => item.creator);
     setSelectedId(creatorIds[0]);
     setIsExpectionModalOpen(true);
   };
 
   const handleSaveApprovers = () => {
-    const approverValues = [approvers.approver1, approvers.approver2, approvers.approver3].filter(Boolean);
-    const hasDuplicates = new Set(approverValues).size !== approverValues.length;
+    const approverValues = [
+      approvers.approver1,
+      approvers.approver2,
+      approvers.approver3,
+    ].filter(Boolean);
+    const hasDuplicates =
+      new Set(approverValues).size !== approverValues.length;
 
     if (approverValues.length === 0) {
       alert("Please select at least one approver.");
@@ -77,32 +79,53 @@ const ExceptionTable = () => {
     }
 
     let newData = {
-      aprove_1: approvers.approver1 ? { approver: approvers.approver1, status: "Pending", aproved: false, description: "" } : null,
-      aprove_2: approvers.approver2 ? { approver: approvers.approver2, status: "Pending", aproved: false, description: "" } : null,
-      aprove_3: approvers.approver3 ? { approver: approvers.approver3, status: "Pending", aproved: false, description: "" } : null,
+      aprove_1: approvers.approver1
+        ? {
+            approver: approvers.approver1,
+            status: "Pending",
+            aproved: false,
+            description: "",
+          }
+        : null,
+      aprove_2: approvers.approver2
+        ? {
+            approver: approvers.approver2,
+            status: "Pending",
+            aproved: false,
+            description: "",
+          }
+        : null,
+      aprove_3: approvers.approver3
+        ? {
+            approver: approvers.approver3,
+            status: "Pending",
+            aproved: false,
+            description: "",
+          }
+        : null,
     };
 
     newData = EmptyFieldRemover(newData);
 
-    UpdateExpectionData(selectedRow._id,newData);
-    setApproveArray([])
+    UpdateExpectionData(selectedRow._id, newData);
+    setApproveArray([]);
 
     closeApproverModal();
   };
 
   const HandleApprovalsetHeading = (data) => {
-    if(data?.aprove_1?.status === "Rejected"){
-      setApproveArray((prev)=>[...prev,'aprove_1'])
-    };
+    if (data?.aprove_1?.status === "Rejected") {
+      setApproveArray((prev) => [...prev, "aprove_1"]);
+    }
 
-    if(data?.aprove_2?.status === "Rejected"){
-      setApproveArray((prev)=>[...prev,'aprove_2'])
-    };
+    if (data?.aprove_2?.status === "Rejected") {
+      setApproveArray((prev) => [...prev, "aprove_2"]);
+    }
 
-    if(data?.aprove_3?.status === "Rejected"){
-      setApproveArray((prev)=>[...prev,'aprove_3'])
-    };
-  }
+    if (data?.aprove_3?.status === "Rejected") {
+      setApproveArray((prev) => [...prev, "aprove_3"]);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -121,13 +144,12 @@ const ExceptionTable = () => {
     }
   };
 
-  useEffect(()=>{
-    if(isApproverModalOpen && approveArray.length <= 0){
+  useEffect(() => {
+    if (isApproverModalOpen && approveArray.length <= 0) {
       setIsApproverModalOpen(false);
-      alert("not any rejection")
+      alert("not any rejection");
     }
-
-  },[isApproverModalOpen]);
+  }, [isApproverModalOpen]);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -138,15 +160,11 @@ const ExceptionTable = () => {
     };
   }, []);
 
-  useEffect(() => {
+  useEffect(() => {   
     if (token) {
       ExpectionPendingData(1, tenant);
-
     }
-
-  }, [tenant])
-
-
+  }, [tenant]);
 
   useEffect(() => {
     if (token) {
@@ -157,11 +175,10 @@ const ExceptionTable = () => {
     }
   }, [tenant]);
 
-  console.log(editTable)
+  console.log(editTable);
   return (
     <div className="min-h-screen bg-[#0F172A] p-8 text-gray-400">
       <h1 className="text-3xl text-white font-bold mb-6">Pending Exception</h1>
-
 
       {isApproverModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
@@ -210,14 +227,21 @@ const ExceptionTable = () => {
         </div>
       )}
 
-
       {hasData ? (
         <div className="overflow-auto custom-scrollbar">
           <div className="overflow-auto rounded-xl border border-slate-700 shadow-xl backdrop-blur-sm">
             <table className="min-w-full text-sm text-slate-200">
               <thead className="sticky top-0 z-10 bg-slate-800/90 backdrop-blur border-b border-slate-700">
                 <tr>
-                  {["Start Date", "End Date", "Reason", "Control", "Control Details", "File", "Action"].map((heading) => (
+                  {[
+                    "Start Date",
+                    "End Date",
+                    "Reason",
+                    "Control",
+                    "Control Details",
+                    "File",
+                    "Action",
+                  ].map((heading) => (
                     <th
                       key={heading}
                       className="px-6 py-4 text-left text-xs font-semibold tracking-widest uppercase text-slate-300"
@@ -239,13 +263,16 @@ const ExceptionTable = () => {
                     <td className="px-6 py-4 whitespace-nowrap">
                       {dateFormaterWithDate(item?.exception_end_data)}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">{item.reason}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {item.reason}
+                    </td>
                     <td className="px-6 py-4">
                       <span
-                        className={`px-3 py-1 rounded-full text-xs font-semibold shadow-sm ${item.compensatory_control === "Yes"
-                          ? "bg-green-500/10 text-green-300 border border-green-500/20"
-                          : "bg-red-500/10 text-red-300 border border-red-500/20"
-                          }`}
+                        className={`px-3 py-1 rounded-full text-xs font-semibold shadow-sm ${
+                          item.compensatory_control === "Yes"
+                            ? "bg-green-500/10 text-green-300 border border-green-500/20"
+                            : "bg-red-500/10 text-red-300 border border-red-500/20"
+                        }`}
                       >
                         {item.compensatory_control}
                       </span>
@@ -274,14 +301,20 @@ const ExceptionTable = () => {
                     </td>
                     <td className="px-6 py-4 text-start flex gap-2">
                       <button
-                        onClick={()=>{openExpectionModal(); setEditTable(item)}}
+                        onClick={() => {
+                          openExpectionModal();
+                          setEditTable(item);
+                        }}
                         className="p-2 rounded-md hover:bg-slate-600/30 transition"
                         title="Open Expection Modal"
                       >
                         <GrEdit className="w-5 h-5 text-blue-400 hover:scale-110 transition-transform" />
                       </button>
                       <button
-                        onClick={() => {openApproverModal(item);HandleApprovalsetHeading(item);}}
+                        onClick={() => {
+                          openApproverModal(item);
+                          HandleApprovalsetHeading(item);
+                        }}
                         className="p-2 rounded-md hover:bg-slate-600/30 transition"
                         title="Add Approver"
                       >
@@ -300,12 +333,11 @@ const ExceptionTable = () => {
         </p>
       )}
 
-
       {isExpectionModalOpen && (
         <ExpectionModal
           setIsModalOpen={setIsExpectionModalOpen}
           creator={selectedId}
-           editTable={editTable} 
+          editTable={editTable}
         />
       )}
     </div>

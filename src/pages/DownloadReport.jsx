@@ -1,20 +1,25 @@
 import { useAuthContext, useMainReportContext } from "@/context";
-import { Download, Eye, Mails } from "lucide-react";
-import { useEffect } from "react";
+import { Download, Mails, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
+import Select from "react-select"; // ✅ import React Select
 
 export default function DownloadReports() {
-
   const { DownloadReport, downloadData } = useMainReportContext();
+  const { token } = useAuthContext();
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [currentReport, setCurrentReport] = useState(null);
+
+  // Example users (can be replaced with API)
+  const users = ["Admin", "Manager", "Security Lead", "Auditor"];
 
   const handleDownloadExcel = (data) => {
     if (!data || !Array.isArray(data)) return;
 
-    // Fields to skip
     const exclude = new Set(["Proof_of_Concept", "Exploit_Details"]);
 
-    // Helper to clean each value for Excel cell
     const formatValue = (val) => {
       if (val === null || val === undefined) return "";
       if (Array.isArray(val)) return val.join("; ");
@@ -22,48 +27,109 @@ export default function DownloadReports() {
       return val;
     };
 
-    // Get all keys except excluded ones
     const keys = Object.keys(data[0]).filter((k) => !exclude.has(k));
-
-    // Convert data into Excel-friendly objects
     const cleanedData = data.map((item) => {
       const row = {};
       keys.forEach((key) => (row[key] = formatValue(item[key])));
       return row;
     });
 
-    // Convert to worksheet
     const worksheet = XLSX.utils.json_to_sheet(cleanedData);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
-
-    // Trigger file download
     XLSX.writeFile(workbook, "vulnerabilities.xlsx");
   };
-  const { token } = useAuthContext()
+
   const reports = [
     {
       name: "All Vulnerabilities",
-      description: "A report containing a summary of vulnerabilities in CSV Format",
-      func: ()=>handleDownloadExcel(downloadData)
+      description:
+        "A report containing a summary of vulnerabilities in CSV Format",
+      func: () => handleDownloadExcel(downloadData),
     },
     {
       name: "Executive Report",
       description: "A high level Executive Report",
-      func:()=>{}
+      func: () => {},
     },
     {
       name: "TVM Report",
       description: "A high level Threat & Vulnerability Management Report",
-      func:()=>{}
+      func: () => {},
     },
   ];
 
   useEffect(() => {
     if (token) {
-      DownloadReport()
+      DownloadReport();
     }
-  }, [token])
+  }, [token]);
+
+  const handleOpenModal = (report) => {
+    setCurrentReport(report);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedUsers([]);
+    setCurrentReport(null);
+  };
+
+  const handleSendReport = () => {
+    if (selectedUsers.length === 0)
+      return alert("Please select at least one user!");
+    const userList = selectedUsers.map((u) => u.value).join(", ");
+    alert(`Report "${currentReport?.name}" sent to: ${userList}`);
+    handleCloseModal();
+  };
+
+  // === Style Config for React Select ===
+  const customSelectStyles = {
+    control: (base) => ({
+      ...base,
+      backgroundColor: "#0f162d",
+      borderColor: "#334155",
+      color: "white",
+      borderRadius: "0.5rem",
+      boxShadow: "none",
+      "&:hover": { borderColor: "#3b82f6" },
+    }),
+    menu: (base) => ({
+      ...base,
+      backgroundColor: "#0f162d",
+      color: "white",
+      borderRadius: "0.5rem",
+      border: "1px solid #334155",
+    }),
+    option: (base, state) => ({
+      ...base,
+      backgroundColor: state.isFocused ? "#1e293b" : "#0f162d",
+      color: "white",
+      cursor: "pointer",
+    }),
+    multiValue: (base) => ({
+      ...base,
+      backgroundColor: "#1e3a8a",
+      color: "white",
+      borderRadius: "0.375rem",
+      padding: "0 4px",
+    }),
+    multiValueLabel: (base) => ({
+      ...base,
+      color: "white",
+    }),
+    // ✅ CROSS BUTTON COLOR FIX
+    multiValueRemove: (base) => ({
+      ...base,
+      color: "#6B7280", // gray-500 default
+      cursor: "pointer",
+      ":hover": {
+        backgroundColor: "transparent",
+        color: "#4B5563", // gray-600 on hover
+      },
+    }),
+  };
 
   return (
     <div className="w-full min-h-screen bg-[#0e1529] text-white p-6 md:p-8">
@@ -76,26 +142,28 @@ export default function DownloadReports() {
           Download all vulnerability assessment reports
         </p>
       </div>
+
       {/* Table Container */}
-      <div className="overflow-hidden rounded-xl border mt-8 border-[#1e2746] bg-[#131b33] shadow-lg shadow-black/20">
-        <table className="w-full text-sm">
-          {/* Table Header */}
-          <thead className="bg-[#1a2342] text-gray-300 uppercase text-xs tracking-wider">
+      <div className="overflow-x-auto w-full custom-scrollbar mt-8 rounded-xl border border-[#1e2746] bg-[#1a1f2e] shadow-lg shadow-black/20">
+        <table className="table-fixed min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+          <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
             <tr>
-              <th className="text-left px-6 py-3 font-medium">Name</th>
-              <th className="text-right px-6 py-3 font-medium">Actions</th>
+              <th className="px-4 py-3 border-b border-gray-600 font-medium">
+                Name
+              </th>
+              <th className="px-4 py-3 border-b border-gray-600 text-right font-medium">
+                Actions
+              </th>
             </tr>
           </thead>
 
-          {/* Table Body */}
-          <tbody>
+          <tbody className="divide-y divide-gray-700">
             {reports.map((report, idx) => (
               <tr
                 key={idx}
-                className="border-t border-[#1e2746] hover:bg-[#1c2546] transition duration-200 ease-in-out"
+                className="border-b border-slate-700 hover:bg-[#1E293B] transition"
               >
-                {/* Name & Description */}
-                <td className="px-6 py-4">
+                <td className="px-4 py-3">
                   <div>
                     <div className="font-semibold text-gray-100 text-base">
                       {report.name}
@@ -106,19 +174,19 @@ export default function DownloadReports() {
                   </div>
                 </td>
 
-                {/* Actions */}
-                <td className="px-6 py-4">
-                  <div className="flex justify-end gap-3">
+                <td className="px-4 py-3">
+                  <div className="flex justify-end items-center gap-3">
                     <button
-                      className="p-2 rounded-md bg-[#12203a] text-green-400 hover:text-green-300 hover:bg-[#1b2b4e] transition duration-200"
+                      className="text-green-500 hover:text-green-600 transition"
                       title="Download Report"
                       onClick={report.func}
                     >
                       <Download size={18} />
                     </button>
                     <button
-                      className="p-2 rounded-md bg-[#12203a] text-blue-400 hover:text-blue-300 hover:bg-[#1b2b4e] transition duration-200"
-                      title="View Report"
+                      className="text-blue-500 hover:text-blue-600 transition"
+                      title="Send Report"
+                      onClick={() => handleOpenModal(report)}
                     >
                       <Mails size={18} />
                     </button>
@@ -130,10 +198,63 @@ export default function DownloadReports() {
         </table>
 
         {/* Footer */}
-        <div className="text-gray-400 text-xs px-6 py-3 border-t border-[#1e2746] bg-[#0f162d]">
+        <div className="text-gray-400 text-xs px-4 py-3 border-t border-gray-700 bg-[#1a1f2e]">
           Showing {reports.length} reports
         </div>
       </div>
+
+      {/* === Modal === */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-50">
+          <div className="bg-[#131b33] w-[90%] max-w-md rounded-xl p-6 relative border border-gray-700 shadow-lg">
+            <button
+              onClick={handleCloseModal}
+              className="absolute top-3 right-3 text-gray-400 hover:text-white transition"
+            >
+              <X size={20} />
+            </button>
+
+            <h2 className="text-xl font-semibold text-white mb-4">
+              Send Report
+            </h2>
+            <p className="text-sm text-gray-400 mb-4">
+              Select users to send{" "}
+              <span className="text-white font-medium">
+                {currentReport?.name}
+              </span>{" "}
+              report.
+            </p>
+
+            {/* Multi Selector */}
+            <Select
+              isMulti
+              name="users"
+              value={selectedUsers}
+              onChange={setSelectedUsers}
+              options={users.map((u) => ({ value: u, label: u }))}
+              className="basic-multi-select"
+              classNamePrefix="select"
+              placeholder="Select users..."
+              styles={customSelectStyles}
+            />
+
+            <div className="mt-6 flex justify-end gap-3">
+              <button
+                onClick={handleCloseModal}
+                className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSendReport}
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition"
+              >
+                Send
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

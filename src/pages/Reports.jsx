@@ -7,7 +7,11 @@ import {
   useMainReportContext,
   useScheduleAssessmentContext,
 } from "@/context";
-import { DeleteImage, Imageuploader, UpdateImage } from "@/utils/firebaseImageUploader";
+import {
+  DeleteImage,
+  Imageuploader,
+  UpdateImage,
+} from "@/utils/firebaseImageUploader";
 import { EmptyFieldRemover } from "@/utils/RemoveEmptyField";
 import { Reportvalidation } from "@/Validation/VulnerabililtyDataValidation";
 import { Form, Formik } from "formik";
@@ -28,34 +32,35 @@ const Reports = () => {
 
   const { getAllInProgress, allOption } = useScheduleAssessmentContext();
 
-  const { GetAllReports, reportsData,uploadReports,DeleteReport,UpdateReport} = useMainReportContext();
-
+  const {
+    GetAllReports,
+    reportsData,
+    uploadReports,
+    DeleteReport,
+    UpdateReport,
+  } = useMainReportContext();
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    setLoading(true)
+    setLoading(true);
     let file;
 
     if (values?.report && !editData) {
       file = await Imageuploader(values?.report);
-    }else if(values?.report?.type && editData) {
-      file = await UpdateImage(values?.report,editData?.report?.image_id)
-    };
-
-
-
+    } else if (values?.report?.type && editData) {
+      file = await UpdateImage(values?.report, editData?.report?.image_id);
+    }
 
     let data = { ...values, file, creator: tenant };
 
-    data = EmptyFieldRemover(data)
+    data = EmptyFieldRemover(data);
 
-
-    if(editData){
-      await UpdateReport(editData.id,data);
-    }else {
+    if (editData) {
+      await UpdateReport(editData.id, data);
+    } else {
       await uploadReports(data);
     }
 
-    setEditData(null)
+    setEditData(null);
 
     resetForm();
     setSubmitting();
@@ -64,7 +69,12 @@ const Reports = () => {
   };
 
   const handleEdit = (report) => {
-    setEditData({id:report._id,report:report.file,Type_Of_Assesment:report?.Type_Of_Assesment?._id,report_name:report?.report_name});
+    setEditData({
+      id: report._id,
+      report: report.file,
+      Type_Of_Assesment: report?.Type_Of_Assesment?._id,
+      report_name: report?.report_name,
+    });
     setIsEdit(true);
     setIsModalOpen(true);
     getAllInProgress(report?.creator?._id);
@@ -103,14 +113,14 @@ const Reports = () => {
       </div>
 
       {/* Data Table */}
-      <div className="mt-6 bg-table rounded-2xl shadow-lg border border-gray-700/50 backdrop-blur-sm overflow-hidden">
+      <div>
         {!reportsData || reportsData.length === 0 ? (
           <NoDataFound />
         ) : (
-          <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent">
-            <table className="min-w-full text-sm text-gray-300">
-              {/* Sticky Table Header */}
-              <thead className="bg-gradient-to-r from-[#23314f] to-[#1c2740] text-gray-100 uppercase text-xs tracking-wider sticky top-0 z-10 shadow-md">
+          <div className="overflow-x-auto w-full custom-scrollbar mt-8 rounded-xl border border-[#1e2746] bg-[#1a1f2e] shadow-lg shadow-black/20">
+            <table className="table-fixed min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+              {/* Table Header */}
+              <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider sticky top-0 z-10 shadow-md">
                 <tr>
                   {[
                     "S.No",
@@ -121,7 +131,7 @@ const Reports = () => {
                   ].map((head, idx) => (
                     <th
                       key={idx}
-                      className="px-6 py-4 text-center font-semibold whitespace-nowrap"
+                      className="px-4 py-3 border-b border-gray-600 font-medium text-center"
                     >
                       {head}
                     </th>
@@ -130,28 +140,31 @@ const Reports = () => {
               </thead>
 
               {/* Table Body */}
-              <tbody className="divide-y divide-gray-700/70">
+              <tbody className="divide-y divide-gray-700">
                 {reportsData.map((report, index) => (
                   <tr
                     key={report?._id || index}
-                    className="hover:bg-[#24314e] transition-colors duration-200 odd:bg-[#1b253f] even:bg-[#1e2943]"
+                    className="hover:bg-[#1E293B] transition-colors duration-200"
                   >
-                    <td className="px-6 py-3 text-center text-gray-400">
+                    <td className="px-4 py-3 text-center text-gray-400">
                       {index + 1}
                     </td>
-                    <td className="px-6 py-3 text-center font-medium text-gray-200">
+
+                    <td className="px-4 py-3 text-center font-medium text-gray-200">
                       {report?.report_name || "-"}
                     </td>
-                    <td className="px-6 py-3 text-center text-gray-400">
+
+                    <td className="px-4 py-3 text-center text-gray-400">
                       {report?.Type_Of_Assesment?.Type_Of_Assesment || "-"}
                     </td>
-                    <td className="px-6 py-3 text-center">
+
+                    <td className="px-4 py-3 text-center">
                       {report?.file ? (
                         <a
                           href={report.file?.image_url}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-block bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white px-4 py-1.5 rounded-lg shadow-md text-xs font-medium transition-all duration-200"
+                          className="inline-block bg-blue-600 hover:bg-blue-500 text-white px-4 py-1.5 rounded-lg text-xs font-medium transition"
                         >
                           View
                         </a>
@@ -159,21 +172,27 @@ const Reports = () => {
                         <span className="text-gray-500">-</span>
                       )}
                     </td>
-                    <td className="px-6 py-3 text-center flex justify-center gap-4">
-                      <button
-                        onClick={() => handleEdit(report)}
-                        className="p-2 rounded-md bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 hover:text-blue-300 transition-all"
-                        title="Edit"
-                      >
-                        <BiEditAlt className="w-5 h-5" />
-                      </button>
-                      <button
-                        className="p-2 rounded-md bg-red-500/10 hover:bg-red-500/20 text-red-500 hover:text-red-400 transition-all"
-                        title="Delete"
-                        onClick={()=>{DeleteReport(report._id);DeleteImage(report?.file?.image_id)}}
-                      >
-                        <RiDeleteBinFill className="w-5 h-5" />
-                      </button>
+
+                    <td className="px-4 py-3 text-center">
+                      <div className="flex justify-center items-center">
+                        <button
+                          onClick={() => handleEdit(report)}
+                          className="p-2 rounded-md text-blue-500 hover:text-blue-400 hover:bg-blue-500/10 transition"
+                          title="Edit"
+                        >
+                          <BiEditAlt className="w-5 h-5" />
+                        </button>
+                        <button
+                          className="p-2 rounded-md text-red-500 hover:text-red-400 hover:bg-red-500/10 transition"
+                          title="Delete"
+                          onClick={() => {
+                            DeleteReport(report._id);
+                            DeleteImage(report?.file?.image_id);
+                          }}
+                        >
+                          <RiDeleteBinFill className="w-5 h-5" />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -205,11 +224,13 @@ const Reports = () => {
             </div>
 
             <Formik
-              initialValues={editData || {
-                report: "",
-                Type_Of_Assesment:"",
-                report_name: "",
-              }}
+              initialValues={
+                editData || {
+                  report: "",
+                  Type_Of_Assesment: "",
+                  report_name: "",
+                }
+              }
               validationSchema={Reportvalidation}
               enableReinitialize={true}
               onSubmit={handleSubmit}
@@ -291,7 +312,7 @@ const Reports = () => {
                       disabled={loading}
                       className="px-5 py-2 bg-blue-700 hover:bg-blue-600 text-white font-medium rounded-md shadow transition"
                     >
-                      {isEdit ? "Update" : loading ? "saving..." :  "Save"}
+                      {isEdit ? "Update" : loading ? "saving..." : "Save"}
                     </button>
                   </div>
                 </Form>
