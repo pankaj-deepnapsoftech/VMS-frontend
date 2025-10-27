@@ -8,6 +8,7 @@ import {
   useScheduleAssessmentContext,
 } from "@/context";
 import { DeleteImage, Imageuploader, UpdateImage } from "@/utils/firebaseImageUploader";
+import { EmptyFieldRemover } from "@/utils/RemoveEmptyField";
 import { Reportvalidation } from "@/Validation/VulnerabililtyDataValidation";
 import { Form, Formik } from "formik";
 import { useEffect, useState } from "react";
@@ -37,13 +38,16 @@ const Reports = () => {
     if (values?.report && !editData) {
       file = await Imageuploader(values?.report);
     }else if(values?.report?.type && editData) {
-      file = await UpdateImage(values?.report,editData?.file?.image_id)
+      file = await UpdateImage(values?.report,editData?.report?.image_id)
     };
 
-    
 
 
-    const data = { ...values, file, creator: tenant };
+
+    let data = { ...values, file, creator: tenant };
+
+    data = EmptyFieldRemover(data)
+
 
     if(editData){
       await UpdateReport(editData.id,data);
