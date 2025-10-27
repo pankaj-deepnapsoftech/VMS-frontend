@@ -4,7 +4,8 @@ export default function DownloadReports() {
   const reports = [
     {
       name: "All Vulnerabilities",
-      description: "A report containing a summary of vulnerabilities in CSV Format",
+      description:
+        "A report containing a summary of vulnerabilities in CSV Format",
     },
     {
       name: "Executive Report",
