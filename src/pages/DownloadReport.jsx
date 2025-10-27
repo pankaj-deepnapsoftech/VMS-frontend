@@ -6,7 +6,7 @@ import Select from "react-select"; // ✅ import React Select
 
 export default function DownloadReports() {
   const { DownloadReport, downloadData } = useMainReportContext();
-  const { token } = useAuthContext();
+    const { token,tenant } = useAuthContext();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -16,6 +16,11 @@ export default function DownloadReports() {
   const users = ["Admin", "Manager", "Security Lead", "Auditor"];
 
   const handleDownloadExcel = (data) => {
+
+    if(!tenant){
+      alert("Please Select tenant first");
+      return;
+    }
     if (!data || !Array.isArray(data)) return;
 
     const exclude = new Set(["Proof_of_Concept", "Exploit_Details"]);
@@ -40,12 +45,13 @@ export default function DownloadReports() {
     XLSX.writeFile(workbook, "vulnerabilities.xlsx");
   };
 
+
+  
   const reports = [
     {
       name: "All Vulnerabilities",
-      description:
-        "A report containing a summary of vulnerabilities in CSV Format",
-      func: () => handleDownloadExcel(downloadData),
+      description: "A report containing a summary of vulnerabilities in CSV Format",
+      func: ()=>handleDownloadExcel(downloadData),
     },
     {
       name: "Executive Report",
@@ -130,6 +136,10 @@ export default function DownloadReports() {
       },
     }),
   };
+    if (token && tenant) {
+      DownloadReport(tenant)
+    }
+  }, [token,tenant])
 
   return (
     <div className="w-full min-h-screen bg-[#0e1529] text-white p-6 md:p-8">
