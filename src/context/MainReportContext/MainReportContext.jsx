@@ -8,6 +8,7 @@ export const MainReportContext = createContext({
   uploadReports: () => {},
   DeleteReport: () => {},
   UpdateReport: () => {},
+  DownloadReport: () => {},
   reportsData: [],
   downloadData: [],
 });
@@ -64,9 +65,7 @@ const MainReportContextProvider = ({ children }) => {
 
   const DownloadReport = async () => {
     try {
-      const res = await AxiosHandler.get(
-        `/report/download-all-vulnerabilities`
-      );
+      const res = await AxiosHandler.get(`/report/download-all-vulnerabilities`);
       setDownloadData(res.data?.data);
     } catch (error) {
       console.log(error);
@@ -82,6 +81,7 @@ const MainReportContextProvider = ({ children }) => {
         DeleteReport,
         UpdateReport,
         DownloadReport,
+        downloadData
       }}
     >
       {children}

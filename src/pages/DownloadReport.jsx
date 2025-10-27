@@ -1,20 +1,69 @@
+import { useAuthContext, useMainReportContext } from "@/context";
 import { Download, Eye } from "lucide-react";
+import { useEffect } from "react";
+import * as XLSX from "xlsx";
 
 export default function DownloadReports() {
+
+  const { DownloadReport, downloadData } = useMainReportContext();
+
+
+  const handleDownloadExcel = (data) => {
+    if (!data || !Array.isArray(data)) return;
+
+    // Fields to skip
+    const exclude = new Set(["Proof_of_Concept", "Exploit_Details"]);
+
+    // Helper to clean each value for Excel cell
+    const formatValue = (val) => {
+      if (val === null || val === undefined) return "";
+      if (Array.isArray(val)) return val.join("; ");
+      if (typeof val === "object") return JSON.stringify(val);
+      return val;
+    };
+
+    // Get all keys except excluded ones
+    const keys = Object.keys(data[0]).filter((k) => !exclude.has(k));
+
+    // Convert data into Excel-friendly objects
+    const cleanedData = data.map((item) => {
+      const row = {};
+      keys.forEach((key) => (row[key] = formatValue(item[key])));
+      return row;
+    });
+
+    // Convert to worksheet
+    const worksheet = XLSX.utils.json_to_sheet(cleanedData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
+
+    // Trigger file download
+    XLSX.writeFile(workbook, "vulnerabilities.xlsx");
+  };
+  const { token } = useAuthContext()
   const reports = [
     {
       name: "All Vulnerabilities",
       description: "A report containing a summary of vulnerabilities in CSV Format",
+      func: ()=>handleDownloadExcel(downloadData)
     },
     {
       name: "Executive Report",
       description: "A high level Executive Report",
+      func:()=>{}
     },
     {
       name: "TVM Report",
       description: "A high level Threat & Vulnerability Management Report",
+      func:()=>{}
     },
   ];
+
+  useEffect(() => {
+    if (token) {
+      DownloadReport()
+    }
+  }, [token])
 
   return (
     <div className="w-full min-h-screen bg-[#0e1529] text-white p-6 md:p-8">
@@ -63,6 +112,7 @@ export default function DownloadReports() {
                     <button
                       className="p-2 rounded-md bg-[#12203a] text-green-400 hover:text-green-300 hover:bg-[#1b2b4e] transition duration-200"
                       title="Download Report"
+                      onClick={report.func}
                     >
                       <Download size={18} />
                     </button>
