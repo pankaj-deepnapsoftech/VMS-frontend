@@ -1,5 +1,5 @@
 import { useAuthContext, useMainReportContext } from "@/context";
-import { Download, Eye } from "lucide-react";
+import { Download, Eye, Mails } from "lucide-react";
 import { useEffect } from "react";
 import * as XLSX from "xlsx";
 
@@ -120,7 +120,7 @@ export default function DownloadReports() {
                       className="p-2 rounded-md bg-[#12203a] text-blue-400 hover:text-blue-300 hover:bg-[#1b2b4e] transition duration-200"
                       title="View Report"
                     >
-                      <Eye size={18} />
+                      <Mails size={18} />
                     </button>
                   </div>
                 </td>
