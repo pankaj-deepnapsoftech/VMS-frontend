@@ -6,9 +6,15 @@ import * as XLSX from "xlsx";
 export default function DownloadReports() {
 
   const { DownloadReport, downloadData } = useMainReportContext();
+    const { token,tenant } = useAuthContext();
 
 
   const handleDownloadExcel = (data) => {
+
+    if(!tenant){
+      alert("Please Select tenant first");
+      return;
+    }
     if (!data || !Array.isArray(data)) return;
 
     // Fields to skip
@@ -40,12 +46,14 @@ export default function DownloadReports() {
     // Trigger file download
     XLSX.writeFile(workbook, "vulnerabilities.xlsx");
   };
-  const { token } = useAuthContext()
+
+
+  
   const reports = [
     {
       name: "All Vulnerabilities",
       description: "A report containing a summary of vulnerabilities in CSV Format",
-      func: ()=>handleDownloadExcel(downloadData)
+      func: ()=>handleDownloadExcel(downloadData),
     },
     {
       name: "Executive Report",
@@ -60,10 +68,10 @@ export default function DownloadReports() {
   ];
 
   useEffect(() => {
-    if (token) {
-      DownloadReport()
+    if (token && tenant) {
+      DownloadReport(tenant)
     }
-  }, [token])
+  }, [token,tenant])
 
   return (
     <div className="w-full min-h-screen bg-[#0e1529] text-white p-6 md:p-8">

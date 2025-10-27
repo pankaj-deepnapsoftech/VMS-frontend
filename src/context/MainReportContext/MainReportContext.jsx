@@ -63,9 +63,9 @@ const MainReportContextProvider = ({ children }) => {
     }
   };
 
-  const DownloadReport = async () => {
+  const DownloadReport = async (tenant) => {
     try {
-      const res = await AxiosHandler.get(`/report/download-all-vulnerabilities`);
+      const res = await AxiosHandler.get(`/report/download-all-vulnerabilities?tenant=${tenant ? tenant : ""}`);
       setDownloadData(res.data?.data);
     } catch (error) {
       console.log(error);
