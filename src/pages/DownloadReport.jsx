@@ -241,7 +241,7 @@ export default function DownloadReports() {
               name="users"
               value={selectedUsers}
               onChange={setSelectedUsers}
-              options={users.map((u) => ({ value: u, label: u }))}
+              options={ tenant ?  UserViaTenant.map((u) => ({ value: u._id, label: u.email })) : alert("Please select tenant first !")}
               className="basic-multi-select"
               classNamePrefix="select"
               placeholder="Select users..."
