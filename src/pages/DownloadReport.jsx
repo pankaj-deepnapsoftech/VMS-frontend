@@ -2,20 +2,20 @@ import { useAuthContext, useMainReportContext } from "@/context";
 import { Download, Mails, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
-import Select from "react-select"; // ✅ import React Select
+import Select from "react-select";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function DownloadReports() {
   const { DownloadReport, downloadData } = useMainReportContext();
-  const { token,  UserViaTenant,GetTenantData, tenant } = useAuthContext();
-
-  console.log("================>>>>>>>>>>>",UserViaTenant)
+  const { token, UserViaTenant, GetTenantData, tenant } = useAuthContext();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [currentReport, setCurrentReport] = useState(null);
-
-  // Example users (can be replaced with API)
-  const users = ["Admin", "Manager", "Security Lead", "Auditor"];
+  const [sendType, setSendType] = useState("now"); // now | later
+  const [scheduleType, setScheduleType] = useState("once"); // once | weekly | monthly
+  const [scheduleDate, setScheduleDate] = useState(null);
 
   // ✅ Handle Excel Download
   const handleDownloadExcel = (data) => {
@@ -68,7 +68,6 @@ export default function DownloadReports() {
     },
   ];
 
-  // ✅ Fetch reports when token or tenant changes
   useEffect(() => {
     if (token && tenant) {
       DownloadReport(tenant);
@@ -85,13 +84,36 @@ export default function DownloadReports() {
     setIsModalOpen(false);
     setSelectedUsers([]);
     setCurrentReport(null);
+    setSendType("now");
+    setScheduleType("once");
+    setScheduleDate(null);
   };
 
+  // ✅ Handle Sending / Scheduling
   const handleSendReport = () => {
     if (selectedUsers.length === 0)
       return alert("Please select at least one user!");
+
     const userList = selectedUsers.map((u) => u.value).join(", ");
-    alert(`Report "${currentReport?.name}" sent to: ${userList}`);
+
+    if (sendType === "later" && !scheduleDate)
+      return alert("Please select a start date and time!");
+
+    if (sendType === "now") {
+      alert(`Report "${currentReport?.name}" sent immediately to: ${userList}`);
+    } else {
+      let message = `Report "${currentReport?.name}" scheduled `;
+      if (scheduleType === "once") {
+        message += `on ${scheduleDate.toLocaleString()}`;
+      } else if (scheduleType === "weekly") {
+        message += `to repeat weekly starting ${scheduleDate.toLocaleString()}`;
+      } else if (scheduleType === "monthly") {
+        message += `to repeat monthly starting ${scheduleDate.toLocaleString()}`;
+      }
+      message += ` for: ${userList}`;
+      alert(message);
+    }
+
     handleCloseModal();
   };
 
@@ -132,18 +154,18 @@ export default function DownloadReports() {
     }),
     multiValueRemove: (base) => ({
       ...base,
-      color: "#6B7280", // gray-500 default
+      color: "#6B7280",
       cursor: "pointer",
       ":hover": {
         backgroundColor: "transparent",
-        color: "#4B5563", // gray-600 on hover
+        color: "#4B5563",
       },
     }),
   };
 
   return (
     <div className="w-full min-h-screen bg-[#0e1529] text-white p-6 md:p-8">
-      {/* Page Header */}
+      {/* Header */}
       <div>
         <h1 className="text-2xl md:text-3xl font-semibold tracking-wide text-white">
           Download Reports
@@ -153,7 +175,7 @@ export default function DownloadReports() {
         </p>
       </div>
 
-      {/* Table Container */}
+      {/* Table */}
       <div className="overflow-x-auto w-full custom-scrollbar mt-8 rounded-xl border border-[#1e2746] bg-[#1a1f2e] shadow-lg shadow-black/20">
         <table className="table-fixed min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
           <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
@@ -207,7 +229,6 @@ export default function DownloadReports() {
           </tbody>
         </table>
 
-        {/* Footer */}
         <div className="text-gray-400 text-xs px-4 py-3 border-t border-gray-700 bg-[#1a1f2e]">
           Showing {reports.length} reports
         </div>
@@ -241,12 +262,114 @@ export default function DownloadReports() {
               name="users"
               value={selectedUsers}
               onChange={setSelectedUsers}
-              options={ tenant ?  UserViaTenant.map((u) => ({ value: u._id, label: u.email })) : alert("Please select tenant first !")}
+              options={
+                tenant
+                  ? UserViaTenant.map((u) => ({
+                      value: u._id,
+                      label: u.email,
+                    }))
+                  : []
+              }
               className="basic-multi-select"
               classNamePrefix="select"
               placeholder="Select users..."
               styles={customSelectStyles}
             />
+
+            {/* Send Type Options */}
+            <div className="mt-6">
+              <label className="text-sm text-gray-300 font-medium mb-2 block">
+                Send Options
+              </label>
+              <div className="flex flex-col gap-3">
+                <label className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    name="sendType"
+                    value="now"
+                    checked={sendType === "now"}
+                    onChange={() => setSendType("now")}
+                  />
+                  Send Now
+                </label>
+
+                <label className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    name="sendType"
+                    value="later"
+                    checked={sendType === "later"}
+                    onChange={() => setSendType("later")}
+                  />
+                  Schedule
+                </label>
+              </div>
+            </div>
+
+            {sendType === "later" && (
+              <div className="mt-4 space-y-4">
+                <div>
+                  <label className="text-sm text-gray-300 mb-2 block">
+                    Schedule Frequency
+                  </label>
+                  <div className="flex items-center gap-4">
+                    <label className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="scheduleType"
+                        value="once"
+                        checked={scheduleType === "once"}
+                        onChange={() => setScheduleType("once")}
+                      />
+                      Once
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="scheduleType"
+                        value="weekly"
+                        checked={scheduleType === "weekly"}
+                        onChange={() => setScheduleType("weekly")}
+                      />
+                      Weekly
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="scheduleType"
+                        value="monthly"
+                        checked={scheduleType === "monthly"}
+                        onChange={() => setScheduleType("monthly")}
+                      />
+                      Monthly
+                    </label>
+                  </div>
+                </div>
+
+                {/* Date & Time Picker */}
+                <div>
+                  <label className="text-sm text-gray-300 mb-2 block">
+                    Select Start Date & Time
+                  </label>
+                  <DatePicker
+                    selected={scheduleDate}
+                    onChange={(date) => setScheduleDate(date)}
+                    showTimeSelect
+                    timeIntervals={15}
+                    dateFormat="Pp"
+                    minDate={new Date()}
+                    className="w-full bg-[#0f162d] border border-[#334155] rounded-lg px-3 py-2 text-white focus:outline-none"
+                    placeholderText="Pick start date & time"
+                  />
+                  {scheduleType !== "once" && (
+                    <p className="text-xs text-gray-400 mt-1">
+                      This report will automatically repeat every{" "}
+                      {scheduleType}.
+                    </p>
+                  )}
+                </div>
+              </div>
+            )}
 
             <div className="mt-6 flex justify-end gap-3">
               <button
@@ -259,7 +382,11 @@ export default function DownloadReports() {
                 onClick={handleSendReport}
                 className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition"
               >
-                Send
+                {sendType === "later"
+                  ? scheduleType === "once"
+                    ? "Schedule"
+                    : "Set Recurring"
+                  : "Send"}
               </button>
             </div>
           </div>

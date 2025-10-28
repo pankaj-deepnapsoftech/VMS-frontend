@@ -11,9 +11,9 @@ export const authContext = createContext({
   token: "",
   authenticate: null,
   tenant: "",
-  GetSecuirityQuestion: () => { },
-  selectedYear:new Date().getFullYear(),
-  setSelectedYear:()=>{}
+  GetSecuirityQuestion: () => {},
+  selectedYear: new Date().getFullYear(),
+  setSelectedYear: () => {},
 });
 
 // eslint-disable-next-line react/prop-types
@@ -74,7 +74,7 @@ const AuthContextProvider = ({ children }) => {
       toast.dismiss(toastId);
       toast.error(
         error?.response?.data?.message ||
-        "something went wrong please try again..."
+          "something went wrong please try again..."
       );
     } finally {
       setLoading(false);
@@ -289,7 +289,6 @@ const AuthContextProvider = ({ children }) => {
       const res = await AxiosHandler.get(
         `/auth/user-by-tenant?tenant=${tenant ? tenant : ""}`
       );
-      console.log("this is called much more time in frontend====================>>>>>>>>>>>>>>>>>>>")
       setuserViaTenant(res.data.data);
     } catch (error) {
       console.log(error);
@@ -302,16 +301,12 @@ const AuthContextProvider = ({ children }) => {
         `/auth/change-password-question?email=${email}`
       );
       if (res?.data?.url) {
-        window.location.href = res?.data?.url
+        window.location.href = res?.data?.url;
       }
     } catch (error) {
       console.log(error);
     }
   };
-
-
-
-
 
   useEffect(() => {
     if (token) {
@@ -328,7 +323,6 @@ const AuthContextProvider = ({ children }) => {
       setTenant(authenticate?.tenant || "");
     }
   }, [location.search, authenticate]);
-
 
   return (
     <authContext.Provider
@@ -363,7 +357,7 @@ const AuthContextProvider = ({ children }) => {
         tenant,
         GetSecuirityQuestion,
         selectedYear,
-        setSelectedYear
+        setSelectedYear,
       }}
     >
       {children}
