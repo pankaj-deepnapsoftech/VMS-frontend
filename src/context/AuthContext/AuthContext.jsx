@@ -37,7 +37,6 @@ const AuthContextProvider = ({ children }) => {
   });
 
   const [OpenSideBar, setOpenSideBar] = useState(false);
-  const [tenantData, setTenantData] = useState([])
   const getLogedInUser = async () => {
     setUserLoading(true);
     try {
@@ -290,6 +289,7 @@ const AuthContextProvider = ({ children }) => {
       const res = await AxiosHandler.get(
         `/auth/user-by-tenant?tenant=${tenant ? tenant : ""}`
       );
+      console.log("this is called much more time in frontend====================>>>>>>>>>>>>>>>>>>>")
       setuserViaTenant(res.data.data);
     } catch (error) {
       console.log(error);
@@ -312,14 +312,6 @@ const AuthContextProvider = ({ children }) => {
 
 
 
-  const GetUserDataByTenant = async (tenantId) => {
-    try {
-      const res = await AxiosHandler.get(`/auth/user-by-tenant?tenant=${tenantId}`)
-      setTenantData(res?.data?.data)
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
   useEffect(() => {
     if (token) {
@@ -337,11 +329,6 @@ const AuthContextProvider = ({ children }) => {
     }
   }, [location.search, authenticate]);
 
-  useEffect(()=>{
-    if(token){
-      GetTenantData(tenant);
-    }
-  },[tenant,token])
 
   return (
     <authContext.Provider
@@ -375,8 +362,6 @@ const AuthContextProvider = ({ children }) => {
         Verifyrecaptcha,
         tenant,
         GetSecuirityQuestion,
-        GetUserDataByTenant,
-        tenantData,
         selectedYear,
         setSelectedYear
       }}

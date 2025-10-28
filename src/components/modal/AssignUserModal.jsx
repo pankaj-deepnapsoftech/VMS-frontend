@@ -1,23 +1,23 @@
 /* eslint-disable react/prop-types */
-import { AxiosHandler } from '@/config/AxiosConfig'
-import { useAuthContext, useDataContext, useVulnerabililtyDataContext } from '@/context'
-import axios from 'axios'
+import { useAuthContext, useVulnerabililtyDataContext } from '@/context'
 import { X } from 'lucide-react'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const AssignUserModal = ({ setAssignUserOpenModal, tenantId, selectedDataId }) => {
-    const { GetUserDataByTenant, tenantData } = useAuthContext()
+    const { GetTenantData, UserViaTenant, token, tenant } = useAuthContext()
     const { GetInfrastructureData, UpdateData } = useVulnerabililtyDataContext();
 
     const [selectedUserId, setSelectedUserId] = useState('')
 
     useEffect(() => {
-        GetUserDataByTenant(tenantId)
-    }, [])
+        if (token && tenant) {
+            GetTenantData(tenantId);
+        }
+    }, [token, tenant])
 
     const handleSubmit = () => {
         if (selectedUserId) {
-            UpdateData({ assign:selectedUserId }, selectedDataId?._id)
+            UpdateData({ assign: selectedUserId }, selectedDataId?._id)
             setAssignUserOpenModal(false)
             GetInfrastructureData()
         } else {
@@ -52,7 +52,7 @@ const AssignUserModal = ({ setAssignUserOpenModal, tenantId, selectedDataId }) =
                         className="w-full px-4 py-2 rounded-lg bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                         <option value="">-- Select a user --</option>
-                        {tenantData.map((user) => (
+                        {UserViaTenant.map((user) => (
                             <option key={user._id} value={user._id}>
                                 {user.fname}
                             </option>

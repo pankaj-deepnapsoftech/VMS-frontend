@@ -6,7 +6,9 @@ import Select from "react-select"; // ✅ import React Select
 
 export default function DownloadReports() {
   const { DownloadReport, downloadData } = useMainReportContext();
-  const { token, tenant } = useAuthContext();
+  const { token,  UserViaTenant,GetTenantData, tenant } = useAuthContext();
+
+  console.log("================>>>>>>>>>>>",UserViaTenant)
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -70,8 +72,9 @@ export default function DownloadReports() {
   useEffect(() => {
     if (token && tenant) {
       DownloadReport(tenant);
+      GetTenantData(tenant);
     }
-  }, [token, tenant, DownloadReport]);
+  }, [token, tenant]);
 
   const handleOpenModal = (report) => {
     setCurrentReport(report);
