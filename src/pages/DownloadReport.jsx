@@ -10,14 +10,18 @@ export default function DownloadReports() {
   const { DownloadReport, downloadData } = useMainReportContext();
   const { token, UserViaTenant, GetTenantData, tenant } = useAuthContext();
 
+  const [scheduleDay, setScheduleDay] = useState("");
+  const [scheduleTime, setScheduleTime] = useState(null);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [currentReport, setCurrentReport] = useState(null);
-  const [sendType, setSendType] = useState("now"); // now | later
-  const [scheduleType, setScheduleType] = useState("once"); // once | weekly | monthly
+  const [sendType, setSendType] = useState("now");
+  const [scheduleType, setScheduleType] = useState("once");
   const [scheduleDate, setScheduleDate] = useState(null);
+  const [weeklyDay, setWeeklyDay] = useState("");
 
-  // ✅ Handle Excel Download
+  // ✅ Excel Download
   const handleDownloadExcel = (data) => {
     if (!tenant) {
       alert("Please select tenant first");
@@ -48,7 +52,6 @@ export default function DownloadReports() {
     XLSX.writeFile(workbook, "vulnerabilities.xlsx");
   };
 
-  // ✅ Report List
   const reports = [
     {
       name: "All Vulnerabilities",
@@ -87,37 +90,64 @@ export default function DownloadReports() {
     setSendType("now");
     setScheduleType("once");
     setScheduleDate(null);
+    setWeeklyDay("");
   };
 
-  // ✅ Handle Sending / Scheduling
   const handleSendReport = () => {
+    if (scheduleType === "monthly") {
+      if (!scheduleDay || !scheduleTime)
+        return alert("Please select both day and time for monthly schedule!");
+
+      const timeFormatted = scheduleTime.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+
+      alert(
+        `Report "${currentReport?.name}" will repeat monthly on day ${scheduleDay} at ${timeFormatted} for: ${userList}`
+      );
+      handleCloseModal();
+      return;
+    }
+
     if (selectedUsers.length === 0)
       return alert("Please select at least one user!");
 
     const userList = selectedUsers.map((u) => u.value).join(", ");
 
-    if (sendType === "later" && !scheduleDate)
-      return alert("Please select a start date and time!");
-
-    if (sendType === "now") {
-      alert(`Report "${currentReport?.name}" sent immediately to: ${userList}`);
-    } else {
-      let message = `Report "${currentReport?.name}" scheduled `;
-      if (scheduleType === "once") {
-        message += `on ${scheduleDate.toLocaleString()}`;
-      } else if (scheduleType === "weekly") {
-        message += `to repeat weekly starting ${scheduleDate.toLocaleString()}`;
-      } else if (scheduleType === "monthly") {
-        message += `to repeat monthly starting ${scheduleDate.toLocaleString()}`;
-      }
-      message += ` for: ${userList}`;
-      alert(message);
+    if (sendType === "later") {
+      if (scheduleType === "once" && !scheduleDate)
+        return alert("Please select date and time!");
+      if (scheduleType === "weekly" && (!weeklyDay || !scheduleDate))
+        return alert("Please select day and time!");
+      if (scheduleType === "monthly" && !scheduleDate)
+        return alert("Please select date and time!");
     }
 
+    let message = "";
+    if (sendType === "now") {
+      message = `Report "${currentReport?.name}" sent immediately to: ${userList}`;
+    } else {
+      if (scheduleType === "once") {
+        message = `Report "${
+          currentReport?.name
+        }" scheduled once on ${scheduleDate.toLocaleString()}`;
+      } else if (scheduleType === "weekly") {
+        message = `Report "${
+          currentReport?.name
+        }" scheduled weekly on ${weeklyDay} at ${scheduleDate.toLocaleTimeString()}`;
+      } else if (scheduleType === "monthly") {
+        message = `Report "${
+          currentReport?.name
+        }" scheduled monthly on ${scheduleDate.toLocaleDateString()} at ${scheduleDate.toLocaleTimeString()}`;
+      }
+      message += ` for: ${userList}`;
+    }
+
+    alert(message);
     handleCloseModal();
   };
 
-  // ✅ Custom React Select Styles
   const customSelectStyles = {
     control: (base) => ({
       ...base,
@@ -141,27 +171,17 @@ export default function DownloadReports() {
       color: "white",
       cursor: "pointer",
     }),
-    multiValue: (base) => ({
-      ...base,
-      backgroundColor: "#1e3a8a",
-      color: "white",
-      borderRadius: "0.375rem",
-      padding: "0 4px",
-    }),
-    multiValueLabel: (base) => ({
-      ...base,
-      color: "white",
-    }),
-    multiValueRemove: (base) => ({
-      ...base,
-      color: "#6B7280",
-      cursor: "pointer",
-      ":hover": {
-        backgroundColor: "transparent",
-        color: "#4B5563",
-      },
-    }),
   };
+
+  const daysOfWeek = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
 
   return (
     <div className="w-full min-h-screen bg-[#0e1529] text-white p-6 md:p-8">
@@ -256,7 +276,6 @@ export default function DownloadReports() {
               report.
             </p>
 
-            {/* Multi Selector */}
             <Select
               isMulti
               name="users"
@@ -270,13 +289,11 @@ export default function DownloadReports() {
                     }))
                   : []
               }
-              className="basic-multi-select"
-              classNamePrefix="select"
               placeholder="Select users..."
               styles={customSelectStyles}
             />
 
-            {/* Send Type Options */}
+            {/* Send Options */}
             <div className="mt-6">
               <label className="text-sm text-gray-300 font-medium mb-2 block">
                 Send Options
@@ -292,7 +309,6 @@ export default function DownloadReports() {
                   />
                   Send Now
                 </label>
-
                 <label className="flex items-center gap-2">
                   <input
                     type="radio"
@@ -346,31 +362,87 @@ export default function DownloadReports() {
                   </div>
                 </div>
 
-                {/* Date & Time Picker */}
-                <div>
-                  <label className="text-sm text-gray-300 mb-2 block">
-                    Select Start Date & Time
-                  </label>
-                  <DatePicker
-                    selected={scheduleDate}
-                    onChange={(date) => setScheduleDate(date)}
-                    showTimeSelect
-                    timeIntervals={15}
-                    dateFormat="Pp"
-                    minDate={new Date()}
-                    className="w-full bg-[#0f162d] border border-[#334155] rounded-lg px-3 py-2 text-white focus:outline-none"
-                    placeholderText="Pick start date & time"
-                  />
-                  {scheduleType !== "once" && (
-                    <p className="text-xs text-gray-400 mt-1">
-                      This report will automatically repeat every{" "}
-                      {scheduleType}.
-                    </p>
-                  )}
-                </div>
+                {/* Weekly → Day + Time */}
+                {scheduleType === "weekly" && (
+                  <div className="space-y-3">
+                    <label className="text-sm text-gray-300 block">
+                      Select Day of Week
+                    </label>
+                    <select
+                      value={weeklyDay}
+                      onChange={(e) => setWeeklyDay(e.target.value)}
+                      className="w-full bg-[#0f162d] border border-[#334155] rounded-lg px-3 py-2 text-white"
+                    >
+                      <option value="">Select Day</option>
+                      {daysOfWeek.map((day) => (
+                        <option key={day} value={day}>
+                          {day}
+                        </option>
+                      ))}
+                    </select>
+
+                    <label className="text-sm text-gray-300 block">
+                      Select Time
+                    </label>
+                    <DatePicker
+                      selected={scheduleDate}
+                      onChange={(date) => setScheduleDate(date)}
+                      showTimeSelect
+                      showTimeSelectOnly
+                      timeIntervals={15}
+                      timeCaption="Time"
+                      dateFormat="h:mm aa"
+                      className="w-full bg-[#0f162d] border border-[#334155] rounded-lg px-3 py-2 text-white"
+                      placeholderText="Pick time"
+                    />
+                  </div>
+                )}
+
+                {/* Monthly → Day of Month + Time Picker */}
+                {scheduleType === "monthly" && (
+                  <div className="space-y-4">
+                    <div>
+                      <label className="text-sm text-gray-300 mb-2 block">
+                        Select Day of Month
+                      </label>
+                      <select
+                        value={scheduleDay || ""}
+                        onChange={(e) => setScheduleDay(e.target.value)}
+                        className="w-full bg-[#0f162d] border border-[#334155] rounded-lg px-3 py-2 text-white focus:outline-none"
+                      >
+                        <option value="" disabled>
+                          Select day
+                        </option>
+                        {Array.from({ length: 30 }, (_, i) => (
+                          <option key={i + 1} value={i + 1}>
+                            {i + 1}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="text-sm text-gray-300 mb-2 block">
+                        Select Time
+                      </label>
+                      <DatePicker
+                        selected={scheduleTime}
+                        onChange={(time) => setScheduleTime(time)}
+                        showTimeSelect
+                        showTimeSelectOnly
+                        timeIntervals={15}
+                        timeCaption="Time"
+                        dateFormat="h:mm aa"
+                        className="w-full bg-[#0f162d] border border-[#334155] rounded-lg px-3 py-2 text-white focus:outline-none"
+                        placeholderText="Pick time"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 
+            {/* Buttons */}
             <div className="mt-6 flex justify-end gap-3">
               <button
                 onClick={handleCloseModal}
