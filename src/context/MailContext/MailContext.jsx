@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { AxiosHandler } from "@/config/AxiosConfig";
-import { createContext} from "react";
+import { createContext, useEffect} from "react";
 import toast from "react-hot-toast";
 
 export const MailContext = createContext();
@@ -19,11 +19,13 @@ const MailContextProvider = ({ children }) => {
   };
 
   const getMailReport = async (tenant) => {
+    console.log("tenant", tenant)
     const toastId = toast.loading("Loading...");
     try {
       const res = await AxiosHandler.post(
         `/mailing/get?tenant=${tenant ? tenant : ""}`
       );
+      console.log(res) 
       toast.dismiss(toastId);
       toast.success(res.data.message);
     } catch (error) {
@@ -57,6 +59,7 @@ const MailContextProvider = ({ children }) => {
       toast.error(error?.response?.data?.message);
     }
   }
+
 
   return (
     <MailContext.Provider

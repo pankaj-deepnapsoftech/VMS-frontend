@@ -50,7 +50,7 @@ const ExceptionContextProvider = ({ children }) => {
         `/expection/get?page=${page}&tenant=${tenant ? tenant : ""}`
       );
 
-      console.log(res);
+
       setExpectionData(res.data?.data);
     } catch (error) {
       console.log(error);
