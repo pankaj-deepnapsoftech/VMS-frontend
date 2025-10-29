@@ -9,7 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 export default function DownloadReports() {
   const { DownloadReport, downloadData } = useMainReportContext();
   const { token, UserViaTenant, GetTenantData, tenant } = useAuthContext();
-  const { createMailReport, getMailReport } = useMailContext()
+  const { createMailReport, getMailReport, scheduleMailData } = useMailContext()
 
   const [scheduleDay, setScheduleDay] = useState("");
   const [scheduleTime, setScheduleTime] = useState(null);
@@ -21,15 +21,17 @@ export default function DownloadReports() {
   const [scheduleType, setScheduleType] = useState("weekly");
   const [scheduleDate, setScheduleDate] = useState(null);
   const [weeklyDay, setWeeklyDay] = useState("");
-
+  // const [ ]
   
+  console.log(scheduleMailData)
+
   useEffect(()=>{
     if(token && tenant){
       getMailReport(tenant)
     }
   }, [token,tenant])
 
-  // ✅ Excel Download
+
   const handleDownloadExcel = (data) => {
     if (!tenant) {
       alert("Please select tenant first");
@@ -124,6 +126,7 @@ export default function DownloadReports() {
       schedule_type: scheduleType,
       scheduled,
       time: scheduleTime,
+      tenant
     }
 
     if (weeklyDay) {

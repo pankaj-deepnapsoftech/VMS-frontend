@@ -1,11 +1,13 @@
 /* eslint-disable react/prop-types */
 import { AxiosHandler } from "@/config/AxiosConfig";
-import { createContext, useEffect} from "react";
+import { createContext, useEffect, useState, } from "react";
 import toast from "react-hot-toast";
 
 export const MailContext = createContext();
 
+
 const MailContextProvider = ({ children }) => {
+  const [scheduleMailData, setscheduleMailData] = useState()
   const createMailReport = async (data) => {
     const toastId = toast.loading("Loading...");
     try {
@@ -22,10 +24,11 @@ const MailContextProvider = ({ children }) => {
     console.log("tenant", tenant)
     const toastId = toast.loading("Loading...");
     try {
-      const res = await AxiosHandler.post(
+      const res = await AxiosHandler.get(
         `/mailing/get?tenant=${tenant ? tenant : ""}`
       );
-      console.log(res) 
+      setscheduleMailData(res?.data?.data)
+     
       toast.dismiss(toastId);
       toast.success(res.data.message);
     } catch (error) {
@@ -33,7 +36,6 @@ const MailContextProvider = ({ children }) => {
       toast.error(error?.response?.data?.message);
     }
   };
-
 
   const updateMailReport = async (id,data) => {
      const toastId = toast.loading("Loading...");
@@ -68,7 +70,7 @@ const MailContextProvider = ({ children }) => {
         getMailReport,
         updateMailReport,
         deleteMailReport,
-
+        scheduleMailData
       }}
     >
       {children}
