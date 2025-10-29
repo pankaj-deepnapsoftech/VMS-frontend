@@ -21,28 +21,24 @@ const MailContextProvider = ({ children }) => {
   };
 
   const getMailReport = async (tenant) => {
-    console.log("tenant", tenant)
-    const toastId = toast.loading("Loading...");
     try {
       const res = await AxiosHandler.get(
         `/mailing/get?tenant=${tenant ? tenant : ""}`
       );
       setscheduleMailData(res?.data?.data)
      
-      toast.dismiss(toastId);
-      toast.success(res.data.message);
     } catch (error) {
-      toast.dismiss(toastId);
-      toast.error(error?.response?.data?.message);
+      console.log(error);
     }
   };
 
   const updateMailReport = async (id,data) => {
      const toastId = toast.loading("Loading...");
     try {
-      const res = await AxiosHandler.post(`/mailing/update/${id}`,data);
+      const res = await AxiosHandler.put(`/mailing/update/${id}`,data);
       toast.dismiss(toastId);
       toast.success(res.data.message);
+      getMailReport()
     } catch (error) {
       toast.dismiss(toastId);
       toast.error(error?.response?.data?.message);

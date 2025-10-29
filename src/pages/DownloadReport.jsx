@@ -9,9 +9,9 @@ import "react-datepicker/dist/react-datepicker.css";
 export default function DownloadReports() {
   const { DownloadReport, downloadData } = useMainReportContext();
   const { token, UserViaTenant, GetTenantData, tenant } = useAuthContext();
-  const { createMailReport, getMailReport, scheduleMailData } = useMailContext()
+  const { createMailReport, getMailReport, scheduleMailData, updateMailReport } = useMailContext()
 
-  const [scheduleDay, setScheduleDay] = useState("");
+
   const [scheduleTime, setScheduleTime] = useState(null);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,15 +21,14 @@ export default function DownloadReports() {
   const [scheduleType, setScheduleType] = useState("weekly");
   const [scheduleDate, setScheduleDate] = useState(null);
   const [weeklyDay, setWeeklyDay] = useState("");
-  // const [ ]
-  
-  console.log(scheduleMailData)
+  const [editable, setEditable] = useState(null);
 
-  useEffect(()=>{
-    if(token && tenant){
+
+  useEffect(() => {
+    if (token && tenant) {
       getMailReport(tenant)
     }
-  }, [token,tenant])
+  }, [token, tenant])
 
 
   const handleDownloadExcel = (data) => {
@@ -89,8 +88,27 @@ export default function DownloadReports() {
   }, [token, tenant]);
 
   const handleOpenModal = (report) => {
+    if (!tenant) {
+      return alert("select tenant first !")
+    }
     setCurrentReport(report);
     setIsModalOpen(true);
+    const filterData = scheduleMailData.filter((item) => item.tenant === tenant && item.report_type === report.name)[0]
+    setSelectedUsers(
+      UserViaTenant
+        .filter((item) => filterData.users.includes(item._id))
+        .map((item) => ({
+          value: item._id,
+          label: item.email
+        }))
+    );
+    setSendType(filterData?.scheduled ? "later" : "now");
+    setScheduleType(filterData?.schedule_type);
+    setScheduleTime(filterData?.time);
+    setWeeklyDay(filterData?.day);
+    setScheduleDate(filterData?.date)
+    setEditable(filterData);
+
   };
 
   const handleCloseModal = () => {
@@ -98,7 +116,7 @@ export default function DownloadReports() {
     setSelectedUsers([]);
     setCurrentReport(null);
     setSendType("now");
-    setScheduleType("once");
+    setScheduleType("weekly");
     setScheduleDate(null);
     setWeeklyDay("");
   };
@@ -133,13 +151,17 @@ export default function DownloadReports() {
       data = { ...data, day: weeklyDay }
     }
 
-    console.log("this is testing",scheduleDate)
 
     if (scheduleDate) {
       data = { ...data, date: scheduleDate }
     }
 
-    createMailReport(data)
+    if (editable) {
+      updateMailReport(editable._id, data)
+    } else {
+      createMailReport(data)
+    }
+
 
 
     handleCloseModal();
@@ -374,11 +396,11 @@ export default function DownloadReports() {
                     </label>
                     <input
                       type="time"
-                      selected={scheduleTime}
+                      value={scheduleTime}
                       onChange={(e) => setScheduleTime(e.target.value)}
-                      className="w-full bg-[#0f162d] border border-[#334155] rounded-lg px-3 py-2 text-white focus:outline-none"
-
+                      className="w-full bg-[#0f162d] border border-[#334155] rounded-lg px-3 py-2 text-white focus:outline-none [color-scheme:dark]"
                     />
+
                   </div>
                 )}
 
