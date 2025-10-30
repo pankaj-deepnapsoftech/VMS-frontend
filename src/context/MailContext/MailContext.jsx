@@ -2,12 +2,14 @@
 import { AxiosHandler } from "@/config/AxiosConfig";
 import { createContext, useEffect, useState, } from "react";
 import toast from "react-hot-toast";
+import { useAuthContext } from "..";
 
 export const MailContext = createContext();
 
 
 const MailContextProvider = ({ children }) => {
   const [scheduleMailData, setscheduleMailData] = useState()
+  const {tenant} = useAuthContext()
   const createMailReport = async (data) => {
     const toastId = toast.loading("Loading...");
     try {
@@ -38,7 +40,7 @@ const MailContextProvider = ({ children }) => {
       const res = await AxiosHandler.put(`/mailing/update/${id}`,data);
       toast.dismiss(toastId);
       toast.success(res.data.message);
-      getMailReport()
+      getMailReport(tenant)
     } catch (error) {
       toast.dismiss(toastId);
       toast.error(error?.response?.data?.message);
