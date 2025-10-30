@@ -76,4 +76,4 @@ const MailContextProvider = ({ children }) => {
   );
 };
 
-export default MailContextProvider;
+     export default MailContextProvider;
