@@ -1,11 +1,13 @@
 /* eslint-disable react/prop-types */
 import { AxiosHandler } from "@/config/AxiosConfig";
-import { createContext, useState, useEffect } from "react";
+import { createContext, useEffect, useState, } from "react";
 import toast from "react-hot-toast";
 
 export const MailContext = createContext();
 
+
 const MailContextProvider = ({ children }) => {
+  const [scheduleMailData, setscheduleMailData] = useState()
   const createMailReport = async (data) => {
     const toastId = toast.loading("Loading...");
     try {
@@ -19,24 +21,35 @@ const MailContextProvider = ({ children }) => {
   };
 
   const getMailReport = async (tenant) => {
-    const toastId = toast.loading("Loading...");
     try {
-      const res = await AxiosHandler.post(
+      const res = await AxiosHandler.get(
         `/mailing/get?tenant=${tenant ? tenant : ""}`
       );
+      setscheduleMailData(res?.data?.data)
+     
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateMailReport = async (id,data) => {
+     const toastId = toast.loading("Loading...");
+    try {
+      const res = await AxiosHandler.put(`/mailing/update/${id}`,data);
       toast.dismiss(toastId);
       toast.success(res.data.message);
+      getMailReport()
     } catch (error) {
       toast.dismiss(toastId);
       toast.error(error?.response?.data?.message);
     }
-  };
+  }
 
 
-  const updateMailReport = async () => {
+  const deleteMailReport = async (id) => {
      const toastId = toast.loading("Loading...");
     try {
-      const res = await AxiosHandler.post(`/mailing/update/`);
+      const res = await AxiosHandler.post( `/mailing/delete/${id}`);
       toast.dismiss(toastId);
       toast.success(res.data.message);
     } catch (error) {
@@ -46,17 +59,6 @@ const MailContextProvider = ({ children }) => {
   }
 
 
-  const deleteMailReport = async () => {
-     const toastId = toast.loading("Loading...");
-    try {
-      const res = await AxiosHandler.post( `/mailing/delete/`);
-      toast.dismiss(toastId);
-      toast.success(res.data.message);
-    } catch (error) {
-      toast.dismiss(toastId);
-      toast.error(error?.response?.data?.message);
-    }
-
   return (
     <MailContext.Provider
       value={{
@@ -64,7 +66,7 @@ const MailContextProvider = ({ children }) => {
         getMailReport,
         updateMailReport,
         deleteMailReport,
-
+        scheduleMailData
       }}
     >
       {children}

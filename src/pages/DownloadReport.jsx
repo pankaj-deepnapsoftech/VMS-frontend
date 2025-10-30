@@ -1,4 +1,4 @@
-import { useAuthContext, useMainReportContext } from "@/context";
+import { useAuthContext, useMailContext, useMainReportContext } from "@/context";
 import { Download, Mails, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
@@ -9,19 +9,28 @@ import "react-datepicker/dist/react-datepicker.css";
 export default function DownloadReports() {
   const { DownloadReport, downloadData } = useMainReportContext();
   const { token, UserViaTenant, GetTenantData, tenant } = useAuthContext();
+  const { createMailReport, getMailReport, scheduleMailData, updateMailReport } = useMailContext()
 
-  const [scheduleDay, setScheduleDay] = useState("");
+
   const [scheduleTime, setScheduleTime] = useState(null);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [currentReport, setCurrentReport] = useState(null);
   const [sendType, setSendType] = useState("now");
-  const [scheduleType, setScheduleType] = useState("once");
+  const [scheduleType, setScheduleType] = useState("weekly");
   const [scheduleDate, setScheduleDate] = useState(null);
   const [weeklyDay, setWeeklyDay] = useState("");
+  const [editable, setEditable] = useState(null);
 
-  // ✅ Excel Download
+
+  useEffect(() => {
+    if (token && tenant) {
+      getMailReport(tenant)
+    }
+  }, [token, tenant])
+
+
   const handleDownloadExcel = (data) => {
     if (!tenant) {
       alert("Please select tenant first");
@@ -62,12 +71,12 @@ export default function DownloadReports() {
     {
       name: "Executive Report",
       description: "A high level Executive Report",
-      func: () => {},
+      func: () => { },
     },
     {
       name: "TVM Report",
       description: "A high level Threat & Vulnerability Management Report",
-      func: () => {},
+      func: () => { },
     },
   ];
 
@@ -79,8 +88,27 @@ export default function DownloadReports() {
   }, [token, tenant]);
 
   const handleOpenModal = (report) => {
+    if (!tenant) {
+      return alert("select tenant first !")
+    }
     setCurrentReport(report);
     setIsModalOpen(true);
+    const filterData = scheduleMailData.filter((item) => item.tenant === tenant && item.report_type === report.name)[0]
+    setSelectedUsers(
+      UserViaTenant
+        .filter((item) => filterData.users.includes(item._id))
+        .map((item) => ({
+          value: item._id,
+          label: item.email
+        }))
+    );
+    setSendType(filterData?.scheduled ? "later" : "now");
+    setScheduleType(filterData?.schedule_type);
+    setScheduleTime(filterData?.time);
+    setWeeklyDay(filterData?.day);
+    setScheduleDate(filterData?.date)
+    setEditable(filterData);
+
   };
 
   const handleCloseModal = () => {
@@ -88,63 +116,54 @@ export default function DownloadReports() {
     setSelectedUsers([]);
     setCurrentReport(null);
     setSendType("now");
-    setScheduleType("once");
+    setScheduleType("weekly");
     setScheduleDate(null);
     setWeeklyDay("");
   };
 
   const handleSendReport = () => {
+
+    if (selectedUsers.length <= 0) {
+      return alert("Please select Users first");
+    };
+
     if (scheduleType === "monthly") {
-      if (!scheduleDay || !scheduleTime)
+      if (!scheduleDate || !scheduleTime)
         return alert("Please select both day and time for monthly schedule!");
-
-      const timeFormatted = scheduleTime.toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-
-      alert(
-        `Report "${currentReport?.name}" will repeat monthly on day ${scheduleDay} at ${timeFormatted} for: ${userList}`
-      );
-      handleCloseModal();
-      return;
     }
 
-    if (selectedUsers.length === 0)
-      return alert("Please select at least one user!");
+    let scheduled = false;
 
-    const userList = selectedUsers.map((u) => u.value).join(", ");
-
-    if (sendType === "later") {
-      if (scheduleType === "once" && !scheduleDate)
-        return alert("Please select date and time!");
-      if (scheduleType === "weekly" && (!weeklyDay || !scheduleDate))
-        return alert("Please select day and time!");
-      if (scheduleType === "monthly" && !scheduleDate)
-        return alert("Please select date and time!");
+    if (sendType == 'later') {
+      scheduled = true
     }
 
-    let message = "";
-    if (sendType === "now") {
-      message = `Report "${currentReport?.name}" sent immediately to: ${userList}`;
+    let data = {
+      report_type: currentReport.name,
+      users: selectedUsers.map((item) => item.value),
+      schedule_type: scheduleType,
+      scheduled,
+      time: scheduleTime,
+      tenant
+    }
+
+    if (weeklyDay) {
+      data = { ...data, day: weeklyDay }
+    }
+
+
+    if (scheduleDate) {
+      data = { ...data, date: scheduleDate }
+    }
+
+    if (editable) {
+      updateMailReport(editable._id, data)
     } else {
-      if (scheduleType === "once") {
-        message = `Report "${
-          currentReport?.name
-        }" scheduled once on ${scheduleDate.toLocaleString()}`;
-      } else if (scheduleType === "weekly") {
-        message = `Report "${
-          currentReport?.name
-        }" scheduled weekly on ${weeklyDay} at ${scheduleDate.toLocaleTimeString()}`;
-      } else if (scheduleType === "monthly") {
-        message = `Report "${
-          currentReport?.name
-        }" scheduled monthly on ${scheduleDate.toLocaleDateString()} at ${scheduleDate.toLocaleTimeString()}`;
-      }
-      message += ` for: ${userList}`;
+      createMailReport(data)
     }
 
-    alert(message);
+
+
     handleCloseModal();
   };
 
@@ -284,9 +303,9 @@ export default function DownloadReports() {
               options={
                 tenant
                   ? UserViaTenant.map((u) => ({
-                      value: u._id,
-                      label: u.email,
-                    }))
+                    value: u._id,
+                    label: u.email,
+                  }))
                   : []
               }
               placeholder="Select users..."
@@ -329,16 +348,7 @@ export default function DownloadReports() {
                     Schedule Frequency
                   </label>
                   <div className="flex items-center gap-4">
-                    <label className="flex items-center gap-2">
-                      <input
-                        type="radio"
-                        name="scheduleType"
-                        value="once"
-                        checked={scheduleType === "once"}
-                        onChange={() => setScheduleType("once")}
-                      />
-                      Once
-                    </label>
+
                     <label className="flex items-center gap-2">
                       <input
                         type="radio"
@@ -384,17 +394,13 @@ export default function DownloadReports() {
                     <label className="text-sm text-gray-300 block">
                       Select Time
                     </label>
-                    <DatePicker
-                      selected={scheduleDate}
-                      onChange={(date) => setScheduleDate(date)}
-                      showTimeSelect
-                      showTimeSelectOnly
-                      timeIntervals={15}
-                      timeCaption="Time"
-                      dateFormat="h:mm aa"
-                      className="w-full bg-[#0f162d] border border-[#334155] rounded-lg px-3 py-2 text-white"
-                      placeholderText="Pick time"
+                    <input
+                      type="time"
+                      value={scheduleTime}
+                      onChange={(e) => setScheduleTime(e.target.value)}
+                      className="w-full bg-[#0f162d] border border-[#334155] rounded-lg px-3 py-2 text-white focus:outline-none [color-scheme:dark]"
                     />
+
                   </div>
                 )}
 
@@ -406,8 +412,8 @@ export default function DownloadReports() {
                         Select Day of Month
                       </label>
                       <select
-                        value={scheduleDay || ""}
-                        onChange={(e) => setScheduleDay(e.target.value)}
+                        value={scheduleDate || ""}
+                        onChange={(e) => setScheduleDate(e.target.value)}
                         className="w-full bg-[#0f162d] border border-[#334155] rounded-lg px-3 py-2 text-white focus:outline-none"
                       >
                         <option value="" disabled>
@@ -425,16 +431,12 @@ export default function DownloadReports() {
                       <label className="text-sm text-gray-300 mb-2 block">
                         Select Time
                       </label>
-                      <DatePicker
+                      <input
+                        type="time"
                         selected={scheduleTime}
-                        onChange={(time) => setScheduleTime(time)}
-                        showTimeSelect
-                        showTimeSelectOnly
-                        timeIntervals={15}
-                        timeCaption="Time"
-                        dateFormat="h:mm aa"
+                        onChange={(e) => setScheduleTime(e.target.value)}
                         className="w-full bg-[#0f162d] border border-[#334155] rounded-lg px-3 py-2 text-white focus:outline-none"
-                        placeholderText="Pick time"
+
                       />
                     </div>
                   </div>

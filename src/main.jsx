@@ -12,6 +12,7 @@ import {
   InfraAssetContextProvider,
   InfrastructureVulnerabilityContextProvider,
   JiraContextProvider,
+  MailContextProvider,
   MainReportContextProvider,
   NessusContextProvider,
   RemeditionContextProvider,
@@ -45,7 +46,9 @@ createRoot(document.getElementById("root")).render(
                                     <SeverityContextProvider>
                                       <NessusContextProvider>
                                         <MainReportContextProvider>
-                                        <App />
+                                          <MailContextProvider>
+                                            <App />
+                                          </MailContextProvider>
                                         </MainReportContextProvider>
                                       </NessusContextProvider>
                                     </SeverityContextProvider>
