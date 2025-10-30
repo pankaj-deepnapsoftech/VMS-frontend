@@ -435,7 +435,7 @@ export default function DownloadReports() {
                         type="time"
                         selected={scheduleTime}
                         onChange={(e) => setScheduleTime(e.target.value)}
-                        className="w-full bg-[#0f162d] border border-[#334155] rounded-lg px-3 py-2 text-white focus:outline-none"
+                        className="w-full bg-[#0f162d] border border-[#334155] rounded-lg px-3 py-2 text-white focus:outline-none [color-scheme:dark]"
 
                       />
                     </div>
