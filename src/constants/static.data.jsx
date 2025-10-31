@@ -20,8 +20,9 @@ import {
 } from "react-icons/md";
 import { TbReport } from "react-icons/tb";
 import { GrVulnerability } from "react-icons/gr";
-import { GiCyberEye, GiProgression } from "react-icons/gi";
+import { GiCyberEye, GiProgression, GiTwirlCenter } from "react-icons/gi";
 import { PiHardHatFill } from "react-icons/pi";
+import { RiHome3Fill } from "react-icons/ri";
 
 export const AllowedPaths = [
   // --------------------Roc Pages-----------------------
@@ -418,25 +419,25 @@ export const products = [
   //   allowedPath: [],
   // },
 
-  // {
-  //   title: "AI-VA",
-  //   desc: "AI Virtual Analyst",
-  //   borderColor: "#ee9ca7",
-  //   icon: " /Icons/Vector.png",
-  //   ShownTitle: "AI-VA",
-  //   allowedPath: [
-  //     {
-  //       title: "Dashboard",
-  //       route: "/center-dashboard",
-  //       icon: RiHome3Fill,
-  //     },
-  //     {
-  //       title: "Assessment Center",
-  //       route: "/assessment-center",
-  //       icon: GiTwirlCenter,
-  //     },
-  //   ],
-  // },
+  {
+    title: "AI-VA",
+    desc: "AI Virtual Analyst",
+    borderColor: "#ee9ca7",
+    icon: " /Icons/Vector.png",
+    ShownTitle: "AI-VA",
+    allowedPath: [
+      {
+        title: "Dashboard",
+        route: "/center-dashboard",
+        icon: RiHome3Fill,
+      },
+      {
+        title: "Assessment Center",
+        route: "/assessment-center",
+        icon: GiTwirlCenter,
+      },
+    ],
+  },
   // {
   //   title: "Vulnerability Intelligence",
   //   desc: "Insights on vulnerabilities",
