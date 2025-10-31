@@ -1,4 +1,8 @@
-import { useAuthContext, useMailContext, useMainReportContext } from "@/context";
+import {
+  useAuthContext,
+  useMailContext,
+  useMainReportContext,
+} from "@/context";
 import { Download, Mails, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
@@ -9,8 +13,12 @@ import "react-datepicker/dist/react-datepicker.css";
 export default function DownloadReports() {
   const { DownloadReport, downloadData } = useMainReportContext();
   const { token, UserViaTenant, GetTenantData, tenant } = useAuthContext();
-  const { createMailReport, getMailReport, scheduleMailData, updateMailReport } = useMailContext()
-
+  const {
+    createMailReport,
+    getMailReport,
+    scheduleMailData,
+    updateMailReport,
+  } = useMailContext();
 
   const [scheduleTime, setScheduleTime] = useState(null);
 
@@ -23,13 +31,11 @@ export default function DownloadReports() {
   const [weeklyDay, setWeeklyDay] = useState("");
   const [editable, setEditable] = useState(null);
 
-
   useEffect(() => {
     if (token && tenant) {
-      getMailReport(tenant)
+      getMailReport(tenant);
     }
-  }, [token, tenant])
-
+  }, [token, tenant]);
 
   const handleDownloadExcel = (data) => {
     if (!tenant) {
@@ -71,12 +77,12 @@ export default function DownloadReports() {
     {
       name: "Executive Report",
       description: "A high level Executive Report",
-      func: () => { },
+      func: () => {},
     },
     {
       name: "TVM Report",
       description: "A high level Threat & Vulnerability Management Report",
-      func: () => { },
+      func: () => {},
     },
   ];
 
@@ -89,26 +95,27 @@ export default function DownloadReports() {
 
   const handleOpenModal = (report) => {
     if (!tenant) {
-      return alert("select tenant first !")
+      return alert("select tenant first !");
     }
     setCurrentReport(report);
     setIsModalOpen(true);
-    const filterData = scheduleMailData.filter((item) => item.tenant === tenant && item.report_type === report.name)[0]
+    const filterData = scheduleMailData.filter(
+      (item) => item.tenant === tenant && item.report_type === report.name
+    )[0];
     setSelectedUsers(
-      UserViaTenant
-        .filter((item) => filterData.users.includes(item._id))
-        .map((item) => ({
+      UserViaTenant.filter((item) => filterData.users.includes(item._id)).map(
+        (item) => ({
           value: item._id,
-          label: item.email
-        }))
+          label: item.email,
+        })
+      )
     );
     setSendType(filterData?.scheduled ? "later" : "now");
     setScheduleType(filterData?.schedule_type);
     setScheduleTime(filterData?.time);
     setWeeklyDay(filterData?.day);
-    setScheduleDate(filterData?.date)
+    setScheduleDate(filterData?.date);
     setEditable(filterData);
-
   };
 
   const handleCloseModal = () => {
@@ -122,10 +129,9 @@ export default function DownloadReports() {
   };
 
   const handleSendReport = () => {
-
     if (selectedUsers.length <= 0) {
       return alert("Please select Users first");
-    };
+    }
 
     if (scheduleType === "monthly") {
       if (!scheduleDate || !scheduleTime)
@@ -134,8 +140,8 @@ export default function DownloadReports() {
 
     let scheduled = false;
 
-    if (sendType == 'later') {
-      scheduled = true
+    if (sendType == "later") {
+      scheduled = true;
     }
 
     let data = {
@@ -144,25 +150,22 @@ export default function DownloadReports() {
       schedule_type: scheduleType,
       scheduled,
       time: scheduleTime,
-      tenant
-    }
+      tenant,
+    };
 
     if (weeklyDay) {
-      data = { ...data, day: weeklyDay }
+      data = { ...data, day: weeklyDay };
     }
 
-
     if (scheduleDate) {
-      data = { ...data, date: scheduleDate }
+      data = { ...data, date: scheduleDate };
     }
 
     if (editable) {
-      updateMailReport(editable._id, data)
+      updateMailReport(editable._id, data);
     } else {
-      createMailReport(data)
+      createMailReport(data);
     }
-
-
 
     handleCloseModal();
   };
@@ -303,9 +306,9 @@ export default function DownloadReports() {
               options={
                 tenant
                   ? UserViaTenant.map((u) => ({
-                    value: u._id,
-                    label: u.email,
-                  }))
+                      value: u._id,
+                      label: u.email,
+                    }))
                   : []
               }
               placeholder="Select users..."
@@ -348,7 +351,6 @@ export default function DownloadReports() {
                     Schedule Frequency
                   </label>
                   <div className="flex items-center gap-4">
-
                     <label className="flex items-center gap-2">
                       <input
                         type="radio"
@@ -400,7 +402,6 @@ export default function DownloadReports() {
                       onChange={(e) => setScheduleTime(e.target.value)}
                       className="w-full bg-[#0f162d] border border-[#334155] rounded-lg px-3 py-2 text-white focus:outline-none [color-scheme:dark]"
                     />
-
                   </div>
                 )}
 
@@ -436,7 +437,6 @@ export default function DownloadReports() {
                         selected={scheduleTime}
                         onChange={(e) => setScheduleTime(e.target.value)}
                         className="w-full bg-[#0f162d] border border-[#334155] rounded-lg px-3 py-2 text-white focus:outline-none [color-scheme:dark]"
-
                       />
                     </div>
                   </div>
