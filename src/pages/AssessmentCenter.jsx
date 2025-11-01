@@ -33,9 +33,7 @@ const scans = [
 ];
 
 export default function AssessmentCenter() {
-  const { TenantAllData } = useDataContext();
 
-  console.log(TenantAllData);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [expanded, setExpanded] = useState(null);

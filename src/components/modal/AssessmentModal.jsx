@@ -62,15 +62,8 @@ const AssessmentModal = ({ isOpen, onClose }) => {
       },
     },
     validationSchema,
-    onSubmit: async (values) => {
-      try {
-        await createAIVA(values);
-        toast.success("Scan started successfully!");
-        onClose();
-      } catch (err) {
-        console.error("Error creating scan:", err);
-        toast.error("Failed to start scan");
-      }
+    onSubmit: (values) => {
+         createAIVA(values);
     },
   });
 
