@@ -20,7 +20,7 @@ const AIVAContextProvider = ({ children }) => {
     try {
       const res = await AxiosHandler.post(`/ai-power-scan/create`, data);
       toast.success(res.data?.message || "AI Scan created successfully!");
-      console.log(res);
+      setAIVAData(prev => [...prev,res.data.data])
     } catch (error) {
       console.log(error);
       toast.error(error.response?.data?.message || "Failed to create AI scan");
