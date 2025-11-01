@@ -44,6 +44,7 @@ const AIVAContextProvider = ({ children }) => {
     try {
       const res = await AxiosHandler.delete(`/ai-power-scan/delete/${id}`);
       toast.success(res.data.message || "Report delete Successfully");
+      getAIVA()
     } catch (error) {
       console.log(error);
     }
@@ -53,6 +54,7 @@ const AIVAContextProvider = ({ children }) => {
     try {
       const res = await AxiosHandler.put(`/ai-power-scan/update/${id}`, data);
       toast.success(res.data.message || "Report delete Successfully");
+      getAIVA()
     } catch (error) {
       console.log(error);
     }
