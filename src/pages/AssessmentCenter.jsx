@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ChevronRight, ChevronDown } from "lucide-react";
 import { Edit, Trash2 } from "lucide-react";
 import { useAIVAContext, useAuthContext, useDataContext } from "@/context";
+import AssessmentModal from "@/components/modal/AssessmentModal";
 
 const scans = [
   {
@@ -32,41 +33,12 @@ const scans = [
 ];
 
 export default function AssessmentCenter() {
-    const { TenantAllData } = useDataContext();
-  const { createAIVA } = useAIVAContext();
-  const {tenant} = useAuthContext();
+  const { TenantAllData } = useDataContext();
 
-
-  console.log(TenantAllData)
-
+  console.log(TenantAllData);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [expanded, setExpanded] = useState(null);
-
-  const [authScan, setAuthScan] = useState(false);
-  const [scheduleLater, setScheduleLater] = useState(false);
-  const [targets, setTargets] = useState([""]);
-
-
-  const handleAddTarget = () => {
-    setTargets([...targets, ""]);
-  };
-
-  const handleTargetChange = (index, value) => {
-    const updatedTargets = [...targets];
-    updatedTargets[index] = value;
-    setTargets(updatedTargets);
-  };
-
-  const handleRemoveTarget = (index) => {
-    const updatedTargets = targets.filter((_, i) => i !== index);
-    setTargets(updatedTargets);
-  };
-
-  const getTodayDate = () => {
-    const today = new Date();
-    return today.toISOString().split("T")[0];
-  };
 
   const handleDelete = (onDelete) => {
     const confirmed = window.confirm(
@@ -299,260 +271,10 @@ export default function AssessmentCenter() {
         </div>
       </section>
 
-      {/* MODAL */}
-      {isModalOpen && (
-        <div className="fixed inset-0  flex items-center justify-center bg-black/50">
-          <div className="bg-slate-900 border border-slate-700 rounded-xl shadow-2xl w-full max-w-2xl p-6 relative max-h-[80vh] overflow-auto">
-            {/* Header */}
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold">Start AI-Powered Scan</h2>
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="text-slate-400 hover:text-slate-200"
-              >
-                ✕
-              </button>
-            </div>
-
-            {/* Form */}
-            <form className="space-y-4">
-              {/* Organization + Target */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-slate-300">
-                    Tenant Name
-                  </label>
-                  <input
-                    type="text"
-                    value={TenantAllData.filter((item)=> item.value === tenant)[0].label}
-                    className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
-                    disabled
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-slate-300">
-                    User Name
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Enter User Name"
-                    className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-slate-300">
-                    Target Name <span className="text-rose-400">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Enter Target Name"
-                    className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
-                  />
-                </div>
-              </div>
-
-              {/* Scan Targets */}
-              <div>
-                <label className="block text-sm font-medium text-slate-300">
-                  Scan Targets <span className="text-rose-400">*</span>
-                </label>
-
-                {targets.map((url, index) => (
-                  <div key={index} className="flex gap-2 mt-2">
-                    <input
-                      type="text"
-                      value={url}
-                      onChange={(e) =>
-                        handleTargetChange(index, e.target.value)
-                      }
-                      placeholder="Enter URL with http(s)://"
-                      className="flex-1 rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
-                    />
-                    {index === 0 ? (
-                      <span></span>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveTarget(index)}
-                        className="px-2 text-rose-400 hover:text-rose-300"
-                      >
-                        ✕
-                      </button>
-                    )}
-                  </div>
-                ))}
-
-                <button
-                  type="button"
-                  onClick={handleAddTarget}
-                  className="mt-3 px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 rounded-md text-sm"
-                >
-                  + Add
-                </button>
-
-                <p className="mt-2 text-xs text-slate-400">
-                  💡 Tip: You can scan multiple websites in one go. The first
-                  URL will be used as the primary target.
-                </p>
-              </div>
-
-              {/* Label Input */}
-              <div>
-                <label className="block text-sm font-medium text-slate-300">
-                  Label{" "}
-                  <span className="text-slate-400 text-xs">(optional)</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Add a label for this scan (e.g. 'Quarterly PCI', 'Staging')"
-                  className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
-                />
-              </div>
-
-              {/* Auth Scan */}
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1">
-                  Auth Scan?
-                </label>
-                <div className="flex items-center gap-6">
-                  <label className="flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name="auth"
-                      className="accent-cyan-500"
-                      checked={authScan}
-                      onChange={() => setAuthScan(true)}
-                    />
-                    <span>Yes</span>
-                  </label>
-                  <label className="flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name="auth"
-                      className="accent-cyan-500"
-                      checked={!authScan}
-                      onChange={() => setAuthScan(false)}
-                    />
-                    <span>No</span>
-                  </label>
-                </div>
-              </div>
-
-              {/* Auth fields (only when Yes) */}
-              {authScan && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-slate-300">
-                      Email ID <span className="text-rose-400">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Enter email/username"
-                      className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-slate-300">
-                      Password <span className="text-rose-400">*</span>
-                    </label>
-                    <input
-                      type="password"
-                      placeholder="Enter password"
-                      className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
-                    />
-                  </div>
-                  <div className="sm:col-span-2">
-                    <label className="block text-sm font-medium text-slate-300">
-                      Login URL <span className="text-rose-400">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Enter login page URL"
-                      className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
-                    />
-                  </div>
-                </div>
-              )}
-
-              {/* Schedule */}
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1">
-                  Schedule
-                </label>
-                <div className="flex items-center gap-6">
-                  <label className="flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name="schedule"
-                      className="accent-cyan-500"
-                      checked={!scheduleLater}
-                      onChange={() => setScheduleLater(false)}
-                    />
-                    <span>Now</span>
-                  </label>
-                  <label className="flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name="schedule"
-                      className="accent-cyan-500"
-                      checked={scheduleLater}
-                      onChange={() => setScheduleLater(true)}
-                    />
-                    <span>Later</span>
-                  </label>
-                </div>
-              </div>
-
-              {/* Date + Time (only when Later) */}
-              {scheduleLater && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-slate-300">
-                      Date
-                    </label>
-                    <input
-                      type="date"
-                      className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
-                      min={getTodayDate()}
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-slate-300">
-                      Time
-                    </label>
-                    <input
-                      type="time"
-                      className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
-                    />
-                  </div>
-                </div>
-              )}
-
-              {/* Confirm */}
-              <div className="flex items-start gap-2">
-                <input type="checkbox" className="mt-1 accent-cyan-500" />
-                <p className="text-xs text-slate-400">
-                  I confirm that I own or have authorization to scan the
-                  specified assets and that the information provided is
-                  accurate.
-                </p>
-              </div>
-
-              {/* Submit */}
-              
-                <button
-                  type="submit"
-                  className="w-full rounded-md bg-cyan-800 hover:bg-cyan-900 py-2.5 text-sm font-medium text-slate-100 mt-2"
-                >
-                  Start Scan
-                </button>
-              
-            </form>
-          </div>
-        </div>
-      )}
+      <AssessmentModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 }
