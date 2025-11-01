@@ -24,6 +24,9 @@ import {
   VulnerabililtyDataContextProvider,
 } from "./context";
 import AppSoftContextProvider from "./context/ApplicationSoftwareInventoryContext/ApplicationSoftwareInventoryContext";
+import AIVAContextProvider, {
+  AIVAContext,
+} from "./context/AI-VAContext/AI-VAContext";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -47,7 +50,9 @@ createRoot(document.getElementById("root")).render(
                                       <NessusContextProvider>
                                         <MainReportContextProvider>
                                           <MailContextProvider>
-                                            <App />
+                                            <AIVAContextProvider>
+                                              <App />
+                                            </AIVAContextProvider>
                                           </MailContextProvider>
                                         </MainReportContextProvider>
                                       </NessusContextProvider>
@@ -68,5 +73,5 @@ createRoot(document.getElementById("root")).render(
         </VulnerabililtyDataContextProvider>
       </DataContextProvider>
     </AuthContextProvider>
-  </BrowserRouter >
+  </BrowserRouter>
 );
