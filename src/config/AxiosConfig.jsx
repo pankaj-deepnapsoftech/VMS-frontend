@@ -20,7 +20,7 @@ export const AxiosHandler = axios.create({
     baseURL: HandleBaseUser(config.REACT_ENV),
     withCredentials: true,
     headers: {
-        Authorization: `Bearer ${NewDecryptionToken(token)}`
+        Authorization: `Bearer ${token}`
     }
 });
 
