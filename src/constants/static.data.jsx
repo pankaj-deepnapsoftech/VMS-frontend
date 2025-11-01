@@ -1,8 +1,10 @@
 import {
+  AirVent,
   Bug,
   CalendarClock,
   FileUp,
   LucideShield,
+  User,
   UserCircle,
   Users,
 } from "lucide-react";
@@ -423,7 +425,7 @@ export const products = [
     title: "AI-VA",
     desc: "AI Virtual Analyst",
     borderColor: "#ee9ca7",
-    icon: " /Icons/Vector.png",
+    icon: AirVent,
     ShownTitle: "AI-VA",
     allowedPath: [
       {

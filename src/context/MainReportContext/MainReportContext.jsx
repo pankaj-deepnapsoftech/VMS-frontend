@@ -24,7 +24,7 @@ const MainReportContextProvider = ({ children }) => {
   const GetAllReports = async (tenant) => {
     try {
       const res = await AxiosHandler(
-        `/report/get-report?tenat=${tenant ? tenant : ""}`
+        `/report/get-report?tenant=${tenant ? tenant : ""}`
       );
       setReportsData(res.data?.data);
     } catch (error) {

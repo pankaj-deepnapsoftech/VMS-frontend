@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { ChevronRight, ChevronDown } from "lucide-react";
+import { Edit, Trash2 } from "lucide-react";
+import { useAIVAContext } from "@/context";
 
 const scans = [
   {
@@ -35,19 +37,37 @@ export default function AssessmentCenter() {
 
   const [authScan, setAuthScan] = useState(false);
   const [scheduleLater, setScheduleLater] = useState(false);
-  const [targets, setTargets] = useState([]);
-  const [targetInput, setTargetInput] = useState("");
+  const [targets, setTargets] = useState([""]);
+
+  const { createAIVA } = useAIVAContext();
 
   const handleAddTarget = () => {
-    if (targetInput.trim() && !targets.includes(targetInput.trim())) {
-      setTargets([...targets, targetInput.trim()]);
-      setTargetInput("");
-    }
+    setTargets([...targets, ""]);
+  };
+
+  const handleTargetChange = (index, value) => {
+    const updatedTargets = [...targets];
+    updatedTargets[index] = value;
+    setTargets(updatedTargets);
+  };
+
+  const handleRemoveTarget = (index) => {
+    const updatedTargets = targets.filter((_, i) => i !== index);
+    setTargets(updatedTargets);
   };
 
   const getTodayDate = () => {
     const today = new Date();
-    return today.toISOString().split('T')[0];
+    return today.toISOString().split("T")[0];
+  };
+
+  const handleDelete = (onDelete) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this item?"
+    );
+    if (confirmed) {
+      onDelete(); // Call your delete handler here
+    }
   };
 
   return (
@@ -192,8 +212,22 @@ export default function AssessmentCenter() {
                         {scan.status}
                       </span>
                     </td>
-                    <td className="py-4 px-4 text-slate-300 cursor-pointer hover:text-slate-100">
-                      Actions ▾
+                    <td className="py-4 px-4 text-slate-300 cursor-pointer hover:text-slate-100 flex items-center gap-3">
+                      <button
+                        onClick={() => console.log("Edit clicked")}
+                        className="hover:text-blue-400 transition-colors"
+                        title="Edit"
+                      >
+                        <Edit size={18} />
+                      </button>
+
+                      <button
+                        onClick={handleDelete}
+                        className="hover:text-red-400 transition-colors"
+                        title="Delete"
+                      >
+                        <Trash2 size={18} />
+                      </button>
                     </td>
                   </tr>
 
@@ -260,8 +294,8 @@ export default function AssessmentCenter() {
 
       {/* MODAL */}
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/50">
-          <div className="bg-slate-900 border border-slate-700 rounded-xl shadow-2xl w-full max-w-2xl p-6 relative">
+        <div className="fixed inset-0  flex items-center justify-center bg-black/50">
+          <div className="bg-slate-900 border border-slate-700 rounded-xl shadow-2xl w-full max-w-2xl p-6 relative max-h-[80vh] overflow-auto">
             {/* Header */}
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold">Start AI-Powered Scan</h2>
@@ -316,49 +350,40 @@ export default function AssessmentCenter() {
                 <label className="block text-sm font-medium text-slate-300">
                   Scan Targets <span className="text-rose-400">*</span>
                 </label>
-                <div className="flex gap-2 mt-1">
-                  <input
-                    type="text"
-                    value={targetInput}
-                    onChange={(e) => setTargetInput(e.target.value)}
-                    placeholder="Enter URL with http(s)://"
-                    className="flex-1 rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
-                  />
-                  <button
-                    type="button"
-                    onClick={handleAddTarget}
-                    className="px-3 rounded-md bg-cyan-600 hover:bg-cyan-500 text-sm"
-                  >
-                    + Add
-                  </button>
-                </div>
 
-                {/* Show added targets */}
-                <div className="flex flex-wrap gap-2 mt-2">
-                  {targets.map((url, i) => (
-                    <span
-                      key={i}
-                      className="px-3 py-1 bg-slate-700 text-slate-100 rounded-md flex items-center gap-2"
-                    >
-                      {url}{" "}
-                      {i === 0 && (
-                        <span className="text-xs bg-cyan-600 px-2 rounded-full">
-                          Primary
-                        </span>
-                      )}
+                {targets.map((url, index) => (
+                  <div key={index} className="flex gap-2 mt-2">
+                    <input
+                      type="text"
+                      value={url}
+                      onChange={(e) =>
+                        handleTargetChange(index, e.target.value)
+                      }
+                      placeholder="Enter URL with http(s)://"
+                      className="flex-1 rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
+                    />
+                    {index === 0 ? (
+                      <span></span>
+                    ) : (
                       <button
                         type="button"
-                        onClick={() =>
-                          setTargets(targets.filter((t) => t !== url))
-                        }
+                        onClick={() => handleRemoveTarget(index)}
+                        className="px-2 text-rose-400 hover:text-rose-300"
                       >
                         ✕
                       </button>
-                    </span>
-                  ))}
-                </div>
+                    )}
+                  </div>
+                ))}
 
-                {/* Tip / Warning */}
+                <button
+                  type="button"
+                  onClick={handleAddTarget}
+                  className="mt-3 px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 rounded-md text-sm"
+                >
+                  + Add
+                </button>
+
                 <p className="mt-2 text-xs text-slate-400">
                   💡 Tip: You can scan multiple websites in one go. The first
                   URL will be used as the primary target.
@@ -482,7 +507,7 @@ export default function AssessmentCenter() {
                     <input
                       type="date"
                       className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
-                      min = {getTodayDate()}
+                      min={getTodayDate()}
                     />
                   </div>
                   <div>
@@ -508,12 +533,14 @@ export default function AssessmentCenter() {
               </div>
 
               {/* Submit */}
-              <button
-                type="submit"
-                className="w-full rounded-md bg-cyan-800 hover:bg-cyan-900 py-2.5 text-sm font-medium text-slate-100 mt-2"
-              >
-                Start Scan
-              </button>
+              {createAIVA && (
+                <button
+                  type="submit"
+                  className="w-full rounded-md bg-cyan-800 hover:bg-cyan-900 py-2.5 text-sm font-medium text-slate-100 mt-2"
+                >
+                  Start Scan
+                </button>
+              )}
             </form>
           </div>
         </div>

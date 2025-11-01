@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-binary-expression */
 import { useEffect, useState } from "react";
 import { X, Boxes } from "lucide-react";
 import { BiPlus } from "react-icons/bi";
