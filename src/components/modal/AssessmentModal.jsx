@@ -64,6 +64,7 @@ const AssessmentModal = ({ isOpen, onClose }) => {
     validationSchema,
     onSubmit: (values) => {
          createAIVA(values);
+         onClose();
     },
   });
 

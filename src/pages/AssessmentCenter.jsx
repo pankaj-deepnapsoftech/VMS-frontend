@@ -5,27 +5,22 @@ import AssessmentModal from "@/components/modal/AssessmentModal";
 
 export default function AssessmentCenter() {
   const { getAIVA, AIVAData, DeleteAIVA } = useAIVAContext();
-  const { tenant,token } = useAuthContext();
+  const { tenant, token } = useAuthContext();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [expanded, setExpanded] = useState(null);
 
-
-
   const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this scan?")) {
-      DeleteAIVA(id);
-      setTimeout(() => getAIVA(tenant), 500); // Refresh after delete
-    }
+    DeleteAIVA(id);
   };
 
   const handleRefresh = () => {
     getAIVA(tenant);
   };
 
-    useEffect(() => {
+  useEffect(() => {
     if (token) getAIVA(tenant);
-  }, [tenant,token]);
+  }, [tenant, token]);
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans p-4 sm:p-6 lg:p-8">
@@ -177,6 +172,7 @@ export default function AssessmentCenter() {
                         >
                           <Edit size={18} />
                         </button>
+
                         <button
                           onClick={() => handleDelete(scan._id)}
                           className="hover:text-red-400 transition-colors"
