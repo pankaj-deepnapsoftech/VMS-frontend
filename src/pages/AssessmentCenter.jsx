@@ -5,14 +5,12 @@ import AssessmentModal from "@/components/modal/AssessmentModal";
 
 export default function AssessmentCenter() {
   const { getAIVA, AIVAData, DeleteAIVA } = useAIVAContext();
-  const { tenant } = useAuthContext();
+  const { tenant,token } = useAuthContext();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [expanded, setExpanded] = useState(null);
 
-  useEffect(() => {
-    if (tenant) getAIVA(tenant);
-  }, [tenant]);
+
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this scan?")) {
@@ -25,7 +23,9 @@ export default function AssessmentCenter() {
     getAIVA(tenant);
   };
 
-  console.log("dhsgbj ..........---------------------", AIVAData);
+    useEffect(() => {
+    if (token) getAIVA(tenant);
+  }, [tenant,token]);
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans p-4 sm:p-6 lg:p-8">

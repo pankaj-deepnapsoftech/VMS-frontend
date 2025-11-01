@@ -65,6 +65,7 @@ const AIVAContextProvider = ({ children }) => {
         getAIVA,
         DeleteAIVA,
         UpdateAIVA,
+        AIVAData
       }}
     >
       {children}
