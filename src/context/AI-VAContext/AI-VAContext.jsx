@@ -18,7 +18,7 @@ const AIVAContextProvider = ({ children }) => {
 
   const createAIVA = async (data) => {
     try {
-      const res = await AxiosHandler.post(`/ai-power-scan/create`,data);
+      const res = await AxiosHandler.post(`/ai-power-scan/create`, data);
       toast.success(res.data?.message || "AI Scan created successfully!");
       console.log(res);
     } catch (error) {
@@ -32,6 +32,7 @@ const AIVAContextProvider = ({ children }) => {
       const res = await AxiosHandler.get(
         `/ai-power-scan/get?tenant=${tenant ? tenant : ""}`
       );
+      console.log("hdtghbjh",res);
       setAIVAData(res.data?.data);
     } catch (error) {
       console.log(error);
