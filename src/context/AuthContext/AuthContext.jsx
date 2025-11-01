@@ -55,11 +55,11 @@ const AuthContextProvider = ({ children }) => {
     setLoading(true);
     try {
       const res = await AxiosHandler.post("/auth/login", data);
-      AxiosHandler.defaults.headers.authorization = `Bearer ${NewDecryptionToken(
-        res.data.token
-      )}`;
-      Cookies.set("AT", res.data.token, { expires: 1, secure: true });
-      setToken(res.data.token);
+      const token = NewDecryptionToken(res.data.token)
+      AxiosHandler.defaults.headers.authorization = `Bearer ${token}`;
+
+      Cookies.set("AT", token, { expires: 1, secure: true });
+      setToken(token);
       if (!res.data.user.email_verification) {
         navigate("/verify-otp");
         ResendOtp();

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ChevronRight, ChevronDown } from "lucide-react";
 import { Edit, Trash2 } from "lucide-react";
-import { useAIVAContext } from "@/context";
+import { useAIVAContext, useAuthContext, useDataContext } from "@/context";
 
 const scans = [
   {
@@ -32,6 +32,14 @@ const scans = [
 ];
 
 export default function AssessmentCenter() {
+    const { TenantAllData } = useDataContext();
+  const { createAIVA } = useAIVAContext();
+  const {tenant} = useAuthContext();
+
+
+  console.log(TenantAllData)
+
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [expanded, setExpanded] = useState(null);
 
@@ -39,7 +47,6 @@ export default function AssessmentCenter() {
   const [scheduleLater, setScheduleLater] = useState(false);
   const [targets, setTargets] = useState([""]);
 
-  const { createAIVA } = useAIVAContext();
 
   const handleAddTarget = () => {
     setTargets([...targets, ""]);
@@ -317,8 +324,9 @@ export default function AssessmentCenter() {
                   </label>
                   <input
                     type="text"
-                    defaultValue="SECUREND"
+                    value={TenantAllData.filter((item)=> item.value === tenant)[0].label}
                     className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
+                    disabled
                   />
                 </div>
 
@@ -533,14 +541,14 @@ export default function AssessmentCenter() {
               </div>
 
               {/* Submit */}
-              {createAIVA && (
+              
                 <button
                   type="submit"
                   className="w-full rounded-md bg-cyan-800 hover:bg-cyan-900 py-2.5 text-sm font-medium text-slate-100 mt-2"
                 >
                   Start Scan
                 </button>
-              )}
+              
             </form>
           </div>
         </div>
