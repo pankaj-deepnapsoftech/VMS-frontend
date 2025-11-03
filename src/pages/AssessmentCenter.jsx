@@ -9,9 +9,15 @@ export default function AssessmentCenter() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [expanded, setExpanded] = useState(null);
+  const [editable, setEditable] = useState(null);
 
   const handleDelete = (id) => {
     DeleteAIVA(id);
+  };
+
+  const handleEdit = (data) => {
+    setEditable(data);
+    setIsModalOpen(true);
   };
 
   const handleRefresh = () => {
@@ -41,7 +47,7 @@ export default function AssessmentCenter() {
         {/* Start AI Scan */}
         <div
           className="rounded-2xl bg-slate-800 border border-slate-700 p-4 shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => {setIsModalOpen(true);setEditable(null)}}
         >
           <div className="flex flex-col items-start text-left">
             <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-slate-700 flex items-center justify-center shadow-inner mb-3">
@@ -166,7 +172,7 @@ export default function AssessmentCenter() {
                       </td>
                       <td className="py-4 px-4 flex items-center gap-3">
                         <button
-                          onClick={() => console.log("Edit clicked")}
+                          onClick={() => handleEdit(scan)}
                           className="hover:text-blue-400 transition-colors"
                           title="Edit"
                         >
@@ -228,6 +234,7 @@ export default function AssessmentCenter() {
       <AssessmentModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+        editable={editable}
       />
     </div>
   );

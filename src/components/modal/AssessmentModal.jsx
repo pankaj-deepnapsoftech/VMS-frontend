@@ -5,8 +5,8 @@ import { useAIVAContext, useAuthContext, useDataContext } from "@/context";
 import toast from "react-hot-toast";
 
 // eslint-disable-next-line react/prop-types
-const AssessmentModal = ({ isOpen, onClose }) => {
-  const { createAIVA } = useAIVAContext();
+const AssessmentModal = ({ isOpen, onClose, editable }) => {
+  const { createAIVA, UpdateAIVA } = useAIVAContext();
   const { TenantAllData } = useDataContext();
   const { tenant } = useAuthContext();
 
@@ -44,7 +44,7 @@ const AssessmentModal = ({ isOpen, onClose }) => {
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const formik = useFormik({
-    initialValues: {
+    initialValues: editable || {
       tenant: tenant,
       target_name: "",
       scan_tags: [""],
@@ -63,8 +63,13 @@ const AssessmentModal = ({ isOpen, onClose }) => {
     },
     validationSchema,
     onSubmit: (values) => {
-         createAIVA(values);
-         onClose();
+      if (editable) {
+        // eslint-disable-next-line react/prop-types
+        UpdateAIVA(editable._id, values);
+      } else {
+        createAIVA(values);
+      }
+      onClose();
     },
   });
 
@@ -344,7 +349,7 @@ const AssessmentModal = ({ isOpen, onClose }) => {
             type="submit"
             className="w-full rounded-md bg-cyan-800 hover:bg-cyan-900 py-2.5 text-sm font-medium text-slate-100 mt-2"
           >
-            Start Scan
+            {editable ? "Edit Scan" : "Start Scan"}
           </button>
         </form>
       </div>

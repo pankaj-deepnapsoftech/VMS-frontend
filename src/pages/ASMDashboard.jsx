@@ -150,7 +150,11 @@ const ASMDashboard = () => {
                 strokeWidth="2"
                 viewBox="0 0 24 24"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19 9l-7 7-7-7"
+                />
               </svg>
             </button>
 
@@ -163,7 +167,11 @@ const ASMDashboard = () => {
                 strokeWidth="2"
                 viewBox="0 0 24 24"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19 9l-7 7-7-7"
+                />
               </svg>
             </button>
           </div>
@@ -173,14 +181,20 @@ const ASMDashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Score Card (spans 2 columns on md) */}
           <div className="md:col-span-2">
-            <div className={card + " flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6"}>
+            <div
+              className={
+                card +
+                " flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6"
+              }
+            >
               <div className="flex-1 text-center sm:text-left">
                 <h2 className="text-base sm:text-lg font-semibold flex items-center gap-2 justify-center sm:justify-start">
-                  Cyber Hygiene Score <span className="text-slate-400 text-sm">ⓘ</span>
+                  Cyber Hygiene Score{" "}
+                  <span className="text-slate-400 text-sm">ⓘ</span>
                 </h2>
                 <p className="text-xs sm:text-sm text-slate-400 mt-2 max-w-xl mx-auto sm:mx-0">
-                  Reflects your organizations overall security posture. Aim for a
-                  higher score.
+                  Reflects your organizations overall security posture. Aim for
+                  a higher score.
                 </p>
 
                 <button className="mt-4 sm:mt-6 px-4 sm:px-5 py-2 sm:py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm rounded-md border border-slate-700 transition w-full sm:w-auto">
@@ -205,7 +219,13 @@ const ASMDashboard = () => {
                   {/* local gradient defs used by pathColor url */}
                   <svg style={{ height: 0 }}>
                     <defs>
-                      <linearGradient id="grad-main" x1="0" x2="1" y1="0" y2="0">
+                      <linearGradient
+                        id="grad-main"
+                        x1="0"
+                        x2="1"
+                        y1="0"
+                        y2="0"
+                      >
                         <stop offset="0%" stopColor="#F44336" />
                         <stop offset="50%" stopColor="#FF9800" />
                         <stop offset="100%" stopColor="#FFEB3B" />
@@ -221,7 +241,9 @@ const ASMDashboard = () => {
           <div className="space-y-3">
             <div className="grid grid-cols-3 sm:grid-cols-3 gap-3">
               <div className="col-span-3 sm:col-span-3 bg-red-600 text-white rounded-lg p-3 flex flex-col items-center justify-center shadow">
-                <h3 className="text-xs sm:text-sm font-medium text-center">Total Vulnerabilities</h3>
+                <h3 className="text-xs sm:text-sm font-medium text-center">
+                  Total Vulnerabilities
+                </h3>
                 <p className="text-lg sm:text-2xl font-bold mt-1">11</p>
               </div>
             </div>
@@ -230,7 +252,9 @@ const ASMDashboard = () => {
               <div className="rounded-lg p-2 flex flex-col items-center justify-center bg-slate-900 border border-slate-700 shadow">
                 <h3 className="text-[11px] sm:text-xs font-medium">Critical</h3>
                 <p className="text-lg sm:text-xl font-bold mt-0.5">0</p>
-                <span className="text-green-400 text-[10px] mt-0.5">▲ +0.53%</span>
+                <span className="text-green-400 text-[10px] mt-0.5">
+                  ▲ +0.53%
+                </span>
               </div>
 
               <div className="rounded-lg p-2 flex flex-col items-center justify-center bg-slate-900 border border-red-700 shadow">
@@ -242,7 +266,9 @@ const ASMDashboard = () => {
               <div className="rounded-lg p-2 flex flex-col items-center justify-center bg-slate-900 border border-yellow-700 shadow">
                 <h3 className="text-[11px] sm:text-xs font-medium">Medium</h3>
                 <p className="text-lg sm:text-xl font-bold mt-0.5">2</p>
-                <span className="text-green-400 text-[10px] mt-0.5">▲ +0.53%</span>
+                <span className="text-green-400 text-[10px] mt-0.5">
+                  ▲ +0.53%
+                </span>
               </div>
 
               <div className="rounded-lg p-2 flex flex-col items-center justify-center bg-slate-900 border border-green-700 shadow">
@@ -254,7 +280,9 @@ const ASMDashboard = () => {
               <div className="rounded-lg p-2 flex flex-col items-center justify-center bg-slate-900 border border-blue-700 shadow">
                 <h3 className="text-[11px] sm:text-xs font-medium">Info</h3>
                 <p className="text-lg sm:text-xl font-bold mt-0.5">4</p>
-                <span className="text-green-400 text-[10px] mt-0.5">▲ +0.53%</span>
+                <span className="text-green-400 text-[10px] mt-0.5">
+                  ▲ +0.53%
+                </span>
               </div>
             </div>
           </div>
@@ -264,12 +292,20 @@ const ASMDashboard = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Risk Trends */}
           <div className={card}>
-            <h2 className="text-base sm:text-lg font-semibold mb-3">Risk Trends Over Time</h2>
+            <h2 className="text-base sm:text-lg font-semibold mb-3">
+              Risk Trends Over Time
+            </h2>
 
             <div className="flex flex-wrap gap-2 mb-4">
-              <button className="px-3 py-1 text-xs sm:text-sm rounded bg-blue-600 text-white">Monthly</button>
-              <button className="px-3 py-1 text-xs sm:text-sm rounded bg-slate-800 text-slate-300">Weekly</button>
-              <button className="px-3 py-1 text-xs sm:text-sm rounded bg-slate-800 text-slate-300">Today</button>
+              <button className="px-3 py-1 text-xs sm:text-sm rounded bg-blue-600 text-white">
+                Monthly
+              </button>
+              <button className="px-3 py-1 text-xs sm:text-sm rounded bg-slate-800 text-slate-300">
+                Weekly
+              </button>
+              <button className="px-3 py-1 text-xs sm:text-sm rounded bg-slate-800 text-slate-300">
+                Today
+              </button>
             </div>
 
             {/* Chart wrapper with deterministic height so ResponsiveContainer can size itself */}
@@ -279,13 +315,44 @@ const ASMDashboard = () => {
                   <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
                   <XAxis dataKey="month" stroke="#cbd5e1" />
                   <YAxis stroke="#cbd5e1" />
-                  <Tooltip contentStyle={{ backgroundColor: "#0f1724", border: "none" }} labelStyle={{ color: "#fff" }} />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#0f1724",
+                      border: "none",
+                    }}
+                    labelStyle={{ color: "#fff" }}
+                  />
                   <Legend />
-                  <Line type="monotone" dataKey="Critical" stroke="#f87171" strokeWidth={2} />
-                  <Line type="monotone" dataKey="High" stroke="#fb923c" strokeWidth={2} />
-                  <Line type="monotone" dataKey="Medium" stroke="#facc15" strokeWidth={2} />
-                  <Line type="monotone" dataKey="Low" stroke="#4ade80" strokeWidth={2} />
-                  <Line type="monotone" dataKey="Info" stroke="#60a5fa" strokeWidth={2} />
+                  <Line
+                    type="monotone"
+                    dataKey="Critical"
+                    stroke="#f87171"
+                    strokeWidth={2}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="High"
+                    stroke="#fb923c"
+                    strokeWidth={2}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="Medium"
+                    stroke="#facc15"
+                    strokeWidth={2}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="Low"
+                    stroke="#4ade80"
+                    strokeWidth={2}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="Info"
+                    stroke="#60a5fa"
+                    strokeWidth={2}
+                  />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -294,15 +361,27 @@ const ASMDashboard = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Asset Risk Bar Chart */}
               <div className="bg-transparent p-0">
-                <h3 className="text-lg font-semibold mb-3">Asset Risk by Severity</h3>
+                <h3 className="text-lg font-semibold mb-3">
+                  Asset Risk by Severity
+                </h3>
                 <div className="w-full h-44">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={assetRiskData}>
                       <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
                       <XAxis dataKey="name" stroke="#cbd5e1" />
                       <YAxis allowDecimals={false} stroke="#cbd5e1" />
-                      <Tooltip contentStyle={{ backgroundColor: "#0f1724", border: "none" }} labelStyle={{ color: "#fff" }} />
-                      <Bar dataKey="value" fill="#ef4444" radius={[6, 6, 0, 0]} />
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: "#0f1724",
+                          border: "none",
+                        }}
+                        labelStyle={{ color: "#fff" }}
+                      />
+                      <Bar
+                        dataKey="value"
+                        fill="#ef4444"
+                        radius={[6, 6, 0, 0]}
+                      />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
@@ -310,7 +389,9 @@ const ASMDashboard = () => {
 
               {/* Threat Intelligence */}
               <div className="flex flex-col items-center justify-center">
-                <h3 className="text-lg font-semibold mb-3">Threat Intelligence Score</h3>
+                <h3 className="text-lg font-semibold mb-3">
+                  Threat Intelligence Score
+                </h3>
                 <div className="w-32 h-20">
                   <CircularProgressbar
                     value={threatScore}
@@ -327,7 +408,9 @@ const ASMDashboard = () => {
                     })}
                   />
                 </div>
-                <p className="text-sm text-slate-400 mt-3 text-center">Moderate concerns detected</p>
+                <p className="text-sm text-slate-400 mt-3 text-center">
+                  Moderate concerns detected
+                </p>
               </div>
             </div>
           </div>
@@ -335,11 +418,15 @@ const ASMDashboard = () => {
           {/* Compliance Coverage */}
           <div className={card + " flex flex-col justify-between"}>
             <div>
-              <h2 className="text-base sm:text-lg font-semibold mb-3">Compliance Coverage</h2>
+              <h2 className="text-base sm:text-lg font-semibold mb-3">
+                Compliance Coverage
+              </h2>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                 <div className="rounded-lg p-4 flex flex-col items-center justify-center border border-slate-700">
-                  <h3 className="text-sm sm:text-base font-medium text-slate-200 text-center">OWASP Coverage</h3>
+                  <h3 className="text-sm sm:text-base font-medium text-slate-200 text-center">
+                    OWASP Coverage
+                  </h3>
                   <div className="w-24 h-12 sm:w-28 sm:h-14 mt-3 mb-3">
                     <CircularProgressbar
                       value={76.67}
@@ -359,7 +446,9 @@ const ASMDashboard = () => {
                 </div>
 
                 <div className="rounded-lg p-4 flex flex-col items-center justify-center border border-slate-700">
-                  <h3 className="text-sm sm:text-base font-medium text-slate-200 text-center">NVD Coverage</h3>
+                  <h3 className="text-sm sm:text-base font-medium text-slate-200 text-center">
+                    NVD Coverage
+                  </h3>
                   <div className="w-24 h-12 sm:w-28 sm:h-14 mt-3 mb-3">
                     <CircularProgressbar
                       value={72}
@@ -381,7 +470,9 @@ const ASMDashboard = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="border border-slate-700 rounded-lg p-4">
-                  <h3 className="text-lg font-semibold mb-3">Open Ports & Services</h3>
+                  <h3 className="text-lg font-semibold mb-3">
+                    Open Ports & Services
+                  </h3>
                   <div className="overflow-x-auto">
                     <table className="w-full text-sm border-collapse">
                       <thead>
@@ -409,15 +500,27 @@ const ASMDashboard = () => {
                 </div>
 
                 <div className="border border-slate-700 rounded-lg p-4 flex flex-col">
-                  <h3 className="text-lg font-semibold mb-3">Security Headers</h3>
+                  <h3 className="text-lg font-semibold mb-3">
+                    Security Headers
+                  </h3>
                   <div className="flex flex-wrap gap-3 mb-4">
-                    <button className="px-3 py-1 text-xs bg-blue-600 text-white rounded">Present (6)</button>
-                    <button className="px-3 py-1 text-xs bg-red-900 text-red-300 rounded">Missing (3)</button>
+                    <button className="px-3 py-1 text-xs bg-blue-600 text-white rounded">
+                      Present (6)
+                    </button>
+                    <button className="px-3 py-1 text-xs bg-red-900 text-red-300 rounded">
+                      Missing (3)
+                    </button>
                   </div>
                   <div className="text-sm space-y-2">
-                    <p className="border border-slate-700 p-2 rounded bg-slate-800">content-security-policy</p>
-                    <p className="border border-slate-700 p-2 rounded bg-slate-800">x-content-type-options</p>
-                    <p className="border border-slate-700 p-2 rounded bg-slate-800">strict-transport-security</p>
+                    <p className="border border-slate-700 p-2 rounded bg-slate-800">
+                      content-security-policy
+                    </p>
+                    <p className="border border-slate-700 p-2 rounded bg-slate-800">
+                      x-content-type-options
+                    </p>
+                    <p className="border border-slate-700 p-2 rounded bg-slate-800">
+                      strict-transport-security
+                    </p>
                   </div>
                 </div>
               </div>
@@ -427,34 +530,47 @@ const ASMDashboard = () => {
             <div className="mt-6 space-y-4">
               <div className="border border-slate-700 rounded-lg p-4">
                 <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
-                  Attack Surface Index <span className="text-slate-400 text-sm">ⓘ</span>
+                  Attack Surface Index{" "}
+                  <span className="text-slate-400 text-sm">ⓘ</span>
                 </h3>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-3">
                   <div className="bg-slate-800 rounded-lg p-3 text-center">
                     <div className="text-blue-400 text-xl font-bold">3</div>
-                    <div className="text-xs text-slate-300 mt-1">Exposed Services</div>
+                    <div className="text-xs text-slate-300 mt-1">
+                      Exposed Services
+                    </div>
                   </div>
                   <div className="bg-slate-800 rounded-lg p-3 text-center">
                     <div className="text-red-400 text-xl font-bold">1</div>
-                    <div className="text-xs text-slate-300 mt-1">Public IPs</div>
+                    <div className="text-xs text-slate-300 mt-1">
+                      Public IPs
+                    </div>
                   </div>
                   <div className="bg-slate-800 rounded-lg p-3 text-center">
                     <div className="text-yellow-400 text-xl font-bold">3</div>
-                    <div className="text-xs text-slate-300 mt-1">Open Ports</div>
+                    <div className="text-xs text-slate-300 mt-1">
+                      Open Ports
+                    </div>
                   </div>
                   <div className="bg-slate-800 rounded-lg p-3 text-center">
                     <div className="text-blue-400 text-xl font-bold">1</div>
-                    <div className="text-xs text-slate-300 mt-1">Subdomains</div>
+                    <div className="text-xs text-slate-300 mt-1">
+                      Subdomains
+                    </div>
                   </div>
                 </div>
 
                 <div className="text-center">
-                  <button className="border border-slate-700 rounded-md px-3 py-2 text-sm text-blue-400 hover:bg-slate-800 transition">Details</button>
+                  <button className="border border-slate-700 rounded-md px-3 py-2 text-sm text-blue-400 hover:bg-slate-800 transition">
+                    Details
+                  </button>
                 </div>
               </div>
 
               <div className="border border-slate-700 rounded-lg p-4">
-                <h3 className="text-lg font-semibold mb-3">Vulnerable Endpoints</h3>
+                <h3 className="text-lg font-semibold mb-3">
+                  Vulnerable Endpoints
+                </h3>
                 <div className="space-y-3">
                   {dataa.map((item, index) => (
                     <div
@@ -471,23 +587,36 @@ const ASMDashboard = () => {
                           GET {item.url}
                           <FaExternalLinkAlt className="text-xs" />
                         </a>
-                        <p className="text-sm text-slate-400">{item.vulnerability}</p>
+                        <p className="text-sm text-slate-400">
+                          {item.vulnerability}
+                        </p>
                       </div>
 
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium self-start sm:self-center ${getSeverityColor(item.severity)}`}>
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-medium self-start sm:self-center ${getSeverityColor(
+                          item.severity
+                        )}`}
+                      >
                         {item.severity}
                       </span>
                     </div>
                   ))}
                 </div>
 
-                <button className="w-full mt-4 text-blue-400 text-sm font-medium hover:underline">Show All →</button>
+                <button className="w-full mt-4 text-blue-400 text-sm font-medium hover:underline">
+                  Show All →
+                </button>
               </div>
 
               <div className="border border-slate-700 rounded-lg p-4">
-                <h3 className="text-base font-semibold flex items-center gap-2">Assets Intelligence Graph <FaRegQuestionCircle className="text-slate-400 text-sm" /></h3>
+                <h3 className="text-base font-semibold flex items-center gap-2">
+                  Assets Intelligence Graph{" "}
+                  <FaRegQuestionCircle className="text-slate-400 text-sm" />
+                </h3>
                 <p className="text-sm text-slate-400 mt-1">
-                  Visualizes your domain’s subdomains, WHOIS, SSL certificates, and DNS resolution—helping you map external exposures and dependencies at a glance.
+                  Visualizes your domain’s subdomains, WHOIS, SSL certificates,
+                  and DNS resolution—helping you map external exposures and
+                  dependencies at a glance.
                 </p>
               </div>
             </div>
@@ -540,7 +669,11 @@ const ASMDashboard = () => {
                       </span>
                     </td>
                     <td className="text-blue-400 hover:underline">
-                      <a href={item.endpoint} target="_blank" rel="noopener noreferrer">
+                      <a
+                        href={item.endpoint}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         {item.endpoint}
                       </a>
                     </td>
@@ -551,7 +684,9 @@ const ASMDashboard = () => {
           </div>
 
           <div className="text-center mt-4">
-            <button className="text-blue-400 hover:underline text-sm">Show All</button>
+            <button className="text-blue-400 hover:underline text-sm">
+              Show All
+            </button>
           </div>
         </div>
 
@@ -562,16 +697,30 @@ const ASMDashboard = () => {
               <div>
                 <h2 className="text-lg font-semibold flex items-center gap-2">
                   Latest Security News
-                  <span className="text-green-400 text-xs font-medium">LIVE</span>
+                  <span className="text-green-400 text-xs font-medium">
+                    LIVE
+                  </span>
                 </h2>
                 <p className="text-xs text-slate-400">
-                  Real-time cybersecurity threats and updates • <span className="italic">Last update: 2:11</span>
+                  Real-time cybersecurity threats and updates •{" "}
+                  <span className="italic">Last update: 2:11</span>
                 </p>
               </div>
 
               <button className="p-2 rounded-md hover:bg-slate-800">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4 text-slate-300"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
               </button>
             </div>
@@ -580,9 +729,9 @@ const ASMDashboard = () => {
               {[
                 {
                   emblem: "C",
-                  title: "CISA Releases Security Advisory for Critical Infrastructure",
-                  desc:
-                    "The Cybersecurity and Infrastructure Security Agency has issued new guidance for protecting critical infrastructure from cyber threats.",
+                  title:
+                    "CISA Releases Security Advisory for Critical Infrastructure",
+                  desc: "The Cybersecurity and Infrastructure Security Agency has issued new guidance for protecting critical infrastructure from cyber threats.",
                   meta: "CISA • 3h ago • Read more",
                   level: "CRITICAL",
                   badgeColor: "text-red-400",
@@ -591,8 +740,7 @@ const ASMDashboard = () => {
                 {
                   emblem: "A",
                   title: "Latest Cybersecurity Threats and Vulnerabilities",
-                  desc:
-                    "Comprehensive coverage of the latest security risks, data breaches, and vulnerability disclosures affecting organizations worldwide.",
+                  desc: "Comprehensive coverage of the latest security risks, data breaches, and vulnerability disclosures affecting organizations worldwide.",
                   meta: "BleepingComputer • 5h ago",
                   level: "HIGH",
                   badgeColor: "text-orange-400",
@@ -601,8 +749,7 @@ const ASMDashboard = () => {
                 {
                   emblem: "S",
                   title: "Security Week - Latest Cybersecurity News",
-                  desc:
-                    "Security news updates with a focus on cyber threats, vulnerabilities, and industry developments from security experts.",
+                  desc: "Security news updates with a focus on cyber threats, vulnerabilities, and industry developments from security experts.",
                   meta: "SecurityWeek • 8h ago",
                   level: "MEDIUM",
                   badgeColor: "text-yellow-400",
@@ -611,8 +758,7 @@ const ASMDashboard = () => {
                 {
                   emblem: "K",
                   title: "Knobs on Security - In-depth Security Analysis",
-                  desc:
-                    "In-depth cybersecurity reporting and analysis on the latest threats from renowned security journalist Brian Krebs.",
+                  desc: "In-depth cybersecurity reporting and analysis on the latest threats from renowned security journalist Brian Krebs.",
                   meta: "KrebsOnSecurity • 1d ago",
                   level: "HIGH",
                   badgeColor: "text-orange-400",
@@ -620,13 +766,21 @@ const ASMDashboard = () => {
                 },
               ].map((n, i) => (
                 <div key={i} className="flex items-start gap-3">
-                  <div className={`w-8 h-8 ${n.iconBg} flex items-center justify-center rounded-full font-bold`}>{n.emblem}</div>
+                  <div
+                    className={`w-8 h-8 ${n.iconBg} flex items-center justify-center rounded-full font-bold`}
+                  >
+                    {n.emblem}
+                  </div>
                   <div className="flex-1">
-                    <h3 className="text-sm font-semibold text-slate-100">{n.title}</h3>
+                    <h3 className="text-sm font-semibold text-slate-100">
+                      {n.title}
+                    </h3>
                     <p className="text-xs text-slate-400">{n.desc}</p>
                     <div className="flex justify-between items-center mt-1">
                       <span className="text-xs text-slate-500">{n.meta}</span>
-                      <span className={`text-xs font-bold ${n.badgeColor}`}>{n.level}</span>
+                      <span className={`text-xs font-bold ${n.badgeColor}`}>
+                        {n.level}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -637,7 +791,10 @@ const ASMDashboard = () => {
           {/* Placeholder: future right-column (keeps layout balanced on larger screens) */}
           <div className={`${card} hidden md:block`}>
             <h3 className="text-lg font-semibold mb-2">Additional Insights</h3>
-            <p className="text-sm text-slate-400">Reserved space for future widgets or quick actions (threat feed, scan controls, export options).</p>
+            <p className="text-sm text-slate-400">
+              Reserved space for future widgets or quick actions (threat feed,
+              scan controls, export options).
+            </p>
           </div>
         </div>
       </div>
