@@ -70,12 +70,10 @@ export default function ExecutiveSummaryPage() {
       GetAttackExposure(tenant, selectedYear);
       GetRiskTrend(tenant, selectedYear);
       GetAssetInventory(selectedYear);
-    }
-
-    if (token) {
       GetTopRiskIndicator(tenant, selectedYear);
       GetFinanceExposureTrend(tenant, selectedYear);
     }
+
   }, [token, tenant, selectedYear]);
 
   return loading ? (

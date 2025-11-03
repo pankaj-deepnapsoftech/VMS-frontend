@@ -3,7 +3,6 @@ import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import {
-  AllCustomerContextProvider,
   AllEmployeeContextProvider,
   ApplicationVulnerabilityContextProvider,
   AuthContextProvider,
@@ -24,9 +23,8 @@ import {
   VulnerabililtyDataContextProvider,
 } from "./context";
 import AppSoftContextProvider from "./context/ApplicationSoftwareInventoryContext/ApplicationSoftwareInventoryContext";
-import AIVAContextProvider, {
-  AIVAContext,
-} from "./context/AI-VAContext/AI-VAContext";
+import AIVAContextProvider from "./context/AI-VAContext/AI-VAContext";
+
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -34,7 +32,6 @@ createRoot(document.getElementById("root")).render(
       <DataContextProvider>
         <VulnerabililtyDataContextProvider>
           <AllEmployeeContextProvider>
-            <AllCustomerContextProvider>
               <JiraContextProvider>
                 <SchedulingAssesmentContextProvider>
                   <ApplicationVulnerabilityContextProvider>
@@ -68,7 +65,6 @@ createRoot(document.getElementById("root")).render(
                   </ApplicationVulnerabilityContextProvider>
                 </SchedulingAssesmentContextProvider>
               </JiraContextProvider>
-            </AllCustomerContextProvider>
           </AllEmployeeContextProvider>
         </VulnerabililtyDataContextProvider>
       </DataContextProvider>

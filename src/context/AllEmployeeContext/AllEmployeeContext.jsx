@@ -5,6 +5,7 @@ import { createContext, useState, useEffect } from "react";
 import toast from "react-hot-toast";
 
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const AllEmployeeContext = createContext();
 
 
@@ -24,37 +25,6 @@ const AllEmployeeContextProvider = ({ children }) => {
 
 
 
-
-	const VerifyEmployee = async (id) => {
-
-		const toastId = toast.loading("Loading...");
-		try {
-			const res = await AxiosHandler.patch(`/auth/verify-employee/${id}`);
-			toast.dismiss(toastId);
-			toast.success(res.data.message);
-
-		} catch (error) {
-			//console.log(error)
-			toast.dismiss(toastId);
-			toast.error(error?.response?.data?.message);
-
-		}
-	}
-
-	const UploadDetailedReport = async (id, data) => {
-		const toastId = toast.loading("Loading...");
-		try {
-			const res = await AxiosHandler.post(`/data/upload-pdf/${id}`, data);
-			toast.dismiss(toastId);
-			toast.success(res.data.message);
-
-		} catch (error) {
-			//console.log(error)
-			toast.dismiss(toastId);
-			toast.error(error?.response?.data?.message);
-
-		}
-	}
 
 	const GetUsers = async (page = 1,tenant) => {
 		try {
@@ -97,12 +67,10 @@ const AllEmployeeContextProvider = ({ children }) => {
 
 	return (
 		<AllEmployeeContext.Provider value={{
-			VerifyEmployee,
 			page,
 			setPage,
 			taskPage,
 			setTaskPage,
-			UploadDetailedReport,
 			datafetchCount,
 			setdatafetchCount,
 			DeleteUser,

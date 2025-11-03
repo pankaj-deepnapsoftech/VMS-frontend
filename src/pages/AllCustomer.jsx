@@ -1,11 +1,6 @@
-/* eslint-disable react/jsx-no-undef */
-/* eslint-disable no-undef */
-
-import AllowedModal from "@/components/modal/AllowedModal";
-import { useAllEmployeeContext, useAuthContext } from "@/context";
 import { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
-import { FaEdit, FaRegTrashAlt, FaTrash } from "react-icons/fa";
+import {  FaRegTrashAlt } from "react-icons/fa";
 import { AxiosHandler } from "@/config/AxiosConfig";
 import Pagination from "./Pagination";
 import Loader from "@/components/Loader/Loader";
@@ -24,11 +19,11 @@ import {
   isModifyAccess,
   isViewAccess,
 } from "@/utils/pageAccess";
+import { useAuthContext } from "@/context";
 
 export default function AllCustomer() {
   // context api hooks
   const { token, authenticate } = useAuthContext();
-  const { VerifyEmployee } = useAllEmployeeContext();
 
   // location hook
   const location = useLocation();
@@ -36,13 +31,11 @@ export default function AllCustomer() {
   // all use States
   const [page, setPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-  const [dataId, setDataId] = useState(null);
   const [tenants, setTenants] = useState([]);
   const [editTable, setEditTable] = useState(null);
   const [isLoading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const { isOpen, closeModal, openModal } = useAccessPartner();
+  const { isOpen, closeModal } = useAccessPartner();
   const [tenantId, setTenantId] = useState(null);
   const [partnersData, setPartnersData] = useState("");
 
@@ -74,7 +67,7 @@ export default function AllCustomer() {
     if (token) {
       getTenants(page);
     }
-  }, [token, page, VerifyEmployee]);
+  }, [token, page]);
 
   if (isViewAccess(authenticate, location)) {
     return <Access />;
@@ -226,13 +219,7 @@ export default function AllCustomer() {
         </div>
       )}
 
-      {isChecked && (
-        <AllowedModal
-          setIsChecked={setIsChecked}
-          isChecked={isChecked}
-          id={dataId}
-        />
-      )}
+   
       {isModalOpen && (
         <Addtanent
           isModalOpen={isModalOpen}

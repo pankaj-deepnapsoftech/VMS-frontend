@@ -14,8 +14,6 @@ import AssertInventory from "@/pages/AssertInventory";
 import ChangePassword from "@/pages/ChangePassword";
 import AdminBookDemo from "@/pages/AdminBookDemo";
 import ApplicationSoftwareInventory from "@/pages/ApplicationSoftwareInventory";
-import ClientCISO from "@/pages/ClientCiso";
-import NewUser from "@/pages/NewUser";
 import EmailConfigPanel from "@/pages/Configure";
 import Roles from "@/pages/Roles";
 import JiraDataTable from "@/pages/JiraDataTable";
@@ -137,14 +135,6 @@ export const PrivateRoutes = [
   {
     path: "/application",
     element: <ApplicationSoftwareInventory />,
-  },
-  {
-    path: "/client-Sme",
-    element: <ClientCISO />,
-  },
-  {
-    path: "/newuser",
-    element: <NewUser />,
   },
   {
     path: "/business-applications",

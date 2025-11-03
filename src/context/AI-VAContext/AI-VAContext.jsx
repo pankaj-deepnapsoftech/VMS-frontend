@@ -32,7 +32,6 @@ const AIVAContextProvider = ({ children }) => {
       const res = await AxiosHandler.get(
         `/ai-power-scan/get?tenant=${tenant ? tenant : ""}`
       );
-      console.log("hdtghbjh",res);
       setAIVAData(res.data?.data);
     } catch (error) {
       console.log(error);
