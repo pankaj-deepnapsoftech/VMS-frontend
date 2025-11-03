@@ -33,6 +33,9 @@ const AppRoutes = () => {
     }
   };
 
+
+  // console.log(PrivateRoutes.length);
+
   return (
     <Routes>
       {/* Public routes */}

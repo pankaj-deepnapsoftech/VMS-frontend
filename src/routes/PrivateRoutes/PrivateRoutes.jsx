@@ -36,7 +36,6 @@ import Severity from "@/pages/SLA-Configuration";
 import ASMDashboard from "@/pages/ASMDashboard";
 import AssessmentCenter from "@/pages/AssessmentCenter";
 import PendingVulnerability from "@/pages/PendingVulnerability";
-import SecurendDashboardCards from "@/pages/ThreeCards";
 import DownloadReports from "@/pages/DownloadReport";
 
 export const PrivateRoutes = [
@@ -191,10 +190,6 @@ export const PrivateRoutes = [
   {
     path: "/pending-vulnerability",
     element: <PendingVulnerability />,
-  },
-  {
-    path: "/Three-cards",
-    element: <SecurendDashboardCards />,
   },
   {
     path: "/download-report",

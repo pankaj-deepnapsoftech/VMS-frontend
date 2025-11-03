@@ -4,7 +4,6 @@ import {
   CalendarClock,
   FileUp,
   LucideShield,
-  User,
   UserCircle,
   Users,
 } from "lucide-react";
@@ -21,7 +20,6 @@ import {
   MdWifiTetheringErrorRounded,
 } from "react-icons/md";
 import { TbReport } from "react-icons/tb";
-import { GrVulnerability } from "react-icons/gr";
 import { GiCyberEye, GiProgression, GiTwirlCenter } from "react-icons/gi";
 import { PiHardHatFill } from "react-icons/pi";
 import { RiHome3Fill } from "react-icons/ri";
