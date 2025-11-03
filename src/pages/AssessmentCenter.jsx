@@ -50,8 +50,12 @@ export default function AssessmentCenter() {
         <div
           className="rounded-2xl bg-slate-800 border border-slate-700 p-4 shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
           onClick={() => {
-            setIsModalOpen(true);
-            setEditable(null);
+            if(tenant){
+              setIsModalOpen(true);
+              setEditable(null);
+            }else{
+              alert("Please selcet tenant first !")
+            }
           }}
         >
           <div className="flex flex-col items-start text-left">

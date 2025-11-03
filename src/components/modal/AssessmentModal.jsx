@@ -67,7 +67,7 @@ const AssessmentModal = ({ isOpen, onClose, editable }) => {
         // eslint-disable-next-line react/prop-types
         UpdateAIVA(editable._id, values);
       } else {
-        createAIVA(values);
+        createAIVA({...values,scan_tags:values.scan_tags.map((item) => ({url:item}))});
       }
       onClose();
     },
