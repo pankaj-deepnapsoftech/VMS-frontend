@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { ChevronRight, ChevronDown, Edit, Trash2 } from "lucide-react";
 import { useAIVAContext, useAuthContext } from "@/context";
 import AssessmentModal from "@/components/modal/AssessmentModal";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 export default function AssessmentCenter() {
   const { getAIVA, AIVAData, DeleteAIVA } = useAIVAContext();
@@ -47,7 +49,10 @@ export default function AssessmentCenter() {
         {/* Start AI Scan */}
         <div
           className="rounded-2xl bg-slate-800 border border-slate-700 p-4 shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
-          onClick={() => {setIsModalOpen(true);setEditable(null)}}
+          onClick={() => {
+            setIsModalOpen(true);
+            setEditable(null);
+          }}
         >
           <div className="flex flex-col items-start text-left">
             <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-slate-700 flex items-center justify-center shadow-inner mb-3">
@@ -139,13 +144,20 @@ export default function AssessmentCenter() {
               {AIVAData && AIVAData.length > 0 ? (
                 AIVAData.map((scan) => (
                   <React.Fragment key={scan._id}>
-                    <tr className="border-b border-slate-800 hover:bg-slate-800/50 transition-colors">
-                      <td
-                        className="px-4 cursor-pointer text-slate-400 hover:text-slate-200"
-                        onClick={() =>
-                          setExpanded(expanded === scan._id ? null : scan._id)
-                        }
-                      >
+                    <tr
+                      className="border-b border-slate-800 hover:bg-slate-800/50 transition-colors cursor-pointer"
+                      onClick={(e) => {
+                        // Prevent triggering expand when clicking edit/delete buttons
+                        if (
+                          e.target.closest("button") ||
+                          e.target.closest("svg") ||
+                          e.target.closest("a")
+                        )
+                          return;
+                        setExpanded(expanded === scan._id ? null : scan._id);
+                      }}
+                    >
+                      <td className="px-4 text-slate-400">
                         {expanded === scan._id ? (
                           <ChevronDown size={16} />
                         ) : (
@@ -178,7 +190,6 @@ export default function AssessmentCenter() {
                         >
                           <Edit size={18} />
                         </button>
-
                         <button
                           onClick={() => handleDelete(scan._id)}
                           className="hover:text-red-400 transition-colors"
@@ -192,23 +203,187 @@ export default function AssessmentCenter() {
                     {expanded === scan._id && (
                       <tr>
                         <td colSpan="8" className="bg-slate-900 p-5">
-                          <div className="text-sm text-slate-300 space-y-2">
-                            <p>
-                              <strong>Auth Scan:</strong>{" "}
-                              {scan.auth_scan ? "Yes" : "No"}
-                            </p>
-                            <p>
-                              <strong>Schedule:</strong>{" "}
-                              {scan.schedule ? "Yes" : "No"}
-                            </p>
-                            {scan.auth_fields && (
-                              <div>
-                                <p>
-                                  <strong>Login URL:</strong>{" "}
-                                  {scan.auth_fields.login_url}
-                                </p>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 text-slate-200">
+                            {/* Scan Summary */}
+                            <div className="bg-slate-800 rounded-2xl p-5 border border-slate-700 shadow-lg">
+                              <h3 className="text-base font-semibold mb-4 flex items-center gap-2">
+                                <span className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-slate-700">
+                                  🧭
+                                </span>
+                                Scan Summary
+                              </h3>
+                              <div className="space-y-3 text-sm">
+                                <div>
+                                  <p className="text-slate-400">Scan Target</p>
+                                  <p className="font-medium text-emerald-300 break-all">
+                                    {scan.target_url || "—"}
+                                  </p>
+                                </div>
+                                <div className="flex justify-between">
+                                  <div>
+                                    <p className="text-slate-400">Scan Type</p>
+                                    <p className="font-medium">
+                                      {scan.scan_type || "AI Scan"}
+                                    </p>
+                                  </div>
+                                  <div>
+                                    <p className="text-slate-400">Auth Scan</p>
+                                    <p className="font-medium">
+                                      {scan.auth_scan ? "Yes" : "No"}
+                                    </p>
+                                  </div>
+                                </div>
+                                <div className="flex justify-between">
+                                  <div>
+                                    <p className="text-slate-400">
+                                      Organization
+                                    </p>
+                                    <p className="font-medium">
+                                      {scan.organization || "SecurEnd"}
+                                    </p>
+                                  </div>
+                                  <div>
+                                    <p className="text-slate-400">Duration</p>
+                                    <p className="font-medium">
+                                      {scan.duration || "5h 30m"}
+                                    </p>
+                                  </div>
+                                </div>
                               </div>
-                            )}
+                            </div>
+
+                            {/* Vulnerabilities */}
+                            <div className="bg-slate-800 rounded-2xl p-5 border border-slate-700 shadow-lg flex flex-col justify-between">
+                              <div>
+                                <h3 className="text-base font-semibold mb-4 flex items-center gap-2">
+                                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-slate-700">
+                                    🛡️
+                                  </span>
+                                  Vulnerabilities
+                                </h3>
+
+                                <div className="flex items-center justify-between gap-3">
+                                  <div>
+                                    <p className="text-3xl font-bold">
+                                      {scan.total_vulns || 12}
+                                    </p>
+                                    <p className="text-slate-400 text-xs">
+                                      Security issues found
+                                    </p>
+                                  </div>
+                                  <div className="w-20 h-20">
+                                    <CircularProgressbar
+                                      value={scan.vuln_score || 60}
+                                      text={`${scan.vuln_score || 60}%`}
+                                      styles={buildStyles({
+                                        textColor: "#fff",
+                                        pathColor: "#22c55e",
+                                        trailColor: "#1e293b",
+                                      })}
+                                    />
+                                  </div>
+                                </div>
+
+                                {/* Severity Breakdown */}
+                                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-5 text-xs">
+                                  <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-red-900/40 border border-red-700">
+                                    <span className="font-medium">
+                                      Critical
+                                    </span>
+                                    <span className="font-semibold text-red-300">
+                                      {scan.vulns?.critical ?? 2}
+                                    </span>
+                                  </div>
+                                  <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-orange-900/40 border border-orange-700">
+                                    <span className="font-medium">High</span>
+                                    <span className="font-semibold text-orange-300">
+                                      {scan.vulns?.high ?? 3}
+                                    </span>
+                                  </div>
+                                  <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-yellow-900/40 border border-yellow-700">
+                                    <span className="font-medium">Medium</span>
+                                    <span className="font-semibold text-yellow-300">
+                                      {scan.vulns?.medium ?? 4}
+                                    </span>
+                                  </div>
+                                  <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-green-900/40 border border-green-700">
+                                    <span className="font-medium">Low</span>
+                                    <span className="font-semibold text-green-300">
+                                      {scan.vulns?.low ?? 2}
+                                    </span>
+                                  </div>
+                                  <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-blue-900/40 border border-blue-700 col-span-2 sm:col-span-1">
+                                    <span className="font-medium">Info</span>
+                                    <span className="font-semibold text-blue-300">
+                                      {scan.vulns?.info ?? 1}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Defendly Metrics */}
+                            <div className="bg-slate-800 rounded-2xl p-5 border border-slate-700 shadow-lg">
+                              <h3 className="text-base font-semibold mb-4 flex items-center gap-2">
+                                <span className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-slate-700">
+                                  📊
+                                </span>
+                                Defendly Metrics
+                              </h3>
+
+                              <div className="grid grid-cols-2 gap-3 text-sm">
+                                <div className="bg-slate-700/50 rounded-xl p-3">
+                                  <p className="text-slate-400 text-xs">
+                                    Endpoints
+                                  </p>
+                                  <p className="font-medium">
+                                    {scan.endpoints || 6}
+                                  </p>
+                                </div>
+                                <div className="bg-slate-700/50 rounded-xl p-3">
+                                  <p className="text-slate-400 text-xs">
+                                    Open Ports
+                                  </p>
+                                  <p className="font-medium">
+                                    {scan.open_ports || 3}
+                                  </p>
+                                </div>
+                                <div className="bg-slate-700/50 rounded-xl p-3">
+                                  <p className="text-slate-400 text-xs">
+                                    Cyber Hygiene
+                                  </p>
+                                  <p className="font-medium">
+                                    {scan.cyber_hygiene || 59}
+                                  </p>
+                                </div>
+                                <div className="bg-slate-700/50 rounded-xl p-3">
+                                  <p className="text-slate-400 text-xs">
+                                    Threat Intel
+                                  </p>
+                                  <p className="font-medium">
+                                    {scan.threat_intel || 64}
+                                  </p>
+                                </div>
+                                <div className="bg-slate-700/50 rounded-xl p-3 col-span-2 flex items-center justify-between">
+                                  <div>
+                                    <p className="text-slate-400 text-xs">
+                                      OWASP Coverage
+                                    </p>
+                                    <p className="font-medium">
+                                      {scan.owasp_score || 76.67}
+                                    </p>
+                                  </div>
+                                  <div className="flex items-center gap-2">
+                                    <span className="px-2 py-0.5 bg-green-800/40 rounded-md border border-green-700 text-xs">
+                                      7 Present
+                                    </span>
+                                    <span className="px-2 py-0.5 bg-red-800/40 rounded-md border border-red-700 text-xs">
+                                      2 Missing
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </td>
                       </tr>
