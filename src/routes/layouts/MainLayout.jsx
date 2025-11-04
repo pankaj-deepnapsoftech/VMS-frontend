@@ -368,9 +368,9 @@ const MainLayout = () => {
         : "w-full lg:w-[95%] xl:w-[96%] 2xl:w-[97%]"
     }`}
       >
-        <ErrorBoundary>
+        {/* <ErrorBoundary> */}
           <Outlet />
-        </ErrorBoundary>
+        {/* </ErrorBoundary> */}
       </div>
 
       <Footer />

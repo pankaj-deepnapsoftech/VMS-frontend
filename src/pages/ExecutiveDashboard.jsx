@@ -4,6 +4,8 @@ import { Line } from "react-chartjs-2";
 import "react-circular-progressbar/dist/styles.css";
 import {
   Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
   RadialLinearScale,
   PointElement,
   LineElement,
@@ -16,7 +18,6 @@ import {
   useReportContext,
   useTVMCardsContext,
 } from "@/context";
-import Loader from "@/components/Loader/Loader";
 import {
   assetData,
   FinancialExposure,
@@ -25,7 +26,10 @@ import {
   TopFiveRiskIndicator,
 } from "@/constants/dynomic.data";
 
+
 ChartJS.register(
+  CategoryScale,
+  LinearScale,
   RadialLinearScale,
   PointElement,
   LineElement,
@@ -39,7 +43,6 @@ export default function ExecutiveSummaryPage() {
   const {
     GetRiskData,
     dasboardData,
-    loading,
     GetAssetInventory,
     assetInventory,
     GetFinancialExposure,
@@ -76,9 +79,7 @@ export default function ExecutiveSummaryPage() {
 
   }, [token, tenant, selectedYear]);
 
-  return loading ? (
-    <Loader />
-  ) : (
+  return (
     <div className="min-h-screen bg-background p-4 sm:p-6 font-sans">
       <div className="flex flex-col mb-10 gap-3 max-w-full xl:max-w-7xl mx-auto">
         {/* Summary Cards */}

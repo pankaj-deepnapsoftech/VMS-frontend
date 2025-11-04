@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 
 // Lazy imports
+const Loader = lazy(()=>import("@/components/Loader/Loader"))
 const Exceptions = lazy(() => import("@/pages/Exceptions"));
 const Remediation = lazy(() => import("@/pages/Remedition"));
 const AllCustomer = lazy(() => import("@/pages/AllCustomer"));
@@ -71,7 +72,7 @@ export const PrivateRoutes = [
   { path: "/tags", element: <Suspense><TagsPage /></Suspense> },
   { path: "/demo", element: <Suspense><DemoDashboard /></Suspense> },
   { path: "/risk-details", element: <Suspense><RiskOperation /></Suspense> },
-  { path: "/", element: <Suspense><ExecutiveDashboard /></Suspense> },
+  { path: "/", element: <Suspense fallback={<Loader />}><ExecutiveDashboard /></Suspense> },
   { path: "/edit-vulnerability-data", element: <Suspense><VulnerabilityForm /></Suspense> },
   { path: "/in-progress-assessment", element: <Suspense><InProgressAssessment /></Suspense> },
   { path: "/completed-assessment", element: <Suspense><CompleteAssessment /></Suspense> },
