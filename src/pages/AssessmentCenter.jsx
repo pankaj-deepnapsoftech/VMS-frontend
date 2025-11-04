@@ -26,12 +26,12 @@ export default function AssessmentCenter() {
   };
 
   const handleRefresh = () => {
-    getAIVA(tenant);
+    getAIVA(tenant,page);
   };
 
   useEffect(() => {
-    if (token) getAIVA(tenant);
-  }, [tenant, token]);
+    if (token) getAIVA(tenant,page);
+  }, [tenant, token,page]);
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans p-4 sm:p-6 lg:p-8">

@@ -18,10 +18,10 @@ const AIVAContextProvider = ({ children }) => {
 
 
 
-  const getAIVA = async (tenant) => {
+  const getAIVA = async (tenant,page) => {
     try {
       const res = await AxiosHandler.get(
-        `/ai-power-scan/get?tenant=${tenant ? tenant : ""}`
+        `/ai-power-scan/get?tenant=${tenant ? tenant : ""}&page=${page}`
       );
       setAIVAData(res.data?.data);
     } catch (error) {
