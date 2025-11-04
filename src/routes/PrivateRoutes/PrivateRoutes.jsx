@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "react";
 
 // Lazy imports
-const Loader = lazy(()=>import("@/components/Loader/Loader"))
+const Loader = lazy(() => import("@/components/Loader/Loader"))
 const Exceptions = lazy(() => import("@/pages/Exceptions"));
 const Remediation = lazy(() => import("@/pages/Remedition"));
 const AllCustomer = lazy(() => import("@/pages/AllCustomer"));
@@ -45,9 +45,9 @@ export const PrivateRoutes = [
   { path: "/tvm-dashboard", element: <Suspense><Home /></Suspense> },
   { path: "/assesment-schedule", element: <Suspense><SchedulingAssessmentPage /></Suspense> },
   { path: "/pending-assesment", element: <Suspense><PendingAssessment /></Suspense> },
-  { path: "/vulnerability-data", element: <Suspense><VulnerabilityData /></Suspense> },
-  { path: "/application-data", element: <Suspense><ApplicationData /></Suspense> },
-  { path: "/infrastructure-data", element: <Suspense><InfrastructureData /></Suspense> },
+  { path: "/vulnerability-data", element: <Suspense fallback={<Loader />} ><VulnerabilityData /></Suspense> },
+  { path: "/application-data", element: <Suspense fallback={<Loader />} ><ApplicationData /></Suspense> },
+  { path: "/infrastructure-data", element: <Suspense fallback={<Loader />} ><InfrastructureData /></Suspense> },
   { path: "/third-party-data", element: <Suspense><JiraDataTable /></Suspense> },
   { path: "/third-party-integrations", element: <Suspense><ThirdPartyIntegrations /></Suspense> },
   { path: "/all-tenant", element: <Suspense><AllCustomer /></Suspense> },

@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import {
   useAuthContext,
   useNessusContext,
@@ -13,169 +13,189 @@ import EnhancedDetailsModal from "@/modals/ExploitDetail";
 import useAccessPartner from "@/hooks/AccessPartner";
 import { handlerSeverity } from "@/utils/vulnerableOperations";
 
-export function VulnerabilityData() {
+export default function VulnerabilityData() {
   const { loading } = useVulnerabililtyDataContext();
   const { token, tenant } = useAuthContext();
-
-  const { NessusData, getNessusData,deleteNessusData } = useNessusContext();
-
-
-    const { closeModal, isOpen, openModal } = useAccessPartner();
+  const { NessusData, getNessusData, deleteNessusData } = useNessusContext();
+  const { closeModal, isOpen, openModal } = useAccessPartner();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
-
-  const [exploitDetails,setExploitDetails] = useState(null)
+  const [exploitDetails, setExploitDetails] = useState(null);
 
   const itemsPerPage = 10;
 
+  // Always return a string for title attributes
   const showTitle = (header) => {
-    if (header === "VRS") {
-      return "Vulnerability Risk Score";
-    }
+    if (header === "VRS") return "Vulnerability Risk Score";
     return "";
   };
 
+  // Defensive: ensure isHaveAction() returns boolean
+  const hasAction = Boolean(isHaveAction());
+
   useEffect(() => {
     if (token) {
-      getNessusData(currentPage,tenant);
+      getNessusData(currentPage, tenant);
     }
-  }, [token, tenant,currentPage]);
+  }, [token, tenant, currentPage]);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
 
-  useEffect(() => {}, []);
-
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      {loading ? (
-        <Loader />
-      ) : (
-        <>
-          {/* Heading */}
-          <div className="w-full pt-6 px-6">
-            <h2 className="text-2xl font-semibold text-white">
-              All Vulnerability Data
-            </h2>
-            <span className="text-subtext text-sm">
-              Manage your Vulnerability Data
-            </span>
-          </div>
+    <>
+      {/* Heading */}
+      <div className="w-full pt-6 px-6">
+        <h2 className="text-2xl font-semibold text-white">
+          All Vulnerability Data
+        </h2>
+        <span className="text-subtext text-sm">
+          Manage your Vulnerability Data
+        </span>
+      </div>
 
-          <div className="w-full min-h-screen p-6">
-            <div className="bg-[#1a1f2e] mb-12 rounded-lg shadow-xl overflow-hidden">
-              {/* SEARCH */}
-              <div className="px-6 py-4 border-b border-gray-700 relative">
-                <div className="relative">
-                  <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
-                  <input
-                    type="search"
-                    placeholder="Search data..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="bg-input backdrop-blur-md py-2 w-1/3 text-white ps-7 pe-3 rounded-md "
-                  />
-                </div>
-              </div>
-
-              {/* TABLE */}
-              <div className="overflow-x-auto w-full custom-scrollbar">
-                <table className="table-fixed min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
-                  <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
-                    <tr>
-                      {[
-                        "S No.",
-                        "Title",
-                        "Scan Type",
-                        "Threat Type",
-                        "Severity",
-                        "Asset",
-                        "Status",
-                      ]
-                        .concat(isHaveAction() ? ["Actions"] : [])
-                        .map((header) => (
-                          <th
-                            title={showTitle(header)}
-                            key={header}
-                            className="px-4 py-3 border-b border-gray-600 font-medium"
-                          >
-                            {header}
-                          </th>
-                        ))}
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-700">
-                    {NessusData?.map((item, index) => (
-                      <tr
-                        key={index}
-                        className="border-b border-slate-700 hover:bg-[#1E293B] transition"
-                      >
-                        <td className="px-4 py-3">{startIndex + index + 1}</td>
-                        <td className="px-4 py-3">
-                          {item?.Title || item?.plugin_name || "-"}
-                        </td>
-                        <td className="px-4 py-3">{item?.scan_type || "-"}</td>
-                        <td className="px-4 py-3">
-                          {item?.threat_type || "-"}
-                        </td>
-                        <td className="px-4 py-3">
-                          {item?.Severity?.name || handlerSeverity(item?.severity) ||  "-"}
-                        </td>
-                        <td className="px-4 py-3">
-                          {item?.BusinessApplication?.name || item?.InfraStructureAsset?.asset_hostname || "-"}
-                        </td>
-                        <td className="px-4 py-3">{item?.status || "-"}</td>
-
-                        {isHaveAction() && (
-                          <td className="px-4 py-3 flex items-center gap-3">
-                            <button
-                              title="View"
-                              className="text-green-500 hover:text-green-600 transition"
-                              onClick={()=>{openModal();setExploitDetails(item)}}
-                            >
-                              <FaEye />
-                            </button>
-                            <button
-                              title="Edit"
-                              className=" text-blue-500 hover:text-blue-600 transition"
-                              onClick={()=>{openModal();setExploitDetails(item)}}
-                            >
-                              <FaEdit />
-                            </button>
-                            <button
-                              title="Delete"
-                              className=" text-red-500 hover:text-red-600 transition"
-                              onClick={() => deleteNessusData(item._id)}
-                            >
-                              <FaTrash />
-                            </button>
-                          </td>
-                        )}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-              {/* PAGINATION */}
-              <Pagination
-                page={currentPage}
-                setPage={setCurrentPage}
-                hasNextPage={
-                   itemsPerPage <= NessusData?.length
-                }
-                total={NessusData?.length}
+      <div className="w-full min-h-screen p-6">
+        <div className="bg-[#1a1f2e] mb-12 rounded-lg shadow-xl overflow-hidden">
+          {/* SEARCH */}
+          <div className="px-6 py-4 border-b border-gray-700 relative">
+            <div className="relative">
+              <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
+              <input
+                type="search"
+                placeholder="Search data..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="bg-input backdrop-blur-md py-2 w-1/3 text-white ps-7 pe-3 rounded-md "
               />
             </div>
           </div>
 
-          <EnhancedDetailsModal
-            data={exploitDetails}
-            isOpen={isOpen}
-            onClose={closeModal}
+          {/* TABLE */}
+          <div className="overflow-x-auto w-full custom-scrollbar">
+            <table className="table-fixed min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+              <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
+                <tr>
+                  {[
+                    "S No.",
+                    "Title",
+                    "Scan Type",
+                    "Threat Type",
+                    "Severity",
+                    "Asset",
+                    "Status",
+                  ]
+                    .concat(hasAction ? ["Actions"] : [])
+                    .map((header) => (
+                      <th
+                        key={String(header)} // ✅ always a string
+                        title={String(showTitle(header))} // ✅ always a string
+                        className="px-4 py-3 border-b border-gray-600 font-medium"
+                      >
+                        {String(header)}
+                      </th>
+                    ))}
+                </tr>
+              </thead>
+
+              <tbody className="divide-y divide-gray-700">
+                {Array.isArray(NessusData) && NessusData.length > 0 ? (
+                  NessusData.map((item, index) => (
+                    <tr
+                      key={item._id || index}
+                      className="border-b border-slate-700 hover:bg-[#1E293B] transition"
+                    >
+                      <td className="px-4 py-3">
+                        {startIndex + index + 1}
+                      </td>
+                      <td className="px-4 py-3">
+                        {String(item?.Title || item?.plugin_name || "-")}
+                      </td>
+                      <td className="px-4 py-3">
+                        {String(item?.scan_type || "-")}
+                      </td>
+                      <td className="px-4 py-3">
+                        {String(item?.threat_type || "-")}
+                      </td>
+                      <td className="px-4 py-3">
+                        {String(
+                          item?.Severity?.name ||
+                            handlerSeverity(item?.severity) ||
+                            "-"
+                        )}
+                      </td>
+                      <td className="px-4 py-3">
+                        {String(
+                          item?.BusinessApplication?.name ||
+                            item?.InfraStructureAsset?.asset_hostname ||
+                            "-"
+                        )}
+                      </td>
+                      <td className="px-4 py-3">
+                        {String(item?.status || "-")}
+                      </td>
+
+                      {hasAction && (
+                        <td className="px-4 py-3 flex items-center gap-3">
+                          <button
+                            title="View"
+                            className="text-green-500 hover:text-green-600 transition"
+                            onClick={() => {
+                              openModal();
+                              setExploitDetails(item);
+                            }}
+                          >
+                            <FaEye />
+                          </button>
+                          <button
+                            title="Edit"
+                            className=" text-blue-500 hover:text-blue-600 transition"
+                            onClick={() => {
+                              openModal();
+                              setExploitDetails(item);
+                            }}
+                          >
+                            <FaEdit />
+                          </button>
+                          <button
+                            title="Delete"
+                            className=" text-red-500 hover:text-red-600 transition"
+                            onClick={() => deleteNessusData(item._id)}
+                          >
+                            <FaTrash />
+                          </button>
+                        </td>
+                      )}
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td
+                      colSpan={hasAction ? 8 : 7}
+                      className="text-center py-6 text-gray-400"
+                    >
+                      {loading ? <Loader /> : "No data found"}
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          {/* PAGINATION */}
+          <Pagination
+            page={currentPage}
+            setPage={setCurrentPage}
+            hasNextPage={itemsPerPage <= (NessusData?.length || 0)}
+            total={NessusData?.length || 0}
           />
-        </>
-      )}
-    </Suspense>
+        </div>
+      </div>
+
+      <EnhancedDetailsModal
+        data={exploitDetails}
+        isOpen={isOpen}
+        onClose={closeModal}
+      />
+    </>
   );
 }

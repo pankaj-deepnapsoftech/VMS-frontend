@@ -1,6 +1,5 @@
-import { Suspense, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { useAuthContext, useVulnerabililtyDataContext } from "@/context";
-import Loader from "@/components/Loader/Loader";
 import { useLocation, useNavigate } from "react-router-dom";
 import ExpectionModal from "@/modals/ExpectionModal";
 import ExploitDetail from "@/modals/ExploitDetail";
@@ -27,8 +26,8 @@ import AssignUserModal from "@/components/modal/AssignUserModal";
 
 // Popup Menu Component using Portal
 
-export function InfrastructureData() {
-  const { loading, GetInfrastructureData, allInfrastructureData, DeleteData } =
+export default function InfrastructureData() {
+  const {  GetInfrastructureData, allInfrastructureData, DeleteData } =
     useVulnerabililtyDataContext();
   const { token, authenticate } = useAuthContext();
   const navigate = useNavigate();
@@ -52,8 +51,8 @@ export function InfrastructureData() {
   // Popup state
   const [activeMenu, setActiveMenu] = useState(null);
   const [menuPosition, setMenuPosition] = useState(null);
-  const [tenantId,setTenantId] = useState(null)
-  const [selectedDataId,setselectedData ] = useState(null)
+  const [tenantId, setTenantId] = useState(null)
+  const [selectedDataId, setselectedData] = useState(null)
   const filteredData = allInfrastructureData?.filter((item) => {
     const valuesToSearch = [
       item.scan_type,
@@ -117,222 +116,216 @@ export function InfrastructureData() {
   }
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      {loading ? (
-        <Loader />
-      ) : (
-        <div className="bg-gradient-custom min-h-screen p-4 rounded-lg text-white">
-          <div className="w-full mt-4 px-6">
-            <h2 className="text-2xl font-semibold text-white">
-              All Infrastructure Data
-            </h2>
-            <span className="text-subtext text-sm">
-              Manage your Infrastructure Data
-            </span>
-          </div>
+    <div className="bg-gradient-custom min-h-screen p-4 rounded-lg text-white">
+      <div className="w-full mt-4 px-6">
+        <h2 className="text-2xl font-semibold text-white">
+          All Infrastructure Data
+        </h2>
+        <span className="text-subtext text-sm">
+          Manage your Infrastructure Data
+        </span>
+      </div>
 
-          <div className="relative w-full min-h-screen p-6">
-            <div className="bg-[#1a1f2e] mb-12 rounded-lg shadow-xl overflow-hidden">
-              {/* Header */}
-              <div className="px-6 py-4 border-b border-gray-700 relative">
-                <div className="relative">
-                  <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
-                  <input
-                    type="search"
-                    placeholder="Search infrastructure data..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="bg-input backdrop-blur-md py-2 w-1/3 text-white ps-7 pe-3 rounded-md "
-                  />
-                </div>
-              </div>
-
-              {/* Table */}
-              {filteredData?.length < 1 ? (
-                <NoDataFound />
-              ) : (
-                <div className="overflow-x-auto custom-scrollbar w-full relative">
-                  <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
-                    <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
-                      <tr>
-                        {[
-                          "S No.",
-                          "Title",
-                          "Scan Type",
-                          "Threat Type",
-                          "Severity",
-                          "Asset",
-                          "ACS",
-                          "Status",
-                          isHaveAction() && "Actions",
-                        ].map((header) => (
-                          <th
-                            title={showTitle(header)}
-                            key={header}
-                            className="px-4 py-3 border-b border-gray-600 font-medium"
-                          >
-                            {header}
-                          </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-700 relative">
-                      {filteredData.map((item, index) => (
-                        <tr
-                          key={index}
-                          className="border-b border-slate-700 hover:bg-[#1E293B] transition relative"
-                        >
-                          <td className="px-4 py-3">
-                            {(currentPage - 1) * 10 + 1 + index}
-                          </td>
-                          <td className="px-4 py-3">{item.Title || "-"}</td>
-                          <td className="px-4 py-3">{item.scan_type || "-"}</td>
-                          <td className="px-4 py-3">
-                            {item.threat_type || "-"}
-                          </td>
-                          <td className="px-4 py-3">
-                            {item?.Severity?.name || "-"}
-                          </td>
-                          <td className="px-4 py-3">
-                            {item.InfraStructureAsset?.asset_hostname || "-"}
-                          </td>
-                          <td className="px-4 py-3">
-                            {calculateACS(item.InfraStructureAsset) || "-"}
-                          </td>
-                          <td className="px-4 py-3">{item?.status || "-"}</td>
-                          {isHaveAction() && (
-                            <td className="px-4 py-3 ">
-                              <button
-                                className="hover:bg-gray-700 px-3 py-2 rounded-lg"
-                                onClick={(e) => { toggleMenu(index, e); setTenantId(item?.Severity?.tenant); setselectedData(item) }}
-                              >
-                                <BsThreeDotsVertical />
-                              </button>
-                            </td>
-                          )}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-
-              {/* Footer */}
-              <Pagination
-                page={currentPage}
-                setPage={setCurrentPage}
-                hasNextPage={filteredData.length === 10}
-                total={filteredData.length}
+      <div className="relative w-full min-h-screen p-6">
+        <div className="bg-[#1a1f2e] mb-12 rounded-lg shadow-xl overflow-hidden">
+          {/* Header */}
+          <div className="px-6 py-4 border-b border-gray-700 relative">
+            <div className="relative">
+              <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
+              <input
+                type="search"
+                placeholder="Search infrastructure data..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="bg-input backdrop-blur-md py-2 w-1/3 text-white ps-7 pe-3 rounded-md "
               />
             </div>
           </div>
 
-          {/* Portal Popup */}
-          <PopupMenu position={menuPosition} onClose={closeMenu}>
-            {activeMenu !== null && (
-              <>
-                {isModifyAccess() && (
-                  <li
-                    className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
-                    onClick={() =>
-                      navigate("/edit-vulnerability-data", {
-                        state: { data: filteredData[activeMenu] },
-                      })
-                    }
-                  >
-                    <MdModeEditOutline /> Edit
-                  </li>
-                )}
-                {isDeleteAccess() && (
-                  <li
-                    className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
-                    onClick={() => {
-                      if (window.confirm("Are you sure to delete?")) {
-                        DeleteData(filteredData[activeMenu]._id);
-                        closeMenu();
-                      }
-                    }}
-                  >
-                    <MdDelete /> Delete
-                  </li>
-                )}
-                {isModifyAccess() && (
-                  <li
-                    className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
-                    onClick={() => {
-                      handleExpectionModal(filteredData[activeMenu]);
-                      closeMenu();
-                    }}
-                  >
-                    <IoWarningOutline /> Add Exception
-                  </li>
-                )}
-                <li
-                  className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
-                  onClick={() => {
-                    setExploitDetails(filteredData[activeMenu]);
-                    openModal();
-                    closeMenu();
-                  }}
-                >
-                  <BiDetail />
-                  View Details
-                </li>
-                <li
-                  className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
-                  onClick={() => {
-                   
-                    setAssignUserOpenModal(true)
-                  }}
-                >
-                  <CircleUser />
-                  Assign User
-                </li>
-                {isModifyAccess() && (
-                  <li
-                    className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
-                    onClick={() => {
-                      setStatus({
-                        status: filteredData[activeMenu].status,
-                        _id: filteredData[activeMenu]._id,
-                      });
-                      setIsStatusModalOpen(true);
-                    }}
-                  >
-                    <GrStatusGood /> Change Status
-                  </li>
-                )}
-              </>
-            )}
-          </PopupMenu>
-
-          {isModalOpen && (
-            <ExpectionModal
-              setIsModalOpen={setIsModalOpen}
-              creator={selectedId}
-            />
+          {/* Table */}
+          {filteredData?.length < 1 ? (
+            <NoDataFound />
+          ) : (
+            <div className="overflow-x-auto custom-scrollbar w-full relative">
+              <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+                <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
+                  <tr>
+                    {[
+                      "S No.",
+                      "Title",
+                      "Scan Type",
+                      "Threat Type",
+                      "Severity",
+                      "Asset",
+                      "ACS",
+                      "Status",
+                      isHaveAction() && "Actions",
+                    ].map((header) => (
+                      <th
+                        title={showTitle(header)}
+                        key={header}
+                        className="px-4 py-3 border-b border-gray-600 font-medium"
+                      >
+                        {header}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-700 relative">
+                  {filteredData.map((item, index) => (
+                    <tr
+                      key={index}
+                      className="border-b border-slate-700 hover:bg-[#1E293B] transition relative"
+                    >
+                      <td className="px-4 py-3">
+                        {(currentPage - 1) * 10 + 1 + index}
+                      </td>
+                      <td className="px-4 py-3">{item.Title || "-"}</td>
+                      <td className="px-4 py-3">{item.scan_type || "-"}</td>
+                      <td className="px-4 py-3">
+                        {item.threat_type || "-"}
+                      </td>
+                      <td className="px-4 py-3">
+                        {item?.Severity?.name || "-"}
+                      </td>
+                      <td className="px-4 py-3">
+                        {item.InfraStructureAsset?.asset_hostname || "-"}
+                      </td>
+                      <td className="px-4 py-3">
+                        {calculateACS(item.InfraStructureAsset) || "-"}
+                      </td>
+                      <td className="px-4 py-3">{item?.status || "-"}</td>
+                      {isHaveAction() && (
+                        <td className="px-4 py-3 ">
+                          <button
+                            className="hover:bg-gray-700 px-3 py-2 rounded-lg"
+                            onClick={(e) => { toggleMenu(index, e); setTenantId(item?.Severity?.tenant); setselectedData(item) }}
+                          >
+                            <BsThreeDotsVertical />
+                          </button>
+                        </td>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
 
-          <ExploitDetail
-            data={exploitDetails}
-            onClose={closeModal}
-            isOpen={isOpen}
+          {/* Footer */}
+          <Pagination
+            page={currentPage}
+            setPage={setCurrentPage}
+            hasNextPage={filteredData.length === 10}
+            total={filteredData.length}
           />
-
-          {isStatusModalOpen && (
-            <StatusModal
-              setIsModalOpen={setIsStatusModalOpen}
-              defaultData={status}
-            />
-          )}
-
-
-          {AssignUserOpenModal && (
-              <AssignUserModal setAssignUserOpenModal={setAssignUserOpenModal} tenantId={tenantId} selectedDataId={selectedDataId} />
-          )
-          }
         </div>
+      </div>
+
+      {/* Portal Popup */}
+      <PopupMenu position={menuPosition} onClose={closeMenu}>
+        {activeMenu !== null && (
+          <>
+            {isModifyAccess() && (
+              <li
+                className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
+                onClick={() =>
+                  navigate("/edit-vulnerability-data", {
+                    state: { data: filteredData[activeMenu] },
+                  })
+                }
+              >
+                <MdModeEditOutline /> Edit
+              </li>
+            )}
+            {isDeleteAccess() && (
+              <li
+                className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
+                onClick={() => {
+                  if (window.confirm("Are you sure to delete?")) {
+                    DeleteData(filteredData[activeMenu]._id);
+                    closeMenu();
+                  }
+                }}
+              >
+                <MdDelete /> Delete
+              </li>
+            )}
+            {isModifyAccess() && (
+              <li
+                className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
+                onClick={() => {
+                  handleExpectionModal(filteredData[activeMenu]);
+                  closeMenu();
+                }}
+              >
+                <IoWarningOutline /> Add Exception
+              </li>
+            )}
+            <li
+              className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
+              onClick={() => {
+                setExploitDetails(filteredData[activeMenu]);
+                openModal();
+                closeMenu();
+              }}
+            >
+              <BiDetail />
+              View Details
+            </li>
+            <li
+              className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
+              onClick={() => {
+
+                setAssignUserOpenModal(true)
+              }}
+            >
+              <CircleUser />
+              Assign User
+            </li>
+            {isModifyAccess() && (
+              <li
+                className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
+                onClick={() => {
+                  setStatus({
+                    status: filteredData[activeMenu].status,
+                    _id: filteredData[activeMenu]._id,
+                  });
+                  setIsStatusModalOpen(true);
+                }}
+              >
+                <GrStatusGood /> Change Status
+              </li>
+            )}
+          </>
+        )}
+      </PopupMenu>
+
+      {isModalOpen && (
+        <ExpectionModal
+          setIsModalOpen={setIsModalOpen}
+          creator={selectedId}
+        />
       )}
-    </Suspense>
+
+      <ExploitDetail
+        data={exploitDetails}
+        onClose={closeModal}
+        isOpen={isOpen}
+      />
+
+      {isStatusModalOpen && (
+        <StatusModal
+          setIsModalOpen={setIsStatusModalOpen}
+          defaultData={status}
+        />
+      )}
+
+
+      {AssignUserOpenModal && (
+        <AssignUserModal setAssignUserOpenModal={setAssignUserOpenModal} tenantId={tenantId} selectedDataId={selectedDataId} />
+      )
+      }
+    </div>
   );
 }

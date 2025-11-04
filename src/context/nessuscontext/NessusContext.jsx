@@ -20,7 +20,6 @@ const NessusContextProvider = ({ children }) => {
         try {
             const res = await AxiosHandler.get(`/nessus/getNessusData?page=${page}`);
             SetNessusData(res?.data?.data || []);
-            console.log("this is just testing ===================>>>>>>>>>>",res.data.data)
         } catch (error) {
             console.log(error);
         };

@@ -11,9 +11,9 @@ export const authContext = createContext({
   token: "",
   authenticate: null,
   tenant: "",
-  GetSecuirityQuestion: () => {},
+  GetSecuirityQuestion: () => { },
   selectedYear: new Date().getFullYear(),
-  setSelectedYear: () => {},
+  setSelectedYear: () => { },
 });
 
 // eslint-disable-next-line react/prop-types
@@ -29,7 +29,15 @@ const AuthContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [userLoading, setUserLoading] = useState(false);
   const [runner, setRunner] = useState(1);
-  const [authenticate, setAuthenticate] = useState(null);
+  const [authenticate, setAuthenticate] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem("auth");
+      return saved ? JSON.parse(saved) : null;
+    } catch (err) {
+      console.error("Error parsing session storage auth:", err);
+      return null;
+    }
+  });
   const [updateProfileModal, setUpdateProfileModal] = useState(false);
   const [UserViaTenant, setuserViaTenant] = useState([]);
   const [getDataFromSession, setGetDataFromSession] = useState(() => {
@@ -42,6 +50,7 @@ const AuthContextProvider = ({ children }) => {
     try {
       const res = await AxiosHandler.get("/auth/logedin-user");
       setAuthenticate(res.data.data);
+      sessionStorage.setItem("auth", JSON.stringify(res.data.data))
     } catch (error) {
       console.log(error);
     } finally {
@@ -74,7 +83,7 @@ const AuthContextProvider = ({ children }) => {
       toast.dismiss(toastId);
       toast.error(
         error?.response?.data?.message ||
-          "something went wrong please try again..."
+        "something went wrong please try again..."
       );
     } finally {
       setLoading(false);
@@ -309,7 +318,7 @@ const AuthContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (token) {
+    if (token && !authenticate) {
       getLogedInUser();
       const data = decrypt(token);
     }
