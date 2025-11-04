@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { AxiosHandler } from "@/config/AxiosConfig";
 import toast from "react-hot-toast";
 import { DateModifier } from "@/utils/utils";

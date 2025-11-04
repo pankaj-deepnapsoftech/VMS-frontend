@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import ApplicationSoftwareInventory from "./ApplicationSoftwareInventory";
 import { ApplicationSoftwareInventoryContext } from "@/context/ApplicationSoftwareInventoryContext/ApplicationSoftwareInventoryContext";
 import { FaEdit } from "react-icons/fa";
