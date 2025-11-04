@@ -16,16 +16,7 @@ const AIVAContextProvider = ({ children }) => {
 
   const [AIVAData, setAIVAData] = useState([]);
 
-  const createAIVA = async (data) => {
-    try {
-      const res = await AxiosHandler.post(`/ai-power-scan/create`, data);
-      toast.success(res.data?.message || "AI Scan created successfully!");
-      setAIVAData(prev => [...prev,res.data.data])
-    } catch (error) {
-      console.log(error);
-      toast.error(error.response?.data?.message || "Failed to create AI scan");
-    }
-  };
+
 
   const getAIVA = async (tenant) => {
     try {
@@ -35,6 +26,17 @@ const AIVAContextProvider = ({ children }) => {
       setAIVAData(res.data?.data);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+    const createAIVA = async (data) => {
+    try {
+      const res = await AxiosHandler.post(`/ai-power-scan/create`, data);
+      toast.success(res.data?.message || "AI Scan created successfully!");
+      getAIVA(tenant);
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data?.message || "Failed to create AI scan");
     }
   };
 
