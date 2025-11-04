@@ -439,27 +439,6 @@ export const products = [
     ],
   },
   // {
-  //   title: "Vulnerability Intelligence",
-  //   desc: "Insights on vulnerabilities",
-  //   borderColor: "#feb47b",
-  //   icon: "/Icons/Component 3.png",
-  //   allowedPath: [],
-  // },
-  // {
-  //   title: "GRC",
-  //   desc: "Governance, Risk & Compliance",
-  //   borderColor: "#f7971e",
-  //   icon: <Settings />,
-  //   allowedPath: [],
-  // },
-  // {
-  //   title: "TPRM",
-  //   desc: "Third-Party Risk Management",
-  //   borderColor: "#43cea2",
-  //   icon: <Users />,
-  //   allowedPath: [],
-  // },
-  // {
   //   title: "Remediation Factory",
   //   desc: "Automated remediation of vulnerabilities",
   //   borderColor: "#6a11cb",
