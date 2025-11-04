@@ -1,198 +1,83 @@
-import Exceptions from "@/pages/Exceptions";
-import Remediation from "@/pages/Remedition";
-import Home from "@/pages/Home";
-import AllCustomer from "@/pages/AllCustomer";
-import { VulnerabilityData } from "@/pages/VulnerablityData";
-import ApplicationVulnerability from "@/pages/ApplicationVulnerability";
-import InfraStructureVulnerability from "@/pages/InfrastructureVulnerability";
-import AllEmployee from "@/pages/AllEmployee";
+import { lazy, Suspense } from "react";
 
-import SchedulingAssessmentPage from "@/pages/SchedulingAssessment";
-import Reports from "@/pages/Reports";
-import ChatPage from "@/pages/ChatPage";
-import AssertInventory from "@/pages/AssertInventory";
-import ChangePassword from "@/pages/ChangePassword";
-import AdminBookDemo from "@/pages/AdminBookDemo";
-import ApplicationSoftwareInventory from "@/pages/ApplicationSoftwareInventory";
-import EmailConfigPanel from "@/pages/Configure";
-import Roles from "@/pages/Roles";
-import JiraDataTable from "@/pages/JiraDataTable";
-import Partners from "@/pages/Partners";
-import ThirdPartyIntegrations from "@/pages/ThirdPartyIntegrations";
-import UserProfile from "@/pages/UserDetails";
-import PendingAssessment from "@/pages/PendingAssessment";
-import { ApplicationData } from "@/pages/ApplicationData";
-import { InfrastructureData } from "@/pages/InfrastructureData";
-import BusinessApplications from "@/pages/BusinessApplications";
-import VulnerabilityForm from "@/pages/AddVulnerabilityData";
-import ExceptionTable from "@/pages/ExceptionTable";
-import TagsPage from "@/pages/TagConfig";
-import DemoDashboard from "@/pages/demo/Dashboard";
-import RiskOperation from "@/pages/RiskQuantification";
-import ExecutiveDashboard from "@/pages/ExecutiveDashboard";
-import InProgressAssessment from "@/pages/InProgress";
-import CompleteAssessment from "@/pages/CompleteAssessment";
-import Severity from "@/pages/SLA-Configuration";
-import ASMDashboard from "@/pages/ASMDashboard";
-import AssessmentCenter from "@/pages/AssessmentCenter";
-import PendingVulnerability from "@/pages/PendingVulnerability";
-import DownloadReports from "@/pages/DownloadReport";
+// Lazy imports
+const Exceptions = lazy(() => import("@/pages/Exceptions"));
+const Remediation = lazy(() => import("@/pages/Remedition"));
+const AllCustomer = lazy(() => import("@/pages/AllCustomer"));
+const VulnerabilityData = lazy(() => import("@/pages/VulnerablityData"));
+const ApplicationVulnerability = lazy(() => import("@/pages/ApplicationVulnerability"));
+const InfraStructureVulnerability = lazy(() => import("@/pages/InfrastructureVulnerability"));
+const AllEmployee = lazy(() => import("@/pages/AllEmployee"));
+const Reports = lazy(() => import("@/pages/Reports"));
+const ChatPage = lazy(() => import("@/pages/ChatPage"));
+const AssertInventory = lazy(() => import("@/pages/AssertInventory"));
+const ChangePassword = lazy(() => import("@/pages/ChangePassword"));
+const AdminBookDemo = lazy(() => import("@/pages/AdminBookDemo"));
+const ApplicationSoftwareInventory = lazy(() => import("@/pages/ApplicationSoftwareInventory"));
+const EmailConfigPanel = lazy(() => import("@/pages/Configure"));
+const Roles = lazy(() => import("@/pages/Roles"));
+const JiraDataTable = lazy(() => import("@/pages/JiraDataTable"));
+const Partners = lazy(() => import("@/pages/Partners"));
+const ThirdPartyIntegrations = lazy(() => import("@/pages/ThirdPartyIntegrations"));
+const UserProfile = lazy(() => import("@/pages/UserDetails"));
+const PendingAssessment = lazy(() => import("@/pages/PendingAssessment"));
+const ApplicationData = lazy(() => import("@/pages/ApplicationData"));
+const InfrastructureData = lazy(() => import("@/pages/InfrastructureData"));
+const BusinessApplications = lazy(() => import("@/pages/BusinessApplications"));
+const VulnerabilityForm = lazy(() => import("@/pages/AddVulnerabilityData"));
+const ExceptionTable = lazy(() => import("@/pages/ExceptionTable"));
+const TagsPage = lazy(() => import("@/pages/TagConfig"));
+const DemoDashboard = lazy(() => import("@/pages/demo/Dashboard"));
+const RiskOperation = lazy(() => import("@/pages/RiskQuantification"));
+const ExecutiveDashboard = lazy(() => import("@/pages/ExecutiveDashboard"));
+const InProgressAssessment = lazy(() => import("@/pages/InProgress"));
+const CompleteAssessment = lazy(() => import("@/pages/CompleteAssessment"));
+const Severity = lazy(() => import("@/pages/SLA-Configuration"));
+const ASMDashboard = lazy(() => import("@/pages/ASMDashboard"));
+const AssessmentCenter = lazy(() => import("@/pages/AssessmentCenter"));
+const PendingVulnerability = lazy(() => import("@/pages/PendingVulnerability"));
+const DownloadReports = lazy(() => import("@/pages/DownloadReport"));
+const Home = lazy(() => import("@/pages/Home"));
+const SchedulingAssessmentPage = lazy(() => import("@/pages/SchedulingAssessment"));
 
 export const PrivateRoutes = [
-  {
-    path: "/tvm-dashboard",
-    element: <Home />,
-  },
-  {
-    path: "/assesment-schedule",
-    element: <SchedulingAssessmentPage />,
-  },
-  {
-    path: "/pending-assesment",
-    element: <PendingAssessment />,
-  },
-  {
-    path: "/vulnerability-data",
-    element: <VulnerabilityData />,
-  },
-  {
-    path: "/application-data",
-    element: <ApplicationData />,
-  },
-  {
-    path: "/infrastructure-data",
-    element: <InfrastructureData />,
-  },
-  {
-    path: "/third-party-data",
-    element: <JiraDataTable />,
-  },
-  {
-    path: "/third-party-integrations",
-    element: <ThirdPartyIntegrations />,
-  },
-  {
-    path: "/all-tenant",
-    element: <AllCustomer />,
-  },
-  {
-    path: "/config-email",
-    element: <EmailConfigPanel />,
-  },
-  {
-    path: "/roles",
-    element: <Roles />,
-  },
-  {
-    path: "/partners",
-    element: <Partners />,
-  },
-  {
-    path: "/all-users",
-    element: <AllEmployee />,
-  },
-  {
-    path: "/application-dashboard",
-    element: <ApplicationVulnerability />,
-  },
-  {
-    path: "/infrastructure-dashboard",
-    element: <InfraStructureVulnerability />,
-  },
-  {
-    path: "/exceptions-dashboard",
-    element: <Exceptions />,
-  },
-  {
-    path: "/remedition",
-    element: <Remediation />,
-  },
-  {
-    path: "/reports",
-    element: <Reports />,
-  },
-  {
-    path: "/chat/:chatId",
-    element: <ChatPage />,
-  },
-  {
-    path: "/infraStructure-asset",
-    element: <AssertInventory />,
-  },
-  {
-    path: "/change-password",
-    element: <ChangePassword />,
-  },
-  {
-    path: "/user-details",
-    element: <UserProfile />,
-  },
-  {
-    path: "/book-demo",
-    element: <AdminBookDemo />,
-  },
-  {
-    path: "/application",
-    element: <ApplicationSoftwareInventory />,
-  },
-  {
-    path: "/business-applications",
-    element: <BusinessApplications />,
-  },
-  {
-    path: "/add-vulnerability-data",
-    element: <VulnerabilityForm />,
-  },
-  {
-    path: "/pending-exception",
-    element: <ExceptionTable />,
-  },
-  {
-    path: "/tags",
-    element: <TagsPage />,
-  },
-  {
-    path: "/demo",
-    element: <DemoDashboard />,
-  },
-  {
-    path: "/risk-details",
-    element: <RiskOperation />,
-  },
-  {
-    path: "/",
-    element: <ExecutiveDashboard />,
-  },
-  {
-    path: "/edit-vulnerability-data",
-    element: <VulnerabilityForm />,
-  },
-  {
-    path: "/in-progress-assessment",
-    element: <InProgressAssessment />,
-  },
-  {
-    path: "/completed-assessment",
-    element: <CompleteAssessment />,
-  },
-  {
-    path: "/sla-configuration",
-    element: <Severity />,
-  },
-  {
-    path: "/center-dashboard",
-    element: <ASMDashboard />,
-  },
-  {
-    path: "/assessment-center",
-    element: <AssessmentCenter />,
-  },
-  {
-    path: "/pending-vulnerability",
-    element: <PendingVulnerability />,
-  },
-  {
-    path: "/download-report",
-    element: <DownloadReports/>,
-  },
+  { path: "/tvm-dashboard", element: <Suspense><Home /></Suspense> },
+  { path: "/assesment-schedule", element: <Suspense><SchedulingAssessmentPage /></Suspense> },
+  { path: "/pending-assesment", element: <Suspense><PendingAssessment /></Suspense> },
+  { path: "/vulnerability-data", element: <Suspense><VulnerabilityData /></Suspense> },
+  { path: "/application-data", element: <Suspense><ApplicationData /></Suspense> },
+  { path: "/infrastructure-data", element: <Suspense><InfrastructureData /></Suspense> },
+  { path: "/third-party-data", element: <Suspense><JiraDataTable /></Suspense> },
+  { path: "/third-party-integrations", element: <Suspense><ThirdPartyIntegrations /></Suspense> },
+  { path: "/all-tenant", element: <Suspense><AllCustomer /></Suspense> },
+  { path: "/config-email", element: <Suspense><EmailConfigPanel /></Suspense> },
+  { path: "/roles", element: <Suspense><Roles /></Suspense> },
+  { path: "/partners", element: <Suspense><Partners /></Suspense> },
+  { path: "/all-users", element: <Suspense><AllEmployee /></Suspense> },
+  { path: "/application-dashboard", element: <Suspense><ApplicationVulnerability /></Suspense> },
+  { path: "/infrastructure-dashboard", element: <Suspense><InfraStructureVulnerability /></Suspense> },
+  { path: "/exceptions-dashboard", element: <Suspense><Exceptions /></Suspense> },
+  { path: "/remedition", element: <Suspense><Remediation /></Suspense> },
+  { path: "/reports", element: <Suspense><Reports /></Suspense> },
+  { path: "/chat/:chatId", element: <Suspense><ChatPage /></Suspense> },
+  { path: "/infraStructure-asset", element: <Suspense><AssertInventory /></Suspense> },
+  { path: "/change-password", element: <Suspense><ChangePassword /></Suspense> },
+  { path: "/user-details", element: <Suspense><UserProfile /></Suspense> },
+  { path: "/book-demo", element: <Suspense><AdminBookDemo /></Suspense> },
+  { path: "/application", element: <Suspense><ApplicationSoftwareInventory /></Suspense> },
+  { path: "/business-applications", element: <Suspense><BusinessApplications /></Suspense> },
+  { path: "/add-vulnerability-data", element: <Suspense><VulnerabilityForm /></Suspense> },
+  { path: "/pending-exception", element: <Suspense><ExceptionTable /></Suspense> },
+  { path: "/tags", element: <Suspense><TagsPage /></Suspense> },
+  { path: "/demo", element: <Suspense><DemoDashboard /></Suspense> },
+  { path: "/risk-details", element: <Suspense><RiskOperation /></Suspense> },
+  { path: "/", element: <Suspense><ExecutiveDashboard /></Suspense> },
+  { path: "/edit-vulnerability-data", element: <Suspense><VulnerabilityForm /></Suspense> },
+  { path: "/in-progress-assessment", element: <Suspense><InProgressAssessment /></Suspense> },
+  { path: "/completed-assessment", element: <Suspense><CompleteAssessment /></Suspense> },
+  { path: "/sla-configuration", element: <Suspense><Severity /></Suspense> },
+  { path: "/center-dashboard", element: <Suspense><ASMDashboard /></Suspense> },
+  { path: "/assessment-center", element: <Suspense><AssessmentCenter /></Suspense> },
+  { path: "/pending-vulnerability", element: <Suspense><PendingVulnerability /></Suspense> },
+  { path: "/download-report", element: <Suspense><DownloadReports /></Suspense> },
 ];

@@ -290,16 +290,16 @@ export const products = [
         icon: BiSolidDashboard,
       },
       
-      {
-        title: "Application Dashboard",
-        route: "/application-dashboard",
-        icon: MdOutlineMiscellaneousServices,
-      },
-      {
-        title: "Infrastructure Dashboard",
-        route: "/infrastructure-dashboard",
-        icon: GrVulnerability,
-      },
+      // {
+      //   title: "Application Dashboard",
+      //   route: "/application-dashboard",
+      //   icon: MdOutlineMiscellaneousServices,
+      // },
+      // {
+      //   title: "Infrastructure Dashboard",
+      //   route: "/infrastructure-dashboard",
+      //   icon: GrVulnerability,
+      // },
     ],
   },
    {
@@ -441,36 +441,36 @@ export const products = [
       },
     ],
   },
-  {
-    title: "Remediation Factory",
-    desc: "Automated remediation of vulnerabilities",
-    borderColor: "#6a11cb",
-    icon: User,
-    ShownTitle: "Remediation Factory",
-    allowedPath: [
-      {
-        title: "Remediation",
-        route: "/remedition",
-        icon: SiWikimediafoundation,
-      },
-      { title: "Vulnerability Data", route: "/vulnerability-data", icon: Bug },
-      {
-        title: "Add Vulnerability Data",
-        route: "/add-vulnerability-data",
-        icon: FaBug,
-      },
-      {
-        title: "Application Data",
-        route: "/application-data",
-        icon: MdSettingsApplications,
-      },
-      {
-        title: "Infrastructure Data",
-        route: "/infrastructure-data",
-        icon: IoIosInformationCircleOutline,
-      },
-    ],
-  },
+  // {
+  //   title: "Remediation Factory",
+  //   desc: "Automated remediation of vulnerabilities",
+  //   borderColor: "#6a11cb",
+  //   icon: User,
+  //   ShownTitle: "Remediation Factory",
+  //   allowedPath: [
+  //     {
+  //       title: "Remediation",
+  //       route: "/remedition",
+  //       icon: SiWikimediafoundation,
+  //     },
+  //     { title: "Vulnerability Data", route: "/vulnerability-data", icon: Bug },
+  //     {
+  //       title: "Add Vulnerability Data",
+  //       route: "/add-vulnerability-data",
+  //       icon: FaBug,
+  //     },
+  //     {
+  //       title: "Application Data",
+  //       route: "/application-data",
+  //       icon: MdSettingsApplications,
+  //     },
+  //     {
+  //       title: "Infrastructure Data",
+  //       route: "/infrastructure-data",
+  //       icon: IoIosInformationCircleOutline,
+  //     },
+  //   ],
+  // },
 
   {
     title: "Reports",
@@ -506,7 +506,7 @@ export const products = [
         route: "/third-party-integrations",
         icon: MdWifiTetheringErrorRounded,
       },
-      { title: "Config Email", route: "/config-email", icon: Settings },
+      // { title: "Config Email", route: "/config-email", icon: Settings },
     ],
   },
   

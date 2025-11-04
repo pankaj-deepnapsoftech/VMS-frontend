@@ -1,7 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-import SignIn from "@/pages/Auth/SignIn";
-import ForgotPassword from "@/pages/Auth/ForgotPassword";
-import MainLayout from "@/routes/layouts/MainLayout";
 import { PrivateRoutes } from "@/routes/PrivateRoutes/PrivateRoutes";
 import {
   PageNotFound,
@@ -9,9 +6,16 @@ import {
   VerifyOtp,
 } from "@/constants/Components-lazy-loading/components.Lazy";
 import { useAuthContext } from "@/context";
-import Pricing from "@/pages/Auth/Pricing";
-import Solutions from "@/pages/Auth/Solutions";
-import JiraDataTable from "@/pages/JiraDataTable";
+import { lazy, Suspense } from "react";
+
+
+const Solutions = lazy(() => import("@/pages/Auth/Solutions"));
+const Pricing = lazy(() => import("@/pages/Auth/Pricing"));
+const MainLayout = lazy(() => import("@/routes/layouts/MainLayout"));
+const ForgotPassword = lazy(() => import("@/pages/Auth/ForgotPassword"));
+const SignIn = lazy(() => import("@/pages/Auth/SignIn"));
+
+
 
 const AppRoutes = () => {
   const { authenticate, token } = useAuthContext();
@@ -42,14 +46,13 @@ const AppRoutes = () => {
       {!isAuthenticated && (
         <>
           {/* <Route path="/" element={<LandingPage />} /> */}
-          <Route path="/" element={<SignIn />} />
+          <Route path="/" element={(<Suspense><SignIn /></Suspense>)} />
           {/* <Route path="/sign-up" element={<SignUp />} /> */}
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/verify-otp" element={<VerifyOtp />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/solutions" element={<Solutions />} />
-          <Route path="/JiraDataTable" element={<JiraDataTable />} />
+          <Route path="/forgot-password" element={(<Suspense><ForgotPassword /></Suspense>)} />
+          <Route path="/reset-password" element={(<Suspense><ResetPassword /></Suspense>)} />
+          <Route path="/verify-otp" element={(<Suspense><VerifyOtp /></Suspense>)} />
+          <Route path="/pricing" element={(<Suspense><Pricing /></Suspense>)} />
+          <Route path="/solutions" element={(<Suspense><Solutions /></Suspense>)} />
         </>
       )}
 
