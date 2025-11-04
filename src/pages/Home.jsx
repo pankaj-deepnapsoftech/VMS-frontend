@@ -445,7 +445,7 @@ const DashboardCards = () => {
               <p className="text-white text-lg font-bold">
                 {thirdChartData
                   ? (thirdChartData.exploitable || 0) +
-                    (thirdChartData.not_exploitable || 0)
+                  (thirdChartData.not_exploitable || 0)
                   : 0}
               </p>
               <p className="text-gray-400 text-xs">Total</p>
@@ -492,27 +492,27 @@ const DashboardCards = () => {
               data={
                 fourthChartData
                   ? {
-                      labels: Object.keys(fourthChartData || {}),
-                      datasets: [
-                        {
-                          data: Object.values(fourthChartData || {}),
-                          backgroundColor: ["#EF4444", "#22C55E"],
-                          borderWidth: 0,
-                        },
-                      ],
-                    }
+                    labels: Object.keys(fourthChartData || {}),
+                    datasets: [
+                      {
+                        data: Object.values(fourthChartData || {}),
+                        backgroundColor: ["#EF4444", "#22C55E"],
+                        borderWidth: 0,
+                      },
+                    ],
+                  }
                   : {
-                      labels: InventoryData.map((item) => item.label),
-                      datasets: [
-                        {
-                          data: InventoryData.map((item) => item.value),
-                          backgroundColor: InventoryData.map(
-                            (item) => item.color
-                          ),
-                          borderWidth: 0,
-                        },
-                      ],
-                    }
+                    labels: InventoryData.map((item) => item.label),
+                    datasets: [
+                      {
+                        data: InventoryData.map((item) => item.value),
+                        backgroundColor: InventoryData.map(
+                          (item) => item.color
+                        ),
+                        borderWidth: 0,
+                      },
+                    ],
+                  }
               }
               options={{
                 cutout: "70%",
@@ -527,9 +527,9 @@ const DashboardCards = () => {
               <p className="text-white text-lg font-bold">
                 {fourthChartData
                   ? Object.values(fourthChartData).reduce(
-                      (sum, val) => sum + (val || 0),
-                      0
-                    )
+                    (sum, val) => sum + (val || 0),
+                    0
+                  )
                   : totall}
               </p>
               <p className="text-gray-400 text-xs">Total</p>
@@ -540,33 +540,33 @@ const DashboardCards = () => {
           <div className="flex justify-center gap-8 mt-3">
             {fourthChartData
               ? Object.entries(fourthChartData).map(([label, value], idx) => (
-                  <div key={idx} className="flex items-center gap-2 mt-0.5">
-                    <span
-                      className="w-2.5 h-2.5 rounded-full"
-                      style={{
-                        backgroundColor: idx === 0 ? "#EF4444" : "#22C55E",
-                      }}
-                    ></span>
-                    <p className="text-white text-xs">
-                      {label === "businessApplication"
-                        ? "Business Application"
-                        : "Infrastructure IP"}{" "}
-                      <span className="text-gray-400">{value}</span>
-                    </p>
-                  </div>
-                ))
+                <div key={idx} className="flex items-center gap-2 mt-0.5">
+                  <span
+                    className="w-2.5 h-2.5 rounded-full"
+                    style={{
+                      backgroundColor: idx === 0 ? "#EF4444" : "#22C55E",
+                    }}
+                  ></span>
+                  <p className="text-white text-xs">
+                    {label === "businessApplication"
+                      ? "Business Application"
+                      : "Infrastructure IP"}{" "}
+                    <span className="text-gray-400">{value}</span>
+                  </p>
+                </div>
+              ))
               : InventoryData.map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2 mt-0.5">
-                    <span
-                      className="w-2.5 h-2.5 rounded-full"
-                      style={{ backgroundColor: item.color }}
-                    ></span>
-                    <p className="text-white text-xs">
-                      {item.label}{" "}
-                      <span className="text-gray-400">{item.value}</span>
-                    </p>
-                  </div>
-                ))}
+                <div key={idx} className="flex items-center gap-2 mt-0.5">
+                  <span
+                    className="w-2.5 h-2.5 rounded-full"
+                    style={{ backgroundColor: item.color }}
+                  ></span>
+                  <p className="text-white text-xs">
+                    {item.label}{" "}
+                    <span className="text-gray-400">{item.value}</span>
+                  </p>
+                </div>
+              ))}
           </div>
         </div>
 
@@ -667,76 +667,103 @@ const DashboardCards = () => {
 
           {/* Chart Container */}
           <div className="flex mt-2 h-[180px] sm:h-[200px] relative">
-            {/* Y Axis Labels */}
-            <div className="flex flex-col justify-between mr-2 text-[9px] sm:text-[10px] text-gray-500">
-              {[32, 24, 16, 8, 0].map((v, i) => (
-                <div key={i} className="h-[36px] sm:h-[40px] flex items-center">
-                  {v}
-                </div>
-              ))}
-            </div>
+            {(() => {
+              // Flatten all values from the dataset
+              const allValues = [
+                ...(ninthChartData?.Open || []),
+                ...(ninthChartData?.Closed || []),
+                ...(ninthChartData?.Exception || []),
+              ];
 
-            {/* Scrollable Chart Wrapper */}
-            <div className="relative flex-1 overflow-hidden">
-              <div
-                className="relative flex justify-between items-end h-full z-10 px-2"
-                style={{
-                  width: "100%", // full width of parent, no scroll
-                }}
-              >
-                {/* Dotted Grid Lines */}
-                {[...Array(5)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="absolute w-full border-t border-dotted border-gray-600"
-                    style={{ top: `${i * 36}px` }}
-                  />
-                ))}
+              // Handle empty data
+              if (!allValues.length) return <div>No data</div>;
 
-                {/* Bars */}
-                <div
-                  className="flex justify-between items-end w-full"
-                  style={{
-                    gap: `${Math.max(
-                      2,
-                      8 - (ninthChartData?.label?.length || 12) / 2
-                    )}px`, // auto adjust gap based on count
-                  }}
-                >
-                  {ninthChartData?.label?.map((month, i) => {
-                    const openVal = (ninthChartData?.Open || [])[i];
-                    const closedVal = (ninthChartData?.Closed || [])[i];
-                    const exceptionVal = (ninthChartData?.Exception || [])[i];
+              const maxVal = Math.max(...allValues, 0);
+              const steps = 4; // Number of Y grid sections
+              const niceMax =
+                Math.ceil(maxVal / 8) * 8 || 8; // round up to nearest multiple of 8 for clean numbers
+              const stepValue = niceMax / steps;
 
-                    return (
-                      <div
-                        key={month}
-                        className="flex flex-col items-center flex-1"
-                      >
-                        <div className="flex items-end space-x-[2px] sm:space-x-[3px]">
-                          <div
-                            className="w-2 sm:w-2.5 rounded-sm bg-red-500"
-                            style={{ height: `${(openVal / 32) * 180}px` }}
-                          />
-                          <div
-                            className="w-2 sm:w-2.5 rounded-sm bg-blue-500"
-                            style={{ height: `${(closedVal / 32) * 180}px` }}
-                          />
-                          <div
-                            className="w-2 sm:w-2.5 rounded-sm bg-green-400"
-                            style={{ height: `${(exceptionVal / 32) * 180}px` }}
-                          />
-                        </div>
-                        <div className="text-[8px] sm:text-[9px] text-gray-300 mt-1 rotate-[-35deg] origin-top whitespace-nowrap">
-                          {month}
-                        </div>
+              // Generate Y-axis labels (top to bottom)
+              const yLabels = Array.from({ length: steps + 1 }, (_, i) =>
+                Math.round(niceMax - i * stepValue)
+              );
+
+              // Scale bars so max value fits chart height (≈ 180px)
+              const chartHeight = 180;
+              const scale = chartHeight / niceMax;
+
+              return (
+                <>
+                  {/* Y Axis Labels */}
+                  <div className="flex flex-col justify-between mr-2 text-[9px] sm:text-[10px] text-gray-500">
+                    {yLabels.map((v, i) => (
+                      <div key={i} className="flex items-center">
+                        {v}
                       </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
+                    ))}
+                  </div>
+
+                  {/* Chart */}
+                  <div className="relative flex-1 overflow-hidden">
+                    <div className="relative flex justify-between items-end h-full z-10 px-2">
+                      {/* Dotted Grid Lines */}
+                      {yLabels.map((_, i) => (
+                        <div
+                          key={i}
+                          className="absolute w-full border-t border-dotted border-gray-600"
+                          style={{
+                            top: `${(i / steps) * chartHeight}px`,
+                          }}
+                        />
+                      ))}
+
+                      {/* Bars */}
+                      <div
+                        className="flex justify-between items-end w-full"
+                        style={{
+                          gap: `${Math.max(
+                            2,
+                            8 - (ninthChartData?.label?.length || 12) / 2
+                          )}px`,
+                        }}
+                      >
+                        {ninthChartData?.label?.map((month, i) => {
+                          const openVal = (ninthChartData?.Open || [])[i] || 0;
+                          const closedVal = (ninthChartData?.Closed || [])[i] || 0;
+                          const exceptionVal = (ninthChartData?.Exception || [])[i] || 0;
+
+                          return (
+                            <div key={month} className="flex flex-col items-center flex-1">
+                              <div className="flex items-end space-x-[2px] sm:space-x-[3px]">
+                                <div
+                                  className="w-2 sm:w-2.5 rounded-sm bg-red-500"
+                                  style={{ height: `${openVal * scale}px` }}
+                                />
+                                <div
+                                  className="w-2 sm:w-2.5 rounded-sm bg-blue-500"
+                                  style={{ height: `${closedVal * scale}px` }}
+                                />
+                                <div
+                                  className="w-2 sm:w-2.5 rounded-sm bg-green-400"
+                                  style={{ height: `${exceptionVal * scale}px` }}
+                                />
+                              </div>
+                              <div className="text-[8px] sm:text-[9px] text-gray-300 mt-1 rotate-[-35deg] origin-top whitespace-nowrap">
+                                {month}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                </>
+              );
+            })()}
           </div>
+
+
 
           {/* Legend */}
           <div className="flex flex-wrap justify-center text-[10px] sm:text-xs text-gray-400 gap-3 sm:space-x-4 mt-4">
