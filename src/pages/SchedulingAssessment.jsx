@@ -80,9 +80,7 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
       resetForm();
     },
   });
-
-  console.log("error formik", errors);
-
+  
   useEffect(() => {
     if (token) {
       TesterForAssessment();
@@ -100,7 +98,7 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
       {editable && (
         <div className="flex items-center justify-end w-full py-3 ">
           <IoClose
-            onClick={() => setEditable(null)}
+            onClick={() => setEditable(null)} 
             className="h-10 w-10 hover:bg-gray-900 cursor-pointer rounded-md px-2 py-1 "
           />
         </div>
