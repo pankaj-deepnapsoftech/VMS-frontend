@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ExternalLink, Trash2, Edit, X, Boxes } from "lucide-react";
+import {  Trash2, Edit, X, Boxes } from "lucide-react";
 import { BiPlus } from "react-icons/bi";
 import { useFormik } from "formik";
 import { useAuthContext, useInfraAssetContext } from "@/context";

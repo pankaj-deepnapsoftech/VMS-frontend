@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import  { useEffect, useState, useRef } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { useLocation, useParams } from "react-router-dom";
 import { useVulnerabililtyDataContext } from "@/context";

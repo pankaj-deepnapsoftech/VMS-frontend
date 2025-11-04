@@ -1,7 +1,7 @@
-import React from "react";
 import { IoIosClose } from "react-icons/io";
 import { useAuthContext } from "@/context";
 
+// eslint-disable-next-line react/prop-types
 const UserProfile = ({ showUserMenu, setShowMenu }) => {
   const { authenticate } = useAuthContext();
 

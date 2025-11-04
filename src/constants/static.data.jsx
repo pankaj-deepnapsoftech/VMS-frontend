@@ -4,6 +4,8 @@ import {
   CalendarClock,
   FileUp,
   LucideShield,
+  Settings,
+  User,
   UserCircle,
   Users,
 } from "lucide-react";
@@ -23,6 +25,8 @@ import { TbReport } from "react-icons/tb";
 import { GiCyberEye, GiProgression, GiTwirlCenter } from "react-icons/gi";
 import { PiHardHatFill } from "react-icons/pi";
 import { RiHome3Fill } from "react-icons/ri";
+import { SiWikimediafoundation } from "react-icons/si";
+import { GrVulnerability } from "react-icons/gr";
 
 export const AllowedPaths = [
   // --------------------Roc Pages-----------------------
@@ -286,16 +290,16 @@ export const products = [
         icon: BiSolidDashboard,
       },
       
-      // {
-      //   title: "Application Dashboard",
-      //   route: "/application-dashboard",
-      //   icon: MdOutlineMiscellaneousServices,
-      // },
-      // {
-      //   title: "Infrastructure Dashboard",
-      //   route: "/infrastructure-dashboard",
-      //   icon: GrVulnerability,
-      // },
+      {
+        title: "Application Dashboard",
+        route: "/application-dashboard",
+        icon: MdOutlineMiscellaneousServices,
+      },
+      {
+        title: "Infrastructure Dashboard",
+        route: "/infrastructure-dashboard",
+        icon: GrVulnerability,
+      },
     ],
   },
    {
@@ -340,7 +344,6 @@ export const products = [
     allowedPath: [
       {
         title: "Manage Assessments",
-        // route: "/assesment-schedule",
         icon: CalendarClock,
         childRoutes: [
           {
@@ -365,11 +368,11 @@ export const products = [
           },
         ],
       },
-      // {
-      //   title: "Exceptions Dashboard",
-      //   route: "/exceptions-dashboard",
-      //   icon: AiOutlineException,
-      // },
+      {
+        title: "Exceptions Dashboard",
+        route: "/exceptions-dashboard",
+        icon: AiOutlineException,
+      },
       {
         title: "Pending Exceptions",
         route: "/pending-exception",
@@ -438,36 +441,36 @@ export const products = [
       },
     ],
   },
-  // {
-  //   title: "Remediation Factory",
-  //   desc: "Automated remediation of vulnerabilities",
-  //   borderColor: "#6a11cb",
-  //   icon: "/Icons/Component 4.png",
-  //   ShownTitle: "Remediation Factory",
-  //   allowedPath: [
-  //     {
-  //       title: "Remediation",
-  //       route: "/remedition",
-  //       icon: SiWikimediafoundation,
-  //     },
-  //     { title: "Vulnerability Data", route: "/vulnerability-data", icon: Bug },
-  //     {
-  //       title: "Add Vulnerability Data",
-  //       route: "/add-vulnerability-data",
-  //       icon: FaBug,
-  //     },
-  //     {
-  //       title: "Application Data",
-  //       route: "/application-data",
-  //       icon: MdSettingsApplications,
-  //     },
-  //     {
-  //       title: "Infrastructure Data",
-  //       route: "/infrastructure-data",
-  //       icon: IoIosInformationCircleOutline,
-  //     },
-  //   ],
-  // },
+  {
+    title: "Remediation Factory",
+    desc: "Automated remediation of vulnerabilities",
+    borderColor: "#6a11cb",
+    icon: User,
+    ShownTitle: "Remediation Factory",
+    allowedPath: [
+      {
+        title: "Remediation",
+        route: "/remedition",
+        icon: SiWikimediafoundation,
+      },
+      { title: "Vulnerability Data", route: "/vulnerability-data", icon: Bug },
+      {
+        title: "Add Vulnerability Data",
+        route: "/add-vulnerability-data",
+        icon: FaBug,
+      },
+      {
+        title: "Application Data",
+        route: "/application-data",
+        icon: MdSettingsApplications,
+      },
+      {
+        title: "Infrastructure Data",
+        route: "/infrastructure-data",
+        icon: IoIosInformationCircleOutline,
+      },
+    ],
+  },
 
   {
     title: "Reports",
@@ -503,7 +506,7 @@ export const products = [
         route: "/third-party-integrations",
         icon: MdWifiTetheringErrorRounded,
       },
-      // { title: "Config Email", route: "/config-email", icon: Settings },
+      { title: "Config Email", route: "/config-email", icon: Settings },
     ],
   },
   

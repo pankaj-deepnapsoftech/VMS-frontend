@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import { AiOutlineMenu, AiOutlinePlus, AiOutlineShareAlt } from 'react-icons/ai';
-import { FaDatabase, FaHdd, FaNetworkWired, FaCog, FaStar } from 'react-icons/fa';
+import  { useEffect } from 'react';
+import { BarChart, Bar, XAxis, YAxis,  Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { useAuthContext, useRemeditionContext } from '@/context';
 
 

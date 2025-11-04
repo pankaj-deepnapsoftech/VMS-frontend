@@ -6,18 +6,12 @@ import {
   useCallback,
   useRef,
 } from "react";
-import { BiSearch, BiEditAlt, BiSave, BiUpload, BiTrash } from "react-icons/bi";
-import { RiDeleteBinFill } from "react-icons/ri";
-import { MdClose } from "react-icons/md";
-import { FaEnvelope } from "react-icons/fa";
-import { useFormik } from "formik";
+import {  BiEditAlt,  } from "react-icons/bi";
+import { RiDeleteBinFill } from "react-icons/ri"
 import * as XLSX from "xlsx";
 import toast from "react-hot-toast";
 import { useAuthContext, useJiraContext } from "@/context";
 import Loader from "@/components/Loader/Loader";
-import NoDataFound from "@/components/NoDataFound";
-import InputField from "@/components/InputField";
-import { Modal } from "@/components/modal/FileUploadModal";
 
 export const JiraDataTable = () => {
   const {

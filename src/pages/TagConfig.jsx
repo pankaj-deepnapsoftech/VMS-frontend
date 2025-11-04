@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { BiPlus } from "react-icons/bi";
 import { FaRegTrashAlt } from "react-icons/fa";
-import Loader from "@/components/Loader/Loader";
 import { useAuthContext, useTagsContext } from "@/context";
 import { useFormik } from "formik";
 import { tagValidation } from "@/Validation/TagValidation";
@@ -26,7 +25,6 @@ export default function TagsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editTag, setEditTag] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [isLoading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
 
   const {
@@ -79,9 +77,7 @@ export default function TagsPage() {
 
   return (
     <>
-      {isLoading ? (
-        <Loader />
-      ) : (
+      { (
         <div className="min-h-screen py-6 px-3 md:px-6">
           {/* Top Bar */}
           <div className="w-full border-[#6B728033] flex flex-col md:flex-row md:items-center md:justify-between gap-4 backdrop-blur-md rounded-lg bg-[#1a1f2e]/40 p-4">

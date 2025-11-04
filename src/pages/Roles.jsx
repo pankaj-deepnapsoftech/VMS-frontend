@@ -5,7 +5,7 @@ import { useAuthContext } from "@/context";
 import RoleModel from "@/modals/RoleModel";
 import { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
-import { FiEdit2, FiMoreVertical, FiTrash2 } from "react-icons/fi";
+import { FiEdit2,  FiTrash2 } from "react-icons/fi";
 import Pagination from "./Pagination";
 import toast from "react-hot-toast";
 import { useLocation } from "react-router-dom";

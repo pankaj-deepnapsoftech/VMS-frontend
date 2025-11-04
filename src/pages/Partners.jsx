@@ -3,7 +3,6 @@ import { AxiosHandler } from "@/config/AxiosConfig";
 import { useAuthContext } from "@/context";
 import { PartnersSchema } from "@/Validation/PartnerrValidations";
 import { useFormik } from "formik";
-import { Loader } from "lucide-react";
 import { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import {
