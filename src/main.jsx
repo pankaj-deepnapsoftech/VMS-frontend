@@ -15,11 +15,9 @@ import {
   MainReportContextProvider,
   NessusContextProvider,
   RemeditionContextProvider,
-  ReportContextProvider,
   SchedulingAssesmentContextProvider,
   SeverityContextProvider,
   TagsContextProvider,
-  TVMCardsContextProvider,
   VulnerabililtyDataContextProvider,
 } from "./context";
 import AppSoftContextProvider from "./context/ApplicationSoftwareInventoryContext/ApplicationSoftwareInventoryContext";
@@ -41,7 +39,6 @@ createRoot(document.getElementById("root")).render(
                           <AppSoftContextProvider>
                             <InfraAssetContextProvider>
                               <TagsContextProvider>
-                                <TVMCardsContextProvider>
                                  
                                     <SeverityContextProvider>
                                       <NessusContextProvider>
@@ -54,7 +51,6 @@ createRoot(document.getElementById("root")).render(
                                         </MainReportContextProvider>
                                       </NessusContextProvider>
                                     </SeverityContextProvider>
-                                </TVMCardsContextProvider>
                               </TagsContextProvider>
                             </InfraAssetContextProvider>
                           </AppSoftContextProvider>

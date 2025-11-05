@@ -1,4 +1,4 @@
-import { ReportContextProvider } from "@/context";
+import { ExecutiveDashboardContextProvider, TVMCardsContextProvider } from "@/context";
 import { lazy, Suspense } from "react";
 
 // Lazy imports
@@ -43,7 +43,13 @@ const Home = lazy(() => import("@/pages/Home"));
 const SchedulingAssessmentPage = lazy(() => import("@/pages/SchedulingAssessment"));
 
 export const PrivateRoutes = [
-  { path: "/tvm-dashboard", element: <Suspense><Home /></Suspense> },
+  {
+    path: "/tvm-dashboard", element: (<TVMCardsContextProvider>
+      <Suspense>
+        <Home />
+      </Suspense>
+    </TVMCardsContextProvider>)
+  },
   { path: "/assesment-schedule", element: <Suspense><SchedulingAssessmentPage /></Suspense> },
   { path: "/pending-assesment", element: <Suspense><PendingAssessment /></Suspense> },
   { path: "/vulnerability-data", element: <Suspense fallback={<Loader />} ><VulnerabilityData /></Suspense> },
@@ -73,7 +79,7 @@ export const PrivateRoutes = [
   { path: "/tags", element: <Suspense><TagsPage /></Suspense> },
   { path: "/demo", element: <Suspense><DemoDashboard /></Suspense> },
   { path: "/risk-details", element: <Suspense><RiskOperation /></Suspense> },
-  { path: "/", element:  <ReportContextProvider><Suspense fallback={<Loader />}><ExecutiveDashboard /></Suspense> </ReportContextProvider>},
+  { path: "/", element: <ExecutiveDashboardContextProvider><Suspense fallback={<Loader />}><ExecutiveDashboard /></Suspense> </ExecutiveDashboardContextProvider> },
   { path: "/edit-vulnerability-data", element: <Suspense><VulnerabilityForm /></Suspense> },
   { path: "/in-progress-assessment", element: <Suspense><InProgressAssessment /></Suspense> },
   { path: "/completed-assessment", element: <Suspense><CompleteAssessment /></Suspense> },

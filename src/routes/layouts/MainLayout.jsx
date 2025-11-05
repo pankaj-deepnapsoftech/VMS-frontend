@@ -14,11 +14,9 @@ import {
   useAuthContext,
   useDataContext,
   useVulnerabililtyDataContext,
-  useTVMCardsContext,
   useExceptionContext,
 } from "@/context";
 import UserProfile from "@/pages/UserProfile";
-// import ChangePasswordModal from "@/modals/ChangePasswordModal";
 import useChangePassword from "@/hooks/changePassword";
 import Loader from "@/components/Loader/Loader";
 import Sidebar from "@/components/sidebar/Sidebar";
@@ -49,7 +47,7 @@ const MainLayout = () => {
   } = useAuthContext();
   const { TenantAllData } = useDataContext();
 
-  const { refreshTVMCardsData } = useTVMCardsContext();
+ 
 
   const { openModal, isOpen, closeModal } = useChangePassword();
   const { UpdateExpectionData } = useExceptionContext();
@@ -94,7 +92,6 @@ const MainLayout = () => {
   const handleSelect = ({ value, label }) => {
     setTenantId(value);
     setTenant({ label, value });
-    refreshTVMCardsData(value);
   };
 
   useEffect(() => {

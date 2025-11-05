@@ -1,26 +1,26 @@
 import { createContext, useState, useEffect } from "react";
 import { AxiosHandler } from "@/config/AxiosConfig";
 import { useAuthContext } from "..";
-import toast from "react-hot-toast";
 
 export const TVMCardsContext = createContext();
 
 // eslint-disable-next-line react/prop-types
 const TVMCardsContextProvider = ({ children }) => {
 
+  //  exploitableVulnerabilities,twntythChart
+
   const { selectedYear } = useAuthContext();
   const [loading, setLoading] = useState(false);
-  const [topFiveRisk, setTopFiveRisk] = useState([])
+
   const [topFiveinfraAssetCount, setTopFiveInfraAssertCount] = useState([]);
   const [topOpenVulnerabilities, setTopOpenVulnerabilities] = useState([]);
   const [topClosedVulnerabilities, setTopClosedVulnerabilities] = useState([]);
   const [topUniqueVulnerabilities, setTopUniqueVulnerabilities] = useState([]);
   const [exceptionVulnerabilities, setExceptionVulnerabilities] = useState([]);
-  const [exploitableVulnerabilities, setExploitableVulnerabilities] = useState([]);
   const [creticalHighVulnrable, setCreticalHighVulnrable] = useState([]);
   const [slaBreached, setSlaBreached] = useState([]);
   const [breachVulnerableList, setBreachVulnerableList] = useState([]);
-  const [topHighValue, setTopHighValue] = useState([]);
+
   const [tvmCardsData, setTvmCardsData] = useState({
     applications: 0,
     infrastructureIPs: 0,
@@ -54,15 +54,6 @@ const TVMCardsContextProvider = ({ children }) => {
     }
   };
 
-  const tenthChart = async (tenant, year) => {
-
-    try {
-      const res = await AxiosHandler.get(`/data/tvm-thenth-data?tenant=${tenant ? tenant : ""}&year=${year}`);
-      setTopFiveRisk(res?.data?.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const elaventhChart = async (tenant, year) => {
 
@@ -75,14 +66,7 @@ const TVMCardsContextProvider = ({ children }) => {
   };
 
 
-  const twelfthChart = async (tenant, year) => {
-    try {
-      const res = await AxiosHandler.get(`/data/tvm-twelfth-data?tenant=${tenant ? tenant : ""}&year=${year}`);
-      setTopHighValue(res?.data?.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+
 
   const TharteenthChart = async (tenant, year) => {
     try {
@@ -140,7 +124,7 @@ const TVMCardsContextProvider = ({ children }) => {
     }
   };
 
-   const eightteenthChart = async (tenant, year) => {
+  const eightteenthChart = async (tenant, year) => {
     try {
       const res = await AxiosHandler.get(`/data/tvm-eighteen-data?tenant=${tenant ? tenant : ""}&year=${year}`);
       setBreachVulnerableList(res?.data?.data);
@@ -149,14 +133,7 @@ const TVMCardsContextProvider = ({ children }) => {
     }
   };
 
-   const twntythChart = async (tenant, year) => {
-    try {
-      const res = await AxiosHandler.get(`/data/tvm-twntyth-data?tenant=${tenant ? tenant : ""}&year=${year}`);
-      setExploitableVulnerabilities(res?.data?.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+
 
   useEffect(() => {
     if (token) {
@@ -175,12 +152,8 @@ const TVMCardsContextProvider = ({ children }) => {
         loading,
         refreshTVMCardsData,
         currentTenantId,
-        tenthChart,
-        topFiveRisk,
         elaventhChart,
         topFiveinfraAssetCount,
-        topHighValue,
-        twelfthChart,
         TharteenthChart,
         topOpenVulnerabilities,
         fourteenthChart,
@@ -195,8 +168,6 @@ const TVMCardsContextProvider = ({ children }) => {
         eightteenthChart,
         breachVulnerableList,
         slaBreached,
-        twntythChart,
-        exploitableVulnerabilities
       }}
     >
       {children}

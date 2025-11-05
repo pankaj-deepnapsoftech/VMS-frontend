@@ -2,7 +2,7 @@ import { createContext, useState } from "react";
 import { AxiosHandler } from "@/config/AxiosConfig";
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const ReportContext = createContext({
+export const ExecutiveDashboardContext = createContext({
   riskQuantification: () => { },
   GetRiskData: () => { },
   riskQuantificationData: [],
@@ -23,7 +23,7 @@ export const ReportContext = createContext({
 });
 
 // eslint-disable-next-line react/prop-types
-const ReportContextProvider = ({ children }) => {
+const ExecutiveDashboardContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [riskQuantificationData, setRiskQuantificationData] = useState([]);
   const [dasboardData, setDashboardData] = useState(null);
@@ -34,6 +34,9 @@ const ReportContextProvider = ({ children }) => {
   const [financeTrendChart, setFinanceTrendChart] = useState(null);
   const [remidationWorkflow, setRemidationWorkflow] = useState(null);
   const [attackExposureData, setAttackExposureData] = useState(null);
+  const [topFiveRisk, setTopFiveRisk] = useState([]);
+  const [topHighValue, setTopHighValue] = useState([]);
+  const [exploitableVulnerabilities, setExploitableVulnerabilities] = useState([]);
 
   const [page, setPage] = useState(1);
 
@@ -141,7 +144,6 @@ const ReportContextProvider = ({ children }) => {
     }
   };
 
-
   const GetAttackExposure = async (tenant, selectedYear) => {
     setLoading(true);
     try {
@@ -154,8 +156,36 @@ const ReportContextProvider = ({ children }) => {
     }
   };
 
+  const tenthChart = async (tenant, year) => {
+
+    try {
+      const res = await AxiosHandler.get(`/data/tvm-thenth-data?tenant=${tenant ? tenant : ""}&year=${year}`);
+      setTopFiveRisk(res?.data?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const twelfthChart = async (tenant, year) => {
+    try {
+      const res = await AxiosHandler.get(`/data/tvm-twelfth-data?tenant=${tenant ? tenant : ""}&year=${year}`);
+      setTopHighValue(res?.data?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const twntythChart = async (tenant, year) => {
+      try {
+        const res = await AxiosHandler.get(`/data/tvm-twntyth-data?tenant=${tenant ? tenant : ""}&year=${year}`);
+        setExploitableVulnerabilities(res?.data?.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
   return (
-    <ReportContext.Provider
+    <ExecutiveDashboardContext.Provider
       value={{
         loading,
         page,
@@ -177,12 +207,17 @@ const ReportContextProvider = ({ children }) => {
         GetRemediationWorkflow,
         remidationWorkflow,
         GetAttackExposure,
-        attackExposureData
+        attackExposureData,
+        topFiveRisk, tenthChart,
+        topHighValue,
+        twelfthChart,
+        exploitableVulnerabilities,
+        twntythChart
       }}
     >
       {children}
-    </ReportContext.Provider>
+    </ExecutiveDashboardContext.Provider>
   );
 };
 
-export default ReportContextProvider;
+export default ExecutiveDashboardContextProvider;

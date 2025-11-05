@@ -24,10 +24,8 @@ ChartJS.register(
 const Dashboard = () => {
   const { token, tenant, selectedYear } = useAuthContext();
   const {
-    tenthChart,
     elaventhChart,
     topFiveinfraAssetCount,
-    twelfthChart,
     TharteenthChart,
     topOpenVulnerabilities,
     fourteenthChart,
@@ -40,14 +38,11 @@ const Dashboard = () => {
     seventeenthChart,
     eightteenthChart,
     breachVulnerableList,
-    twntythChart,
   } = useTVMCardsContext();
 
   useEffect(() => {
     if (token) {
-      tenthChart(tenant, selectedYear);
       elaventhChart(tenant, selectedYear);
-      twelfthChart(tenant, selectedYear);
       TharteenthChart(tenant, selectedYear);
       fourteenthChart(tenant, selectedYear);
       fifthteenthChart(tenant, selectedYear);
@@ -55,7 +50,6 @@ const Dashboard = () => {
       ninteenthChart(tenant, selectedYear);
       seventeenthChart(tenant, selectedYear);
       eightteenthChart(tenant, selectedYear);
-      twntythChart(tenant, selectedYear);
     }
   }, [token, tenant, selectedYear]);
 
