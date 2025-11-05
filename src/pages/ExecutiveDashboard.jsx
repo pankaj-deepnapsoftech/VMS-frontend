@@ -61,14 +61,14 @@ export default function ExecutiveSummaryPage() {
 });
 
  const { data: financeTrendChart,isLoading:isFinanceTrendLoading } = useQuery({
-  queryKey:["ExecutiveDashboard-risk",[selectedYear,tenant]],
+  queryKey:["ExecutiveDashboard-finance-trend",[selectedYear,tenant]],
   queryFn:()=>getfinanceTrendChartData({tenant,selectedYear}),
   enabled: !!tenant && !!token,
   placeholderData: keepPreviousData,
 });
 
  const { data: assetInventory,isLoading:isAssetInventoryLoading } = useQuery({
-  queryKey:["ExecutiveDashboard-risk",[selectedYear]],
+  queryKey:["ExecutiveDashboard-asset-inventory",[selectedYear]],
   queryFn:()=>getAssetInventoryData({selectedYear}),
   enabled: !!token,
   placeholderData: keepPreviousData,
