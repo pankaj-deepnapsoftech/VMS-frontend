@@ -23,6 +23,19 @@ export const getAssetInventoryData = async ({selectedYear}) => {
 };
 
 
+export const getFinancialExposureData = async ({tenant,selectedYear}) => {
+    const res = await AxiosHandler.get(`/vroc/financial-exposure?year=${selectedYear ? selectedYear : ""}&tenant=${tenant ? tenant : ""}`);
+    return res.data?.data || [];
+};
+
+
+export const getRemidationWorkflowData = async ({tenant,selectedYear}) => {
+    const res = await AxiosHandler.get(`/vroc/remediation-workflow?year=${selectedYear ? selectedYear : ""}&tenant=${tenant ? tenant : ""}`);
+    return res.data || [];
+};
+
+
+
 
 
 

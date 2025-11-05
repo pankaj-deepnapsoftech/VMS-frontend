@@ -25,10 +25,10 @@ import {
   TopFiveRiskIndicator,
 } from "@/constants/dynomic.data";
 import { keepPreviousData, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getAssetInventoryData, getCardsData, getfinanceTrendChartData, getRiskTrendChartData } from "@/services/ExecutiveDashboard.service";
+import { getAssetInventoryData, getCardsData, getfinanceTrendChartData, getFinancialExposureData, getRemidationWorkflowData, getRiskTrendChartData } from "@/services/ExecutiveDashboard.service";
 import CardsSkeletonLoading from "@/Skeletons/ExecutiveDashbord/Cards";
 import LineChartSkeletonLoading from "@/Skeletons/ExecutiveDashbord/trendsChart";
-import { AssertInvertorySkeletonLoading } from "@/Skeletons/ExecutiveDashbord/thirdSection";
+import { AssertInvertorySkeletonLoading, FinancialExposureSkeletonLoading, RemediationWorkflowSkeletonLoading } from "@/Skeletons/ExecutiveDashbord/thirdSection";
 
 
 ChartJS.register(
@@ -74,13 +74,23 @@ export default function ExecutiveSummaryPage() {
   placeholderData: keepPreviousData,
 });
 
+ const { data: financialExposure,isLoading:isFinancialExposureLoading } = useQuery({
+  queryKey:["ExecutiveDashboard-financial-Exposure",[selectedYear,tenant]],
+  queryFn:()=>getFinancialExposureData({tenant,selectedYear}),
+  enabled: !!tenant && !!token,
+  placeholderData: keepPreviousData,
+});
+
+ const { data: remidationWorkflow,isLoading:isRemidationWorkflowLoading } = useQuery({
+  queryKey:["ExecutiveDashboard-remidation-workflow",[selectedYear,tenant]],
+  queryFn:()=>getRemidationWorkflowData({tenant,selectedYear}),
+  enabled: !!tenant && !!token,
+  placeholderData: keepPreviousData,
+});
+
   const {
-    GetFinancialExposure,
-    financialExposure,
     GetTopRiskIndicator,
     topFiveRiskIndicatorData,
-    GetRemediationWorkflow,
-    remidationWorkflow,
     GetAttackExposure,
     attackExposureData,
     topFiveRisk,
@@ -95,8 +105,6 @@ export default function ExecutiveSummaryPage() {
   useEffect(() => {
     if (token && tenant) {
       Promise.all([
-      GetFinancialExposure(tenant, selectedYear),
-      GetRemediationWorkflow(tenant, selectedYear),
       tenthChart(tenant, selectedYear),
       twelfthChart(tenant, selectedYear),
       twntythChart(tenant, selectedYear),
@@ -368,7 +376,7 @@ return (
         </div>}
 
         {/* Financial Exposure */}
-        <div className="bg-[#161d3d] hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out p-5 rounded-2xl text-white border border-gray-800 flex flex-col justify-between">
+        {isFinancialExposureLoading ? <FinancialExposureSkeletonLoading/> : <div className="bg-[#161d3d] hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out p-5 rounded-2xl text-white border border-gray-800 flex flex-col justify-between">
           <div className="flex justify-between items-start mb-3">
             <h2 className="text-lg font-semibold">Financial Exposure</h2>
             <button className="text-white/50 hover:text-white text-lg leading-none">
@@ -407,10 +415,10 @@ return (
               </div>
             ))}
           </div>
-        </div>
+        </div>}
 
         {/* Remediation Workflow */}
-        <div className="bg-[#161d3d] p-5 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-2xl text-white border border-gray-800 flex flex-col justify-between">
+        {isRemidationWorkflowLoading ? <RemediationWorkflowSkeletonLoading/>: <div className="bg-[#161d3d] p-5 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-2xl text-white border border-gray-800 flex flex-col justify-between">
           <div className="flex justify-between items-start mb-3">
             <h2 className="text-lg font-semibold">Remediation Workflow</h2>
             <button className="text-white/50 hover:text-white text-lg leading-none">
@@ -449,7 +457,7 @@ return (
               </div>
             ))}
           </div>
-        </div>
+        </div>}
 
         {/* Attack Exposure */}
         <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-5 rounded-xl flex flex-col">

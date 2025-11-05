@@ -22,8 +22,6 @@ export const ExecutiveDashboardContext = createContext({
 const ExecutiveDashboardContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [riskQuantificationData, setRiskQuantificationData] = useState([]);
-  const [assetInventory, setAssetInventory] = useState(null);
-  const [financialExposure, setFinancialExposure] = useState(null);
   const [topFiveRiskIndicatorData, setTopFiveRiskIndicator] = useState([]);
   const [remidationWorkflow, setRemidationWorkflow] = useState(null);
   const [attackExposureData, setAttackExposureData] = useState(null);
@@ -49,32 +47,8 @@ const ExecutiveDashboardContextProvider = ({ children }) => {
 
 
 
-  const GetAssetInventory = async (selectedYear) => {
-    setLoading(true);
-    try {
-      const res = await AxiosHandler.get(
-        `/vroc/assert-inventory?year=${selectedYear ? selectedYear : ""
-        }`
-      );
-      setAssetInventory(res.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  const GetFinancialExposure = async (tenant, selectedYear) => {
-    setLoading(true);
-    try {
-      const res = await AxiosHandler.get(`/vroc/financial-exposure?year=${selectedYear ? selectedYear : ""}&tenant=${tenant ? tenant : ""}`);
-      setFinancialExposure(res.data?.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+
 
   const GetTopRiskIndicator = async (tenant, selectedYear) => {
     setLoading(true);
@@ -149,10 +123,6 @@ const ExecutiveDashboardContextProvider = ({ children }) => {
         setPage,
         riskQuantification,
         riskQuantificationData,
-        GetAssetInventory,
-        assetInventory,
-        GetFinancialExposure,
-        financialExposure,
         GetTopRiskIndicator,
         topFiveRiskIndicatorData,
         GetRemediationWorkflow,
