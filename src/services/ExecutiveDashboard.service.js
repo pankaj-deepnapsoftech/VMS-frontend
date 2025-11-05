@@ -35,7 +35,10 @@ export const getRemidationWorkflowData = async ({tenant,selectedYear}) => {
 };
 
 
-
+export const getAttackExposureDataData = async ({tenant,selectedYear}) => {
+    const res = await AxiosHandler.get(`/vroc/attack-exposure?year=${selectedYear ? selectedYear : ""}&tenant=${tenant ? tenant : ""}`);
+    return res.data?.data || [];
+};
 
 
 

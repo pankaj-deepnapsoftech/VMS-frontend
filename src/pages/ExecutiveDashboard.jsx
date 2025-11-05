@@ -25,10 +25,10 @@ import {
   TopFiveRiskIndicator,
 } from "@/constants/dynomic.data";
 import { keepPreviousData, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getAssetInventoryData, getCardsData, getfinanceTrendChartData, getFinancialExposureData, getRemidationWorkflowData, getRiskTrendChartData } from "@/services/ExecutiveDashboard.service";
+import { getAssetInventoryData, getAttackExposureDataData, getCardsData, getfinanceTrendChartData, getFinancialExposureData, getRemidationWorkflowData, getRiskTrendChartData } from "@/services/ExecutiveDashboard.service";
 import CardsSkeletonLoading from "@/Skeletons/ExecutiveDashbord/Cards";
 import LineChartSkeletonLoading from "@/Skeletons/ExecutiveDashbord/trendsChart";
-import { AssertInvertorySkeletonLoading, FinancialExposureSkeletonLoading, RemediationWorkflowSkeletonLoading } from "@/Skeletons/ExecutiveDashbord/thirdSection";
+import { AssackExposureSkeletonLoading, AssertInvertorySkeletonLoading, FinancialExposureSkeletonLoading, RemediationWorkflowSkeletonLoading } from "@/Skeletons/ExecutiveDashbord/thirdSection";
 
 
 ChartJS.register(
@@ -88,11 +88,18 @@ export default function ExecutiveSummaryPage() {
   placeholderData: keepPreviousData,
 });
 
+
+ const { data: attackExposureData,isLoading:isAttackExposureDataLoading} = useQuery({
+  queryKey:["ExecutiveDashboard-attack-exposure",[selectedYear,tenant]],
+  queryFn:()=>getAttackExposureDataData({tenant,selectedYear}),
+  enabled: !!tenant && !!token,
+  placeholderData: keepPreviousData,
+});
+
+
   const {
     GetTopRiskIndicator,
     topFiveRiskIndicatorData,
-    GetAttackExposure,
-    attackExposureData,
     topFiveRisk,
     tenthChart,
     topHighValue,
@@ -108,7 +115,6 @@ export default function ExecutiveSummaryPage() {
       tenthChart(tenant, selectedYear),
       twelfthChart(tenant, selectedYear),
       twntythChart(tenant, selectedYear),
-      GetAttackExposure(tenant, selectedYear),
       GetTopRiskIndicator(tenant, selectedYear),
       ])
 }
@@ -460,7 +466,7 @@ return (
         </div>}
 
         {/* Attack Exposure */}
-        <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-5 rounded-xl flex flex-col">
+        {isAttackExposureDataLoading ? <AssackExposureSkeletonLoading/> : <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-5 rounded-xl flex flex-col">
           {/* Header */}
           <div className="flex justify-between items-start">
             <div>
@@ -496,7 +502,7 @@ return (
                 </div>
               ))}
           </div>
-        </div>
+        </div>}
       </div>
 
       {/* Third row  */}
