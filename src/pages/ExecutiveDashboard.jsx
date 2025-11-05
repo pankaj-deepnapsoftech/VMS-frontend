@@ -24,6 +24,11 @@ import {
   summaryData,
   TopFiveRiskIndicator,
 } from "@/constants/dynomic.data";
+import { keepPreviousData, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getAssetInventoryData, getCardsData, getfinanceTrendChartData, getRiskTrendChartData } from "@/services/ExecutiveDashboard.service";
+import CardsSkeletonLoading from "@/Skeletons/ExecutiveDashbord/Cards";
+import LineChartSkeletonLoading from "@/Skeletons/ExecutiveDashbord/trendsChart";
+import { AssertInvertorySkeletonLoading } from "@/Skeletons/ExecutiveDashbord/thirdSection";
 
 
 ChartJS.register(
@@ -39,19 +44,41 @@ ChartJS.register(
 
 export default function ExecutiveSummaryPage() {
   const { token, tenant, selectedYear } = useAuthContext();
+
+// ==================== here is tenStack query code here ==========================
+ const { data: dasboardData,isLoading:isDashboardCardLoading } = useQuery({
+  queryKey:["ExecutiveDashboard-card",[selectedYear,tenant]],
+  queryFn:()=>getCardsData({tenant,selectedYear}),
+  enabled: !!tenant && !!token,
+  placeholderData: keepPreviousData,
+});
+
+ const { data: riskTrendChart,isLoading:isRiskTrendChartLoading } = useQuery({
+  queryKey:["ExecutiveDashboard-risk",[selectedYear,tenant]],
+  queryFn:()=>getRiskTrendChartData({tenant,selectedYear}),
+  enabled: !!tenant && !!token,
+  placeholderData: keepPreviousData,
+});
+
+ const { data: financeTrendChart,isLoading:isFinanceTrendLoading } = useQuery({
+  queryKey:["ExecutiveDashboard-risk",[selectedYear,tenant]],
+  queryFn:()=>getfinanceTrendChartData({tenant,selectedYear}),
+  enabled: !!tenant && !!token,
+  placeholderData: keepPreviousData,
+});
+
+ const { data: assetInventory,isLoading:isAssetInventoryLoading } = useQuery({
+  queryKey:["ExecutiveDashboard-risk",[selectedYear]],
+  queryFn:()=>getAssetInventoryData({selectedYear}),
+  enabled: !!token,
+  placeholderData: keepPreviousData,
+});
+
   const {
-    GetRiskData,
-    dasboardData,
-    GetAssetInventory,
-    assetInventory,
     GetFinancialExposure,
     financialExposure,
     GetTopRiskIndicator,
     topFiveRiskIndicatorData,
-    GetRiskTrend,
-    riskTrendChart,
-    GetFinanceExposureTrend,
-    financeTrendChart,
     GetRemediationWorkflow,
     remidationWorkflow,
     GetAttackExposure,
@@ -68,17 +95,13 @@ export default function ExecutiveSummaryPage() {
   useEffect(() => {
     if (token && tenant) {
       Promise.all([
-        GetRiskData(tenant, selectedYear),
       GetFinancialExposure(tenant, selectedYear),
       GetRemediationWorkflow(tenant, selectedYear),
       tenthChart(tenant, selectedYear),
       twelfthChart(tenant, selectedYear),
       twntythChart(tenant, selectedYear),
       GetAttackExposure(tenant, selectedYear),
-      GetRiskTrend(tenant, selectedYear),
-      GetAssetInventory(selectedYear),
       GetTopRiskIndicator(tenant, selectedYear),
-      GetFinanceExposureTrend(tenant, selectedYear),
       ])
 }
 
@@ -88,7 +111,7 @@ return (
   <div className="min-h-screen bg-background p-4 sm:p-6 font-sans">
     <div className="flex flex-col mb-10 gap-3 max-w-full xl:max-w-7xl mx-auto">
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mb-2 gap-4">
+      {isDashboardCardLoading ? <CardsSkeletonLoading /> :<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mb-2 gap-4">
         {summaryData(dasboardData).map((item, idx) => (
           <div
             key={idx}
@@ -120,7 +143,7 @@ return (
             </div>
           </div>
         ))}
-      </div>
+      </div>}
 
       {/* First Row – Trend Charts */}
       <div className="flex flex-col xl:flex-row gap-4 w-full">
@@ -136,7 +159,7 @@ return (
           </div>
 
           <div className="w-full h-[180px] sm:h-[220px]">
-            {riskTrendChart && (
+            {isRiskTrendChartLoading ? <LineChartSkeletonLoading /> : riskTrendChart &&  (
               <Line
                 data={{
                   labels: Object.keys(riskTrendChart),
@@ -206,7 +229,7 @@ return (
           </div>
 
           <div className="w-full h-[180px] sm:h-[220px]">
-            {financeTrendChart && (
+            {isFinanceTrendLoading ? <LineChartSkeletonLoading /> : financeTrendChart && (
               <Line
                 data={{
                   labels: Object.keys(financeTrendChart),
@@ -270,7 +293,7 @@ return (
       {/* Second Row */}
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
         {/* Asset Inventory */}
-        <div className="bg-[#161d3d] p-5 rounded-2xl hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white border border-gray-800 flex flex-col justify-between">
+       { isAssetInventoryLoading ? <AssertInvertorySkeletonLoading /> :  <div className="bg-[#161d3d] p-5 rounded-2xl hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white border border-gray-800 flex flex-col justify-between">
           {/* Header */}
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-sm font-semibold tracking-wide text-white/90">
@@ -342,7 +365,7 @@ return (
               </div>
             ))}
           </div>
-        </div>
+        </div>}
 
         {/* Financial Exposure */}
         <div className="bg-[#161d3d] hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out p-5 rounded-2xl text-white border border-gray-800 flex flex-col justify-between">

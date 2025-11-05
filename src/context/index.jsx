@@ -2,6 +2,7 @@
 import { useContext } from "react";
 import { authContext } from "./AuthContext/AuthContext";
 import { ExecutiveDashboardContext} from "./ExecutiveDashboardContext/ExecutiveDashboardContext";
+import {TVMDashboardContext} from "./TVMDashboardContext/TVMDashboardContext";
 
 // working on it
 import { DataContext } from "./DataContext/DataContext";
@@ -34,7 +35,7 @@ import { AIVAContext } from "./AI-VAContext/AI-VAContext";
 
 export { default as AuthContextProvider } from "./AuthContext/AuthContext";
 export { default as ExecutiveDashboardContextProvider } from "./ExecutiveDashboardContext/ExecutiveDashboardContext";
-
+export {default as TVMDashboardContextProvider} from "./TVMDashboardContext/TVMDashboardContext"
 
 // working on it
 export { default as DataContextProvider } from "./DataContext/DataContext";
@@ -67,7 +68,7 @@ export { default as MailContextProvider } from "./MailContext/MailContext";
 
 export const useAuthContext = () => useContext(authContext);
 export const useExecutiveDashboardContext = () => useContext(ExecutiveDashboardContext);
-
+export const useTVMDashboardContext = () => useContext(TVMDashboardContext);
 // working on it
 export const useDataContext = () => useContext(DataContext);
 export const useVulnerabililtyDataContext = () =>  useContext(VulnerabililtyDataContext);
