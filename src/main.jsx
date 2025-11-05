@@ -42,7 +42,7 @@ createRoot(document.getElementById("root")).render(
                             <InfraAssetContextProvider>
                               <TagsContextProvider>
                                 <TVMCardsContextProvider>
-                                  <ReportContextProvider>
+                                 
                                     <SeverityContextProvider>
                                       <NessusContextProvider>
                                         <MainReportContextProvider>
@@ -54,7 +54,6 @@ createRoot(document.getElementById("root")).render(
                                         </MainReportContextProvider>
                                       </NessusContextProvider>
                                     </SeverityContextProvider>
-                                  </ReportContextProvider>
                                 </TVMCardsContextProvider>
                               </TagsContextProvider>
                             </InfraAssetContextProvider>

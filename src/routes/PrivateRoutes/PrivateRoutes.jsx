@@ -1,3 +1,4 @@
+import { ReportContextProvider } from "@/context";
 import { lazy, Suspense } from "react";
 
 // Lazy imports
@@ -72,7 +73,7 @@ export const PrivateRoutes = [
   { path: "/tags", element: <Suspense><TagsPage /></Suspense> },
   { path: "/demo", element: <Suspense><DemoDashboard /></Suspense> },
   { path: "/risk-details", element: <Suspense><RiskOperation /></Suspense> },
-  { path: "/", element: <Suspense fallback={<Loader />}><ExecutiveDashboard /></Suspense> },
+  { path: "/", element:  <ReportContextProvider><Suspense fallback={<Loader />}><ExecutiveDashboard /></Suspense> </ReportContextProvider>},
   { path: "/edit-vulnerability-data", element: <Suspense><VulnerabilityForm /></Suspense> },
   { path: "/in-progress-assessment", element: <Suspense><InProgressAssessment /></Suspense> },
   { path: "/completed-assessment", element: <Suspense><CompleteAssessment /></Suspense> },
