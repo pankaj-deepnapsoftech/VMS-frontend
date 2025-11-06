@@ -8,15 +8,13 @@ import {
 import { useAuthContext } from "@/context";
 import { lazy, Suspense } from "react";
 import ExecutiveDashboardLayoutSkeleton from "@/Skeletons/ExecutiveDashbord/ExecutiveDashboardLayoutSkeleton";
-
+import TvmDashboardLayoutSkeleton from "@/Skeletons/TvmDashboard/TvmDashboardLayoutSkeleton";
 
 const Solutions = lazy(() => import("@/pages/Auth/Solutions"));
 const Pricing = lazy(() => import("@/pages/Auth/Pricing"));
 const MainLayout = lazy(() => import("@/routes/layouts/MainLayout"));
 const ForgotPassword = lazy(() => import("@/pages/Auth/ForgotPassword"));
 const SignIn = lazy(() => import("@/pages/Auth/SignIn"));
-
-
 
 const AppRoutes = () => {
   const { authenticate, token } = useAuthContext();
@@ -37,24 +35,63 @@ const AppRoutes = () => {
       );
     }
   };
-
-
-  // console.log(PrivateRoutes.length);
-
   return (
     <Routes>
       {/* Public routes */}
       {!isAuthenticated && (
         <>
           {/* <Route path="/" element={<LandingPage />} /> */}
-          <Route path="/" element={(<Suspense><SignIn /></Suspense>)} />
+          <Route
+            path="/"
+            element={
+              <Suspense>
+                <SignIn />
+              </Suspense>
+            }
+          />
           {/* <Route path="/sign-up" element={<SignUp />} /> */}
-          <Route path="/forgot-password" element={(<Suspense><ForgotPassword /></Suspense>)} />
-          <Route path="/reset-password" element={(<Suspense><ResetPassword /></Suspense>)} />
-          <Route path="/verify-otp" element={(<Suspense><VerifyOtp /></Suspense>)} />
-          <Route path="/pricing" element={(<Suspense><Pricing /></Suspense>)} />
-          <Route path="/solutions" element={(<Suspense><Solutions /></Suspense>)} />
-          <Route path="/test" element={(<ExecutiveDashboardLayoutSkeleton />)} />
+          <Route
+            path="/forgot-password"
+            element={
+              <Suspense>
+                <ForgotPassword />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/reset-password"
+            element={
+              <Suspense>
+                <ResetPassword />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/verify-otp"
+            element={
+              <Suspense>
+                <VerifyOtp />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/pricing"
+            element={
+              <Suspense>
+                <Pricing />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/solutions"
+            element={
+              <Suspense>
+                <Solutions />
+              </Suspense>
+            }
+          />
+          <Route path="/test" element={<ExecutiveDashboardLayoutSkeleton />} />
+          <Route path="/testt" element={<TvmDashboardLayoutSkeleton />} />
         </>
       )}
 

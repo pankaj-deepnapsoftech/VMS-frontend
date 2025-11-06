@@ -447,7 +447,7 @@ console.log("this is just testing ===================",tvmCardsData)
               <p className="text-white text-lg font-bold">
                 {thirdChartData
                   ? (thirdChartData.exploitable || 0) +
-                  (thirdChartData.not_exploitable || 0)
+                    (thirdChartData.not_exploitable || 0)
                   : 0}
               </p>
               <p className="text-gray-400 text-xs">Total</p>
@@ -494,27 +494,27 @@ console.log("this is just testing ===================",tvmCardsData)
               data={
                 fourthChartData
                   ? {
-                    labels: Object.keys(fourthChartData || {}),
-                    datasets: [
-                      {
-                        data: Object.values(fourthChartData || {}),
-                        backgroundColor: ["#EF4444", "#22C55E"],
-                        borderWidth: 0,
-                      },
-                    ],
-                  }
+                      labels: Object.keys(fourthChartData || {}),
+                      datasets: [
+                        {
+                          data: Object.values(fourthChartData || {}),
+                          backgroundColor: ["#EF4444", "#22C55E"],
+                          borderWidth: 0,
+                        },
+                      ],
+                    }
                   : {
-                    labels: InventoryData.map((item) => item.label),
-                    datasets: [
-                      {
-                        data: InventoryData.map((item) => item.value),
-                        backgroundColor: InventoryData.map(
-                          (item) => item.color
-                        ),
-                        borderWidth: 0,
-                      },
-                    ],
-                  }
+                      labels: InventoryData.map((item) => item.label),
+                      datasets: [
+                        {
+                          data: InventoryData.map((item) => item.value),
+                          backgroundColor: InventoryData.map(
+                            (item) => item.color
+                          ),
+                          borderWidth: 0,
+                        },
+                      ],
+                    }
               }
               options={{
                 cutout: "70%",
@@ -529,9 +529,9 @@ console.log("this is just testing ===================",tvmCardsData)
               <p className="text-white text-lg font-bold">
                 {fourthChartData
                   ? Object.values(fourthChartData).reduce(
-                    (sum, val) => sum + (val || 0),
-                    0
-                  )
+                      (sum, val) => sum + (val || 0),
+                      0
+                    )
                   : totall}
               </p>
               <p className="text-gray-400 text-xs">Total</p>
@@ -542,33 +542,33 @@ console.log("this is just testing ===================",tvmCardsData)
           <div className="flex justify-center gap-8 mt-3">
             {fourthChartData
               ? Object.entries(fourthChartData).map(([label, value], idx) => (
-                <div key={idx} className="flex items-center gap-2 mt-0.5">
-                  <span
-                    className="w-2.5 h-2.5 rounded-full"
-                    style={{
-                      backgroundColor: idx === 0 ? "#EF4444" : "#22C55E",
-                    }}
-                  ></span>
-                  <p className="text-white text-xs">
-                    {label === "businessApplication"
-                      ? "Business Application"
-                      : "Infrastructure IP"}{" "}
-                    <span className="text-gray-400">{value}</span>
-                  </p>
-                </div>
-              ))
+                  <div key={idx} className="flex items-center gap-2 mt-0.5">
+                    <span
+                      className="w-2.5 h-2.5 rounded-full"
+                      style={{
+                        backgroundColor: idx === 0 ? "#EF4444" : "#22C55E",
+                      }}
+                    ></span>
+                    <p className="text-white text-xs">
+                      {label === "businessApplication"
+                        ? "Business Application"
+                        : "Infrastructure IP"}{" "}
+                      <span className="text-gray-400">{value}</span>
+                    </p>
+                  </div>
+                ))
               : InventoryData.map((item, idx) => (
-                <div key={idx} className="flex items-center gap-2 mt-0.5">
-                  <span
-                    className="w-2.5 h-2.5 rounded-full"
-                    style={{ backgroundColor: item.color }}
-                  ></span>
-                  <p className="text-white text-xs">
-                    {item.label}{" "}
-                    <span className="text-gray-400">{item.value}</span>
-                  </p>
-                </div>
-              ))}
+                  <div key={idx} className="flex items-center gap-2 mt-0.5">
+                    <span
+                      className="w-2.5 h-2.5 rounded-full"
+                      style={{ backgroundColor: item.color }}
+                    ></span>
+                    <p className="text-white text-xs">
+                      {item.label}{" "}
+                      <span className="text-gray-400">{item.value}</span>
+                    </p>
+                  </div>
+                ))}
           </div>
         </div>
 
@@ -654,6 +654,7 @@ console.log("this is just testing ===================",tvmCardsData)
           </div>
         </div>
       </div>
+
       {/* Third row  */}
       <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr_1fr] mb-4 gap-6 mt-4 w-full">
         {/* === Open and Closed Vulnerable Items === */}
@@ -682,8 +683,7 @@ console.log("this is just testing ===================",tvmCardsData)
 
               const maxVal = Math.max(...allValues, 0);
               const steps = 4; // Number of Y grid sections
-              const niceMax =
-                Math.ceil(maxVal / 8) * 8 || 8; // round up to nearest multiple of 8 for clean numbers
+              const niceMax = Math.ceil(maxVal / 8) * 8 || 8; // round up to nearest multiple of 8 for clean numbers
               const stepValue = niceMax / steps;
 
               // Generate Y-axis labels (top to bottom)
@@ -732,11 +732,16 @@ console.log("this is just testing ===================",tvmCardsData)
                       >
                         {ninthChartData?.label?.map((month, i) => {
                           const openVal = (ninthChartData?.Open || [])[i] || 0;
-                          const closedVal = (ninthChartData?.Closed || [])[i] || 0;
-                          const exceptionVal = (ninthChartData?.Exception || [])[i] || 0;
+                          const closedVal =
+                            (ninthChartData?.Closed || [])[i] || 0;
+                          const exceptionVal =
+                            (ninthChartData?.Exception || [])[i] || 0;
 
                           return (
-                            <div key={month} className="flex flex-col items-center flex-1">
+                            <div
+                              key={month}
+                              className="flex flex-col items-center flex-1"
+                            >
                               <div className="flex items-end space-x-[2px] sm:space-x-[3px]">
                                 <div
                                   className="w-2 sm:w-2.5 rounded-sm bg-red-500"
@@ -748,7 +753,9 @@ console.log("this is just testing ===================",tvmCardsData)
                                 />
                                 <div
                                   className="w-2 sm:w-2.5 rounded-sm bg-green-400"
-                                  style={{ height: `${exceptionVal * scale}px` }}
+                                  style={{
+                                    height: `${exceptionVal * scale}px`,
+                                  }}
                                 />
                               </div>
                               <div className="text-[8px] sm:text-[9px] text-gray-300 mt-1 rotate-[-35deg] origin-top whitespace-nowrap">
@@ -764,8 +771,6 @@ console.log("this is just testing ===================",tvmCardsData)
               );
             })()}
           </div>
-
-
 
           {/* Legend */}
           <div className="flex flex-wrap justify-center text-[10px] sm:text-xs text-gray-400 gap-3 sm:space-x-4 mt-4">
