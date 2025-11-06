@@ -1,6 +1,6 @@
 import Footer from "@/components/Footer/Footer";
 import { Header } from "@/constants/Components-lazy-loading/components.Lazy";
-import { Suspense, useEffect, useRef, useState } from "react";
+import {  useEffect, useRef, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import {
   Outlet,
@@ -27,12 +27,10 @@ import Select from "react-select";
 import { customStyles, darkTheme } from "@/constants/constants.data";
 import ChangePasswordModal from "@/modals/ChangePasswordModal";
 import SecurityQuestions from "@/pages/Auth/Secuirity";
-import ErrorBoundary from "@/utils/Errorhandler";
 import { ReasonModal } from "@/components/modal/Reason";
 
 const MainLayout = () => {
-  const { notificationData, NotificationsViewed } =
-    useVulnerabililtyDataContext();
+  const { notificationData, NotificationsViewed } = useVulnerabililtyDataContext();
 
   const {
     authenticate,
@@ -364,9 +362,7 @@ const MainLayout = () => {
         : "w-full lg:w-[95%] xl:w-[96%] 2xl:w-[97%]"
     }`}
       >
-        <ErrorBoundary>
           <Outlet />
-        </ErrorBoundary>
       </div>
 
       <Footer />

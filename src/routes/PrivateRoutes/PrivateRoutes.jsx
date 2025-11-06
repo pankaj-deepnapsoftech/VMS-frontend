@@ -1,4 +1,5 @@
 import { TVMCardsContextProvider } from "@/context";
+import AppErrorBoundary from "@/utils/Errorhandler";
 import { lazy, Suspense } from "react";
 
 // Lazy imports
@@ -44,7 +45,7 @@ const SchedulingAssessmentPage = lazy(() => import("@/pages/SchedulingAssessment
 
 
 // ========================== all skeletons load here ==========================
-const ExecutiveDashboardLayoutSkeleton = lazy(()=>import("@/Skeletons/ExecutiveDashbord/ExecutiveDashboardLayoutSkeleton"));
+const ExecutiveDashboardLayoutSkeleton = lazy(() => import("@/Skeletons/ExecutiveDashbord/ExecutiveDashboardLayoutSkeleton"));
 
 
 
@@ -53,13 +54,25 @@ const ExecutiveDashboardLayoutSkeleton = lazy(()=>import("@/Skeletons/ExecutiveD
 
 export const PrivateRoutes = [
   {
-    path: "/tvm-dashboard", element: (<TVMCardsContextProvider>
+    path: "/tvm-dashboard",
+    element: (<TVMCardsContextProvider>
       <Suspense>
-        <Home />
+        <AppErrorBoundary>
+          <Home />
+        </AppErrorBoundary>
       </Suspense>
     </TVMCardsContextProvider>)
   },
-  { path: "/assesment-schedule", element: <Suspense><SchedulingAssessmentPage /></Suspense> },
+  {
+    path: "/assesment-schedule",
+    element: (
+      <Suspense>
+        <AppErrorBoundary>
+          <SchedulingAssessmentPage />
+        </AppErrorBoundary>
+      </Suspense>
+    )
+  },
   { path: "/pending-assesment", element: <Suspense><PendingAssessment /></Suspense> },
   { path: "/vulnerability-data", element: <Suspense fallback={<Loader />} ><VulnerabilityData /></Suspense> },
   { path: "/application-data", element: <Suspense fallback={<Loader />} ><ApplicationData /></Suspense> },
@@ -88,7 +101,16 @@ export const PrivateRoutes = [
   { path: "/tags", element: <Suspense><TagsPage /></Suspense> },
   { path: "/demo", element: <Suspense><DemoDashboard /></Suspense> },
   { path: "/risk-details", element: <Suspense><RiskOperation /></Suspense> },
-  { path: "/", element: <Suspense fallback={<Suspense><ExecutiveDashboardLayoutSkeleton /></Suspense>}><ExecutiveDashboard /></Suspense>},
+  {
+    path: "/",
+    element: (
+      <Suspense fallback={<Suspense><ExecutiveDashboardLayoutSkeleton /></Suspense>}>
+        <AppErrorBoundary>
+          <ExecutiveDashboard />
+        </AppErrorBoundary>
+      </Suspense>
+    )
+  },
   { path: "/edit-vulnerability-data", element: <Suspense><VulnerabilityForm /></Suspense> },
   { path: "/in-progress-assessment", element: <Suspense><InProgressAssessment /></Suspense> },
   { path: "/completed-assessment", element: <Suspense><CompleteAssessment /></Suspense> },

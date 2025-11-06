@@ -19,6 +19,8 @@ import {
   SecondChartDatady,
 } from "@/constants/dynomic.data";
 import SecurendDashboardCards from "./ThreeCards";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { getTvmCardsData } from "@/services/TVMDashboard.service";
 
 // Register Chart.js components once
 ChartJS.register(
@@ -41,7 +43,25 @@ const InventoryData = [
 
 const DashboardCards = () => {
   const { token, selectedYear, tenant } = useAuthContext();
-  const { tvmCardsData, loading, refreshTVMCardsData } = useTVMCardsContext();
+  // const { tvmCardsData } = useTVMCardsContext();
+
+
+  // ========================= here am using tenstack query ========================
+
+const { data: tvmCardsData,isLoading:isTvmCardsDataLoading} = useQuery({
+  queryKey:["ExecutiveDashboard-top-risk-indicator",[selectedYear,tenant]],
+  queryFn:()=>getTvmCardsData({tenant,selectedYear}),
+  enabled:!!token,
+  placeholderData: keepPreviousData,
+});
+
+console.log("this is just testing ===================",tvmCardsData)
+
+
+
+
+
+
 
   const options = {
     plugins: {
@@ -158,7 +178,6 @@ const DashboardCards = () => {
       GetthirdChart(tenant, selectedYear);
       GetFourthChart(tenant, selectedYear);
       GetSecondChart(tenant, selectedYear);
-      refreshTVMCardsData(tenant, selectedYear);
       GetFirstChart(tenant, selectedYear);
       GetNinthChart(tenant, selectedYear);
       GetFiveChart(tenant, selectedYear);
@@ -238,49 +257,32 @@ const DashboardCards = () => {
     <div className="w-full px-4 sm:px-6 xl:max-w-7xl mx-auto">
       {/* Cards */}
       <div className="w-full">
-        {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
-            {[...Array(5)].map((_, index) => (
-              <div
-                key={index}
-                className="bg-[#161e3e] hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl px-4 py-4 shadow-md border border-gray-800 animate-pulse"
-              >
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-gray-600 rounded-md"></div>
-                  <div className="h-4 bg-gray-600 rounded w-20"></div>
+       { <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+          {CardsData(tvmCardsData).map((card, index) => (
+            <div
+              key={index}
+              onClick={() => navigate(card.url)}
+              className="bg-[#161e3e] hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl px-4 mt-10 py-4 shadow-md border border-gray-800  flex flex-col items-start"
+            >
+              <div className="flex items-center gap-2 min-w-0 w-full">
+                <div className="w-8 h-8 flex items-center justify-center rounded-md">
+                  <img src={card.icon} alt={card.title} className="w-7 h-7" />
                 </div>
-                <div className="h-6 bg-gray-600 rounded w-12 mt-3"></div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
-            {CardsData(tvmCardsData).map((card, index) => (
-              <div
-                key={index}
-                onClick={() => navigate(card.url)}
-                className="bg-[#161e3e] hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl px-4 mt-10 py-4 shadow-md border border-gray-800  flex flex-col items-start"
-              >
-                <div className="flex items-center gap-2 min-w-0 w-full">
-                  <div className="w-8 h-8 flex items-center justify-center rounded-md">
-                    <img src={card.icon} alt={card.title} className="w-7 h-7" />
-                  </div>
-                  <p
-                    className="text-sm font-medium whitespace-nowrap max-sm:truncate overflow-hidden min-w-0"
-                    style={{ color: card.color }}
-                    title={card.title}
-                  >
-                    {card.title}
-                  </p>
-                </div>
-
-                <p className="text-xl font-semibold text-white mt-3 ml-1">
-                  {card.value}
+                <p
+                  className="text-sm font-medium whitespace-nowrap max-sm:truncate overflow-hidden min-w-0"
+                  style={{ color: card.color }}
+                  title={card.title}
+                >
+                  {card.title}
                 </p>
               </div>
-            ))}
-          </div>
-        )}
+
+              <p className="text-xl font-semibold text-white mt-3 ml-1">
+                {card.value}
+              </p>
+            </div>
+          ))}
+        </div>}
       </div>
 
       {/* First Row */}
