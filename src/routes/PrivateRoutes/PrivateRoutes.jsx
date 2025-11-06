@@ -1,4 +1,5 @@
 import { TVMCardsContextProvider } from "@/context";
+import AppErrorBoundary from "@/utils/Errorhandler";
 import { lazy, Suspense } from "react";
 
 // Lazy imports

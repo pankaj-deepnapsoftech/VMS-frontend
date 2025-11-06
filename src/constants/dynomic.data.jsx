@@ -38,33 +38,33 @@ export const CardsData = (tvmCardsData) => {
   return [
     {
       title: "Applications",
-      value: tvmCardsData.applications.toString(),
+      value: (tvmCardsData?.businessApplication || 0).toString(),
       icon: "/Icons/TVM1.png",
       color: "#3B82F6",
       url: "/business-applications",
     },
     {
       title: "Infrastructure IPs",
-      value: tvmCardsData.infrastructureIPs.toString(),
+      value: (tvmCardsData?.infrastructure || 0).toString(),
       icon: "/Icons/TVM2.png",
       color: "#22C55E",
       url: "/infraStructure-asset",
     },
     {
       title: "Total Vulnerabilities",
-      value: tvmCardsData.totalVulnerabilities.toString(),
+      value: (tvmCardsData?.vulnerableData || 0).toString(),
       icon: "/Icons/TVM3.png",
       color: "#EF4444",
     },
     {
       title: "Remediated",
-      value: tvmCardsData.remediated.toString(),
+      value: (tvmCardsData?.Remediated || 0).toString(),
       icon: "/Icons/TVM4.png",
       color: "#10B981",
     },
     {
       title: "Exceptions",
-      value: tvmCardsData.exceptions.toString(),
+      value: (tvmCardsData?.expections || 0).toString(),
       icon: "/Icons/TVM5.png",
       color: "#F59E0B",
       url: "/pending-exception",
