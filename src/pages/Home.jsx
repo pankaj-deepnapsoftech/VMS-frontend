@@ -25,7 +25,14 @@ import { TvmCardsSkeleton } from "@/Skeletons/TvmDashboard/Cards";
 import { BarGraphsSkeleton } from "@/Skeletons/TvmDashboard/BarGraphs";
 import { LineChartsSkeleton } from "@/Skeletons/TvmDashboard/LineCharts";
 import LineChartSkeletonLoading from "@/Skeletons/ExecutiveDashbord/trendsChart";
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 // Register Chart.js components once
 ChartJS.register(
@@ -138,6 +145,28 @@ const DashboardCards = () => {
       },
     },
   };
+
+  const COLORS = {
+    green: "#22c55e",
+    yellow: "#facc15",
+    red: "#ef4444",
+  };
+
+  const legendFormatter = (value, entry) => (
+    <span className="flex items-center">
+      <span
+        style={{
+          display: "inline-block",
+          width: "1rem",
+          height: "1rem",
+          borderRadius: "50%",
+          backgroundColor: entry.color,
+          marginRight: "0.4rem",
+        }}
+      />
+      <span style={{ color: "#e5e7eb" }}>{value}</span>
+    </span>
+  );
 
   const doughnutOptions = {
     responsive: true,
@@ -276,7 +305,6 @@ const DashboardCards = () => {
           </div>
         )}
       </div>
-
       {/* First Row */}
       <div className="flex flex-col lg:flex-row gap-4 w-full">
         {/* Vulnerability Status Card */}
@@ -398,7 +426,6 @@ const DashboardCards = () => {
           </div>
         )}
       </div>
-
       {/* Second Row  */}
       <div className="flex flex-col lg:flex-row lg:flex-wrap gap-4 mt-4 w-full">
         {/* Exploitability */}
@@ -450,7 +477,7 @@ const DashboardCards = () => {
                 <p className="text-white text-lg font-bold">
                   {thirdChartData
                     ? (thirdChartData.exploitable || 0) +
-                    (thirdChartData.not_exploitable || 0)
+                      (thirdChartData.not_exploitable || 0)
                     : 0}
                 </p>
                 <p className="text-gray-400 text-xs">Total</p>
@@ -501,27 +528,27 @@ const DashboardCards = () => {
                 data={
                   fourthChartData
                     ? {
-                      labels: Object.keys(fourthChartData || {}),
-                      datasets: [
-                        {
-                          data: Object.values(fourthChartData || {}),
-                          backgroundColor: ["#EF4444", "#22C55E"],
-                          borderWidth: 0,
-                        },
-                      ],
-                    }
+                        labels: Object.keys(fourthChartData || {}),
+                        datasets: [
+                          {
+                            data: Object.values(fourthChartData || {}),
+                            backgroundColor: ["#EF4444", "#22C55E"],
+                            borderWidth: 0,
+                          },
+                        ],
+                      }
                     : {
-                      labels: InventoryData.map((item) => item.label),
-                      datasets: [
-                        {
-                          data: InventoryData.map((item) => item.value),
-                          backgroundColor: InventoryData.map(
-                            (item) => item.color
-                          ),
-                          borderWidth: 0,
-                        },
-                      ],
-                    }
+                        labels: InventoryData.map((item) => item.label),
+                        datasets: [
+                          {
+                            data: InventoryData.map((item) => item.value),
+                            backgroundColor: InventoryData.map(
+                              (item) => item.color
+                            ),
+                            borderWidth: 0,
+                          },
+                        ],
+                      }
                 }
                 options={{
                   cutout: "70%",
@@ -536,9 +563,9 @@ const DashboardCards = () => {
                 <p className="text-white text-lg font-bold">
                   {fourthChartData
                     ? Object.values(fourthChartData).reduce(
-                      (sum, val) => sum + (val || 0),
-                      0
-                    )
+                        (sum, val) => sum + (val || 0),
+                        0
+                      )
                     : totall}
                 </p>
                 <p className="text-gray-400 text-xs">Total</p>
@@ -549,33 +576,33 @@ const DashboardCards = () => {
             <div className="flex justify-center gap-8 mt-3">
               {fourthChartData
                 ? Object.entries(fourthChartData).map(([label, value], idx) => (
-                  <div key={idx} className="flex items-center gap-2 mt-0.5">
-                    <span
-                      className="w-2.5 h-2.5 rounded-full"
-                      style={{
-                        backgroundColor: idx === 0 ? "#EF4444" : "#22C55E",
-                      }}
-                    ></span>
-                    <p className="text-white text-xs">
-                      {label === "businessApplication"
-                        ? "Business Application"
-                        : "Infrastructure IP"}{" "}
-                      <span className="text-gray-400">{value}</span>
-                    </p>
-                  </div>
-                ))
+                    <div key={idx} className="flex items-center gap-2 mt-0.5">
+                      <span
+                        className="w-2.5 h-2.5 rounded-full"
+                        style={{
+                          backgroundColor: idx === 0 ? "#EF4444" : "#22C55E",
+                        }}
+                      ></span>
+                      <p className="text-white text-xs">
+                        {label === "businessApplication"
+                          ? "Business Application"
+                          : "Infrastructure IP"}{" "}
+                        <span className="text-gray-400">{value}</span>
+                      </p>
+                    </div>
+                  ))
                 : InventoryData.map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2 mt-0.5">
-                    <span
-                      className="w-2.5 h-2.5 rounded-full"
-                      style={{ backgroundColor: item.color }}
-                    ></span>
-                    <p className="text-white text-xs">
-                      {item.label}{" "}
-                      <span className="text-gray-400">{item.value}</span>
-                    </p>
-                  </div>
-                ))}
+                    <div key={idx} className="flex items-center gap-2 mt-0.5">
+                      <span
+                        className="w-2.5 h-2.5 rounded-full"
+                        style={{ backgroundColor: item.color }}
+                      ></span>
+                      <p className="text-white text-xs">
+                        {item.label}{" "}
+                        <span className="text-gray-400">{item.value}</span>
+                      </p>
+                    </div>
+                  ))}
             </div>
           </div>
         )}
@@ -601,150 +628,186 @@ const DashboardCards = () => {
                   <XAxis dataKey="category" stroke="#aaa" />
                   <YAxis stroke="#aaa" />
                   <Tooltip
-                    contentStyle={{ backgroundColor: "#1f2a48", border: "none" }}
+                    contentStyle={{
+                      backgroundColor: "#1e2761",
+                      borderRadius: "0.5rem",
+                      border: "none",
+                      color: "#fff",
+                      fontWeight: "bold",
+                    }}
+                    itemStyle={{ fontWeight: 500 }}
                     cursor={{ fill: "rgba(255,255,255,0.05)" }}
                   />
-                  <Legend />
-                  <Bar dataKey="0–30 days" fill="#22c55e" />
-                  <Bar dataKey="31–90 days" fill="#facc15" />
-                  <Bar dataKey="90+ days" fill="#ef4444" />
+                  <Legend
+                    verticalAlign="top"
+                    align="center"
+                    iconType="circle"
+                    iconSize={18}
+                    formatter={legendFormatter}
+                    wrapperStyle={{
+                      color: "#fff",
+                      fontWeight: "bold",
+                      marginBottom: 10,
+                    }}
+                  />
+                  {/* Bars with rounded corners */}
+                  <Bar
+                    dataKey="0–30 days"
+                    fill={COLORS.green}
+                    radius={[8, 8, 0, 0]}
+                  />
+                  <Bar
+                    dataKey="31–90 days"
+                    fill={COLORS.yellow}
+                    radius={[8, 8, 0, 0]}
+                  />
+                  <Bar
+                    dataKey="90+ days"
+                    fill={COLORS.red}
+                    radius={[8, 8, 0, 0]}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </div>
           )}
         </div>}
       </div>
-
       {/* Third row  */}
-      isNinthChartDataLoading  <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr_1fr] mb-4 gap-6 mt-4 w-full">
+      isNinthChartDataLoading{" "}
+      <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr_1fr] mb-4 gap-6 mt-4 w-full">
         {/* === Open and Closed Vulnerable Items === */}
-        {isNinthChartDataLoading ? <LineChartsSkeleton /> : <div className="bg-[#161e3e] rounded-xl p-6 border border-gray-800 shadow-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white flex flex-col justify-between overflow-hidden">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold">
-              Open and Closed Vulnerable Items
-            </h2>
-            <button className="text-gray-400 text-sm hover:text-gray-200 transition-colors">
-              •••
-            </button>
-          </div>
+        {isNinthChartDataLoading ? (
+          <LineChartsSkeleton />
+        ) : (
+          <div className="bg-[#161e3e] rounded-xl p-6 border border-gray-800 shadow-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white flex flex-col justify-between overflow-hidden">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-lg font-semibold">
+                Open and Closed Vulnerable Items
+              </h2>
+              <button className="text-gray-400 text-sm hover:text-gray-200 transition-colors">
+                •••
+              </button>
+            </div>
 
-          {/* Chart Container */}
-          <div className="flex mt-2 h-[180px] sm:h-[200px] relative">
-            {(() => {
-              // Flatten all values from the dataset
-              const allValues = [
-                ...(ninthChartData?.Open || []),
-                ...(ninthChartData?.Closed || []),
-                ...(ninthChartData?.Exception || []),
-              ];
+            {/* Chart Container */}
+            <div className="flex mt-2 h-[180px] sm:h-[200px] relative">
+              {(() => {
+                // Flatten all values from the dataset
+                const allValues = [
+                  ...(ninthChartData?.Open || []),
+                  ...(ninthChartData?.Closed || []),
+                  ...(ninthChartData?.Exception || []),
+                ];
 
-              // Handle empty data
-              if (!allValues.length) return <div>No data</div>;
+                // Handle empty data
+                if (!allValues.length) return <div>No data</div>;
 
-              const maxVal = Math.max(...allValues, 0);
-              const steps = 4; // Number of Y grid sections
-              const niceMax = Math.ceil(maxVal / 8) * 8 || 8; // round up to nearest multiple of 8 for clean numbers
-              const stepValue = niceMax / steps;
+                const maxVal = Math.max(...allValues, 0);
+                const steps = 4; // Number of Y grid sections
+                const niceMax = Math.ceil(maxVal / 8) * 8 || 8; // round up to nearest multiple of 8 for clean numbers
+                const stepValue = niceMax / steps;
 
-              // Generate Y-axis labels (top to bottom)
-              const yLabels = Array.from({ length: steps + 1 }, (_, i) =>
-                Math.round(niceMax - i * stepValue)
-              );
+                // Generate Y-axis labels (top to bottom)
+                const yLabels = Array.from({ length: steps + 1 }, (_, i) =>
+                  Math.round(niceMax - i * stepValue)
+                );
 
-              // Scale bars so max value fits chart height (≈ 180px)
-              const chartHeight = 180;
-              const scale = chartHeight / niceMax;
+                // Scale bars so max value fits chart height (≈ 180px)
+                const chartHeight = 180;
+                const scale = chartHeight / niceMax;
 
-              return (
-                <>
-                  {/* Y Axis Labels */}
-                  <div className="flex flex-col justify-between mr-2 text-[9px] sm:text-[10px] text-gray-500">
-                    {yLabels.map((v, i) => (
-                      <div key={i} className="flex items-center">
-                        {v}
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Chart */}
-                  <div className="relative flex-1 overflow-hidden">
-                    <div className="relative flex justify-between items-end h-full z-10 px-2">
-                      {/* Dotted Grid Lines */}
-                      {yLabels.map((_, i) => (
-                        <div
-                          key={i}
-                          className="absolute w-full border-t border-dotted border-gray-600"
-                          style={{
-                            top: `${(i / steps) * chartHeight}px`,
-                          }}
-                        />
+                return (
+                  <>
+                    {/* Y Axis Labels */}
+                    <div className="flex flex-col justify-between mr-2 text-[9px] sm:text-[10px] text-gray-500">
+                      {yLabels.map((v, i) => (
+                        <div key={i} className="flex items-center">
+                          {v}
+                        </div>
                       ))}
+                    </div>
 
-                      {/* Bars */}
-                      <div
-                        className="flex justify-between items-end w-full"
-                        style={{
-                          gap: `${Math.max(
-                            2,
-                            8 - (ninthChartData?.label?.length || 12) / 2
-                          )}px`,
-                        }}
-                      >
-                        {ninthChartData?.label?.map((month, i) => {
-                          const openVal = (ninthChartData?.Open || [])[i] || 0;
-                          const closedVal =
-                            (ninthChartData?.Closed || [])[i] || 0;
-                          const exceptionVal =
-                            (ninthChartData?.Exception || [])[i] || 0;
+                    {/* Chart */}
+                    <div className="relative flex-1 overflow-hidden">
+                      <div className="relative flex justify-between items-end h-full z-10 px-2">
+                        {/* Dotted Grid Lines */}
+                        {yLabels.map((_, i) => (
+                          <div
+                            key={i}
+                            className="absolute w-full border-t border-dotted border-gray-600"
+                            style={{
+                              top: `${(i / steps) * chartHeight}px`,
+                            }}
+                          />
+                        ))}
 
-                          return (
-                            <div
-                              key={month}
-                              className="flex flex-col items-center flex-1"
-                            >
-                              <div className="flex items-end space-x-[2px] sm:space-x-[3px]">
-                                <div
-                                  className="w-2 sm:w-2.5 rounded-sm bg-red-500"
-                                  style={{ height: `${openVal * scale}px` }}
-                                />
-                                <div
-                                  className="w-2 sm:w-2.5 rounded-sm bg-blue-500"
-                                  style={{ height: `${closedVal * scale}px` }}
-                                />
-                                <div
-                                  className="w-2 sm:w-2.5 rounded-sm bg-green-400"
-                                  style={{
-                                    height: `${exceptionVal * scale}px`,
-                                  }}
-                                />
+                        {/* Bars */}
+                        <div
+                          className="flex justify-between items-end w-full"
+                          style={{
+                            gap: `${Math.max(
+                              2,
+                              8 - (ninthChartData?.label?.length || 12) / 2
+                            )}px`,
+                          }}
+                        >
+                          {ninthChartData?.label?.map((month, i) => {
+                            const openVal =
+                              (ninthChartData?.Open || [])[i] || 0;
+                            const closedVal =
+                              (ninthChartData?.Closed || [])[i] || 0;
+                            const exceptionVal =
+                              (ninthChartData?.Exception || [])[i] || 0;
+
+                            return (
+                              <div
+                                key={month}
+                                className="flex flex-col items-center flex-1"
+                              >
+                                <div className="flex items-end space-x-[2px] sm:space-x-[3px]">
+                                  <div
+                                    className="w-2 sm:w-2.5 rounded-sm bg-red-500"
+                                    style={{ height: `${openVal * scale}px` }}
+                                  />
+                                  <div
+                                    className="w-2 sm:w-2.5 rounded-sm bg-blue-500"
+                                    style={{ height: `${closedVal * scale}px` }}
+                                  />
+                                  <div
+                                    className="w-2 sm:w-2.5 rounded-sm bg-green-400"
+                                    style={{
+                                      height: `${exceptionVal * scale}px`,
+                                    }}
+                                  />
+                                </div>
+                                <div className="text-[8px] sm:text-[9px] text-gray-300 mt-1 rotate-[-35deg] origin-top whitespace-nowrap">
+                                  {month}
+                                </div>
                               </div>
-                              <div className="text-[8px] sm:text-[9px] text-gray-300 mt-1 rotate-[-35deg] origin-top whitespace-nowrap">
-                                {month}
-                              </div>
-                            </div>
-                          );
-                        })}
+                            );
+                          })}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </>
-              );
-            })()}
-          </div>
+                  </>
+                );
+              })()}
+            </div>
 
-          {/* Legend */}
-          <div className="flex flex-wrap justify-center text-[10px] sm:text-xs text-gray-400 gap-3 sm:space-x-4 mt-4">
-            <div className="flex items-center gap-1">
-              <div className="w-2 h-2 rounded-full bg-red-500" /> Open
-            </div>
-            <div className="flex items-center gap-1">
-              <div className="w-2 h-2 rounded-full bg-blue-500" /> Closed
-            </div>
-            <div className="flex items-center gap-1">
-              <div className="w-2 h-2 rounded-full bg-green-400" /> Exception
+            {/* Legend */}
+            <div className="flex flex-wrap justify-center text-[10px] sm:text-xs text-gray-400 gap-3 sm:space-x-4 mt-4">
+              <div className="flex items-center gap-1">
+                <div className="w-2 h-2 rounded-full bg-red-500" /> Open
+              </div>
+              <div className="flex items-center gap-1">
+                <div className="w-2 h-2 rounded-full bg-blue-500" /> Closed
+              </div>
+              <div className="flex items-center gap-1">
+                <div className="w-2 h-2 rounded-full bg-green-400" /> Exception
+              </div>
             </div>
           </div>
-        </div>}
+        )}
 
         {/* === Critical / High Vulnerabilities === */}
         {isCreticalHighVulnrableLoading ? (
@@ -809,7 +872,6 @@ const DashboardCards = () => {
           </div>
         )}
       </div>
-
       <SecurendDashboardCards />
     </div>
   );
