@@ -42,6 +42,15 @@ const DownloadReports = lazy(() => import("@/pages/DownloadReport"));
 const Home = lazy(() => import("@/pages/Home"));
 const SchedulingAssessmentPage = lazy(() => import("@/pages/SchedulingAssessment"));
 
+
+// ========================== all skeletons load here ==========================
+const ExecutiveDashboardLayoutSkeleton = lazy(()=>import("@/Skeletons/ExecutiveDashbord/ExecutiveDashboardLayoutSkeleton"));
+
+
+
+
+
+
 export const PrivateRoutes = [
   {
     path: "/tvm-dashboard", element: (<TVMCardsContextProvider>
@@ -79,7 +88,7 @@ export const PrivateRoutes = [
   { path: "/tags", element: <Suspense><TagsPage /></Suspense> },
   { path: "/demo", element: <Suspense><DemoDashboard /></Suspense> },
   { path: "/risk-details", element: <Suspense><RiskOperation /></Suspense> },
-  { path: "/", element: <ExecutiveDashboardContextProvider><Suspense fallback={<Loader />}><ExecutiveDashboard /></Suspense> </ExecutiveDashboardContextProvider> },
+  { path: "/", element: <ExecutiveDashboardContextProvider><Suspense fallback={<Suspense><ExecutiveDashboardLayoutSkeleton /></Suspense>}><ExecutiveDashboard /></Suspense> </ExecutiveDashboardContextProvider> },
   { path: "/edit-vulnerability-data", element: <Suspense><VulnerabilityForm /></Suspense> },
   { path: "/in-progress-assessment", element: <Suspense><InProgressAssessment /></Suspense> },
   { path: "/completed-assessment", element: <Suspense><CompleteAssessment /></Suspense> },

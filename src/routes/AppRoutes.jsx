@@ -7,6 +7,7 @@ import {
 } from "@/constants/Components-lazy-loading/components.Lazy";
 import { useAuthContext } from "@/context";
 import { lazy, Suspense } from "react";
+import ExecutiveDashboardLayoutSkeleton from "@/Skeletons/ExecutiveDashbord/ExecutiveDashboardLayoutSkeleton";
 
 
 const Solutions = lazy(() => import("@/pages/Auth/Solutions"));
@@ -53,6 +54,7 @@ const AppRoutes = () => {
           <Route path="/verify-otp" element={(<Suspense><VerifyOtp /></Suspense>)} />
           <Route path="/pricing" element={(<Suspense><Pricing /></Suspense>)} />
           <Route path="/solutions" element={(<Suspense><Solutions /></Suspense>)} />
+          <Route path="/test" element={(<ExecutiveDashboardLayoutSkeleton />)} />
         </>
       )}
 
