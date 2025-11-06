@@ -20,7 +20,7 @@ import {
 } from "@/constants/dynomic.data";
 import SecurendDashboardCards from "./ThreeCards";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { getFirstChartData, getfourthChartData, getNinthChartData, getSecondChartData, getSeventeenChartData, getSixteenChartData, getThirdChartData, getTvmCardsData } from "@/services/TVMDashboard.service";
+import { getFifthChartData, getFirstChartData, getfourthChartData, getNinthChartData, getSecondChartData, getSeventeenChartData, getSixteenChartData, getThirdChartData, getTvmCardsData } from "@/services/TVMDashboard.service";
 import { TvmCardsSkeleton } from "@/Skeletons/TvmDashboard/Cards";
 import { BarGraphsSkeleton } from "@/Skeletons/TvmDashboard/BarGraphs";
 import { LineChartsSkeleton } from "@/Skeletons/TvmDashboard/LineCharts";
@@ -118,6 +118,13 @@ const DashboardCards = () => {
   });
 
 
+    const { data: itemsByAge, isLoading: isItemsByAgeLoading } = useQuery({
+    queryKey: ["TVMDashboard-fifth-chart", [selectedYear, tenant]],
+    queryFn: () => getFifthChartData({ tenant, selectedYear }),
+    enabled: !!token,
+    placeholderData: keepPreviousData,
+  });
+
 
   const options = {
     plugins: {
@@ -148,8 +155,7 @@ const DashboardCards = () => {
     },
   };
 
-  const { GetFiveChart, itemsByAge } =
-    useDataContext();
+  const { GetFiveChart } =useDataContext();
 
   // usestats
 
@@ -191,7 +197,6 @@ const DashboardCards = () => {
     },
   };
 
-  const [data, setData] = useState([]);
 
   const navigate = useNavigate();
 
@@ -200,30 +205,9 @@ const DashboardCards = () => {
       GetFiveChart(tenant, selectedYear);
     }
   }, [token, tenant, selectedYear]);
-  const categories = ["Critical", "High", "Medium", "Low"];
 
-  useEffect(() => {
-    if (itemsByAge) {
-      const getCounts = (data = []) => {
-        const map = Object.fromEntries(data.map((item) => [item.severity, item.count]));
-        return categories.map((cat) => map[cat] || 0);
-      };
 
-      const green = getCounts(itemsByAge.first);
-      const yellow = getCounts(itemsByAge.second);
-      const red = getCounts(itemsByAge.third);
 
-      // Merge into chart-friendly data structure
-      const formatted = categories.map((cat, i) => ({
-        category: cat,
-        "0–30 days": green[i],
-        "31–90 days": yellow[i],
-        "90+ days": red[i],
-      }));
-
-      setData(formatted);
-    }
-  }, [itemsByAge]);
 
   const combinedVulnerabilities = (data) => {
     return {
@@ -597,7 +581,7 @@ const DashboardCards = () => {
         )}
 
         {/* Card 2: Vulnerable Items by Age */}
-        <div className="bg-[#161e3e] rounded-xl p-4 w-full md:w-[360px] lg:flex-1 text-white shadow-lg border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out">
+        {isItemsByAgeLoading ? <LineChartsSkeleton/>  : <div className="bg-[#161e3e] rounded-xl p-4 w-full md:w-[360px] lg:flex-1 text-white shadow-lg border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-semibold">Vulnerable Items by Age</h2>
             <button className="text-gray-400 text-sm hover:text-gray-200 transition-colors">
@@ -605,14 +589,14 @@ const DashboardCards = () => {
             </button>
           </div>
 
-          {data.length === 0 ? (
+          {itemsByAge.length === 0 ? (
             <div className="h-[200px] flex items-center justify-center text-gray-400">
               No data available
             </div>
           ) : (
             <div className="h-[200px]">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+                <BarChart data={itemsByAge} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#444" />
                   <XAxis dataKey="category" stroke="#aaa" />
                   <YAxis stroke="#aaa" />
@@ -628,7 +612,7 @@ const DashboardCards = () => {
               </ResponsiveContainer>
             </div>
           )}
-        </div>
+        </div>}
       </div>
 
       {/* Third row  */}
