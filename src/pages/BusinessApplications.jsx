@@ -205,7 +205,7 @@ export default function BusinessApplications() {
             ) : (
               <div className="overflow-x-auto custom-scrollbar w-full">
                 <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
-                  <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
+                  <thead className="bg-[#0c1120] text-white uppercase   whitespace-nowrap tracking-wider">
                     <tr>
                       {[
                         "Name",
