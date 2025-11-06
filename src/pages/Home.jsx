@@ -621,6 +621,7 @@ const DashboardCards = () => {
               No data available
             </div>
           ) : (
+            <>
             <div className="h-[200px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={itemsByAge} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
@@ -669,6 +670,9 @@ const DashboardCards = () => {
                 </BarChart>
               </ResponsiveContainer>
             </div>
+
+            <div className="flex flex-wrap justify-center text-xs text-gray-400 gap-3 mt-3"> <div className="flex items-center gap-1"> <div className="w-2 h-2 rounded-full bg-green-500" /> 0–30 days </div> <div className="flex items-center gap-1"> <div className="w-2 h-2 rounded-full bg-yellow-400" /> 31–90 days </div> <div className="flex items-center gap-1"> <div className="w-2 h-2 rounded-full bg-red-500" /> 90+ days </div> </div>
+            </>
           )}
         </div>}
       </div>
