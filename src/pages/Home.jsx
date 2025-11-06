@@ -20,7 +20,7 @@ import {
 } from "@/constants/dynomic.data";
 import SecurendDashboardCards from "./ThreeCards";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { getFirstChartData, getfourthChartData, getSecondChartData, getSeventeenChartData, getSixteenChartData, getThirdChartData, getTvmCardsData } from "@/services/TVMDashboard.service";
+import { getFirstChartData, getfourthChartData, getNinthChartData, getSecondChartData, getSeventeenChartData, getSixteenChartData, getThirdChartData, getTvmCardsData } from "@/services/TVMDashboard.service";
 import { TvmCardsSkeleton } from "@/Skeletons/TvmDashboard/Cards";
 import { BarGraphsSkeleton } from "@/Skeletons/TvmDashboard/BarGraphs";
 import { LineChartsSkeleton } from "@/Skeletons/TvmDashboard/LineCharts";
@@ -105,6 +105,12 @@ const DashboardCards = () => {
     placeholderData: keepPreviousData,
   });
 
+const { data: ninthChartData, isLoading: isNinthChartDataLoading } = useQuery({
+    queryKey: ["TVMDashboard-ninth-chart", [selectedYear, tenant]],
+    queryFn: () => getNinthChartData({ tenant, selectedYear }),
+    enabled: !!token,
+    placeholderData: keepPreviousData,
+  });
 
 
 
@@ -139,8 +145,8 @@ const DashboardCards = () => {
 
 
   const {
-    ninthChartData,
-    GetNinthChart,
+    // ninthChartData,
+    // GetNinthChart,
     GetFiveChart,
     itemsByAge,
   } = useDataContext();
@@ -197,7 +203,6 @@ const DashboardCards = () => {
 
   useEffect(() => {
     if (token) {
-      GetNinthChart(tenant, selectedYear);
       GetFiveChart(tenant, selectedYear);
     }
   }, [token, tenant, selectedYear]);
@@ -672,9 +677,9 @@ const DashboardCards = () => {
       </div>
 
       {/* Third row  */}
-      <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr_1fr] mb-4 gap-6 mt-4 w-full">
+    isNinthChartDataLoading  <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr_1fr] mb-4 gap-6 mt-4 w-full">
         {/* === Open and Closed Vulnerable Items === */}
-        <div className="bg-[#161e3e] rounded-xl p-6 border border-gray-800 shadow-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white flex flex-col justify-between overflow-hidden">
+      {isNinthChartDataLoading ? <LineChartsSkeleton/>  :  <div className="bg-[#161e3e] rounded-xl p-6 border border-gray-800 shadow-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white flex flex-col justify-between overflow-hidden">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-semibold">
               Open and Closed Vulnerable Items
@@ -800,7 +805,7 @@ const DashboardCards = () => {
               <div className="w-2 h-2 rounded-full bg-green-400" /> Exception
             </div>
           </div>
-        </div>
+        </div>}
 
         {/* === Critical / High Vulnerabilities === */}
         {isCreticalHighVulnrableLoading ? <BarGraphsSkeleton /> : <div className="bg-[#161e3e] p-6 border border-gray-800 rounded-xl shadow-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out flex flex-col items-center justify-between text-white">

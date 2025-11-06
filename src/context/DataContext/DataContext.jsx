@@ -14,8 +14,6 @@ const DataContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [TenantAllData, setTenantAllData] = useState([]);
   const [partners, setPartners] = useState([]);
-  const [fourthChartData, setFourthChartData] = useState(null);
-  const [ninthChartData, setNinthChartData] = useState(null);
   const [AssignedData, setAssignedData] = useState(null);
   const [itemsByAge,setTtemsByAge] = useState(null)
 
@@ -61,27 +59,9 @@ const DataContextProvider = ({ children }) => {
 
 
 
-  const GetFourthChart = async (tenant, year) => {
-    try {
-      const res = await AxiosHandler.get(
-        `/BusinessApplication/tvm-forth-chart?tenant=${tenant ? tenant : ""}&year=${year}`
-      );
-      setFourthChartData(res?.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+ 
 
-  const GetNinthChart = async (tenant, year) => {
-    try {
-      const res = await AxiosHandler.get(
-        `/data/tvm-nine-chart?tenant=${tenant ? tenant : ""}&year=${year}`
-      );
-      setNinthChartData(res?.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+
 
   const GetFiveChart = async (tenant, year) => {
     setLoading(true)
@@ -120,10 +100,6 @@ const DataContextProvider = ({ children }) => {
         UploadBulkData,
         TenantAllData,
         partners,
-        GetFourthChart,
-        fourthChartData,
-        ninthChartData,
-        GetNinthChart,
         GetAssignedByData,
         AssignedData,
         GetFiveChart,

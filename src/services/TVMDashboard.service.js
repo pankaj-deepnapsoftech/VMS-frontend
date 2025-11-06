@@ -49,7 +49,10 @@ export const getSeventeenChartData  = async ({ tenant, selectedYear }) => {
     return res.data;
 };
 
-
+export const getNinthChartData  = async ({ tenant, selectedYear }) => {
+     const res = await AxiosHandler.get(`/data/tvm-nine-chart?tenant=${tenant ? tenant : ""}&year=${selectedYear}`);
+    return res.data;
+};
 
 
 
