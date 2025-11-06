@@ -1,7 +1,13 @@
 import React from "react";
 import CardsSkeletonLoading from "./Cards";
 import LineChartSkeletonLoading from "./trendsChart";
-import { AssackExposureSkeletonLoading, AssertInvertorySkeletonLoading, FinancialExposureSkeletonLoading, RemediationWorkflowSkeletonLoading } from "./thirdSection";
+import {
+  AssackExposureSkeletonLoading,
+  AssertInvertorySkeletonLoading,
+  FinancialExposureSkeletonLoading,
+  RemediationWorkflowSkeletonLoading,
+} from "./thirdSection";
+import { TopFiveRiskIndicatorsSkeleton } from "./LastSection";
 
 const ExecutiveDashboardLayoutSkeleton = () => {
   return (
@@ -23,7 +29,17 @@ const ExecutiveDashboardLayoutSkeleton = () => {
         <FinancialExposureSkeletonLoading />
         <RemediationWorkflowSkeletonLoading />
         <AssackExposureSkeletonLoading />
-        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-5">
+        <AssackExposureSkeletonLoading />
+        <AssackExposureSkeletonLoading />
+        <AssackExposureSkeletonLoading />
+      </div>
+
+      <div className="flex flex-col xl:flex-row gap-4 pt-5 w-full">
+        <TopFiveRiskIndicatorsSkeleton />
+      </div>
     </div>
   );
 };
