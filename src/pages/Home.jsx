@@ -12,7 +12,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { useAuthContext, useDataContext, useTVMCardsContext } from "../context";
+import { useAuthContext, useDataContext } from "../context";
 import {
   CardsData,
   firstChartDatady,
@@ -25,6 +25,7 @@ import { TvmCardsSkeleton } from "@/Skeletons/TvmDashboard/Cards";
 import { BarGraphsSkeleton } from "@/Skeletons/TvmDashboard/BarGraphs";
 import { LineChartsSkeleton } from "@/Skeletons/TvmDashboard/LineCharts";
 import LineChartSkeletonLoading from "@/Skeletons/ExecutiveDashbord/trendsChart";
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
 // Register Chart.js components once
 ChartJS.register(
@@ -109,7 +110,7 @@ const DashboardCards = () => {
     placeholderData: keepPreviousData,
   });
 
-const { data: ninthChartData, isLoading: isNinthChartDataLoading } = useQuery({
+  const { data: ninthChartData, isLoading: isNinthChartDataLoading } = useQuery({
     queryKey: ["TVMDashboard-ninth-chart", [selectedYear, tenant]],
     queryFn: () => getNinthChartData({ tenant, selectedYear }),
     enabled: !!token,
@@ -147,7 +148,7 @@ const { data: ninthChartData, isLoading: isNinthChartDataLoading } = useQuery({
     },
   };
 
-  const {  GetFiveChart, itemsByAge } =
+  const { GetFiveChart, itemsByAge } =
     useDataContext();
 
   // usestats
@@ -190,10 +191,7 @@ const { data: ninthChartData, isLoading: isNinthChartDataLoading } = useQuery({
     },
   };
 
-  const [greenData, setGreenData] = useState([]);
-  const [yellowData, setYellowData] = useState([]);
-  const [redData, setRedData] = useState([]);
-  const [maxY, setMaxY] = useState(10); // default max height scale
+  const [data, setData] = useState([]);
 
   const navigate = useNavigate();
 
@@ -207,9 +205,7 @@ const { data: ninthChartData, isLoading: isNinthChartDataLoading } = useQuery({
   useEffect(() => {
     if (itemsByAge) {
       const getCounts = (data = []) => {
-        const map = Object.fromEntries(
-          data.map((item) => [item.severity, item.count])
-        );
+        const map = Object.fromEntries(data.map((item) => [item.severity, item.count]));
         return categories.map((cat) => map[cat] || 0);
       };
 
@@ -217,16 +213,15 @@ const { data: ninthChartData, isLoading: isNinthChartDataLoading } = useQuery({
       const yellow = getCounts(itemsByAge.second);
       const red = getCounts(itemsByAge.third);
 
-      const maxVal = Math.max(...green, ...yellow, ...red) + 2;
+      // Merge into chart-friendly data structure
+      const formatted = categories.map((cat, i) => ({
+        category: cat,
+        "0–30 days": green[i],
+        "31–90 days": yellow[i],
+        "90+ days": red[i],
+      }));
 
-      console.log("green", green);
-      console.log("yellow", yellow);
-      console.log("red", red);
-
-      setGreenData(green);
-      setYellowData(yellow);
-      setRedData(red);
-      setMaxY(maxVal);
+      setData(formatted);
     }
   }, [itemsByAge]);
 
@@ -471,7 +466,7 @@ const { data: ninthChartData, isLoading: isNinthChartDataLoading } = useQuery({
                 <p className="text-white text-lg font-bold">
                   {thirdChartData
                     ? (thirdChartData.exploitable || 0) +
-                      (thirdChartData.not_exploitable || 0)
+                    (thirdChartData.not_exploitable || 0)
                     : 0}
                 </p>
                 <p className="text-gray-400 text-xs">Total</p>
@@ -522,27 +517,27 @@ const { data: ninthChartData, isLoading: isNinthChartDataLoading } = useQuery({
                 data={
                   fourthChartData
                     ? {
-                        labels: Object.keys(fourthChartData || {}),
-                        datasets: [
-                          {
-                            data: Object.values(fourthChartData || {}),
-                            backgroundColor: ["#EF4444", "#22C55E"],
-                            borderWidth: 0,
-                          },
-                        ],
-                      }
+                      labels: Object.keys(fourthChartData || {}),
+                      datasets: [
+                        {
+                          data: Object.values(fourthChartData || {}),
+                          backgroundColor: ["#EF4444", "#22C55E"],
+                          borderWidth: 0,
+                        },
+                      ],
+                    }
                     : {
-                        labels: InventoryData.map((item) => item.label),
-                        datasets: [
-                          {
-                            data: InventoryData.map((item) => item.value),
-                            backgroundColor: InventoryData.map(
-                              (item) => item.color
-                            ),
-                            borderWidth: 0,
-                          },
-                        ],
-                      }
+                      labels: InventoryData.map((item) => item.label),
+                      datasets: [
+                        {
+                          data: InventoryData.map((item) => item.value),
+                          backgroundColor: InventoryData.map(
+                            (item) => item.color
+                          ),
+                          borderWidth: 0,
+                        },
+                      ],
+                    }
                 }
                 options={{
                   cutout: "70%",
@@ -557,9 +552,9 @@ const { data: ninthChartData, isLoading: isNinthChartDataLoading } = useQuery({
                 <p className="text-white text-lg font-bold">
                   {fourthChartData
                     ? Object.values(fourthChartData).reduce(
-                        (sum, val) => sum + (val || 0),
-                        0
-                      )
+                      (sum, val) => sum + (val || 0),
+                      0
+                    )
                     : totall}
                 </p>
                 <p className="text-gray-400 text-xs">Total</p>
@@ -570,40 +565,39 @@ const { data: ninthChartData, isLoading: isNinthChartDataLoading } = useQuery({
             <div className="flex justify-center gap-8 mt-3">
               {fourthChartData
                 ? Object.entries(fourthChartData).map(([label, value], idx) => (
-                    <div key={idx} className="flex items-center gap-2 mt-0.5">
-                      <span
-                        className="w-2.5 h-2.5 rounded-full"
-                        style={{
-                          backgroundColor: idx === 0 ? "#EF4444" : "#22C55E",
-                        }}
-                      ></span>
-                      <p className="text-white text-xs">
-                        {label === "businessApplication"
-                          ? "Business Application"
-                          : "Infrastructure IP"}{" "}
-                        <span className="text-gray-400">{value}</span>
-                      </p>
-                    </div>
-                  ))
+                  <div key={idx} className="flex items-center gap-2 mt-0.5">
+                    <span
+                      className="w-2.5 h-2.5 rounded-full"
+                      style={{
+                        backgroundColor: idx === 0 ? "#EF4444" : "#22C55E",
+                      }}
+                    ></span>
+                    <p className="text-white text-xs">
+                      {label === "businessApplication"
+                        ? "Business Application"
+                        : "Infrastructure IP"}{" "}
+                      <span className="text-gray-400">{value}</span>
+                    </p>
+                  </div>
+                ))
                 : InventoryData.map((item, idx) => (
-                    <div key={idx} className="flex items-center gap-2 mt-0.5">
-                      <span
-                        className="w-2.5 h-2.5 rounded-full"
-                        style={{ backgroundColor: item.color }}
-                      ></span>
-                      <p className="text-white text-xs">
-                        {item.label}{" "}
-                        <span className="text-gray-400">{item.value}</span>
-                      </p>
-                    </div>
-                  ))}
+                  <div key={idx} className="flex items-center gap-2 mt-0.5">
+                    <span
+                      className="w-2.5 h-2.5 rounded-full"
+                      style={{ backgroundColor: item.color }}
+                    ></span>
+                    <p className="text-white text-xs">
+                      {item.label}{" "}
+                      <span className="text-gray-400">{item.value}</span>
+                    </p>
+                  </div>
+                ))}
             </div>
           </div>
         )}
 
         {/* Card 2: Vulnerable Items by Age */}
         <div className="bg-[#161e3e] rounded-xl p-4 w-full md:w-[360px] lg:flex-1 text-white shadow-lg border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out">
-          {/* Header */}
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-semibold">Vulnerable Items by Age</h2>
             <button className="text-gray-400 text-sm hover:text-gray-200 transition-colors">
@@ -611,106 +605,36 @@ const { data: ninthChartData, isLoading: isNinthChartDataLoading } = useQuery({
             </button>
           </div>
 
-          {/* Chart */}
-          <div className="flex mt-4 h-[160px] sm:h-[180px]">
-            {/* Y Axis Labels */}
-            <div className="flex flex-col justify-between mr-2 text-[10px] text-gray-500">
-              {[...Array(5)].map((_, i) => {
-                const step = maxY / 4;
-                const value = Math.round(maxY - i * step);
-                return (
-                  <div
-                    key={i}
-                    className="flex items-center justify-end"
-                    style={{ height: "20%" }}
-                  >
-                    {value}
-                  </div>
-                );
-              })}
+          {data.length === 0 ? (
+            <div className="h-[200px] flex items-center justify-center text-gray-400">
+              No data available
             </div>
-
-            {/* Grid + Bars */}
-            <div className="relative flex-1 overflow-hidden">
-              {/* Horizontal dotted lines */}
-              {[...Array(5)].map((_, i) => (
-                <div
-                  key={i}
-                  className="absolute left-0 w-full border-t border-dotted border-gray-600"
-                  style={{ top: `${(i * 100) / 4}%` }}
-                />
-              ))}
-
-              {/* Bar Groups */}
-              {greenData
-                .concat(yellowData)
-                .concat(redData)
-                .every((val) => val === 0) ? (
-                <div className="flex items-center justify-center h-full text-gray-400 text-base">
-                  No data available
-                </div>
-              ) : (
-                <div className="flex justify-around items-end h-full z-10 relative">
-                  {categories.map((label, i) => (
-                    <div key={label} className="flex flex-col items-center">
-                      <div className="flex items-end space-x-1">
-                        <div
-                          className="w-2 rounded-sm bg-green-500"
-                          style={{
-                            height: `${Math.max(
-                              (greenData[i] / maxY) * 100
-                            )}px`,
-                          }}
-                        />
-                        <div
-                          className="w-2 rounded-sm bg-yellow-400"
-                          style={{
-                            height: `${Math.max(
-                              (yellowData[i] / maxY) * 100
-                            )}px`,
-                          }}
-                        />
-                        <div
-                          className="w-2 rounded-sm bg-red-500"
-                          style={{
-                            height: `${Math.max(
-                              (redData[i] / maxY) * 100
-                            )}px`,
-                          }}
-                        />
-                      </div>
-                      <div className="text-[10px] text-gray-300 mt-1">
-                        {label}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
+          ) : (
+            <div className="h-[200px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#444" />
+                  <XAxis dataKey="category" stroke="#aaa" />
+                  <YAxis stroke="#aaa" />
+                  <Tooltip
+                    contentStyle={{ backgroundColor: "#1f2a48", border: "none" }}
+                    cursor={{ fill: "rgba(255,255,255,0.05)" }}
+                  />
+                  <Legend />
+                  <Bar dataKey="0–30 days" fill="#22c55e" />
+                  <Bar dataKey="31–90 days" fill="#facc15" />
+                  <Bar dataKey="90+ days" fill="#ef4444" />
+                </BarChart>
+              </ResponsiveContainer>
             </div>
-          </div>
-
-          {/* Legend */}
-          <div className="flex flex-wrap justify-center text-xs text-gray-400 gap-3 mt-3">
-            <div className="flex items-center gap-1">
-              <div className="w-2 h-2 rounded-full bg-green-500" />
-              0–30 days
-            </div>
-            <div className="flex items-center gap-1">
-              <div className="w-2 h-2 rounded-full bg-yellow-400" />
-              31–90 days
-            </div>
-            <div className="flex items-center gap-1">
-              <div className="w-2 h-2 rounded-full bg-red-500" />
-              90+ days
-            </div>
-          </div>
+          )}
         </div>
       </div>
 
       {/* Third row  */}
-    isNinthChartDataLoading  <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr_1fr] mb-4 gap-6 mt-4 w-full">
+      isNinthChartDataLoading  <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr_1fr] mb-4 gap-6 mt-4 w-full">
         {/* === Open and Closed Vulnerable Items === */}
-      {isNinthChartDataLoading ? <LineChartsSkeleton/>  :  <div className="bg-[#161e3e] rounded-xl p-6 border border-gray-800 shadow-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white flex flex-col justify-between overflow-hidden">
+        {isNinthChartDataLoading ? <LineChartsSkeleton /> : <div className="bg-[#161e3e] rounded-xl p-6 border border-gray-800 shadow-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white flex flex-col justify-between overflow-hidden">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-semibold">
               Open and Closed Vulnerable Items
