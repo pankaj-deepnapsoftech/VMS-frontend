@@ -20,7 +20,15 @@ import {
 } from "@/constants/dynomic.data";
 import SecurendDashboardCards from "./ThreeCards";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { getFirstChartData, getfourthChartData, getSecondChartData, getSeventeenChartData, getSixteenChartData, getThirdChartData, getTvmCardsData } from "@/services/TVMDashboard.service";
+import {
+  getFirstChartData,
+  getfourthChartData,
+  getSecondChartData,
+  getSeventeenChartData,
+  getSixteenChartData,
+  getThirdChartData,
+  getTvmCardsData,
+} from "@/services/TVMDashboard.service";
 import { TvmCardsSkeleton } from "@/Skeletons/TvmDashboard/Cards";
 import { BarGraphsSkeleton } from "@/Skeletons/TvmDashboard/BarGraphs";
 import { LineChartsSkeleton } from "@/Skeletons/TvmDashboard/LineCharts";
@@ -49,7 +57,6 @@ const DashboardCards = () => {
   const { token, selectedYear, tenant } = useAuthContext();
   // const { tvmCardsData } = useTVMCardsContext();
 
-
   // ========================= here am using tenstack query ========================
 
   const { data: tvmCardsData, isLoading: isTvmCardsDataLoading } = useQuery({
@@ -59,39 +66,44 @@ const DashboardCards = () => {
     placeholderData: keepPreviousData,
   });
 
+  const { data: firstChartData, isLoading: isFirstChartDataLoading } = useQuery(
+    {
+      queryKey: ["TVMDashboard-first-chart", [selectedYear, tenant]],
+      queryFn: () => getFirstChartData({ tenant, selectedYear }),
+      enabled: !!token,
+      placeholderData: keepPreviousData,
+    }
+  );
 
-  const { data: firstChartData, isLoading: isFirstChartDataLoading } = useQuery({
-    queryKey: ["TVMDashboard-first-chart", [selectedYear, tenant]],
-    queryFn: () => getFirstChartData({ tenant, selectedYear }),
-    enabled: !!token,
-    placeholderData: keepPreviousData,
-  });
+  const { data: secondChartData, isLoading: isSecondChartDataLoading } =
+    useQuery({
+      queryKey: ["TVMDashboard-second-chart", [selectedYear, tenant]],
+      queryFn: () => getSecondChartData({ tenant, selectedYear }),
+      enabled: !!token,
+      placeholderData: keepPreviousData,
+    });
 
+  const { data: thirdChartData, isLoading: isThirdChartDataLoading } = useQuery(
+    {
+      queryKey: ["TVMDashboard-third-chart", [selectedYear, tenant]],
+      queryFn: () => getThirdChartData({ tenant, selectedYear }),
+      enabled: !!token,
+      placeholderData: keepPreviousData,
+    }
+  );
 
-  const { data: secondChartData, isLoading: isSecondChartDataLoading } = useQuery({
-    queryKey: ["TVMDashboard-second-chart", [selectedYear, tenant]],
-    queryFn: () => getSecondChartData({ tenant, selectedYear }),
-    enabled: !!token,
-    placeholderData: keepPreviousData,
-  });
+  const { data: fourthChartData, isLoading: isFourthChartDataLoading } =
+    useQuery({
+      queryKey: ["TVMDashboard-fourth-chart", [selectedYear, tenant]],
+      queryFn: () => getfourthChartData({ tenant, selectedYear }),
+      enabled: !!token,
+      placeholderData: keepPreviousData,
+    });
 
-
-  const { data: thirdChartData, isLoading: isThirdChartDataLoading } = useQuery({
-    queryKey: ["TVMDashboard-third-chart", [selectedYear, tenant]],
-    queryFn: () => getThirdChartData({ tenant, selectedYear }),
-    enabled: !!token,
-    placeholderData: keepPreviousData,
-  });
-
-  const { data: fourthChartData, isLoading: isFourthChartDataLoading } = useQuery({
-    queryKey: ["TVMDashboard-fourth-chart", [selectedYear, tenant]],
-    queryFn: () => getfourthChartData({ tenant, selectedYear }),
-    enabled: !!token,
-    placeholderData: keepPreviousData,
-  });
-
-
-  const { data: creticalHighVulnrable, isLoading: isCreticalHighVulnrableLoading } = useQuery({
+  const {
+    data: creticalHighVulnrable,
+    isLoading: isCreticalHighVulnrableLoading,
+  } = useQuery({
     queryKey: ["TVMDashboard-sixteen-chart", [selectedYear, tenant]],
     queryFn: () => getSixteenChartData({ tenant, selectedYear }),
     enabled: !!token,
@@ -104,9 +116,6 @@ const DashboardCards = () => {
     enabled: !!token,
     placeholderData: keepPreviousData,
   });
-
-
-
 
   const options = {
     plugins: {
@@ -137,15 +146,8 @@ const DashboardCards = () => {
     },
   };
 
-
-  const {
-    ninthChartData,
-    GetNinthChart,
-    GetFiveChart,
-    itemsByAge,
-  } = useDataContext();
-
-
+  const { ninthChartData, GetNinthChart, GetFiveChart, itemsByAge } =
+    useDataContext();
 
   // usestats
 
@@ -192,7 +194,6 @@ const DashboardCards = () => {
   const [redData, setRedData] = useState([]);
   const [maxY, setMaxY] = useState(10); // default max height scale
 
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -206,8 +207,10 @@ const DashboardCards = () => {
   useEffect(() => {
     if (itemsByAge) {
       const getCounts = (data = []) => {
-        const map = Object.fromEntries(data.map(item => [item.severity, item.count]));
-        return categories.map(cat => map[cat] || 0);
+        const map = Object.fromEntries(
+          data.map((item) => [item.severity, item.count])
+        );
+        return categories.map((cat) => map[cat] || 0);
       };
 
       const green = getCounts(itemsByAge.first);
@@ -226,9 +229,6 @@ const DashboardCards = () => {
       setMaxY(maxVal);
     }
   }, [itemsByAge]);
-
-
-
 
   const combinedVulnerabilities = (data) => {
     return {
@@ -266,178 +266,58 @@ const DashboardCards = () => {
     <div className="w-full px-4 sm:px-6 xl:max-w-7xl mx-auto">
       {/* Cards */}
       <div className="w-full">
-        {isTvmCardsDataLoading ? <TvmCardsSkeleton /> : <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
-          {CardsData(tvmCardsData).map((card, index) => (
-            <div
-              key={index}
-              onClick={() => navigate(card.url)}
-              className="bg-[#161e3e] hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl px-4 mt-10 py-4 shadow-md border border-gray-800  flex flex-col items-start"
-            >
-              <div className="flex items-center gap-2 min-w-0 w-full">
-                <div className="w-8 h-8 flex items-center justify-center rounded-md">
-                  <img src={card.icon} alt={card.title} className="w-7 h-7" />
+        {isTvmCardsDataLoading ? (
+          <TvmCardsSkeleton />
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+            {CardsData(tvmCardsData).map((card, index) => (
+              <div
+                key={index}
+                onClick={() => navigate(card.url)}
+                className="bg-[#161e3e] hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl px-4 mt-10 py-4 shadow-md border border-gray-800  flex flex-col items-start"
+              >
+                <div className="flex items-center gap-2 min-w-0 w-full">
+                  <div className="w-8 h-8 flex items-center justify-center rounded-md">
+                    <img src={card.icon} alt={card.title} className="w-7 h-7" />
+                  </div>
+                  <p
+                    className="text-sm font-medium whitespace-nowrap max-sm:truncate overflow-hidden min-w-0"
+                    style={{ color: card.color }}
+                    title={card.title}
+                  >
+                    {card.title}
+                  </p>
                 </div>
-                <p
-                  className="text-sm font-medium whitespace-nowrap max-sm:truncate overflow-hidden min-w-0"
-                  style={{ color: card.color }}
-                  title={card.title}
-                >
-                  {card.title}
+
+                <p className="text-xl font-semibold text-white mt-3 ml-1">
+                  {card.value}
                 </p>
               </div>
-
-              <p className="text-xl font-semibold text-white mt-3 ml-1">
-                {card.value}
-              </p>
-            </div>
-          ))}
-        </div>}
+            ))}
+          </div>
+        )}
       </div>
 
       {/* First Row */}
       <div className="flex flex-col lg:flex-row gap-4 w-full">
         {/* Vulnerability Status Card */}
-        {isFirstChartDataLoading ? <BarGraphsSkeleton /> : <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl p-4 w-full md:w-[360px] lg:w-[360px] h-auto shadow-md">
-          <div className="flex justify-between items-center mb-2">
-            <h2 className="text-white text-base font-semibold">
-              Vulnerability Status
-            </h2>
-            <button className="text-gray-400 hover:text-gray-200 text-sm">
-              •••
-            </button>
-          </div>
-
-          {/* Doughnut Chart */}
-          <div className="relative flex justify-center items-center h-[120px] sm:h-[140px] md:h-[150px]">
-            <Doughnut
-              data={doughnutData}
-              options={{
-                cutout: "70%",
-                maintainAspectRatio: false,
-                plugins: {
-                  legend: { display: false },
-                  tooltip: { enabled: false },
-                },
-              }}
-            />
-            <div className="absolute flex flex-col items-center">
-              <p className="text-white text-lg font-bold">
-                {firstChartData?.total}
-              </p>
-              <p className="text-gray-400 text-xs">Total</p>
-            </div>
-          </div>
-
-          {/* Legend with Counts */}
-          <div className="grid grid-cols-2 gap-y-2 mt-3">
-            {/* Column 1 */}
-            <div className="flex flex-col items-start gap-2 pl-4 sm:pl-6">
-              {firstChartDatady(firstChartData)
-                .slice(0, 2)
-                .map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2">
-                    <span
-                      className="w-2.5 h-2.5 rounded-full"
-                      style={{ backgroundColor: item.color }}
-                    ></span>
-                    <p className="text-white text-xs">
-                      {item.label}{" "}
-                      <span className="text-gray-400">{item.value ?? 0}</span>
-                    </p>
-                  </div>
-                ))}
-            </div>
-
-            {/* Column 2 */}
-            <div className="flex flex-col items-start gap-2">
-              {firstChartDatady(firstChartData)
-                .slice(2, 4)
-                .map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2">
-                    <span
-                      className="w-2.5 h-2.5 rounded-full"
-                      style={{ backgroundColor: item.color }}
-                    ></span>
-                    <p className="text-white text-xs">
-                      {item.label}{" "}
-                      <span className="text-gray-400">{item.value ?? 0}</span>
-                    </p>
-                  </div>
-                ))}
-            </div>
-          </div>
-        </div>}
-
-        {/* Line Chart Card */}
-        {isSecondChartDataLoading ? <LineChartSkeletonLoading /> : <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl p-4 flex-1 h-auto shadow-md overflow-hidden">
-          <div className="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-2">
-            <h2 className="text-white text-base sm:text-lg font-semibold truncate">
-              Vulnerable Items by Risk Rating
-            </h2>
-            <div className="flex items-center gap-2 flex-shrink-0">
+        {isFirstChartDataLoading ? (
+          <BarGraphsSkeleton />
+        ) : (
+          <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl p-4 w-full md:w-[360px] lg:w-[360px] h-auto shadow-md">
+            <div className="flex justify-between items-center mb-2">
+              <h2 className="text-white text-base font-semibold">
+                Vulnerability Status
+              </h2>
               <button className="text-gray-400 hover:text-gray-200 text-sm">
                 •••
               </button>
             </div>
-          </div>
 
-          {/* Line Chart Container */}
-          <div className="w-full h-[150px] md:h-[160px] overflow-hidden">
-            <Line
-              data={SecondChartDatady(secondChartData.data)}
-              options={{
-                ...lineOptions,
-                maintainAspectRatio: false,
-                responsive: true,
-              }}
-            />
-          </div>
-
-          {/* Legend */}
-          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mt-4">
-            {SecondChartDatady(secondChartData).datasets.map((ds, idx) => (
-              <div key={idx} className="flex items-center gap-2">
-                <span
-                  className="w-3 h-3 rounded-full"
-                  style={{ backgroundColor: ds.borderColor }}
-                ></span>
-                <p className="text-white text-xs">{ds.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>}
-      </div>
-
-      {/* Second Row  */}
-      <div className="flex flex-col lg:flex-row lg:flex-wrap gap-4 mt-4 w-full">
-        {/* Exploitability */}
-        {isThirdChartDataLoading ? <BarGraphsSkeleton /> : <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl p-4 w-full md:w-[360px] lg:flex-1 h-auto shadow-md">
-          <div className="flex justify-between items-center mb-2">
-            <h2 className="text-white text-base font-semibold">
-              Exploitability
-            </h2>
-            <button className="text-gray-400 hover:text-gray-200 text-sm">
-              •••
-            </button>
-          </div>
-
-          {/* Doughnut Chart */}
-          <div className="relative flex justify-center items-center h-[200px] sm:h-[240px]">
-            {thirdChartData && thirdChartData.exploitable !== undefined ? (
+            {/* Doughnut Chart */}
+            <div className="relative flex justify-center items-center h-[120px] sm:h-[140px] md:h-[150px]">
               <Doughnut
-                data={{
-                  labels: ["Exploitability", "Not Exploitability"],
-                  datasets: [
-                    {
-                      data: [
-                        thirdChartData.exploitable || 0,
-                        thirdChartData.not_exploitable || 0,
-                      ],
-                      backgroundColor: ["#EF4444", "#22C55E"],
-                      borderWidth: 0,
-                    },
-                  ],
-                }}
+                data={doughnutData}
                 options={{
                   cutout: "70%",
                   maintainAspectRatio: false,
@@ -447,139 +327,279 @@ const DashboardCards = () => {
                   },
                 }}
               />
-            ) : (
-              <p className="text-gray-400 text-sm">No data available</p>
-            )}
+              <div className="absolute flex flex-col items-center">
+                <p className="text-white text-lg font-bold">
+                  {firstChartData?.total}
+                </p>
+                <p className="text-gray-400 text-xs">Total</p>
+              </div>
+            </div>
 
-            {/* Center Total */}
-            <div className="absolute flex flex-col items-center">
-              <p className="text-white text-lg font-bold">
-                {thirdChartData
-                  ? (thirdChartData.exploitable || 0) +
-                  (thirdChartData.not_exploitable || 0)
-                  : 0}
-              </p>
-              <p className="text-gray-400 text-xs">Total</p>
+            {/* Legend with Counts */}
+            <div className="grid grid-cols-2 gap-y-2 mt-3">
+              {/* Column 1 */}
+              <div className="flex flex-col items-start gap-2 pl-4 sm:pl-6">
+                {firstChartDatady(firstChartData)
+                  .slice(0, 2)
+                  .map((item, idx) => (
+                    <div key={idx} className="flex items-center gap-2">
+                      <span
+                        className="w-2.5 h-2.5 rounded-full"
+                        style={{ backgroundColor: item.color }}
+                      ></span>
+                      <p className="text-white text-xs">
+                        {item.label}{" "}
+                        <span className="text-gray-400">{item.value ?? 0}</span>
+                      </p>
+                    </div>
+                  ))}
+              </div>
+
+              {/* Column 2 */}
+              <div className="flex flex-col items-start gap-2">
+                {firstChartDatady(firstChartData)
+                  .slice(2, 4)
+                  .map((item, idx) => (
+                    <div key={idx} className="flex items-center gap-2">
+                      <span
+                        className="w-2.5 h-2.5 rounded-full"
+                        style={{ backgroundColor: item.color }}
+                      ></span>
+                      <p className="text-white text-xs">
+                        {item.label}{" "}
+                        <span className="text-gray-400">{item.value ?? 0}</span>
+                      </p>
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
+        )}
 
-          {/* Legend */}
-          <div className="flex justify-center gap-8 mt-3">
-            <div className="flex items-center gap-2 mt-0.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#EF4444]"></span>
-              <p className="text-white text-xs">
-                Exploitability{" "}
-                <span className="text-gray-400">
-                  {thirdChartData?.exploitable || 0}
-                </span>
-              </p>
+        {/* Line Chart Card */}
+        {isSecondChartDataLoading ? (
+          <LineChartSkeletonLoading />
+        ) : (
+          <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl p-4 flex-1 h-auto shadow-md overflow-hidden">
+            <div className="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-2">
+              <h2 className="text-white text-base sm:text-lg font-semibold truncate">
+                Vulnerable Items by Risk Rating
+              </h2>
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <button className="text-gray-400 hover:text-gray-200 text-sm">
+                  •••
+                </button>
+              </div>
             </div>
-            <div className="flex items-center gap-2 mt-0.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#22C55E]"></span>
-              <p className="text-white text-xs">
-                Not Exploitability{" "}
-                <span className="text-gray-400">
-                  {thirdChartData?.not_exploitable || 0}
-                </span>
-              </p>
+
+            {/* Line Chart Container */}
+            <div className="w-full h-[150px] md:h-[160px] overflow-hidden">
+              <Line
+                data={SecondChartDatady(secondChartData.data)}
+                options={{
+                  ...lineOptions,
+                  maintainAspectRatio: false,
+                  responsive: true,
+                }}
+              />
+            </div>
+
+            {/* Legend */}
+            <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mt-4">
+              {SecondChartDatady(secondChartData).datasets.map((ds, idx) => (
+                <div key={idx} className="flex items-center gap-2">
+                  <span
+                    className="w-3 h-3 rounded-full"
+                    style={{ backgroundColor: ds.borderColor }}
+                  ></span>
+                  <p className="text-white text-xs">{ds.label}</p>
+                </div>
+              ))}
             </div>
           </div>
-        </div>}
+        )}
+      </div>
 
-        {/* Inventory Status */}
-        {isFourthChartDataLoading ? <BarGraphsSkeleton /> : <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl p-4 w-full md:w-[360px] lg:flex-1 h-auto shadow-md">
-          <div className="flex justify-between items-center mb-2">
-            <h2 className="text-white text-base font-semibold">
-              Inventory Status
-            </h2>
-            <button className="text-gray-400 hover:text-gray-200 text-sm">
-              •••
-            </button>
-          </div>
+      {/* Second Row  */}
+      <div className="flex flex-col lg:flex-row lg:flex-wrap gap-4 mt-4 w-full">
+        {/* Exploitability */}
+        {isThirdChartDataLoading ? (
+          <BarGraphsSkeleton />
+        ) : (
+          <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl p-4 w-full md:w-[360px] lg:flex-1 h-auto shadow-md">
+            <div className="flex justify-between items-center mb-2">
+              <h2 className="text-white text-base font-semibold">
+                Exploitability
+              </h2>
+              <button className="text-gray-400 hover:text-gray-200 text-sm">
+                •••
+              </button>
+            </div>
 
-          {/* Doughnut Chart */}
-          <div className="relative flex justify-center items-center h-[200px] sm:h-[240px]">
-            <Doughnut
-              data={
-                fourthChartData
-                  ? {
-                    labels: Object.keys(fourthChartData || {}),
+            {/* Doughnut Chart */}
+            <div className="relative flex justify-center items-center h-[200px] sm:h-[240px]">
+              {thirdChartData && thirdChartData.exploitable !== undefined ? (
+                <Doughnut
+                  data={{
+                    labels: ["Exploitability", "Not Exploitability"],
                     datasets: [
                       {
-                        data: Object.values(fourthChartData || {}),
+                        data: [
+                          thirdChartData.exploitable || 0,
+                          thirdChartData.not_exploitable || 0,
+                        ],
                         backgroundColor: ["#EF4444", "#22C55E"],
                         borderWidth: 0,
                       },
                     ],
-                  }
-                  : {
-                    labels: InventoryData.map((item) => item.label),
-                    datasets: [
-                      {
-                        data: InventoryData.map((item) => item.value),
-                        backgroundColor: InventoryData.map(
-                          (item) => item.color
-                        ),
-                        borderWidth: 0,
-                      },
-                    ],
-                  }
-              }
-              options={{
-                cutout: "70%",
-                maintainAspectRatio: false,
-                plugins: {
-                  legend: { display: false },
-                  tooltip: { enabled: false },
-                },
-              }}
-            />
-            <div className="absolute flex flex-col items-center">
-              <p className="text-white text-lg font-bold">
-                {fourthChartData
-                  ? Object.values(fourthChartData).reduce(
-                    (sum, val) => sum + (val || 0),
-                    0
-                  )
-                  : totall}
-              </p>
-              <p className="text-gray-400 text-xs">Total</p>
+                  }}
+                  options={{
+                    cutout: "70%",
+                    maintainAspectRatio: false,
+                    plugins: {
+                      legend: { display: false },
+                      tooltip: { enabled: false },
+                    },
+                  }}
+                />
+              ) : (
+                <p className="text-gray-400 text-sm">No data available</p>
+              )}
+
+              {/* Center Total */}
+              <div className="absolute flex flex-col items-center">
+                <p className="text-white text-lg font-bold">
+                  {thirdChartData
+                    ? (thirdChartData.exploitable || 0) +
+                      (thirdChartData.not_exploitable || 0)
+                    : 0}
+                </p>
+                <p className="text-gray-400 text-xs">Total</p>
+              </div>
+            </div>
+
+            {/* Legend */}
+            <div className="flex justify-center gap-8 mt-3">
+              <div className="flex items-center gap-2 mt-0.5">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#EF4444]"></span>
+                <p className="text-white text-xs">
+                  Exploitability{" "}
+                  <span className="text-gray-400">
+                    {thirdChartData?.exploitable || 0}
+                  </span>
+                </p>
+              </div>
+              <div className="flex items-center gap-2 mt-0.5">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#22C55E]"></span>
+                <p className="text-white text-xs">
+                  Not Exploitability{" "}
+                  <span className="text-gray-400">
+                    {thirdChartData?.not_exploitable || 0}
+                  </span>
+                </p>
+              </div>
             </div>
           </div>
+        )}
 
-          {/* Legend */}
-          <div className="flex justify-center gap-8 mt-3">
-            {fourthChartData
-              ? Object.entries(fourthChartData).map(([label, value], idx) => (
-                <div key={idx} className="flex items-center gap-2 mt-0.5">
-                  <span
-                    className="w-2.5 h-2.5 rounded-full"
-                    style={{
-                      backgroundColor: idx === 0 ? "#EF4444" : "#22C55E",
-                    }}
-                  ></span>
-                  <p className="text-white text-xs">
-                    {label === "businessApplication"
-                      ? "Business Application"
-                      : "Infrastructure IP"}{" "}
-                    <span className="text-gray-400">{value}</span>
-                  </p>
-                </div>
-              ))
-              : InventoryData.map((item, idx) => (
-                <div key={idx} className="flex items-center gap-2 mt-0.5">
-                  <span
-                    className="w-2.5 h-2.5 rounded-full"
-                    style={{ backgroundColor: item.color }}
-                  ></span>
-                  <p className="text-white text-xs">
-                    {item.label}{" "}
-                    <span className="text-gray-400">{item.value}</span>
-                  </p>
-                </div>
-              ))}
+        {/* Inventory Status */}
+        {isFourthChartDataLoading ? (
+          <BarGraphsSkeleton />
+        ) : (
+          <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl p-4 w-full md:w-[360px] lg:flex-1 h-auto shadow-md">
+            <div className="flex justify-between items-center mb-2">
+              <h2 className="text-white text-base font-semibold">
+                Inventory Status
+              </h2>
+              <button className="text-gray-400 hover:text-gray-200 text-sm">
+                •••
+              </button>
+            </div>
+
+            {/* Doughnut Chart */}
+            <div className="relative flex justify-center items-center h-[200px] sm:h-[240px]">
+              <Doughnut
+                data={
+                  fourthChartData
+                    ? {
+                        labels: Object.keys(fourthChartData || {}),
+                        datasets: [
+                          {
+                            data: Object.values(fourthChartData || {}),
+                            backgroundColor: ["#EF4444", "#22C55E"],
+                            borderWidth: 0,
+                          },
+                        ],
+                      }
+                    : {
+                        labels: InventoryData.map((item) => item.label),
+                        datasets: [
+                          {
+                            data: InventoryData.map((item) => item.value),
+                            backgroundColor: InventoryData.map(
+                              (item) => item.color
+                            ),
+                            borderWidth: 0,
+                          },
+                        ],
+                      }
+                }
+                options={{
+                  cutout: "70%",
+                  maintainAspectRatio: false,
+                  plugins: {
+                    legend: { display: false },
+                    tooltip: { enabled: false },
+                  },
+                }}
+              />
+              <div className="absolute flex flex-col items-center">
+                <p className="text-white text-lg font-bold">
+                  {fourthChartData
+                    ? Object.values(fourthChartData).reduce(
+                        (sum, val) => sum + (val || 0),
+                        0
+                      )
+                    : totall}
+                </p>
+                <p className="text-gray-400 text-xs">Total</p>
+              </div>
+            </div>
+
+            {/* Legend */}
+            <div className="flex justify-center gap-8 mt-3">
+              {fourthChartData
+                ? Object.entries(fourthChartData).map(([label, value], idx) => (
+                    <div key={idx} className="flex items-center gap-2 mt-0.5">
+                      <span
+                        className="w-2.5 h-2.5 rounded-full"
+                        style={{
+                          backgroundColor: idx === 0 ? "#EF4444" : "#22C55E",
+                        }}
+                      ></span>
+                      <p className="text-white text-xs">
+                        {label === "businessApplication"
+                          ? "Business Application"
+                          : "Infrastructure IP"}{" "}
+                        <span className="text-gray-400">{value}</span>
+                      </p>
+                    </div>
+                  ))
+                : InventoryData.map((item, idx) => (
+                    <div key={idx} className="flex items-center gap-2 mt-0.5">
+                      <span
+                        className="w-2.5 h-2.5 rounded-full"
+                        style={{ backgroundColor: item.color }}
+                      ></span>
+                      <p className="text-white text-xs">
+                        {item.label}{" "}
+                        <span className="text-gray-400">{item.value}</span>
+                      </p>
+                    </div>
+                  ))}
+            </div>
           </div>
-        </div>}
+        )}
 
         {/* Card 2: Vulnerable Items by Age */}
         <div className="bg-[#161e3e] rounded-xl p-4 w-full md:w-[360px] lg:flex-1 text-white shadow-lg border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out">
@@ -591,12 +611,12 @@ const DashboardCards = () => {
             </button>
           </div>
 
-          {/* ==== Chart ==== */}
+          {/* Chart */}
           <div className="flex mt-4 h-[160px] sm:h-[180px]">
-            {/* ==== Y Axis Labels ==== */}
+            {/* Y Axis Labels */}
             <div className="flex flex-col justify-between mr-2 text-[10px] text-gray-500">
               {[...Array(5)].map((_, i) => {
-                const step = maxY / 4; // divide into 4 equal steps
+                const step = maxY / 4;
                 const value = Math.round(maxY - i * step);
                 return (
                   <div
@@ -610,7 +630,7 @@ const DashboardCards = () => {
               })}
             </div>
 
-            {/* ==== Grid + Bars ==== */}
+            {/* Grid + Bars */}
             <div className="relative flex-1 overflow-hidden">
               {/* Horizontal dotted lines */}
               {[...Array(5)].map((_, i) => (
@@ -621,38 +641,55 @@ const DashboardCards = () => {
                 />
               ))}
 
-              {/* ==== Bar Groups ==== */}
-              <div className="flex justify-around items-end h-full z-10 relative">
-                {categories.map((label, i) => (
-                  <div key={label} className="flex flex-col items-center">
-                    <div className="flex items-end space-x-1">
-                      <div
-                        className="w-2 rounded-sm bg-green-500"
-                        style={{
-                          height: `${(greenData[i] / maxY) * 100}%`,
-                        }}
-                      />
-                      <div
-                        className="w-2 rounded-sm bg-yellow-400"
-                        style={{
-                          height: `${(yellowData[i] / maxY) * 100}%`,
-                        }}
-                      />
-                      <div
-                        className="w-2 rounded-sm bg-red-500"
-                        style={{
-                          height: `${(redData[i] / maxY) * 100}%`,
-                        }}
-                      />
+              {/* Bar Groups */}
+              {greenData
+                .concat(yellowData)
+                .concat(redData)
+                .every((val) => val === 0) ? (
+                <div className="flex items-center justify-center h-full text-gray-400 text-base">
+                  No data available
+                </div>
+              ) : (
+                <div className="flex justify-around items-end h-full z-10 relative">
+                  {categories.map((label, i) => (
+                    <div key={label} className="flex flex-col items-center">
+                      <div className="flex items-end space-x-1">
+                        <div
+                          className="w-2 rounded-sm bg-green-500"
+                          style={{
+                            height: `${Math.max(
+                              (greenData[i] / maxY) * 100
+                            )}px`,
+                          }}
+                        />
+                        <div
+                          className="w-2 rounded-sm bg-yellow-400"
+                          style={{
+                            height: `${Math.max(
+                              (yellowData[i] / maxY) * 100
+                            )}px`,
+                          }}
+                        />
+                        <div
+                          className="w-2 rounded-sm bg-red-500"
+                          style={{
+                            height: `${Math.max(
+                              (redData[i] / maxY) * 100
+                            )}px`,
+                          }}
+                        />
+                      </div>
+                      <div className="text-[10px] text-gray-300 mt-1">
+                        {label}
+                      </div>
                     </div>
-                    <div className="text-[10px] text-gray-300 mt-1">{label}</div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
-          {/* ==== Legend ==== */}
+          {/* Legend */}
           <div className="flex flex-wrap justify-center text-xs text-gray-400 gap-3 mt-3">
             <div className="flex items-center gap-1">
               <div className="w-2 h-2 rounded-full bg-green-500" />
@@ -668,7 +705,6 @@ const DashboardCards = () => {
             </div>
           </div>
         </div>
-
       </div>
 
       {/* Third row  */}
@@ -803,59 +839,67 @@ const DashboardCards = () => {
         </div>
 
         {/* === Critical / High Vulnerabilities === */}
-        {isCreticalHighVulnrableLoading ? <BarGraphsSkeleton /> : <div className="bg-[#161e3e] p-6 border border-gray-800 rounded-xl shadow-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out flex flex-col items-center justify-between text-white">
-          <h2 className="text-lg font-semibold mb-4 text-center">
-            Critical / High Vulnerabilities
-          </h2>
-          <div className="relative w-48 h-48 sm:w-56 sm:h-56">
-            <Doughnut
-              data={combinedVulnerabilities(creticalHighVulnrable)}
-              options={doughnutOptions}
-            />
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
-              <p className="text-sm text-gray-400">Total</p>
-              <p className="text-3xl font-bold">
-                {creticalHighVulnrable.Critical + creticalHighVulnrable.High}
-              </p>
+        {isCreticalHighVulnrableLoading ? (
+          <BarGraphsSkeleton />
+        ) : (
+          <div className="bg-[#161e3e] p-6 border border-gray-800 rounded-xl shadow-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out flex flex-col items-center justify-between text-white">
+            <h2 className="text-lg font-semibold mb-4 text-center">
+              Critical / High Vulnerabilities
+            </h2>
+            <div className="relative w-48 h-48 sm:w-56 sm:h-56">
+              <Doughnut
+                data={combinedVulnerabilities(creticalHighVulnrable)}
+                options={doughnutOptions}
+              />
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
+                <p className="text-sm text-gray-400">Total</p>
+                <p className="text-3xl font-bold">
+                  {creticalHighVulnrable.Critical + creticalHighVulnrable.High}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center text-xs justify-center gap-6 mt-4">
+              <div className="flex items-center font-medium">
+                <span className="inline-block w-3 h-3 bg-[#ef4444] rounded-full mr-2"></span>
+                Critical: {creticalHighVulnrable.Critical}
+              </div>
+              <div className="flex items-center font-medium">
+                <span className="inline-block w-3 h-3 bg-[#3b82f6] rounded-full mr-2"></span>
+                High: {creticalHighVulnrable.High}
+              </div>
             </div>
           </div>
-          <div className="flex items-center text-xs justify-center gap-6 mt-4">
-            <div className="flex items-center font-medium">
-              <span className="inline-block w-3 h-3 bg-[#ef4444] rounded-full mr-2"></span>
-              Critical: {creticalHighVulnrable.Critical}
-            </div>
-            <div className="flex items-center font-medium">
-              <span className="inline-block w-3 h-3 bg-[#3b82f6] rounded-full mr-2"></span>
-              High: {creticalHighVulnrable.High}
-            </div>
-          </div>
-        </div>}
+        )}
 
         {/* === SLA Details === */}
-        {isSlaBreachedLoading ? <BarGraphsSkeleton /> : <div className="bg-[#161e3e] p-6 border border-gray-800 rounded-xl shadow-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out flex flex-col items-center justify-between text-white">
-          <h2 className="text-lg font-semibold mb-4 text-center">
-            SLA Details
-          </h2>
-          <div className="relative w-48 h-48 sm:w-56 sm:h-56">
-            <Doughnut data={SLABreached(slaBreached)} options={options} />
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
-              <p className="text-sm text-gray-400">Total</p>
-              <p className="text-3xl font-bold">
-                {slaBreached.MET + slaBreached.NOT_MET}
-              </p>
+        {isSlaBreachedLoading ? (
+          <BarGraphsSkeleton />
+        ) : (
+          <div className="bg-[#161e3e] p-6 border border-gray-800 rounded-xl shadow-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out flex flex-col items-center justify-between text-white">
+            <h2 className="text-lg font-semibold mb-4 text-center">
+              SLA Details
+            </h2>
+            <div className="relative w-48 h-48 sm:w-56 sm:h-56">
+              <Doughnut data={SLABreached(slaBreached)} options={options} />
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
+                <p className="text-sm text-gray-400">Total</p>
+                <p className="text-3xl font-bold">
+                  {slaBreached.MET + slaBreached.NOT_MET}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center text-xs justify-center gap-6 mt-4">
+              <div className="flex items-center font-medium">
+                <span className="inline-block w-3 h-3 bg-green-500 rounded-full mr-2"></span>
+                Met: {slaBreached.MET}
+              </div>
+              <div className="flex items-center font-medium">
+                <span className="inline-block w-3 h-3 bg-red-500 rounded-full mr-2"></span>
+                Not Met: {slaBreached.NOT_MET}
+              </div>
             </div>
           </div>
-          <div className="flex items-center text-xs justify-center gap-6 mt-4">
-            <div className="flex items-center font-medium">
-              <span className="inline-block w-3 h-3 bg-green-500 rounded-full mr-2"></span>
-              Met: {slaBreached.MET}
-            </div>
-            <div className="flex items-center font-medium">
-              <span className="inline-block w-3 h-3 bg-red-500 rounded-full mr-2"></span>
-              Not Met: {slaBreached.NOT_MET}
-            </div>
-          </div>
-        </div>}
+        )}
       </div>
 
       <SecurendDashboardCards />
