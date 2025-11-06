@@ -19,7 +19,17 @@ import {
 } from "@/constants/dynomic.data";
 import SecurendDashboardCards from "./ThreeCards";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { getFifthChartData, getFirstChartData, getfourthChartData, getNinthChartData, getSecondChartData, getSeventeenChartData, getSixteenChartData, getThirdChartData, getTvmCardsData } from "@/services/TVMDashboard.service";
+import {
+  getFifthChartData,
+  getFirstChartData,
+  getfourthChartData,
+  getNinthChartData,
+  getSecondChartData,
+  getSeventeenChartData,
+  getSixteenChartData,
+  getThirdChartData,
+  getTvmCardsData,
+} from "@/services/TVMDashboard.service";
 import { TvmCardsSkeleton } from "@/Skeletons/TvmDashboard/Cards";
 import { BarGraphsSkeleton } from "@/Skeletons/TvmDashboard/BarGraphs";
 import { LineChartsSkeleton } from "@/Skeletons/TvmDashboard/LineCharts";
@@ -116,13 +126,14 @@ const DashboardCards = () => {
     placeholderData: keepPreviousData,
   });
 
-  const { data: ninthChartData, isLoading: isNinthChartDataLoading } = useQuery({
-    queryKey: ["TVMDashboard-ninth-chart", [selectedYear, tenant]],
-    queryFn: () => getNinthChartData({ tenant, selectedYear }),
-    enabled: !!token,
-    placeholderData: keepPreviousData,
-  });
-
+  const { data: ninthChartData, isLoading: isNinthChartDataLoading } = useQuery(
+    {
+      queryKey: ["TVMDashboard-ninth-chart", [selectedYear, tenant]],
+      queryFn: () => getNinthChartData({ tenant, selectedYear }),
+      enabled: !!token,
+      placeholderData: keepPreviousData,
+    }
+  );
 
   const { data: itemsByAge, isLoading: isItemsByAgeLoading } = useQuery({
     queryKey: ["TVMDashboard-fifth-chart", [selectedYear, tenant]],
@@ -130,7 +141,6 @@ const DashboardCards = () => {
     enabled: !!token,
     placeholderData: keepPreviousData,
   });
-
 
   const options = {
     plugins: {
@@ -222,11 +232,7 @@ const DashboardCards = () => {
     },
   };
 
-
   const navigate = useNavigate();
-
-
-
 
 
 
@@ -600,26 +606,49 @@ const DashboardCards = () => {
         )}
 
         {/* Card 2: Vulnerable Items by Age */}
-        {isItemsByAgeLoading ? <LineChartsSkeleton /> : <div className="bg-[#161e3e] rounded-xl p-4 w-full md:w-[360px] lg:flex-1 text-white shadow-lg border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold">Vulnerable Items by Age</h2>
-            <button className="text-gray-400 text-sm hover:text-gray-200 transition-colors">
-              •••
-            </button>
-          </div>
-
-          {itemsByAge.length === 0 ? (
-            <div className="h-[200px] flex items-center justify-center text-gray-400">
-              No data available
+        {isItemsByAgeLoading ? (
+          <LineChartsSkeleton />
+        ) : (
+          <div className="bg-[#161e3e] rounded-xl p-4 w-full md:w-[360px] lg:flex-1 text-white shadow-lg border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-lg font-semibold">Vulnerable Items by Age</h2>
+              <button className="text-gray-400 text-sm hover:text-gray-200 transition-colors">
+                •••
+              </button>
             </div>
-          ) : (
-            <>
+
+            {!itemsByAge || itemsByAge.length === 0 ? (
+              <div className="h-[200px] flex items-center justify-center text-gray-400">
+                No data available
+              </div>
+            ) : (
               <div className="h-[200px]">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={itemsByAge} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#444" />
-                    <XAxis dataKey="category" stroke="#aaa" />
-                    <YAxis stroke="#aaa" />
+                  <BarChart
+                    data={itemsByAge}
+                    barCategoryGap="30%" // spacing between groups
+                    barGap={2}
+                    margin={{ top: 10, right: 16, left: 0, bottom: 24 }}
+                  >
+                    <CartesianGrid
+                      strokeDasharray="4 4"
+                      stroke="#23293a"
+                      vertical={false}
+                    />
+                    <XAxis
+                      dataKey="category"
+                      stroke="#94A3B8"
+                      tickLine={false}
+                      axisLine={{ stroke: "#293249" }}
+                      tick={{ fontSize: 14, fontWeight: 600 }}
+                    />
+                    <YAxis
+                      stroke="#94A3B8"
+                      axisLine={{ stroke: "#293249" }}
+                      tickLine={false}
+                      tick={{ fontSize: 13 }}
+                      allowDecimals={false}
+                    />
                     <Tooltip
                       contentStyle={{
                         backgroundColor: "#1e2761",
@@ -661,12 +690,16 @@ const DashboardCards = () => {
                     />
                   </BarChart>
                 </ResponsiveContainer>
+
+                <div className="flex flex-wrap justify-center text-xs text-gray-400 gap-3 mt-3"> <div className="flex items-center gap-1"> <div className="w-2 h-2 rounded-full bg-green-500" /> 0–30 days </div> <div className="flex items-center gap-1"> <div className="w-2 h-2 rounded-full bg-yellow-400" /> 31–90 days </div> <div className="flex items-center gap-1"> <div className="w-2 h-2 rounded-full bg-red-500" /> 90+ days </div> </div>
               </div>
 
-              <div className="flex flex-wrap justify-center text-xs text-gray-400 gap-3 mt-3"> <div className="flex items-center gap-1"> <div className="w-2 h-2 rounded-full bg-green-500" /> 0–30 days </div> <div className="flex items-center gap-1"> <div className="w-2 h-2 rounded-full bg-yellow-400" /> 31–90 days </div> <div className="flex items-center gap-1"> <div className="w-2 h-2 rounded-full bg-red-500" /> 90+ days </div> </div>
-            </>
-          )}
-        </div>}
+              
+            )}
+          </div>
+        )}
+
+        
       </div>
       {/* Third row  */}
       isNinthChartDataLoading{" "}
