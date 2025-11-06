@@ -1,4 +1,3 @@
-import { TVMCardsContextProvider } from "@/context";
 import AppErrorBoundary from "@/utils/Errorhandler";
 import { lazy, Suspense } from "react";
 
@@ -66,13 +65,11 @@ export const PrivateRoutes = [
   {
     path: "/tvm-dashboard",
     element: (
-      <TVMCardsContextProvider>
+      <Suspense fallback={<Suspense><TvmDashboardLayoutSkeleton /></Suspense>}>
         <AppErrorBoundary>
-          <Suspense fallback={<Suspense><TvmDashboardLayoutSkeleton /></Suspense>}>
-            <Home />
-          </Suspense>
+          <Home />
         </AppErrorBoundary>
-      </TVMCardsContextProvider>
+      </Suspense>
     ),
   },
   {

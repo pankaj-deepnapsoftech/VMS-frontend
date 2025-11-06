@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Doughnut, Line } from "react-chartjs-2";
 import { useNavigate } from "react-router-dom";
 import {
@@ -12,7 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { useAuthContext, useDataContext } from "../context";
+import { useAuthContext } from "../context";
 import {
   CardsData,
   firstChartDatady,
@@ -125,7 +124,7 @@ const DashboardCards = () => {
   });
 
 
-    const { data: itemsByAge, isLoading: isItemsByAgeLoading } = useQuery({
+  const { data: itemsByAge, isLoading: isItemsByAgeLoading } = useQuery({
     queryKey: ["TVMDashboard-fifth-chart", [selectedYear, tenant]],
     queryFn: () => getFifthChartData({ tenant, selectedYear }),
     enabled: !!token,
@@ -184,9 +183,6 @@ const DashboardCards = () => {
     },
   };
 
-  const { GetFiveChart } =useDataContext();
-
-  // usestats
 
   const totall = InventoryData.reduce((sum, item) => sum + item.value, 0);
 
@@ -229,11 +225,7 @@ const DashboardCards = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (token) {
-      GetFiveChart(tenant, selectedYear);
-    }
-  }, [token, tenant, selectedYear]);
+
 
 
 
@@ -477,7 +469,7 @@ const DashboardCards = () => {
                 <p className="text-white text-lg font-bold">
                   {thirdChartData
                     ? (thirdChartData.exploitable || 0) +
-                      (thirdChartData.not_exploitable || 0)
+                    (thirdChartData.not_exploitable || 0)
                     : 0}
                 </p>
                 <p className="text-gray-400 text-xs">Total</p>
@@ -528,27 +520,27 @@ const DashboardCards = () => {
                 data={
                   fourthChartData
                     ? {
-                        labels: Object.keys(fourthChartData || {}),
-                        datasets: [
-                          {
-                            data: Object.values(fourthChartData || {}),
-                            backgroundColor: ["#EF4444", "#22C55E"],
-                            borderWidth: 0,
-                          },
-                        ],
-                      }
+                      labels: Object.keys(fourthChartData || {}),
+                      datasets: [
+                        {
+                          data: Object.values(fourthChartData || {}),
+                          backgroundColor: ["#EF4444", "#22C55E"],
+                          borderWidth: 0,
+                        },
+                      ],
+                    }
                     : {
-                        labels: InventoryData.map((item) => item.label),
-                        datasets: [
-                          {
-                            data: InventoryData.map((item) => item.value),
-                            backgroundColor: InventoryData.map(
-                              (item) => item.color
-                            ),
-                            borderWidth: 0,
-                          },
-                        ],
-                      }
+                      labels: InventoryData.map((item) => item.label),
+                      datasets: [
+                        {
+                          data: InventoryData.map((item) => item.value),
+                          backgroundColor: InventoryData.map(
+                            (item) => item.color
+                          ),
+                          borderWidth: 0,
+                        },
+                      ],
+                    }
                 }
                 options={{
                   cutout: "70%",
@@ -563,9 +555,9 @@ const DashboardCards = () => {
                 <p className="text-white text-lg font-bold">
                   {fourthChartData
                     ? Object.values(fourthChartData).reduce(
-                        (sum, val) => sum + (val || 0),
-                        0
-                      )
+                      (sum, val) => sum + (val || 0),
+                      0
+                    )
                     : totall}
                 </p>
                 <p className="text-gray-400 text-xs">Total</p>
@@ -576,39 +568,39 @@ const DashboardCards = () => {
             <div className="flex justify-center gap-8 mt-3">
               {fourthChartData
                 ? Object.entries(fourthChartData).map(([label, value], idx) => (
-                    <div key={idx} className="flex items-center gap-2 mt-0.5">
-                      <span
-                        className="w-2.5 h-2.5 rounded-full"
-                        style={{
-                          backgroundColor: idx === 0 ? "#EF4444" : "#22C55E",
-                        }}
-                      ></span>
-                      <p className="text-white text-xs">
-                        {label === "businessApplication"
-                          ? "Business Application"
-                          : "Infrastructure IP"}{" "}
-                        <span className="text-gray-400">{value}</span>
-                      </p>
-                    </div>
-                  ))
+                  <div key={idx} className="flex items-center gap-2 mt-0.5">
+                    <span
+                      className="w-2.5 h-2.5 rounded-full"
+                      style={{
+                        backgroundColor: idx === 0 ? "#EF4444" : "#22C55E",
+                      }}
+                    ></span>
+                    <p className="text-white text-xs">
+                      {label === "businessApplication"
+                        ? "Business Application"
+                        : "Infrastructure IP"}{" "}
+                      <span className="text-gray-400">{value}</span>
+                    </p>
+                  </div>
+                ))
                 : InventoryData.map((item, idx) => (
-                    <div key={idx} className="flex items-center gap-2 mt-0.5">
-                      <span
-                        className="w-2.5 h-2.5 rounded-full"
-                        style={{ backgroundColor: item.color }}
-                      ></span>
-                      <p className="text-white text-xs">
-                        {item.label}{" "}
-                        <span className="text-gray-400">{item.value}</span>
-                      </p>
-                    </div>
-                  ))}
+                  <div key={idx} className="flex items-center gap-2 mt-0.5">
+                    <span
+                      className="w-2.5 h-2.5 rounded-full"
+                      style={{ backgroundColor: item.color }}
+                    ></span>
+                    <p className="text-white text-xs">
+                      {item.label}{" "}
+                      <span className="text-gray-400">{item.value}</span>
+                    </p>
+                  </div>
+                ))}
             </div>
           </div>
         )}
 
         {/* Card 2: Vulnerable Items by Age */}
-        {isItemsByAgeLoading ? <LineChartsSkeleton/>  : <div className="bg-[#161e3e] rounded-xl p-4 w-full md:w-[360px] lg:flex-1 text-white shadow-lg border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out">
+        {isItemsByAgeLoading ? <LineChartsSkeleton /> : <div className="bg-[#161e3e] rounded-xl p-4 w-full md:w-[360px] lg:flex-1 text-white shadow-lg border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-semibold">Vulnerable Items by Age</h2>
             <button className="text-gray-400 text-sm hover:text-gray-200 transition-colors">
@@ -622,56 +614,56 @@ const DashboardCards = () => {
             </div>
           ) : (
             <>
-            <div className="h-[200px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={itemsByAge} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#444" />
-                  <XAxis dataKey="category" stroke="#aaa" />
-                  <YAxis stroke="#aaa" />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: "#1e2761",
-                      borderRadius: "0.5rem",
-                      border: "none",
-                      color: "#fff",
-                      fontWeight: "bold",
-                    }}
-                    itemStyle={{ fontWeight: 500 }}
-                    cursor={{ fill: "rgba(255,255,255,0.05)" }}
-                  />
-                  <Legend
-                    verticalAlign="top"
-                    align="center"
-                    iconType="circle"
-                    iconSize={18}
-                    formatter={legendFormatter}
-                    wrapperStyle={{
-                      color: "#fff",
-                      fontWeight: "bold",
-                      marginBottom: 10,
-                    }}
-                  />
-                  {/* Bars with rounded corners */}
-                  <Bar
-                    dataKey="0–30 days"
-                    fill={COLORS.green}
-                    radius={[8, 8, 0, 0]}
-                  />
-                  <Bar
-                    dataKey="31–90 days"
-                    fill={COLORS.yellow}
-                    radius={[8, 8, 0, 0]}
-                  />
-                  <Bar
-                    dataKey="90+ days"
-                    fill={COLORS.red}
-                    radius={[8, 8, 0, 0]}
-                  />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+              <div className="h-[200px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={itemsByAge} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#444" />
+                    <XAxis dataKey="category" stroke="#aaa" />
+                    <YAxis stroke="#aaa" />
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: "#1e2761",
+                        borderRadius: "0.5rem",
+                        border: "none",
+                        color: "#fff",
+                        fontWeight: "bold",
+                      }}
+                      itemStyle={{ fontWeight: 500 }}
+                      cursor={{ fill: "rgba(255,255,255,0.05)" }}
+                    />
+                    <Legend
+                      verticalAlign="top"
+                      align="center"
+                      iconType="circle"
+                      iconSize={18}
+                      formatter={legendFormatter}
+                      wrapperStyle={{
+                        color: "#fff",
+                        fontWeight: "bold",
+                        marginBottom: 10,
+                      }}
+                    />
+                    {/* Bars with rounded corners */}
+                    <Bar
+                      dataKey="0–30 days"
+                      fill={COLORS.green}
+                      radius={[8, 8, 0, 0]}
+                    />
+                    <Bar
+                      dataKey="31–90 days"
+                      fill={COLORS.yellow}
+                      radius={[8, 8, 0, 0]}
+                    />
+                    <Bar
+                      dataKey="90+ days"
+                      fill={COLORS.red}
+                      radius={[8, 8, 0, 0]}
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
 
-            <div className="flex flex-wrap justify-center text-xs text-gray-400 gap-3 mt-3"> <div className="flex items-center gap-1"> <div className="w-2 h-2 rounded-full bg-green-500" /> 0–30 days </div> <div className="flex items-center gap-1"> <div className="w-2 h-2 rounded-full bg-yellow-400" /> 31–90 days </div> <div className="flex items-center gap-1"> <div className="w-2 h-2 rounded-full bg-red-500" /> 90+ days </div> </div>
+              <div className="flex flex-wrap justify-center text-xs text-gray-400 gap-3 mt-3"> <div className="flex items-center gap-1"> <div className="w-2 h-2 rounded-full bg-green-500" /> 0–30 days </div> <div className="flex items-center gap-1"> <div className="w-2 h-2 rounded-full bg-yellow-400" /> 31–90 days </div> <div className="flex items-center gap-1"> <div className="w-2 h-2 rounded-full bg-red-500" /> 90+ days </div> </div>
             </>
           )}
         </div>}

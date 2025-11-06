@@ -9,9 +9,10 @@ import {
   Legend,
   ArcElement,
 } from "chart.js";
-import { useAuthContext, useTVMCardsContext } from "@/context";
-import { getSixteenChartData } from "@/services/TVMDashboard.service";
+import { useAuthContext } from "@/context";
+import { getEighteenthChartData, getElaventhChartData, getFifteenthChartData, getFourteenthChartData, getNineteenthChartData, getSixteenChartData, getTharteenthChartData } from "@/services/TVMDashboard.service";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { AssackExposureSkeletonLoading } from "@/Skeletons/ExecutiveDashbord/thirdSection";
 
 ChartJS.register(
   CategoryScale,
@@ -26,45 +27,57 @@ ChartJS.register(
 const Dashboard = () => {
   const { token, tenant, selectedYear } = useAuthContext();
 
-     const { data: creticalHighVulnrable, isLoading: isCreticalHighVulnrableLoading } = useQuery({
-    queryKey: ["TVMDashboard-sixteen-chart", [selectedYear, tenant]],
-    queryFn: () => getSixteenChartData({ tenant, selectedYear }),
+  const { data: topFiveinfraAssetCount, isLoading: isTopFiveinfraAssetCountLoading } = useQuery({
+    queryKey: ["TVMDashboard-eleventh-chart", [selectedYear, tenant]],
+    queryFn: () => getElaventhChartData({ tenant, selectedYear }),
     enabled: !!token,
     placeholderData: keepPreviousData,
   });
 
-  const {
-    elaventhChart,
-    topFiveinfraAssetCount,
-    TharteenthChart,
-    topOpenVulnerabilities,
-    fourteenthChart,
-    topClosedVulnerabilities,
-    fifthteenthChart,
-    topUniqueVulnerabilities,
-    ninteenthChart,
-    exceptionVulnerabilities,
-    seventeenthChart,
-    eightteenthChart,
-    breachVulnerableList,
-  } = useTVMCardsContext();
+  const { data: topOpenVulnerabilities, isLoading: isTopOpenVulnerabilitiesLoading } = useQuery({
+    queryKey: ["TVMDashboard-tharteenth-chart", [selectedYear, tenant]],
+    queryFn: () => getTharteenthChartData({ tenant, selectedYear }),
+    enabled: !!token,
+    placeholderData: keepPreviousData,
+  });
 
-  useEffect(() => {
-    if (token) {
-      elaventhChart(tenant, selectedYear);
-      TharteenthChart(tenant, selectedYear);
-      fourteenthChart(tenant, selectedYear);
-      fifthteenthChart(tenant, selectedYear);
-      ninteenthChart(tenant, selectedYear);
-      eightteenthChart(tenant, selectedYear);
-    }
-  }, [token, tenant, selectedYear]);
+  const { data: topClosedVulnerabilities, isLoading: isTopClosedVulnerabilitiesLoading } = useQuery({
+    queryKey: ["TVMDashboard-fourteenth-chart", [selectedYear, tenant]],
+    queryFn: () => getFourteenthChartData({ tenant, selectedYear }),
+    enabled: !!token,
+    placeholderData: keepPreviousData,
+  });
+
+
+  const { data: topUniqueVulnerabilities, isLoading: isTopUniqueVulnerabilitiesLoading } = useQuery({
+    queryKey: ["TVMDashboard-fifteenth-chart", [selectedYear, tenant]],
+    queryFn: () => getFifteenthChartData({ tenant, selectedYear }),
+    enabled: !!token,
+    placeholderData: keepPreviousData,
+  });
+
+   const { data: breachVulnerableList, isLoading: isBreachVulnerableListLoading } = useQuery({
+    queryKey: ["TVMDashboard-eighteenth-chart", [selectedYear, tenant]],
+    queryFn: () => getEighteenthChartData({ tenant, selectedYear }),
+    enabled: !!token,
+    placeholderData: keepPreviousData,
+  });
+
+
+    const { data: exceptionVulnerabilities, isLoading: isExceptionVulnerabilitiesLoading } = useQuery({
+    queryKey: ["TVMDashboard-nineteenth-chart", [selectedYear, tenant]],
+    queryFn: () => getNineteenthChartData({ tenant, selectedYear }),
+    enabled: !!token,
+    placeholderData: keepPreviousData,
+  });
+
+
 
   return (
     <div className="min-h-screen">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Top 5 Vulnerable Assets */}
-        <div className="bg-[#161e3e] border hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
+        {isTopFiveinfraAssetCountLoading ? <AssackExposureSkeletonLoading /> : <div className="bg-[#161e3e] border hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
               <h2 className="text-lg font-semibold mb-1">
@@ -87,7 +100,7 @@ const Dashboard = () => {
             </div>
 
             {/* Data Rows */}
-            {topFiveinfraAssetCount?.map((asset, idx) => (
+            {topFiveinfraAssetCount && topFiveinfraAssetCount?.map((asset, idx) => (
               <div
                 key={idx}
                 className="grid grid-cols-12 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-gray-800 transition-colors"
@@ -102,10 +115,10 @@ const Dashboard = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div>}
 
         {/* Top 5 Open Vulnerabilities */}
-        <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-6 rounded-xl h-auto w-full lg:flex-1">
+        {isTopOpenVulnerabilitiesLoading ? <AssackExposureSkeletonLoading /> : <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
               <h2 className="text-lg font-semibold mb-1">
@@ -126,7 +139,7 @@ const Dashboard = () => {
             </div>
 
             {/* Data Rows */}
-            {topOpenVulnerabilities.map((vuln, idx) => (
+            {topOpenVulnerabilities && topOpenVulnerabilities.map((vuln, idx) => (
               <div
                 key={idx}
                 className="grid grid-cols-9 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-gray-800 transition-colors"
@@ -141,10 +154,10 @@ const Dashboard = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div>}
 
         {/* Top 5 Closed Vulnerabilities */}
-        <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-6 rounded-xl h-auto w-full lg:flex-1">
+        {isTopClosedVulnerabilitiesLoading ? <AssackExposureSkeletonLoading /> : <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
               <h2 className="text-lg font-semibold mb-1">
@@ -165,7 +178,7 @@ const Dashboard = () => {
             </div>
 
             {/* Data Rows */}
-            {topClosedVulnerabilities.map((vuln, idx) => (
+            {topClosedVulnerabilities && topClosedVulnerabilities.map((vuln, idx) => (
               <div
                 key={idx}
                 className="grid grid-cols-9 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-gray-800 transition-colors"
@@ -177,10 +190,10 @@ const Dashboard = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div>}
 
         {/* Top 5 Unique Vulnerabilities */}
-        <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-6 rounded-xl h-auto w-full lg:flex-1">
+       {isTopUniqueVulnerabilitiesLoading ? <AssackExposureSkeletonLoading />  : <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
               <h2 className="text-lg font-semibold mb-1">
@@ -201,7 +214,7 @@ const Dashboard = () => {
             </div>
 
             {/* Data Rows */}
-            {topUniqueVulnerabilities.map((vuln, idx) => (
+            {topUniqueVulnerabilities && topUniqueVulnerabilities.map((vuln, idx) => (
               <div
                 key={idx}
                 className="grid grid-cols-9 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-gray-800 transition-colors"
@@ -213,10 +226,10 @@ const Dashboard = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div>}
 
         {/* Breach Vulnerabilities List */}
-        <div className="bg-[#161e3e] border hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out border-gray-800 text-white p-6 rounded-xl h-auto w-full
+       {isBreachVulnerableListLoading ? <AssackExposureSkeletonLoading />  : <div className="bg-[#161e3e] border hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out border-gray-800 text-white p-6 rounded-xl h-auto w-full
          lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
@@ -234,7 +247,7 @@ const Dashboard = () => {
               <div className="col-span-3 text-right">Severity</div>
             </div>
 
-            {breachVulnerableList?.map((vuln, idx) => (
+            {breachVulnerableList && breachVulnerableList?.map((vuln, idx) => (
               <div
                 key={idx}
                 className="grid grid-cols-9 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-gray-800 transition-colors"
@@ -246,10 +259,10 @@ const Dashboard = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div>}
 
         {/* Exception Vulnerabilities List */}
-        <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-6 rounded-xl h-auto w-full
+       {isExceptionVulnerabilitiesLoading ? <AssackExposureSkeletonLoading />   :  <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-6 rounded-xl h-auto w-full
          lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
@@ -269,7 +282,7 @@ const Dashboard = () => {
               <div className="col-span-3 text-right">Severity</div>
             </div>
 
-            {exceptionVulnerabilities?.map((vuln, idx) => (
+            {exceptionVulnerabilities  && exceptionVulnerabilities?.map((vuln, idx) => (
               <div
                 key={idx}
                 className="grid grid-cols-9 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-gray-800 transition-colors"
@@ -281,7 +294,7 @@ const Dashboard = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div>}
       </div>
     </div>
   );

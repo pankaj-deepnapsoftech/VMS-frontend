@@ -77,9 +77,38 @@ export const getFifthChartData = async ({ tenant, selectedYear }) => {
     return formatted;
 };
 
+export const getElaventhChartData = async ({ tenant, selectedYear }) => {
+    const res = await AxiosHandler.get(`/data/tvm-elaventh-data?tenant=${tenant ? tenant : ""}&year=${selectedYear}`);
+    return res.data?.data;
+};
+
+export const getTharteenthChartData = async ({ tenant, selectedYear }) => {
+    const res = await AxiosHandler.get(`/data/tvm-tharteenth-data?tenant=${tenant ? tenant : ""}&year=${selectedYear}`);
+    return res.data?.data;
+};
+
+export const getFourteenthChartData = async ({ tenant, selectedYear }) => {
+    const res = await AxiosHandler.get(`/data/tvm-fourteenth-data?tenant=${tenant ? tenant : ""}&year=${selectedYear}`);
+    return res.data?.data;
+};
 
 
+export const getFifteenthChartData = async ({ tenant, selectedYear }) => {
+    const res = await AxiosHandler.get(`/data/tvm-fifteen-data?tenant=${tenant ? tenant : ""}&year=${selectedYear}`);
+    return res.data?.data;
+};
 
+
+export const getNineteenthChartData = async ({ tenant, selectedYear }) => {
+   const res = await AxiosHandler.get(`/data/tvm-ninteen-data?tenant=${tenant ? tenant : ""}&year=${selectedYear}`);
+    return res.data?.data;
+};
+
+
+export const getEighteenthChartData = async ({ tenant, selectedYear }) => {
+      const res = await AxiosHandler.get(`/data/tvm-eighteen-data?tenant=${tenant ? tenant : ""}&year=${selectedYear}`);
+    return res.data?.data;
+};
 
 
 
