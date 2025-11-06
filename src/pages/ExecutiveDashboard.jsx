@@ -25,10 +25,10 @@ import {
   TopFiveRiskIndicator,
 } from "@/constants/dynomic.data";
 import { keepPreviousData, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getAssetInventoryData, getCardsData, getfinanceTrendChartData, getFinancialExposureData, getRemidationWorkflowData, getRiskTrendChartData } from "@/services/ExecutiveDashboard.service";
+import { getAssetInventoryData, getAttackExposureData, getCardsData, getfinanceTrendChartData, getFinancialExposureData, getRemidationWorkflowData, getRiskTrendChartData, getTopFiveRiskChartData, getTopHighValueChartData } from "@/services/ExecutiveDashboard.service";
 import CardsSkeletonLoading from "@/Skeletons/ExecutiveDashbord/Cards";
 import LineChartSkeletonLoading from "@/Skeletons/ExecutiveDashbord/trendsChart";
-import { AssertInvertorySkeletonLoading, FinancialExposureSkeletonLoading, RemediationWorkflowSkeletonLoading } from "@/Skeletons/ExecutiveDashbord/thirdSection";
+import { AssackExposureSkeletonLoading, AssertInvertorySkeletonLoading, FinancialExposureSkeletonLoading, RemediationWorkflowSkeletonLoading } from "@/Skeletons/ExecutiveDashbord/thirdSection";
 
 
 ChartJS.register(
@@ -88,15 +88,34 @@ export default function ExecutiveSummaryPage() {
   placeholderData: keepPreviousData,
 });
 
+
+ const { data: attackExposureData,isLoading:isAttackExposureDataLoading} = useQuery({
+  queryKey:["ExecutiveDashboard-attack-exposure",[selectedYear,tenant]],
+  queryFn:()=>getAttackExposureData({tenant,selectedYear}),
+  enabled: !!tenant && !!token,
+  placeholderData: keepPreviousData,
+});
+
+ const { data: topFiveRisk,isLoading:isTopFiveRiskLoading} = useQuery({
+  queryKey:["ExecutiveDashboard-top-five-risk",[selectedYear,tenant]],
+  queryFn:()=>getTopFiveRiskChartData({tenant,selectedYear}),
+  enabled: !!tenant && !!token,
+  placeholderData: keepPreviousData,
+});
+
+
+const { data: topHighValue,isLoading:isTopHighValueLoading} = useQuery({
+  queryKey:["ExecutiveDashboard-top-high-value",[selectedYear,tenant]],
+  queryFn:()=>getTopHighValueChartData({tenant,selectedYear}),
+  enabled: !!tenant && !!token,
+  placeholderData: keepPreviousData,
+});
+
+
+
   const {
     GetTopRiskIndicator,
     topFiveRiskIndicatorData,
-    GetAttackExposure,
-    attackExposureData,
-    topFiveRisk,
-    tenthChart,
-    topHighValue,
-    twelfthChart,
     exploitableVulnerabilities,
     twntythChart
   } = useExecutiveDashboardContext();
@@ -105,10 +124,7 @@ export default function ExecutiveSummaryPage() {
   useEffect(() => {
     if (token && tenant) {
       Promise.all([
-      tenthChart(tenant, selectedYear),
-      twelfthChart(tenant, selectedYear),
       twntythChart(tenant, selectedYear),
-      GetAttackExposure(tenant, selectedYear),
       GetTopRiskIndicator(tenant, selectedYear),
       ])
 }
@@ -460,7 +476,7 @@ return (
         </div>}
 
         {/* Attack Exposure */}
-        <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-5 rounded-xl flex flex-col">
+        {isAttackExposureDataLoading ? <AssackExposureSkeletonLoading/> : <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-5 rounded-xl flex flex-col">
           {/* Header */}
           <div className="flex justify-between items-start">
             <div>
@@ -496,13 +512,13 @@ return (
                 </div>
               ))}
           </div>
-        </div>
+        </div>}
       </div>
 
       {/* Third row  */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Top 5 Risks */}
-        <div className="bg-[#161e3e] border hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
+       {isTopFiveRiskLoading ? <AssackExposureSkeletonLoading/> : <div className="bg-[#161e3e] border hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           {/* Header */}
           <div className="flex justify-between items-start mb-2">
             <div>
@@ -523,7 +539,7 @@ return (
             </div>
 
             {/* Data Rows */}
-            {topFiveRisk.map((label, idx) => (
+            {topFiveRisk && topFiveRisk.map((label, idx) => (
               <div
                 key={idx}
                 className="grid grid-cols-12 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-gray-800 transition-colors"
@@ -540,10 +556,10 @@ return (
               </div>
             ))}
           </div>
-        </div>
+        </div>}
 
         {/* Top 5 High Value Assets */}
-        <div className="bg-[#161e3e] border hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
+        {isTopHighValueLoading ? <AssackExposureSkeletonLoading/> : <div className="bg-[#161e3e] border hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
               <h2 className="text-lg font-semibold mb-1">
@@ -564,7 +580,7 @@ return (
             </div>
 
             {/* Data Rows */}
-            {topHighValue.map((asset, idx) => (
+            { topHighValue && topHighValue.map((asset, idx) => (
               <div
                 key={idx}
                 className="grid grid-cols-12 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-gray-800 transition-colors"
@@ -579,7 +595,7 @@ return (
               </div>
             ))}
           </div>
-        </div>
+        </div>}
 
         {/* Top 5 Exploitable Vulnerabilities */}
         <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-6 rounded-xl h-auto w-full lg:flex-1">

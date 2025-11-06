@@ -35,10 +35,23 @@ export const getRemidationWorkflowData = async ({tenant,selectedYear}) => {
 };
 
 
+export const getAttackExposureData = async ({tenant,selectedYear}) => {
+    const res = await AxiosHandler.get(`/vroc/attack-exposure?year=${selectedYear ? selectedYear : ""}&tenant=${tenant ? tenant : ""}`);
+    return res.data?.data || [];
+};
 
 
 
+export const getTopFiveRiskChartData = async ({tenant,selectedYear}) => {
+   const res = await AxiosHandler.get(`/data/tvm-thenth-data?tenant=${tenant ? tenant : ""}&year=${selectedYear}`);
+    return res.data?.data || [];
+};
 
+
+export const getTopHighValueChartData = async ({tenant,selectedYear}) => {
+   const res = await AxiosHandler.get(`/data/tvm-twelfth-data?tenant=${tenant ? tenant : ""}&year=${selectedYear}`);
+    return res.data?.data || [];
+};
 
 
 
