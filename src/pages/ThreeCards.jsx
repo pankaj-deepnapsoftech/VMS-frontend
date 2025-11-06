@@ -10,6 +10,8 @@ import {
   ArcElement,
 } from "chart.js";
 import { useAuthContext, useTVMCardsContext } from "@/context";
+import { getSixteenChartData } from "@/services/TVMDashboard.service";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 ChartJS.register(
   CategoryScale,
@@ -23,6 +25,14 @@ ChartJS.register(
 
 const Dashboard = () => {
   const { token, tenant, selectedYear } = useAuthContext();
+
+     const { data: creticalHighVulnrable, isLoading: isCreticalHighVulnrableLoading } = useQuery({
+    queryKey: ["TVMDashboard-sixteen-chart", [selectedYear, tenant]],
+    queryFn: () => getSixteenChartData({ tenant, selectedYear }),
+    enabled: !!token,
+    placeholderData: keepPreviousData,
+  });
+
   const {
     elaventhChart,
     topFiveinfraAssetCount,
@@ -32,7 +42,6 @@ const Dashboard = () => {
     topClosedVulnerabilities,
     fifthteenthChart,
     topUniqueVulnerabilities,
-    SixteenthChart,
     ninteenthChart,
     exceptionVulnerabilities,
     seventeenthChart,
@@ -46,9 +55,7 @@ const Dashboard = () => {
       TharteenthChart(tenant, selectedYear);
       fourteenthChart(tenant, selectedYear);
       fifthteenthChart(tenant, selectedYear);
-      SixteenthChart(tenant, selectedYear);
       ninteenthChart(tenant, selectedYear);
-      seventeenthChart(tenant, selectedYear);
       eightteenthChart(tenant, selectedYear);
     }
   }, [token, tenant, selectedYear]);

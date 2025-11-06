@@ -13,10 +13,7 @@ const DataContextProvider = ({ children }) => {
   // useState
   const [loading, setLoading] = useState(false);
   const [TenantAllData, setTenantAllData] = useState([]);
-  const [firstChartData, setFirstChartData] = useState(null);
-  const [thirdChartData, setThirdChartData] = useState(null);
   const [partners, setPartners] = useState([]);
-  const [secondChartData, setSecondChartData] = useState(null);
   const [fourthChartData, setFourthChartData] = useState(null);
   const [ninthChartData, setNinthChartData] = useState(null);
   const [AssignedData, setAssignedData] = useState(null);
@@ -62,38 +59,7 @@ const DataContextProvider = ({ children }) => {
     }
   };
 
-  const GetFirstChart = async (tenant, year) => {
-    try {
-      const res = await AxiosHandler.get(
-        `/data/tvm-first-chart?tenant=${tenant ? tenant : ""}&year=${year}`
-      );
-      setFirstChartData(res?.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
-  const GetSecondChart = async (tenant, year) => {
-    try {
-      const res = await AxiosHandler.get(
-        `/data/tvm-second-chart?tenant=${tenant ? tenant : ""}&year=${year}`
-      );
-      setSecondChartData(res?.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const GetthirdChart = async (tenant, year) => {
-    try {
-      const res = await AxiosHandler.get(
-        `/data/tvm-third-data?tenant=${tenant ? tenant : ""}&year=${year}`
-      );
-      setThirdChartData(res?.data?.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const GetFourthChart = async (tenant, year) => {
     try {
@@ -154,18 +120,12 @@ const DataContextProvider = ({ children }) => {
         UploadBulkData,
         TenantAllData,
         partners,
-        GetFirstChart,
-        firstChartData,
-        GetSecondChart,
-        secondChartData,
         GetFourthChart,
         fourthChartData,
         ninthChartData,
         GetNinthChart,
         GetAssignedByData,
         AssignedData,
-        GetthirdChart,
-        thirdChartData,
         GetFiveChart,
         itemsByAge
       }}

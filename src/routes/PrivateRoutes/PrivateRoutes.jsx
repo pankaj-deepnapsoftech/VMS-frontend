@@ -67,9 +67,11 @@ export const PrivateRoutes = [
     path: "/tvm-dashboard",
     element: (
       <TVMCardsContextProvider>
-        <Suspense fallback={<TvmDashboardLayoutSkeleton />}>
-          <Home />
-        </Suspense>
+        <AppErrorBoundary>
+          <Suspense fallback={<Suspense><TvmDashboardLayoutSkeleton /></Suspense>}>
+            <Home />
+          </Suspense>
+        </AppErrorBoundary>
       </TVMCardsContextProvider>
     ),
   },

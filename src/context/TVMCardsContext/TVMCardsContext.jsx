@@ -15,8 +15,6 @@ const TVMCardsContextProvider = ({ children }) => {
   const [topClosedVulnerabilities, setTopClosedVulnerabilities] = useState([]);
   const [topUniqueVulnerabilities, setTopUniqueVulnerabilities] = useState([]);
   const [exceptionVulnerabilities, setExceptionVulnerabilities] = useState([]);
-  const [creticalHighVulnrable, setCreticalHighVulnrable] = useState([]);
-  const [slaBreached, setSlaBreached] = useState([]);
   const [breachVulnerableList, setBreachVulnerableList] = useState([]);
 
 
@@ -64,14 +62,6 @@ const TVMCardsContextProvider = ({ children }) => {
   };
 
 
-  const SixteenthChart = async (tenant, year) => {
-    try {
-      const res = await AxiosHandler.get(`/data/tvm-sixteen-data?tenant=${tenant ? tenant : ""}&year=${year}`);
-      setCreticalHighVulnrable(res?.data?.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const ninteenthChart = async (tenant, year) => {
     try {
@@ -82,15 +72,7 @@ const TVMCardsContextProvider = ({ children }) => {
     }
   };
 
-  const seventeenthChart = async (tenant, year) => {
-    try {
-      const res = await AxiosHandler.get(`/data/tvm-seventeen-data?tenant=${tenant ? tenant : ""}&year=${year}`);
-      setSlaBreached(res?.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
+ 
   const eightteenthChart = async (tenant, year) => {
     try {
       const res = await AxiosHandler.get(`/data/tvm-eighteen-data?tenant=${tenant ? tenant : ""}&year=${year}`);
@@ -116,14 +98,10 @@ const TVMCardsContextProvider = ({ children }) => {
         topClosedVulnerabilities,
         fifthteenthChart,
         topUniqueVulnerabilities,
-        SixteenthChart,
-        creticalHighVulnrable,
         ninteenthChart,
         exceptionVulnerabilities,
-        seventeenthChart,
         eightteenthChart,
         breachVulnerableList,
-        slaBreached,
       }}
     >
       {children}

@@ -20,7 +20,11 @@ import {
 } from "@/constants/dynomic.data";
 import SecurendDashboardCards from "./ThreeCards";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { getTvmCardsData } from "@/services/TVMDashboard.service";
+import { getFirstChartData, getfourthChartData, getSecondChartData, getSeventeenChartData, getSixteenChartData, getThirdChartData, getTvmCardsData } from "@/services/TVMDashboard.service";
+import { TvmCardsSkeleton } from "@/Skeletons/TvmDashboard/Cards";
+import { BarGraphsSkeleton } from "@/Skeletons/TvmDashboard/BarGraphs";
+import { LineChartsSkeleton } from "@/Skeletons/TvmDashboard/LineCharts";
+import LineChartSkeletonLoading from "@/Skeletons/ExecutiveDashbord/trendsChart";
 
 // Register Chart.js components once
 ChartJS.register(
@@ -48,17 +52,58 @@ const DashboardCards = () => {
 
   // ========================= here am using tenstack query ========================
 
-const { data: tvmCardsData,isLoading:isTvmCardsDataLoading} = useQuery({
-  queryKey:["ExecutiveDashboard-top-risk-indicator",[selectedYear,tenant]],
-  queryFn:()=>getTvmCardsData({tenant,selectedYear}),
-  enabled:!!token,
-  placeholderData: keepPreviousData,
-});
-
-console.log("this is just testing ===================",tvmCardsData)
+  const { data: tvmCardsData, isLoading: isTvmCardsDataLoading } = useQuery({
+    queryKey: ["TVMDashboard-card-data", [selectedYear, tenant]],
+    queryFn: () => getTvmCardsData({ tenant, selectedYear }),
+    enabled: !!token,
+    placeholderData: keepPreviousData,
+  });
 
 
+  const { data: firstChartData, isLoading: isFirstChartDataLoading } = useQuery({
+    queryKey: ["TVMDashboard-first-chart", [selectedYear, tenant]],
+    queryFn: () => getFirstChartData({ tenant, selectedYear }),
+    enabled: !!token,
+    placeholderData: keepPreviousData,
+  });
 
+
+  const { data: secondChartData, isLoading: isSecondChartDataLoading } = useQuery({
+    queryKey: ["TVMDashboard-second-chart", [selectedYear, tenant]],
+    queryFn: () => getSecondChartData({ tenant, selectedYear }),
+    enabled: !!token,
+    placeholderData: keepPreviousData,
+  });
+
+
+  const { data: thirdChartData, isLoading: isThirdChartDataLoading } = useQuery({
+    queryKey: ["TVMDashboard-third-chart", [selectedYear, tenant]],
+    queryFn: () => getThirdChartData({ tenant, selectedYear }),
+    enabled: !!token,
+    placeholderData: keepPreviousData,
+  });
+
+  const { data: fourthChartData, isLoading: isFourthChartDataLoading } = useQuery({
+    queryKey: ["TVMDashboard-fourth-chart", [selectedYear, tenant]],
+    queryFn: () => getfourthChartData({ tenant, selectedYear }),
+    enabled: !!token,
+    placeholderData: keepPreviousData,
+  });
+
+
+  const { data: creticalHighVulnrable, isLoading: isCreticalHighVulnrableLoading } = useQuery({
+    queryKey: ["TVMDashboard-sixteen-chart", [selectedYear, tenant]],
+    queryFn: () => getSixteenChartData({ tenant, selectedYear }),
+    enabled: !!token,
+    placeholderData: keepPreviousData,
+  });
+
+  const { data: slaBreached, isLoading: isSlaBreachedLoading } = useQuery({
+    queryKey: ["TVMDashboard-seventeen-chart", [selectedYear, tenant]],
+    queryFn: () => getSeventeenChartData({ tenant, selectedYear }),
+    enabled: !!token,
+    placeholderData: keepPreviousData,
+  });
 
 
 
@@ -92,37 +137,15 @@ console.log("this is just testing ===================",tvmCardsData)
     },
   };
 
-  const { creticalHighVulnrable, slaBreached } = useTVMCardsContext();
 
   const {
-    GetFirstChart,
-    firstChartData,
-    GetSecondChart,
-    secondChartData,
-    GetFourthChart,
-    fourthChartData,
     ninthChartData,
     GetNinthChart,
-    GetthirdChart,
-    thirdChartData,
     GetFiveChart,
     itemsByAge,
   } = useDataContext();
 
-  const [lineValue, setLinevalue] = useState(0);
 
-  const handleChartLine = () => {
-    const data = [
-      ...secondChartData.Critical,
-      ...secondChartData.High,
-      ...secondChartData.Informational,
-      ...secondChartData.Low,
-      ...secondChartData.Medium,
-    ];
-    const maxvalue = Math.max(...data);
-
-    setLinevalue(maxvalue + 2);
-  };
 
   // usestats
 
@@ -157,7 +180,7 @@ console.log("this is just testing ===================",tvmCardsData)
       },
       y: {
         min: 0,
-        max: lineValue,
+        max: secondChartData?.maxvalue,
         grid: { color: "rgba(255,255,255,0.05)" },
         ticks: { color: "#9CA3AF", stepSize: 15 },
       },
@@ -169,45 +192,34 @@ console.log("this is just testing ===================",tvmCardsData)
   const [redData, setRedData] = useState([]);
   const [maxY, setMaxY] = useState(10); // default max height scale
 
-  const categories = ["Critical", "High", "Medium", "Low"];
 
   const navigate = useNavigate();
 
   useEffect(() => {
     if (token) {
-      GetthirdChart(tenant, selectedYear);
-      GetFourthChart(tenant, selectedYear);
-      GetSecondChart(tenant, selectedYear);
-      GetFirstChart(tenant, selectedYear);
       GetNinthChart(tenant, selectedYear);
       GetFiveChart(tenant, selectedYear);
     }
   }, [token, tenant, selectedYear]);
+  const categories = ["Critical", "High", "Medium", "Low"];
 
   useEffect(() => {
     if (itemsByAge) {
-      const categories = ["Critical", "High", "Medium", "Low"];
+      const getCounts = (data = []) => {
+        const map = Object.fromEntries(data.map(item => [item.severity, item.count]));
+        return categories.map(cat => map[cat] || 0);
+      };
 
-      // Map API data dynamically into arrays
-      const green = categories.map((cat) => {
-        const match = itemsByAge.first?.find((item) => item.severity === cat);
-        return match ? match.count : 0;
-      });
+      const green = getCounts(itemsByAge.first);
+      const yellow = getCounts(itemsByAge.second);
+      const red = getCounts(itemsByAge.third);
 
-      const yellow = categories.map((cat) => {
-        const match = itemsByAge.second?.find((item) => item.severity === cat);
-        return match ? match.count : 0;
-      });
+      const maxVal = Math.max(...green, ...yellow, ...red) + 2;
 
-      const red = categories.map((cat) => {
-        const match = itemsByAge.third?.find((item) => item.severity === cat);
-        return match ? match.count : 0;
-      });
+      console.log("green", green);
+      console.log("yellow", yellow);
+      console.log("red", red);
 
-      // Compute max value dynamically for bar scaling
-      const maxVal = Math.max(...green, ...yellow, ...red, 10) + 2;
-
-      // Update state
       setGreenData(green);
       setYellowData(yellow);
       setRedData(red);
@@ -215,11 +227,8 @@ console.log("this is just testing ===================",tvmCardsData)
     }
   }, [itemsByAge]);
 
-  useEffect(() => {
-    if (secondChartData) {
-      handleChartLine();
-    }
-  }, [secondChartData]);
+
+
 
   const combinedVulnerabilities = (data) => {
     return {
@@ -257,7 +266,7 @@ console.log("this is just testing ===================",tvmCardsData)
     <div className="w-full px-4 sm:px-6 xl:max-w-7xl mx-auto">
       {/* Cards */}
       <div className="w-full">
-       { <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+        {isTvmCardsDataLoading ? <TvmCardsSkeleton /> : <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
           {CardsData(tvmCardsData).map((card, index) => (
             <div
               key={index}
@@ -288,7 +297,7 @@ console.log("this is just testing ===================",tvmCardsData)
       {/* First Row */}
       <div className="flex flex-col lg:flex-row gap-4 w-full">
         {/* Vulnerability Status Card */}
-        <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl p-4 w-full md:w-[360px] lg:w-[360px] h-auto shadow-md">
+        {isFirstChartDataLoading ? <BarGraphsSkeleton /> : <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl p-4 w-full md:w-[360px] lg:w-[360px] h-auto shadow-md">
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-white text-base font-semibold">
               Vulnerability Status
@@ -357,10 +366,10 @@ console.log("this is just testing ===================",tvmCardsData)
                 ))}
             </div>
           </div>
-        </div>
+        </div>}
 
         {/* Line Chart Card */}
-        <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl p-4 flex-1 h-auto shadow-md overflow-hidden">
+        {isSecondChartDataLoading ? <LineChartSkeletonLoading /> : <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl p-4 flex-1 h-auto shadow-md overflow-hidden">
           <div className="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-2">
             <h2 className="text-white text-base sm:text-lg font-semibold truncate">
               Vulnerable Items by Risk Rating
@@ -375,7 +384,7 @@ console.log("this is just testing ===================",tvmCardsData)
           {/* Line Chart Container */}
           <div className="w-full h-[150px] md:h-[160px] overflow-hidden">
             <Line
-              data={SecondChartDatady(secondChartData)}
+              data={SecondChartDatady(secondChartData.data)}
               options={{
                 ...lineOptions,
                 maintainAspectRatio: false,
@@ -396,13 +405,13 @@ console.log("this is just testing ===================",tvmCardsData)
               </div>
             ))}
           </div>
-        </div>
+        </div>}
       </div>
 
       {/* Second Row  */}
       <div className="flex flex-col lg:flex-row lg:flex-wrap gap-4 mt-4 w-full">
         {/* Exploitability */}
-        <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl p-4 w-full md:w-[360px] lg:flex-1 h-auto shadow-md">
+        {isThirdChartDataLoading ? <BarGraphsSkeleton /> : <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl p-4 w-full md:w-[360px] lg:flex-1 h-auto shadow-md">
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-white text-base font-semibold">
               Exploitability
@@ -447,7 +456,7 @@ console.log("this is just testing ===================",tvmCardsData)
               <p className="text-white text-lg font-bold">
                 {thirdChartData
                   ? (thirdChartData.exploitable || 0) +
-                    (thirdChartData.not_exploitable || 0)
+                  (thirdChartData.not_exploitable || 0)
                   : 0}
               </p>
               <p className="text-gray-400 text-xs">Total</p>
@@ -475,10 +484,10 @@ console.log("this is just testing ===================",tvmCardsData)
               </p>
             </div>
           </div>
-        </div>
+        </div>}
 
         {/* Inventory Status */}
-        <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl p-4 w-full md:w-[360px] lg:flex-1 h-auto shadow-md">
+        {isFourthChartDataLoading ? <BarGraphsSkeleton /> : <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out rounded-xl p-4 w-full md:w-[360px] lg:flex-1 h-auto shadow-md">
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-white text-base font-semibold">
               Inventory Status
@@ -494,27 +503,27 @@ console.log("this is just testing ===================",tvmCardsData)
               data={
                 fourthChartData
                   ? {
-                      labels: Object.keys(fourthChartData || {}),
-                      datasets: [
-                        {
-                          data: Object.values(fourthChartData || {}),
-                          backgroundColor: ["#EF4444", "#22C55E"],
-                          borderWidth: 0,
-                        },
-                      ],
-                    }
+                    labels: Object.keys(fourthChartData || {}),
+                    datasets: [
+                      {
+                        data: Object.values(fourthChartData || {}),
+                        backgroundColor: ["#EF4444", "#22C55E"],
+                        borderWidth: 0,
+                      },
+                    ],
+                  }
                   : {
-                      labels: InventoryData.map((item) => item.label),
-                      datasets: [
-                        {
-                          data: InventoryData.map((item) => item.value),
-                          backgroundColor: InventoryData.map(
-                            (item) => item.color
-                          ),
-                          borderWidth: 0,
-                        },
-                      ],
-                    }
+                    labels: InventoryData.map((item) => item.label),
+                    datasets: [
+                      {
+                        data: InventoryData.map((item) => item.value),
+                        backgroundColor: InventoryData.map(
+                          (item) => item.color
+                        ),
+                        borderWidth: 0,
+                      },
+                    ],
+                  }
               }
               options={{
                 cutout: "70%",
@@ -529,9 +538,9 @@ console.log("this is just testing ===================",tvmCardsData)
               <p className="text-white text-lg font-bold">
                 {fourthChartData
                   ? Object.values(fourthChartData).reduce(
-                      (sum, val) => sum + (val || 0),
-                      0
-                    )
+                    (sum, val) => sum + (val || 0),
+                    0
+                  )
                   : totall}
               </p>
               <p className="text-gray-400 text-xs">Total</p>
@@ -542,38 +551,39 @@ console.log("this is just testing ===================",tvmCardsData)
           <div className="flex justify-center gap-8 mt-3">
             {fourthChartData
               ? Object.entries(fourthChartData).map(([label, value], idx) => (
-                  <div key={idx} className="flex items-center gap-2 mt-0.5">
-                    <span
-                      className="w-2.5 h-2.5 rounded-full"
-                      style={{
-                        backgroundColor: idx === 0 ? "#EF4444" : "#22C55E",
-                      }}
-                    ></span>
-                    <p className="text-white text-xs">
-                      {label === "businessApplication"
-                        ? "Business Application"
-                        : "Infrastructure IP"}{" "}
-                      <span className="text-gray-400">{value}</span>
-                    </p>
-                  </div>
-                ))
+                <div key={idx} className="flex items-center gap-2 mt-0.5">
+                  <span
+                    className="w-2.5 h-2.5 rounded-full"
+                    style={{
+                      backgroundColor: idx === 0 ? "#EF4444" : "#22C55E",
+                    }}
+                  ></span>
+                  <p className="text-white text-xs">
+                    {label === "businessApplication"
+                      ? "Business Application"
+                      : "Infrastructure IP"}{" "}
+                    <span className="text-gray-400">{value}</span>
+                  </p>
+                </div>
+              ))
               : InventoryData.map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2 mt-0.5">
-                    <span
-                      className="w-2.5 h-2.5 rounded-full"
-                      style={{ backgroundColor: item.color }}
-                    ></span>
-                    <p className="text-white text-xs">
-                      {item.label}{" "}
-                      <span className="text-gray-400">{item.value}</span>
-                    </p>
-                  </div>
-                ))}
+                <div key={idx} className="flex items-center gap-2 mt-0.5">
+                  <span
+                    className="w-2.5 h-2.5 rounded-full"
+                    style={{ backgroundColor: item.color }}
+                  ></span>
+                  <p className="text-white text-xs">
+                    {item.label}{" "}
+                    <span className="text-gray-400">{item.value}</span>
+                  </p>
+                </div>
+              ))}
           </div>
-        </div>
+        </div>}
 
         {/* Card 2: Vulnerable Items by Age */}
         <div className="bg-[#161e3e] rounded-xl p-4 w-full md:w-[360px] lg:flex-1 text-white shadow-lg border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out">
+          {/* Header */}
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-semibold">Vulnerable Items by Age</h2>
             <button className="text-gray-400 text-sm hover:text-gray-200 transition-colors">
@@ -581,17 +591,18 @@ console.log("this is just testing ===================",tvmCardsData)
             </button>
           </div>
 
-          {/* Chart */}
+          {/* ==== Chart ==== */}
           <div className="flex mt-4 h-[160px] sm:h-[180px]">
-            {/* Y Axis Labels */}
+            {/* ==== Y Axis Labels ==== */}
             <div className="flex flex-col justify-between mr-2 text-[10px] text-gray-500">
               {[...Array(5)].map((_, i) => {
-                const value = maxY - i * 4;
+                const step = maxY / 4; // divide into 4 equal steps
+                const value = Math.round(maxY - i * step);
                 return (
                   <div
-                    key={value}
-                    style={{ height: "32px" }}
-                    className="flex items-center"
+                    key={i}
+                    className="flex items-center justify-end"
+                    style={{ height: "20%" }}
                   >
                     {value}
                   </div>
@@ -599,45 +610,49 @@ console.log("this is just testing ===================",tvmCardsData)
               })}
             </div>
 
-            {/* Grid + Bars */}
+            {/* ==== Grid + Bars ==== */}
             <div className="relative flex-1 overflow-hidden">
               {/* Horizontal dotted lines */}
               {[...Array(5)].map((_, i) => (
                 <div
                   key={i}
                   className="absolute left-0 w-full border-t border-dotted border-gray-600"
-                  style={{ top: `${i * 32}px` }}
+                  style={{ top: `${(i * 100) / 4}%` }}
                 />
               ))}
 
-              {/* Bar Groups */}
+              {/* ==== Bar Groups ==== */}
               <div className="flex justify-around items-end h-full z-10 relative">
                 {categories.map((label, i) => (
                   <div key={label} className="flex flex-col items-center">
                     <div className="flex items-end space-x-1">
                       <div
                         className="w-2 rounded-sm bg-green-500"
-                        style={{ height: `${(greenData[i] / maxY) * 160}px` }}
+                        style={{
+                          height: `${(greenData[i] / maxY) * 100}%`,
+                        }}
                       />
                       <div
                         className="w-2 rounded-sm bg-yellow-400"
-                        style={{ height: `${(yellowData[i] / maxY) * 160}px` }}
+                        style={{
+                          height: `${(yellowData[i] / maxY) * 100}%`,
+                        }}
                       />
                       <div
                         className="w-2 rounded-sm bg-red-500"
-                        style={{ height: `${(redData[i] / maxY) * 160}px` }}
+                        style={{
+                          height: `${(redData[i] / maxY) * 100}%`,
+                        }}
                       />
                     </div>
-                    <div className="text-[10px] text-gray-300 mt-1">
-                      {label}
-                    </div>
+                    <div className="text-[10px] text-gray-300 mt-1">{label}</div>
                   </div>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* Legend */}
+          {/* ==== Legend ==== */}
           <div className="flex flex-wrap justify-center text-xs text-gray-400 gap-3 mt-3">
             <div className="flex items-center gap-1">
               <div className="w-2 h-2 rounded-full bg-green-500" />
@@ -653,6 +668,7 @@ console.log("this is just testing ===================",tvmCardsData)
             </div>
           </div>
         </div>
+
       </div>
 
       {/* Third row  */}
@@ -787,7 +803,7 @@ console.log("this is just testing ===================",tvmCardsData)
         </div>
 
         {/* === Critical / High Vulnerabilities === */}
-        <div className="bg-[#161e3e] p-6 border border-gray-800 rounded-xl shadow-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out flex flex-col items-center justify-between text-white">
+        {isCreticalHighVulnrableLoading ? <BarGraphsSkeleton /> : <div className="bg-[#161e3e] p-6 border border-gray-800 rounded-xl shadow-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out flex flex-col items-center justify-between text-white">
           <h2 className="text-lg font-semibold mb-4 text-center">
             Critical / High Vulnerabilities
           </h2>
@@ -813,10 +829,10 @@ console.log("this is just testing ===================",tvmCardsData)
               High: {creticalHighVulnrable.High}
             </div>
           </div>
-        </div>
+        </div>}
 
         {/* === SLA Details === */}
-        <div className="bg-[#161e3e] p-6 border border-gray-800 rounded-xl shadow-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out flex flex-col items-center justify-between text-white">
+        {isSlaBreachedLoading ? <BarGraphsSkeleton /> : <div className="bg-[#161e3e] p-6 border border-gray-800 rounded-xl shadow-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out flex flex-col items-center justify-between text-white">
           <h2 className="text-lg font-semibold mb-4 text-center">
             SLA Details
           </h2>
@@ -839,7 +855,7 @@ console.log("this is just testing ===================",tvmCardsData)
               Not Met: {slaBreached.NOT_MET}
             </div>
           </div>
-        </div>
+        </div>}
       </div>
 
       <SecurendDashboardCards />
