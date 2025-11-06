@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Line } from "react-chartjs-2";
 
 import "react-circular-progressbar/dist/styles.css";
@@ -13,10 +12,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import {
-  useAuthContext,
-  useExecutiveDashboardContext
-} from "@/context";
+import {useAuthContext} from "@/context";
 import {
   assetData,
   FinancialExposure,
@@ -24,11 +20,12 @@ import {
   summaryData,
   TopFiveRiskIndicator,
 } from "@/constants/dynomic.data";
-import { keepPreviousData, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getAssetInventoryData, getAttackExposureData, getCardsData, getfinanceTrendChartData, getFinancialExposureData, getRemidationWorkflowData, getRiskTrendChartData, getTopFiveRiskChartData, getTopHighValueChartData } from "@/services/ExecutiveDashboard.service";
+import { keepPreviousData, useQuery} from "@tanstack/react-query";
+import { getAssetInventoryData, getAttackExposureData, getCardsData, getExploitableVulnerabilitiesData, getfinanceTrendChartData, getFinancialExposureData, getRemidationWorkflowData, getRiskTrendChartData, getTopFiveRiskChartData, getTopFiveRiskIndicatorData, getTopHighValueChartData } from "@/services/ExecutiveDashboard.service";
 import CardsSkeletonLoading from "@/Skeletons/ExecutiveDashbord/Cards";
 import LineChartSkeletonLoading from "@/Skeletons/ExecutiveDashbord/trendsChart";
 import { AssackExposureSkeletonLoading, AssertInvertorySkeletonLoading, FinancialExposureSkeletonLoading, RemediationWorkflowSkeletonLoading } from "@/Skeletons/ExecutiveDashbord/thirdSection";
+import { TopFiveRiskIndicatorsSkeleton } from "@/Skeletons/ExecutiveDashbord/LastSection";
 
 
 ChartJS.register(
@@ -112,24 +109,23 @@ const { data: topHighValue,isLoading:isTopHighValueLoading} = useQuery({
 });
 
 
+const { data: exploitableVulnerabilities,isLoading:isExploitableVulnerabilitiesLoading} = useQuery({
+  queryKey:["ExecutiveDashboard-exploitable-vulnerability",[selectedYear,tenant]],
+  queryFn:()=>getExploitableVulnerabilitiesData({tenant,selectedYear}),
+  enabled: !!tenant && !!token,
+  placeholderData: keepPreviousData,
+});
 
-  const {
-    GetTopRiskIndicator,
-    topFiveRiskIndicatorData,
-    exploitableVulnerabilities,
-    twntythChart
-  } = useExecutiveDashboardContext();
+
+const { data: topFiveRiskIndicatorData,isLoading:isTopFiveRiskIndicatorDataLoading} = useQuery({
+  queryKey:["ExecutiveDashboard-top-risk-indicator",[selectedYear,tenant]],
+  queryFn:()=>getTopFiveRiskIndicatorData({tenant,selectedYear}),
+  enabled: !!tenant && !!token,
+  placeholderData: keepPreviousData,
+});
 
 
-  useEffect(() => {
-    if (token && tenant) {
-      Promise.all([
-      twntythChart(tenant, selectedYear),
-      GetTopRiskIndicator(tenant, selectedYear),
-      ])
-}
 
-  }, [token, tenant, selectedYear]);
 
 return (
   <div className="min-h-screen bg-background p-4 sm:p-6 font-sans">
@@ -598,7 +594,7 @@ return (
         </div>}
 
         {/* Top 5 Exploitable Vulnerabilities */}
-        <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-6 rounded-xl h-auto w-full lg:flex-1">
+       {isExploitableVulnerabilitiesLoading ? <AssackExposureSkeletonLoading/> : <div className="bg-[#161e3e] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           <div className="flex justify-between items-start mb-2">
             <div>
               <div className="text-lg font-semibold mb-1">
@@ -619,7 +615,7 @@ return (
               <div className="col-span-3 text-right">Score</div>
             </div>
 
-            {exploitableVulnerabilities?.map((vuln, idx) => (
+            {exploitableVulnerabilities && exploitableVulnerabilities?.map((vuln, idx) => (
               <div
                 key={idx}
                 className="grid grid-cols-9 gap-4 px-4 py-2 border-b border-[#1B2B45] items-center hover:bg-gray-800 transition-colors"
@@ -631,13 +627,13 @@ return (
               </div>
             ))}
           </div>
-        </div>
+        </div>}
       </div>
 
       {/* Fourth row */}
       <div className="flex flex-col xl:flex-row gap-4 w-full">
         {/* Third Row */}
-        <div className="bg-[#161d3d] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out p-4 sm:p-6 rounded-2xl w-full text-white font-sans overflow-x-auto">
+       {isTopFiveRiskIndicatorDataLoading ? <TopFiveRiskIndicatorsSkeleton/> : <div className="bg-[#161d3d] border border-gray-800 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out p-4 sm:p-6 rounded-2xl w-full text-white font-sans overflow-x-auto">
           <div className="flex justify-between items-start mb-4">
             <h2 className="text-base sm:text-lg md:text-xl font-semibold">
               Top 5 Risk Indicators
@@ -648,7 +644,7 @@ return (
           </div>
 
           <div className="space-y-3">
-            {TopFiveRiskIndicator(topFiveRiskIndicatorData).map(
+            {TopFiveRiskIndicator && TopFiveRiskIndicator(topFiveRiskIndicatorData).map(
               (item, idx) => (
                 <div
                   key={idx}
@@ -685,7 +681,7 @@ return (
               )
             )}
           </div>
-        </div>
+        </div>}
       </div>
     </div>
   </div>

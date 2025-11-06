@@ -41,7 +41,6 @@ export const getAttackExposureData = async ({tenant,selectedYear}) => {
 };
 
 
-
 export const getTopFiveRiskChartData = async ({tenant,selectedYear}) => {
    const res = await AxiosHandler.get(`/data/tvm-thenth-data?tenant=${tenant ? tenant : ""}&year=${selectedYear}`);
     return res.data?.data || [];
@@ -53,6 +52,17 @@ export const getTopHighValueChartData = async ({tenant,selectedYear}) => {
     return res.data?.data || [];
 };
 
+
+export const getExploitableVulnerabilitiesData = async ({tenant,selectedYear}) => {
+   const res = await AxiosHandler.get(`/data/tvm-twntyth-data?tenant=${tenant ? tenant : ""}&year=${selectedYear}`);
+    return res.data?.data || [];
+};
+
+
+export const getTopFiveRiskIndicatorData = async ({tenant,selectedYear}) => {
+    const res = await AxiosHandler.get(`/vroc/top-risk-indicator?year=${selectedYear ? selectedYear : ""}&tenant=${tenant ? tenant : ""}`);
+    return res.data?.data || [];
+};
 
 
 

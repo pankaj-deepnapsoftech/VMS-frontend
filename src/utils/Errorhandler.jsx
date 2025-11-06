@@ -17,16 +17,16 @@ class ErrorBoundary extends React.Component {
 
   componentDidCatch(error, errorInfo) {
     console.error("Error caught by ErrorBoundary:", error, errorInfo);
-    this.errorName = error.message;
+    this.errormessage = error.message;
   }
 
   render() {
     if (this.state.hasError) {
       // Render custom fallback UI
       return (
-        <div style={{ padding: "2rem", textAlign: "center", color: "#fff", backgroundColor: "#111" }}>
-          <h1>Something went wrong.</h1>
-          <p>{this.errorName}</p>
+        <div className="bg-background text-white">
+          <h1>Found an Error on this page </h1>
+          <p>{this.errormessage}</p>
         </div>
       );
     }

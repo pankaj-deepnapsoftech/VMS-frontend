@@ -1,4 +1,3 @@
-import React from 'react'
 import CardsSkeletonLoading from './Cards'
 
 const ExecutiveDashboardLayoutSkeleton = () => {

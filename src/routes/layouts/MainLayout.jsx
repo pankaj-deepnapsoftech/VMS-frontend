@@ -18,7 +18,6 @@ import {
 } from "@/context";
 import UserProfile from "@/pages/UserProfile";
 import useChangePassword from "@/hooks/changePassword";
-import Loader from "@/components/Loader/Loader";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { products } from "@/constants/static.data";
 import UpdateProfileModal from "@/modals/UpdateProfile";
@@ -218,7 +217,7 @@ const MainLayout = () => {
   }
 
   return  (
-    <Suspense fallback={<Loader />}>
+    <>
       <Sidebar />
 
       {/* header */}
@@ -376,7 +375,7 @@ const MainLayout = () => {
       {updateProfileModal && <UpdateProfileModal />}
 
       <ChangePasswordModal isOpen={isOpen} onClose={closeModal} />
-    </Suspense>
+    </>
   );
 };
 
