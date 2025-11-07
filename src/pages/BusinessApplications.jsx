@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import {  Trash2, Edit, X, Boxes } from "lucide-react";
+import { Trash2, Edit, X, Boxes } from "lucide-react";
 import { BiPlus } from "react-icons/bi";
 import { useFormik } from "formik";
-import { useAuthContext, useInfraAssetContext } from "@/context";
+import { useAuthContext } from "@/context";
 import { BusinessApplicationValidation } from "@/Validation/BusinessApp.validation";
 import axios from "axios";
 import * as XLSX from "xlsx";
@@ -13,24 +13,16 @@ import { isCreateAccess, isDeleteAccess, isHaveAction, isModifyAccess, isViewAcc
 import Access from "@/components/role/Access";
 import { useLocation } from "react-router-dom";
 import { handleExcelFile } from "@/utils/CheckFileType";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { createApplicationData, createBulkApplicationData, deleteApplicationData, getApplicationData, updateApplicationData } from "@/services/BusinessApplication.service";
+import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
+import { getAllInfrastructureAsset } from "@/services/infraStructureAsset.service";
 
 export default function BusinessApplications() {
 
   // context api hooks
   const { token, authenticate, tenant } = useAuthContext();
-  const {
-    CreateBussinerssApplcation,
-    GetBussinerssApplcation,
-    businessApplication,
-    DeleteBussinerssApplcation,
-    UpdateBussinerssApplcation,
-    CreateBulkBussinerssApplcation,
-    GetAllInfraAssetData,
-    totalInfraAsset,
-  } = useInfraAssetContext();
-
-  // location hook
-  const location = useLocation()
+  const queryClient = useQueryClient();
 
   // use States 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,9 +33,59 @@ export default function BusinessApplications() {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredTenants = businessApplication.filter((tenant) =>
-    tenant?.name?.toLowerCase()?.includes(searchQuery.toLowerCase())
-  );
+  // ======================== all tenstack query start here ===================================
+  const { data: businessApplication, isLoading: isBusinessApplicationLoading } = useQuery({
+    queryKey: ["business-application", { currentPage, tenant }],
+    queryFn: () => getApplicationData({ page: currentPage, tenant }),
+    enabled: !!token,
+    placeholderData: keepPreviousData,
+  });
+
+  const { data: totalInfraAsset } = useQuery({
+    queryKey: ["infrastructure-asset-all", { tenant }],
+    queryFn: () => getAllInfrastructureAsset({ tenant }),
+    enabled: !!token,
+    placeholderData: keepPreviousData,
+  });
+
+
+  // =========================== all tenstack mutation start here ===============================
+
+  const { mutate: CreateBussinerssApplcation, isPending: isCreateBussinerssApplcationLoading } = useMutation({
+    mutationFn: (data) => createApplicationData(data),
+    onSuccess: async () => {
+      queryClient.invalidateQueries({ queryKey: ["business-application"] });
+    }
+  });
+
+  const { mutate: CreateBulkBussinerssApplcation, isPending: isCreateBulkBussinerssApplcationLoading } = useMutation({
+    mutationFn: (data) => createBulkApplicationData(data),
+    onSuccess: async () => {
+      queryClient.invalidateQueries({ queryKey: ["business-application"] });
+    }
+  });
+
+  const { mutate: DeleteBussinerssApplcation, isPending: isDeleteBussinerssApplcationLoading } = useMutation({
+    mutationFn: (id) => deleteApplicationData(id),
+    onSuccess: async () => {
+      queryClient.invalidateQueries({ queryKey: ["business-application"] });
+    }
+  });
+
+    const { mutate: UpdateBussinerssApplcation, isPending: isUpdateBussinerssApplcationLoading } = useMutation({
+    mutationFn: ({id,data}) => updateApplicationData({id,data}),
+    onSuccess: async () => {
+      queryClient.invalidateQueries({ queryKey: ["business-application"] });
+    }
+  });
+
+
+
+
+  // location hook
+  const location = useLocation()
+
+
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
@@ -72,7 +114,7 @@ export default function BusinessApplications() {
         }
 
         if (editable) {
-          UpdateBussinerssApplcation(editable._id, value);
+          UpdateBussinerssApplcation({id:editable._id, data:value});
         } else {
           CreateBussinerssApplcation({ ...value, creator: tenant ? tenant : editable?.creator });
         }
@@ -130,16 +172,11 @@ export default function BusinessApplications() {
 
   useEffect(() => {
     if (token) {
-      GetBussinerssApplcation(currentPage, tenant);
       GetCountryData();
     }
   }, [currentPage, tenant]);
 
-  useEffect(() => {
-    if (token) {
-      GetAllInfraAssetData(tenant);
-    }
-  }, [tenant, token]);
+
 
   if (isViewAccess(authenticate, location)) {
     return <Access />
@@ -164,6 +201,7 @@ export default function BusinessApplications() {
           {isCreateAccess() && <div className="flex flex-col sm:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
             <button
               onClick={() => setIsModalOpen(true)}
+              disabled={isCreateBulkBussinerssApplcationLoading || isUpdateBussinerssApplcationLoading}
               className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center justify-center gap-2"
             >
               <BiPlus className="h-6 w-6" />
@@ -200,11 +238,11 @@ export default function BusinessApplications() {
             </div>
 
             {/* Table */}
-            {filteredTenants?.length < 1 ? (
+            {businessApplication?.length < 1 ? (
               <NoDataFound />
             ) : (
               <div className="overflow-x-auto custom-scrollbar w-full">
-                <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+                {isBusinessApplicationLoading ? <TableSkeletonLoading /> : <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
                   <thead className="bg-[#0c1120] text-white uppercase   whitespace-nowrap tracking-wider">
                     <tr>
                       {[
@@ -229,7 +267,7 @@ export default function BusinessApplications() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-700">
-                    {filteredTenants.map((tenant) => (
+                    {businessApplication.map((tenant) => (
                       <tr
                         key={tenant._id}
                         className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
@@ -258,6 +296,7 @@ export default function BusinessApplications() {
                               <ExternalLink className="w-4 h-4" />
                             </button> */}
                             {isDeleteAccess() && <button
+                              disabled={isDeleteBussinerssApplcationLoading}
                               onClick={() => {
                                 const confirmDelete = window.confirm(
                                   "Are you sure you want to delete this business application?"
@@ -285,7 +324,7 @@ export default function BusinessApplications() {
                       </tr>
                     ))}
                   </tbody>
-                </table>
+                </table>}
               </div>
             )}
 
@@ -293,8 +332,8 @@ export default function BusinessApplications() {
             <Pagination
               page={currentPage}
               setPage={setCurrentPage}
-              hasNextPage={filteredTenants.length === 10}
-              total={filteredTenants.length}
+              hasNextPage={businessApplication?.length === 10}
+              total={businessApplication?.length}
             />
           </div>
         </div>
@@ -613,6 +652,7 @@ export default function BusinessApplications() {
                 </button>
                 <button
                   type="button"
+                  disabled={isCreateBussinerssApplcationLoading}
                   onClick={handleSubmit}
                   className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-md py-2 px-4 transition-colors font-medium"
                 >

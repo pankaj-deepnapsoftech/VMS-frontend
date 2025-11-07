@@ -21,18 +21,23 @@ export const createBulkInfrastructureAsset = async (data) => {
 }
 
 
-export const deleteInfrastructureAsset = async ({id}) => {
+export const deleteInfrastructureAsset = async ({ id }) => {
     const res = await AxiosHandler.delete(`/infraStructureAsset/delete/${id}`);
     toast.success(res.data.message || "Infrastructure Assets deleted successfully");
     return res.data;
 }
 
 
-export const updateInfrastructureAsset = async ({id,data}) => {
-    console.log("here is both",id,data)
-      const res = await AxiosHandler.put(`/infraStructureAsset/update/${id}`, data);
+export const updateInfrastructureAsset = async ({ id, data }) => {
+    const res = await AxiosHandler.put(`/infraStructureAsset/update/${id}`, data);
     toast.success(res.data.message || "Infrastructure Assets updated successfully");
     return res.data;
+}
+
+
+export const getAllInfrastructureAsset = async ({tenant}) => {
+ const res = await AxiosHandler.get(`/infraStructureAsset/get-all?tenant=${tenant}`);
+ return res.data?.data || [];
 }
 
 

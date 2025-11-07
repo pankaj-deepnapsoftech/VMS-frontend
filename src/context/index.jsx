@@ -12,7 +12,6 @@ import { AssesmentContext } from "./SchedulingAssesmentContext/SchedulingAssesme
 import { RemeditionContext } from "./RemeditionContext/RemeditionContext";
 import { ExceptionContext } from "./ExceptionContext/ExceptionContext";
 import { InfrastructureVulnerabilityContext } from "./InfrastructureVulnerabilityContext/InfrastructureVulnerabilityContext";
-import { InfraAssetContext } from "./InfraAssetContext/InfraAssetContext";
 import { TagsContext } from "./TagsContext/TagsContext";
 import { SeverityContext } from "./SeverityContext/SeverityContext";
 import { NessusContext } from "./nessuscontext/NessusContext";
@@ -42,7 +41,6 @@ export { default as SchedulingAssesmentContextProvider } from "./SchedulingAsses
 export { default as RemeditionContextProvider } from "./RemeditionContext/RemeditionContext";
 export { default as ExceptionContextProvider } from "./ExceptionContext/ExceptionContext";
 export { default as InfrastructureVulnerabilityContextProvider } from "./InfrastructureVulnerabilityContext/InfrastructureVulnerabilityContext";
-export { default as InfraAssetContextProvider } from "./InfraAssetContext/InfraAssetContext";
 export { default as TagsContextProvider } from "./TagsContext/TagsContext";
 export { default as SeverityContextProvider } from "./SeverityContext/SeverityContext";
 export { default as NessusContextProvider } from "./nessuscontext/NessusContext";
@@ -71,7 +69,6 @@ export const useScheduleAssessmentContext = () => useContext(AssesmentContext);
 export const useRemeditionContext = () => useContext(RemeditionContext);
 export const useExceptionContext = () => useContext(ExceptionContext);
 export const useInfrastructureVulnerabilityContext = () =>  useContext(InfrastructureVulnerabilityContext);
-export const useInfraAssetContext = () => useContext(InfraAssetContext);
 export const useTagsContext = () => useContext(TagsContext);
 export const useSeverityContext = () => useContext(SeverityContext);
 export const useNessusContext = () => useContext(NessusContext);

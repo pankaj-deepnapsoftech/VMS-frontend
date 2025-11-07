@@ -7,7 +7,6 @@ import {
 } from "@/constants/Components-lazy-loading/components.Lazy";
 import { useAuthContext } from "@/context";
 import { lazy, Suspense } from "react";
-import { RiskDetailsSkeletonLayout } from "@/Skeletons/RiskDetails/RiskDetailsSkeleton";
 import { AssertInventorySkeletonLayout } from "@/Skeletons/AssetInventory/AssetInventorySkeleton";
 
 const Solutions = lazy(() => import("@/pages/Auth/Solutions"));
@@ -96,7 +95,7 @@ const AppRoutes = () => {
 
       {/* Protected routes */}
       {isAuthenticated && (
-        <Route element={<MainLayout />}>
+        <Route element={<Suspense fallback={"loading...."} ><MainLayout /></Suspense>}>
           {getRoleBasedRoutes().map((item, index) => (
             <Route key={index} path={item.path} element={item.element}>
               {item.children &&

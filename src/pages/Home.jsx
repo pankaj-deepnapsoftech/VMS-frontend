@@ -42,6 +42,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { useAuthStore } from "@/store/AuthSore";
 
 // Register Chart.js components once
 ChartJS.register(
@@ -63,8 +64,13 @@ const InventoryData = [
 ];
 
 const DashboardCards = () => {
-  const { token, selectedYear, tenant } = useAuthContext();
+  const {token,selectedYear, tenant } = useAuthContext();
   // const { tvmCardsData } = useTVMCardsContext();
+
+  const {selectedYears} = useAuthStore();
+
+
+  console.log(selectedYears);
 
   // ========================= here am using tenstack query ========================
 

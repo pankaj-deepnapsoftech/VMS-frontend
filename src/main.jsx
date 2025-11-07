@@ -8,7 +8,6 @@ import {
   AuthContextProvider,
   DataContextProvider,
   ExceptionContextProvider,
-  InfraAssetContextProvider,
   InfrastructureVulnerabilityContextProvider,
   JiraContextProvider,
   MailContextProvider,
@@ -30,36 +29,33 @@ createRoot(document.getElementById("root")).render(
       <DataContextProvider>
         <VulnerabililtyDataContextProvider>
           <AllEmployeeContextProvider>
-              <JiraContextProvider>
-                <SchedulingAssesmentContextProvider>
-                  <ApplicationVulnerabilityContextProvider>
-                    <RemeditionContextProvider>
-                      <ExceptionContextProvider>
-                        <InfrastructureVulnerabilityContextProvider>
-                          <AppSoftContextProvider>
-                            <InfraAssetContextProvider>
-                              <TagsContextProvider>
-                                 
-                                    <SeverityContextProvider>
-                                      <NessusContextProvider>
-                                        <MainReportContextProvider>
-                                          <MailContextProvider>
-                                            <AIVAContextProvider>
-                                              <App />
-                                            </AIVAContextProvider>
-                                          </MailContextProvider>
-                                        </MainReportContextProvider>
-                                      </NessusContextProvider>
-                                    </SeverityContextProvider>
-                              </TagsContextProvider>
-                            </InfraAssetContextProvider>
-                          </AppSoftContextProvider>
-                        </InfrastructureVulnerabilityContextProvider>
-                      </ExceptionContextProvider>
-                    </RemeditionContextProvider>
-                  </ApplicationVulnerabilityContextProvider>
-                </SchedulingAssesmentContextProvider>
-              </JiraContextProvider>
+            <JiraContextProvider>
+              <SchedulingAssesmentContextProvider>
+                <ApplicationVulnerabilityContextProvider>
+                  <RemeditionContextProvider>
+                    <ExceptionContextProvider>
+                      <InfrastructureVulnerabilityContextProvider>
+                        <AppSoftContextProvider>
+                          <TagsContextProvider>
+                            <SeverityContextProvider>
+                              <NessusContextProvider>
+                                <MainReportContextProvider>
+                                  <MailContextProvider>
+                                    <AIVAContextProvider>
+                                      <App />
+                                    </AIVAContextProvider>
+                                  </MailContextProvider>
+                                </MainReportContextProvider>
+                              </NessusContextProvider>
+                            </SeverityContextProvider>
+                          </TagsContextProvider>
+                        </AppSoftContextProvider>
+                      </InfrastructureVulnerabilityContextProvider>
+                    </ExceptionContextProvider>
+                  </RemeditionContextProvider>
+                </ApplicationVulnerabilityContextProvider>
+              </SchedulingAssesmentContextProvider>
+            </JiraContextProvider>
           </AllEmployeeContextProvider>
         </VulnerabililtyDataContextProvider>
       </DataContextProvider>

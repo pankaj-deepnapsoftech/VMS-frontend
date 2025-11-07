@@ -4,6 +4,8 @@ import Loader from "./components/Loader/Loader";
 import { useAuthContext } from "./context";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useAuthStore } from "./store/AuthSore";
+import { useEffect } from "react";
 
 // Create the QueryClient
 const queryClient = new QueryClient({
@@ -19,9 +21,17 @@ const queryClient = new QueryClient({
 const App = () => {
   const { userLoading } = useAuthContext();
 
+  const {setSelectedYear} = useAuthStore();
+
+
   if (userLoading) {
     return <Loader />;
   }
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(()=>{
+    setSelectedYear("this is testing")
+  },[])
 
   return (
     <QueryClientProvider client={queryClient}>
