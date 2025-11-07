@@ -19,12 +19,13 @@ import NoDataFound from "@/components/NoDataFound";
 import Access from "@/components/role/Access";
 import { isCreateAccess, isDeleteAccess, isHaveAction, isModifyAccess, isViewAccess } from "@/utils/pageAccess";
 import { handleExcelFile } from "@/utils/CheckFileType";
-import { keepPreviousData, useMutation, useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { GetAlltags } from "@/services/Tags.service";
-import { createInfrastructureAsset, getInfrastructureAsset } from "@/services/infraStructureAsset.service";
+import { createBulkInfrastructureAsset, createInfrastructureAsset, deleteInfrastructureAsset, getInfrastructureAsset, updateInfrastructureAsset } from "@/services/infraStructureAsset.service";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 
 export default function TenantDashboard() {
+  const { token, authenticate, tenant } = useAuthContext();
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState(null);
@@ -32,7 +33,8 @@ export default function TenantDashboard() {
   const location = useLocation();
 
   const [model, setmodel] = useState(false);
-  const { token, authenticate, tenant } = useAuthContext();
+  const [editable, setEditable] = useState(null);
+  const queryClient = useQueryClient();
 
   // ================================ here is all tenstack querys code =========================
 
@@ -43,7 +45,7 @@ export default function TenantDashboard() {
     placeholderData: keepPreviousData
   });
 
-  const { data: infraAssetdata,isLoading:isInfraAssetsDataLoading } = useQuery({
+  const { data: infraAssetdata, isLoading: isInfraAssetsDataLoading } = useQuery({
     queryKey: ["infrastructur-asset", { currentPage, tenant }],
     queryFn: () => getInfrastructureAsset({ currentPage, tenant }),
     enabled: !!token,
@@ -53,21 +55,37 @@ export default function TenantDashboard() {
 
   // =========================== all tenstack murtation code start here ===============================
 
-  const mutation = useMutation({
-    mutationKey:"infrastructur-asset",
-    mutationFn :(data) => createInfrastructureAsset(data),
-  })
+  const { isPending: isCreateInfraAssertLoading, mutate: createInfraAsset } = useMutation({
+    mutationFn: (data) => createInfrastructureAsset(data),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["infrastructur-asset"] });
+    }
+  });
+
+  const { isPending: isCreateBulkInfraAssetLoading, mutate: CreateBulkInfraAsset } = useMutation({
+    mutationFn: (data) => createBulkInfrastructureAsset(data),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["infrastructur-asset"] });
+    }
+  });
+
+  const { isPending: isDeleteInfraAssetLoading, mutate: DeleteInfraAsset } = useMutation({
+    mutationFn: (id) => deleteInfrastructureAsset({ id }),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["infrastructur-asset"] });
+    }
+  });
+
+  const { isPending: isUpdateInfraAssetLoading, mutate: UpdateInfraAsset } = useMutation({
+    mutationFn: ({id,data}) => updateInfrastructureAsset({ id,data }),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["infrastructur-asset"] });
+    }
+  });
 
 
-  const {
-    CreateInfraAsset,
-    DeleteInfraAsset,
-    UpdateInfraAsset,
-    CreateBulkInfraAsset,
-  } = useInfraAssetContext();
-  const [editable, setEditable] = useState(null);
 
- 
+
 
   const {
     values,
@@ -94,12 +112,12 @@ export default function TenantDashboard() {
     onSubmit: (value) => {
 
       if (editable) {
-        UpdateInfraAsset(editable._id, value);
+        UpdateInfraAsset({id:editable._id, data:value});
       } else {
         if (!tenant) {
           return alert("Please select a tenant");
         }
-        CreateInfraAsset({ ...value, creator: tenant ? tenant : editable?.creator });
+        createInfraAsset({ ...value, creator: tenant ? tenant : editable?.creator });
       }
       setmodel(false);
       handleReset();
@@ -207,7 +225,7 @@ export default function TenantDashboard() {
                 <NoDataFound />
               ) : (
                 <div className="overflow-x-auto custom-scrollbar w-full">
-                  {isInfraAssetsDataLoading ? <TableSkeletonLoading/>  : <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+                  {isInfraAssetsDataLoading ? <TableSkeletonLoading /> : <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
                     <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
                       <tr>
                         {[
@@ -268,6 +286,7 @@ export default function TenantDashboard() {
 
                           <td className="px-4 py-3 space-x-4">
                             {isDeleteAccess() && <button
+                              disabled={isDeleteInfraAssetLoading}
                               onClick={() => {
                                 if (
                                   window.confirm(
@@ -361,6 +380,7 @@ export default function TenantDashboard() {
                 Cancel
               </button>
               <button
+                disabled={isCreateBulkInfraAssetLoading}
                 onClick={() => {
                   if (!tenant) {
                     return alert("Please select a tenant");
@@ -587,6 +607,7 @@ export default function TenantDashboard() {
                   Cancel
                 </button>
                 <button
+                  disabled={isCreateInfraAssertLoading || isUpdateInfraAssetLoading}
                   onClick={handleSubmit}
                   className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-md py-2 px-4 transition-colors font-medium"
                 >

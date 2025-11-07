@@ -17,42 +17,10 @@ const InfraAssetContextProvider = ({ children }) => {
 
 
 
+  
 
-    const CreateInfraAsset = async (data) => {
-        try {
-            const res = await AxiosHandler.post("/infraStructureAsset/create", data);
-            toast.success(res.data.message);
-        } catch (error) {
-            toast.error(error.response.data.message)
-        }
-    }
 
-    const CreateBulkInfraAsset = async (data) => {
-        try {
-            const res = await AxiosHandler.post("/infraStructureAsset/bulk-create", data);
-            toast.success(res.data.message);
-        } catch (error) {
-            toast.error(error.response.data.message)
-        }
-    }
 
-    const DeleteInfraAsset = async (id) => {
-        try {
-            const res = await AxiosHandler.delete(`/infraStructureAsset/delete/${id}`);
-            toast.success(res.data.message);
-        } catch (error) {
-            toast.error(error.response.data.message)
-        }
-    }
-
-    const UpdateInfraAsset = async (id, data) => {
-        try {
-            const res = await AxiosHandler.put(`/infraStructureAsset/update/${id}`, data);
-            toast.success(res.data.message);
-        } catch (error) {
-            toast.error(error.response.data.message)
-        }
-    };
 
     const GetBussinerssApplcation = async (page, tenant) => {
         try {
@@ -132,15 +100,11 @@ const InfraAssetContextProvider = ({ children }) => {
 
     return (
         <InfraAssetContext.Provider value={{
-            CreateInfraAsset,
-            DeleteInfraAsset,
-            UpdateInfraAsset,
             CreateBussinerssApplcation,
             GetBussinerssApplcation,
             businessApplication,
             DeleteBussinerssApplcation,
             UpdateBussinerssApplcation,
-            CreateBulkInfraAsset,
             CreateBulkBussinerssApplcation,
             totalInfraAsset,
             totalBusinessApplication,
