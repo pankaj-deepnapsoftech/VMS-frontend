@@ -1,6 +1,18 @@
 import AppErrorBoundary from "@/utils/Errorhandler";
 import { lazy, Suspense } from "react";
 
+
+// ========================= all skeletons here loaded=============
+import TvmDashboardLayoutSkeleton from "@/Skeletons/TvmDashboard/TvmDashboardLayoutSkeleton";
+import { RiskDetailsSkeletonLayout } from "@/Skeletons/RiskDetails/RiskDetailsSkeleton";
+import ExecutiveDashboardLayoutSkeleton from "@/Skeletons/ExecutiveDashbord/ExecutiveDashboardLayoutSkeleton";
+
+
+
+
+
+
+
 // Lazy imports
 const Loader = lazy(() => import("@/components/Loader/Loader"));
 const Exceptions = lazy(() => import("@/pages/Exceptions"));
@@ -52,27 +64,14 @@ const SchedulingAssessmentPage = lazy(() =>
   import("@/pages/SchedulingAssessment")
 );
 
-// ========================== all skeletons load here ==========================
-const ExecutiveDashboardLayoutSkeleton = lazy(() =>
-  import("@/Skeletons/ExecutiveDashbord/ExecutiveDashboardLayoutSkeleton")
-);
-const TvmDashboardLayoutSkeleton = lazy(() =>
-  import("@/Skeletons/TvmDashboard/TvmDashboardLayoutSkeleton")
-);
-const RiskDetailsSkeletonLayout = lazy(() =>
-  import("@/Skeletons/RiskDetails/RiskDetailsSkeleton")
-);
+
 
 export const PrivateRoutes = [
   {
     path: "/tvm-dashboard",
     element: (
       <Suspense
-        fallback={
-          <Suspense>
-            <TvmDashboardLayoutSkeleton />
-          </Suspense>
-        }
+        fallback={<TvmDashboardLayoutSkeleton />}
       >
         <AppErrorBoundary>
           <Home />
@@ -363,13 +362,7 @@ export const PrivateRoutes = [
   {
     path: "/risk-details",
     element: (
-      <Suspense
-        fallback={
-          <Suspense>
-            <RiskDetailsSkeletonLayout />
-          </Suspense>
-        }
-      >
+      <Suspense fallback={<RiskDetailsSkeletonLayout />}>
         <AppErrorBoundary>
           <RiskOperation />
         </AppErrorBoundary>
@@ -380,11 +373,7 @@ export const PrivateRoutes = [
     path: "/",
     element: (
       <Suspense
-        fallback={
-          <Suspense>
-            <ExecutiveDashboardLayoutSkeleton />
-          </Suspense>
-        }
+        fallback={<ExecutiveDashboardLayoutSkeleton />}
       >
         <AppErrorBoundary>
           <ExecutiveDashboard />

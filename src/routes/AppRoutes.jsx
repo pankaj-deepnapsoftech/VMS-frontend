@@ -7,8 +7,6 @@ import {
 } from "@/constants/Components-lazy-loading/components.Lazy";
 import { useAuthContext } from "@/context";
 import { lazy, Suspense } from "react";
-import ExecutiveDashboardLayoutSkeleton from "@/Skeletons/ExecutiveDashbord/ExecutiveDashboardLayoutSkeleton";
-import TvmDashboardLayoutSkeleton from "@/Skeletons/TvmDashboard/TvmDashboardLayoutSkeleton";
 import { RiskDetailsSkeletonLayout } from "@/Skeletons/RiskDetails/RiskDetailsSkeleton";
 
 const Solutions = lazy(() => import("@/pages/Auth/Solutions"));
@@ -91,7 +89,6 @@ const AppRoutes = () => {
               </Suspense>
             }
           />
-          <Route path="/test" element={<ExecutiveDashboardLayoutSkeleton />} />
           <Route path="/testt" element={<RiskDetailsSkeletonLayout />} />
         </>
       )}
