@@ -9,7 +9,13 @@ import * as XLSX from "xlsx";
 import Pagination from "./Pagination";
 import NoDataFound from "@/components/NoDataFound";
 import { IoSearch } from "react-icons/io5";
-import { isCreateAccess, isDeleteAccess, isHaveAction, isModifyAccess, isViewAccess } from "@/utils/pageAccess";
+import {
+  isCreateAccess,
+  isDeleteAccess,
+  isHaveAction,
+  isModifyAccess,
+  isViewAccess,
+} from "@/utils/pageAccess";
 import Access from "@/components/role/Access";
 import { useLocation } from "react-router-dom";
 import { handleExcelFile } from "@/utils/CheckFileType";
@@ -19,12 +25,11 @@ import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 import { getAllInfrastructureAsset } from "@/services/infraStructureAsset.service";
 
 export default function BusinessApplications() {
-
   // context api hooks
   const { token, authenticate, tenant } = useAuthContext();
   const queryClient = useQueryClient();
 
-  // use States 
+  // use States
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [model, setmodel] = useState(false);
   const [editable, setEditable] = useState(null);
@@ -91,20 +96,20 @@ export default function BusinessApplications() {
     useFormik({
       initialValues: editable
         ? {
-          ...editable,
-          asset: editable.asset?._id || "",
-        }
+            ...editable,
+            asset: editable.asset?._id || "",
+          }
         : {
-          name: "",
-          description: "",
-          country: "",
-          state: "",
-          city: "",
-          type: "",
-          applicationUrl: "",
-          modifyCriticality: "",
-          asset: "",
-        },
+            name: "",
+            description: "",
+            country: "",
+            state: "",
+            city: "",
+            type: "",
+            applicationUrl: "",
+            modifyCriticality: "",
+            asset: "",
+          },
 
       validationSchema: BusinessApplicationValidation,
       enableReinitialize: true,
@@ -116,7 +121,10 @@ export default function BusinessApplications() {
         if (editable) {
           UpdateBussinerssApplcation({id:editable._id, data:value});
         } else {
-          CreateBussinerssApplcation({ ...value, creator: tenant ? tenant : editable?.creator });
+          CreateBussinerssApplcation({
+            ...value,
+            creator: tenant ? tenant : editable?.creator,
+          });
         }
         setmodel(false);
       },
@@ -155,19 +163,19 @@ export default function BusinessApplications() {
   const handleFileChange = (e) => {
     if (!e.target.files[0]) {
       alert("file is required field");
-      return
-    };
-
-    if (e.target.files[0].size >= (10 * 1024 * 1024)) {
-      alert("File is too large")
+      return;
     }
 
-    const file = handleExcelFile(e.target.files[0])
+    if (e.target.files[0].size >= 10 * 1024 * 1024) {
+      alert("File is too large");
+    }
+
+    const file = handleExcelFile(e.target.files[0]);
     if (file) {
       setSelectedFiles(file);
     } else {
-      e.target.value = ""
-    };
+      e.target.value = "";
+    }
   };
 
   useEffect(() => {
@@ -179,7 +187,7 @@ export default function BusinessApplications() {
 
 
   if (isViewAccess(authenticate, location)) {
-    return <Access />
+    return <Access />;
   }
 
   return (
@@ -208,17 +216,18 @@ export default function BusinessApplications() {
               Bulk Upload
             </button>
 
-            <button
-              onClick={() => {
-                setmodel(!model);
-                setEditable(null);
-              }}
-              className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center justify-center gap-2"
-            >
-              <BiPlus className="h-6 w-6" />
-              Business Applications
-            </button>
-          </div>}
+              <button
+                onClick={() => {
+                  setmodel(!model);
+                  setEditable(null);
+                }}
+                className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center justify-center gap-2"
+              >
+                <BiPlus className="h-6 w-6" />
+                Business Applications
+              </button>
+            </div>
+          }
         </div>
 
         <div className="w-full  min-h-screen p-6">
@@ -310,15 +319,17 @@ export default function BusinessApplications() {
                               <Trash2 className="w-5 h-5" />
                             </button>}
 
-                            {isModifyAccess() && <button
-                              onClick={() => {
-                                setEditable(tenant);
-                                setmodel(!model);
-                              }}
-                              className="text-subtext hover:text-blue-700"
-                            >
-                              <Edit className="w-5 h-5" />
-                            </button>}
+                            {isModifyAccess() && (
+                              <button
+                                onClick={() => {
+                                  setEditable(tenant);
+                                  setmodel(!model);
+                                }}
+                                className="text-subtext hover:text-blue-700"
+                              >
+                                <Edit className="w-5 h-5" />
+                              </button>
+                            )}
                           </div>
                         </td>
                       </tr>
@@ -534,7 +545,8 @@ export default function BusinessApplications() {
                       </option>
                       {values.country &&
                         countryData
-                          .filter((item) => item.name === values.country)[0]?.states.map((item, index) => (
+                          .filter((item) => item.name === values.country)[0]
+                          ?.states.map((item, index) => (
                             <option key={index} value={item.name}>
                               {item.name}
                             </option>
