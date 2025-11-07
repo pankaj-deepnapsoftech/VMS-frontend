@@ -76,6 +76,7 @@ export const PrivateRoutes = [
     path: "/assesment-schedule",
     element: (
       <Suspense>
+
         <SchedulingAssessmentPage />
       </Suspense>
     ),
@@ -300,7 +301,9 @@ export const PrivateRoutes = [
     path: "/risk-details",
     element: (
       <Suspense>
-        <RiskOperation />
+        <AppErrorBoundary>
+          <RiskOperation />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
