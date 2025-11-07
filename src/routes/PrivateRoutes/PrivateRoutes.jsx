@@ -53,8 +53,15 @@ const SchedulingAssessmentPage = lazy(() =>
 );
 
 // ========================== all skeletons load here ==========================
-const ExecutiveDashboardLayoutSkeleton = lazy(() =>import("@/Skeletons/ExecutiveDashbord/ExecutiveDashboardLayoutSkeleton"));
-const TvmDashboardLayoutSkeleton = lazy(() =>import("@/Skeletons/TvmDashboard/TvmDashboardLayoutSkeleton"));
+const ExecutiveDashboardLayoutSkeleton = lazy(() =>
+  import("@/Skeletons/ExecutiveDashbord/ExecutiveDashboardLayoutSkeleton")
+);
+const TvmDashboardLayoutSkeleton = lazy(() =>
+  import("@/Skeletons/TvmDashboard/TvmDashboardLayoutSkeleton")
+);
+const RiskDetailsSkeletonLayout = lazy(() =>
+  import("@/Skeletons/RiskDetails/RiskDetailsSkeleton")
+);
 
 export const PrivateRoutes = [
   {
@@ -356,7 +363,13 @@ export const PrivateRoutes = [
   {
     path: "/risk-details",
     element: (
-      <Suspense>
+      <Suspense
+        fallback={
+          <Suspense>
+            <RiskDetailsSkeletonLayout />
+          </Suspense>
+        }
+      >
         <AppErrorBoundary>
           <RiskOperation />
         </AppErrorBoundary>
