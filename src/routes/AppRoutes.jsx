@@ -8,6 +8,7 @@ import {
 import { useAuthContext } from "@/context";
 import { lazy, Suspense } from "react";
 import { RiskDetailsSkeletonLayout } from "@/Skeletons/RiskDetails/RiskDetailsSkeleton";
+import { AssertInventorySkeletonLayout } from "@/Skeletons/AssetInventory/AssetInventorySkeleton";
 
 const Solutions = lazy(() => import("@/pages/Auth/Solutions"));
 const Pricing = lazy(() => import("@/pages/Auth/Pricing"));
@@ -89,7 +90,7 @@ const AppRoutes = () => {
               </Suspense>
             }
           />
-          <Route path="/testt" element={<RiskDetailsSkeletonLayout />} />
+          <Route path="/test" element={<AssertInventorySkeletonLayout />} />
         </>
       )}
 

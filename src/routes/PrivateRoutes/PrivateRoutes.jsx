@@ -6,6 +6,7 @@ import { lazy, Suspense } from "react";
 import TvmDashboardLayoutSkeleton from "@/Skeletons/TvmDashboard/TvmDashboardLayoutSkeleton";
 import { RiskDetailsSkeletonLayout } from "@/Skeletons/RiskDetails/RiskDetailsSkeleton";
 import ExecutiveDashboardLayoutSkeleton from "@/Skeletons/ExecutiveDashbord/ExecutiveDashboardLayoutSkeleton";
+import { AssertInventorySkeletonLayout } from "@/Skeletons/AssetInventory/AssetInventorySkeleton";
 
 
 
@@ -262,7 +263,7 @@ export const PrivateRoutes = [
   {
     path: "/infraStructure-asset",
     element: (
-      <Suspense>
+      <Suspense fallback={<AssertInventorySkeletonLayout />}>
         <AppErrorBoundary>
           <AssertInventory />
         </AppErrorBoundary>
@@ -312,7 +313,7 @@ export const PrivateRoutes = [
   {
     path: "/business-applications",
     element: (
-      <Suspense>
+      <Suspense fallback={<AssertInventorySkeletonLayout />}>
         <AppErrorBoundary>
           <BusinessApplications />
         </AppErrorBoundary>
