@@ -1,40 +1,32 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import Pagination from "./Pagination";
 import NoDataFound from "@/components/NoDataFound";
 import { IoSearch } from "react-icons/io5";
-import { useAuthContext, useReportContext } from "@/context";
-import Loader from "@/components/Loader/Loader";
+import { useAuthContext } from "@/context";
 import {
   calculateACS,
   calculateALE,
   calculateARS,
   calculateVRS,
 } from "@/utils/vulnerableOperations";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import {  TableSkeletonLoading } from "@/Skeletons/Tables/TablesSkeleton";
+import { getRiskQuantificationData } from "@/services/RiskDetails.service";
 
 const RiskOperation = () => {
-  const { token } = useAuthContext();
-  const { riskQuantification, riskQuantificationData, loading } =
-    useReportContext();
+  const { token,tenant } = useAuthContext();
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
-  const [tenant, setTenant] = useState("");
 
-  const filteredData = riskQuantificationData.filter(
-    (item) =>
-      item.Title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item?.BusinessApplication?.name
-        ?.toLowerCase()
-        ?.includes(searchTerm.toLowerCase()) ||
-      item?.BusinessApplication?.name
-        ?.toLowerCase()
-        ?.includes(searchTerm.toLowerCase()) ||
-      item?.BusinessApplication?.asset_hostname
-        ?.toLowerCase()
-        ?.includes(searchTerm.toLowerCase()) ||
-      item?.InfraStructureAsset?.asset_hostname
-        ?.toLowerCase()
-        ?.includes(searchTerm.toLowerCase())
-  );
+
+  const {data:riskQuantificationData,isLoading:isRiskQuantificationDataLoading} = useQuery({
+    queryKey:["risk-quantification",{tenant,page}],
+    queryFn:()=>getRiskQuantificationData({tenant,page}),
+    enabled: !!token,
+    placeholderData: keepPreviousData
+  })
+
+
 
   const showTitle = (header) => {
     if (header === "VRS") {
@@ -48,20 +40,8 @@ const RiskOperation = () => {
     }
   };
 
-  useEffect(() => {
-    if (token) {
-      riskQuantification(tenant, page);
-    }
-  }, [token, tenant, page]);
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    setTenant(params.get("tenant") || "");
-  }, [location.search]);
-
-  return loading ? (
-    <Loader />
-  ) : (
+  return  (
     <div>
       <div className="flex items-center justify-between px-6 py-4">
         {/* Optional Left Side Heading */}
@@ -92,11 +72,11 @@ const RiskOperation = () => {
           </div>
 
           {/* Table */}
-          {filteredData?.length < 1 ? (
+          {riskQuantificationData?.length < 1 ? (
             <NoDataFound />
           ) : (
             <div className="overflow-x-auto custom-scrollbar w-full">
-              <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+            {isRiskQuantificationDataLoading ? <TableSkeletonLoading /> :   <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
                 <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
                   <tr>
                     {[
@@ -121,7 +101,7 @@ const RiskOperation = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-700">
-                  {filteredData?.map((user, index) => (
+                  {riskQuantificationData?.map((user, index) => (
                     <tr
                       key={user._id}
                       className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
@@ -159,7 +139,7 @@ const RiskOperation = () => {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </table>}
             </div>
           )}
 
@@ -167,8 +147,8 @@ const RiskOperation = () => {
           <Pagination
             page={page}
             setPage={setPage}
-            hasNextPage={filteredData.length === 10}
-            total={filteredData.length}
+            hasNextPage={riskQuantificationData?.length === 10}
+            total={riskQuantificationData?.length}
           />
         </div>
       </div>

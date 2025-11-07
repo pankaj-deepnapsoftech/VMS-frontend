@@ -1,4 +1,4 @@
-export const LineChartsSkeleton = () => {
+export const TableSkeletonLoading = () => {
   return (
     <div className="overflow-x-auto custom-scrollbar w-full">
       <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
