@@ -4,33 +4,24 @@ import toast from "react-hot-toast";
 import { useAuthContext } from "..";
 
 
-export const InfraAssetContext = createContext();
+export const InfraAssetContext = createContext(); 
 
 // eslint-disable-next-line react/prop-types
 const InfraAssetContextProvider = ({ children }) => {
 
     const {token} = useAuthContext();
-    const [infraAssetdata, setInfraAssetdata] = useState([]);
     const [businessApplication, setBusinessApplication] = useState([]);
 
     const [totalInfraAsset,setTotalInfraAsset] = useState([]);
     const [totalBusinessApplication, setTotalBusinessApplication] = useState([]);
 
-    const GetInfraAsset = async (page, tenant) => {
-        try {
-            const res = await AxiosHandler.get(`/infraStructureAsset/get?page=${page}&tenant=${tenant ? tenant : ""}`);
-            setInfraAssetdata(res.data.data)
-        } catch (error) {
-            console.log(error);
-        }
-    }
+
 
 
     const CreateInfraAsset = async (data) => {
         try {
             const res = await AxiosHandler.post("/infraStructureAsset/create", data);
             toast.success(res.data.message);
-            GetInfraAsset()
         } catch (error) {
             toast.error(error.response.data.message)
         }
@@ -40,7 +31,6 @@ const InfraAssetContextProvider = ({ children }) => {
         try {
             const res = await AxiosHandler.post("/infraStructureAsset/bulk-create", data);
             toast.success(res.data.message);
-            GetInfraAsset()
         } catch (error) {
             toast.error(error.response.data.message)
         }
@@ -50,7 +40,6 @@ const InfraAssetContextProvider = ({ children }) => {
         try {
             const res = await AxiosHandler.delete(`/infraStructureAsset/delete/${id}`);
             toast.success(res.data.message);
-            GetInfraAsset()
         } catch (error) {
             toast.error(error.response.data.message)
         }
@@ -60,7 +49,6 @@ const InfraAssetContextProvider = ({ children }) => {
         try {
             const res = await AxiosHandler.put(`/infraStructureAsset/update/${id}`, data);
             toast.success(res.data.message);
-            GetInfraAsset()
         } catch (error) {
             toast.error(error.response.data.message)
         }
@@ -145,8 +133,6 @@ const InfraAssetContextProvider = ({ children }) => {
     return (
         <InfraAssetContext.Provider value={{
             CreateInfraAsset,
-            GetInfraAsset,
-            infraAssetdata,
             DeleteInfraAsset,
             UpdateInfraAsset,
             CreateBussinerssApplcation,

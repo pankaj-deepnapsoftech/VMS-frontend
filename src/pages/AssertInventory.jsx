@@ -19,10 +19,10 @@ import NoDataFound from "@/components/NoDataFound";
 import Access from "@/components/role/Access";
 import { isCreateAccess, isDeleteAccess, isHaveAction, isModifyAccess, isViewAccess } from "@/utils/pageAccess";
 import { handleExcelFile } from "@/utils/CheckFileType";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useMutation, useQuery } from "@tanstack/react-query";
 import { GetAlltags } from "@/services/Tags.service";
-import { getInfrastructureAsset } from "@/services/infraStructureAsset.service";
-import { TableSkeletonLoading } from "@/Skeletons/Tables/TablesSkeleton";
+import { createInfrastructureAsset, getInfrastructureAsset } from "@/services/infraStructureAsset.service";
+import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 
 export default function TenantDashboard() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -41,13 +41,21 @@ export default function TenantDashboard() {
     queryFn: GetAlltags,
     enabled: !!token,
     placeholderData: keepPreviousData
-  })
+  });
 
   const { data: infraAssetdata,isLoading:isInfraAssetsDataLoading } = useQuery({
     queryKey: ["infrastructur-asset", { currentPage, tenant }],
     queryFn: () => getInfrastructureAsset({ currentPage, tenant }),
     enabled: !!token,
     placeholderData: keepPreviousData
+  });
+
+
+  // =========================== all tenstack murtation code start here ===============================
+
+  const mutation = useMutation({
+    mutationKey:"infrastructur-asset",
+    mutationFn :(data) => createInfrastructureAsset(data),
   })
 
 
