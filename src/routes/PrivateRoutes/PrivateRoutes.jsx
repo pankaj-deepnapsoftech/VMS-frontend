@@ -53,13 +53,8 @@ const SchedulingAssessmentPage = lazy(() =>
 );
 
 // ========================== all skeletons load here ==========================
-const ExecutiveDashboardLayoutSkeleton = lazy(() =>
-  import("@/Skeletons/ExecutiveDashbord/ExecutiveDashboardLayoutSkeleton")
-);
-
-const TvmDashboardLayoutSkeleton = lazy(() =>
-  import("@/Skeletons/TvmDashboard/TvmDashboardLayoutSkeleton")
-);
+const ExecutiveDashboardLayoutSkeleton = lazy(() =>import("@/Skeletons/ExecutiveDashbord/ExecutiveDashboardLayoutSkeleton"));
+const TvmDashboardLayoutSkeleton = lazy(() =>import("@/Skeletons/TvmDashboard/TvmDashboardLayoutSkeleton"));
 
 export const PrivateRoutes = [
   {
@@ -76,7 +71,6 @@ export const PrivateRoutes = [
     path: "/assesment-schedule",
     element: (
       <Suspense>
-
         <SchedulingAssessmentPage />
       </Suspense>
     ),

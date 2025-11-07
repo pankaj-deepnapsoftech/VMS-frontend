@@ -1,5 +1,5 @@
 /* eslint-disable no-constant-binary-expression */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { X, Boxes } from "lucide-react";
 import { BiPlus } from "react-icons/bi";
 import { useFormik } from "formik";
@@ -7,7 +7,6 @@ import { InfraAssetvalidation } from "@/Validation/InfrastructureAssetvalidation
 import {
   useAuthContext,
   useInfraAssetContext,
-  useTagsContext,
 } from "@/context";
 import * as XLSX from "xlsx";
 import { useLocation } from "react-router-dom";
@@ -20,6 +19,10 @@ import NoDataFound from "@/components/NoDataFound";
 import Access from "@/components/role/Access";
 import { isCreateAccess, isDeleteAccess, isHaveAction, isModifyAccess, isViewAccess } from "@/utils/pageAccess";
 import { handleExcelFile } from "@/utils/CheckFileType";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { GetAlltags } from "@/services/Tags.service";
+import { getInfrastructureAsset } from "@/services/infraStructureAsset.service";
+import { TableSkeletonLoading } from "@/Skeletons/Tables/TablesSkeleton";
 
 export default function TenantDashboard() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -31,24 +34,32 @@ export default function TenantDashboard() {
   const [model, setmodel] = useState(false);
   const { token, authenticate, tenant } = useAuthContext();
 
+  // ================================ here is all tenstack querys code =========================
 
+  const { data: AllTags } = useQuery({
+    queryKey: "All-tags",
+    queryFn: GetAlltags,
+    enabled: !!token,
+    placeholderData: keepPreviousData
+  })
 
+  const { data: infraAssetdata,isLoading:isInfraAssetsDataLoading } = useQuery({
+    queryKey: ["infrastructur-asset", { currentPage, tenant }],
+    queryFn: () => getInfrastructureAsset({ currentPage, tenant }),
+    enabled: !!token,
+    placeholderData: keepPreviousData
+  })
 
-  const { AllTags } = useTagsContext();
 
   const {
     CreateInfraAsset,
-    GetInfraAsset,
-    infraAssetdata,
     DeleteInfraAsset,
     UpdateInfraAsset,
     CreateBulkInfraAsset,
   } = useInfraAssetContext();
   const [editable, setEditable] = useState(null);
 
-  const filteredTenants = infraAssetdata.filter((tenant) =>
-    tenant.asset_hostname.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+ 
 
   const {
     values,
@@ -120,11 +131,6 @@ export default function TenantDashboard() {
     XLSX.writeFile(workbook, "infraStructure-asset.xlsx");
   };
 
-  useEffect(() => {
-    if (token) {
-      GetInfraAsset(currentPage, tenant);
-    }
-  }, [currentPage, tenant]);
 
 
 
@@ -189,11 +195,11 @@ export default function TenantDashboard() {
               </div>
 
               {/* Table */}
-              {filteredTenants?.length < 1 ? (
+              {infraAssetdata?.length < 1 ? (
                 <NoDataFound />
               ) : (
                 <div className="overflow-x-auto custom-scrollbar w-full">
-                  <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+                  {isInfraAssetsDataLoading ? <TableSkeletonLoading/>  : <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
                     <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
                       <tr>
                         {[
@@ -216,7 +222,7 @@ export default function TenantDashboard() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-700">
-                      {filteredTenants.map((tenant, index) => (
+                      {infraAssetdata.map((tenant, index) => (
                         <tr
                           key={tenant._id}
                           className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
@@ -283,7 +289,7 @@ export default function TenantDashboard() {
                         </tr>
                       ))}
                     </tbody>
-                  </table>
+                  </table>}
                 </div>
               )}
 
@@ -291,8 +297,8 @@ export default function TenantDashboard() {
               <Pagination
                 page={currentPage}
                 setPage={setCurrentPage}
-                hasNextPage={filteredTenants.length === 10}
-                total={filteredTenants.length}
+                hasNextPage={infraAssetdata?.length === 10}
+                total={infraAssetdata?.length}
               />
             </div>
           </div>
