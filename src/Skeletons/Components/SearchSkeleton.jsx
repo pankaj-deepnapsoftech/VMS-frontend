@@ -1,4 +1,4 @@
-export const searchSkeletonLoading = () => {
+export const SearchSkeletonLoading = () => {
   return (
     <div className="px-6 py-4 border-b border-gray-700 relative">
       <div className="relative">
