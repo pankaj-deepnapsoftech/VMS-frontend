@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import { useState } from "react";
 import Pagination from "./Pagination";
 import NoDataFound from "@/components/NoDataFound";
 import { IoSearch } from "react-icons/io5";
@@ -10,23 +10,23 @@ import {
   calculateVRS,
 } from "@/utils/vulnerableOperations";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import {  TableSkeletonLoading } from "@/Skeletons/Tables/TablesSkeleton";
+import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 import { getRiskQuantificationData } from "@/services/RiskDetails.service";
 
 const RiskOperation = () => {
-  const { token,tenant } = useAuthContext();
+  const { token, tenant } = useAuthContext();
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
 
-
-  const {data:riskQuantificationData,isLoading:isRiskQuantificationDataLoading} = useQuery({
-    queryKey:["risk-quantification",{tenant,page}],
-    queryFn:()=>getRiskQuantificationData({tenant,page}),
+  const {
+    data: riskQuantificationData,
+    isLoading: isRiskQuantificationDataLoading,
+  } = useQuery({
+    queryKey: ["risk-quantification", { tenant, page }],
+    queryFn: () => getRiskQuantificationData({ tenant, page }),
     enabled: !!token,
-    placeholderData: keepPreviousData
-  })
-
-
+    placeholderData: keepPreviousData,
+  });
 
   const showTitle = (header) => {
     if (header === "VRS") {
@@ -40,8 +40,7 @@ const RiskOperation = () => {
     }
   };
 
-
-  return  (
+  return (
     <div>
       <div className="flex items-center justify-between px-6 py-4">
         {/* Optional Left Side Heading */}
@@ -76,70 +75,76 @@ const RiskOperation = () => {
             <NoDataFound />
           ) : (
             <div className="overflow-x-auto custom-scrollbar w-full">
-            {isRiskQuantificationDataLoading ? <TableSkeletonLoading /> :   <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
-                <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
-                  <tr>
-                    {[
-                      "S No.",
-                      "Business Application",
-                      "Infrastructure Asset",
-                      "Vulnerability Title",
-                      "SLA",
-                      "VRS",
-                      "ACS",
-                      "ARS",
-                      "ALE",
-                    ].map((header) => (
-                      <th
-                        title={showTitle(header)}
-                        key={header}
-                        className="px-4 py-3 border-b border-gray-600 font-medium"
-                      >
-                        {header}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-700">
-                  {riskQuantificationData?.map((user, index) => (
-                    <tr
-                      key={user._id}
-                      className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
-                    >
-                      <td className="px-4 py-3">
-                        {index + 1 + (page - 1) * 10}
-                      </td>
-                      <td className="px-4 py-3 capitalize">
-                        {user?.BusinessApplication?.name || "Not Added"}
-                      </td>
-                      <td className="px-4 py-3 capitalize">
-                        {user?.BusinessApplication?.asset_hostname ||
-                          user?.InfraStructureAsset?.asset_hostname ||
-                          "-"}
-                      </td>
-                      <td className="px-4 py-3">{user.Title || "-"}</td>
-                      <td className="px-4 py-3">{user.SLA || "-"}</td>
-                      <td className="px-4 py-3">
-                        {calculateVRS(
-                          user.EPSS,
-                          user.exploit_complexity,
-                          user.Exploit_Availale,
-                          user.threat_type
-                        ) || "-"}
-                      </td>
-                      <td className="px-4 py-3">
-                        {user?.BusinessApplication
-                          ? calculateACS(user?.BusinessApplication)
-                          : calculateACS(user?.InfraStructureAsset) || "0"}
-                      </td>
-                      <td className="px-4 py-3">{calculateARS(user) || "0"}</td>
-                      <td className="px-4 py-3">
-                        $ {calculateALE(user) || "0"}
-                      </td>
+              {isRiskQuantificationDataLoading ? (
+                <TableSkeletonLoading />
+              ) : (
+                <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+                  <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
+                    <tr>
+                      {[
+                        "S No.",
+                        "Business Application",
+                        "Infrastructure Asset",
+                        "Vulnerability Title",
+                        "SLA",
+                        "VRS",
+                        "ACS",
+                        "ARS",
+                        "ALE",
+                      ].map((header) => (
+                        <th
+                          title={showTitle(header)}
+                          key={header}
+                          className="px-4 py-3 border-b border-gray-600 font-medium"
+                        >
+                          {header}
+                        </th>
+                      ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>}
+                  </thead>
+                  <tbody className="divide-y divide-gray-700">
+                    {riskQuantificationData?.map((user, index) => (
+                      <tr
+                        key={user._id}
+                        className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
+                      >
+                        <td className="px-4 py-3">
+                          {index + 1 + (page - 1) * 10}
+                        </td>
+                        <td className="px-4 py-3 capitalize">
+                          {user?.BusinessApplication?.name || "Not Added"}
+                        </td>
+                        <td className="px-4 py-3 capitalize">
+                          {user?.BusinessApplication?.asset_hostname ||
+                            user?.InfraStructureAsset?.asset_hostname ||
+                            "-"}
+                        </td>
+                        <td className="px-4 py-3">{user.Title || "-"}</td>
+                        <td className="px-4 py-3">{user.SLA || "-"}</td>
+                        <td className="px-4 py-3">
+                          {calculateVRS(
+                            user.EPSS,
+                            user.exploit_complexity,
+                            user.Exploit_Availale,
+                            user.threat_type
+                          ) || "-"}
+                        </td>
+                        <td className="px-4 py-3">
+                          {user?.BusinessApplication
+                            ? calculateACS(user?.BusinessApplication)
+                            : calculateACS(user?.InfraStructureAsset) || "0"}
+                        </td>
+                        <td className="px-4 py-3">
+                          {calculateARS(user) || "0"}
+                        </td>
+                        <td className="px-4 py-3">
+                          $ {calculateALE(user) || "0"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
             </div>
           )}
 

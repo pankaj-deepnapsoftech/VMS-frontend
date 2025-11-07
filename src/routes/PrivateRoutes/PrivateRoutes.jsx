@@ -60,7 +60,13 @@ export const PrivateRoutes = [
   {
     path: "/tvm-dashboard",
     element: (
-      <Suspense fallback={<Suspense><TvmDashboardLayoutSkeleton /></Suspense>}>
+      <Suspense
+        fallback={
+          <Suspense>
+            <TvmDashboardLayoutSkeleton />
+          </Suspense>
+        }
+      >
         <AppErrorBoundary>
           <Home />
         </AppErrorBoundary>
@@ -71,7 +77,9 @@ export const PrivateRoutes = [
     path: "/assesment-schedule",
     element: (
       <Suspense>
-        <SchedulingAssessmentPage />
+        <AppErrorBoundary>
+          <SchedulingAssessmentPage />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -79,7 +87,9 @@ export const PrivateRoutes = [
     path: "/pending-assesment",
     element: (
       <Suspense>
-        <PendingAssessment />
+        <AppErrorBoundary>
+          <PendingAssessment />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -87,7 +97,9 @@ export const PrivateRoutes = [
     path: "/vulnerability-data",
     element: (
       <Suspense fallback={<Loader />}>
-        <VulnerabilityData />
+        <AppErrorBoundary>
+          <VulnerabilityData />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -95,7 +107,9 @@ export const PrivateRoutes = [
     path: "/application-data",
     element: (
       <Suspense fallback={<Loader />}>
-        <ApplicationData />
+        <AppErrorBoundary>
+          <ApplicationData />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -103,7 +117,9 @@ export const PrivateRoutes = [
     path: "/infrastructure-data",
     element: (
       <Suspense fallback={<Loader />}>
-        <InfrastructureData />
+        <AppErrorBoundary>
+          <InfrastructureData />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -111,7 +127,9 @@ export const PrivateRoutes = [
     path: "/third-party-data",
     element: (
       <Suspense>
-        <JiraDataTable />
+        <AppErrorBoundary>
+          <JiraDataTable />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -119,7 +137,9 @@ export const PrivateRoutes = [
     path: "/third-party-integrations",
     element: (
       <Suspense>
-        <ThirdPartyIntegrations />
+        <AppErrorBoundary>
+          <ThirdPartyIntegrations />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -127,7 +147,9 @@ export const PrivateRoutes = [
     path: "/all-tenant",
     element: (
       <Suspense>
-        <AllCustomer />
+        <AppErrorBoundary>
+          <AllCustomer />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -135,7 +157,9 @@ export const PrivateRoutes = [
     path: "/config-email",
     element: (
       <Suspense>
-        <EmailConfigPanel />
+        <AppErrorBoundary>
+          <EmailConfigPanel />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -143,7 +167,9 @@ export const PrivateRoutes = [
     path: "/roles",
     element: (
       <Suspense>
-        <Roles />
+        <AppErrorBoundary>
+          <Roles />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -151,7 +177,9 @@ export const PrivateRoutes = [
     path: "/partners",
     element: (
       <Suspense>
-        <Partners />
+        <AppErrorBoundary>
+          <Partners />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -159,7 +187,9 @@ export const PrivateRoutes = [
     path: "/all-users",
     element: (
       <Suspense>
-        <AllEmployee />
+        <AppErrorBoundary>
+          <AllEmployee />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -167,7 +197,9 @@ export const PrivateRoutes = [
     path: "/application-dashboard",
     element: (
       <Suspense>
-        <ApplicationVulnerability />
+        <AppErrorBoundary>
+          <ApplicationVulnerability />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -175,7 +207,9 @@ export const PrivateRoutes = [
     path: "/infrastructure-dashboard",
     element: (
       <Suspense>
-        <InfraStructureVulnerability />
+        <AppErrorBoundary>
+          <InfraStructureVulnerability />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -183,7 +217,9 @@ export const PrivateRoutes = [
     path: "/exceptions-dashboard",
     element: (
       <Suspense>
-        <Exceptions />
+        <AppErrorBoundary>
+          <Exceptions />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -191,7 +227,9 @@ export const PrivateRoutes = [
     path: "/remedition",
     element: (
       <Suspense>
-        <Remediation />
+        <AppErrorBoundary>
+          <Remediation />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -199,7 +237,9 @@ export const PrivateRoutes = [
     path: "/reports",
     element: (
       <Suspense>
-        <Reports />
+        <AppErrorBoundary>
+          <Reports />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -207,7 +247,9 @@ export const PrivateRoutes = [
     path: "/chat/:chatId",
     element: (
       <Suspense>
-        <ChatPage />
+        <AppErrorBoundary>
+          <ChatPage />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -215,7 +257,9 @@ export const PrivateRoutes = [
     path: "/infraStructure-asset",
     element: (
       <Suspense>
-        <AssertInventory />
+        <AppErrorBoundary>
+          <AssertInventory />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -223,7 +267,9 @@ export const PrivateRoutes = [
     path: "/change-password",
     element: (
       <Suspense>
-        <ChangePassword />
+        <AppErrorBoundary>
+          <ChangePassword />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -231,7 +277,9 @@ export const PrivateRoutes = [
     path: "/user-details",
     element: (
       <Suspense>
-        <UserProfile />
+        <AppErrorBoundary>
+          <UserProfile />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -239,7 +287,9 @@ export const PrivateRoutes = [
     path: "/book-demo",
     element: (
       <Suspense>
-        <AdminBookDemo />
+        <AppErrorBoundary>
+          <AdminBookDemo />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -247,7 +297,9 @@ export const PrivateRoutes = [
     path: "/application",
     element: (
       <Suspense>
-        <ApplicationSoftwareInventory />
+        <AppErrorBoundary>
+          <ApplicationSoftwareInventory />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -255,7 +307,9 @@ export const PrivateRoutes = [
     path: "/business-applications",
     element: (
       <Suspense>
-        <BusinessApplications />
+        <AppErrorBoundary>
+          <BusinessApplications />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -263,7 +317,9 @@ export const PrivateRoutes = [
     path: "/add-vulnerability-data",
     element: (
       <Suspense>
-        <VulnerabilityForm />
+        <AppErrorBoundary>
+          <VulnerabilityForm />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -271,7 +327,9 @@ export const PrivateRoutes = [
     path: "/pending-exception",
     element: (
       <Suspense>
-        <ExceptionTable />
+        <AppErrorBoundary>
+          <ExceptionTable />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -279,7 +337,9 @@ export const PrivateRoutes = [
     path: "/tags",
     element: (
       <Suspense>
-        <TagsPage />
+        <AppErrorBoundary>
+          <TagsPage />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -287,7 +347,9 @@ export const PrivateRoutes = [
     path: "/demo",
     element: (
       <Suspense>
-        <DemoDashboard />
+        <AppErrorBoundary>
+          <DemoDashboard />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -311,7 +373,9 @@ export const PrivateRoutes = [
           </Suspense>
         }
       >
-        <ExecutiveDashboard />
+        <AppErrorBoundary>
+          <ExecutiveDashboard />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -319,7 +383,9 @@ export const PrivateRoutes = [
     path: "/edit-vulnerability-data",
     element: (
       <Suspense>
-        <VulnerabilityForm />
+        <AppErrorBoundary>
+          <VulnerabilityForm />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -327,7 +393,9 @@ export const PrivateRoutes = [
     path: "/in-progress-assessment",
     element: (
       <Suspense>
-        <InProgressAssessment />
+        <AppErrorBoundary>
+          <InProgressAssessment />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -335,7 +403,9 @@ export const PrivateRoutes = [
     path: "/completed-assessment",
     element: (
       <Suspense>
-        <CompleteAssessment />
+        <AppErrorBoundary>
+          <CompleteAssessment />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -343,7 +413,9 @@ export const PrivateRoutes = [
     path: "/sla-configuration",
     element: (
       <Suspense>
-        <Severity />
+        <AppErrorBoundary>
+          <Severity />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -351,7 +423,9 @@ export const PrivateRoutes = [
     path: "/center-dashboard",
     element: (
       <Suspense>
-        <ASMDashboard />
+        <AppErrorBoundary>
+          <ASMDashboard />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -359,7 +433,9 @@ export const PrivateRoutes = [
     path: "/assessment-center",
     element: (
       <Suspense>
-        <AssessmentCenter />
+        <AppErrorBoundary>
+          <AssessmentCenter />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -367,7 +443,9 @@ export const PrivateRoutes = [
     path: "/pending-vulnerability",
     element: (
       <Suspense>
-        <PendingVulnerability />
+        <AppErrorBoundary>
+          <PendingVulnerability />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
@@ -375,7 +453,9 @@ export const PrivateRoutes = [
     path: "/download-report",
     element: (
       <Suspense>
-        <DownloadReports />
+        <AppErrorBoundary>
+          <DownloadReports />
+        </AppErrorBoundary>
       </Suspense>
     ),
   },
