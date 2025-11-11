@@ -19,8 +19,19 @@ import {
 import Access from "@/components/role/Access";
 import { useLocation } from "react-router-dom";
 import { handleExcelFile } from "@/utils/CheckFileType";
-import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createApplicationData, createBulkApplicationData, deleteApplicationData, getApplicationData, updateApplicationData } from "@/services/BusinessApplication.service";
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
+import {
+  createApplicationData,
+  createBulkApplicationData,
+  deleteApplicationData,
+  getApplicationData,
+  updateApplicationData,
+} from "@/services/BusinessApplication.service";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 import { getAllInfrastructureAsset } from "@/services/infraStructureAsset.service";
 
@@ -39,12 +50,13 @@ export default function BusinessApplications() {
   const [searchQuery, setSearchQuery] = useState("");
 
   // ======================== all tenstack query start here ===================================
-  const { data: businessApplication, isLoading: isBusinessApplicationLoading } = useQuery({
-    queryKey: ["business-application", { currentPage, tenant }],
-    queryFn: () => getApplicationData({ page: currentPage, tenant }),
-    enabled: !!token,
-    placeholderData: keepPreviousData,
-  });
+  const { data: businessApplication, isLoading: isBusinessApplicationLoading } =
+    useQuery({
+      queryKey: ["business-application", { currentPage, tenant }],
+      queryFn: () => getApplicationData({ page: currentPage, tenant }),
+      enabled: !!token,
+      placeholderData: keepPreviousData,
+    });
 
   const { data: totalInfraAsset } = useQuery({
     queryKey: ["infrastructure-asset-all", { tenant }],
@@ -53,44 +65,50 @@ export default function BusinessApplications() {
     placeholderData: keepPreviousData,
   });
 
-
   // =========================== all tenstack mutation start here ===============================
 
-  const { mutate: CreateBussinerssApplcation, isPending: isCreateBussinerssApplcationLoading } = useMutation({
+  const {
+    mutate: CreateBussinerssApplcation,
+    isPending: isCreateBussinerssApplcationLoading,
+  } = useMutation({
     mutationFn: (data) => createApplicationData(data),
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["business-application"] });
-    }
+    },
   });
 
-  const { mutate: CreateBulkBussinerssApplcation, isPending: isCreateBulkBussinerssApplcationLoading } = useMutation({
+  const {
+    mutate: CreateBulkBussinerssApplcation,
+    isPending: isCreateBulkBussinerssApplcationLoading,
+  } = useMutation({
     mutationFn: (data) => createBulkApplicationData(data),
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["business-application"] });
-    }
+    },
   });
 
-  const { mutate: DeleteBussinerssApplcation, isPending: isDeleteBussinerssApplcationLoading } = useMutation({
+  const {
+    mutate: DeleteBussinerssApplcation,
+    isPending: isDeleteBussinerssApplcationLoading,
+  } = useMutation({
     mutationFn: (id) => deleteApplicationData(id),
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["business-application"] });
-    }
+    },
   });
 
-    const { mutate: UpdateBussinerssApplcation, isPending: isUpdateBussinerssApplcationLoading } = useMutation({
-    mutationFn: ({id,data}) => updateApplicationData({id,data}),
+  const {
+    mutate: UpdateBussinerssApplcation,
+    isPending: isUpdateBussinerssApplcationLoading,
+  } = useMutation({
+    mutationFn: ({ id, data }) => updateApplicationData({ id, data }),
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["business-application"] });
-    }
+    },
   });
 
-
-
-
   // location hook
-  const location = useLocation()
-
-
+  const location = useLocation();
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
@@ -119,7 +137,7 @@ export default function BusinessApplications() {
         }
 
         if (editable) {
-          UpdateBussinerssApplcation({id:editable._id, data:value});
+          UpdateBussinerssApplcation({ id: editable._id, data: value });
         } else {
           CreateBussinerssApplcation({
             ...value,
@@ -184,8 +202,6 @@ export default function BusinessApplications() {
     }
   }, [currentPage, tenant]);
 
-
-
   if (isViewAccess(authenticate, location)) {
     return <Access />;
   }
@@ -206,15 +222,19 @@ export default function BusinessApplications() {
           </div>
 
           {/* Buttons */}
-          {isCreateAccess() && <div className="flex flex-col sm:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
-            <button
-              onClick={() => setIsModalOpen(true)}
-              disabled={isCreateBulkBussinerssApplcationLoading || isUpdateBussinerssApplcationLoading}
-              className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center justify-center gap-2"
-            >
-              <BiPlus className="h-6 w-6" />
-              Bulk Upload
-            </button>
+          {isCreateAccess() && (
+            <div className="flex flex-col sm:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
+              <button
+                onClick={() => setIsModalOpen(true)}
+                disabled={
+                  isCreateBulkBussinerssApplcationLoading ||
+                  isUpdateBussinerssApplcationLoading
+                }
+                className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center justify-center gap-2"
+              >
+                <BiPlus className="h-6 w-6" />
+                Bulk Upload
+              </button>
 
               <button
                 onClick={() => {
@@ -227,7 +247,7 @@ export default function BusinessApplications() {
                 Business Applications
               </button>
             </div>
-          }
+          )}
         </div>
 
         <div className="w-full  min-h-screen p-6">
@@ -251,91 +271,99 @@ export default function BusinessApplications() {
               <NoDataFound />
             ) : (
               <div className="overflow-x-auto custom-scrollbar w-full">
-                {isBusinessApplicationLoading ? <TableSkeletonLoading /> : <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
-                  <thead className="bg-[#0c1120] text-white uppercase   whitespace-nowrap tracking-wider">
-                    <tr>
-                      {[
-                        "Name",
-                        "Description",
-                        "Country",
-                        "State",
-                        "City",
-                        "Type",
-                        "Application URL",
-                        "Modify Criticality",
-                        "Infrastructure Asset",
-                        isHaveAction() && "Actions",
-                      ].map((header) => (
-                        <th
-                          key={header}
-                          className="px-4 py-3 border-b border-gray-600 font-medium"
+                {isBusinessApplicationLoading ? (
+                  <TableSkeletonLoading />
+                ) : (
+                  <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+                    <thead className="bg-[#0c1120] text-white uppercase   whitespace-nowrap tracking-wider">
+                      <tr>
+                        {[
+                          "Name",
+                          "Description",
+                          "Country",
+                          "State",
+                          "City",
+                          "Type",
+                          "Application URL",
+                          "Modify Criticality",
+                          "Infrastructure Asset",
+                          isHaveAction() && "Actions",
+                        ].map((header) => (
+                          <th
+                            key={header}
+                            className="px-4 py-3 border-b border-gray-600 font-medium"
+                          >
+                            {header}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-700">
+                      {businessApplication.map((tenant) => (
+                        <tr
+                          key={tenant._id}
+                          className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
                         >
-                          {header}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-700">
-                    {businessApplication.map((tenant) => (
-                      <tr
-                        key={tenant._id}
-                        className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
-                      >
-                        <td className="px-4 py-3">{tenant?.name}</td>
-                        <td className="px-4 py-3 capitalize">
-                          {tenant?.description}
-                        </td>
-                        <td className="px-4 py-3 capitalize">
-                          {tenant?.country}
-                        </td>
-                        <td className="px-4 py-3">{tenant?.state}</td>
-                        <td className="px-4 py-3">{tenant?.city}</td>
-                        <td className="px-4 py-3">{tenant?.type}</td>
-                        <td className="px-4 py-3">{tenant?.applicationUrl}</td>
-                        <td className="px-4 py-3">
-                          {tenant?.modifyCriticality}
-                        </td>
-                        <td className="px-4 py-3">
-                          {tenant?.asset?.asset_hostname}
-                        </td>
+                          <td className="px-4 py-3">{tenant?.name}</td>
+                          <td className="px-4 py-3 capitalize">
+                            {tenant?.description}
+                          </td>
+                          <td className="px-4 py-3 capitalize">
+                            {tenant?.country}
+                          </td>
+                          <td className="px-4 py-3">{tenant?.state}</td>
+                          <td className="px-4 py-3">{tenant?.city}</td>
+                          <td className="px-4 py-3">{tenant?.type}</td>
+                          <td className="px-4 py-3">
+                            {tenant?.applicationUrl}
+                          </td>
+                          <td className="px-4 py-3">
+                            {tenant?.modifyCriticality}
+                          </td>
+                          <td className="px-4 py-3">
+                            {tenant?.asset?.asset_hostname}
+                          </td>
 
-                        <td className="py-3 px-4">
-                          <div className="flex space-x-2">
-                            {/* <button className="p-1 text-blue-400 hover:text-blue-300">
+                          <td className="py-3 px-4">
+                            <div className="flex space-x-2">
+                              {/* <button className="p-1 text-blue-400 hover:text-blue-300">
                               <ExternalLink className="w-4 h-4" />
                             </button> */}
-                            {isDeleteAccess() && <button
-                              disabled={isDeleteBussinerssApplcationLoading}
-                              onClick={() => {
-                                const confirmDelete = window.confirm(
-                                  "Are you sure you want to delete this business application?"
-                                );
-                                if (confirmDelete) {
-                                  DeleteBussinerssApplcation(tenant._id);
-                                }
-                              }}
-                              className="text-subtext hover:text-subTextHover"
-                            >
-                              <Trash2 className="w-5 h-5" />
-                            </button>}
+                              {isDeleteAccess() && (
+                                <button
+                                  disabled={isDeleteBussinerssApplcationLoading}
+                                  onClick={() => {
+                                    const confirmDelete = window.confirm(
+                                      "Are you sure you want to delete this business application?"
+                                    );
+                                    if (confirmDelete) {
+                                      DeleteBussinerssApplcation(tenant._id);
+                                    }
+                                  }}
+                                  className="text-subtext hover:text-subTextHover"
+                                >
+                                  <Trash2 className="w-5 h-5" />
+                                </button>
+                              )}
 
-                            {isModifyAccess() && (
-                              <button
-                                onClick={() => {
-                                  setEditable(tenant);
-                                  setmodel(!model);
-                                }}
-                                className="text-subtext hover:text-blue-700"
-                              >
-                                <Edit className="w-5 h-5" />
-                              </button>
-                            )}
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>}
+                              {isModifyAccess() && (
+                                <button
+                                  onClick={() => {
+                                    setEditable(tenant);
+                                    setmodel(!model);
+                                  }}
+                                  className="text-subtext hover:text-blue-700"
+                                >
+                                  <Edit className="w-5 h-5" />
+                                </button>
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
               </div>
             )}
 

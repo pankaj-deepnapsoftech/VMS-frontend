@@ -49,6 +49,14 @@ const PendingAssessment = () => {
 
   return (
     <div className="w-full  pb-20 p-6">
+       <div className="mb-8">
+            <h1 className="text-3xl font-bold text-white mb-2">
+              In-progress Assessment
+            </h1>
+            <p className="text-slate-300">
+              Configure and schedule your in-progress assessment parameters
+            </p>
+          </div>
       <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
         {/* Header */}
         <div className="px-6 py-4 border-b border-gray-700 relative">
@@ -59,7 +67,7 @@ const PendingAssessment = () => {
               placeholder="Search users..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="bg-input backdrop-blur-md py-2 w-1/3 text-white ps-7 pe-3 rounded-md "
+              className="bg-input backdrop-blur-md py-2 w-1/3 text-white ps-7 pe-3 rounded-md"
             />
           </div>
         </div>
