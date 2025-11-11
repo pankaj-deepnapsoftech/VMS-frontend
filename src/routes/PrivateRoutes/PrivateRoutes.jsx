@@ -1,18 +1,12 @@
 import AppErrorBoundary from "@/utils/Errorhandler";
 import { lazy, Suspense } from "react";
 
-
 // ========================= all skeletons here loaded=============
 import TvmDashboardLayoutSkeleton from "@/Skeletons/TvmDashboard/TvmDashboardLayoutSkeleton";
 import { RiskDetailsSkeletonLayout } from "@/Skeletons/RiskDetails/RiskDetailsSkeleton";
 import ExecutiveDashboardLayoutSkeleton from "@/Skeletons/ExecutiveDashbord/ExecutiveDashboardLayoutSkeleton";
 import { AssertInventorySkeletonLayout } from "@/Skeletons/AssetInventory/AssetInventorySkeleton";
-
-
-
-
-
-
+import AssessmentSkeleton from "@/Skeletons/Assessment/AssessmentSkeleton";
 
 // Lazy imports
 const Loader = lazy(() => import("@/components/Loader/Loader"));
@@ -65,15 +59,11 @@ const SchedulingAssessmentPage = lazy(() =>
   import("@/pages/SchedulingAssessment")
 );
 
-
-
 export const PrivateRoutes = [
   {
     path: "/tvm-dashboard",
     element: (
-      <Suspense
-        fallback={<TvmDashboardLayoutSkeleton />}
-      >
+      <Suspense fallback={<TvmDashboardLayoutSkeleton />}>
         <AppErrorBoundary>
           <Home />
         </AppErrorBoundary>
@@ -93,7 +83,7 @@ export const PrivateRoutes = [
   {
     path: "/pending-assesment",
     element: (
-      <Suspense>
+      <Suspense fallback={<AssessmentSkeleton />}>
         <AppErrorBoundary>
           <PendingAssessment />
         </AppErrorBoundary>
@@ -373,9 +363,7 @@ export const PrivateRoutes = [
   {
     path: "/",
     element: (
-      <Suspense
-        fallback={<ExecutiveDashboardLayoutSkeleton />}
-      >
+      <Suspense fallback={<ExecutiveDashboardLayoutSkeleton />}>
         <AppErrorBoundary>
           <ExecutiveDashboard />
         </AppErrorBoundary>
@@ -395,7 +383,7 @@ export const PrivateRoutes = [
   {
     path: "/in-progress-assessment",
     element: (
-      <Suspense>
+      <Suspense fallback={<AssessmentSkeleton />}>
         <AppErrorBoundary>
           <InProgressAssessment />
         </AppErrorBoundary>
@@ -405,7 +393,7 @@ export const PrivateRoutes = [
   {
     path: "/completed-assessment",
     element: (
-      <Suspense>
+      <Suspense fallback={<AssessmentSkeleton />}>
         <AppErrorBoundary>
           <CompleteAssessment />
         </AppErrorBoundary>
