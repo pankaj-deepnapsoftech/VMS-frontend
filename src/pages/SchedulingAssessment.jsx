@@ -6,12 +6,17 @@ import { MdClose } from "react-icons/md";
 import { useAuthContext, useScheduleAssessmentContext } from "@/context";
 import { IoClose } from "react-icons/io5";
 import { handleFileChange } from "@/utils/CheckFileType";
-import { ImageUploader } from "@/utils/ImagesUploader";
+import { ImageUploader } from "@/utils/ImagesUploader"; 
+import { useMutation } from "@tanstack/react-query";
+import { CreateScheduleAssessment } from "@/services/assessment.service";
 
 function SchedulingAssessmentPage({ editable, setEditable }) {
+
+  const {mutate:SchedulingAssesment,isPending:isSchedulingAssesmentLoading} = useMutation({
+    mutationFn:(data) => CreateScheduleAssessment(data)
+  })
   // all context api hooks
   const {
-    SchedulingAssesment,
     UpdateAssesment,
     page,
     setdatafetchCount,
@@ -294,6 +299,7 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
               <div className="flex justify-end">
                 <button
                   type="submit"
+                  disabled={isSchedulingAssesmentLoading}
                   className="bottom-2 left-10 px-8 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
                 >
                   Submit Assessment Request
