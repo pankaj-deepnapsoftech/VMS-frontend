@@ -4,9 +4,7 @@ import { X, Boxes } from "lucide-react";
 import { BiPlus } from "react-icons/bi";
 import { useFormik } from "formik";
 import { InfraAssetvalidation } from "@/Validation/InfrastructureAssetvalidation";
-import {
-  useAuthContext,
-} from "@/context";
+import { useAuthContext } from "@/context";
 import * as XLSX from "xlsx";
 import { useLocation } from "react-router-dom";
 import CustomSelection from "@/components/customSelection/CustomSelection";
@@ -16,11 +14,28 @@ import { RiEdit2Line } from "react-icons/ri";
 import { IoSearch } from "react-icons/io5";
 import NoDataFound from "@/components/NoDataFound";
 import Access from "@/components/role/Access";
-import { isCreateAccess, isDeleteAccess, isHaveAction, isModifyAccess, isViewAccess } from "@/utils/pageAccess";
+import {
+  isCreateAccess,
+  isDeleteAccess,
+  isHaveAction,
+  isModifyAccess,
+  isViewAccess,
+} from "@/utils/pageAccess";
 import { handleExcelFile } from "@/utils/CheckFileType";
-import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { GetAlltags } from "@/services/Tags.service";
-import { createBulkInfrastructureAsset, createInfrastructureAsset, deleteInfrastructureAsset, getInfrastructureAsset, updateInfrastructureAsset } from "@/services/infraStructureAsset.service";
+import {
+  createBulkInfrastructureAsset,
+  createInfrastructureAsset,
+  deleteInfrastructureAsset,
+  getInfrastructureAsset,
+  updateInfrastructureAsset,
+} from "@/services/infraStructureAsset.service";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 
 export default function TenantDashboard() {
@@ -41,50 +56,60 @@ export default function TenantDashboard() {
     queryKey: "All-tags",
     queryFn: GetAlltags,
     enabled: !!token,
-    placeholderData: keepPreviousData
+    placeholderData: keepPreviousData,
   });
 
-  const { data: infraAssetdata, isLoading: isInfraAssetsDataLoading } = useQuery({
-    queryKey: ["infrastructur-asset", { currentPage, tenant }],
-    queryFn: () => getInfrastructureAsset({ currentPage, tenant }),
-    enabled: !!token,
-    placeholderData: keepPreviousData
-  });
-
+  const { data: infraAssetdata, isLoading: isInfraAssetsDataLoading } =
+    useQuery({
+      queryKey: ["infrastructur-asset", { currentPage, tenant }],
+      queryFn: () => getInfrastructureAsset({ currentPage, tenant }),
+      enabled: !!token,
+      placeholderData: keepPreviousData,
+    });
 
   // =========================== all tenstack murtation code start here ===============================
 
-  const { isPending: isCreateInfraAssertLoading, mutate: createInfraAsset } = useMutation({
-    mutationFn: (data) => createInfrastructureAsset(data),
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["infrastructur-asset"] });
-    }
-  });
+  const { isPending: isCreateInfraAssertLoading, mutate: createInfraAsset } =
+    useMutation({
+      mutationFn: (data) => createInfrastructureAsset(data),
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({
+          queryKey: ["infrastructur-asset"],
+        });
+      },
+    });
 
-  const { isPending: isCreateBulkInfraAssetLoading, mutate: CreateBulkInfraAsset } = useMutation({
+  const {
+    isPending: isCreateBulkInfraAssetLoading,
+    mutate: CreateBulkInfraAsset,
+  } = useMutation({
     mutationFn: (data) => createBulkInfrastructureAsset(data),
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["infrastructur-asset"] });
-    }
+      await queryClient.invalidateQueries({
+        queryKey: ["infrastructur-asset"],
+      });
+    },
   });
 
-  const { isPending: isDeleteInfraAssetLoading, mutate: DeleteInfraAsset } = useMutation({
-    mutationFn: (id) => deleteInfrastructureAsset({ id }),
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["infrastructur-asset"] });
-    }
-  });
+  const { isPending: isDeleteInfraAssetLoading, mutate: DeleteInfraAsset } =
+    useMutation({
+      mutationFn: (id) => deleteInfrastructureAsset({ id }),
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({
+          queryKey: ["infrastructur-asset"],
+        });
+      },
+    });
 
-  const { isPending: isUpdateInfraAssetLoading, mutate: UpdateInfraAsset } = useMutation({
-    mutationFn: ({id,data}) => updateInfrastructureAsset({ id,data }),
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["infrastructur-asset"] });
-    }
-  });
-
-
-
-
+  const { isPending: isUpdateInfraAssetLoading, mutate: UpdateInfraAsset } =
+    useMutation({
+      mutationFn: ({ id, data }) => updateInfrastructureAsset({ id, data }),
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({
+          queryKey: ["infrastructur-asset"],
+        });
+      },
+    });
 
   const {
     values,
@@ -109,14 +134,16 @@ export default function TenantDashboard() {
     validationSchema: InfraAssetvalidation,
     enableReinitialize: true,
     onSubmit: (value) => {
-
       if (editable) {
-        UpdateInfraAsset({id:editable._id, data:value});
+        UpdateInfraAsset({ id: editable._id, data: value });
       } else {
         if (!tenant) {
           return alert("Please select a tenant");
         }
-        createInfraAsset({ ...value, creator: tenant ? tenant : editable?.creator });
+        createInfraAsset({
+          ...value,
+          creator: tenant ? tenant : editable?.creator,
+        });
       }
       setmodel(false);
       handleReset();
@@ -126,19 +153,18 @@ export default function TenantDashboard() {
   const handleFileChange = (e) => {
     if (!e.target.files[0]) {
       alert("file is required field");
-      return
-    };
-
-    if (e.target.files[0].size >= (10 * 1024 * 1024)) {
-      alert("File is too large")
+      return;
     }
 
+    if (e.target.files[0].size >= 10 * 1024 * 1024) {
+      alert("File is too large");
+    }
 
-    const file = handleExcelFile(e.target.files[0])
+    const file = handleExcelFile(e.target.files[0]);
     if (file) {
       setSelectedFiles(file);
     } else {
-      e.target.value = ""
+      e.target.value = "";
     }
   };
 
@@ -156,30 +182,27 @@ export default function TenantDashboard() {
     XLSX.writeFile(workbook, "infraStructure-asset.xlsx");
   };
 
-
-
-
   if (isViewAccess(authenticate, location)) {
-    return <Access />
+    return <Access />;
   }
 
   return (
     <>
       <div className="min-h-screen bg-gradient-custom text-white p-6">
-        <div className="max-w-7xl mx-auto">
+        <div className="w-full px-2 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           {/* Header */}
-          <div className="w-full px-6  my-5 py-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div>
-              <h2 className="text-2xl font-semibold text-white">
-                All InfraStructure Asset
-              </h2>
-              <span className="text-subtext text-sm">
-                Manage your infraStructure asset
-              </span>
-            </div>
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-white">
+              All InfraStructure Asset
+            </h1>
+            <span className="text-subtext text-sm">
+              Manage your infraStructure asset
+            </span>
+          </div>
 
-            {/* Buttons */}
-            {isCreateAccess() && <div className="flex flex-col sm:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
+          {/* Buttons */}
+          {isCreateAccess() && (
+            <div className="flex flex-col sm:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
               <button
                 onClick={() => setIsModalOpen(true)}
                 className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center justify-center gap-2"
@@ -198,33 +221,37 @@ export default function TenantDashboard() {
                 <BiPlus className="h-6 w-6" />
                 Infrastructure Asset
               </button>
-            </div>}
-          </div>
+            </div>
+          )}
+        </div>
 
-          {/*table */}
+        {/*table */}
 
-          <div className="w-full   p-6">
-            <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
-              {/* Header */}
-              <div className="px-6 py-4 border-b border-gray-700 relative">
-                <div className="relative">
-                  <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
-                  <input
-                    type="search"
-                    placeholder="Search users..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="bg-input backdrop-blur-md py-2 w-1/3 text-white ps-7 pe-3 rounded-md "
-                  />
-                </div>
+        <div className="w-full min-h-screen">
+          <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
+            {/* Header */}
+            <div className="px-6 py-4 border-b border-gray-700 relative">
+              <div className="relative">
+                <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
+                <input
+                  type="search"
+                  placeholder="Search users..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="bg-input backdrop-blur-md py-2 w-1/3 text-white ps-7 pe-3 rounded-md "
+                />
               </div>
+            </div>
 
-              {/* Table */}
-              {infraAssetdata?.length < 1 ? (
-                <NoDataFound />
-              ) : (
-                <div className="overflow-x-auto custom-scrollbar w-full">
-                  {isInfraAssetsDataLoading ? <TableSkeletonLoading /> : <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+            {/* Table */}
+            {infraAssetdata?.length < 1 ? (
+              <NoDataFound />
+            ) : (
+              <div className="overflow-x-auto custom-scrollbar w-full">
+                {isInfraAssetsDataLoading ? (
+                  <TableSkeletonLoading />
+                ) : (
+                  <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
                     <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
                       <tr>
                         {[
@@ -252,7 +279,9 @@ export default function TenantDashboard() {
                           key={tenant._id}
                           className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
                         >
-                          <td className="px-4 py-3">{(currentPage - 1) * 10 + 1 + index}</td>
+                          <td className="px-4 py-3">
+                            {(currentPage - 1) * 10 + 1 + index}
+                          </td>
                           <td className="px-4 py-3 ">
                             {tenant.asset_hostname || "-"}
                           </td>
@@ -263,7 +292,9 @@ export default function TenantDashboard() {
                             {tenant.modify_criticality || "-"}
                           </td>
                           <td className="px-4 py-3">
-                            {tenant.asset_class == 6 ? "Server" : "Endpoint" || "0"}
+                            {tenant.asset_class == 6
+                              ? "Server"
+                              : "Endpoint" || "0"}
                           </td>
                           <td className="px-4 py-3">
                             {tenant?.data_sensitivity?.tag_name || "-"}{" "}
@@ -272,61 +303,65 @@ export default function TenantDashboard() {
                           <td className="py-4 px-6 text-white flex flex-wrap gap-2 w-40">
                             {tenant?.service_role?.length > 0
                               ? tenant?.service_role?.map((item) => (
-                                <p
-                                  key={item._id}
-                                  style={{ backgroundColor: item.tag_color }}
-                                  className="px-3 py-1 rounded-full"
-                                >
-                                  {item.tag_name}
-                                </p>
-                              ))
+                                  <p
+                                    key={item._id}
+                                    style={{ backgroundColor: item.tag_color }}
+                                    className="px-3 py-1 rounded-full"
+                                  >
+                                    {item.tag_name}
+                                  </p>
+                                ))
                               : "-"}
                           </td>
 
                           <td className="px-4 py-3 space-x-4">
-                            {isDeleteAccess() && <button
-                              disabled={isDeleteInfraAssetLoading}
-                              onClick={() => {
-                                if (
-                                  window.confirm(
-                                    "Are you sure you want to delete this item?"
-                                  )
-                                ) {
-                                  DeleteInfraAsset(tenant._id);
-                                }
-                              }}
-                              title="Delete"
-                              className="text-subtext hover:text-subTextHover"
-                            >
-                              <FaRegTrashAlt className="w-5 h-5" />
-                            </button>}
+                            {isDeleteAccess() && (
+                              <button
+                                disabled={isDeleteInfraAssetLoading}
+                                onClick={() => {
+                                  if (
+                                    window.confirm(
+                                      "Are you sure you want to delete this item?"
+                                    )
+                                  ) {
+                                    DeleteInfraAsset(tenant._id);
+                                  }
+                                }}
+                                title="Delete"
+                                className="text-subtext hover:text-subTextHover"
+                              >
+                                <FaRegTrashAlt className="w-5 h-5" />
+                              </button>
+                            )}
 
-                            {isModifyAccess() && <button
-                              onClick={() => {
-                                setEditable(tenant);
-                                setmodel(!model);
-                              }}
-                              title="Edit"
-                              className="text-subtext hover:text-blue-700"
-                            >
-                              <RiEdit2Line className="w-5 h-5" />
-                            </button>}
+                            {isModifyAccess() && (
+                              <button
+                                onClick={() => {
+                                  setEditable(tenant);
+                                  setmodel(!model);
+                                }}
+                                title="Edit"
+                                className="text-subtext hover:text-blue-700"
+                              >
+                                <RiEdit2Line className="w-5 h-5" />
+                              </button>
+                            )}
                           </td>
                         </tr>
                       ))}
                     </tbody>
-                  </table>}
-                </div>
-              )}
+                  </table>
+                )}
+              </div>
+            )}
 
-              {/* Footer */}
-              <Pagination
-                page={currentPage}
-                setPage={setCurrentPage}
-                hasNextPage={infraAssetdata?.length === 10}
-                total={infraAssetdata?.length}
-              />
-            </div>
+            {/* Footer */}
+            <Pagination
+              page={currentPage}
+              setPage={setCurrentPage}
+              hasNextPage={infraAssetdata?.length === 10}
+              total={infraAssetdata?.length}
+            />
           </div>
         </div>
       </div>
@@ -606,7 +641,9 @@ export default function TenantDashboard() {
                   Cancel
                 </button>
                 <button
-                  disabled={isCreateInfraAssertLoading || isUpdateInfraAssetLoading}
+                  disabled={
+                    isCreateInfraAssertLoading || isUpdateInfraAssetLoading
+                  }
                   onClick={handleSubmit}
                   className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-md py-2 px-4 transition-colors font-medium"
                 >

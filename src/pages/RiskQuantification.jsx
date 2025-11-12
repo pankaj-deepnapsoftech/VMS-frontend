@@ -41,23 +41,22 @@ const RiskOperation = () => {
   };
 
   return (
-    <div>
-      <div className="flex items-center justify-between px-6 py-4">
-        {/* Optional Left Side Heading */}
-        <div className="w-full mt-4">
-          <h2 className="text-2xl font-semibold text-white">
-            Risk Quantification
-          </h2>
+    <div className="min-h-screen bg-gradient-custom text-white p-6">
+      <div className="w-full px-2 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        {/* Header */}
+ 
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-white">Risk Quantification</h1>
           <span className="text-subtext text-sm">
             Manage your Risk Quantification
           </span>
         </div>
       </div>
 
-      <div className="w-full min-h-screen p-6">
-        <div className="bg-[#1a1f2e] rounded-lg mb-12 shadow-xl overflow-hidden">
+      <div className="w-full min-h-screen">
+        <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
           {/* Header */}
-          <div className="px-6 py-4 border-b border-gray-700 relative">
+          <div className="px-4 py-4 border-b border-gray-700 relative">
             <div className="relative">
               <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
               <input

@@ -208,14 +208,14 @@ export default function BusinessApplications() {
 
   return (
     <>
-      <div className="min-h-screen mb-10 bg-gradient-custom text-white p-6">
-        <div className="w-full px-6  my-5 py-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <div className="min-h-screen bg-gradient-custom text-white p-6">
+        <div className="w-full px-2 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           {/* Header */}
 
-          <div>
-            <h2 className="text-2xl font-semibold text-white">
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-white">
               All Business Applications
-            </h2>
+            </h1>
             <span className="text-subtext text-sm">
               Manage your business applications
             </span>
@@ -230,7 +230,7 @@ export default function BusinessApplications() {
                   isCreateBulkBussinerssApplcationLoading ||
                   isUpdateBussinerssApplcationLoading
                 }
-                className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center justify-center gap-2"
+                className="px-2 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center justify-center gap-2"
               >
                 <BiPlus className="h-6 w-6" />
                 Bulk Upload
@@ -250,10 +250,10 @@ export default function BusinessApplications() {
           )}
         </div>
 
-        <div className="w-full  min-h-screen p-6">
+        <div className="w-full min-h-screen">
           <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
             {/* Header */}
-            <div className="px-6 py-4 border-b border-gray-700 relative">
+            <div className="px-4 py-4 border-b border-gray-700 relative">
               <div className="relative">
                 <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
                 <input
@@ -275,7 +275,7 @@ export default function BusinessApplications() {
                   <TableSkeletonLoading />
                 ) : (
                   <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
-                    <thead className="bg-[#0c1120] text-white uppercase   whitespace-nowrap tracking-wider">
+                    <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
                       <tr>
                         {[
                           "Name",
