@@ -289,7 +289,7 @@ export const products = [
         route: "/tvm-dashboard",
         icon: BiSolidDashboard,
       },
-      
+
       // {
       //   title: "Application Dashboard",
       //   route: "/application-dashboard",
@@ -302,7 +302,7 @@ export const products = [
       // },
     ],
   },
-   {
+  {
     title: "Cyber Risk Quantification",
     desc: "Admin control panel",
     borderColor: "#f8b500",
@@ -423,7 +423,7 @@ export const products = [
   // },
 
   {
-    title: "AI-VA",
+    title: "Exposure Management",
     desc: "AI Virtual Analyst",
     borderColor: "#ee9ca7",
     icon: AirVent,
@@ -436,7 +436,7 @@ export const products = [
       },
       {
         title: "Assessment Center",
-        route: "/assessment-center",
+        route: "/attack-surface",
         icon: GiTwirlCenter,
       },
     ],
@@ -509,5 +509,4 @@ export const products = [
       // { title: "Config Email", route: "/config-email", icon: Settings },
     ],
   },
-  
 ];

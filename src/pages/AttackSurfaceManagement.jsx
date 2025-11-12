@@ -26,12 +26,12 @@ export default function AssessmentCenter() {
   };
 
   const handleRefresh = () => {
-    getAIVA(tenant,page);
+    getAIVA(tenant, page);
   };
 
   useEffect(() => {
-    if (token) getAIVA(tenant,page);
-  }, [tenant, token,page]);
+    if (token) getAIVA(tenant, page);
+  }, [tenant, token, page]);
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans p-4 sm:p-6 lg:p-8">
@@ -39,7 +39,7 @@ export default function AssessmentCenter() {
       <header className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between mb-8">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
-            Assessment Center
+            Attack Surface Management 
           </h1>
           <p className="text-slate-400 mt-1 text-sm sm:text-base">
             Launch security assessments and view scan results
@@ -75,7 +75,7 @@ export default function AssessmentCenter() {
               </svg>
             </div>
             <h3 className="text-sm sm:text-base font-semibold">
-              Securend AI-Powered Scan
+              New Exposure Scan
             </h3>
             <p className="text-slate-400 mt-1 leading-relaxed text-xs sm:text-sm">
               Run intelligent automated scans for vulnerabilities,

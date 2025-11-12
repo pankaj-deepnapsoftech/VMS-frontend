@@ -79,7 +79,7 @@ const AssessmentModal = ({ isOpen, onClose, editable }) => {
     <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
       <div className="bg-slate-900 border border-slate-700 rounded-xl shadow-2xl w-full max-w-2xl p-6 relative max-h-[85vh] overflow-auto">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold">Start AI-Powered Scan</h2>
+          <h2 className="text-lg font-semibold">New Exposure Scan</h2>
           <button
             onClick={onClose}
             className="text-slate-400 hover:text-slate-200"

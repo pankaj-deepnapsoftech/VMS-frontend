@@ -19,12 +19,16 @@ import Access from "@/components/role/Access";
 
 const PendingAssessment = () => {
   // all context api hooks
-  const { token,authenticate,tenant } = useAuthContext();
-  const { getInProgressAssessment, progressAssessment, DeleteAssesment,UpdateAssesment } =
-    useScheduleAssessmentContext();
+  const { token, authenticate, tenant } = useAuthContext();
+  const {
+    getInProgressAssessment,
+    progressAssessment,
+    DeleteAssesment,
+    UpdateAssesment,
+  } = useScheduleAssessmentContext();
 
-    // location 
-    const location = useLocation();
+  // location
+  const location = useLocation();
 
   // all useState hooks
   const [page, setPage] = useState(1);
@@ -37,26 +41,24 @@ const PendingAssessment = () => {
 
   useEffect(() => {
     if (token) {
-      getInProgressAssessment(page,tenant);
+      getInProgressAssessment(page, tenant);
     }
-  }, [token,tenant]);
+  }, [token, tenant]);
 
-
-    if(isViewAccess(authenticate, location)){
-      return <Access/>
-    }
- 
+  if (isViewAccess(authenticate, location)) {
+    return <Access />;
+  }
 
   return (
     <div className="w-full  pb-20 p-6">
-       <div className="mb-8">
-            <h1 className="text-3xl font-bold text-white mb-2">
-              In-progress Assessment
-            </h1>
-            <p className="text-slate-300">
-              Configure and schedule your in-progress assessment parameters
-            </p>
-          </div>
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-white mb-2">
+          In-progress Assessment
+        </h1>
+        <p className="text-slate-300">
+          Configure and schedule your in-progress assessment parameters
+        </p>
+      </div>
       <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
         {/* Header */}
         <div className="px-6 py-4 border-b border-gray-700 relative">
@@ -107,7 +109,7 @@ const PendingAssessment = () => {
                     key={item._id}
                     className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
                   >
-                    <td className="px-4 py-3">{(page -1 ) * 10 + 1+ index}</td>
+                    <td className="px-4 py-3">{(page - 1) * 10 + 1 + index}</td>
                     <td className="px-4 py-3 capitalize">
                       {item?.Data_Classification || "-"}
                     </td>
@@ -194,11 +196,9 @@ const PendingAssessment = () => {
                   onClick={async () => {
                     try {
                       // 🔧 Call your API or context function here
-                      await UpdateAssesment(
-                        selectedStatusItemId,{
-                          status: "Completed"
-                        }
-                      );
+                      await UpdateAssesment(selectedStatusItemId, {
+                        status: "Completed",
+                      });
 
                       // Refresh table data
                       getInProgressAssessment();

@@ -51,7 +51,7 @@ const InProgressAssessment = lazy(() => import("@/pages/InProgress"));
 const CompleteAssessment = lazy(() => import("@/pages/CompleteAssessment"));
 const Severity = lazy(() => import("@/pages/SLA-Configuration"));
 const ASMDashboard = lazy(() => import("@/pages/ASMDashboard"));
-const AssessmentCenter = lazy(() => import("@/pages/AssessmentCenter"));
+const AssessmentCenter = lazy(() => import("@/pages/AttackSurfaceManagement"));
 const PendingVulnerability = lazy(() => import("@/pages/PendingVulnerability"));
 const DownloadReports = lazy(() => import("@/pages/DownloadReport"));
 const Home = lazy(() => import("@/pages/Home"));
@@ -421,7 +421,7 @@ export const PrivateRoutes = [
     ),
   },
   {
-    path: "/assessment-center",
+    path: "/attack-surface",
     element: (
       <Suspense>
         <AppErrorBoundary>

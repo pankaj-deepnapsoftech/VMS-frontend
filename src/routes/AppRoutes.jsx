@@ -8,6 +8,7 @@ import {
 import { useAuthContext } from "@/context";
 import { lazy, Suspense } from "react";
 import { AssertInventorySkeletonLayout } from "@/Skeletons/AssetInventory/AssetInventorySkeleton";
+import MainLayoutSkeleton from "@/Skeletons/MainLayout/MainLayoutSkeleton";
 
 const Solutions = lazy(() => import("@/pages/Auth/Solutions"));
 const Pricing = lazy(() => import("@/pages/Auth/Pricing"));
@@ -48,7 +49,7 @@ const AppRoutes = () => {
             <Route path="/verify-otp" element={<VerifyOtp />} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/solutions" element={<Solutions />} />
-            <Route path="/test" element={<AssertInventorySkeletonLayout />} />
+            <Route path="/test" element={<MainLayoutSkeleton />} />
           </>
         )}
 
@@ -56,7 +57,7 @@ const AppRoutes = () => {
         {isAuthenticated && (
           <Route
             element={
-              <Suspense fallback={<div>Loading layout...</div>}>
+              <Suspense fallback={<MainLayoutSkeleton />}>
                 <MainLayout />
               </Suspense>
             }
