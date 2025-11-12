@@ -51,7 +51,7 @@ const PendingAssessment = () => {
   }
 
   return (
-    <div className="w-full  pb-20 p-6">
+    <div className="w-full pb-20 p-6">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-white mb-2">
           Pending Assessment
