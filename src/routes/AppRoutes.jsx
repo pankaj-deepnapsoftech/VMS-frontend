@@ -30,85 +30,52 @@ const AppRoutes = () => {
       authenticate.allowed_path
     ) {
       return PrivateRoutes.filter((item) =>
-        authenticate?.allowed_path.map((ite) => ite.value === item.path)
+        authenticate.allowed_path.some((ite) => ite.value === item.path)
       );
     }
+    return []; // Always return an array
   };
+
   return (
-    <Routes>
-      {/* Public routes */}
-      {!isAuthenticated && (
-        <>
-          {/* <Route path="/" element={<LandingPage />} /> */}
-          <Route
-            path="/"
-            element={
-              <Suspense>
-                <SignIn />
-              </Suspense>
-            }
-          />
-          {/* <Route path="/sign-up" element={<SignUp />} /> */}
-          <Route
-            path="/forgot-password"
-            element={
-              <Suspense>
-                <ForgotPassword />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/reset-password"
-            element={
-              <Suspense>
-                <ResetPassword />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/verify-otp"
-            element={
-              <Suspense>
-                <VerifyOtp />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/pricing"
-            element={
-              <Suspense>
-                <Pricing />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/solutions"
-            element={
-              <Suspense>
-                <Solutions />
-              </Suspense>
-            }
-          />
-          <Route path="/test" element={<AssertInventorySkeletonLayout />} />
-        </>
-      )}
+    <Suspense fallback={<div>Loading...</div>}>
+      <Routes>
+        {/* Public routes */}
+        {!isAuthenticated && (
+          <>
+            <Route path="/" element={<SignIn />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/verify-otp" element={<VerifyOtp />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/solutions" element={<Solutions />} />
+            <Route path="/test" element={<AssertInventorySkeletonLayout />} />
+          </>
+        )}
 
-      {/* Protected routes */}
-      {isAuthenticated && (
-        <Route element={<Suspense fallback={"loading...."} ><MainLayout /></Suspense>}>
-          {getRoleBasedRoutes().map((item, index) => (
-            <Route key={index} path={item.path} element={item.element}>
-              {item.children &&
-                item.children.map((child, i) => (
-                  <Route key={i} path={child.path} element={child.element} />
-                ))}
-            </Route>
-          ))}
-        </Route>
-      )}
+        {/* Protected routes */}
+        {isAuthenticated && (
+          <Route
+            element={
+              <Suspense fallback={<div>Loading layout...</div>}>
+                <MainLayout />
+              </Suspense>
+            }
+          >
+            {getRoleBasedRoutes().map((item, index) => (
+              <Route key={index} path={item.path} element={item.element}>
+                {item.children &&
+                  item.children.map((child, i) => (
+                    <Route key={i} path={child.path} element={child.element} />
+                  ))}
+              </Route>
+            ))}
+          </Route>
+        )}
 
-      <Route path="*" element={<PageNotFound />} />
-    </Routes>
+        {/* 404 fallback */}
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    </Suspense>
   );
 };
 

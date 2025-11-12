@@ -21,17 +21,13 @@ const queryClient = new QueryClient({
 const App = () => {
   const { userLoading } = useAuthContext();
 
-  const {setSelectedYear} = useAuthStore();
 
 
   if (userLoading) {
     return <Loader />;
   }
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useEffect(()=>{
-    setSelectedYear("this is testing")
-  },[])
+
 
   return (
     <QueryClientProvider client={queryClient}>
