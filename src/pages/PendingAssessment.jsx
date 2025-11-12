@@ -55,9 +55,6 @@ const { mutate: UpdateAssesment, isPending: isUpdateAssesmentLoading } = useMuta
   }
 })
 
-const {
-  getPendingAssessments,
-} = useScheduleAssessmentContext();
 
 // location
 const location = useLocation();
@@ -248,7 +245,6 @@ return (
                   await UpdateAssesment(selectedAssessmentId, {
                     status: newStatus,
                   });
-                  getPendingAssessments();
                   setIsStatusModalOpen(false);
                 }}
                 className="px-4 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
