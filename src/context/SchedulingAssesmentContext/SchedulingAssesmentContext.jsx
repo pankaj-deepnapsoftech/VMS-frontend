@@ -15,7 +15,6 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 	const [loading, setLoading] = useState(false);
 	const [datafetchCount, setdatafetchCount] = useState(0)
 
-	const [pendingAssessment, setPendingAssessment] = useState([]);
 	const [testerData, setTesterData] = useState([]);
 	const [dashboardData, setDashboardData] = useState([]);
 	const [progressAssessment, setProgressAssessment] = useState([]);
@@ -24,18 +23,7 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 
 
 
-	const getPendingAssessments = async (page, tenant) => {
-		setLoading(true);
-		try {
-			const res = await AxiosHandler.get(`/assessment/get?page=${page}&tenant=${tenant ? tenant : ""}`);
-			setPendingAssessment(res.data?.data);
 
-		} catch (error) {
-			console.log(error)
-		} finally {
-			setLoading(false);
-		}
-	}
 
 	const getInProgressAssessment = async (page, tenant) => {
 		setLoading(true);
@@ -90,61 +78,10 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 		}
 	}
 
-	const SchedulingAssesment = async (data) => {
-
-		const toastId = toast.loading("Loading...");
-		try {
-			const res = await AxiosHandler.post(`/assessment/create`, data);
-			getPendingAssessments();
-			toast.dismiss(toastId);
-			toast.success(res.data.message);
-
-		} catch (error) {
-			//console.log(error)
-			toast.dismiss(toastId);
-			toast.error(error?.response?.data?.message);
-
-		}
-	}
-
-	const UpdateAssesment = async (id, data) => {
-		const toastId = toast.loading("Loading...");
-		try {
-			const res = await AxiosHandler.patch(`/assessment/update/${id}`, data);
-
-			getPendingAssessments();
-			getCompleteAssessment();
-			getInProgressAssessment();
-			toast.dismiss(toastId);
-			toast.success(res.data.message);
-
-		} catch (error) {
-			//console.log(error)
-			toast.dismiss(toastId);
-			toast.error(error?.response?.data?.message);
-
-		}
-	}
-
-	const DeleteAssesment = async (id) => {
-
-		const toastId = toast.loading("Loading...");
-		try {
-			const res = await AxiosHandler.delete(`/assessment/delete/${id}`);
-			getPendingAssessments();
-			getCompleteAssessment();
-			getInProgressAssessment();
-			toast.dismiss(toastId);
-			toast.success(res.data.message);
 
 
-		} catch (error) {
-			//console.log(error)
-			toast.dismiss(toastId);
-			toast.error(error?.response?.data?.message);
 
-		}
-	}
+
 
 	const getAllInProgress = async (tenant) => {
 
@@ -162,15 +99,10 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 	return (
 		<AssesmentContext.Provider value={{
 			loading,
-			SchedulingAssesment,
-			pendingAssessment,
-			DeleteAssesment,
-			UpdateAssesment,
 			testerData,
 			dashboardData,
 			datafetchCount,
 			setdatafetchCount,
-			getPendingAssessments,
 			TesterForAssessment,
 			DashboardData,
 			getInProgressAssessment,
