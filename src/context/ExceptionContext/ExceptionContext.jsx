@@ -7,12 +7,10 @@ import { useAuthContext } from "..";
 export const ExceptionContext = createContext();
 
 const ExceptionContextProvider = ({ children }) => {
-  const {tenant} = useAuthContext();
 
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
 
-  const [expectionData, setExpectionData] = useState([]);
   const [expectionDataFiftyDays, setExpectionDataFiftyDays] = useState([]);
   const [riskRating, setRiskRating] = useState([]);
   const [deferredVulnerableItems, setDeferredVulnerableItems] = useState([]);
@@ -42,22 +40,7 @@ const ExceptionContextProvider = ({ children }) => {
     }
   };
 
-   const ExpectionPendingData = async (page,tenant) => {
-    console.log()
-    setLoading(true);
-    try {
-      const res = await AxiosHandler.get(
-        `/expection/get?page=${page}&tenant=${tenant ? tenant : ""}`
-      );
-
-
-      setExpectionData(res.data?.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  
 
   const ClientDeferredVulnerableItems = async () => {
     setLoading(true);
@@ -71,18 +54,7 @@ const ExceptionContextProvider = ({ children }) => {
     }
   };
 
-  const UpdateExpectionData = async (id,data) => {
-    setLoading(true);
-    try {
-      const res = await AxiosHandler.put(`/expection/update/${id}`,data);
-      toast.success(res.data.message);
-      ExpectionPendingData(1,tenant)
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+
 
  
 
@@ -101,12 +73,9 @@ const ExceptionContextProvider = ({ children }) => {
   return (
     <ExceptionContext.Provider
       value={{
-        expectionData,
         loading,
         page,
         setPage,
-        UpdateExpectionData,
-        ExpectionPendingData,
         expectionDataFiftyDays,
         riskRating,
         deferredVulnerableItems,

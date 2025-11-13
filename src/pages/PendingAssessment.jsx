@@ -26,6 +26,7 @@ import {
   CreateScheduleAssessment,
   deleteAssesment,
   getPendingAssessment,
+  UpdateScheduleAssessment,
 } from "@/services/assessment.service";
 import AssessmentSkeleton from "@/Skeletons/Assessment/AssessmentSkeleton";
 
@@ -57,7 +58,7 @@ const PendingAssessment = () => {
 
   const { mutate: UpdateAssesment, isPending: isUpdateAssesmentLoading } =
     useMutation({
-      mutationFn: (data) => CreateScheduleAssessment(data),
+      mutationFn: ({id,data}) => UpdateScheduleAssessment({id,data}),
       onSuccess: async () => {
         await Promise.all([
           queryClient.invalidateQueries({ queryKey: "in-progress-assessment" }),
@@ -256,9 +257,9 @@ const PendingAssessment = () => {
                   disabled={isUpdateAssesmentLoading}
                   onClick={async () => {
                     if (!newStatus) return;
-                    await UpdateAssesment(selectedAssessmentId, {
+                    await UpdateAssesment({id:selectedAssessmentId,data: {
                       status: newStatus,
-                    });
+                    }});
                     setIsStatusModalOpen(false);
                   }}
                   className="px-4 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"

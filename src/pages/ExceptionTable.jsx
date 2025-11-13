@@ -1,15 +1,38 @@
 import { useAuthContext, useExceptionContext } from "@/context";
 import ExpectionModal from "@/modals/ExpectionModal";
+import { GetExceptionData, updateExceptionData } from "@/services/exception.service";
+import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 import { dateFormaterWithDate } from "@/utils/dateFormate";
 import { EmptyFieldRemover } from "@/utils/RemoveEmptyField";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState, useRef } from "react";
 import { FaUserCheck } from "react-icons/fa";
 import { GrEdit } from "react-icons/gr";
 
 const ExceptionTable = () => {
-  const { ExpectionPendingData, expectionData, UpdateExpectionData } =
-    useExceptionContext();
+
+  const queryClient = useQueryClient();
   const { token, GetTenantData, UserViaTenant, tenant } = useAuthContext();
+  const [page,setPage] = useState(1);
+
+  // ---------------- here am using tenstack query ---------------------
+
+  const {data:expectionData,isLoading:isExpectionDataLoading} = useQuery({
+    queryKey:["Exception",{page,tenant}],
+    queryFn:()=>GetExceptionData({page,tenant}),
+    enabled: !!token,
+    placeholderData:keepPreviousData,
+  })
+
+  const {mutate:UpdateExpectionData,isPending:isUpdateExpectionDataLoading} = useMutation({
+    mutationFn:({id,data})=>updateExceptionData({id,data}),
+    onSuccess:async () => {
+      await queryClient.invalidateQueries({queryKey:['Exception']})
+    }
+  })
+
+
+
   const [editTable, setEditTable] = useState(null);
 
   const [selectedId, setSelectedId] = useState(null);
@@ -107,7 +130,7 @@ const ExceptionTable = () => {
 
     newData = EmptyFieldRemover(newData);
 
-    UpdateExpectionData(selectedRow._id, newData);
+    UpdateExpectionData({id:selectedRow._id, data:newData});
     setApproveArray([]);
 
     closeApproverModal();
@@ -160,16 +183,9 @@ const ExceptionTable = () => {
     };
   }, []);
 
-  useEffect(() => {   
-    if (token) {
-      ExpectionPendingData(1, tenant);
-    }
-  }, [tenant]);
+
 
   useEffect(() => {
-    if (token) {
-      ExpectionPendingData(1, tenant);
-    }
     if (tenant) {
       GetTenantData(tenant);
     }
@@ -216,6 +232,7 @@ const ExceptionTable = () => {
                 Cancel
               </button>
               <button
+              disabled={isUpdateExpectionDataLoading}
                 onClick={handleSaveApprovers}
                 className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
               >
@@ -229,7 +246,7 @@ const ExceptionTable = () => {
       {hasData ? (
         <div className="overflow-auto custom-scrollbar">
           <div className="overflow-auto rounded-xl border border-slate-700 shadow-xl backdrop-blur-sm">
-            <table className="min-w-full text-sm text-slate-200">
+           {isExpectionDataLoading ? <TableSkeletonLoading/> : <table className="min-w-full text-sm text-slate-200">
               <thead className="sticky top-0 z-10 bg-slate-800/90 backdrop-blur border-b border-slate-700">
                 <tr>
                   {[
@@ -323,7 +340,7 @@ const ExceptionTable = () => {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </table>}
           </div>
         </div>
       ) : (

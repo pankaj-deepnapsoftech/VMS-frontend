@@ -10,7 +10,6 @@ import {
   Legend,
   ResponsiveContainer,
   ComposedChart,
-  Line,
   Cell,
 } from "recharts";
 import {
@@ -18,22 +17,14 @@ import {
   useExceptionContext,
   useVulnerabililtyDataContext,
 } from "@/context";
-import { BiSearch } from "react-icons/bi";
-import { RiDeleteBinFill } from "react-icons/ri";
 import Loader from "@/components/Loader/Loader";
-import NoDataFound from "@/components/NoDataFound";
-import { excelDateToJSDate } from "@/utils/utils";
 
 function Exceptions() {
   const { UpdateData, DeleteData } = useVulnerabililtyDataContext();
 
   const {
-    expectionData,
     loading,
     page,
-    setPage,
-    ExpectionData,
-    ExpectionPendingData,
     expectionDataFiftyDays,
     riskRating,
     deferredVulnerableItems,
@@ -46,51 +37,21 @@ function Exceptions() {
 
   useEffect(() => {
     if (token) {
-      authenticate?.role === "ClientCISO"
-        ? ExpectionData()
-        : ExpectionPendingData();
+    
       ClientExcectionDataFiftyDays();
       ClientRiskRating();
       ClientDeferredVulnerableItems();
     }
   }, [token, authenticate, UpdateData, DeleteData, page]);
 
-  const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPage = 10;
 
-  const tableHeaders =
-    []?.length > 0
-      ? Object.keys(expectionData[0])?.filter(
-        (key) =>
-          key !== "_id" &&
-          key !== "__v" &&
-          key !== "updatedAt" &&
-          key !== "docs"
-      )
-      : [];
+ 
 
-  const filteredData = expectionData?.filter((item) =>
-    Object.values(item).some(
-      (value) =>
-        value &&
-        value.toString().toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  );
 
-  const paginatedData = filteredData.slice(
-    (currentPage - 1) * rowsPerPage,
-    currentPage * rowsPerPage
-  );
 
-  const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this vulnerability?")) {
-      DeleteData(id);
-      authenticate?.role === "ClientCISO"
-        ? ExpectionData()
-        : ExpectionPendingData();
-    }
-  };
+
+
+
 
   const colorMapping = { "15 days": "#FF0000", "30 days": "#FFBF00" }; // Red & Amber
   const defaultColors = ["#28A745", "#007BFF"]; // Green & Blue

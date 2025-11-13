@@ -1,5 +1,5 @@
 /* eslint-disable no-constant-binary-expression */
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import Pagination from "./Pagination";
 import {
   isDeleteAccess,
@@ -11,7 +11,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { RiEdit2Line } from "react-icons/ri";
 import { IoSearch } from "react-icons/io5";
 import NoDataFound from "@/components/NoDataFound";
-import { useAuthContext, useScheduleAssessmentContext } from "@/context";
+import { useAuthContext } from "@/context";
 import SchedulingAssessmentPage from "./SchedulingAssessment";
 import Access from "@/components/role/Access";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";

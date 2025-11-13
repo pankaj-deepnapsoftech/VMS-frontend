@@ -1,7 +1,9 @@
 /* eslint-disable react/prop-types */
-import { useAuthContext, useExceptionContext } from "@/context";
+import { useAuthContext} from "@/context";
+import { GetExceptionData, updateExceptionData } from "@/services/exception.service";
 import { Checkhariqui } from "@/utils/checkHarirqui";
-import React, { useEffect, useRef } from "react";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import React, { useEffect, useRef, useState } from "react";
 import { FaTimesCircle, FaBell } from "react-icons/fa";
 
 export function NotificationSidebar({
@@ -12,9 +14,26 @@ export function NotificationSidebar({
   setRejectionReasion,
   setNotificationData,
 }) {
-  const { tenant, token, authenticate } = useAuthContext();
-  const { UpdateExpectionData, ExpectionPendingData, expectionData } =
-    useExceptionContext();
+ const queryClient = useQueryClient();
+  const { token, tenant,authenticate } = useAuthContext();
+  const [page,setPage] = useState(1);
+
+  // ---------------- here am using tenstack query ---------------------
+
+  const {data:expectionData} = useQuery({
+    queryKey:["Exception",{page,tenant}],
+    queryFn:()=>GetExceptionData({page,tenant}),
+    enabled: !!token,
+    placeholderData:keepPreviousData,
+  })
+
+  const {mutate:UpdateExpectionData,isPending:isUpdateExpectionDataLoading} = useMutation({
+    mutationFn:({id,data})=>updateExceptionData({id,data}),
+    onSuccess:async () => {
+      await queryClient.invalidateQueries({queryKey:['Exception']})
+    }
+  })
+
   let notificationcount =
     notifications?.filter((notification) => !notification.view).length || 0;
 
@@ -41,14 +60,14 @@ export function NotificationSidebar({
     }
 
     if (key) {
-      UpdateExpectionData(data.expection_id, {
+      UpdateExpectionData({id:data.expection_id, data:{
         [key]: {
           ...UpdatedData,
           aproved: true,
           status: "Approved",
           description: null,
         },
-      });
+      }});
       notificationsViewed(data?._id);
     }
   };
@@ -98,11 +117,6 @@ export function NotificationSidebar({
     };
   }, [isOpen, onClose]);
 
-  useEffect(() => {
-    if (token) {
-      ExpectionPendingData(1, tenant);
-    }
-  }, [token, tenant]);
 
   return (
     <div
@@ -158,6 +172,7 @@ export function NotificationSidebar({
                 {notification?.options && Checkhariqui(expectionData.filter((item)=>item._id === notification.expection_id)[0] || null,authenticate) && (
                   <div className="flex justify-end gap-2 mt-3">
                     <button
+                    disabled={isUpdateExpectionDataLoading}
                       onClick={() => HandleUpdateExpection(notification)}
                       className="px-3 py-1.5 text-sm font-medium rounded-lg bg-gradient-to-r from-green-400 to-emerald-500 text-white shadow-md hover:opacity-90 transition-all duration-200 transform hover:scale-105 active:scale-95"
                     >
