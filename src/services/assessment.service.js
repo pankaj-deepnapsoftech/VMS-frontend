@@ -26,9 +26,17 @@ export const deleteAssesment = async (id) => {
   return res.data;
 };
 
-export const getInProgressAssessment = async ({ page, tenant }) => {
+export const getInProgressAssessment = async ({tenant,page }) => {
   const res = await AxiosHandler.get(
     `/assessment/get-in-progress?page=${page}&tenant=${tenant ? tenant : ""}`
   );
+  return res.data?.data || [];
+};
+
+
+export const getInCompletedAssessment = async ({tenant,page }) => {
+   const res = await AxiosHandler.get(
+        `/assessment/get-completed?page=${page}&tenant=${tenant ? tenant : ""}`
+      );
   return res.data?.data || [];
 };

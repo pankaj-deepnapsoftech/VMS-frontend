@@ -12,39 +12,10 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 
   const [testerData, setTesterData] = useState([]);
   const [dashboardData, setDashboardData] = useState([]);
-  const [progressAssessment, setProgressAssessment] = useState([]);
-  const [completeAssessment, setCompleteAssessment] = useState([]);
   const [allOption, setAllOptions] = useState([]);
 
-  const getInProgressAssessment = async (page, tenant) => {
-    setLoading(true);
-    try {
-      const res = await AxiosHandler.get(
-        `/assessment/get-in-progress?page=${page}&tenant=${
-          tenant ? tenant : ""
-        }`
-      );
-      setProgressAssessment(res.data?.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  const getCompleteAssessment = async (page, tenant) => {
-    setLoading(true);
-    try {
-      const res = await AxiosHandler.get(
-        `/assessment/get-completed?page=${page}&tenant=${tenant ? tenant : ""}`
-      );
-      setCompleteAssessment(res.data?.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+
 
   const DashboardData = async () => {
     setLoading(true);
@@ -88,10 +59,6 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
         setdatafetchCount,
         TesterForAssessment,
         DashboardData,
-        getInProgressAssessment,
-        progressAssessment,
-        getCompleteAssessment,
-        completeAssessment,
         getAllInProgress,
         allOption,
         // CreateNotifications

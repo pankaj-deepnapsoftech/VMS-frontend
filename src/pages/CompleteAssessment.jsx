@@ -14,25 +14,45 @@ import NoDataFound from "@/components/NoDataFound";
 import { useAuthContext, useScheduleAssessmentContext } from "@/context";
 import SchedulingAssessmentPage from "./SchedulingAssessment";
 import Access from "@/components/role/Access";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { deleteAssesment, getInCompletedAssessment } from "@/services/assessment.service";
+import AssessmentSkeleton from "@/Skeletons/Assessment/AssessmentSkeleton";
 
 const PendingAssessment = () => {
+
+  const queryClient = useQueryClient();
+
   // all context api hooks
   const { token,authenticate,tenant } = useAuthContext();
-  const { getCompleteAssessment, completeAssessment, DeleteAssesment } =
-    useScheduleAssessmentContext();
+  const [page, setPage] = useState(1);
+
+    const { mutate: DeleteAssesment, isPending: isDeleteAssesmentLoading } =
+    useMutation({
+      mutationFn: (id) => deleteAssesment(id),
+      onSuccess: async () => {
+        await Promise.all([
+          queryClient.invalidateQueries({ queryKey: "in-progress-assessment" }),
+          queryClient.invalidateQueries({ queryKey: "completed-assessment" }),
+          queryClient.invalidateQueries({ queryKey: "pending-assessment" }),
+        ]);
+      },
+    });
+
+    const {data:completeAssessment,isLoading:isCompleteAssessmentLoading} = useQuery({
+    queryKey: ["completed-assessment", {page,tenant}],
+    queryFn: () => getInCompletedAssessment({ page,tenant }),
+    keepPreviousData: true,
+    enabled: !!token,
+    })
+
 
   // all useState hooks
-  const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [editable, setEditable] = useState(null);
 
-  const filteredData = completeAssessment;
 
-  useEffect(() => {
-    if (token) {
-      getCompleteAssessment(page,tenant);
-    }
-  }, [token,tenant]);
+
+
 
     if(isViewAccess(authenticate, location)){
     return <Access/>
@@ -64,11 +84,11 @@ const PendingAssessment = () => {
         </div>
 
         {/* Table */}
-        {filteredData?.length < 1 ? (
+        {completeAssessment?.length < 1 ? (
           <NoDataFound />
         ) : (
           <div className="overflow-x-auto custom-scrollbar w-full">
-            <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+          {isCompleteAssessmentLoading ?  <AssessmentSkeleton />  :  <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
               <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
                 <tr>
                   {[
@@ -93,7 +113,7 @@ const PendingAssessment = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-700">
-                {filteredData.map((item, index) => (
+                {completeAssessment.map((item, index) => (
                   <tr
                     key={item._id}
                     className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
@@ -119,6 +139,7 @@ const PendingAssessment = () => {
                     <td className="px-4 py-3 flex gap-2">
                       {isDeleteAccess() && (
                         <button
+                        disabled={isDeleteAssesmentLoading}
                           onClick={() =>
                             window.confirm("Delete this user?") &&
                             DeleteAssesment(item._id)
@@ -148,7 +169,7 @@ const PendingAssessment = () => {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </table>}
           </div>
         )}
 
@@ -156,8 +177,8 @@ const PendingAssessment = () => {
         <Pagination
           page={page}
           setPage={setPage}
-          hasNextPage={filteredData.length === 10}
-          total={filteredData.length}
+          hasNextPage={completeAssessment?.length === 10}
+          total={completeAssessment?.length}
         />
       </div>
 

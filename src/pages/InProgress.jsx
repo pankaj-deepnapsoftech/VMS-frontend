@@ -16,34 +16,63 @@ import SchedulingAssessmentPage from "./SchedulingAssessment";
 import { TbStatusChange } from "react-icons/tb";
 import { useLocation } from "react-router-dom";
 import Access from "@/components/role/Access";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { CreateScheduleAssessment, deleteAssesment, getInProgressAssessment } from "@/services/assessment.service";
+import AssessmentSkeleton from "@/Skeletons/Assessment/AssessmentSkeleton";
 
 const PendingAssessment = () => {
+
+  const queryClient = useQueryClient();
   // all context api hooks
   const { token, authenticate, tenant } = useAuthContext();
-  const {
-    getInProgressAssessment,
-    progressAssessment,
-    DeleteAssesment,
-    UpdateAssesment,
-  } = useScheduleAssessmentContext();
+  const [page, setPage] = useState(1);
+
+
+  
+  const { mutate: DeleteAssesment, isPending: isDeleteAssesmentLoading } =
+    useMutation({
+      mutationFn: (id) => deleteAssesment(id),
+      onSuccess: async () => {
+        await Promise.all([
+          queryClient.invalidateQueries({ queryKey: "in-progress-assessment" }),
+          queryClient.invalidateQueries({ queryKey: "completed-assessment" }),
+          queryClient.invalidateQueries({ queryKey: "pending-assessment" }),
+        ]);
+      },
+    });
+
+  const { mutate: UpdateAssesment, isPending: isUpdateAssesmentLoading } =
+    useMutation({
+      mutationFn: (data) => CreateScheduleAssessment(data),
+      onSuccess: async () => {
+        await Promise.all([
+          queryClient.invalidateQueries({ queryKey: "in-progress-assessment" }),
+          queryClient.invalidateQueries({ queryKey: "completed-assessment" }),
+        ]);
+      },
+    });
+
+    const {data:progressAssessment,isLoading:isProgressAssessmentLoading}=useQuery({
+    queryKey: ['in-progress-assessment', {tenant,page}],
+    queryFn: ()=>getInProgressAssessment({ tenant,page}),
+    enabled: !!token,
+    placeholderData: keepPreviousData,
+    });
+
+
+ 
 
   // location
   const location = useLocation();
 
   // all useState hooks
-  const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [editable, setEditable] = useState(null);
   const [showStatusModal, setShowStatusModal] = useState(false);
   const [selectedStatusItemId, setSelectedStatusItemId] = useState(null);
 
-  const filteredData = progressAssessment;
+  
 
-  useEffect(() => {
-    if (token) {
-      getInProgressAssessment(page, tenant);
-    }
-  }, [token, tenant]);
 
   if (isViewAccess(authenticate, location)) {
     return <Access />;
@@ -75,11 +104,13 @@ const PendingAssessment = () => {
         </div>
 
         {/* Table */}
-        {filteredData?.length < 1 ? (
+        {progressAssessment?.length < 1 ? (
           <NoDataFound />
         ) : (
           <div className="overflow-x-auto custom-scrollbar w-full">
-            <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+           {isProgressAssessmentLoading ?  (
+              <AssessmentSkeleton />
+            )  : <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
               <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
                 <tr>
                   {[
@@ -104,7 +135,7 @@ const PendingAssessment = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-700">
-                {filteredData.map((item, index) => (
+                {progressAssessment.map((item, index) => (
                   <tr
                     key={item._id}
                     className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
@@ -130,6 +161,7 @@ const PendingAssessment = () => {
                     <td className="px-4 py-3 flex gap-2">
                       {isDeleteAccess() && (
                         <button
+                        disabled={isDeleteAssesmentLoading}
                           onClick={() =>
                             window.confirm("Delete this user?") &&
                             DeleteAssesment(item._id)
@@ -171,7 +203,7 @@ const PendingAssessment = () => {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </table>}
           </div>
         )}
 
@@ -193,6 +225,7 @@ const PendingAssessment = () => {
                   No
                 </button>
                 <button
+                disabled={isUpdateAssesmentLoading}
                   onClick={async () => {
                     try {
                       // 🔧 Call your API or context function here
@@ -224,8 +257,8 @@ const PendingAssessment = () => {
         <Pagination
           page={page}
           setPage={setPage}
-          hasNextPage={filteredData.length === 10}
-          total={filteredData.length}
+          hasNextPage={progressAssessment?.length === 10}
+          total={progressAssessment?.length}
         />
       </div>
 
