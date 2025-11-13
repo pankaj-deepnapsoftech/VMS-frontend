@@ -178,7 +178,7 @@ export const AllowedPaths = [
     permission: ["view", "", "modify", "delete"],
   },
 
-  // ---------------------------- Report -----------------------------
+  // ---------------------------- Report --------------------------------------
 
   { heading: "Report Pages" },
   {
@@ -190,7 +190,7 @@ export const AllowedPaths = [
     permission: ["view", "create", "modify", "delete"],
   },
 
-  //  ------------------------------- Administration --------------------
+  //  ------------------------------- Administration ---------------------------
 
   { heading: "Administration Pages" },
   {
@@ -435,7 +435,7 @@ export const products = [
         icon: RiHome3Fill,
       },
       {
-        title: "Assessment Center",
+        title: "Attack Surface Management",
         route: "/attack-surface",
         icon: GiTwirlCenter,
       },
