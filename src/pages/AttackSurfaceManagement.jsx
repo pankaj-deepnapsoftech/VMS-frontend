@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { ChevronRight, ChevronDown, Edit, Trash2 } from "lucide-react";
+import {
+  ChevronRight,
+  ChevronDown,
+  Edit,
+  Trash2,
+  Eye,
+  Download,
+  Settings,
+} from "lucide-react";
 import { useAIVAContext, useAuthContext } from "@/context";
 import AssessmentModal from "@/components/modal/AssessmentModal";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
@@ -16,14 +24,14 @@ export default function AssessmentCenter() {
   const [editable, setEditable] = useState(null);
   const [page, setPage] = useState(1);
 
-  const handleDelete = (id) => {
-    DeleteAIVA(id);
-  };
+  // const handleDelete = (id) => {
+  //   DeleteAIVA(id);
+  // };
 
-  const handleEdit = (data) => {
-    setEditable(data);
-    setIsModalOpen(true);
-  };
+  // const handleEdit = (data) => {
+  //   setEditable(data);
+  //   setIsModalOpen(true);
+  // };
 
   const handleRefresh = () => {
     getAIVA(tenant, page);
@@ -39,7 +47,7 @@ export default function AssessmentCenter() {
       <header className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between mb-8">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
-            Attack Surface Management 
+            Attack Surface Management
           </h1>
           <p className="text-slate-400 mt-1 text-sm sm:text-base">
             Launch security assessments and view scan results
@@ -138,15 +146,14 @@ export default function AssessmentCenter() {
           <NoDataFound />
         ) : (
           <div className="overflow-x-auto rounded-xl">
-            <table className="w-full min-w-[700px] table-auto text-xs sm:text-sm">
-              <thead className="bg-slate-800 text-slate-300 text-left uppercase tracking-wide">
+            <table className="w-full min-w-[900px] table-auto text-xs sm:text-sm">
+              <thead className="bg-slate-800 text-slate-300 uppercase tracking-wide">
                 <tr>
-                  <th className="py-3 px-3 sm:px-4"></th>
-                  <th className="py-3 px-3 sm:px-4">Target Name</th>
-                  <th className="py-3 px-3 sm:px-4">Scan Tags</th>
-                  <th className="py-3 px-3 sm:px-4">Label</th>
-                  <th className="py-3 px-3 sm:px-4">Status</th>
-                  <th className="py-3 px-3 sm:px-4">Actions</th>
+                  <th className="py-3 px-4 text-left">Scan Name</th>
+                  <th className="py-3 px-4 text-left">Severity Breakdown</th>
+                  <th className="py-3 px-4 text-left">Assets</th>
+                  <th className="py-3 px-4 text-left">Last Update</th>
+                  <th className="py-3 px-4 text-left">Options</th>
                 </tr>
               </thead>
 
@@ -155,9 +162,8 @@ export default function AssessmentCenter() {
                   AIVAData.map((scan) => (
                     <React.Fragment key={scan._id}>
                       <tr
-                        className="border-b border-slate-800 hover:bg-slate-800/50 transition-colors cursor-pointer"
+                        className="border-b border-slate-800 hover:bg-slate-800/40 transition-colors cursor-pointer"
                         onClick={(e) => {
-                          // Prevent triggering expand when clicking edit/delete buttons
                           if (
                             e.target.closest("button") ||
                             e.target.closest("svg") ||
@@ -167,253 +173,73 @@ export default function AssessmentCenter() {
                           setExpanded(expanded === scan._id ? null : scan._id);
                         }}
                       >
-                        <td className="px-4 text-slate-400">
-                          {expanded === scan._id ? (
-                            <ChevronDown size={16} />
-                          ) : (
-                            <ChevronRight size={16} />
-                          )}
+                        {/* SCAN NAME */}
+                        <td className="py-4 px-4 font-medium text-slate-200">
+                          {scan.target_name || "—"}
                         </td>
-                        <td className="py-4 px-4">{scan.target_name}</td>
+
+                        {/* SEVERITY BREAKDOWN */}
                         <td className="py-4 px-4">
-                          {scan.scan_tags?.join(", ")}
+                          <div className="flex items-center gap-2">
+                            {/* Critical */}
+                            <span className="px-2 py-1 rounded-md bg-red-100 text-red-600 text-xs font-semibold">
+                              {scan.vulns?.critical ?? 0}
+                            </span>
+
+                            {/* High */}
+                            <span className="px-2 py-1 rounded-md bg-orange-100 text-orange-600 text-xs font-semibold">
+                              {scan.vulns?.high ?? 0}
+                            </span>
+
+                            {/* Medium */}
+                            <span className="px-2 py-1 rounded-md bg-yellow-100 text-yellow-600 text-xs font-semibold">
+                              {scan.vulns?.medium ?? 0}
+                            </span>
+
+                            {/* Low */}
+                            <span className="px-2 py-1 rounded-md bg-green-100 text-green-600 text-xs font-semibold">
+                              {scan.vulns?.low ?? 0}
+                            </span>
+
+                            {/* Info */}
+                            <span className="px-2 py-1 rounded-md bg-blue-100 text-blue-600 text-xs font-semibold">
+                              {scan.vulns?.info ?? 0}
+                            </span>
+                          </div>
                         </td>
-                        <td className="py-4 px-4">{scan.labels}</td>
+
+                        {/* ASSETS */}
+                        <td className="py-4 px-4 text-slate-200">
+                          {scan.assets_count || 0}
+                        </td>
+
+                        {/* LAST UPDATE */}
+                        <td className="py-4 px-4 text-slate-300">
+                          {scan.updatedAt
+                            ? new Date(scan.updatedAt).toLocaleString()
+                            : "—"}
+                        </td>
+
+                        {/* OPTIONS */}
                         <td className="py-4 px-4">
-                          <span
-                            className={`px-3 py-1 rounded-full text-xs font-medium ${
-                              scan.status === "Pending"
-                                ? "bg-yellow-700 text-yellow-100"
-                                : scan.status === "Completed"
-                                ? "bg-emerald-700 text-emerald-100"
-                                : "bg-rose-700 text-rose-100"
-                            }`}
-                          >
-                            {scan.status}
-                          </span>
-                        </td>
-                        <td className="py-4 px-4 flex items-center gap-3">
-                          <button
-                            onClick={() => handleEdit(scan)}
-                            className="hover:text-blue-400 transition-colors"
-                            title="Edit"
-                          >
-                            <Edit size={18} />
-                          </button>
-                          <button
-                            onClick={() => handleDelete(scan._id)}
-                            className="hover:text-red-400 transition-colors"
-                            title="Delete"
-                          >
-                            <Trash2 size={18} />
-                          </button>
+                          <div className="flex items-center gap-4 text-blue-400">
+                            <button title="View">
+                              <Eye size={18} />
+                            </button>
+                            <button title="Download">
+                              <Download size={18} />
+                            </button>
+                            <button title="Settings">
+                              <Settings size={18} />
+                            </button>
+                          </div>
                         </td>
                       </tr>
-
-                      {expanded === scan._id && (
-                        <tr>
-                          <td colSpan="8" className="bg-slate-900 p-5">
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 text-slate-200">
-                              {/* Scan Summary */}
-                              <div className="bg-slate-800 rounded-2xl p-5 border border-slate-700 shadow-lg">
-                                <h3 className="text-base font-semibold mb-4 flex items-center gap-2">
-                                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-slate-700">
-                                    🧭
-                                  </span>
-                                  Scan Summary
-                                </h3>
-                                <div className="space-y-3 text-sm">
-                                  <div>
-                                    <p className="text-slate-400">
-                                      Scan Target
-                                    </p>
-                                    <p className="font-medium text-emerald-300 break-all">
-                                      {scan.target_url || "—"}
-                                    </p>
-                                  </div>
-                                  <div className="flex justify-between">
-                                    <div>
-                                      <p className="text-slate-400">
-                                        Scan Type
-                                      </p>
-                                      <p className="font-medium">
-                                        {scan.scan_type || "AI Scan"}
-                                      </p>
-                                    </div>
-                                    <div>
-                                      <p className="text-slate-400">
-                                        Auth Scan
-                                      </p>
-                                      <p className="font-medium">
-                                        {scan.auth_scan ? "Yes" : "No"}
-                                      </p>
-                                    </div>
-                                  </div>
-                                  <div className="flex justify-between">
-                                    <div>
-                                      <p className="text-slate-400">
-                                        Organization
-                                      </p>
-                                      <p className="font-medium">
-                                        {scan.organization || "SecurEnd"}
-                                      </p>
-                                    </div>
-                                    <div>
-                                      <p className="text-slate-400">Duration</p>
-                                      <p className="font-medium">
-                                        {scan.duration || "5h 30m"}
-                                      </p>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-
-                              {/* Vulnerabilities */}
-                              <div className="bg-slate-800 rounded-2xl p-5 border border-slate-700 shadow-lg flex flex-col justify-between">
-                                <div>
-                                  <h3 className="text-base font-semibold mb-4 flex items-center gap-2">
-                                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-slate-700">
-                                      🛡️
-                                    </span>
-                                    Vulnerabilities
-                                  </h3>
-
-                                  <div className="flex items-center justify-between gap-3">
-                                    <div>
-                                      <p className="text-3xl font-bold">
-                                        {scan.total_vulns || 12}
-                                      </p>
-                                      <p className="text-slate-400 text-xs">
-                                        Security issues found
-                                      </p>
-                                    </div>
-                                    <div className="w-20 h-20">
-                                      <CircularProgressbar
-                                        value={scan.vuln_score || 60}
-                                        text={`${scan.vuln_score || 60}%`}
-                                        styles={buildStyles({
-                                          textColor: "#fff",
-                                          pathColor: "#22c55e",
-                                          trailColor: "#1e293b",
-                                        })}
-                                      />
-                                    </div>
-                                  </div>
-
-                                  {/* Severity Breakdown */}
-                                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-5 text-xs">
-                                    <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-red-900/40 border border-red-700">
-                                      <span className="font-medium">
-                                        Critical
-                                      </span>
-                                      <span className="font-semibold text-red-300">
-                                        {scan.vulns?.critical ?? 2}
-                                      </span>
-                                    </div>
-                                    <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-orange-900/40 border border-orange-700">
-                                      <span className="font-medium">High</span>
-                                      <span className="font-semibold text-orange-300">
-                                        {scan.vulns?.high ?? 3}
-                                      </span>
-                                    </div>
-                                    <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-yellow-900/40 border border-yellow-700">
-                                      <span className="font-medium">
-                                        Medium
-                                      </span>
-                                      <span className="font-semibold text-yellow-300">
-                                        {scan.vulns?.medium ?? 4}
-                                      </span>
-                                    </div>
-                                    <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-green-900/40 border border-green-700">
-                                      <span className="font-medium">Low</span>
-                                      <span className="font-semibold text-green-300">
-                                        {scan.vulns?.low ?? 2}
-                                      </span>
-                                    </div>
-                                    <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-blue-900/40 border border-blue-700 col-span-2 sm:col-span-1">
-                                      <span className="font-medium">Info</span>
-                                      <span className="font-semibold text-blue-300">
-                                        {scan.vulns?.info ?? 1}
-                                      </span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-
-                              {/* securend Metrics */}
-                              <div className="bg-slate-800 rounded-2xl p-5 border border-slate-700 shadow-lg">
-                                <h3 className="text-base font-semibold mb-4 flex items-center gap-2">
-                                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-slate-700">
-                                    📊
-                                  </span>
-                                  Securend Metrics
-                                </h3>
-
-                                <div className="grid grid-cols-2 gap-3 text-sm">
-                                  <div className="bg-slate-700/50 rounded-xl p-3">
-                                    <p className="text-slate-400 text-xs">
-                                      Endpoints
-                                    </p>
-                                    <p className="font-medium">
-                                      {scan.endpoints || 6}
-                                    </p>
-                                  </div>
-                                  <div className="bg-slate-700/50 rounded-xl p-3">
-                                    <p className="text-slate-400 text-xs">
-                                      Open Ports
-                                    </p>
-                                    <p className="font-medium">
-                                      {scan.open_ports || 3}
-                                    </p>
-                                  </div>
-                                  <div className="bg-slate-700/50 rounded-xl p-3">
-                                    <p className="text-slate-400 text-xs">
-                                      Cyber Hygiene
-                                    </p>
-                                    <p className="font-medium">
-                                      {scan.cyber_hygiene || 59}
-                                    </p>
-                                  </div>
-                                  <div className="bg-slate-700/50 rounded-xl p-3">
-                                    <p className="text-slate-400 text-xs">
-                                      Threat Intel
-                                    </p>
-                                    <p className="font-medium">
-                                      {scan.threat_intel || 64}
-                                    </p>
-                                  </div>
-                                  <div className="bg-slate-700/50 rounded-xl p-3 col-span-2 flex items-center justify-between">
-                                    <div>
-                                      <p className="text-slate-400 text-xs">
-                                        OWASP Coverage
-                                      </p>
-                                      <p className="font-medium">
-                                        {scan.owasp_score || 76.67}
-                                      </p>
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                      <span className="px-2 py-0.5 bg-green-800/40 rounded-md border border-green-700 text-xs">
-                                        7 Present
-                                      </span>
-                                      <span className="px-2 py-0.5 bg-red-800/40 rounded-md border border-red-700 text-xs">
-                                        2 Missing
-                                      </span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                      )}
                     </React.Fragment>
                   ))
                 ) : (
                   <tr>
-                    <td
-                      colSpan="6"
-                      className="text-center text-slate-500 py-6 text-sm"
-                    >
+                    <td colSpan="5" className="text-center py-6 text-slate-500">
                       No scans available
                     </td>
                   </tr>

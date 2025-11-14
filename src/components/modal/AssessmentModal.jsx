@@ -1,18 +1,14 @@
-import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useAIVAContext, useAuthContext, useDataContext } from "@/context";
-import toast from "react-hot-toast";
+import { useAIVAContext } from "@/context";
 
 // eslint-disable-next-line react/prop-types
 const AssessmentModal = ({ isOpen, onClose, editable }) => {
   const { createAIVA, UpdateAIVA } = useAIVAContext();
-  const { TenantAllData } = useDataContext();
-  const { tenant } = useAuthContext();
 
   if (!isOpen) return null;
 
-  // ✅ Yup validation schema
+  // Yup validation schema
   const validationSchema = Yup.object({
     target_name: Yup.string().required("Target name is required"),
     scan_tags: Yup.array()
@@ -45,10 +41,7 @@ const AssessmentModal = ({ isOpen, onClose, editable }) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const formik = useFormik({
     initialValues: editable || {
-      tenant: tenant,
-      target_name: "",
       scan_tags: [""],
-      labels: "",
       auth_scan: false,
       schedule: false,
       auth_fields: {
@@ -67,7 +60,10 @@ const AssessmentModal = ({ isOpen, onClose, editable }) => {
         // eslint-disable-next-line react/prop-types
         UpdateAIVA(editable._id, values);
       } else {
-        createAIVA({...values,scan_tags:values.scan_tags.map((item) => ({url:item}))});
+        createAIVA({
+          ...values,
+          scan_tags: values.scan_tags.map((item) => ({ url: item })),
+        });
       }
       onClose();
     },
@@ -76,75 +72,48 @@ const AssessmentModal = ({ isOpen, onClose, editable }) => {
   const getTodayDate = () => new Date().toISOString().split("T")[0];
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-      <div className="bg-slate-900 border border-slate-700 rounded-xl shadow-2xl w-full max-w-2xl p-6 relative max-h-[85vh] overflow-auto">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold">New Exposure Scan</h2>
+    <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50">
+      <div className="bg-slate-900 border border-slate-700/40 rounded-2xl shadow-xl w-full max-w-2xl p-8 relative max-h-[85vh] overflow-auto animate-fadeIn">
+        {/* Centered Heading */}
+        <div className="flex items-center justify-center relative mb-6">
+          <h2 className="text-xl font-semibold text-slate-100 tracking-wide">
+            New Exposure Scan
+          </h2>
+
+          {/* Close Button */}
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-slate-200"
+            className="absolute right-0 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 hover:scale-110 transition-all"
           >
             ✕
           </button>
         </div>
 
         <form onSubmit={formik.handleSubmit} className="space-y-4">
-          {/* Tenant + User */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-slate-300">
-                Tenant Name
-              </label>
-              <input
-                type="text"
-                value={
-                  TenantAllData?.find((item) => item.value === tenant)?.label ||
-                  ""
-                }
-                disabled
-                className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-400 text-sm"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-slate-300">
-                Target Name <span className="text-rose-400">*</span>
-              </label>
-              <input
-                type="text"
-                name="target_name"
-                onChange={formik.handleChange}
-                value={formik.values.target_name}
-                placeholder="Enter Target Name"
-                className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
-              />
-              {formik.touched.target_name && formik.errors.target_name && (
-                <p className="text-xs text-rose-400 mt-1">
-                  {formik.errors.target_name}
-                </p>
-              )}
-            </div>
-          </div>
-
           {/* Scan Tags */}
           <div>
             <label className="block text-sm font-medium text-slate-300">
               Scan Targets <span className="text-rose-400">*</span>
             </label>
 
-            {formik.values.scan_tags.map((url, index) => (
+            {formik.values.scan_tags.map((item, index) => (
               <div key={index} className="flex gap-2 mt-2">
-                <input
-                  type="text"
-                  value={url}
+                <select
+                  value={item}
                   onChange={(e) => {
                     const updated = [...formik.values.scan_tags];
                     updated[index] = e.target.value;
                     formik.setFieldValue("scan_tags", updated);
                   }}
-                  placeholder="Enter URL with http(s)://"
                   className="flex-1 rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
-                />
+                >
+                  <option value="">Select Scan Target</option>
+                  <option value="https://google.com">Google</option>
+                  <option value="https://facebook.com">Facebook</option>
+                  <option value="https://github.com">GitHub</option>
+                  <option value="https://yourdomain.com">Your Domain</option>
+                </select>
+
                 {index > 0 && (
                   <button
                     type="button"
@@ -161,43 +130,9 @@ const AssessmentModal = ({ isOpen, onClose, editable }) => {
                 )}
               </div>
             ))}
-
-            <button
-              type="button"
-              onClick={() =>
-                formik.setFieldValue("scan_tags", [
-                  ...formik.values.scan_tags,
-                  "",
-                ])
-              }
-              className="mt-3 px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 rounded-md text-sm"
-            >
-              + Add
-            </button>
-
             {formik.touched.scan_tags && formik.errors.scan_tags && (
               <p className="text-xs text-rose-400 mt-1">
                 {formik.errors.scan_tags}
-              </p>
-            )}
-          </div>
-
-          {/* Labels */}
-          <div>
-            <label className="block text-sm font-medium text-slate-300">
-              Label <span className="text-rose-400">*</span>
-            </label>
-            <input
-              type="text"
-              name="labels"
-              onChange={formik.handleChange}
-              value={formik.values.labels}
-              placeholder="Enter Label"
-              className="mt-1 w-full rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
-            />
-            {formik.touched.labels && formik.errors.labels && (
-              <p className="text-xs text-rose-400 mt-1">
-                {formik.errors.labels}
               </p>
             )}
           </div>

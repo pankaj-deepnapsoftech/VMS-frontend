@@ -128,7 +128,7 @@ const { data: topFiveRiskIndicatorData,isLoading:isTopFiveRiskIndicatorDataLoadi
 
 
 return (
-  <div className="min-h-screen bg-background p-4 sm:p-6 font-sans">
+  <div className="min-h-screen bg-[#0a0e25] p-4 sm:p-6 font-sans">
     <div className="flex flex-col mb-10 gap-3 max-w-full xl:max-w-7xl mx-auto">
       {/* Summary Cards */}
       {isDashboardCardLoading ? <CardsSkeletonLoading /> :<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mb-2 gap-4">

@@ -92,7 +92,7 @@ const tlsColors = ["#F44336", "#E91E63", "#FF4081", "#FF80AB", "#9C27B0"];
 // --- Main Dashboard Component ---
 export default function ExposureDashboard() {
   return (
-    <div className="min-h-screen bg-[#0D0F18] text-gray-100 p-6 font-sans">
+    <div className="min-h-screen bg-[#0a0e25] text-gray-100 p-6 font-sans">
       {/* ---- Summary Cards ---- */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {summaryData.map((card, idx) => (
@@ -156,10 +156,10 @@ export default function ExposureDashboard() {
 // --- Summary Card Component ---
 function SummaryCard({ title, value }) {
   return (
-    <div className="bg-[#181A27] p-4 rounded-lg border border-gray-700/50 shadow-lg">
+    <div className="bg-[#161e3e] p-4 rounded-lg border border-gray-800 shadow-lg">
       <h3 className="text-sm text-gray-400">{title}</h3>
       <p className="text-3xl font-semibold text-white mt-2">{value}</p>
-      <button className="text-sm text-gray-300 bg-transparent border border-gray-600 rounded-md px-4 py-1.5 mt-4 transition-colors hover:bg-gray-700 hover:border-gray-500">
+      <button className="text-sm text-gray-300 bg-transparent border border-gray-700 rounded-md px-4 py-1.5 mt-4 transition-colors hover:bg-gray-800 hover:border-gray-600">
         Get Details
       </button>
     </div>
@@ -169,7 +169,7 @@ function SummaryCard({ title, value }) {
 // --- Chart Card Component ---
 function ChartCard({ title, description, data, total, colors, moreLink }) {
   return (
-    <div className="bg-[#181A27] p-5 rounded-lg border border-gray-700/50 shadow-lg flex flex-col h-full">
+    <div className="bg-[#161e3e] p-5 rounded-lg border border-gray-800 shadow-lg flex flex-col h-full">
       {/* Card Header */}
       <div className="flex justify-between items-start">
         <div>

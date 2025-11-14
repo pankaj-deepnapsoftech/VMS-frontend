@@ -150,7 +150,7 @@ export const AllowedPaths = [
 
   { heading: "Remediation Factory Pages" },
   {
-    name: "Remediation",
+    name: "Remediation", 
     value: "/remediation",
     bgColor: "bg-[#232958]",
     border: "1px solid #282e63",
