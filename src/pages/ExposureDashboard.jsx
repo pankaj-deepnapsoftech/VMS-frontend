@@ -9,7 +9,6 @@ import {
 } from "recharts";
 
 // --- SVG Icon ---
-// Using an inline SVG for the "more" icon to keep it in one file.
 const MoreIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -29,10 +28,7 @@ const MoreIcon = () => (
   </svg>
 );
 
-// --- Data from Image ---
-// We use 'value' for the chart (must be a number)
-// and 'displayValue' for the legend (can be a string like "8.27K")
-
+// --- Summary cards ---
 const summaryData = [
   { title: "Assets Discovered Last 30 Days", value: "2.99K" },
   { title: "Assets with at Least One Port Open", value: "936" },
@@ -40,6 +36,7 @@ const summaryData = [
   { title: "Web Applications without Firewall", value: "708" },
 ];
 
+// --- Chart Data Sets ---
 const techData = [
   { name: "Cloudflare", value: 347, displayValue: "347" },
   { name: "HSTS", value: 198, displayValue: "198" },
@@ -65,7 +62,7 @@ const webServerData = [
   { name: "Undefined", value: 4, displayValue: "4" },
   { name: "API-Gateway", value: 2, displayValue: "2" },
 ];
-const webColors = ["#FF9800", "#FFB74D", "#FFC107", "#FFD54F", "#FFEB3B"];
+const webColors = ["#FF9800", "#FFB74D", "#FFC107", "#FFD54F", "#FFE082"];
 
 const firewallData = [
   { name: "Amazon", value: 1, displayValue: "1" },
@@ -89,18 +86,19 @@ const tlsData = [
 ];
 const tlsColors = ["#F44336", "#E91E63", "#FF4081", "#FF80AB", "#9C27B0"];
 
-// --- Main Dashboard Component ---
+// --- MAIN DASHBOARD PAGE ---
 export default function ExposureDashboard() {
   return (
     <div className="min-h-screen bg-[#0a0e25] text-gray-100 p-6 font-sans">
-      {/* ---- Summary Cards ---- */}
+
+      {/* Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {summaryData.map((card, idx) => (
-          <SummaryCard key={idx} title={card.title} value={card.value} />
+        {summaryData.map((card, i) => (
+          <SummaryCard key={i} title={card.title} value={card.value} />
         ))}
       </div>
 
-      {/* ---- Chart Grid ---- */}
+      {/* Charts */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mt-8">
         <ChartCard
           title="Technology | Record Count"
@@ -110,6 +108,7 @@ export default function ExposureDashboard() {
           colors={techColors}
           moreLink="+61 more"
         />
+
         <ChartCard
           title="DNS Type | Record Count"
           description="Ensure optimal DNS health with a comprehensive view of DNS type distribution and record count"
@@ -118,6 +117,7 @@ export default function ExposureDashboard() {
           colors={dnsColors}
           moreLink="+5 more"
         />
+
         <ChartCard
           title="Web Server | Asset Count"
           description="Gain insights into web server distribution and asset count for better management"
@@ -126,6 +126,7 @@ export default function ExposureDashboard() {
           colors={webColors}
           moreLink="+49 more"
         />
+
         <ChartCard
           title="Firewall Assets"
           description="Prioritize firewall management tasks with a detailed view of distribution and asset count"
@@ -133,6 +134,7 @@ export default function ExposureDashboard() {
           total="127"
           colors={firewallColors}
         />
+
         <ChartCard
           title="CDN Assets"
           description="Prioritize CDN management tasks with a detailed view of distribution and asset count"
@@ -140,6 +142,7 @@ export default function ExposureDashboard() {
           total="16"
           colors={cdnColors}
         />
+
         <ChartCard
           title="TLS Issuer | Asset Count"
           description="Ensure optimal security with a comprehensive view of TLS issuer organization distribution and asset count"
@@ -153,107 +156,98 @@ export default function ExposureDashboard() {
   );
 }
 
-// --- Summary Card Component ---
+// --- SUMMARY CARD ---
 function SummaryCard({ title, value }) {
   return (
-    <div className="bg-[#161e3e] p-4 rounded-lg border border-gray-800 shadow-lg">
+    <div className="bg-[#161e3e] p-6 rounded-xl border border-gray-800 shadow-lg">
       <h3 className="text-sm text-gray-400">{title}</h3>
-      <p className="text-3xl font-semibold text-white mt-2">{value}</p>
-      <button className="text-sm text-gray-300 bg-transparent border border-gray-700 rounded-md px-4 py-1.5 mt-4 transition-colors hover:bg-gray-800 hover:border-gray-600">
+      <p className="text-3xl font-semibold text-white mt-3">{value}</p>
+      <button className="text-sm mt-4 px-4 py-2 rounded-md border border-gray-700 text-gray-300 hover:bg-gray-800">
         Get Details
       </button>
     </div>
   );
 }
 
-// --- Chart Card Component ---
+// --- CHART CARD (IMPROVED UI + RESPONSIVE DONUT) ---
 function ChartCard({ title, description, data, total, colors, moreLink }) {
   return (
-    <div className="bg-[#161e3e] p-5 rounded-lg border border-gray-800 shadow-lg flex flex-col h-full">
-      {/* Card Header */}
-      <div className="flex justify-between items-start">
+    <div className="bg-[#161e3e] p-6 rounded-xl border border-gray-800 shadow-lg flex flex-col">
+
+      {/* Header */}
+      <div className="flex justify-between">
         <div>
           <h3 className="text-white font-semibold">{title}</h3>
-          {description && (
-            <p className="text-gray-400 text-xs mt-1 max-w-xs">
-              {description}
-            </p>
-          )}
+          <p className="text-gray-400 text-xs mt-1">{description}</p>
         </div>
-        <button className="p-1 -mr-1 -mt-1 rounded-full hover:bg-gray-700">
+        <button className="p-1 hover:bg-gray-700 rounded-full">
           <MoreIcon />
         </button>
       </div>
 
-      {/* Card Body */}
-      <div className="flex-grow flex items-center mt-4">
+      {/* Chart & Data Section */}
+      <div className="flex flex-col md:flex-row items-center gap-5 mt-6">
+
         {/* Donut Chart */}
-        <div className="w-2/5 relative flex items-center justify-center">
-          <ResponsiveContainer width="100%" height={160}>
-            <PieChart>
-              <Pie
-                data={data}
-                cx="50%"
-                cy="50%"
-                dataKey="value"
-                innerRadius={50}
-                outerRadius={70}
-                fill="#8884d8"
-                paddingAngle={data.length > 1 ? 2 : 0}
-              >
-                {data.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={colors[index % colors.length]}
-                    stroke={colors[index % colors.length]}
-                  />
-                ))}
-              </Pie>
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "#2A2D3D",
-                  border: "none",
-                  borderRadius: "8px",
-                  color: "#fff",
-                }}
-                cursor={{ fill: "rgba(255, 255, 255, 0.1)" }}
-              />
-            </PieChart>
-          </ResponsiveContainer>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
-            <span className="text-2xl font-bold text-white">{total}</span>
+        <div className="w-full md:w-[45%] flex justify-center relative">
+          <div className="w-[160px] h-[160px] md:w-[190px] md:h-[190px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={data}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius="55%"
+                  outerRadius="90%"
+                  paddingAngle={3}
+                  dataKey="value"
+                  stroke="none"
+                >
+                  {data.map((d, i) => (
+                    <Cell key={i} fill={colors[i]} />
+                  ))}
+                </Pie>
+
+                <Tooltip
+                  contentStyle={{
+                    background: "white",
+                    border: "1px solid #333",
+                    color: "white",
+                    borderRadius: "10px",
+                  }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Center Value */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <p className="text-xl md:text-2xl font-bold">{total}</p>
           </div>
         </div>
 
         {/* Legend */}
-        <div className="w-3/5 pl-6 flex flex-col justify-center space-y-2">
-          {data.map((entry, index) => (
-            <div
-              key={index}
-              className="flex justify-between items-center text-sm"
-            >
-              <div className="flex items-center space-x-2 truncate">
-                <div
-                  className="w-3 h-3 rounded-sm flex-shrink-0"
-                  style={{ backgroundColor: colors[index % colors.length] }}
-                />
-                <span className="text-gray-300 truncate" title={entry.name}>
-                  {entry.name}
-                </span>
+        <div className="w-full md:w-[55%] space-y-2">
+          {data.map((item, i) => (
+            <div key={i} className="flex justify-between text-sm">
+              <div className="flex items-center gap-2">
+                <span
+                  className="w-3 h-3 rounded-sm"
+                  style={{ background: colors[i] }}
+                ></span>
+                <span className="text-gray-300">{item.name}</span>
               </div>
-              <span className="font-medium text-gray-100 pl-2">
-                {entry.displayValue}
+
+              <span className="text-gray-100 font-semibold">
+                {item.displayValue}
               </span>
             </div>
           ))}
+
           {moreLink && (
-            <a
-              href="#"
-              onClick={(e) => e.preventDefault()}
-              className="text-sm text-blue-400 hover:underline pt-1"
-            >
+            <button className="text-blue-400 text-sm mt-1 hover:underline">
               {moreLink}
-            </a>
+            </button>
           )}
         </div>
       </div>
