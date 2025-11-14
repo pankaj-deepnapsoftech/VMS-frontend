@@ -14,7 +14,6 @@ import { ExceptionContext } from "./ExceptionContext/ExceptionContext";
 import { InfrastructureVulnerabilityContext } from "./InfrastructureVulnerabilityContext/InfrastructureVulnerabilityContext";
 import { TagsContext } from "./TagsContext/TagsContext";
 import { SeverityContext } from "./SeverityContext/SeverityContext";
-import { NessusContext } from "./nessuscontext/NessusContext";
 import { MainReportContext } from "./MainReportContext/MainReportContext";
 import { MailContext } from "./MailContext/MailContext";
 import { AIVAContext } from "./AI-VAContext/AI-VAContext";
@@ -43,7 +42,6 @@ export { default as ExceptionContextProvider } from "./ExceptionContext/Exceptio
 export { default as InfrastructureVulnerabilityContextProvider } from "./InfrastructureVulnerabilityContext/InfrastructureVulnerabilityContext";
 export { default as TagsContextProvider } from "./TagsContext/TagsContext";
 export { default as SeverityContextProvider } from "./SeverityContext/SeverityContext";
-export { default as NessusContextProvider } from "./nessuscontext/NessusContext";
 export { default as MainReportContextProvider } from "./MainReportContext/MainReportContext";
 export { default as MailContextProvider } from "./MailContext/MailContext";
 
@@ -71,7 +69,6 @@ export const useExceptionContext = () => useContext(ExceptionContext);
 export const useInfrastructureVulnerabilityContext = () =>  useContext(InfrastructureVulnerabilityContext);
 export const useTagsContext = () => useContext(TagsContext);
 export const useSeverityContext = () => useContext(SeverityContext);
-export const useNessusContext = () => useContext(NessusContext);
 export const useMainReportContext = () => useContext(MainReportContext);
 export const useMailContext = () => useContext(MailContext);
 export const useAIVAContext = () => useContext(AIVAContext);

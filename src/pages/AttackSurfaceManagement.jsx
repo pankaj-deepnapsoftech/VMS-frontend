@@ -1,23 +1,32 @@
 import React, { useEffect, useState } from "react";
 import {
-  ChevronRight,
-  ChevronDown,
-  Edit,
-  Trash2,
   Eye,
   Download,
   Settings,
 } from "lucide-react";
 import { useAIVAContext, useAuthContext } from "@/context";
 import AssessmentModal from "@/components/modal/AssessmentModal";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import Pagination from "./Pagination";
 import NoDataFound from "@/components/NoDataFound";
+import { keepPreviousData, useQueries, useQuery } from "@tanstack/react-query";
+import { getAllApplicationData } from "@/services/BusinessApplication.service";
 
 export default function AssessmentCenter() {
-  const { getAIVA, AIVAData, DeleteAIVA } = useAIVAContext();
   const { tenant, token } = useAuthContext();
+
+  // ============= tenstack query start here =====================
+
+  const { data: totalBusinessApplication } =
+    useQuery({
+      queryKey: ["all-business-application", { tenant }],
+      queryFn: () => getAllApplicationData({ tenant }),
+      enabled: !!token && !!tenant,
+      placeholderData: keepPreviousData,
+    });
+
+
+  const { getAIVA, AIVAData } = useAIVAContext();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [expanded, setExpanded] = useState(null);
@@ -265,6 +274,7 @@ export default function AssessmentCenter() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         editable={editable}
+        totalBusinessApplication={totalBusinessApplication}
       />
     </div>
   );

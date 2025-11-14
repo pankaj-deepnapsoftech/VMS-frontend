@@ -23,11 +23,15 @@ import {
 import Access from "@/components/role/Access";
 import { CircleUser } from "lucide-react";
 import AssignUserModal from "@/components/modal/AssignUserModal";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
+import { getApplicationData } from "@/services/Vulnerable.service";
 
 export default function ApplicationData() {
-  const {  GetApplicationData, allApplicationData, DeleteData } =
-    useVulnerabililtyDataContext();
-  const { token, authenticate } = useAuthContext();
+  const {   DeleteData } =
+  useVulnerabililtyDataContext();
+  const [currentPage, setCurrentPage] = useState(1);
+  const { token, authenticate,tenant } = useAuthContext();
   const navigate = useNavigate();
   const location = useLocation();
   const { closeModal, isOpen, openModal } = useAccessPartner();
@@ -37,10 +41,15 @@ export default function ApplicationData() {
     }
   };
 
+  const {data:allApplicationData,isLoading:isAllApplicationDataLoading} = useQuery({
+    queryKey:["All-application-vurnablity",{currentPage,tenant}],
+    queryFn:()=>getApplicationData({page:currentPage,tenant}),
+    enabled: !!token,
+    placeholderData:keepPreviousData
+  })
+
   // States
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [tenant, setTenant] = useState("");
   const [exploitDetails, setExploitDetails] = useState([]);
   const [status, setStatus] = useState(null);
   const [AssignUserOpenModal, setAssignUserOpenModal] = useState(false)
@@ -113,17 +122,8 @@ export default function ApplicationData() {
     }
   };
 
-  // API calls
-  useEffect(() => {
-    if (token) {
-      GetApplicationData(currentPage, tenant);
-    }
-  }, [tenant, currentPage, token]);
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    setTenant(params.get("tenant") || "");
-  }, [location.search]);
+
 
   if (isViewAccess(authenticate, location)) {
     return <Access />;
@@ -163,7 +163,7 @@ export default function ApplicationData() {
             <NoDataFound />
           ) : (
             <div className="overflow-x-auto w-full custom-scrollbar">
-              <table className="table-fixed min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+             {isAllApplicationDataLoading ?  <TableSkeletonLoading/>  : <table className="table-fixed min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
                 <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
                   <tr>
                     {[
@@ -229,7 +229,7 @@ export default function ApplicationData() {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </table>}
             </div>
           )}
 

@@ -12,7 +12,6 @@ import {
   JiraContextProvider,
   MailContextProvider,
   MainReportContextProvider,
-  NessusContextProvider,
   RemeditionContextProvider,
   SchedulingAssesmentContextProvider,
   SeverityContextProvider,
@@ -38,7 +37,6 @@ createRoot(document.getElementById("root")).render(
                         <AppSoftContextProvider>
                           <TagsContextProvider>
                             <SeverityContextProvider>
-                              <NessusContextProvider>
                                 <MainReportContextProvider>
                                   <MailContextProvider>
                                     <AIVAContextProvider>
@@ -46,7 +44,6 @@ createRoot(document.getElementById("root")).render(
                                     </AIVAContextProvider>
                                   </MailContextProvider>
                                 </MainReportContextProvider>
-                              </NessusContextProvider>
                             </SeverityContextProvider>
                           </TagsContextProvider>
                         </AppSoftContextProvider>

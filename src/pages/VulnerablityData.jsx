@@ -1,7 +1,6 @@
-import {  useEffect, useState } from "react";
+import {useState } from "react";
 import {
   useAuthContext,
-  useNessusContext,
   useVulnerabililtyDataContext,
 } from "@/context";
 import { IoSearch } from "react-icons/io5";
@@ -12,14 +11,34 @@ import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import EnhancedDetailsModal from "@/modals/ExploitDetail";
 import useAccessPartner from "@/hooks/AccessPartner";
 import { handlerSeverity } from "@/utils/vulnerableOperations";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { DeleteVulnerableData, getAllVulnerableData } from "@/services/Vulnerable.service";
+import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 
 export default function VulnerabilityData() {
   const { loading } = useVulnerabililtyDataContext();
   const { token, tenant } = useAuthContext();
-  const { NessusData, getNessusData, deleteNessusData } = useNessusContext();
+  const [currentPage, setCurrentPage] = useState(1);
+const queryClient = useQueryClient();
+
+  // -------------------- tenstack query start here ------------------
+
+  const {data:NessusData,isLoading:isNessusDataLoading} = useQuery({
+    queryKey:["All-vulnerablities-data",{currentPage,tenant}],
+    queryFn:()=>getAllVulnerableData({page:currentPage,tenant}),
+    enabled: !!token
+  })
+
+  const {mutate:deleteNessusData} = useMutation({
+    mutationFn:(id)=>DeleteVulnerableData(id),
+    onSuccess:async () => {
+      await queryClient.invalidateQueries({queryKey:["All-vulnerablities-data"]})
+    }
+  })
+
+
   const { closeModal, isOpen, openModal } = useAccessPartner();
 
-  const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [exploitDetails, setExploitDetails] = useState(null);
 
@@ -34,11 +53,7 @@ export default function VulnerabilityData() {
   // Defensive: ensure isHaveAction() returns boolean
   const hasAction = Boolean(isHaveAction());
 
-  useEffect(() => {
-    if (token) {
-      getNessusData(currentPage, tenant);
-    }
-  }, [token, tenant, currentPage]);
+
 
   const startIndex = (currentPage - 1) * itemsPerPage;
 
@@ -72,7 +87,7 @@ export default function VulnerabilityData() {
 
           {/* TABLE */}
           <div className="overflow-x-auto w-full custom-scrollbar">
-            <table className="table-fixed min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+          {isNessusDataLoading ? <TableSkeletonLoading/>  :  <table className="table-fixed min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
               <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
                 <tr>
                   {[
@@ -178,7 +193,7 @@ export default function VulnerabilityData() {
                   </tr>
                 )}
               </tbody>
-            </table>
+            </table>}
           </div>
 
           {/* PAGINATION */}

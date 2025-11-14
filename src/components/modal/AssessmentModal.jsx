@@ -3,8 +3,10 @@ import * as Yup from "yup";
 import { useAIVAContext } from "@/context";
 
 // eslint-disable-next-line react/prop-types
-const AssessmentModal = ({ isOpen, onClose, editable }) => {
+const AssessmentModal = ({ isOpen, onClose, editable,totalBusinessApplication }) => {
   const { createAIVA, UpdateAIVA } = useAIVAContext();
+
+
 
   if (!isOpen) return null;
 
@@ -108,10 +110,7 @@ const AssessmentModal = ({ isOpen, onClose, editable }) => {
                   className="flex-1 rounded-md bg-slate-800 border border-slate-600 px-3 py-2 text-slate-100 text-sm"
                 >
                   <option value="">Select Scan Target</option>
-                  <option value="https://google.com">Google</option>
-                  <option value="https://facebook.com">Facebook</option>
-                  <option value="https://github.com">GitHub</option>
-                  <option value="https://yourdomain.com">Your Domain</option>
+                  {totalBusinessApplication && totalBusinessApplication?.length > 0 && totalBusinessApplication?.map((item)=><option key={item?._id} value={item?.applicationUrl}>{item?.applicationUrl}</option>)}
                 </select>
 
                 {index > 0 && (
