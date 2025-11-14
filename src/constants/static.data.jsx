@@ -1,7 +1,11 @@
 import {
   AirVent,
+  Boxes,
   Bug,
   CalendarClock,
+  CassetteTape,
+  ChartNoAxesCombined,
+  Component,
   FileUp,
   LucideShield,
   Settings,
@@ -282,12 +286,17 @@ export const products = [
       {
         title: "Executive Dashboard",
         route: "/",
-        icon: BiSolidDashboard,
+        icon: Component,
       },
       {
         title: "TVM Dashboard",
         route: "/tvm-dashboard",
-        icon: BiSolidDashboard,
+        icon: Boxes,
+      },
+      {
+        title: "Exposure Dashboard",
+        route: "/exposure-dashboard",
+        icon: ChartNoAxesCombined,
       },
 
       // {
@@ -326,7 +335,7 @@ export const products = [
       {
         title: "Infrastructure Asset",
         route: "/infraStructure-asset",
-        icon: MdInventory2,
+        icon: CassetteTape,
       },
       {
         title: "Business Applications",

@@ -7,6 +7,7 @@ import { RiskDetailsSkeletonLayout } from "@/Skeletons/RiskDetails/RiskDetailsSk
 import ExecutiveDashboardLayoutSkeleton from "@/Skeletons/ExecutiveDashbord/ExecutiveDashboardLayoutSkeleton";
 import { AssertInventorySkeletonLayout } from "@/Skeletons/AssetInventory/AssetInventorySkeleton";
 import AssessmentSkeleton from "@/Skeletons/Assessment/AssessmentSkeleton";
+import ExposureDashboard from "@/pages/ExposureDashboard";
 
 // Lazy imports
 const Loader = lazy(() => import("@/components/Loader/Loader"));
@@ -446,6 +447,16 @@ export const PrivateRoutes = [
       <Suspense>
         <AppErrorBoundary>
           <DownloadReports />
+        </AppErrorBoundary>
+      </Suspense>
+    ),
+  },
+   {
+    path: "/exposure-dashboard",
+    element: (
+      <Suspense>
+        <AppErrorBoundary>
+          <ExposureDashboard />
         </AppErrorBoundary>
       </Suspense>
     ),
