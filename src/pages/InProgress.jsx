@@ -1,5 +1,5 @@
 /* eslint-disable no-constant-binary-expression */
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import Pagination from "./Pagination";
 import {
   isDeleteAccess,
@@ -11,13 +11,13 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { RiEdit2Line } from "react-icons/ri";
 import { IoSearch } from "react-icons/io5";
 import NoDataFound from "@/components/NoDataFound";
-import { useAuthContext, useScheduleAssessmentContext } from "@/context";
+import { useAuthContext } from "@/context";
 import SchedulingAssessmentPage from "./SchedulingAssessment";
 import { TbStatusChange } from "react-icons/tb";
 import { useLocation } from "react-router-dom";
 import Access from "@/components/role/Access";
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { CreateScheduleAssessment, deleteAssesment, getInProgressAssessment } from "@/services/assessment.service";
+import { CreateScheduleAssessment, deleteAssesment, getInProgressAssessment, UpdateScheduleAssessment } from "@/services/assessment.service";
 import AssessmentSkeleton from "@/Skeletons/Assessment/AssessmentSkeleton";
 
 const PendingAssessment = () => {
@@ -41,16 +41,16 @@ const PendingAssessment = () => {
       },
     });
 
-  const { mutate: UpdateAssesment, isPending: isUpdateAssesmentLoading } =
-    useMutation({
-      mutationFn: (data) => CreateScheduleAssessment(data),
-      onSuccess: async () => {
-        await Promise.all([
-          queryClient.invalidateQueries({ queryKey: "in-progress-assessment" }),
-          queryClient.invalidateQueries({ queryKey: "completed-assessment" }),
-        ]);
-      },
-    });
+   const { mutate: UpdateAssesment, isPending: isUpdateAssesmentLoading } =
+      useMutation({
+        mutationFn: ({id,data}) => UpdateScheduleAssessment({id,data}),
+        onSuccess: async () => {
+          await Promise.all([
+            queryClient.invalidateQueries({ queryKey: "in-progress-assessment" }),
+            queryClient.invalidateQueries({ queryKey: "completed-assessment" }),
+          ]);
+        },
+      });
 
     const {data:progressAssessment,isLoading:isProgressAssessmentLoading}=useQuery({
     queryKey: ['in-progress-assessment', {tenant,page}],
@@ -229,9 +229,9 @@ const PendingAssessment = () => {
                   onClick={async () => {
                     try {
                       // 🔧 Call your API or context function here
-                      await UpdateAssesment(selectedStatusItemId, {
+                      await UpdateAssesment({id:selectedStatusItemId,data:{
                         status: "Completed",
-                      });
+                      }});
 
                       // Refresh table data
                       getInProgressAssessment();
