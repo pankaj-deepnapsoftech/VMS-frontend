@@ -17,7 +17,7 @@ import { TbStatusChange } from "react-icons/tb";
 import { useLocation } from "react-router-dom";
 import Access from "@/components/role/Access";
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { CreateScheduleAssessment, deleteAssesment, getInProgressAssessment, UpdateScheduleAssessment } from "@/services/assessment.service";
+import { CreateScheduleAssessment, deleteAssesment, getInProgressAssessment, UpdateScheduleAssessment } from "@/services/Assessment.service";
 import AssessmentSkeleton from "@/Skeletons/Assessment/AssessmentSkeleton";
 
 const PendingAssessment = () => {

@@ -8,7 +8,7 @@ import { IoClose } from "react-icons/io5";
 import { handleFileChange } from "@/utils/CheckFileType";
 import { ImageUploader } from "@/utils/ImagesUploader";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { CreateScheduleAssessment } from "@/services/assessment.service";
+import { CreateScheduleAssessment } from "@/services/Assessment.service";
 
 function SchedulingAssessmentPage({ editable, setEditable }) {
 

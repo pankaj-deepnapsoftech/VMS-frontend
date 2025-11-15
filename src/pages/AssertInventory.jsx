@@ -35,7 +35,7 @@ import {
   deleteInfrastructureAsset,
   getInfrastructureAsset,
   updateInfrastructureAsset,
-} from "@/services/infraStructureAsset.service";
+} from "@/services/InfraStructureAsset.service";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 
 export default function TenantDashboard() {

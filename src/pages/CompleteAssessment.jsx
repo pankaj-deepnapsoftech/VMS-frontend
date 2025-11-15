@@ -15,7 +15,7 @@ import { useAuthContext } from "@/context";
 import SchedulingAssessmentPage from "./SchedulingAssessment";
 import Access from "@/components/role/Access";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { deleteAssesment, getInCompletedAssessment } from "@/services/assessment.service";
+import { deleteAssesment, getInCompletedAssessment } from "@/services/Assessment.service";
 import AssessmentSkeleton from "@/Skeletons/Assessment/AssessmentSkeleton";
 
 const PendingAssessment = () => {

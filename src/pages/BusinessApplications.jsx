@@ -33,7 +33,7 @@ import {
   updateApplicationData,
 } from "@/services/BusinessApplication.service";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
-import { getAllInfrastructureAsset } from "@/services/infraStructureAsset.service";
+import { getAllInfrastructureAsset } from "@/services/InfraStructureAsset.service";
 
 export default function BusinessApplications() {
   // context api hooks

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useAuthContext} from "@/context";
-import { GetExceptionData, updateExceptionData } from "@/services/exception.service";
+import { GetExceptionData, updateExceptionData } from "@/services/Exception.service";
 import { Checkhariqui } from "@/utils/checkHarirqui";
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect, useRef, useState } from "react";
