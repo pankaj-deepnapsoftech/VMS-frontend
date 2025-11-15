@@ -1,5 +1,5 @@
-import {  useEffect, useState } from "react";
-import { useAuthContext, useVulnerabililtyDataContext } from "@/context";
+import { useEffect, useState } from "react";
+import { useAuthContext } from "@/context";
 import { useLocation, useNavigate } from "react-router-dom";
 import ExpectionModal from "@/modals/ExpectionModal";
 import ExploitDetail from "@/modals/ExploitDetail";
@@ -23,13 +23,35 @@ import {
 import Access from "@/components/role/Access";
 import { CircleUser } from "lucide-react";
 import AssignUserModal from "@/components/modal/AssignUserModal";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { DeleteVulnerableData, getInfrastructureData } from "@/services/Vulnerable.service";
+import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 
 // Popup Menu Component using Portal
 
 export default function InfrastructureData() {
-  const {  GetInfrastructureData, allInfrastructureData, DeleteData } =
-    useVulnerabililtyDataContext();
-  const { token, authenticate } = useAuthContext();
+  const { token, authenticate, tenant } = useAuthContext();
+  const [currentPage, setCurrentPage] = useState(1);
+  const queryClient = useQueryClient();
+
+
+
+  const { data: allInfrastructureData, isLoading: isAllInfrastructureDataLoading } = useQuery({
+    queryKey: ["All-Infrastructure-vulnerabilities", { page: currentPage, tenant }],
+    queryFn: () => getInfrastructureData({ page: currentPage, tenant }),
+    enabled: !!token,
+    placeholderData: keepPreviousData,
+  })
+
+
+  const { mutate: DeleteData } = useMutation({
+    mutationFn: (id) => DeleteVulnerableData(id),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["All-Infrastructure-vulnerabilities"] })
+    }
+  })
+
+
   const navigate = useNavigate();
   const location = useLocation();
   const showTitle = (header) => {
@@ -39,11 +61,9 @@ export default function InfrastructureData() {
   };
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [exploitDetails, setExploitDetails] = useState(null);
-  const [tenant, setTenant] = useState("");
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
   const [status, setStatus] = useState(null);
   const { closeModal, isOpen, openModal } = useAccessPartner();
@@ -100,16 +120,9 @@ export default function InfrastructureData() {
     setCurrentPage(1);
   }, [searchTerm]);
 
-  useEffect(() => {
-    if (token) {
-      GetInfrastructureData(currentPage, tenant);
-    }
-  }, [currentPage, tenant]);
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    setTenant(params.get("tenant") || "");
-  }, [location.search]);
+
+
 
   if (isViewAccess(authenticate, location)) {
     return <Access />;
@@ -147,7 +160,7 @@ export default function InfrastructureData() {
             <NoDataFound />
           ) : (
             <div className="overflow-x-auto custom-scrollbar w-full relative">
-              <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+              {isAllInfrastructureDataLoading ? <TableSkeletonLoading /> : <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
                 <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
                   <tr>
                     {[
@@ -208,7 +221,7 @@ export default function InfrastructureData() {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </table>}
             </div>
           )}
 
@@ -216,8 +229,8 @@ export default function InfrastructureData() {
           <Pagination
             page={currentPage}
             setPage={setCurrentPage}
-            hasNextPage={filteredData.length === 10}
-            total={filteredData.length}
+            hasNextPage={filteredData?.length === 10}
+            total={filteredData?.length}
           />
         </div>
       </div>
@@ -242,10 +255,8 @@ export default function InfrastructureData() {
               <li
                 className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
                 onClick={() => {
-                  if (window.confirm("Are you sure to delete?")) {
-                    DeleteData(filteredData[activeMenu]._id);
-                    closeMenu();
-                  }
+                  DeleteData(filteredData[activeMenu]._id);
+                  closeMenu();
                 }}
               >
                 <MdDelete /> Delete

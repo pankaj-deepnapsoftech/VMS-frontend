@@ -7,10 +7,15 @@ export const AddVulnerableData = async ({ tenant, data }) => {
   return res.data;
 };
 
+
+
 export const getAllVulnerableData = async ({ page, tenant }) => {
   const res = await AxiosHandler.get(`/nessus/getNessusData?page=${page}`);
   return res?.data?.data || [];
 };
+
+
+
 
 export const DeleteVulnerableData = async (id) => {
   if (!window.confirm("are you sure you want to delete")) {
@@ -21,6 +26,9 @@ export const DeleteVulnerableData = async (id) => {
   return res.data;
 };
 
+
+
+
 export const getApplicationData = async ({ page, tenant }) => {
   const res = await AxiosHandler.get(
     `/data/get-application?page=${page}&tenant=${tenant ? tenant : ""}`
@@ -28,9 +36,17 @@ export const getApplicationData = async ({ page, tenant }) => {
   return res.data?.data || [];
 };
 
+
+
 export const getInfrastructureData = async ({ page, tenant }) => {
-  const res = await AxiosHandler.get(
-    `/data/get-infrastructure?page=${page}&tenant=${tenant ? tenant : ""}`
-  );
+  const res = await AxiosHandler.get(`/data/get-infrastructure?page=${page}&tenant=${tenant ? tenant : ""}`);
   return res.data?.data || [];
 };
+
+
+
+export const updateVulnerablityData = async ({id,data}) => {
+    const res = await AxiosHandler.patch(`/data/update/${id}`, data);
+      toast.success(res.data.message);
+      return res.data;
+}

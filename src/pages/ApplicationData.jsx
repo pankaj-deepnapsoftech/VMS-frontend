@@ -1,5 +1,5 @@
-import {  useEffect, useState } from "react";
-import { useAuthContext, useVulnerabililtyDataContext } from "@/context";
+import { useState } from "react";
+import { useAuthContext } from "@/context";
 import { useLocation, useNavigate } from "react-router-dom";
 import ExpectionModal from "@/modals/ExpectionModal";
 import ExploitDetail from "@/modals/ExploitDetail";
@@ -23,13 +23,12 @@ import {
 import Access from "@/components/role/Access";
 import { CircleUser } from "lucide-react";
 import AssignUserModal from "@/components/modal/AssignUserModal";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
-import { getApplicationData } from "@/services/Vulnerable.service";
+import { DeleteVulnerableData, getApplicationData } from "@/services/Vulnerable.service";
 
 export default function ApplicationData() {
-  const {   DeleteData } =
-  useVulnerabililtyDataContext();
+  const queryClient = useQueryClient();
   const [currentPage, setCurrentPage] = useState(1);
   const { token, authenticate,tenant } = useAuthContext();
   const navigate = useNavigate();
@@ -46,6 +45,13 @@ export default function ApplicationData() {
     queryFn:()=>getApplicationData({page:currentPage,tenant}),
     enabled: !!token,
     placeholderData:keepPreviousData
+  })
+
+    const {mutate:DeleteData} = useMutation({
+    mutationFn:(id)=>DeleteVulnerableData(id),
+    onSuccess:async () => {
+      await queryClient.invalidateQueries({queryKey:["All-application-vurnablity"]})
+    }
   })
 
   // States
