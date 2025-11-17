@@ -1,15 +1,24 @@
 /* eslint-disable react/prop-types */
-import { useAuthContext, useExceptionContext } from "@/context";
+import { useAuthContext} from "@/context";
+import { CreateExceptionData } from "@/services/Exception.service";
 import { Imageuploader } from "@/utils/firebaseImageUploader";
 import { ExpectionValidation } from "@/Validation/Expection.Validation";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ErrorMessage, Field, Formik } from "formik";
 import { useState } from "react";
 
 const ExpectionModal = ({ setIsModalOpen, creator, editTable }) => {
 
   const { tenant } = useAuthContext();
-  const { ExceptionCreate } = useExceptionContext();
   const { UserViaTenant } = useAuthContext();
+  const queryClient = useQueryClient();
+
+  const {mutate:ExceptionCreate,isPending:isExceptionCreateLoading} = useMutation({
+    mutationFn:(data)=>CreateExceptionData(data),
+    onSuccess:async () => {
+      await queryClient.invalidateQueries({queryKey:"Exception"})
+    }
+  });
 
   const [handleImageLoading, setImageLoading] = useState(false)
 
@@ -250,6 +259,7 @@ const ExpectionModal = ({ setIsModalOpen, creator, editTable }) => {
               {/* Submit Button */}
               <div className="flex justify-end">
                 <button
+                onClick={isExceptionCreateLoading}
                   type="submit"
                   disabled={handleImageLoading}
                   className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"

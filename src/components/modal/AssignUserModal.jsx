@@ -1,25 +1,32 @@
 /* eslint-disable react/prop-types */
-import { useAuthContext, useVulnerabililtyDataContext } from '@/context'
+import { useAuthContext } from '@/context'
+import { updateVulnerablityData } from '@/services/Vulnerable.service'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { X } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 const AssignUserModal = ({ setAssignUserOpenModal, tenantId, selectedDataId }) => {
-    const { GetTenantData, UserViaTenant, token, tenant } = useAuthContext()
-    const { GetInfrastructureData, UpdateData } = useVulnerabililtyDataContext();
+    const queryClient = useQueryClient();
+    const { UserViaTenant } = useAuthContext()
+
+    const { mutate: UpdateData, isPending: isUpdateDataLoading } = useMutation({
+        mutationFn: ({ id, data }) => updateVulnerablityData({ id, data }),
+        onSuccess: async () => {
+            Promise.all([
+                await queryClient.invalidateQueries({ queryKey: ["All-vulnerablities-data"] }),
+                await queryClient.invalidateQueries({ queryKey: ["All-application-vurnablity"] }),
+                await queryClient.invalidateQueries({ queryKey: ["All-Infrastructure-vulnerabilities"] }),
+            ])
+        }
+    });
 
     const [selectedUserId, setSelectedUserId] = useState('')
 
-    useEffect(() => {
-        if (token && tenant) {
-            GetTenantData(tenantId);
-        }
-    }, [token, tenant])
 
-    const handleSubmit = () => {
+    function handleSubmit() {
         if (selectedUserId) {
-            UpdateData({ assign: selectedUserId }, selectedDataId?._id)
+            UpdateData({id:selectedDataId?._id,data:{ assign: selectedUserId }, })
             setAssignUserOpenModal(false)
-            GetInfrastructureData()
         } else {
             alert('Please select a user.')
         }
@@ -62,6 +69,7 @@ const AssignUserModal = ({ setAssignUserOpenModal, tenantId, selectedDataId }) =
 
                 <div className='flex w-full justify-center px-8 mb-5'>
                     <button
+                        disabled={isUpdateDataLoading}
                         onClick={handleSubmit}
                         className="bg-sky-700 hover:bg-sky-600 text-white font-semibold py-2 px-4 rounded shadow"
                     >

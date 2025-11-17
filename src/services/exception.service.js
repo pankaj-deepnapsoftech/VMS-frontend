@@ -14,6 +14,12 @@ export const updateExceptionData = async ({ id, data }) => {
     return res.data;
 }
 
+export const CreateExceptionData = async (data) => {
+    const res = await AxiosHandler.post('/expection/create', data);
+    toast.success(res.data.message);
+    return res.data;
+}
+
 
 
 
