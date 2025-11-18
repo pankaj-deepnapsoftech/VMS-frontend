@@ -157,7 +157,7 @@ export default function ApplicationData() {
               <input
                 type="search"
                 placeholder="Search data..."
-                value={searchTerm}
+                value={searchTerm}  
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="bg-input backdrop-blur-md py-2 w-1/3 text-white ps-7 pe-3 rounded-md "
               />
