@@ -1,17 +1,16 @@
 import {
   useAuthContext,
   useMailContext,
-  useMainReportContext,
 } from "@/context";
 import { Download, Mails, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
 import Select from "react-select";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { DownloadReportService } from "@/services/Reports.service";
 
 export default function DownloadReports() {
-  const { DownloadReport, downloadData } = useMainReportContext();
   const { token, UserViaTenant, GetTenantData, tenant } = useAuthContext();
   const {
     createMailReport,
@@ -19,6 +18,13 @@ export default function DownloadReports() {
     scheduleMailData,
     updateMailReport,
   } = useMailContext();
+
+  const {data:downloadData,isLoading:isDownloadReportLoading} = useQuery({
+    queryKey:["report-download",{tenant}],
+    queryFn:()=>DownloadReportService(tenant),
+    enabled:!!token && !!tenant,
+    placeholderData:keepPreviousData
+  })
 
   const [scheduleTime, setScheduleTime] = useState(null);
 
@@ -88,7 +94,6 @@ export default function DownloadReports() {
 
   useEffect(() => {
     if (token && tenant) {
-      DownloadReport(tenant);
       GetTenantData(tenant);
     }
   }, [token, tenant]);
@@ -254,6 +259,7 @@ export default function DownloadReports() {
                       className="text-green-500 hover:text-green-600 transition"
                       title="Download Report"
                       onClick={report.func}
+                      disabled={isDownloadReportLoading}
                     >
                       <Download size={18} />
                     </button>

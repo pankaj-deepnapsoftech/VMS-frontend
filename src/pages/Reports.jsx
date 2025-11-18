@@ -1,12 +1,12 @@
 import InputField from "@/components/InputField";
 import ReportModal from "@/components/modal/ReportModal";
 import NoDataFound from "@/components/NoDataFound";
-import { AxiosHandler } from "@/config/AxiosConfig";
 import {
   useAuthContext,
-  useMainReportContext,
-  useScheduleAssessmentContext,
 } from "@/context";
+import { getAllInProgressAssessment } from "@/services/Assessment.service";
+import { DeleteReportService, GetAllReportsService, UpdateReportService, UploadReportService } from "@/services/Reports.service";
+import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 import {
   DeleteImage,
   Imageuploader,
@@ -14,13 +14,15 @@ import {
 } from "@/utils/firebaseImageUploader";
 import { EmptyFieldRemover } from "@/utils/RemoveEmptyField";
 import { Reportvalidation } from "@/Validation/VulnerabililtyDataValidation";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { BiEditAlt, BiUpload } from "react-icons/bi";
 import { MdClose } from "react-icons/md";
 import { RiDeleteBinFill } from "react-icons/ri";
 
 const Reports = () => {
+  const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -30,15 +32,47 @@ const Reports = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [editData, setEditData] = useState(null);
 
-  const { getAllInProgress, allOption } = useScheduleAssessmentContext();
 
-  const {
-    GetAllReports,
-    reportsData,
-    uploadReports,
-    DeleteReport,
-    UpdateReport,
-  } = useMainReportContext();
+
+  const { data: allOption, refetch: getAllInProgress } = useQuery({
+    queryKey: ["all-assessment-option", { tenant }],
+    queryFn: () => getAllInProgressAssessment(tenant),
+    enabled: !!token && !!tenant,
+  })
+
+  const { data: reportsData, isLoading: isReportsDataLoading } = useQuery({
+    queryKey: ["all-reports", { tenant }],
+    queryFn: () => GetAllReportsService(tenant),
+    enabled: !!token,
+    placeholderData: keepPreviousData
+  })
+
+  const {mutate:uploadReports,isPending:isUploadReportloading} = useMutation({
+    mutationFn:(data)=>UploadReportService(data),
+    onSuccess:async () => {
+      await queryClient.invalidateQueries({queryKey:["all-reports"]});
+    }
+  });
+
+
+   const {mutate:DeleteReport,isPending:isDeleteReportloading} = useMutation({
+    mutationFn:(id)=>DeleteReportService(id),
+    onSuccess:async () => {
+      await queryClient.invalidateQueries({queryKey:["all-reports"]});
+    }
+  });
+
+
+
+  const {mutate:UpdateReport,isPending:isUpdateReportloading} = useMutation({
+    mutationFn:({id,data})=>UpdateReportService({id,data}),
+    onSuccess:async () => {
+      await queryClient.invalidateQueries({queryKey:["all-reports"]});
+    }
+  });
+  
+
+
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     setLoading(true);
@@ -55,7 +89,7 @@ const Reports = () => {
     data = EmptyFieldRemover(data);
 
     if (editData) {
-      await UpdateReport(editData.id, data);
+      await UpdateReport({id:editData.id, data});
     } else {
       await uploadReports(data);
     }
@@ -80,12 +114,6 @@ const Reports = () => {
     getAllInProgress(report?.creator?._id);
   };
 
-  useEffect(() => {
-    if (token) {
-      getAllInProgress(tenant);
-      GetAllReports(tenant);
-    }
-  }, [token, tenant]);
 
   return (
     <div className="p-6 md:p-8 bg-[#0f172a] min-h-screen text-white">
@@ -118,7 +146,7 @@ const Reports = () => {
           <NoDataFound />
         ) : (
           <div className="overflow-x-auto w-full custom-scrollbar mt-8 rounded-xl border border-[#1e2746] bg-[#1a1f2e] shadow-lg shadow-black/20">
-            <table className="table-fixed min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+            {isReportsDataLoading ? <TableSkeletonLoading /> : <table className="table-fixed min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
               {/* Table Header */}
               <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider sticky top-0 z-10 shadow-md">
                 <tr>
@@ -185,6 +213,7 @@ const Reports = () => {
                         <button
                           className="p-2 rounded-md text-red-500 hover:text-red-400 hover:bg-red-500/10 transition"
                           title="Delete"
+                          disabled={isDeleteReportloading}
                           onClick={() => {
                             DeleteReport(report._id);
                             DeleteImage(report?.file?.image_id);
@@ -197,7 +226,7 @@ const Reports = () => {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </table>}
           </div>
         )}
       </div>
@@ -309,7 +338,7 @@ const Reports = () => {
                     </button>
                     <button
                       type="submit"
-                      disabled={loading}
+                      disabled={loading || isUploadReportloading || isUpdateReportloading}
                       className="px-5 py-2 bg-blue-700 hover:bg-blue-600 text-white font-medium rounded-md shadow transition"
                     >
                       {isEdit ? "Update" : loading ? "saving..." : "Save"}
