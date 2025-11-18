@@ -1,6 +1,7 @@
 import { AxiosHandler } from "@/config/AxiosConfig";
 import toast from "react-hot-toast";
 
+
 export const AddVulnerableData = async ({ tenant, data }) => {
   const res = await AxiosHandler.post(`/data/add-new?tenant=${tenant}`, data);
   toast.success(res.data.message);
@@ -8,13 +9,10 @@ export const AddVulnerableData = async ({ tenant, data }) => {
 };
 
 
-
 export const getAllVulnerableData = async ({ page, tenant }) => {
   const res = await AxiosHandler.get(`/nessus/getNessusData?page=${page}`);
   return res?.data?.data || [];
 };
-
-
 
 
 export const DeleteVulnerableData = async (id) => {
@@ -27,8 +25,6 @@ export const DeleteVulnerableData = async (id) => {
 };
 
 
-
-
 export const getApplicationData = async ({ page, tenant }) => {
   const res = await AxiosHandler.get(
     `/data/get-application?page=${page}&tenant=${tenant ? tenant : ""}`
@@ -37,12 +33,10 @@ export const getApplicationData = async ({ page, tenant }) => {
 };
 
 
-
 export const getInfrastructureData = async ({ page, tenant }) => {
   const res = await AxiosHandler.get(`/data/get-infrastructure?page=${page}&tenant=${tenant ? tenant : ""}`);
   return res.data?.data || [];
 };
-
 
 
 export const updateVulnerablityData = async ({id,data}) => {
