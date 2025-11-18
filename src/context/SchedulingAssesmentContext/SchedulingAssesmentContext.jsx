@@ -12,7 +12,6 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
 
   const [testerData, setTesterData] = useState([]);
   const [dashboardData, setDashboardData] = useState([]);
-  const [allOption, setAllOptions] = useState([]);
 
 
 
@@ -38,16 +37,6 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
     }
   };
 
-  const getAllInProgress = async (tenant) => {
-    try {
-      const res = await AxiosHandler.get(
-        `/assessment/inprogress-assessment?tenant=${tenant ? tenant : ""}`
-      );
-      setAllOptions(res.data?.data);
-    } catch (error) {
-      toast.error(error?.response?.data?.message);
-    }
-  };
 
   return (
     <AssesmentContext.Provider
@@ -59,8 +48,6 @@ const SchedulingAssesmentContextProvider = ({ children }) => {
         setdatafetchCount,
         TesterForAssessment,
         DashboardData,
-        getAllInProgress,
-        allOption,
         // CreateNotifications
       }}
     >

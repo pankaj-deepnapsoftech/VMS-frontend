@@ -40,3 +40,9 @@ export const getInCompletedAssessment = async ({tenant,page }) => {
       );
   return res.data?.data || [];
 };
+
+
+export const getAllInProgressAssessment = async (tenant) => {
+   const res = await AxiosHandler.get(`/assessment/inprogress-assessment?tenant=${tenant ? tenant : ""}`);
+   return res.data?.data || [];
+}
