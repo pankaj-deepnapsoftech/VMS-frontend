@@ -27,7 +27,7 @@ import {
   deleteAssesment,
   getInProgressAssessment,
   UpdateScheduleAssessment,
-} from "@/services/assessment.service";
+} from "@/services/Assessment.service";
 import AssessmentSkeleton from "@/Skeletons/Assessment/AssessmentSkeleton";
 
 const PendingAssessment = () => {

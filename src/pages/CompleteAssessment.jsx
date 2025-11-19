@@ -18,7 +18,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   deleteAssesment,
   getInCompletedAssessment,
-} from "@/services/assessment.service";
+} from "@/services/Assessment.service";
 import AssessmentSkeleton from "@/Skeletons/Assessment/AssessmentSkeleton";
 
 const PendingAssessment = () => {
