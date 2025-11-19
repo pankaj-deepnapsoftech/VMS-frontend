@@ -1,6 +1,6 @@
 import Footer from "@/components/Footer/Footer";
 import { Header } from "@/constants/Components-lazy-loading/components.Lazy";
-import {  useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import {
   Outlet,
@@ -30,7 +30,8 @@ import SecurityQuestions from "@/pages/Auth/Secuirity";
 import { ReasonModal } from "@/components/modal/Reason";
 
 const MainLayout = () => {
-  const { notificationData, NotificationsViewed } = useVulnerabililtyDataContext();
+  const { notificationData, NotificationsViewed } =
+    useVulnerabililtyDataContext();
 
   const {
     authenticate,
@@ -40,16 +41,14 @@ const MainLayout = () => {
     showUserMenu,
     setShowUserMenu,
     selectedYear,
-    setSelectedYear
+    setSelectedYear,
   } = useAuthContext();
   const { TenantAllData } = useDataContext();
-
- 
 
   const { openModal, isOpen, closeModal } = useChangePassword();
   const { UpdateExpectionData } = useExceptionContext();
 
-   const currentYear = new Date().getFullYear();
+  const currentYear = new Date().getFullYear();
 
   const [width, setWidth] = useState(window.innerWidth);
   const [temp, setTemp] = useState("");
@@ -57,31 +56,33 @@ const MainLayout = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [showSidebar, setShowSideBar] = useState(false);
-  const [rejectionReasion,setRejectionReasion] = useState(false);
-  
+  const [rejectionReasion, setRejectionReasion] = useState(false);
+
   const navigate = useNavigate();
 
   const [tenant, setTenant] = useState("Select Value");
   const [tenantId, setTenantId] = useState("");
   const [searchParams] = useSearchParams();
 
-  const [editableNotification,setNotificationData] = useState(null)
+  const [editableNotification, setNotificationData] = useState(null);
 
-
-  const HandleRejection = (description) =>  {
+  const HandleRejection = (description) => {
     const keys = Object.keys(editableNotification.data);
-    UpdateExpectionData(editableNotification.id,{[keys[0]]:{...editableNotification.data[keys[0]],description}});
-    NotificationsViewed(editableNotification.nid)
+    UpdateExpectionData(editableNotification.id, {
+      [keys[0]]: { ...editableNotification.data[keys[0]], description },
+    });
+    NotificationsViewed(editableNotification.nid);
   };
 
-
   const viewOnlyAllowed = (path) => {
-    const alloweds = ['/',"/infrastructure-dashboard","/application-dashboard","/tvm-dashboard"];
-    return alloweds.includes(path)
-  }
-
-
-
+    const alloweds = [
+      "/",
+      "/infrastructure-dashboard",
+      "/application-dashboard",
+      "/tvm-dashboard",
+    ];
+    return alloweds.includes(path);
+  };
 
   let notificationcount =
     notificationData?.filter((notification) => !notification.view).length || 0;
@@ -214,7 +215,7 @@ const MainLayout = () => {
     return <SecurityQuestions />;
   }
 
-  return  (
+  return (
     <>
       <Sidebar />
 
@@ -230,14 +231,12 @@ const MainLayout = () => {
             </button>
 
             <div className="flex gap-3 w-full">
-              <Link className="flex items-center ">
-                <div className="flex gap-2 items-center justify-center  h-7 ">
-                  <img
-                    src="/logo.png"
-                    alt="logo"
-                    className="h-5 transition-all duration-300 ease-in-out group-hover:scale-105"
-                  />
-                </div>
+              <Link className="flex items-center">
+                <img
+                  src="/Logo1.png"
+                  alt="logo"
+                  className="h-12 w-auto object-contain pl-0"
+                />
               </Link>
 
               <div className="hidden md:block">
@@ -258,18 +257,18 @@ const MainLayout = () => {
             </div>
 
             <div className=" flex items-end justify-end">
+              {viewOnlyAllowed(window.location.pathname) && (
+                <select
+                  className="bg-[#0E1430] text-gray-300 text-sm px-2 sm:px-3 py-1 rounded-lg border border-gray-700 focus:outline-none"
+                  value={selectedYear}
+                  onChange={(e) => setSelectedYear(Number(e.target.value))}
+                >
+                  <option value={currentYear}>{currentYear} </option>
+                  <option value={currentYear - 1}>{currentYear - 1}</option>
+                  <option value={currentYear - 2}>{currentYear - 2}</option>
+                </select>
+              )}
 
-              { viewOnlyAllowed(window.location.pathname)  && <select
-                className="bg-[#0E1430] text-gray-300 text-sm px-2 sm:px-3 py-1 rounded-lg border border-gray-700 focus:outline-none"
-                value={selectedYear}
-                onChange={(e) => setSelectedYear(Number(e.target.value))}
-              >
-                <option value={currentYear}>{currentYear} </option>
-                <option value={currentYear - 1}>{currentYear - 1}</option>
-                <option value={currentYear - 2}>{currentYear - 2}</option>
-              </select> }
-
-              
               <button
                 onClick={() => setSidebarOpen(true)}
                 className="relative flex items-center gap-2  text-white px-4 py-2 rounded-lg hover:bg-blue-600"
@@ -283,8 +282,6 @@ const MainLayout = () => {
                   ""
                 )}
               </button>
-
-               
 
               <div className="relative ml-4 flex text-white items-center gap-1 md:gap-3">
                 <button
@@ -308,7 +305,11 @@ const MainLayout = () => {
             />
           </div>
 
-           <ReasonModal isOpen={rejectionReasion} onClose={()=>setRejectionReasion(false)} onSubmit={HandleRejection}/>
+          <ReasonModal
+            isOpen={rejectionReasion}
+            onClose={() => setRejectionReasion(false)}
+            onSubmit={HandleRejection}
+          />
 
           <div className="md:hidden">
             {!authenticate?.role && (
@@ -328,7 +329,7 @@ const MainLayout = () => {
       </header>
 
       {/* sidebar */}
-      { (
+      {
         <aside
           onMouseEnter={() => setShowSideBar(true)}
           onMouseLeave={() => setShowSideBar(false)}
@@ -350,7 +351,7 @@ const MainLayout = () => {
             showSidebar={showSidebar}
           />
         </aside>
-      )}
+      }
       <div
         className={`ml-auto transition-all min-h-screen duration-500 ease-in-out 
      bg-gradient-custom bg-black 
@@ -362,7 +363,7 @@ const MainLayout = () => {
         : "w-full lg:w-[95%] xl:w-[96%] 2xl:w-[97%]"
     }`}
       >
-          <Outlet />
+        <Outlet />
       </div>
 
       <Footer />

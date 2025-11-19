@@ -153,7 +153,7 @@ const Roles = () => {
           )}
 
           {/* Table */}
-          <div className="mt-10 max-w-full border bg-[#1a233c] border-[#1e2b45] rounded-xl sm:max-w-6xl mb-20 mx-auto px-2 sm:px-0">
+          <div className="mt-10 w-full border bg-[#1a233c] border-[#1e2b45] rounded-xl mb-20 overflow-x-auto">
             {filteredRoles.length === 0 ? (
               <p className="text-center text-gray-400 text-sm py-10">
                 No roles found.
