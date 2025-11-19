@@ -3,27 +3,27 @@ import toast from "react-hot-toast";
 
 
 export const getRoles = async ({ page, tenant }) => {
-    const res = await AxiosHandler.get(`/infraStructureAsset/get?page=${page}&tenant=${tenant ? tenant : ""}`);
+    const res = await AxiosHandler.get(`/role/get?page=${page}&tenant=${tenant ? tenant : ""}`);
     return res.data.data || [];
 }
 
 
 export const createRoles = async (data) => {
-    const res = await AxiosHandler.post("/infraStructureAsset/create", data);
-    toast.success(res.data.message || "Infrastructure Asset created");
+    const res = AxiosHandler.post(`/role/create`, data);
+    toast.success(res.data.message || "Role created");
     return res.data;
 }
 
 
 export const updateRoles = async ({ id, data }) => {
-    const res = await AxiosHandler.put(`/infraStructureAsset/update/${id}`, data);
-    toast.success(res.data.message || "Infrastructure Assets updated successfully");
+    const res = await AxiosHandler.put(`/role/update/${id}`, data);
+    toast.success(res.data.message || "Role updated successfully");
     return res.data;
 }
 
 
 export const deleteRoles = async ({ id }) => {
-    const res = await AxiosHandler.delete(`/infraStructureAsset/delete/${id}`);
-    toast.success(res.data.message || "Infrastructure Assets deleted successfully");
+    const res = await AxiosHandler.delete(`/role/delete/${id}`);
+    toast.success(res.data.message || "Role deleted successfully");
     return res.data;
 }

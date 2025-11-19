@@ -11,20 +11,20 @@ export const getPartners = async ({ tenant, page }) => {
 
 export const createPartners = async (data) => {
     const res = await AxiosHandler.post("/partner/create", data);
-    toast.success(res.data.message || "Infrastructure Asset created");
+    toast.success(res.data.message || "Partner created");
     return res.data;
 }
 
 
 export const updatePartners = async ({ values, data }) => {
     const res = await AxiosHandler.put(`/partner/update/${values._id}`, data);
-    toast.success(res.data.message || "Infrastructure Assets updated successfully");
+    toast.success(res.data.message || "Partner updated successfully");
     return res.data;
 }
 
 
 export const deletePartners = async ({ id }) => {
     const res = await AxiosHandler.delete(`/partner/delete/${id}`);
-    toast.success(res.data.message || "Infrastructure Assets deleted successfully");
+    toast.success(res.data.message || "Partner deleted successfully");
     return res.data;
 }

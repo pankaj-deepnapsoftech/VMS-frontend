@@ -17,7 +17,7 @@ export const createTenants = async (values) => {
 
 
 export const updateTenants = async ({ data, values }) => {
-    const res = await AxiosHandler.put(`/tenant/update/${values.id}`, data);
+    const res = await AxiosHandler.put(`/tenant/update/${values._id}`, data);
     toast.success(res.data.message || "Infrastructure Assets updated successfully");
     return res.data;
 }

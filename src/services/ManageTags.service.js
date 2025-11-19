@@ -3,27 +3,27 @@ import toast from "react-hot-toast";
 
 
 export const getTags = async ({ page, tenant }) => {
-    const res = await AxiosHandler.get(`/infraStructureAsset/get?page=${page}&tenant=${tenant ? tenant : ""}`);
+    const res = await AxiosHandler.get(`/tags/get-tags?page=${page}&tenant=${tenant ? tenant : ""}`);
     return res.data.data || [];
 }
 
 
 export const createTags = async (data) => {
-    const res = await AxiosHandler.post("/infraStructureAsset/create", data);
-    toast.success(res.data.message || "Infrastructure Asset created");
+    const res = await AxiosHandler.post('/tags/create',data);
+    toast.success(res.data.message || "Tag created");
     return res.data;
 }
 
 
-export const updateTags = async ({ id, data }) => {
-    const res = await AxiosHandler.put(`/infraStructureAsset/update/${id}`, data);
-    toast.success(res.data.message || "Infrastructure Assets updated successfully");
+export const updateTags = async ({ data }) => {
+    const res = await AxiosHandler.put(`/tags/update-tag/${data._id}`,data);
+    toast.success(res.data.message || "Tag updated successfully");
     return res.data;
 }
 
 
 export const deleteTags = async ({ id }) => {
-    const res = await AxiosHandler.delete(`/infraStructureAsset/delete/${id}`);
-    toast.success(res.data.message || "Infrastructure Assets deleted successfully");
+    const res = await AxiosHandler.delete(`/tags/delete/${id}`);
+    toast.success(res.data.message || "Tag deleted successfully");
     return res.data;
 }

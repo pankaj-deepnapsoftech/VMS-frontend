@@ -10,20 +10,20 @@ export const getUsers = async ({ page, tenant }) => {
 
 export const createUsers = async (data) => {
     const res = await AxiosHandler.post("/infraStructureAsset/create", data);
-    toast.success(res.data.message || "Infrastructure Asset created");
+    toast.success(res.data.message || "User created");
     return res.data;
 }
 
 
 export const updateUsers = async ({ id, data }) => {
     const res = await AxiosHandler.put(`/infraStructureAsset/update/${id}`, data);
-    toast.success(res.data.message || "Infrastructure Assets updated successfully");
+    toast.success(res.data.message || "User updated successfully");
     return res.data;
 }
 
 
 export const deleteUsers = async ({ id }) => {
     const res = await AxiosHandler.delete(`/infraStructureAsset/delete/${id}`);
-    toast.success(res.data.message || "Infrastructure Assets deleted successfully");
+    toast.success(res.data.message || "User deleted successfully");
     return res.data;
 }
