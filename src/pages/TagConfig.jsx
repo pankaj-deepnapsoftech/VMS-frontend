@@ -78,7 +78,7 @@ export default function TagsPage() {
   return (
     <>
       { (
-        <div className="min-h-screen py-6 px-3 md:px-6">
+        <div className="min-h-screen py-4 md:px-6">
           {/* Top Bar */}
           <div className="w-full border-[#6B728033] flex flex-col md:flex-row md:items-center md:justify-between gap-4 backdrop-blur-md rounded-lg bg-[#1a1f2e]/40 p-4">
             <div>
