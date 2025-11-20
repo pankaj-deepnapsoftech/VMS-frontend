@@ -100,10 +100,9 @@ const Partners = () => {
   return (
     <>
       (
-      <section className="p-4 sm:p-6 md:p-8 h-auto shadow-lg">
-        {/* Header */}
-        <div className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-md backdrop-blur-md p-4 mb-6 bg-gray-800/30">
-          <div className="w-full sm:w-auto">
+      <div className="min-h-screen">
+        <div className="max-w-screen px-6 h-fit border-[#6B728033] flex items-center gap-4 backdrop-blur-md rounded-lg mx-5">
+          <div className="w-full">
             <h2 className="text-2xl font-semibold text-white">All Partners</h2>
             <span className="text-subtext text-sm">Manage all partners</span>
           </div>
@@ -258,7 +257,7 @@ const Partners = () => {
         </div>
 
         {/* Partners Table */}
-        <div className="w-full p-2 sm:p-4 md:p-6">
+        <div className="w-full min-h-screen p-6">
           <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
             {/* Search Header */}
             <div className="px-4 sm:px-6 py-4 border-b border-gray-700 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
@@ -357,7 +356,7 @@ const Partners = () => {
             </div>
           </div>
         </div>
-      </section>
+      </div>
       )
     </>
   );
