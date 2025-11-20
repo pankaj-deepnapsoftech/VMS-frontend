@@ -16,6 +16,8 @@ import {
   isModifyAccess,
   isViewAccess,
 } from "@/utils/pageAccess";
+import { Mutation } from "@tanstack/react-query";
+
 
 export default function TagsPage() {
   const { createTags, GetTages, Tages, UpdateTags, DeleteTags } = useTagsContext();
@@ -33,7 +35,7 @@ export default function TagsPage() {
     errors,
     handleBlur,
     handleChange,
-    handleSubmit,
+//handleSubmit,
     resetForm,
   } = useFormik({
     initialValues: editTag || {
@@ -57,11 +59,13 @@ export default function TagsPage() {
     },
   });
 
-  useEffect(() => {
-    if (token) {
-      GetTages(page);
-    }
-  }, [page]);
+  const handleSubmit = ()=>{
+    createTags.mutate({
+      name: values.name,
+    description: values.description,
+    
+    })
+  }
 
   const filteredTags = Tages?.filter((tag) => {
     const query = searchQuery.toLowerCase();

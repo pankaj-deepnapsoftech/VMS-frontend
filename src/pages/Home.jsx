@@ -708,7 +708,7 @@ const DashboardCards = () => {
         
       </div>
       {/* Third row  */}
-      isNinthChartDataLoading{" "}
+      {/* isNinthChartDataLoading{" "} */}
       <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr_1fr] mb-4 gap-6 mt-4 w-full">
         {/* === Open and Closed Vulnerable Items === */}
         {isNinthChartDataLoading ? (

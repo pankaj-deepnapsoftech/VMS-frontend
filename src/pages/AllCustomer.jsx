@@ -20,8 +20,14 @@ import {
   isViewAccess,
 } from "@/utils/pageAccess";
 import { useAuthContext } from "@/context";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+
+import { getTenants, deleteTenants } from "../services/ManageTenants.service"
 
 export default function AllCustomer() {
+
+  const queryClient = useQueryClient();
+
   // context api hooks
   const { token, authenticate } = useAuthContext();
 
@@ -31,43 +37,36 @@ export default function AllCustomer() {
   // all use States
   const [page, setPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [tenants, setTenants] = useState([]);
   const [editTable, setEditTable] = useState(null);
-  const [isLoading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const { isOpen, closeModal } = useAccessPartner();
   const [tenantId, setTenantId] = useState(null);
   const [partnersData, setPartnersData] = useState("");
 
-  const getTenants = async () => {
-    try {
-      const res = await AxiosHandler.get(`/tenant/get?page=${page}&limit=10`);
-      setTenants(res?.data.data);
-    } catch (error) {
-      console.error("Failed to fetch tenants", error);
+   // ============ TANSTACK QUERY ============
+
+  const {
+    data: tenants = [],
+    isLoading,
+  } = useQuery({
+    queryKey: ["tenants", page],
+    queryFn: () => getTenants({ page }),
+    enabled: !!token,
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: ({ id }) => deleteTenants({ id }),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["tenants"]);
+    },
+  });
+
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete?")) {
+      deleteMutation.mutate({ id });
     }
   };
 
-  const DeleteData = async (_id) => {
-    setLoading(true);
-    try {
-      if (window.confirm("Are you sure you want to delete this element?")) {
-        await AxiosHandler.delete(`/tenant/delete/${_id}`);
-        getTenants();
-        setIsModalOpen(false);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (token) {
-      getTenants(page);
-    }
-  }, [token, page]);
 
   if (isViewAccess(authenticate, location)) {
     return <Access />;
@@ -180,7 +179,7 @@ export default function AllCustomer() {
                           <td className="px-4 py-3 flex gap-2">
                             {isDeleteAccess() && (
                               <button
-                                onClick={() => DeleteData(tenant?._id)}
+                                onClick={() => handleDelete(tenant?._id)}
                                 title="Delete"
                                 className="text-subtext hover:text-subTextHover"
                               >
@@ -224,14 +223,12 @@ export default function AllCustomer() {
         <Addtanent
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
-          isLoading={isLoading}
-          setLoading={setLoading}
-          getTenants={getTenants}
+          getTenants={() => queryClient.invalidateQueries(["tenants"])}
           editTable={editTable}
         />
       )}
       {isOpen && (
-        <AccessPartner
+         <AccessPartner
           id={tenantId}
           closeModal={closeModal}
           preSet={partnersData}

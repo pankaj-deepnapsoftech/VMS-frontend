@@ -11,6 +11,8 @@ import toast from "react-hot-toast";
 import { useLocation } from "react-router-dom";
 import { isCreateAccess, isDeleteAccess, isHaveAction, isModifyAccess, isViewAccess } from "@/utils/pageAccess";
 import Access from "@/components/role/Access";
+import {getRoles} from "../services/ManageRoles.service"
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const Roles = () => {
   // all context api hooks
@@ -20,14 +22,15 @@ const Roles = () => {
   // location hook 
   const location = useLocation();
 
+    
+
   // use States
   const [showModal, setModal] = useState(false);
-  const [rolesList, setRolesList] = useState([]);
-  const [filteredRoles, setFilteredRoles] = useState([]);
   const [editable, setEditable] = useState(null);
-  const [isLoading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
+
+  const queryClient = useQueryClient();
 
   const pathMap = AllowedPaths.reduce((acc, path) => {
     acc[path.name] = {
@@ -37,75 +40,59 @@ const Roles = () => {
     return acc;
   }, {});
 
+  
+  // Getting data from Tanstack
+   const {
+    data: roles = [],
+    isLoading,      
+  } = useQuery({
+    queryKey: ["roles", page, search],
+    queryFn: () => getRoles({ page, search }),
+    enabled: !!token,
+    keepPreviousData: true,
+  });
 
-  const GetData = async (page) => {
-    setLoading(true);
-    try {
-      const res = await AxiosHandler.get(`/role/get?page=${page}&limit=5`);
-      const roles = res?.data?.data || [];
-      setRolesList(roles);
-      setFilteredRoles(roles);
-    } catch (error) {
-      console.error("Error fetching roles:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  
     
   const CreateRole = async (data) => {
     try {
       const res = await AxiosHandler.post(`/role/create`, data);
-      GetData();
       toast.success(res.data.message);
+      queryClient.invalidateQueries(["roles"]);
+      setModal(false);
     } catch (error) {
-      console.error("Error fetching roles:", error);
-    } finally {
-      setLoading(false);
+      console.error("Error creating role:", error);
     }
   };
 
-  const UpdateRole = async (id, data) => {
+ const UpdateRole = async (id, data) => {
     try {
       const res = await AxiosHandler.put(`/role/update/${id}`, data);
-      GetData();
       toast.success(res.data.message);
+      queryClient.invalidateQueries(["roles"]);
+      setModal(false);
     } catch (error) {
-      console.error("Error fetching roles:", error);
-    } finally {
-      setLoading(false);
+      console.error("Error updating role:", error);
     }
   };
 
   const DeleteData = async (_id) => {
     if (!window.confirm("Are you sure you want to delete this role?")) return;
-    setLoading(true);
     try {
       await AxiosHandler.delete(`/role/delete/${_id}`);
-      await GetData();
+      queryClient.invalidateQueries(["roles"]);
+      toast.success("Role deleted");
     } catch (error) {
       console.error("Error deleting role:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
-  const handleSearch = (value) => {
+   const handleSearch = (value) => {
     setSearch(value);
     setPage(1);
-    if (!value) {
-      setFilteredRoles(rolesList);
-    } else {
-      const filtered = rolesList.filter((role) =>
-        role.role.toLowerCase().includes(value.toLowerCase())
-      );
-      setFilteredRoles(filtered);
-    }
   };
 
-  useEffect(() => {
-    if (token) GetData(page);
-  }, [token, page]);
-
+  
   if(isViewAccess(authenticate,location)){
     return <Access/>
   }
@@ -154,7 +141,7 @@ const Roles = () => {
 
           {/* Table */}
           <div className="mt-10 max-w-full border bg-[#1a233c] border-[#1e2b45] rounded-xl sm:max-w-6xl mb-20 mx-auto px-2 sm:px-0">
-            {filteredRoles.length === 0 ? (
+            {roles.length === 0 ? (
               <p className="text-center text-gray-400 text-sm py-10">
                 No roles found.
               </p>
@@ -178,7 +165,7 @@ const Roles = () => {
                     </tr>
                   </thead>
                   <tbody className="text-white divide-y divide-[#1e2b45]">
-                    {rolesList.map((roleItem, idx) => (
+                    {roles.map((roleItem, idx) => (
                       <tr
                         key={idx}
                         className="bg-[#151c39] transition w-10 duration-200"
@@ -251,8 +238,8 @@ const Roles = () => {
             <Pagination
               page={page}
               setPage={setPage}
-              hasNextPage={rolesList?.length === 5}
-              total={rolesList?.length}
+              hasNextPage={roles?.length === 5}
+              total={roles?.length}
               limit={5}
             />
           </div>
