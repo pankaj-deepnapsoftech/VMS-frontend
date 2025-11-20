@@ -6,9 +6,12 @@ import { tenantValidator } from "@/Validation/TenantsValidations";
 import { AxiosHandler } from "@/config/AxiosConfig";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useMutation,  useQueryClient } from "@tanstack/react-query";
+import { createTenantsService, updateTenantServices } from "@/services/ManageTenants.service";
 
 // eslint-disable-next-line react/prop-types
 const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
+  const queryClient = useQueryClient()
   const [riskScore, setRiskScore] = useState(600);
   const [countryData, setCountryData] = useState([]);
 
@@ -17,6 +20,32 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
     if (score < 700) return "Medium";
     return "High";
   };
+
+  // ---------------- all tenstack mutation start here -----------------------
+
+  const { mutate: CreateTenant, isPending: isCreatetenantLoading } = useMutation({
+    mutationFn: (data) => createTenantsService(data),
+    onSuccess:async()=>{
+      await queryClient.invalidateQueries({queryKey:["tenants"]});
+    }
+  })
+
+
+    const { mutate: UpdateTenant, isPending: isUpdateTenantLoading } = useMutation({
+    mutationFn: ({id,data}) => updateTenantServices({id,data}),
+    onSuccess:async()=>{
+      await queryClient.invalidateQueries({queryKey:["tenants"]});
+    }
+  })
+
+
+
+  // ------------------ all tenstack query start here -----------------------
+
+
+
+
+
 
   const formik = useFormik({
     initialValues: editTable || {
@@ -34,14 +63,9 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
     onSubmit: async (values) => {
       try {
         if (editTable) {
-          const res = await AxiosHandler.put(
-            `/tenant/update/${values._id}`,
-            values
-          );
-          toast.success(res.data.message || "Tenant updated successfully");
+          UpdateTenant({id:values._id,data:values})
         } else {
-          const res = await AxiosHandler.post("/tenant/create", values);
-          toast.success(res.data.message || "Tenant updated successfully");
+          CreateTenant(values);
         }
         setIsModalOpen(false);
         formik.resetForm();
@@ -75,9 +99,8 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
 
   return (
     <div
-      className={`absolute top-0 left-0 z-50 min-h-screen bg-gradient-custom w-full text-white ${
-        isModalOpen ? "opacity-100 visible" : "opacity-0 invisible"
-      }  transition-opacity duration-500 ease-in-out`}
+      className={`absolute top-0 left-0 z-50 min-h-screen bg-gradient-custom w-full text-white ${isModalOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        }  transition-opacity duration-500 ease-in-out`}
     >
       <div className="w-full flex justify-between items-center py-6 px-10">
         <div className="text-2xl text-center w-full">Company Profile</div>
@@ -377,6 +400,7 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                 Cancel
               </button>
               <button
+                disabled={isCreatetenantLoading || isUpdateTenantLoading}
                 type="submit"
                 className="px-7 py-2 rounded-md bg-button text-white hover:scale-105 transition duration-200"
               >

@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import {  FaRegTrashAlt } from "react-icons/fa";
-import { AxiosHandler } from "@/config/AxiosConfig";
 import Pagination from "./Pagination";
 import Loader from "@/components/Loader/Loader";
 import Addtanent from "./Addtanent";
@@ -23,6 +22,7 @@ import { useAuthContext } from "@/context";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { getTenants, deleteTenants } from "../services/ManageTenants.service"
+import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 
 export default function AllCustomer() {
 
@@ -45,10 +45,7 @@ export default function AllCustomer() {
 
    // ============ TANSTACK QUERY ============
 
-  const {
-    data: tenants = [],
-    isLoading,
-  } = useQuery({
+  const {data:tenants,isLoading:IsTenantLoading} = useQuery({
     queryKey: ["tenants", page],
     queryFn: () => getTenants({ page }),
     enabled: !!token,
@@ -72,25 +69,12 @@ export default function AllCustomer() {
     return <Access />;
   }
 
-  const filteredTenants = tenants.filter((tenant) =>
-    [
-      tenant.company_name,
-      tenant.Website_url,
-      tenant.Employee_count?.toString(),
-      tenant.Country,
-      tenant.State,
-      tenant.City,
-      tenant.Industry,
-      tenant.Risk_Apetite?.toString(),
-    ].some((field) => field?.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
+
 
 
   return (
     <>
-      {isLoading ? (
-        <Loader />
-      ) : (
+      { (
         <div className="min-h-screen py-4">
           <div className="max-w-screen px-6 h-fit border-[#6B728033] flex items-center gap-4 backdrop-blur-md rounded-lg mx-5">
             <div className="w-full">
@@ -130,11 +114,11 @@ export default function AllCustomer() {
               </div>
 
               {/* Table */}
-              {filteredTenants?.length < 1 ? (
+              {tenants?.length < 1 ? (
                 <NoDataFound />
               ) : (
                 <div className="overflow-x-auto custom-scrollbar w-full">
-                  <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+                {IsTenantLoading ? <TableSkeletonLoading/> :  <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
                     <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
                       <tr>
                         {[
@@ -158,7 +142,7 @@ export default function AllCustomer() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-700">
-                      {filteredTenants.map((tenant, index) => (
+                      {tenants?.map((tenant, index) => (
                         <tr
                           key={tenant._id}
                           className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
@@ -202,7 +186,7 @@ export default function AllCustomer() {
                         </tr>
                       ))}
                     </tbody>
-                  </table>
+                  </table>}
                 </div>
               )}
 
@@ -210,8 +194,8 @@ export default function AllCustomer() {
               <Pagination
                 page={page}
                 setPage={setPage}
-                hasNextPage={filteredTenants.length === 10}
-                total={filteredTenants.length}
+                hasNextPage={tenants?.length === 10}
+                total={tenants?.length}
               />
             </div>
           </div>

@@ -9,15 +9,15 @@ export const getTenants = async ({ page, tenant }) => {
 };
 
 
-export const createTenants = async (values) => {
+export const createTenantsService = async (values) => {
     const res = await AxiosHandler.post("/tenant/create", values);
     toast.success(res.data.message || "Infrastructure Asset created");
     return res.data;
 }
 
 
-export const updateTenants = async ({ data, values }) => {
-    const res = await AxiosHandler.put(`/tenant/update/${values._id}`, data);
+export const updateTenantServices = async ({ id,data }) => {
+    const res = await AxiosHandler.put(`/tenant/update/${id}`, data);
     toast.success(res.data.message || "Infrastructure Assets updated successfully");
     return res.data;
 }

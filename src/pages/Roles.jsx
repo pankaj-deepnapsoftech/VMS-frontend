@@ -13,6 +13,7 @@ import { isCreateAccess, isDeleteAccess, isHaveAction, isModifyAccess, isViewAcc
 import Access from "@/components/role/Access";
 import {getRoles} from "../services/ManageRoles.service"
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 
 const Roles = () => {
   // all context api hooks
@@ -43,8 +44,7 @@ const Roles = () => {
   
   // Getting data from Tanstack
    const {
-    data: roles = [],
-    isLoading,      
+    data: roles,isLoading:isRolesLoading,      
   } = useQuery({
     queryKey: ["roles", page, search],
     queryFn: () => getRoles({ page, search }),
@@ -99,9 +99,6 @@ const Roles = () => {
 
   return (
     <>
-      {isLoading ? (
-        <Loader />
-      ) : (
         <section className="min-h-screen w-full px-4 sm:px-6 py-6 sm:py-8">
           <h1 className="text-3xl font-semibold text-white">Role Management</h1>
           <p className="text-gray-400">
@@ -141,13 +138,13 @@ const Roles = () => {
 
           {/* Table */}
           <div className="mt-10 w-full border bg-[#1a233c] border-[#1e2b45] rounded-xl mb-20 overflow-x-auto">
-            {filteredRoles.length === 0 ? (
+            {roles?.length === 0 ? (
               <p className="text-center text-gray-400 text-sm py-10">
                 No roles found.
               </p>
             ) : (
               <div className="bg-[#0c1120] rounded-md shadow-xl">
-                <table className="min-w-full h-20 divide-y divide-[#1e2b45] text-sm">
+                {isRolesLoading ? <TableSkeletonLoading/> : <table className="min-w-full h-20 divide-y divide-[#1e2b45] text-sm">
                   <thead className="bg-[#1a233b]">
                     <tr>
                       <th className="px-4 py-3 text-left font-semibold text-white w-[20px]">
@@ -199,9 +196,9 @@ const Roles = () => {
                                     </span>
                                   );
                                 })}
-                              {roleItem.allowed_path.length > 6 && (
+                              {roleItem?.allowed_path?.length > 6 && (
                                 <span className="bg-[#2e3a5e] text-white px-3 py-1 rounded text-xs font-medium">
-                                  +{roleItem.allowed_path.length - 6} more
+                                  +{roleItem?.allowed_path?.length - 6} more
                                 </span>
                               )}
                             </div>
@@ -230,7 +227,7 @@ const Roles = () => {
                       </tr>
                     ))}
                   </tbody>
-                </table>
+                </table>}
               </div>
             )}
 
@@ -244,7 +241,6 @@ const Roles = () => {
             />
           </div>
         </section>
-      )}
     </>
   );
 };
