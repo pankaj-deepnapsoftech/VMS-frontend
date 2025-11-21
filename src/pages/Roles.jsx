@@ -44,8 +44,8 @@ const Roles = () => {
   //===================Getting data from Tanstack===========================
 
   const { data: roles, isLoading: isRolesLoading } = useQuery({
-    queryKey: ["roles", page, search],
-    queryFn: () => getRoles({ page, search }),
+    queryKey: ["roles", page],
+    queryFn: () => getRoles({ page }),
     enabled: !!token,
     keepPreviousData: true,
   });
@@ -68,6 +68,15 @@ const Roles = () => {
     setPage(1);
   };
 
+  const filteredRoles = roles?.filter((item) => {
+    const q = search.toLowerCase();
+    return (
+      item.role?.toLowerCase().includes(q) ||
+      item.description?.toLowerCase().includes(q) ||
+      item.allowed_path?.some((p) => p.name.toLowerCase().includes(q))
+    );
+  });
+
   if (isViewAccess(authenticate, location)) {
     return <Access />;
   }
@@ -83,12 +92,13 @@ const Roles = () => {
         {/* Top Bar */}
         <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-4 border-[#6B728033] rounded-md border-b backdrop-blur-md bg-[#6B728033] my-6 sm:my-10 px-4 py-4">
           <input
-            type="text"
+            type="search"
             value={search}
             onChange={(e) => handleSearch(e.target.value)}
-            placeholder="Search..."
+            placeholder="Search roles..."
             className="bg-[#23252750] backdrop-blur-md py-2 px-4 w-full sm:w-1/3 rounded-md text-white"
           />
+
           {isCreateAccess() && (
             <button
               onClick={() => {
@@ -139,7 +149,7 @@ const Roles = () => {
                     </tr>
                   </thead>
                   <tbody className="text-white divide-y divide-[#1e2b45]">
-                    {roles.map((roleItem, idx) => (
+                    {filteredRoles.map((roleItem, idx) => (
                       <tr
                         key={idx}
                         className="bg-[#151c39] transition w-10 duration-200"
@@ -217,8 +227,8 @@ const Roles = () => {
           <Pagination
             page={page}
             setPage={setPage}
-            hasNextPage={roles?.length === 5}
-            total={roles?.length}
+            hasNextPage={filteredRoles?.length === 5}
+            total={filteredRoles?.length}
             limit={5}
           />
         </div>

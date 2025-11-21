@@ -63,6 +63,15 @@ export default function AllCustomer() {
     }
   };
 
+  const filteredTenants = tenants?.filter((item) => {
+    const q = searchQuery.toLowerCase();
+    return (
+      item.company_name?.toLowerCase().includes(q) ||
+      item.City?.toLowerCase().includes(q) ||
+      item.State?.toLowerCase().includes(q)
+    );
+  });
+
   if (isViewAccess(authenticate, location)) {
     return <Access />;
   }
@@ -102,14 +111,17 @@ export default function AllCustomer() {
                     type="search"
                     placeholder="Search users..."
                     value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onChange={(e) => {
+                      setSearchQuery(e.target.value);
+                      setPage(1);
+                    }}
                     className="bg-input backdrop-blur-md py-2 w-1/3 text-white ps-7 pe-3 rounded-md "
                   />
                 </div>
               </div>
 
               {/* Table */}
-              {tenants?.length < 1 ? (
+              {filteredTenants?.length < 1 ? (
                 <NoDataFound />
               ) : (
                 <div className="overflow-x-auto custom-scrollbar w-full">
@@ -140,7 +152,7 @@ export default function AllCustomer() {
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-gray-700">
-                        {tenants?.map((tenant, index) => (
+                        {filteredTenants?.map((tenant, index) => (
                           <tr
                             key={tenant._id}
                             className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
@@ -193,8 +205,8 @@ export default function AllCustomer() {
               <Pagination
                 page={page}
                 setPage={setPage}
-                hasNextPage={tenants?.length === 10}
-                total={tenants?.length}
+                hasNextPage={filteredTenants?.length >= 10}
+                total={filteredTenants?.length}
               />
             </div>
           </div>

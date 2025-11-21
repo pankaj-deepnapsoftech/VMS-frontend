@@ -48,10 +48,9 @@ const Partners = () => {
   //Getting Data by TANSTACK
 
   const { data: partnersData, isLoading: isPartnerLoading } = useQuery({
-    queryKey: ["partners", page, searchQuery],
-    queryFn: () => getPartners({ page, search: searchQuery }),
+    queryKey: ["partners", page],
+    queryFn: () => getPartners({ page }),
     enabled: !!token,
-    keepPreviousData: true,
   });
 
   const { mutate: CreatePartners, isPending: isCreatePartnerLoading } =
@@ -115,6 +114,15 @@ const Partners = () => {
         console.log(error);
       }
     },
+  });
+
+  const filteredPartners = partnersData?.filter((item) => {
+    const q = searchQuery.toLowerCase();
+    return (
+      item.company_name?.toLowerCase().includes(q) ||
+      item.city?.toLowerCase().includes(q) ||
+      item.state?.toLowerCase().includes(q)
+    );
   });
 
   if (isViewAccess(authenticate, location)) {
@@ -292,7 +300,10 @@ const Partners = () => {
                   type="search"
                   placeholder="Search partners..."
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    setPage(1);
+                  }}
                   className="bg-input backdrop-blur-md py-2 ps-8 pe-3 w-full text-white rounded-md outline-none focus:ring-1 focus:ring-blue-500"
                 />
               </div>
@@ -330,7 +341,7 @@ const Partners = () => {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-700">
-                      {partnersData.map((tenant) => (
+                      {filteredPartners?.map((tenant) => (
                         <tr
                           key={tenant._id}
                           className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
@@ -379,8 +390,8 @@ const Partners = () => {
               <Pagination
                 page={page}
                 setPage={setPage}
-                total={partnersData?.length}
-                hasNextPage={partnersData?.length === 10}
+                hasNextPage={filteredPartners?.length === 10}
+                total={filteredPartners?.length}
               />
             </div>
           </div>
