@@ -233,9 +233,9 @@ const MainLayout = () => {
             <div className="flex gap-3 w-full">
               <Link className="flex items-center">
                 <img
-                  src="/Logo1.png"
+                  src="/Logo5.png"
                   alt="logo"
-                  className="h-12 w-auto object-contain pl-0"
+                  className="h-9 w-auto object-contain pl-0 filter brightness-[1.5]" // Custom brightness
                 />
               </Link>
 
