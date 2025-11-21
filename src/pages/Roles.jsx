@@ -5,25 +5,33 @@ import { useAuthContext } from "@/context";
 import RoleModel from "@/modals/RoleModel";
 import { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
-import { FiEdit2,  FiTrash2 } from "react-icons/fi";
+import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import Pagination from "./Pagination";
 import toast from "react-hot-toast";
 import { useLocation } from "react-router-dom";
-import { isCreateAccess, isDeleteAccess, isHaveAction, isModifyAccess, isViewAccess } from "@/utils/pageAccess";
+import {
+  isCreateAccess,
+  isDeleteAccess,
+  isHaveAction,
+  isModifyAccess,
+  isViewAccess,
+} from "@/utils/pageAccess";
 import Access from "@/components/role/Access";
-import {getRoles} from "../services/ManageRoles.service"
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  getRoles,
+  createRoles,
+  updateRoles,
+  deleteRoles
+} from "../services/ManageRoles.service";
+import { useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 
 const Roles = () => {
   // all context api hooks
-  const { token,authenticate } = useAuthContext();
-  
+  const { token, authenticate } = useAuthContext();
 
-  // location hook 
+  // location hook
   const location = useLocation();
-
-    
 
   // use States
   const [showModal, setModal] = useState(false);
@@ -41,80 +49,96 @@ const Roles = () => {
     return acc;
   }, {});
 
-  
   // Getting data from Tanstack
-   const {
-    data: roles,isLoading:isRolesLoading,      
-  } = useQuery({
+  const { data: roles, isLoading: isRolesLoading } = useQuery({
     queryKey: ["roles", page, search],
     queryFn: () => getRoles({ page, search }),
     enabled: !!token,
     keepPreviousData: true,
   });
 
-  
-    
-  const CreateRole = async (data) => {
-    try {
-      const res = await AxiosHandler.post(`/role/create`, data);
-      toast.success(res.data.message);
-      queryClient.invalidateQueries(["roles"]);
-      setModal(false);
-    } catch (error) {
-      console.error("Error creating role:", error);
-    }
-  };
+  const { mutate: CreateRole, isPending: isCreateRoleLoading } = useMutation({
+    mutationFn: (data) => createRoles(data),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["roles"] });
+    },
+  });
 
- const UpdateRole = async (id, data) => {
-    try {
-      const res = await AxiosHandler.put(`/role/update/${id}`, data);
-      toast.success(res.data.message);
-      queryClient.invalidateQueries(["roles"]);
-      setModal(false);
-    } catch (error) {
-      console.error("Error updating role:", error);
-    }
-  };
+  const { mutate: UpdateRole, isPending: isUpdateRolesLoading } = useMutation({
+    mutationFn: ({ id, data }) => updateRoles({ id, data }),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["roles"] });
+    },
+  });
 
-  const DeleteData = async (_id) => {
-    if (!window.confirm("Are you sure you want to delete this role?")) return;
-    try {
-      await AxiosHandler.delete(`/role/delete/${_id}`);
+  const DeleteData = useMutation({
+    mutationFn: ({ id }) => deleteRoles({ id }),
+    onSuccess: () => {
       queryClient.invalidateQueries(["roles"]);
-      toast.success("Role deleted");
-    } catch (error) {
-      console.error("Error deleting role:", error);
-    }
-  };
+    },
+  });
 
-   const handleSearch = (value) => {
+  // const CreateRole = async (data) => {
+  //   try {
+  //     const res = await AxiosHandler.post(`/role/create`, data);
+  //     toast.success(res.data.message);
+  //     queryClient.invalidateQueries(["roles"]);
+  //     setModal(false);
+  //   } catch (error) {
+  //     console.error("Error creating role:", error);
+  //   }
+  // };
+
+  //  const UpdateRole = async (id, data) => {
+  //     try {
+  //       const res = await AxiosHandler.put(`/role/update/${id}`, data);
+  //       toast.success(res.data.message);
+  //       queryClient.invalidateQueries(["roles"]);
+  //       setModal(false);
+  //     } catch (error) {
+  //       console.error("Error updating role:", error);
+  //     }
+  //   };
+
+  // const DeleteData = async (_id) => {
+  //   if (!window.confirm("Are you sure you want to delete this role?")) return;
+  //   try {
+  //     await AxiosHandler.delete(`/role/delete/${_id}`);
+  //     queryClient.invalidateQueries(["roles"]);
+  //     toast.success("Role deleted");
+  //   } catch (error) {
+  //     console.error("Error deleting role:", error);
+  //   }
+  // };
+
+  const handleSearch = (value) => {
     setSearch(value);
     setPage(1);
   };
 
-  
-  if(isViewAccess(authenticate,location)){
-    return <Access/>
+  if (isViewAccess(authenticate, location)) {
+    return <Access />;
   }
 
   return (
     <>
-        <section className="min-h-screen w-full px-4 sm:px-6 py-6 sm:py-8">
-          <h1 className="text-3xl font-semibold text-white">Role Management</h1>
-          <p className="text-gray-400">
-            Manage user roles and permissions across the platform
-          </p>
+      <section className="min-h-screen w-full px-4 sm:px-6 py-6 sm:py-8">
+        <h1 className="text-3xl font-semibold text-white">Role Management</h1>
+        <p className="text-gray-400">
+          Manage user roles and permissions across the platform
+        </p>
 
-          {/* Top Bar */}
-          <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-4 border-[#6B728033] rounded-md border-b backdrop-blur-md bg-[#6B728033] my-6 sm:my-10 px-4 py-4">
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => handleSearch(e.target.value)}
-              placeholder="Search..."
-              className="bg-[#23252750] backdrop-blur-md py-2 px-4 w-full sm:w-1/3 rounded-md text-white"
-            />
-           {isCreateAccess() && <button
+        {/* Top Bar */}
+        <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-4 border-[#6B728033] rounded-md border-b backdrop-blur-md bg-[#6B728033] my-6 sm:my-10 px-4 py-4">
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => handleSearch(e.target.value)}
+            placeholder="Search..."
+            className="bg-[#23252750] backdrop-blur-md py-2 px-4 w-full sm:w-1/3 rounded-md text-white"
+          />
+          {isCreateAccess() && (
+            <button
               onClick={() => {
                 setModal(true);
                 setEditable(null);
@@ -123,28 +147,32 @@ const Roles = () => {
             >
               <BiPlus className="h-5 w-5" />
               Add Role
-            </button>}
-          </div>
-
-          {/* Modal */}
-          {showModal && (
-            <RoleModel
-              handleClose={() => setModal(false)}
-              CreateRole={CreateRole}
-              editable={editable}
-              UpdateRole={UpdateRole}
-            />
+            </button>
           )}
+        </div>
 
-          {/* Table */}
-          <div className="mt-10 w-full border bg-[#1a233c] border-[#1e2b45] rounded-xl mb-20 overflow-x-auto">
-            {roles?.length === 0 ? (
-              <p className="text-center text-gray-400 text-sm py-10">
-                No roles found.
-              </p>
-            ) : (
-              <div className="bg-[#0c1120] rounded-md shadow-xl">
-                {isRolesLoading ? <TableSkeletonLoading/> : <table className="min-w-full h-20 divide-y divide-[#1e2b45] text-sm">
+        {/* Modal */}
+        {showModal && (
+          <RoleModel
+            handleClose={() => setModal(false)}
+            CreateRole={CreateRole}
+            editable={editable}
+            UpdateRole={UpdateRole}
+          />
+        )}
+
+        {/* Table */}
+        <div className="mt-10 w-full border bg-[#1a233c] border-[#1e2b45] rounded-xl mb-20 overflow-x-auto">
+          {roles?.length === 0 ? (
+            <p className="text-center text-gray-400 text-sm py-10">
+              No roles found.
+            </p>
+          ) : (
+            <div className="bg-[#0c1120] rounded-md shadow-xl">
+              {isRolesLoading ? (
+                <TableSkeletonLoading />
+              ) : (
+                <table className="min-w-full h-20 divide-y divide-[#1e2b45] text-sm">
                   <thead className="bg-[#1a233b]">
                     <tr>
                       <th className="px-4 py-3 text-left font-semibold text-white w-[20px]">
@@ -156,9 +184,11 @@ const Roles = () => {
                       <th className="px-4 py-3 text-left font-semibold text-white">
                         Allowed Paths
                       </th>
-                     {isHaveAction() && <th className="px-4 py-3 text-left font-semibold text-white">
-                        Actions
-                      </th>}
+                      {isHaveAction() && (
+                        <th className="px-4 py-3 text-left font-semibold text-white">
+                          Actions
+                        </th>
+                      )}
                     </tr>
                   </thead>
                   <tbody className="text-white divide-y divide-[#1e2b45]">
@@ -210,37 +240,42 @@ const Roles = () => {
                         </td>
                         <td className="px-4 py-4">
                           <div className="flex items-center gap-4">
-                           {isModifyAccess() && <FiEdit2
-                              className="cursor-pointer text-gray-300 hover:text-blue-400"
-                              onClick={() => {
-                                setEditable(roleItem);
-                                setModal(true);
-                              }}
-                            /> }
-                            {isDeleteAccess() && <FiTrash2
-                              className="cursor-pointer text-gray-300 hover:text-red-500"
-                              onClick={() => DeleteData(roleItem._id)}
-                            />}
+                            {isModifyAccess() && (
+                              <FiEdit2
+                                className="cursor-pointer text-gray-300 hover:text-blue-400"
+                                onClick={() => {
+                                  setEditable(roleItem);
+                                  setModal(true);
+                                }}
+                              />
+                            )}
+                            {isDeleteAccess() && (
+                              <FiTrash2
+                                className="cursor-pointer text-gray-300 hover:text-red-500"
+                                onClick={() => DeleteData(roleItem._id)}
+                              />
+                            )}
                             {/* <FiMoreVertical className="cursor-pointer text-gray-300 hover:text-gray-100" /> */}
-                          </div>  
+                          </div>
                         </td>
                       </tr>
                     ))}
                   </tbody>
-                </table>}
-              </div>
-            )}
+                </table>
+              )}
+            </div>
+          )}
 
-            {/* Pagination */}
-            <Pagination
-              page={page}
-              setPage={setPage}
-              hasNextPage={roles?.length === 5}
-              total={roles?.length}
-              limit={5}
-            />
-          </div>
-        </section>
+          {/* Pagination */}
+          <Pagination
+            page={page}
+            setPage={setPage}
+            hasNextPage={roles?.length === 5}
+            total={roles?.length}
+            limit={5}
+          />
+        </div>
+      </section>
     </>
   );
 };

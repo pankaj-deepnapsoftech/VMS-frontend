@@ -17,10 +17,11 @@ import {
   isViewAccess,
 } from "@/utils/pageAccess";
 import { Mutation } from "@tanstack/react-query";
+import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 
 
 export default function TagsPage() {
-  const { createTags, GetTages, Tages, UpdateTags, DeleteTags } = useTagsContext();
+  const { CreateTags, Tages, UpdateTags, DeletePartnersData, isTagsLoading, isCreateTagLoading, isUpdateTagsLoading } = useTagsContext();
   const { token, authenticate } = useAuthContext();
 
   const location = useLocation();
@@ -35,7 +36,7 @@ export default function TagsPage() {
     errors,
     handleBlur,
     handleChange,
-//handleSubmit,
+    handleSubmit,
     resetForm,
   } = useFormik({
     initialValues: editTag || {
@@ -50,22 +51,15 @@ export default function TagsPage() {
     enableReinitialize: true,
     onSubmit: (value) => {
       if (editTag) {
-        UpdateTags(value);
+        UpdateTags({id:values._id, data:values});
       } else {
-        createTags(value);
+        CreateTags(value);
       }
       setIsModalOpen(false);
       resetForm();
     },
   });
 
-  const handleSubmit = ()=>{
-    createTags.mutate({
-      name: values.name,
-    description: values.description,
-    
-    })
-  }
 
   const filteredTags = Tages?.filter((tag) => {
     const query = searchQuery.toLowerCase();
@@ -123,7 +117,7 @@ export default function TagsPage() {
 
             {/* Table */}
             <div className="overflow-x-auto custom-scrollbar">
-              <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+              {isTagsLoading ? <TableSkeletonLoading/> : <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
                 <thead className="bg-[#0c1120] text-white uppercase tracking-wider">
                   <tr>
                     {[
@@ -167,14 +161,8 @@ export default function TagsPage() {
                           <td className="px-3 md:px-4 py-3 flex gap-3">
                             {isDeleteAccess() && (
                               <button
-                                onClick={() => {
-                                  const confirmDelete = window.confirm(
-                                    "Are you sure you want to delete this tag?"
-                                  );
-                                  if (confirmDelete) {
-                                    DeleteTags(tag._id);
-                                  }
-                                }}
+                                onClick={() => 
+                                    DeletePartnersData(tag._id)}
                                 title="Delete"
                                 className="text-subtext hover:text-red-500"
                               >
@@ -208,7 +196,7 @@ export default function TagsPage() {
                     </tr>
                   )}
                 </tbody>
-              </table>
+              </table>}
             </div>
 
             <Pagination
@@ -384,6 +372,7 @@ export default function TagsPage() {
                 Cancel
               </button>
               <button
+              disabled={isCreateTagLoading || isUpdateTagsLoading}
                 type="submit"
                 className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md w-full sm:w-auto"
               >

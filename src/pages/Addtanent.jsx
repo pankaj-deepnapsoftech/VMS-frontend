@@ -39,14 +39,6 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
   })
 
 
-
-  // ------------------ all tenstack query start here -----------------------
-
-
-
-
-
-
   const formik = useFormik({
     initialValues: editTable || {
       company_name: "",

@@ -27,13 +27,18 @@ import {
   isModifyAccess,
   isViewAccess,
 } from "@/utils/pageAccess";
-import { getPartners } from "../services/ManagePartners.service";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  getPartners,
+  deletePartners,
+  createPartners,
+  updatePartners
+} from "../services/ManagePartners.service";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 
 const Partners = () => {
   const { token, authenticate } = useAuthContext();
   const location = useLocation();
-
   const [showModal, setModal] = useState(false);
   const [editTable, setEdittable] = useState(false);
   const [page, setPage] = useState(1);
@@ -41,14 +46,43 @@ const Partners = () => {
 
   const queryClient = useQueryClient();
 
-  //Getting Data by TANSTACK 
+  //Getting Data by TANSTACK
 
-  const { data: partnersData = [], isLoading } = useQuery({
+  const { data: partnersData, isLoading: isPartnerLoading } = useQuery({
     queryKey: ["partners", page, searchQuery],
     queryFn: () => getPartners({ page, search: searchQuery }),
     enabled: !!token,
     keepPreviousData: true,
   });
+
+  const { mutate: CreatePartners, isPending: isCreatePartnerLoading } =
+    useMutation({
+      mutationFn: (data) => createPartners(data),
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({ queryKey: ["partners"] });
+      },
+    });
+
+  const { mutate: UpdatePartners, isPending: isUpdatePartnerLoading } =
+    useMutation({
+      mutationFn: ({ id, data }) => updatePartners({ id, data }),
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({ queryKey: ["partners"] });
+      },
+    });
+
+  const deleteMutation = useMutation({
+    mutationFn: ({ id }) => deletePartners({ id }),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["partners"]);
+    },
+  });
+
+  const DeletePartnersData = async (id) => {
+    if (window.confirm("Are you sure you want to delete partner's data?")) {
+      deleteMutation.mutate({ id });
+    }
+  };
 
   const {
     handleBlur,
@@ -71,9 +105,9 @@ const Partners = () => {
     onSubmit: async (values) => {
       try {
         if (editTable) {
-          await AxiosHandler.put(`/partner/update/${values._id}`, values);
+          UpdatePartners({id:values._id, data:values})
         } else {
-          await AxiosHandler.post("/partner/create", values);
+          CreatePartners(values);
         }
         queryClient.invalidateQueries(["partners"]);
         resetForm();
@@ -83,15 +117,6 @@ const Partners = () => {
       }
     },
   });
-
-  
-
-  const DeletePartnersData = async (_id) => {
-    if (window.confirm("Are you sure you want to delete partner's data?")) {
-      await AxiosHandler.delete(`/partner/delete/${_id}`);
-      queryClient.invalidateQueries(["partners"]);
-    }
-  };
 
   if (isViewAccess(authenticate, location)) {
     return <Access />;
@@ -246,6 +271,7 @@ const Partners = () => {
                   Cancel
                 </button>
                 <button
+                  disabled={isCreatePartnerLoading || isUpdatePartnerLoading}
                   type="submit"
                   className="px-5 py-2 bg-button hover:scale-105 transition duration-200 text-white rounded-md w-full sm:w-auto"
                 >
@@ -278,70 +304,74 @@ const Partners = () => {
               <NoDataFound />
             ) : (
               <div className="overflow-x-auto custom-scrollbar w-full">
-                <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
-                  <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
-                    <tr>
-                      {[
-                        "Company Name",
-                        "Website URL",
-                        "Country",
-                        "State",
-                        "City",
-                        isHaveAction() && "Actions",
-                      ].map(
-                        (header) =>
-                          header && (
-                            <th
-                              key={header}
-                              className="px-4 py-3 border-b border-gray-600 font-medium"
-                            >
-                              {header}
-                            </th>
-                          )
-                      )}
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-700">
-                    {partnersData.map((tenant) => (
-                      <tr
-                        key={tenant._id}
-                        className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
-                      >
-                        <td className="px-4 py-3">{tenant.company_name}</td>
-                        <td className="px-4 py-3">{tenant.website_url}</td>
-                        <td className="px-4 py-3">{tenant.country}</td>
-                        <td className="px-4 py-3">{tenant.state}</td>
-                        <td className="px-4 py-3">{tenant.city}</td>
-
-                        {isHaveAction() && (
-                          <td className="px-4 py-3 flex flex-wrap gap-2">
-                            {isDeleteAccess() && (
-                              <button
-                                onClick={() => DeletePartnersData(tenant._id)}
-                                title="Delete"
-                                className="text-subtext hover:text-red-500 transition"
+                {isPartnerLoading ? (
+                  <TableSkeletonLoading />
+                ) : (
+                  <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+                    <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
+                      <tr>
+                        {[
+                          "Company Name",
+                          "Website URL",
+                          "Country",
+                          "State",
+                          "City",
+                          isHaveAction() && "Actions",
+                        ].map(
+                          (header) =>
+                            header && (
+                              <th
+                                key={header}
+                                className="px-4 py-3 border-b border-gray-600 font-medium"
                               >
-                                <FaRegTrashAlt className="w-5 h-5" />
-                              </button>
-                            )}
-                            {isModifyAccess() && (
-                              <button
-                                onClick={() => {
-                                  setEdittable(tenant);
-                                  setModal(true);
-                                }}
-                                title="Edit"
-                                className="text-subtext hover:text-blue-500 transition"
-                              >
-                                <RiEdit2Line className="w-5 h-5" />
-                              </button>
-                            )}
-                          </td>
+                                {header}
+                              </th>
+                            )
                         )}
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody className="divide-y divide-gray-700">
+                      {partnersData.map((tenant) => (
+                        <tr
+                          key={tenant._id}
+                          className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
+                        >
+                          <td className="px-4 py-3">{tenant.company_name}</td>
+                          <td className="px-4 py-3">{tenant.website_url}</td>
+                          <td className="px-4 py-3">{tenant.country}</td>
+                          <td className="px-4 py-3">{tenant.state}</td>
+                          <td className="px-4 py-3">{tenant.city}</td>
+
+                          {isHaveAction() && (
+                            <td className="px-4 py-3 flex flex-wrap gap-2">
+                              {isDeleteAccess() && (
+                                <button
+                                  onClick={() => DeletePartnersData(tenant._id)}
+                                  title="Delete"
+                                  className="text-subtext hover:text-red-500 transition"
+                                >
+                                  <FaRegTrashAlt className="w-5 h-5" />
+                                </button>
+                              )}
+                              {isModifyAccess() && (
+                                <button
+                                  onClick={() => {
+                                    setEdittable(tenant);
+                                    setModal(true);
+                                  }}
+                                  title="Edit"
+                                  className="text-subtext hover:text-blue-500 transition"
+                                >
+                                  <RiEdit2Line className="w-5 h-5" />
+                                </button>
+                              )}
+                            </td>
+                          )}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
               </div>
             )}
 
@@ -350,8 +380,8 @@ const Partners = () => {
               <Pagination
                 page={page}
                 setPage={setPage}
-                total={partnersData.length}
-                hasNextPage={partnersData.length === 10}
+                total={partnersData?.length}
+                hasNextPage={partnersData?.length === 10}
               />
             </div>
           </div>
