@@ -3,7 +3,6 @@ import { IoClose } from "react-icons/io5";
 import { useFormik } from "formik";
 
 import { tenantValidator } from "@/Validation/TenantsValidations";
-import { AxiosHandler } from "@/config/AxiosConfig";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useMutation,  useQueryClient } from "@tanstack/react-query";
@@ -21,7 +20,7 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
     return "High";
   };
 
-  // ---------------- all tenstack mutation start here -----------------------
+  // ---------------- all tanstack mutation start here -----------------------
 
   const { mutate: CreateTenant, isPending: isCreatetenantLoading } = useMutation({
     mutationFn: (data) => createTenantsService(data),

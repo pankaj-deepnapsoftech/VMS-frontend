@@ -1,9 +1,8 @@
 import InputField from "@/components/InputField";
-import { AxiosHandler } from "@/config/AxiosConfig";
 import { useAuthContext } from "@/context";
 import { PartnersSchema } from "@/Validation/PartnerrValidations";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import {
   FaBuilding,
@@ -31,7 +30,7 @@ import {
   getPartners,
   deletePartners,
   createPartners,
-  updatePartners
+  updatePartners,
 } from "../services/ManagePartners.service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
@@ -105,7 +104,7 @@ const Partners = () => {
     onSubmit: async (values) => {
       try {
         if (editTable) {
-          UpdatePartners({id:values._id, data:values})
+          UpdatePartners({ id: values._id, data: values });
         } else {
           CreatePartners(values);
         }

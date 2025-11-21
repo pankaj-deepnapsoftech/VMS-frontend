@@ -16,12 +16,14 @@ import {
   isModifyAccess,
   isViewAccess,
 } from "@/utils/pageAccess";
-import { Mutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
+import {getTags,deleteTags, createTags,updateTags} from "@/services/ManageTags.service";
+
 
 
 export default function TagsPage() {
-  const { CreateTags, Tages, UpdateTags, DeletePartnersData, isTagsLoading, isCreateTagLoading, isUpdateTagsLoading } = useTagsContext();
+  //const { CreateTags, Tages, UpdateTags, DeletePartnersData, isTagsLoading, isCreateTagLoading, isUpdateTagsLoading } = useTagsContext();
   const { token, authenticate } = useAuthContext();
 
   const location = useLocation();
@@ -29,6 +31,46 @@ export default function TagsPage() {
   const [editTag, setEditTag] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(1);
+
+
+  const queryClient = useQueryClient();
+
+  //=====================TANSTACK QUERY================
+
+  const { data: Tages, isLoading: isTagsLoading } = useQuery({
+      queryKey: ["tags", page],
+      queryFn: () => getTags({ page }),
+      enabled: !!token,
+    });
+
+    const { mutate: CreateTags, isPending: isCreateTagLoading } = useMutation({
+    mutationFn: (data) => createTags(data),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["tags"] });
+    },
+  });
+
+  const { mutate: UpdateTags, isPending: isUpdateTagsLoading } = useMutation({
+    mutationFn: ({ id, data }) => updateTags({ id, data }),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["tags"] });
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: ({ id }) => deleteTags({ id }),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["tags"] });
+    },
+  });
+
+  const DeleteTagsData = async (id) => {
+    if (window.confirm("Are you sure you want to delete tags data?")) {
+      deleteMutation.mutate({ id });
+    }
+  };
+
+
 
   const {
     values,
@@ -162,7 +204,7 @@ export default function TagsPage() {
                             {isDeleteAccess() && (
                               <button
                                 onClick={() => 
-                                    DeletePartnersData(tag._id)}
+                                    DeleteTagsData(tag._id)}
                                 title="Delete"
                                 className="text-subtext hover:text-red-500"
                               >

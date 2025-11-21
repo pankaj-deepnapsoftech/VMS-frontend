@@ -1,13 +1,10 @@
-import Loader from "@/components/Loader/Loader";
-import { AxiosHandler } from "@/config/AxiosConfig";
 import { AllowedPaths } from "@/constants/static.data";
 import { useAuthContext } from "@/context";
 import RoleModel from "@/modals/RoleModel";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import Pagination from "./Pagination";
-import toast from "react-hot-toast";
 import { useLocation } from "react-router-dom";
 import {
   isCreateAccess,
@@ -17,13 +14,8 @@ import {
   isViewAccess,
 } from "@/utils/pageAccess";
 import Access from "@/components/role/Access";
-import {
-  getRoles,
-  createRoles,
-  updateRoles,
-  deleteRoles
-} from "../services/ManageRoles.service";
-import { useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
+import { getRoles, deleteRoles } from "../services/ManageRoles.service";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 
 const Roles = () => {
@@ -57,59 +49,18 @@ const Roles = () => {
     keepPreviousData: true,
   });
 
-  const { mutate: CreateRole, isPending: isCreateRoleLoading } = useMutation({
-    mutationFn: (data) => createRoles(data),
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["roles"] });
-    },
-  });
-
-  const { mutate: UpdateRole, isPending: isUpdateRolesLoading } = useMutation({
-    mutationFn: ({ id, data }) => updateRoles({ id, data }),
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["roles"] });
-    },
-  });
-
-  const DeleteData = useMutation({
+  const deleteMutation = useMutation({
     mutationFn: ({ id }) => deleteRoles({ id }),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["roles"]);
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["roles"] });
     },
   });
 
-  // const CreateRole = async (data) => {
-  //   try {
-  //     const res = await AxiosHandler.post(`/role/create`, data);
-  //     toast.success(res.data.message);
-  //     queryClient.invalidateQueries(["roles"]);
-  //     setModal(false);
-  //   } catch (error) {
-  //     console.error("Error creating role:", error);
-  //   }
-  // };
-
-  //  const UpdateRole = async (id, data) => {
-  //     try {
-  //       const res = await AxiosHandler.put(`/role/update/${id}`, data);
-  //       toast.success(res.data.message);
-  //       queryClient.invalidateQueries(["roles"]);
-  //       setModal(false);
-  //     } catch (error) {
-  //       console.error("Error updating role:", error);
-  //     }
-  //   };
-
-  // const DeleteData = async (_id) => {
-  //   if (!window.confirm("Are you sure you want to delete this role?")) return;
-  //   try {
-  //     await AxiosHandler.delete(`/role/delete/${_id}`);
-  //     queryClient.invalidateQueries(["roles"]);
-  //     toast.success("Role deleted");
-  //   } catch (error) {
-  //     console.error("Error deleting role:", error);
-  //   }
-  // };
+  const DeleteRolesData = async (id) => {
+    if (window.confirm("Are you sure you want to delete roles data?")) {
+      deleteMutation.mutate({ id });
+    }
+  };
 
   const handleSearch = (value) => {
     setSearch(value);
@@ -153,12 +104,7 @@ const Roles = () => {
 
         {/* Modal */}
         {showModal && (
-          <RoleModel
-            handleClose={() => setModal(false)}
-            CreateRole={CreateRole}
-            editable={editable}
-            UpdateRole={UpdateRole}
-          />
+          <RoleModel handleClose={() => setModal(false)} editable={editable} />
         )}
 
         {/* Table */}
@@ -252,7 +198,7 @@ const Roles = () => {
                             {isDeleteAccess() && (
                               <FiTrash2
                                 className="cursor-pointer text-gray-300 hover:text-red-500"
-                                onClick={() => DeleteData(roleItem._id)}
+                                onClick={() => DeleteRolesData(roleItem._id)}
                               />
                             )}
                             {/* <FiMoreVertical className="cursor-pointer text-gray-300 hover:text-gray-100" /> */}
