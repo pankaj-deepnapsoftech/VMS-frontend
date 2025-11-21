@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { useAuthContext, useTagsContext } from "@/context";
+import { useAuthContext } from "@/context";
 import { useFormik } from "formik";
 import { tagValidation } from "@/Validation/TagValidation";
 import { RiEdit2Line } from "react-icons/ri";
@@ -23,9 +23,8 @@ import {getTags,deleteTags, createTags,updateTags} from "@/services/ManageTags.s
 
 
 export default function TagsPage() {
-  //const { CreateTags, Tages, UpdateTags, DeletePartnersData, isTagsLoading, isCreateTagLoading, isUpdateTagsLoading } = useTagsContext();
+  
   const { token, authenticate } = useAuthContext();
-
   const location = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editTag, setEditTag] = useState(null);
