@@ -69,8 +69,6 @@ export default function TagsPage() {
     }
   };
 
-
-
   const {
     values,
     touched,

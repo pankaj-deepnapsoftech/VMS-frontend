@@ -55,7 +55,7 @@ const RoleModel = ({ editable, handleClose }) => {
         } else {
           CreateRole(value);
         }
-        queryClient.invalidateQueries(["roles"]);
+        queryClient.invalidateQueries({ queryKey: ["roles"] });
         handleClose();
       }
     },
