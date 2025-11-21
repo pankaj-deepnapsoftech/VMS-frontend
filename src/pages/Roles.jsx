@@ -41,7 +41,8 @@ const Roles = () => {
     return acc;
   }, {});
 
-  // Getting data from Tanstack
+  //===================Getting data from Tanstack===========================
+
   const { data: roles, isLoading: isRolesLoading } = useQuery({
     queryKey: ["roles", page, search],
     queryFn: () => getRoles({ page, search }),
