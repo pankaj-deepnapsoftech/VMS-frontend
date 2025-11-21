@@ -1,6 +1,6 @@
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
-import {  FaRegTrashAlt } from "react-icons/fa";
+import { FaRegTrashAlt } from "react-icons/fa";
 import Pagination from "./Pagination";
 import Loader from "@/components/Loader/Loader";
 import Addtanent from "./Addtanent";
@@ -21,11 +21,10 @@ import {
 import { useAuthContext } from "@/context";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { getTenants, deleteTenants } from "../services/ManageTenants.service"
+import { getTenants, deleteTenants } from "../services/ManageTenants.service";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 
 export default function AllCustomer() {
-
   const queryClient = useQueryClient();
 
   // context api hooks
@@ -43,9 +42,9 @@ export default function AllCustomer() {
   const [tenantId, setTenantId] = useState(null);
   const [partnersData, setPartnersData] = useState("");
 
-   // ============ TANSTACK QUERY ============
+  // ============ TANSTACK QUERY ============
 
-  const {data:tenants,isLoading:IsTenantLoading} = useQuery({
+  const { data: tenants, isLoading: IsTenantLoading } = useQuery({
     queryKey: ["tenants", page],
     queryFn: () => getTenants({ page }),
     enabled: !!token,
@@ -64,17 +63,13 @@ export default function AllCustomer() {
     }
   };
 
-
   if (isViewAccess(authenticate, location)) {
     return <Access />;
   }
 
-
-
-
   return (
     <>
-      { (
+      {
         <div className="min-h-screen py-4">
           <div className="max-w-screen px-6 h-fit border-[#6B728033] flex items-center gap-4 backdrop-blur-md rounded-lg mx-5">
             <div className="w-full">
@@ -118,75 +113,79 @@ export default function AllCustomer() {
                 <NoDataFound />
               ) : (
                 <div className="overflow-x-auto custom-scrollbar w-full">
-                {IsTenantLoading ? <TableSkeletonLoading/> :  <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
-                    <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
-                      <tr>
-                        {[
-                          "Company Name",
-                          "Website URL",
-                          "Employee Count",
-                          "Country",
-                          "State",
-                          "City",
-                          "Industry",
-                          "Risk Appetite",
-                          isHaveAction() && "Actions",
-                        ].map((header) => (
-                          <th
-                            key={header}
-                            className="px-4 py-3 border-b border-gray-600 font-medium"
-                          >
-                            {header}
-                          </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-700">
-                      {tenants?.map((tenant, index) => (
-                        <tr
-                          key={tenant._id}
-                          className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
-                        >
-                          <td className="px-4 py-3">{tenant.company_name}</td>
-                          <td className="px-4 py-3 capitalize">
-                            {tenant.Website_url}
-                          </td>
-                          <td className="px-4 py-3 capitalize">
-                            {tenant.Employee_count}
-                          </td>
-                          <td className="px-4 py-3">{tenant.Country}</td>
-                          <td className="px-4 py-3">{tenant.State}</td>
-                          <td className="px-4 py-3">{tenant.City}</td>
-                          <td className="px-4 py-3">{tenant.Industry}</td>
-                          <td className="px-4 py-3">{tenant.Risk_Apetite}</td>
-
-                          <td className="px-4 py-3 flex gap-2">
-                            {isDeleteAccess() && (
-                              <button
-                                onClick={() => handleDelete(tenant?._id)}
-                                title="Delete"
-                                className="text-subtext hover:text-subTextHover"
-                              >
-                                <FaRegTrashAlt className="w-5 h-5" />
-                              </button>
-                            )}
-                            {isModifyAccess() && (
-                              <button
-                                onClick={() => {
-                                  setEditTable(tenant);
-                                  setIsModalOpen(true);
-                                }}
-                                title="Edit"
-                                className="text-subtext hover:text-blue-700"
-                              >
-                                <RiEdit2Line className="w-5 h-5" />
-                              </button>
-                            )}
-                          </td>
+                  {IsTenantLoading ? (
+                    <TableSkeletonLoading />
+                  ) : (
+                    <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+                      <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
+                        <tr>
+                          {[
+                            "Company Name",
+                            "Website URL",
+                            "Employee Count",
+                            "Country",
+                            "State",
+                            "City",
+                            "Industry",
+                            "Risk Appetite",
+                            isHaveAction() && "Actions",
+                          ].map((header) => (
+                            <th
+                              key={header}
+                              className="px-4 py-3 border-b border-gray-600 font-medium"
+                            >
+                              {header}
+                            </th>
+                          ))}
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>}
+                      </thead>
+                      <tbody className="divide-y divide-gray-700">
+                        {tenants?.map((tenant, index) => (
+                          <tr
+                            key={tenant._id}
+                            className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
+                          >
+                            <td className="px-4 py-3">{tenant.company_name}</td>
+                            <td className="px-4 py-3 capitalize">
+                              {tenant.Website_url}
+                            </td>
+                            <td className="px-4 py-3 capitalize">
+                              {tenant.Employee_count}
+                            </td>
+                            <td className="px-4 py-3">{tenant.Country}</td>
+                            <td className="px-4 py-3">{tenant.State}</td>
+                            <td className="px-4 py-3">{tenant.City}</td>
+                            <td className="px-4 py-3">{tenant.Industry}</td>
+                            <td className="px-4 py-3">{tenant.Risk_Apetite}</td>
+
+                            <td className="px-4 py-3 flex gap-2">
+                              {isDeleteAccess() && (
+                                <button
+                                  onClick={() => handleDelete(tenant?._id)}
+                                  title="Delete"
+                                  className="text-subtext hover:text-subTextHover"
+                                >
+                                  <FaRegTrashAlt className="w-5 h-5" />
+                                </button>
+                              )}
+                              {isModifyAccess() && (
+                                <button
+                                  onClick={() => {
+                                    setEditTable(tenant);
+                                    setIsModalOpen(true);
+                                  }}
+                                  title="Edit"
+                                  className="text-subtext hover:text-blue-700"
+                                >
+                                  <RiEdit2Line className="w-5 h-5" />
+                                </button>
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  )}
                 </div>
               )}
 
@@ -200,9 +199,8 @@ export default function AllCustomer() {
             </div>
           </div>
         </div>
-      )}
+      }
 
-   
       {isModalOpen && (
         <Addtanent
           isModalOpen={isModalOpen}
@@ -212,7 +210,7 @@ export default function AllCustomer() {
         />
       )}
       {isOpen && (
-         <AccessPartner
+        <AccessPartner
           id={tenantId}
           closeModal={closeModal}
           preSet={partnersData}
