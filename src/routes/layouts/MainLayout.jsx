@@ -220,99 +220,86 @@ const MainLayout = () => {
       <Sidebar />
 
       {/* header */}
-      <header className="bg-gradient-to-t from-[#1a1c1e] to-[#212325]  border-gray-200 w-full sticky top-0 z-50">
-        <div className="  px-2 sm:px-4 py-2 bg-[#1f2937]">
-          <div className="w-full flex items-center justify-between">
-            <button
-              className="p-2 text-white hover:bg-gray-600 rounded lg:hidden "
-              onClick={() => setShowMenu(!showMenu)}
-            >
-              <AiOutlineMenu className="w-5 h-5" />
-            </button>
+      <header className="bg-gradient-to-t from-[#1a1c1e] to-[#212325] border-gray-200 w-full sticky top-0 z-50">
+        <div className="px-2 sm:px-4 py-2 bg-[#1f2937]">
+          <div className="flex items-center justify-between w-full">
+            <div className="flex items-center gap-4">
+              <button
+                className="p-2 text-white hover:bg-gray-600 rounded lg:hidden"
+                onClick={() => setShowMenu(!showMenu)}
+              >
+                <AiOutlineMenu className="w-5 h-5" />
+              </button>
 
-            <div className="flex gap-0 w-full">
-              <Link className="flex items-center">
-                <img
-                  src="/Logo5.png"
-                  alt="logo"
-                  className="h-9 w-auto object-contain pl-0 filter brightness-[1.5]" // Custom brightness
-                />
-              </Link>
-
-              <p className="text-center text-white mt-2.5 pr-4"><span className="text-[24px] font-bold">𝚂</span>ecur<span className="text-[24px] font-semibold">𝙴</span>nd.ai</p>
-
-              <div className="hidden md:block">
-                {!authenticate?.role && (
-                  <Select
-                    className="custom-scrollbar w-[250px] basic-single"
-                    classNamePrefix="select"
-                    defaultValue={tenant}
-                    onChange={handleSelect}
-                    value={tenant}
-                    isSearchable={true}
-                    options={TenantAllData}
-                    theme={darkTheme}
-                    styles={customStyles}
+              <div className="flex items-center gap-3">
+                <Link className="flex items-center">
+                  <img
+                    src="/Logo5.png"
+                    alt="logo"
+                    className="h-9 w-auto object-contain filter brightness-[1.5]"
                   />
-                )}
+                </Link>
+
+                <p className="text-white text-2xl font-bold leading-none">
+                  SecureEnd.ai
+                </p>
               </div>
             </div>
 
-            <div className=" flex items-end justify-end">
+            <div className="hidden md:block w-[250px]">
+              {!authenticate?.role && (
+                <Select
+                  className="custom-scrollbar"
+                  classNamePrefix="select"
+                  defaultValue={tenant}
+                  onChange={handleSelect}
+                  value={tenant}
+                  isSearchable={true}
+                  options={TenantAllData}
+                  theme={darkTheme}
+                  styles={customStyles}
+                />
+              )}
+            </div>
+
+            <div className="flex items-center gap-4">
+              {/* Year Select */}
               {viewOnlyAllowed(window.location.pathname) && (
                 <select
-                  className="bg-[#0E1430] text-gray-300 text-sm px-2 sm:px-3 py-1 rounded-lg border border-gray-700 focus:outline-none"
+                  className="bg-[#0E1430] text-gray-300 text-sm px-3 py-1.5 rounded-lg border border-gray-700 focus:outline-none"
                   value={selectedYear}
                   onChange={(e) => setSelectedYear(Number(e.target.value))}
                 >
-                  <option value={currentYear}>{currentYear} </option>
+                  <option value={currentYear}>{currentYear}</option>
                   <option value={currentYear - 1}>{currentYear - 1}</option>
                   <option value={currentYear - 2}>{currentYear - 2}</option>
                 </select>
               )}
 
+              {/* Notifications */}
               <button
                 onClick={() => setSidebarOpen(true)}
-                className="relative flex items-center gap-2  text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                className="relative flex items-center gap-2 text-white px-3 py-2 rounded-lg hover:bg-blue-600"
               >
                 <MdOutlineNotificationsActive className="size-7" />
-                {notificationcount > 0 ? (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                {notificationcount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
                     {notificationcount}
                   </span>
-                ) : (
-                  ""
                 )}
               </button>
 
-              <div className="relative ml-4 flex text-white items-center gap-1 md:gap-3">
-                <button
-                  onClick={() => {
-                    setOpenSideBar(true);
-                  }}
-                  className="bg-blue-400 text-white rounded-full w-10 h-10 flex items-center justify-center border-2 "
-                >
-                  {authenticate.fname[0].toUpperCase()}
-                </button>
-              </div>
+              {/* Profile Button */}
+              <button
+                onClick={() => setOpenSideBar(true)}
+                className="bg-blue-400 text-white rounded-full w-10 h-10 flex items-center justify-center border-2"
+              >
+                {authenticate.fname[0].toUpperCase()}
+              </button>
             </div>
-
-            <NotificationSidebar
-              notificationsViewed={NotificationsViewed}
-              notifications={notificationData}
-              isOpen={isSidebarOpen}
-              onClose={() => setSidebarOpen(false)}
-              setRejectionReasion={setRejectionReasion}
-              setNotificationData={setNotificationData}
-            />
           </div>
 
-          <ReasonModal
-            isOpen={rejectionReasion}
-            onClose={() => setRejectionReasion(false)}
-            onSubmit={HandleRejection}
-          />
-
+          {/* MOBILE TENANT SELECT */}
           <div className="md:hidden">
             {!authenticate?.role && (
               <Select
