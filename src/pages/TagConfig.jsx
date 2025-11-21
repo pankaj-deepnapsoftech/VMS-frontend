@@ -243,8 +243,8 @@ export default function TagsPage() {
             <Pagination
               page={page}
               setPage={setPage}
-              hasNextPage={filteredTags.length === 10}
-              total={filteredTags.length}
+              hasNextPage={filteredTags?.length === 10}
+              total={filteredTags?.length}
             />
           </div>
         </div>
