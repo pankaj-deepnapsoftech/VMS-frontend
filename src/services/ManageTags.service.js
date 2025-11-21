@@ -15,8 +15,8 @@ export const createTags = async (data) => {
 }
 
 
-export const updateTags = async ({ data }) => {
-    const res = await AxiosHandler.put(`/tags/update-tag/${data._id}`,data);
+export const updateTags = async ({id, data }) => {
+    const res = await AxiosHandler.put(`/tags/update-tag/${id}`,data);
     toast.success(res.data.message || "Tag updated successfully");
     return res.data;
 }

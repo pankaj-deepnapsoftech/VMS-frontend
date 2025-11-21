@@ -4,9 +4,29 @@ import RoleTable from "@/components/role/table";
 import { RoleSchema } from "@/Validation/RoleValidations";
 import { useFormik } from "formik";
 import { useState } from "react";
+import { createRoles, updateRoles } from "../services/ManageRoles.service";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-const RoleModel = ({ editable, handleClose, CreateRole, UpdateRole }) => {
+const RoleModel = ({ editable, handleClose }) => {
   const [step, setStep] = useState(1);
+
+  //================TANSTACK QUERY========================
+
+  const queryClient = useQueryClient();
+
+  const { mutate: CreateRole, isPending: isCreateRoleLoading } = useMutation({
+    mutationFn: (data) => createRoles(data),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["roles"] });
+    },
+  });
+
+  const { mutate: UpdateRole, isPending: isUpdateRolesLoading } = useMutation({
+    mutationFn: ({ id, data }) => updateRoles({ id, data }),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["roles"] });
+    },
+  });
 
   const {
     values,
@@ -31,10 +51,11 @@ const RoleModel = ({ editable, handleClose, CreateRole, UpdateRole }) => {
 
       if (step === 2) {
         if (editable) {
-          UpdateRole(editable._id, value);
+          UpdateRole({ id: values._id, data: values });
         } else {
           CreateRole(value);
         }
+        queryClient.invalidateQueries(["roles"]);
         handleClose();
       }
     },
@@ -64,15 +85,17 @@ const RoleModel = ({ editable, handleClose, CreateRole, UpdateRole }) => {
           </div>
           <div className="relative h-1 w-20 bg-white overflow-hidden">
             <div
-              className={`absolute top-0 left-0 h-full transition-all duration-700 ease-in-out ${step > 1 ? "w-full bg-blue-500" : "w-0"
-                }`}
+              className={`absolute top-0 left-0 h-full transition-all duration-700 ease-in-out ${
+                step > 1 ? "w-full bg-blue-500" : "w-0"
+              }`}
             />
           </div>
           <div
-            className={`${step > 1
+            className={`${
+              step > 1
                 ? "bg-blue-500 text-white delay-500"
                 : "bg-white text-black"
-              } h-10 w-10 rounded-full text-2xl  font-bold flex items-center justify-center transition-all duration-200 `}
+            } h-10 w-10 rounded-full text-2xl  font-bold flex items-center justify-center transition-all duration-200 `}
           >
             {" "}
             2
@@ -88,8 +111,9 @@ const RoleModel = ({ editable, handleClose, CreateRole, UpdateRole }) => {
       </div>
       <form
         onSubmit={handleSubmit}
-        className={`bg-[#182031] rounded-lg shadow-xl max-w-5xl ${step === 2 ? "h-[90%]" : "h-fit"
-          } p-5 border border-[#293550] mx-auto overflow-auto custom-scrollbar`}
+        className={`bg-[#182031] rounded-lg shadow-xl max-w-5xl ${
+          step === 2 ? "h-[90%]" : "h-fit"
+        } p-5 border border-[#293550] mx-auto overflow-auto custom-scrollbar`}
       >
         {/* Body */}
 
@@ -126,6 +150,7 @@ const RoleModel = ({ editable, handleClose, CreateRole, UpdateRole }) => {
             {step === 2 ? "Back" : "Cancel"}
           </button>
           <button
+            disabled={isCreateRoleLoading || isUpdateRolesLoading}
             type="submit"
             className="px-5 py-2 bg-blue-600 rounded-md hover:bg-blue-700"
           >

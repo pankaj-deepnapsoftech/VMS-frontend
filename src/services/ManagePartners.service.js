@@ -16,8 +16,8 @@ export const createPartners = async (data) => {
 }
 
 
-export const updatePartners = async ({ values, data }) => {
-    const res = await AxiosHandler.put(`/partner/update/${values._id}`, data);
+export const updatePartners = async ({ id, data }) => {
+    const res = await AxiosHandler.put(`/partner/update/${id}`, data);
     toast.success(res.data.message || "Partner updated successfully");
     return res.data;
 }

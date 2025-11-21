@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { useAuthContext, useTagsContext } from "@/context";
+import { useAuthContext } from "@/context";
 import { useFormik } from "formik";
 import { tagValidation } from "@/Validation/TagValidation";
 import { RiEdit2Line } from "react-icons/ri";
@@ -16,18 +16,60 @@ import {
   isModifyAccess,
   isViewAccess,
 } from "@/utils/pageAccess";
-import { Mutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
+import {getTags,deleteTags, createTags,updateTags} from "@/services/ManageTags.service";
+
 
 
 export default function TagsPage() {
-  const { createTags, GetTages, Tages, UpdateTags, DeleteTags } = useTagsContext();
+  
   const { token, authenticate } = useAuthContext();
-
   const location = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editTag, setEditTag] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(1);
+
+
+  const queryClient = useQueryClient();
+
+  //=====================TANSTACK QUERY================
+
+  const { data: Tages, isLoading: isTagsLoading } = useQuery({
+      queryKey: ["tags", page],
+      queryFn: () => getTags({ page }),
+      enabled: !!token,
+    });
+
+    const { mutate: CreateTags, isPending: isCreateTagLoading } = useMutation({
+    mutationFn: (data) => createTags(data),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["tags"] });
+    },
+  });
+
+  const { mutate: UpdateTags, isPending: isUpdateTagsLoading } = useMutation({
+    mutationFn: ({ id, data }) => updateTags({ id, data }),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["tags"] });
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: ({ id }) => deleteTags({ id }),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["tags"] });
+    },
+  });
+
+  const DeleteTagsData = async (id) => {
+    if (window.confirm("Are you sure you want to delete tags data?")) {
+      deleteMutation.mutate({ id });
+    }
+  };
+
+
 
   const {
     values,
@@ -35,7 +77,7 @@ export default function TagsPage() {
     errors,
     handleBlur,
     handleChange,
-//handleSubmit,
+    handleSubmit,
     resetForm,
   } = useFormik({
     initialValues: editTag || {
@@ -50,22 +92,15 @@ export default function TagsPage() {
     enableReinitialize: true,
     onSubmit: (value) => {
       if (editTag) {
-        UpdateTags(value);
+        UpdateTags({id:values._id, data:values});
       } else {
-        createTags(value);
+        CreateTags(value);
       }
       setIsModalOpen(false);
       resetForm();
     },
   });
 
-  const handleSubmit = ()=>{
-    createTags.mutate({
-      name: values.name,
-    description: values.description,
-    
-    })
-  }
 
   const filteredTags = Tages?.filter((tag) => {
     const query = searchQuery.toLowerCase();
@@ -123,7 +158,7 @@ export default function TagsPage() {
 
             {/* Table */}
             <div className="overflow-x-auto custom-scrollbar">
-              <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+              {isTagsLoading ? <TableSkeletonLoading/> : <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
                 <thead className="bg-[#0c1120] text-white uppercase tracking-wider">
                   <tr>
                     {[
@@ -167,14 +202,8 @@ export default function TagsPage() {
                           <td className="px-3 md:px-4 py-3 flex gap-3">
                             {isDeleteAccess() && (
                               <button
-                                onClick={() => {
-                                  const confirmDelete = window.confirm(
-                                    "Are you sure you want to delete this tag?"
-                                  );
-                                  if (confirmDelete) {
-                                    DeleteTags(tag._id);
-                                  }
-                                }}
+                                onClick={() => 
+                                    DeleteTagsData(tag._id)}
                                 title="Delete"
                                 className="text-subtext hover:text-red-500"
                               >
@@ -208,7 +237,7 @@ export default function TagsPage() {
                     </tr>
                   )}
                 </tbody>
-              </table>
+              </table>}
             </div>
 
             <Pagination
@@ -384,6 +413,7 @@ export default function TagsPage() {
                 Cancel
               </button>
               <button
+              disabled={isCreateTagLoading || isUpdateTagsLoading}
                 type="submit"
                 className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md w-full sm:w-auto"
               >
