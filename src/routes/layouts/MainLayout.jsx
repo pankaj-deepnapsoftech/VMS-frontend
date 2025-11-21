@@ -230,7 +230,7 @@ const MainLayout = () => {
               <AiOutlineMenu className="w-5 h-5" />
             </button>
 
-            <div className="flex gap-3 w-full">
+            <div className="flex gap-0 w-full">
               <Link className="flex items-center">
                 <img
                   src="/Logo5.png"
@@ -238,6 +238,8 @@ const MainLayout = () => {
                   className="h-9 w-auto object-contain pl-0 filter brightness-[1.5]" // Custom brightness
                 />
               </Link>
+
+              <p className="text-center text-white mt-2.5 pr-4"><span className="text-[24px] font-bold">𝚂</span>ecur<span className="text-[24px] font-semibold">𝙴</span>nd.ai</p>
 
               <div className="hidden md:block">
                 {!authenticate?.role && (
