@@ -232,27 +232,20 @@ const MainLayout = () => {
 
             <div className="flex gap-0 w-full">
               <div className="flex items-center gap-4">
-              <button
-                className="p-2 text-white hover:bg-gray-600 rounded lg:hidden"
-                onClick={() => setShowMenu(!showMenu)}
-              >
-                <AiOutlineMenu className="w-5 h-5" />
-              </button>
+                <div className="flex items-center gap-3">
+                  <Link className="flex items-center">
+                    <img
+                      src="/Logo5.png"
+                      alt="logo"
+                      className="h-9 w-auto object-contain filter brightness-[1.5]"
+                    />
+                  </Link>
 
-              <div className="flex items-center gap-3">
-                <Link className="flex items-center">
-                  <img
-                    src="/Logo5.png"
-                    alt="logo"
-                    className="h-9 w-auto object-contain filter brightness-[1.5]"
-                  />
-                </Link>
-
-                <p className="text-white text-2xl font-bold leading-none">
-                  SecureEnd.ai
-                </p>
+                  <p className="text-white text-2xl font-bold leading-none">
+                    SecureEnd.ai
+                  </p>
+                </div>
               </div>
-            </div>
 
               <div className="hidden md:block">
                 {!authenticate?.role && (
