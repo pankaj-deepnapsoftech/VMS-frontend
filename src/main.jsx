@@ -11,11 +11,8 @@ import {
   InfrastructureVulnerabilityContextProvider,
   JiraContextProvider,
   MailContextProvider,
-  MainReportContextProvider,
   RemeditionContextProvider,
-  SchedulingAssesmentContextProvider,
   SeverityContextProvider,
-  TagsContextProvider,
   VulnerabililtyDataContextProvider,
 } from "./context";
 import AppSoftContextProvider from "./context/ApplicationSoftwareInventoryContext/ApplicationSoftwareInventoryContext";
@@ -26,40 +23,34 @@ const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-  <QueryClientProvider client={queryClient}>
-    <AuthContextProvider>
-      <DataContextProvider>
-        <VulnerabililtyDataContextProvider>
-          <AllEmployeeContextProvider>
-            <JiraContextProvider>
-              <SchedulingAssesmentContextProvider>
-                <ApplicationVulnerabilityContextProvider>
-                  <RemeditionContextProvider>
-                    <ExceptionContextProvider>
-                      <InfrastructureVulnerabilityContextProvider>
-                        <AppSoftContextProvider>
-                          <TagsContextProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthContextProvider>
+        <DataContextProvider>
+          <VulnerabililtyDataContextProvider>
+            <AllEmployeeContextProvider>
+              <JiraContextProvider>
+                  <ApplicationVulnerabilityContextProvider>
+                    <RemeditionContextProvider>
+                      <ExceptionContextProvider>
+                        <InfrastructureVulnerabilityContextProvider>
+                          <AppSoftContextProvider>
                             <SeverityContextProvider>
-                                <MainReportContextProvider>
-                                  <MailContextProvider>
-                                    <AIVAContextProvider>
-                                      <App />
-                                    </AIVAContextProvider>
-                                  </MailContextProvider>
-                                </MainReportContextProvider>
+                              <MailContextProvider>
+                                <AIVAContextProvider>
+                                  <App />
+                                </AIVAContextProvider>
+                              </MailContextProvider>
                             </SeverityContextProvider>
-                          </TagsContextProvider>
-                        </AppSoftContextProvider>
-                      </InfrastructureVulnerabilityContextProvider>
-                    </ExceptionContextProvider>
-                  </RemeditionContextProvider>
-                </ApplicationVulnerabilityContextProvider>
-              </SchedulingAssesmentContextProvider>
-            </JiraContextProvider>
-          </AllEmployeeContextProvider>
-        </VulnerabililtyDataContextProvider>
-      </DataContextProvider>
-    </AuthContextProvider>
+                          </AppSoftContextProvider>
+                        </InfrastructureVulnerabilityContextProvider>
+                      </ExceptionContextProvider>
+                    </RemeditionContextProvider>
+                  </ApplicationVulnerabilityContextProvider>
+              </JiraContextProvider>
+            </AllEmployeeContextProvider>
+          </VulnerabililtyDataContextProvider>
+        </DataContextProvider>
+      </AuthContextProvider>
     </QueryClientProvider>
   </BrowserRouter>
 );
