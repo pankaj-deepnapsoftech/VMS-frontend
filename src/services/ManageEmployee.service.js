@@ -21,7 +21,7 @@ export const updateUser = async ({id, data }) => {
 }
 
 export const deleteUser = async ({ id }) => {
-    const res = await AxiosHandler.delete(`/auth/delete/${id}`);
+    const res = await AxiosHandler.delete(`/auth/delete-user/${id}`);
     toast.success(res.data.message || "Tag deleted successfully");
     return res.data;
 }

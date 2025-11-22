@@ -15,17 +15,19 @@ import { useFormik } from "formik";
 import { useAuthContext, useSeverityContext } from "@/context";
 import Access from "@/components/role/Access";
 import { useLocation } from "react-router-dom";
+import {
+  getSlaServices,
+  getSlaByTenantServices,
+  createSlaServices,
+  updateSlaServices,
+  deleteSlaServices,
+} from "@/services/ManageSla.service";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 
 const Severity = () => {
   // all context apis here
   const { token, authenticate } = useAuthContext();
-  const {
-    CreateSeverity,
-    GetSeverity,
-    SeverityData,
-    UpdateSeverity,
-    DeleteSeverity,
-  } = useSeverityContext();
 
   // location hook to get the current URL
   const location = useLocation();
@@ -33,10 +35,50 @@ const Severity = () => {
   //  all state variables here
   const [page, setPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [tenant, setTenant] = useState("");
   const [editableData, setEditableData] = useState(null);
+
+  const queryClient = useQueryClient();
+
+  //====================TANSTACK QUERY====================
+
+  const { data: GetSeverity, isLoading: isSlaLoading } = useQuery({
+    queryKey: ["sla", page],
+    queryFn: () => getSlaServices({ page }),
+    enabled: !!token,
+  });
+
+  const { mutate: CreateSeverity, isPending: isCreateSlaLoading } = useMutation(
+    {
+      mutationFn: (data) => createSlaServices(data),
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({ queryKey: ["sla"] });
+      },
+    }
+  );
+
+  const { mutate: UpdateSeverity, isPending: isUpdateSlaLoading } = useMutation(
+    {
+      mutationFn: ({ id, data }) => updateSlaServices({ id, data }),
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({ queryKey: ["sla"] });
+      },
+    }
+  );
+
+  const deleteMutation = useMutation({
+    mutationFn: ({ id }) => deleteSlaServices({ id }),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["sla"] });
+    },
+  });
+
+  const DeleteSeverity = async (id) => {
+    if (window.confirm("Are you sure you want to delete sla data?")) {
+      deleteMutation.mutate({ id });
+    }
+  };
 
   const {
     values,
@@ -68,7 +110,7 @@ const Severity = () => {
     },
   });
 
-  const filteredTags = SeverityData.filter((item) =>
+  const filteredTags = GetSeverity?.filter((item) =>
     item.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -78,11 +120,6 @@ const Severity = () => {
     setFieldValue("tenant", params.get("tenant") || "");
   }, [location.search]);
 
-  useEffect(() => {
-    if (token) {
-      GetSeverity(page, tenant);
-    }
-  }, [token, page, tenant]);
 
   if (isViewAccess(authenticate, location)) {
     return <Access />;
@@ -134,7 +171,7 @@ const Severity = () => {
 
           {/* table */}
           <div className="overflow-x-auto custom-scrollbar w-full">
-            <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+            {isSlaLoading ? <TableSkeletonLoading/> : <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
               <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
                 <tr>
                   {[
@@ -143,7 +180,7 @@ const Severity = () => {
                     "Description",
                     "Days",
                     isHaveAction() && "Actions",
-                  ].map(
+                  ]?.map(
                     (header) =>
                       header && (
                         <th
@@ -157,7 +194,7 @@ const Severity = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-700">
-                {filteredTags.map((tag, index) => (
+                {filteredTags?.map((tag, index) => (
                   <tr
                     key={tag.id}
                     className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
@@ -172,19 +209,7 @@ const Severity = () => {
                     <td className="px-4 py-3 flex gap-2">
                       {isDeleteAccess() && (
                         <button
-                          onClick={() => {
-                            if (
-                              window.confirm(
-                                "Are you sure you want to delete this severity?"
-                              )
-                            ) {
-                              DeleteSeverity(tag._id)
-                                .then(() => GetSeverity())
-                                .catch((err) =>
-                                  console.error("Delete failed:", err)
-                                );
-                            }
-                          }}
+                          onClick={() => DeleteSeverity(tag._id)}
                           title="Delete"
                           className="text-subtext hover:text-subTextHover"
                         >
@@ -207,15 +232,15 @@ const Severity = () => {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </table>}
           </div>
 
           {/* Footer */}
           <Pagination
             page={page}
             setPage={setPage}
-            hasNextPage={filteredTags.length === 10}
-            total={filteredTags.length}
+            hasNextPage={filteredTags?.length === 10}
+            total={filteredTags?.length}
           />
         </div>
       </div>
@@ -280,6 +305,7 @@ const Severity = () => {
                 Cancel
               </button>
               <button
+              disabled= { isCreateSlaLoading || isUpdateSlaLoading}
                 type="submit"
                 className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded"
               >
