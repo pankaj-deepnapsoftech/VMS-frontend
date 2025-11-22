@@ -1,7 +1,5 @@
 import InputField from "@/components/InputField";
-import Loader from "@/components/Loader/Loader";
 import NoDataFound from "@/components/NoDataFound";
-import { AxiosHandler } from "@/config/AxiosConfig";
 import {
   useAllEmployeeContext,
   useAuthContext,
@@ -9,7 +7,7 @@ import {
 } from "@/context";
 import { BaseValidationSchema, EditUser } from "@/Validation/AuthValidation";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import {
   FaEnvelope,
@@ -30,12 +28,21 @@ import {
   isViewAccess,
 } from "@/utils/pageAccess";
 import Access from "@/components/role/Access";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  getUser,
+  createUser,
+  updateUser,
+  deleteUser
+} from "@/services/ManageEmployee.service";
+import { getAllRoles } from "@/services/ManageRoles.service";
+import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 
 const AllEmployee = () => {
   // all context api hooks
-  const { DeleteUser, GetUsers, EmpData } = useAllEmployeeContext();
+  const { DeleteUser, EmpData } = useAllEmployeeContext();
   const { partners } = useDataContext();
-  const { token, ChangeStatus, authenticate,tenant } = useAuthContext();
+  const { token, ChangeStatus, authenticate, tenant } = useAuthContext();
   const { TenantData } = useAllEmployeeContext();
   // use location hook
 
@@ -45,13 +52,56 @@ const AllEmployee = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editable, setEdiTable] = useState(null);
-
-  const [RoleAllData, setRoleAllData] = useState([]);
   const [page, setPage] = useState(1);
-  const [isloading, setloading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [apiError, setApiError] = useState(null);
   const [partOfPartner, setPartOfPartner] = useState(null);
+
+  const queryClient = useQueryClient();
+
+  //===================Tanstack Query Here========================
+
+  const { data: GetUsers, isLoading: isUserLoading } = useQuery({
+    queryKey: ["users", page, tenant],
+    queryFn: () => getUser({ page, tenant }),
+    enabled: !!token,
+  });
+
+  const { mutate: CreateUser, isPending: isCreateUserLoading } = useMutation({
+    mutationFn: (data) => createUser(data),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["users"] });
+    },
+  });
+
+  const { mutate: UpdateUser, isPending: isUpdateUserLoading } = useMutation({
+    mutationFn: ({ id, data }) => updateUser({ id, data }),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["users"] });
+    },
+  });
+
+  const deleteMutation = useMutation({
+      mutationFn: ({ id }) => deleteUser({ id }),
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({ queryKey: ["users"] });
+      },
+    });
+  
+    const DeleteUserData = async (id) => {
+      if (window.confirm("Are you sure you want to delete user data?")) {
+        deleteMutation.mutate({ id });
+      }
+    };
+
+  //Tanstack for select roles
+
+  const { data: GetAllRoleData} = useQuery({
+    queryKey: ["roles"],
+    queryFn: () => getAllRoles(),
+    enabled: !!token,
+  });
+
 
   const {
     values,
@@ -80,7 +130,6 @@ const AllEmployee = () => {
     validationSchema: editable ? EditUser : BaseValidationSchema,
     enableReinitialize: true,
     onSubmit: async (value) => {
-      setloading(true);
 
       setApiError(null); // Clear previous errors
 
@@ -91,15 +140,11 @@ const AllEmployee = () => {
       );
       try {
         if (editable) {
-          await AxiosHandler.put(
-            `/auth/update-user/${editable._id}`,
-            filteredData
-          );
+          UpdateUser({ id: editable._id, data: value });
         } else {
-          await AxiosHandler.post(`/auth/create`, filteredData);
+          CreateUser(filteredData);
         }
         setIsModalOpen(false);
-        GetUsers();
         resetForm();
       } catch (error) {
         const message =
@@ -109,13 +154,12 @@ const AllEmployee = () => {
         setApiError(message);
         console.error("API Error:", message);
       } finally {
-        setloading(false);
         setPartOfPartner(null);
       }
     },
   });
 
-  const filteredData = EmpData?.filter((user) => {
+  const filteredData = GetUsers?.filter((user) => {
     const search = searchTerm.toLowerCase();
     return (
       user.fname?.toLowerCase().includes(search) ||
@@ -131,7 +175,6 @@ const AllEmployee = () => {
     if (window.confirm("Are you sure you want to change this user's status?")) {
       const deactivate = type === "activate";
       await ChangeStatus({ deactivate }, id);
-      GetUsers();
     }
   };
 
@@ -143,22 +186,6 @@ const AllEmployee = () => {
     }
   };
 
-  const GetAllRoleData = async () => {
-    try {
-      const res = await AxiosHandler.get("/role/get-all");
-      setRoleAllData(res?.data?.data);
-    } catch (error) {
-      console.error("Error fetching roles:", error);
-      setApiError("Failed to fetch roles. Please try again.");
-    }
-  };
-
-  useEffect(() => {
-    if (token) {
-      GetUsers(page,tenant);
-      GetAllRoleData();
-    }
-  }, [token, page,tenant]);
 
   if (isViewAccess(authenticate, location)) {
     return <Access />;
@@ -166,9 +193,7 @@ const AllEmployee = () => {
 
   return (
     <>
-      {isloading ? (
-        <Loader />
-      ) : (
+      
         <div className="min-h-screen shadow-lg py-4">
           <div className="flex items-center justify-between px-6 py-4">
             {/* Optional Left Side Heading */}
@@ -215,7 +240,7 @@ const AllEmployee = () => {
                 <NoDataFound />
               ) : (
                 <div className="overflow-x-auto custom-scrollbar w-full">
-                  <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+                  {isUserLoading ? <TableSkeletonLoading/> : <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
                     <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
                       <tr>
                         {[
@@ -229,7 +254,7 @@ const AllEmployee = () => {
                           "Partner",
                           isModifyAccess() && "Status",
                           isHaveAction() && "Actions",
-                        ].map((header) => (
+                        ]?.map((header) => (
                           <th
                             key={header}
                             className="px-4 py-3 border-b border-gray-600 font-medium"
@@ -240,7 +265,7 @@ const AllEmployee = () => {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-700">
-                      {filteredData.map((user, index) => (
+                      {filteredData?.map((user, index) => (
                         <tr
                           key={user._id}
                           className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
@@ -286,11 +311,9 @@ const AllEmployee = () => {
                           <td className="px-4 py-3 flex gap-2">
                             {isDeleteAccess() && (
                               <button
-                                onClick={() => {
-                                  if (window.confirm("Delete this user?")) {
-                                    DeleteUser(user._id);
-                                  }
-                                }}
+                                onClick={() => 
+                                  DeleteUserData(user._id)
+                                }
                                 title="Delete"
                                 className="text-subtext hover:text-subTextHover"
                               >
@@ -313,7 +336,7 @@ const AllEmployee = () => {
                         </tr>
                       ))}
                     </tbody>
-                  </table>
+                  </table>}
                 </div>
               )}
 
@@ -321,13 +344,12 @@ const AllEmployee = () => {
               <Pagination
                 page={page}
                 setPage={setPage}
-                hasNextPage={EmpData.length === 10}
-                total={EmpData.length}
+                hasNextPage={filteredData?.length === 10}
+                total={filteredData?.length}
               />
             </div>
           </div>
         </div>
-      )}
 
       {/* MODAL */}
       <div
@@ -440,7 +462,7 @@ const AllEmployee = () => {
                     <option value="" disabled>
                       Select role
                     </option>
-                    {RoleAllData?.map((ele) => (
+                    {GetAllRoleData?.map((ele) => (
                       <option key={ele._id} value={ele._id}>
                         {ele?.role}
                       </option>
@@ -617,6 +639,7 @@ const AllEmployee = () => {
                   Cancel
                 </button>
                 <button
+                disabled={isCreateUserLoading || isUpdateUserLoading}
                   type="submit"
                   className="px-5 py-2 bg-button text-white rounded-md hover:shadow-lg hover:scale-105 transition duration-200"
                 >
