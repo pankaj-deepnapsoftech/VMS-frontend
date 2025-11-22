@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { SchedulingAssessmentValidation } from "@/Validation/SchedulingAssessmentValidation";
 import { useFormik } from "formik";
 import { MdClose } from "react-icons/md";
-import { useAuthContext, useScheduleAssessmentContext } from "@/context";
+import { useAuthContext } from "@/context";
 import { IoClose } from "react-icons/io5";
 import { handleFileChange } from "@/utils/CheckFileType";
 import { ImageUploader } from "@/utils/ImagesUploader";
@@ -33,11 +33,7 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
   })
 
   // all context api hooks
-  const {
-    setdatafetchCount,
-    TesterForAssessment,
-    DashboardData,
-  } = useScheduleAssessmentContext();
+
 
   const { token, tenant } = useAuthContext();
 
@@ -101,13 +97,6 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
     },
   });
 
-  useEffect(() => {
-    if (token) {
-      TesterForAssessment();
-      DashboardData();
-      setdatafetchCount(1);
-    }
-  }, [token]);
 
   return (
     <div
