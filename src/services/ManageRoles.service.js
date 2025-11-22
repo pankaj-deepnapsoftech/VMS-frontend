@@ -27,3 +27,8 @@ export const deleteRoles = async ({ id }) => {
     toast.success(res.data.message || "Role deleted successfully");
     return res.data;
 }
+
+export const getAllRoles = async()=>{
+    const res = await AxiosHandler.get("/role/get-all")
+    return res?.data?.data || []
+}
