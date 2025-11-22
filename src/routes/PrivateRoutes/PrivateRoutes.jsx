@@ -8,6 +8,7 @@ import ExecutiveDashboardLayoutSkeleton from "@/Skeletons/ExecutiveDashbord/Exec
 import { AssertInventorySkeletonLayout } from "@/Skeletons/AssetInventory/AssetInventorySkeleton";
 import AssessmentSkeleton from "@/Skeletons/Assessment/AssessmentSkeleton";
 import ExposureDashboard from "@/pages/ExposureDashboard";
+import AttackSurfaceSkeleton from "@/Skeletons/ExposureManagement/AttackSurfaceSkeleton";
 
 // Lazy imports
 const Loader = lazy(() => import("@/components/Loader/Loader"));
@@ -24,6 +25,7 @@ const InfraStructureVulnerability = lazy(() =>
 const AllEmployee = lazy(() => import("@/pages/AllEmployee"));
 const Reports = lazy(() => import("@/pages/Reports"));
 const ChatPage = lazy(() => import("@/pages/ChatPage"));
+`1`;
 const AssertInventory = lazy(() => import("@/pages/AssertInventory"));
 const ChangePassword = lazy(() => import("@/pages/ChangePassword"));
 const AdminBookDemo = lazy(() => import("@/pages/AdminBookDemo"));
@@ -424,7 +426,7 @@ export const PrivateRoutes = [
   {
     path: "/attack-surface",
     element: (
-      <Suspense>
+      <Suspense fallback={<AttackSurfaceSkeleton />}>
         <AppErrorBoundary>
           <AssessmentCenter />
         </AppErrorBoundary>
@@ -451,7 +453,7 @@ export const PrivateRoutes = [
       </Suspense>
     ),
   },
-   {
+  {
     path: "/exposure-dashboard",
     element: (
       <Suspense>
