@@ -3,7 +3,6 @@ import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import {
-  AllEmployeeContextProvider,
   ApplicationVulnerabilityContextProvider,
   AuthContextProvider,
   DataContextProvider,
@@ -12,7 +11,6 @@ import {
   JiraContextProvider,
   MailContextProvider,
   RemeditionContextProvider,
-  SeverityContextProvider,
   VulnerabililtyDataContextProvider,
 } from "./context";
 import AppSoftContextProvider from "./context/ApplicationSoftwareInventoryContext/ApplicationSoftwareInventoryContext";
@@ -27,27 +25,23 @@ createRoot(document.getElementById("root")).render(
       <AuthContextProvider>
         <DataContextProvider>
           <VulnerabililtyDataContextProvider>
-            <AllEmployeeContextProvider>
               <JiraContextProvider>
                   <ApplicationVulnerabilityContextProvider>
                     <RemeditionContextProvider>
                       <ExceptionContextProvider>
                         <InfrastructureVulnerabilityContextProvider>
                           <AppSoftContextProvider>
-                            <SeverityContextProvider>
                               <MailContextProvider>
                                 <AIVAContextProvider>
                                   <App />
                                 </AIVAContextProvider>
                               </MailContextProvider>
-                            </SeverityContextProvider>
                           </AppSoftContextProvider>
                         </InfrastructureVulnerabilityContextProvider>
                       </ExceptionContextProvider>
                     </RemeditionContextProvider>
                   </ApplicationVulnerabilityContextProvider>
               </JiraContextProvider>
-            </AllEmployeeContextProvider>
           </VulnerabililtyDataContextProvider>
         </DataContextProvider>
       </AuthContextProvider>
