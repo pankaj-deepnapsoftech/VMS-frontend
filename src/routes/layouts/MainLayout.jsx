@@ -28,20 +28,20 @@ import { customStyles, darkTheme } from "@/constants/constants.data";
 import ChangePasswordModal from "@/modals/ChangePasswordModal";
 import SecurityQuestions from "@/pages/Auth/Secuirity";
 import { ReasonModal } from "@/components/modal/Reason";
+import { useAuthStore } from "@/store/AuthSore";
 
 const MainLayout = () => {
   const { notificationData, NotificationsViewed } =
     useVulnerabililtyDataContext();
 
+    const {authenticate,selectedYears,setSelectedYear,setTenant,tenant} = useAuthStore((state) => state);
+
   const {
-    authenticate,
     updateProfileModal,
     getDataFromSession,
     setOpenSideBar,
     showUserMenu,
     setShowUserMenu,
-    selectedYear,
-    setSelectedYear,
   } = useAuthContext();
   const { TenantAllData } = useDataContext();
 
@@ -60,7 +60,6 @@ const MainLayout = () => {
 
   const navigate = useNavigate();
 
-  const [tenant, setTenant] = useState("Select Value");
   const [tenantId, setTenantId] = useState("");
   const [searchParams] = useSearchParams();
 
@@ -201,15 +200,7 @@ const MainLayout = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const data = TenantAllData.filter(
-      (item) => item.value === params.get("tenant")
-    )[0];
-    if (data) {
-      setTenant(data);
-    }
-  }, [location.search]);
+ 
 
   if (authenticate?.security_questions <= 0) {
     return <SecurityQuestions />;
@@ -268,7 +259,7 @@ const MainLayout = () => {
               {viewOnlyAllowed(window.location.pathname) && (
                 <select
                   className="bg-[#0E1430] text-gray-300 text-sm px-2 sm:px-3 py-1 rounded-lg border border-gray-700 focus:outline-none"
-                  value={selectedYear}
+                  value={selectedYears}
                   onChange={(e) => setSelectedYear(Number(e.target.value))}
                 >
                   <option value={currentYear}>{currentYear} </option>

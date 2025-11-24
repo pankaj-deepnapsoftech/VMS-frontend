@@ -64,13 +64,9 @@ const InventoryData = [
 ];
 
 const DashboardCards = () => {
-  const {token,selectedYear, tenant } = useAuthContext();
   // const { tvmCardsData } = useTVMCardsContext();
 
-  const {selectedYears} = useAuthStore();
-
-
-  console.log(selectedYears);
+const {selectedYears:selectedYear,tenant,token} = useAuthStore((state) => state);
 
   // ========================= here am using tenstack query ========================
 
