@@ -1,11 +1,9 @@
 import InputField from "@/components/InputField";
 import NoDataFound from "@/components/NoDataFound";
-import {
-  useAuthContext
-} from "@/context";
+import { useAuthContext } from "@/context";
 import { BaseValidationSchema, EditUser } from "@/Validation/AuthValidation";
 import { useFormik } from "formik";
-import {  useState } from "react";
+import { useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import {
   FaEnvelope,
@@ -31,15 +29,14 @@ import {
   getUser,
   createUser,
   updateUser,
-  deleteUser
+  deleteUser,
 } from "@/services/ManageEmployee.service";
 import { getAllRoles } from "@/services/ManageRoles.service";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
-import {getAllPartnerService} from "@/services/ManagePartners.service";
-import {getAllTenantServices} from "@/services/ManageTenants.service";
+import { getAllPartnerService } from "@/services/ManagePartners.service";
+import { getAllTenantServices } from "@/services/ManageTenants.service";
 
 const AllEmployee = () => {
-
   const { token, ChangeStatus, authenticate, tenant } = useAuthContext();
   // use location hook
   const location = useLocation();
@@ -77,40 +74,38 @@ const AllEmployee = () => {
   });
 
   const deleteMutation = useMutation({
-      mutationFn: ({ id }) => deleteUser({ id }),
-      onSuccess: async () => {
-        await queryClient.invalidateQueries({ queryKey: ["users"] });
-      },
-    });
-  
-    const DeleteUserData = async (id) => {
-      if (window.confirm("Are you sure you want to delete user data?")) {
-        deleteMutation.mutate({ id });
-      }
-    };
+    mutationFn: ({ id }) => deleteUser({ id }),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["users"] });
+    },
+  });
+
+  const DeleteUserData = async (id) => {
+    if (window.confirm("Are you sure you want to delete user data?")) {
+      deleteMutation.mutate({ id });
+    }
+  };
 
   //Tanstack for select roles
-  const { data: GetAllRoleData} = useQuery({
+  const { data: GetAllRoleData } = useQuery({
     queryKey: ["roles"],
     queryFn: () => getAllRoles(),
     enabled: !!token,
   });
 
-
-  //Tanstack for Partners 
-  const {data: GetAllPartner} = useQuery({
+  //Tanstack for Partners
+  const { data: GetAllPartner } = useQuery({
     queryKey: ["partners"],
-    queryFn: ()=> getAllPartnerService(),
+    queryFn: () => getAllPartnerService(),
     enabled: !!token,
   });
 
   //Tanstack for Tenants
-  const {data: GetAllTenants} = useQuery({
+  const { data: GetAllTenants } = useQuery({
     queryKey: ["tenants"],
-    queryFn: ()=> getAllTenantServices(),
+    queryFn: () => getAllTenantServices(),
     enabled: !!token,
   });
-  
 
   const {
     values,
@@ -139,7 +134,6 @@ const AllEmployee = () => {
     validationSchema: editable ? EditUser : BaseValidationSchema,
     enableReinitialize: true,
     onSubmit: async (value) => {
-
       setApiError(null); // Clear previous errors
 
       const filteredData = Object.fromEntries(
@@ -195,61 +189,62 @@ const AllEmployee = () => {
     }
   };
 
-
   if (isViewAccess(authenticate, location)) {
     return <Access />;
   }
 
   return (
     <>
-      
-        <div className="min-h-screen shadow-lg py-4">
-          <div className="flex items-center justify-between px-6 py-4">
-            {/* Optional Left Side Heading */}
-            <div className="w-full">
-              <h2 className="text-2xl font-semibold text-white">All Users</h2>
-              <span className="text-subtext text-sm">
-                Manage your organization employees
-              </span>
-            </div>
-
-            {/* Right Side Button */}
-            {isCreateAccess() && (
-              <button
-                onClick={() => {
-                  setIsModalOpen(true);
-                  setEdiTable(null);
-                }}
-                className="flex items-center gap-2 px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium whitespace-nowrap"
-              >
-                <BiPlus className="h-5 w-5" />
-                Add User
-              </button>
-            )}
+      <div className="min-h-screen shadow-lg py-4">
+        <div className="flex items-center justify-between px-6 py-4">
+          {/* Optional Left Side Heading */}
+          <div className="w-full">
+            <h2 className="text-2xl font-semibold text-white">All Users</h2>
+            <span className="text-subtext text-sm">
+              Manage your organization employees
+            </span>
           </div>
 
-          <div className="w-full  min-h-screen p-6">
-            <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
-              {/* Header */}
-              <div className="px-6 py-4 border-b border-gray-700 relative">
-                <div className="relative">
-                  <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
-                  <input
-                    type="search"
-                    placeholder="Search users..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="bg-input backdrop-blur-md py-2 w-1/3 text-white ps-7 pe-3 rounded-md "
-                  />
-                </div>
-              </div>
+          {/* Right Side Button */}
+          {isCreateAccess() && (
+            <button
+              onClick={() => {
+                setIsModalOpen(true);
+                setEdiTable(null);
+              }}
+              className="flex items-center gap-2 px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium whitespace-nowrap"
+            >
+              <BiPlus className="h-5 w-5" />
+              Add User
+            </button>
+          )}
+        </div>
 
-              {/* Table */}
-              {filteredData?.length < 1 ? (
-                <NoDataFound />
-              ) : (
-                <div className="overflow-x-auto custom-scrollbar w-full">
-                  {isUserLoading ? <TableSkeletonLoading/> : <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+        <div className="w-full  min-h-screen p-6">
+          <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
+            {/* Header */}
+            <div className="px-6 py-4 border-b border-gray-700 relative">
+              <div className="relative">
+                <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
+                <input
+                  type="search"
+                  placeholder="Search users..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="bg-input backdrop-blur-md py-2 w-1/3 text-white ps-7 pe-3 rounded-md "
+                />
+              </div>
+            </div>
+
+            {/* Table */}
+            {filteredData?.length < 1 ? (
+              <NoDataFound />
+            ) : (
+              <div className="overflow-x-auto custom-scrollbar w-full">
+                {isUserLoading ? (
+                  <TableSkeletonLoading />
+                ) : (
+                  <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
                     <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
                       <tr>
                         {[
@@ -320,9 +315,7 @@ const AllEmployee = () => {
                           <td className="px-4 py-3 flex gap-2">
                             {isDeleteAccess() && (
                               <button
-                                onClick={() => 
-                                  DeleteUserData(user._id)
-                                }
+                                onClick={() => DeleteUserData(user._id)}
                                 title="Delete"
                                 className="text-subtext hover:text-subTextHover"
                               >
@@ -345,20 +338,21 @@ const AllEmployee = () => {
                         </tr>
                       ))}
                     </tbody>
-                  </table>}
-                </div>
-              )}
+                  </table>
+                )}
+              </div>
+            )}
 
-              {/* Footer */}
-              <Pagination
-                page={page}
-                setPage={setPage}
-                hasNextPage={filteredData?.length === 10}
-                total={filteredData?.length}
-              />
-            </div>
+            {/* Footer */}
+            <Pagination
+              page={page}
+              setPage={setPage}
+              hasNextPage={filteredData?.length === 10}
+              total={filteredData?.length}
+            />
           </div>
         </div>
+      </div>
 
       {/* MODAL */}
       <div
@@ -646,7 +640,7 @@ const AllEmployee = () => {
                   Cancel
                 </button>
                 <button
-                disabled={isCreateUserLoading || isUpdateUserLoading}
+                  disabled={isCreateUserLoading || isUpdateUserLoading}
                   type="submit"
                   className="px-5 py-2 bg-button text-white rounded-md hover:shadow-lg hover:scale-105 transition duration-200"
                 >
