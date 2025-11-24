@@ -3,7 +3,6 @@ import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import {
-  AllEmployeeContextProvider,
   ApplicationVulnerabilityContextProvider,
   AuthContextProvider,
   DataContextProvider,
@@ -26,7 +25,6 @@ createRoot(document.getElementById("root")).render(
       <AuthContextProvider>
         <DataContextProvider>
           <VulnerabililtyDataContextProvider>
-            <AllEmployeeContextProvider>
               <JiraContextProvider>
                   <ApplicationVulnerabilityContextProvider>
                     <RemeditionContextProvider>
@@ -44,7 +42,6 @@ createRoot(document.getElementById("root")).render(
                     </RemeditionContextProvider>
                   </ApplicationVulnerabilityContextProvider>
               </JiraContextProvider>
-            </AllEmployeeContextProvider>
           </VulnerabililtyDataContextProvider>
         </DataContextProvider>
       </AuthContextProvider>

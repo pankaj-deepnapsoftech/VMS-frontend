@@ -5,7 +5,7 @@ import { authContext } from "./AuthContext/AuthContext";
 // working on it
 import { DataContext } from "./DataContext/DataContext";
 import { VulnerabililtyDataContext } from "./VulnerabilityDataContext/VulnerabilityDataContext";
-import { AllEmployeeContext } from "./AllEmployeeContext/AllEmployeeContext";
+// import { AllEmployeeContext } from "./AllEmployeeContext/AllEmployeeContext";
 import { JiraContext } from "./JiraTableContext/JiraTableContext";
 import { ApplicationVulnerabilityContext } from "./ApplicationVulnerabilityContext/ApplicationVulnerabilityContext";
 import { RemeditionContext } from "./RemeditionContext/RemeditionContext";
@@ -29,7 +29,7 @@ export { default as AuthContextProvider } from "./AuthContext/AuthContext";
 // working on it
 export { default as DataContextProvider } from "./DataContext/DataContext";
 export { default as VulnerabililtyDataContextProvider } from "./VulnerabilityDataContext/VulnerabilityDataContext";
-export { default as AllEmployeeContextProvider } from "./AllEmployeeContext/AllEmployeeContext";
+// export { default as AllEmployeeContextProvider } from "./AllEmployeeContext/AllEmployeeContext";
 export { default as JiraContextProvider } from "./JiraTableContext/JiraTableContext";
 export { default as ApplicationVulnerabilityContextProvider } from "./ApplicationVulnerabilityContext/ApplicationVulnerabilityContext";
 export { default as RemeditionContextProvider } from "./RemeditionContext/RemeditionContext";
