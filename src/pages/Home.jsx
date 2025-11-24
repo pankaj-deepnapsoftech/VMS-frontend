@@ -244,7 +244,7 @@ const {selectedYears:selectedYear,tenant,token} = useAuthStore((state) => state)
       datasets: [
         {
           label: "Open Vulnerabilities",
-          data: [data.High, data.Critical],
+          data: [data?.High, data?.Critical],
           backgroundColor: ["#3b82f6", "#ef4444"],
           borderColor: "#1f2937",
           borderWidth: 2,
@@ -260,7 +260,7 @@ const {selectedYears:selectedYear,tenant,token} = useAuthStore((state) => state)
       datasets: [
         {
           label: "SLA Breached",
-          data: [data.MET, data.NOT_MET],
+          data: [data?.MET, data?.NOT_MET],
           backgroundColor: ["#22c55e", "#ef4444"], // green & red
           borderColor: ["#1a1a1a"],
           borderWidth: 2,
@@ -402,7 +402,7 @@ const {selectedYears:selectedYear,tenant,token} = useAuthStore((state) => state)
             {/* Line Chart Container */}
             <div className="w-full h-[150px] md:h-[160px] overflow-hidden">
               <Line
-                data={SecondChartDatady(secondChartData.data)}
+                data={SecondChartDatady(secondChartData?.data)}
                 options={{
                   ...lineOptions,
                   maintainAspectRatio: false,
@@ -856,18 +856,18 @@ const {selectedYears:selectedYear,tenant,token} = useAuthStore((state) => state)
               <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
                 <p className="text-sm text-gray-400">Total</p>
                 <p className="text-3xl font-bold">
-                  {creticalHighVulnrable.Critical + creticalHighVulnrable.High}
+                  {creticalHighVulnrable?.Critical + creticalHighVulnrable?.High}
                 </p>
               </div>
             </div>
             <div className="flex items-center text-xs justify-center gap-6 mt-4">
               <div className="flex items-center font-medium">
                 <span className="inline-block w-3 h-3 bg-[#ef4444] rounded-full mr-2"></span>
-                Critical: {creticalHighVulnrable.Critical}
+                Critical: {creticalHighVulnrable?.Critical}
               </div>
               <div className="flex items-center font-medium">
                 <span className="inline-block w-3 h-3 bg-[#3b82f6] rounded-full mr-2"></span>
-                High: {creticalHighVulnrable.High}
+                High: {creticalHighVulnrable?.High}
               </div>
             </div>
           </div>
@@ -886,18 +886,18 @@ const {selectedYears:selectedYear,tenant,token} = useAuthStore((state) => state)
               <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
                 <p className="text-sm text-gray-400">Total</p>
                 <p className="text-3xl font-bold">
-                  {slaBreached.MET + slaBreached.NOT_MET}
+                  {slaBreached?.MET + slaBreached?.NOT_MET}
                 </p>
               </div>
             </div>
             <div className="flex items-center text-xs justify-center gap-6 mt-4">
               <div className="flex items-center font-medium">
                 <span className="inline-block w-3 h-3 bg-green-500 rounded-full mr-2"></span>
-                Met: {slaBreached.MET}
+                Met: {slaBreached?.MET}
               </div>
               <div className="flex items-center font-medium">
                 <span className="inline-block w-3 h-3 bg-red-500 rounded-full mr-2"></span>
-                Not Met: {slaBreached.NOT_MET}
+                Not Met: {slaBreached?.NOT_MET}
               </div>
             </div>
           </div>
