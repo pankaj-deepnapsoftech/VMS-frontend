@@ -12,7 +12,6 @@ import {
   JiraContextProvider,
   MailContextProvider,
   RemeditionContextProvider,
-  SeverityContextProvider,
   VulnerabililtyDataContextProvider,
 } from "./context";
 import AppSoftContextProvider from "./context/ApplicationSoftwareInventoryContext/ApplicationSoftwareInventoryContext";
@@ -34,13 +33,11 @@ createRoot(document.getElementById("root")).render(
                       <ExceptionContextProvider>
                         <InfrastructureVulnerabilityContextProvider>
                           <AppSoftContextProvider>
-                            <SeverityContextProvider>
                               <MailContextProvider>
                                 <AIVAContextProvider>
                                   <App />
                                 </AIVAContextProvider>
                               </MailContextProvider>
-                            </SeverityContextProvider>
                           </AppSoftContextProvider>
                         </InfrastructureVulnerabilityContextProvider>
                       </ExceptionContextProvider>
