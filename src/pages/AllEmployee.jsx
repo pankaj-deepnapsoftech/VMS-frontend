@@ -1,9 +1,7 @@
 import InputField from "@/components/InputField";
 import NoDataFound from "@/components/NoDataFound";
 import {
-  useAllEmployeeContext,
-  useAuthContext,
-  useDataContext,
+  useAuthContext
 } from "@/context";
 import { BaseValidationSchema, EditUser } from "@/Validation/AuthValidation";
 import { useFormik } from "formik";
@@ -37,19 +35,16 @@ import {
 } from "@/services/ManageEmployee.service";
 import { getAllRoles } from "@/services/ManageRoles.service";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
+import {getAllPartnerService} from "@/services/ManagePartners.service";
+import {getAllTenantServices} from "@/services/ManageTenants.service";
 
 const AllEmployee = () => {
-  // all context api hooks
-  const { DeleteUser, EmpData } = useAllEmployeeContext();
-  const { partners } = useDataContext();
-  const { token, ChangeStatus, authenticate, tenant } = useAuthContext();
-  const { TenantData } = useAllEmployeeContext();
-  // use location hook
 
+  const { token, ChangeStatus, authenticate, tenant } = useAuthContext();
+  // use location hook
   const location = useLocation();
 
   // all useState
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editable, setEdiTable] = useState(null);
   const [page, setPage] = useState(1);
@@ -95,13 +90,27 @@ const AllEmployee = () => {
     };
 
   //Tanstack for select roles
-
   const { data: GetAllRoleData} = useQuery({
     queryKey: ["roles"],
     queryFn: () => getAllRoles(),
     enabled: !!token,
   });
 
+
+  //Tanstack for Partners 
+  const {data: GetAllPartner} = useQuery({
+    queryKey: ["partners"],
+    queryFn: ()=> getAllPartnerService(),
+    enabled: !!token,
+  });
+
+  //Tanstack for Tenants
+  const {data: GetAllTenants} = useQuery({
+    queryKey: ["tenants"],
+    queryFn: ()=> getAllTenantServices(),
+    enabled: !!token,
+  });
+  
 
   const {
     values,
@@ -362,8 +371,6 @@ const AllEmployee = () => {
           <button
             onClick={() => {
               setIsModalOpen(false);
-              // eslint-disable-next-line no-undef
-              formik.resetForm();
             }}
             className="text-3xl hover:text-gray-400 transition duration-300"
           >
@@ -459,7 +466,7 @@ const AllEmployee = () => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                   >
-                    <option value="" disabled>
+                    <option value="" disabled selected>
                       Select role
                     </option>
                     {GetAllRoleData?.map((ele) => (
@@ -548,7 +555,7 @@ const AllEmployee = () => {
                       <option value="" disabled selected>
                         Select tenant
                       </option>
-                      {TenantData?.map((item) => (
+                      {GetAllTenants?.map((item) => (
                         <option key={item._id} value={item._id}>
                           {item?.company_name}
                         </option>
@@ -577,7 +584,7 @@ const AllEmployee = () => {
                       <option value="" disabled selected>
                         Select Partners
                       </option>
-                      {partners?.map((item) => (
+                      {GetAllPartner?.map((item) => (
                         <option key={item._id} value={item._id}>
                           {item?.company_name}
                         </option>

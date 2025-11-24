@@ -24,7 +24,12 @@ export const updateTenantServices = async ({ id,data }) => {
 
 
 export const deleteTenants = async ({ id }) => {
-    const res = await AxiosHandler.delete(`/tenant/delete/${id}`);;
+    const res = await AxiosHandler.delete(`/tenant/delete/${id}`);
     toast.success(res.data.message || "Tenant deleted successfully");
     return res.data;
+}
+
+export const getAllTenantServices = async ()=>{
+    const res = await AxiosHandler.get("/tenant/get-all");
+    return res.data.data || [];
 }
