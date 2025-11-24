@@ -28,3 +28,10 @@ export const deletePartners = async ({ id }) => {
     toast.success(res.data.message || "Partner deleted successfully");
     return res.data;
 }
+
+
+export const getAllPartnerService = async()=>{
+    const res = await AxiosHandler.get("/partner/get-all");
+    console.log("============>>>>>>>Partners", res)
+    return res?.data?.data || [];
+}

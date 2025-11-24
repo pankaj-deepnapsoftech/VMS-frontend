@@ -5,19 +5,18 @@ import {
   isModifyAccess,
   isViewAccess,
 } from "@/utils/pageAccess";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { IoSearch } from "react-icons/io5";
 import { RiEdit2Line } from "react-icons/ri";
 import Pagination from "./Pagination";
 import { useFormik } from "formik";
-import { useAuthContext, useSeverityContext } from "@/context";
+import { useAuthContext } from "@/context";
 import Access from "@/components/role/Access";
 import { useLocation } from "react-router-dom";
 import {
   getSlaServices,
-  getSlaByTenantServices,
   createSlaServices,
   updateSlaServices,
   deleteSlaServices,
@@ -101,12 +100,15 @@ const Severity = () => {
         return;
       }
       if (editableData) {
-        UpdateSeverity(editableData._id, value);
+        UpdateSeverity({ id: editableData?._id, data: value });
+        setEditableData(null);
       } else {
         CreateSeverity(value);
+        setEditableData(null);
       }
       setIsModalOpen(false);
       handleReset();
+      setEditableData(null);
     },
   });
 
@@ -119,7 +121,6 @@ const Severity = () => {
     setTenant(params.get("tenant") || "");
     setFieldValue("tenant", params.get("tenant") || "");
   }, [location.search]);
-
 
   if (isViewAccess(authenticate, location)) {
     return <Access />;
@@ -171,68 +172,76 @@ const Severity = () => {
 
           {/* table */}
           <div className="overflow-x-auto custom-scrollbar w-full">
-            {isSlaLoading ? <TableSkeletonLoading/> : <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
-              <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
-                <tr>
-                  {[
-                    "S No.",
-                    "Severity Name",
-                    "Description",
-                    "Days",
-                    isHaveAction() && "Actions",
-                  ]?.map(
-                    (header) =>
-                      header && (
-                        <th
-                          key={header}
-                          className="px-4 py-3 border-b border-gray-600 font-medium"
-                        >
-                          {header}
-                        </th>
-                      )
-                  )}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-700">
-                {filteredTags?.map((tag, index) => (
-                  <tr
-                    key={tag.id}
-                    className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
-                  >
-                    <td className="px-4 py-3">{(page - 1) * 10 + 1 + index}</td>
-                    <td className="px-4 py-3 capitalize">{tag.name || "-"}</td>
-                    <td className="px-4 py-3 capitalize">
-                      {tag.description || "-"}
-                    </td>
-                    <td className="px-4 py-3">{tag.days || "0"}</td>
-
-                    <td className="px-4 py-3 flex gap-2">
-                      {isDeleteAccess() && (
-                        <button
-                          onClick={() => DeleteSeverity(tag._id)}
-                          title="Delete"
-                          className="text-subtext hover:text-subTextHover"
-                        >
-                          <FaRegTrashAlt className="w-5 h-5" />
-                        </button>
-                      )}
-                      {isModifyAccess() && (
-                        <button
-                          title="Edit"
-                          onClick={() => {
-                            setEditableData(tag);
-                            setIsModalOpen(true);
-                          }}
-                          className="text-subtext hover:text-blue-700"
-                        >
-                          <RiEdit2Line className="w-5 h-5" />
-                        </button>
-                      )}
-                    </td>
+            {isSlaLoading ? (
+              <TableSkeletonLoading />
+            ) : (
+              <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+                <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
+                  <tr>
+                    {[
+                      "S No.",
+                      "Severity Name",
+                      "Description",
+                      "Days",
+                      isHaveAction() && "Actions",
+                    ]?.map(
+                      (header) =>
+                        header && (
+                          <th
+                            key={header}
+                            className="px-4 py-3 border-b border-gray-600 font-medium"
+                          >
+                            {header}
+                          </th>
+                        )
+                    )}
                   </tr>
-                ))}
-              </tbody>
-            </table>}
+                </thead>
+                <tbody className="divide-y divide-gray-700">
+                  {filteredTags?.map((tag, index) => (
+                    <tr
+                      key={tag.id}
+                      className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
+                    >
+                      <td className="px-4 py-3">
+                        {(page - 1) * 10 + 1 + index}
+                      </td>
+                      <td className="px-4 py-3 capitalize">
+                        {tag.name || "-"}
+                      </td>
+                      <td className="px-4 py-3 capitalize">
+                        {tag.description || "-"}
+                      </td>
+                      <td className="px-4 py-3">{tag.days || "0"}</td>
+
+                      <td className="px-4 py-3 flex gap-2">
+                        {isDeleteAccess() && (
+                          <button
+                            onClick={() => DeleteSeverity(tag._id)}
+                            title="Delete"
+                            className="text-subtext hover:text-subTextHover"
+                          >
+                            <FaRegTrashAlt className="w-5 h-5" />
+                          </button>
+                        )}
+                        {isModifyAccess() && (
+                          <button
+                            title="Edit"
+                            onClick={() => {
+                              setEditableData(tag);
+                              setIsModalOpen(true);
+                            }}
+                            className="text-subtext hover:text-blue-700"
+                          >
+                            <RiEdit2Line className="w-5 h-5" />
+                          </button>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
 
           {/* Footer */}
@@ -272,7 +281,7 @@ const Severity = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               className="w-full mb-3 p-2 rounded-lg bg-input text-white"
-              placeholder="Enter severty name"
+              placeholder="Enter severity name"
             />
 
             <label className="text-white text-sm">Description</label>
@@ -305,7 +314,7 @@ const Severity = () => {
                 Cancel
               </button>
               <button
-              disabled= { isCreateSlaLoading || isUpdateSlaLoading}
+                disabled={isCreateSlaLoading || isUpdateSlaLoading}
                 type="submit"
                 className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded"
               >
