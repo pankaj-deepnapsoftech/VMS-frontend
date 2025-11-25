@@ -246,7 +246,7 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                       Select Country
                     </option>
 
-                    {countryData.map((item, index) => (
+                    {countryData?.map((item, index) => (
                       <option key={index} value={item.isoCode}>
                         {item.name}
                       </option>
@@ -277,7 +277,7 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                       Select State
                     </option>
                     {formik.values.Country &&
-                      states.map((state, index) => (
+                      states?.map((state, index) => (
                         <option key={index} value={state.isoCode}>
                           {state.name}
                         </option>
