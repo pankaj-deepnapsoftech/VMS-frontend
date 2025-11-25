@@ -5,10 +5,10 @@ import {
   ResetPassword,
   VerifyOtp,
 } from "@/constants/Components-lazy-loading/components.Lazy";
-import { useAuthContext } from "@/context";
 import { lazy, Suspense } from "react";
 import { AssertInventorySkeletonLayout } from "@/Skeletons/AssetInventory/AssetInventorySkeleton";
 import MainLayoutSkeleton from "@/Skeletons/MainLayout/MainLayoutSkeleton";
+import { useAuthStore } from "@/store/AuthStore";
 
 const Solutions = lazy(() => import("@/pages/Auth/Solutions"));
 const Pricing = lazy(() => import("@/pages/Auth/Pricing"));
@@ -17,7 +17,7 @@ const ForgotPassword = lazy(() => import("@/pages/Auth/ForgotPassword"));
 const SignIn = lazy(() => import("@/pages/Auth/SignIn"));
 
 const AppRoutes = () => {
-  const { authenticate, token } = useAuthContext();
+  const { authenticate, token } = useAuthStore();
 
   // Check if user is authenticated and verify their login and email
   const isAuthenticated = token && authenticate?.email_verification;
