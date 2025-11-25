@@ -30,14 +30,24 @@ function Header({ setShowMenu, showSidebar }) {
   };
 
 
-  const {mutate:handleLogout} = useMutation({
-    mutationFn:()=>{
-      setToken(null);
-      setAuthenticate(null);
-      setTenant(null);
-      return LogoutUser()
-    }
-  })
+
+
+  const { mutate: handleLogout } = useMutation({
+  mutationFn: () => {
+    // Return the API call
+    return LogoutUser();
+  },
+  onSuccess: () => {
+    // Clear state after successful logout
+    naviagte("/");
+    setToken(null);
+    setAuthenticate(null);
+    setTenant(null);
+  },
+  onError: (error) => {
+    console.error("Logout failed:", error);
+  }
+});
 
  
 

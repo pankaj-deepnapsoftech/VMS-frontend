@@ -43,7 +43,7 @@ export default function AllCustomer() {
   // ============ TANSTACK QUERY ============
 
   const { data: tenants, isLoading: IsTenantLoading } = useQuery({
-    queryKey: ["tenants", page],
+    queryKey: ["tenants-pages", {page}],
     queryFn: () => getTenants({ page }),
     enabled: !!token,
   });
