@@ -11,7 +11,6 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { useAuthContext } from "../context";
 import {
   CardsData,
   firstChartDatady,
@@ -42,7 +41,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { useAuthStore } from "@/store/AuthSore";
+import { useAuthStore } from "@/store/AuthStore";
 
 // Register Chart.js components once
 ChartJS.register(

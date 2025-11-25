@@ -4,7 +4,6 @@ import { X, Boxes } from "lucide-react";
 import { BiPlus } from "react-icons/bi";
 import { useFormik } from "formik";
 import { InfraAssetvalidation } from "@/Validation/InfrastructureAssetvalidation";
-import { useAuthContext } from "@/context";
 import * as XLSX from "xlsx";
 import { useLocation } from "react-router-dom";
 import CustomSelection from "@/components/customSelection/CustomSelection";
@@ -37,9 +36,10 @@ import {
   updateInfrastructureAsset,
 } from "@/services/InfraStructureAsset.service";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
+import { useAuthStore } from "@/store/AuthStore";
 
 export default function TenantDashboard() {
-  const { token, authenticate, tenant } = useAuthContext();
+  const { token, authenticate, tenant } = useAuthStore();
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState(null);

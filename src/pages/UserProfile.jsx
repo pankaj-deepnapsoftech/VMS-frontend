@@ -1,9 +1,9 @@
 import { IoIosClose } from "react-icons/io";
-import { useAuthContext } from "@/context";
+import { useAuthStore } from "@/store/AuthStore";
 
 // eslint-disable-next-line react/prop-types
 const UserProfile = ({ showUserMenu, setShowMenu }) => {
-  const { authenticate } = useAuthContext();
+  const { authenticate } = useAuthStore();
 
   return (
     <div

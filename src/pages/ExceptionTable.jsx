@@ -2,6 +2,7 @@ import { useAuthContext, useExceptionContext } from "@/context";
 import ExpectionModal from "@/modals/ExpectionModal";
 import { GetExceptionData, updateExceptionData } from "@/services/Exception.service";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
+import { useAuthStore } from "@/store/AuthStore";
 import { dateFormaterWithDate } from "@/utils/dateFormate";
 import { EmptyFieldRemover } from "@/utils/RemoveEmptyField";
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -12,7 +13,8 @@ import { GrEdit } from "react-icons/gr";
 const ExceptionTable = () => {
 
   const queryClient = useQueryClient();
-  const { token, GetTenantData, UserViaTenant, tenant } = useAuthContext();
+  const {GetTenantData, UserViaTenant} = useAuthContext();
+  const {token, tenant} = useAuthStore()
   const [page,setPage] = useState(1);
 
   // ---------------- here am using tenstack query ---------------------

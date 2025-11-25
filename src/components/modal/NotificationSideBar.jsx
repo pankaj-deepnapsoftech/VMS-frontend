@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
-import { useAuthContext} from "@/context";
+//import { useAuthContext} from "@/context";
+import {useAuthStore} from "@/store/AuthStore"
 import { GetExceptionData, updateExceptionData } from "@/services/Exception.service";
 import { Checkhariqui } from "@/utils/checkHarirqui";
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -15,7 +16,7 @@ export function NotificationSidebar({
   setNotificationData,
 }) {
  const queryClient = useQueryClient();
-  const { token, tenant,authenticate } = useAuthContext();
+  const { token, tenant,authenticate } = useAuthStore();
   const [page,setPage] = useState(1);
 
   // ---------------- here am using tenstack query ---------------------

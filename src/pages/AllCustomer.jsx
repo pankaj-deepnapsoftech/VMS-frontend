@@ -18,17 +18,16 @@ import {
   isModifyAccess,
   isViewAccess,
 } from "@/utils/pageAccess";
-import { useAuthContext } from "@/context";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-
 import { getTenants, deleteTenants } from "../services/ManageTenants.service";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
+import { useAuthStore } from "@/store/AuthStore";
 
 export default function AllCustomer() {
   const queryClient = useQueryClient();
 
   // context api hooks
-  const { token, authenticate } = useAuthContext();
+  const { token, authenticate } = useAuthStore();
 
   // location hook
   const location = useLocation();

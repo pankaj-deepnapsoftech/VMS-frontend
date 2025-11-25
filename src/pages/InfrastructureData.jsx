@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useAuthContext } from "@/context";
 import { useLocation, useNavigate } from "react-router-dom";
 import ExpectionModal from "@/modals/ExpectionModal";
 import ExploitDetail from "@/modals/ExploitDetail";
@@ -26,11 +25,12 @@ import AssignUserModal from "@/components/modal/AssignUserModal";
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { DeleteVulnerableData, getInfrastructureData } from "@/services/Vulnerable.service";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
+import { useAuthStore } from "@/store/AuthStore";
 
 // Popup Menu Component using Portal
 
 export default function InfrastructureData() {
-  const { token, authenticate, tenant } = useAuthContext();
+  const { token, authenticate, tenant } = useAuthStore();
   const [currentPage, setCurrentPage] = useState(1);
   const queryClient = useQueryClient();
 

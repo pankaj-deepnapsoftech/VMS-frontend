@@ -4,7 +4,6 @@ import { RiDeleteBinFill } from "react-icons/ri";
 import { MdClose } from "react-icons/md";
 import {
   useAllEmployeeContext,
-  useAuthContext,
   useDataContext,
   useVulnerabililtyDataContext,
 } from "@/context";
@@ -17,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import InputField from "@/components/InputField";
 import NoDataFound from "@/components/NoDataFound";
 import { excelDateToJSDate } from "@/utils/utils";
+import { useAuthStore } from "@/store/AuthStore";
 
 
 
@@ -43,7 +43,7 @@ const SoftwareAndApplication = () => {
     Notifications,
   } = useVulnerabililtyDataContext();
 
-  const { authenticate, token } = useAuthContext();
+  const { authenticate, token } = useAuthStore();
 
   const { allEmployeesData } = useAllEmployeeContext();
 

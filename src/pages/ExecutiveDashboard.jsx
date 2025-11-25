@@ -12,7 +12,6 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import {useAuthContext} from "@/context";
 import {
   assetData,
   FinancialExposure,
@@ -26,6 +25,7 @@ import CardsSkeletonLoading from "@/Skeletons/ExecutiveDashbord/Cards";
 import LineChartSkeletonLoading from "@/Skeletons/ExecutiveDashbord/trendsChart";
 import { AssackExposureSkeletonLoading, AssertInvertorySkeletonLoading, FinancialExposureSkeletonLoading, RemediationWorkflowSkeletonLoading } from "@/Skeletons/ExecutiveDashbord/thirdSection";
 import { TopFiveRiskIndicatorsSkeleton } from "@/Skeletons/ExecutiveDashbord/LastSection";
+import { useAuthStore } from "@/store/AuthStore";
 
 
 ChartJS.register(
@@ -40,7 +40,7 @@ ChartJS.register(
 );
 
 export default function ExecutiveSummaryPage() {
-  const { token, tenant, selectedYear } = useAuthContext();
+  const { token, tenant, selectedYears: selectedYear} = useAuthStore();
 
 // ==================== here is tenStack query code here ==========================
  const { data: dasboardData,isLoading:isDashboardCardLoading } = useQuery({

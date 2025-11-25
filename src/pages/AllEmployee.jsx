@@ -35,9 +35,11 @@ import { getAllRoles } from "@/services/ManageRoles.service";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 import { getAllPartnerService } from "@/services/ManagePartners.service";
 import { getAllTenantServices } from "@/services/ManageTenants.service";
+import { useAuthStore } from "@/store/AuthStore";
 
 const AllEmployee = () => {
-  const { token, ChangeStatus, authenticate, tenant } = useAuthContext();
+  const {ChangeStatus} = useAuthContext();
+  const {token,authenticate, tenant} = useAuthStore()
   // use location hook
   const location = useLocation();
 
