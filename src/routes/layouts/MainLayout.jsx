@@ -34,6 +34,8 @@ const MainLayout = () => {
   const { notificationData, NotificationsViewed } =
     useVulnerabililtyDataContext();
 
+    const {} = useAuthStore()
+
     const {authenticate,selectedYears,setSelectedYear,setTenant,tenant} = useAuthStore((state) => state);
 
   const {
@@ -181,7 +183,7 @@ const MainLayout = () => {
     if (!authenticate?.mustChangePassword) {
       openModal();
     }
-  }, [authenticate.mustChangePassword]);
+  }, [authenticate?.mustChangePassword]);
 
   const sidebarRef = useRef(null);
 
@@ -289,7 +291,7 @@ const MainLayout = () => {
                   }}
                   className="bg-blue-400 text-white rounded-full w-10 h-10 flex items-center justify-center border-2 "
                 >
-                  {authenticate.fname[0].toUpperCase()}
+                  {authenticate?.fname[0].toUpperCase()}
                 </button>
               </div>
             </div>

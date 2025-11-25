@@ -8,7 +8,7 @@ export const useAuthStore = create((set) => ({
     selectedYears:new Date().getFullYear(),
     tenant:null,
 
-    // ================== all functions ==================
+    // ===================== all functions =====================
     setToken:(token) => set(()=>({token})),
     setSelectedYear:(selectedYears) => set(() => ({selectedYears})),
     setAuthenticate:(authenticate) => set(()=>({authenticate})),
