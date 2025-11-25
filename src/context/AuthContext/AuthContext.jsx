@@ -45,37 +45,7 @@ const AuthContextProvider = ({ children }) => {
   const [OpenSideBar, setOpenSideBar] = useState(false);
 
 
-  const Signin = async (data) => {
-    const toastId = toast.loading("Loading...");
 
-    setLoading(true);
-    try {
-      const res = await AxiosHandler.post("/auth/login", data);
-      const token = NewDecryptionToken(res.data.token)
-      AxiosHandler.defaults.headers.authorization = `Bearer ${token}`;
-
-      Cookies.set("AT", token, { expires: 1, secure: true });
-      setToken(token);
-      if (!res.data.user.email_verification) {
-        navigate("/verify-otp");
-        ResendOtp();
-      } else {
-        navigate("/");
-      }
-      toast.dismiss(toastId);
-      toast.success(res.data.message);
-    } catch (error) {
-      console.log("error data", error);
-
-      toast.dismiss(toastId);
-      toast.error(
-        error?.response?.data?.message ||
-        "something went wrong please try again..."
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const Signup = async (data, navigation) => {
     const toastId = toast.loading("Loading...");
@@ -320,7 +290,6 @@ const AuthContextProvider = ({ children }) => {
         ResendOtp,
         Forgotpassword,
         Resetpassword,
-        Signin,
         Signup,
         Logout,
         token,
