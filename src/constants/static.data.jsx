@@ -316,7 +316,7 @@ export const products = [
     desc: "Admin control panel",
     borderColor: "#f8b500",
     icon: GiCyberEye,
-    ShownTitle: "Administration",
+    ShownTitle: "Cyber Risk Quantification",
     allowedPath: [
       {
         title: "Risk Details",
@@ -436,7 +436,7 @@ export const products = [
     desc: "AI Virtual Analyst",
     borderColor: "#ee9ca7",
     icon: AirVent,
-    ShownTitle: "AI-VA",
+    ShownTitle: "Exposure Management",
     allowedPath: [
       {
         title: "Dashboard",
