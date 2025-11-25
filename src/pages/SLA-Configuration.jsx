@@ -26,7 +26,7 @@ import { useAuthStore } from "@/store/AuthStore";
 
 const Severity = () => {
   // all context apis here
-  const { token, authenticate } = useAuthStore();
+  const { token, authenticate, tenant } = useAuthStore();
 
   // location hook to get the current URL
   const location = useLocation();
@@ -35,7 +35,6 @@ const Severity = () => {
   const [page, setPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [tenant, setTenant] = useState("");
   const [editableData, setEditableData] = useState(null);
 
   const queryClient = useQueryClient();
@@ -43,8 +42,8 @@ const Severity = () => {
   //====================TANSTACK QUERY====================
 
   const { data: GetSeverity, isLoading: isSlaLoading } = useQuery({
-    queryKey: ["sla", page],
-    queryFn: () => getSlaServices({ page }),
+    queryKey: ["sla", {page, tenant}],
+    queryFn: () => getSlaServices({ page, tenant }),
     enabled: !!token,
   });
 
@@ -118,7 +117,6 @@ const Severity = () => {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    setTenant(params.get("tenant") || "");
     setFieldValue("tenant", params.get("tenant") || "");
   }, [location.search]);
 
