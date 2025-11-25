@@ -4,7 +4,6 @@ import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
-import { decrypt } from "@/utils/EncryptAndDcrypt";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const authContext = createContext({
@@ -27,7 +26,6 @@ const AuthContextProvider = ({ children }) => {
 
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [userLoading, setUserLoading] = useState(false);
   const [runner, setRunner] = useState(1);
   const [authenticate, setAuthenticate] = useState(() => {
     try {
@@ -45,18 +43,7 @@ const AuthContextProvider = ({ children }) => {
   });
 
   const [OpenSideBar, setOpenSideBar] = useState(false);
-  const getLogedInUser = async () => {
-    setUserLoading(true);
-    try {
-      const res = await AxiosHandler.get("/auth/logedin-user");
-      setAuthenticate(res.data.data);
-      sessionStorage.setItem("auth", JSON.stringify(res.data.data))
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setUserLoading(false);
-    }
-  };
+
 
   const Signin = async (data) => {
     const toastId = toast.loading("Loading...");
@@ -159,7 +146,6 @@ const AuthContextProvider = ({ children }) => {
       const res = await AxiosHandler.post("/auth/verify-otp", data);
       toast.dismiss(toastId);
       toast.success(res.data.message);
-      getLogedInUser();
       navigate("/");
     } catch (error) {
       toast.dismiss(toastId);
@@ -231,7 +217,6 @@ const AuthContextProvider = ({ children }) => {
       const res = await AxiosHandler.put("/auth/change-password", data);
       console.log(res);
       toast.success(res.data.message);
-      getLogedInUser();
     } catch (error) {
       toast.error(error.response.data.message);
     }
@@ -255,7 +240,6 @@ const AuthContextProvider = ({ children }) => {
     try {
       const res = await AxiosHandler.put(`/auth/update/${id}`, data);
       toast.success(res.data.message);
-      getLogedInUser();
     } catch (error) {
       toast.error(error?.response?.data?.message);
     } finally {
@@ -317,12 +301,7 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    if (token && !authenticate) {
-      getLogedInUser();
-      const data = decrypt(token);
-    }
-  }, [token]);
+
 
   useEffect(() => {
     if (!authenticate?.role || authenticate?.part_securend) {
@@ -337,7 +316,6 @@ const AuthContextProvider = ({ children }) => {
     <authContext.Provider
       value={{
         loading,
-        userLoading,
         verifyotp,
         ResendOtp,
         Forgotpassword,

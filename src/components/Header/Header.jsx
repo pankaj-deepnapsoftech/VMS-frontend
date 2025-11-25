@@ -3,10 +3,13 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { IoIosArrowDown, IoIosLogOut } from "react-icons/io";
 import { products } from "@/constants/static.data";
 import { useAuthContext } from "@/context";
+import { useMutation } from "@tanstack/react-query";
+import { LogoutUser } from "@/services/Auth.service";
+import { useAuthStore } from "@/store/AuthStore";
 
 // eslint-disable-next-line react/prop-types
 function Header({ setShowMenu, showSidebar }) {
-  const { Logout, authenticate } = useAuthContext();
+  const {authenticate,setToken,setAuthenticate,setTenant} = useAuthStore();
   const naviagte = useNavigate();
   const location = useLocation();
 
@@ -26,11 +29,17 @@ function Header({ setShowMenu, showSidebar }) {
     }));
   };
 
-  const handleLogout = () => {
-    if (window.confirm("Are you sure you want to log out?")) {
-      Logout();
+
+  const {mutate:handleLogout} = useMutation({
+    mutationFn:()=>{
+      setToken(null);
+      setAuthenticate(null);
+      setTenant(null);
+      return LogoutUser()
     }
-  };
+  })
+
+ 
 
   useEffect(() => {
     if (!authenticate?.role) {

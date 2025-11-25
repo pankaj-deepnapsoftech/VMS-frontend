@@ -57,6 +57,7 @@ const MainLayout = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [showSidebar, setShowSideBar] = useState(false);
   const [rejectionReasion, setRejectionReasion] = useState(false);
+  const [selectedTenant,setSelectedTenant] = useState(sessionStorage.getItem("tenant") ? JSON.parse(sessionStorage.getItem("tenant")) : "")
 
   const navigate = useNavigate();
 
@@ -88,7 +89,9 @@ const MainLayout = () => {
 
   const handleSelect = ({ value, label }) => {
     setTenantId(value);
-    setTenant({ label, value });
+    setSelectedTenant({value,label})
+    setTenant(value);
+    sessionStorage.setItem("tenant",JSON.stringify({value,label}))
   };
 
   useEffect(() => {
@@ -243,9 +246,9 @@ const MainLayout = () => {
                   <Select
                     className="custom-scrollbar w-[250px] absolute left-4 basic-single"
                     classNamePrefix="select"
-                    defaultValue={tenant}
+                    defaultValue={selectedTenant}
                     onChange={handleSelect}
-                    value={tenant}
+                    value={selectedTenant}
                     isSearchable={true}
                     options={TenantAllData}
                     theme={darkTheme}
