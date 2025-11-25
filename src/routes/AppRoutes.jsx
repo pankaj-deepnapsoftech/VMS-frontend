@@ -5,10 +5,12 @@ import {
   ResetPassword,
   VerifyOtp,
 } from "@/constants/Components-lazy-loading/components.Lazy";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { AssertInventorySkeletonLayout } from "@/Skeletons/AssetInventory/AssetInventorySkeleton";
 import MainLayoutSkeleton from "@/Skeletons/MainLayout/MainLayoutSkeleton";
 import { useAuthStore } from "@/store/AuthStore";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { GetLogedInUser } from "@/services/Auth.service";
 
 const Solutions = lazy(() => import("@/pages/Auth/Solutions"));
 const Pricing = lazy(() => import("@/pages/Auth/Pricing"));
@@ -17,7 +19,16 @@ const ForgotPassword = lazy(() => import("@/pages/Auth/ForgotPassword"));
 const SignIn = lazy(() => import("@/pages/Auth/SignIn"));
 
 const AppRoutes = () => {
-  const { authenticate, token } = useAuthStore();
+  const { authenticate, token, setAuthenticate } = useAuthStore();
+  console.log("this is token",token)
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["login-user", { token }],
+    queryFn: () => GetLogedInUser(),
+    enabled: !!token,
+    placeholderData: keepPreviousData
+  })
+
 
   // Check if user is authenticated and verify their login and email
   const isAuthenticated = token && authenticate?.email_verification;
@@ -36,6 +47,16 @@ const AppRoutes = () => {
     }
     return []; // Always return an array
   };
+
+  useEffect(() => {
+    if (data) {
+      setAuthenticate(data)
+    }
+  }, [data])
+
+  if (isLoading) {
+    return "loading..."
+  }
 
   return (
     <Suspense fallback={<div>Loading...</div>}>

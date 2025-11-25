@@ -28,7 +28,7 @@ import { customStyles, darkTheme } from "@/constants/constants.data";
 import ChangePasswordModal from "@/modals/ChangePasswordModal";
 import SecurityQuestions from "@/pages/Auth/Secuirity";
 import { ReasonModal } from "@/components/modal/Reason";
-import { useAuthStore } from "@/store/AuthSore";
+import { useAuthStore } from "@/store/AuthStore";
 
 const MainLayout = () => {
   const { notificationData, NotificationsViewed } =
