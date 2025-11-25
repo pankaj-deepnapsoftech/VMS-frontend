@@ -3,10 +3,12 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { IoIosArrowDown, IoIosLogOut } from "react-icons/io";
 import { products } from "@/constants/static.data";
 import { useAuthContext } from "@/context";
+import { useAuthStore } from "@/store/AuthStore";
 
 // eslint-disable-next-line react/prop-types
 function Header({ setShowMenu, showSidebar }) {
-  const { Logout, authenticate } = useAuthContext();
+  const { Logout} = useAuthContext();
+  const {authenticate} = useAuthStore();
   const naviagte = useNavigate();
   const location = useLocation();
 

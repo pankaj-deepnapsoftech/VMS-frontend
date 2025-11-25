@@ -34,6 +34,7 @@ import {
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 import { getAllInfrastructureAsset } from "@/services/InfraStructureAsset.service";
 import { useAuthStore } from "@/store/AuthStore";
+import { Country, State, City } from "country-state-city";
 
 export default function BusinessApplications() {
   // context api hooks
@@ -44,10 +45,12 @@ export default function BusinessApplications() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [model, setmodel] = useState(false);
   const [editable, setEditable] = useState(null);
-  const [countryData, setcountryData] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
+  const [countryData, setCountryData] = useState([]);
+  const [stateData, setStateData] = useState([]);
+  const [cityData, setCityData] = useState([]);
 
   // ======================== all tenstack query start here ===================================
   const { data: businessApplication, isLoading: isBusinessApplicationLoading } =
@@ -167,16 +170,16 @@ export default function BusinessApplications() {
     XLSX.writeFile(workbook, "business-applications.xlsx");
   };
 
-  const GetCountryData = async () => {
-    try {
-      const res = await axios.get(
-        "https://countriesnow.space/api/v0.1/countries/states"
-      );
-      setcountryData(res.data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const GetCountryData = async () => {
+  //   try {
+  //     const res = await axios.get(
+  //       "https://countriesnow.space/api/v0.1/countries/states"
+  //     );
+  //     setcountryData(res.data.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const handleFileChange = (e) => {
     if (!e.target.files[0]) {
@@ -197,10 +200,23 @@ export default function BusinessApplications() {
   };
 
   useEffect(() => {
-    if (token) {
-      GetCountryData();
+    setCountryData(Country.getAllCountries());
+  }, []);
+
+  useEffect(() => {
+    if (values.country) {
+      const states = State.getStatesOfCountry(values.country);
+      setStateData(states || []);
+      setCityData([]); // Reset city dropdown
     }
-  }, [currentPage, tenant]);
+  }, [values.country]);
+
+  useEffect(() => {
+    if (values.country && values.state) {
+      const cities = City.getCitiesOfState(values.country, values.state);
+      setCityData(cities || []);
+    }
+  }, [values.state]);
 
   if (isViewAccess(authenticate, location)) {
     return <Access />;
@@ -533,20 +549,17 @@ export default function BusinessApplications() {
                       Country
                     </label>
                     <select
-                      type="text"
-                      placeholder="What is your title?"
-                      className="w-full bg-slate-800 border border-slate-600 rounded-md px-3 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-slate-500 transition-colors"
                       name="country"
                       value={values.country}
-                      onBlur={handleBlur}
                       onChange={handleChange}
+                      className="w-full bg-slate-800 border border-slate-600 rounded-md px-3 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-slate-500 transition-colors"
                     >
                       <option value={"select Country"} selected>
                         select Country
                       </option>
-                      {countryData?.map((item, index) => (
-                        <option key={index} value={item.name}>
-                          {item.name}
+                      {countryData.map((c) => (
+                        <option key={c.isoCode} value={c.isoCode}>
+                          {c.name}
                         </option>
                       ))}
                     </select>
@@ -560,25 +573,19 @@ export default function BusinessApplications() {
                       State
                     </label>
                     <select
-                      type="text"
-                      placeholder="What is your title?"
-                      className="w-full bg-slate-800 border border-slate-600 rounded-md px-3 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-slate-500 transition-colors"
                       name="state"
                       value={values.state}
-                      onBlur={handleBlur}
                       onChange={handleChange}
+                      className="w-full bg-slate-800 border border-slate-600 rounded-md px-3 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-slate-500 transition-colors"
                     >
                       <option value={"select value"} selected>
                         select value
                       </option>
-                      {values.country &&
-                        countryData
-                          .filter((item) => item.name === values.country)[0]
-                          ?.states?.map((item, index) => (
-                            <option key={index} value={item.name}>
-                              {item.name}
-                            </option>
-                          ))}
+                      {stateData.map((s) => (
+                        <option key={s.isoCode} value={s.isoCode}>
+                          {s.name}
+                        </option>
+                      ))}
                     </select>
                     {errors.state && touched.state && (
                       <p className="text-red-400">{errors.state}</p>
@@ -591,15 +598,21 @@ export default function BusinessApplications() {
                     <label className="block text-sm font-medium text-slate-300">
                       City
                     </label>
-                    <input
-                      type="text"
-                      placeholder="What is your title?"
-                      className="w-full bg-slate-800 border border-slate-600 rounded-md px-3 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-slate-500 transition-colors"
+                    <select
                       name="city"
                       value={values.city}
-                      onBlur={handleBlur}
                       onChange={handleChange}
-                    />
+                      className="w-full bg-slate-800 border border-slate-600 rounded-md px-3 py-2 text-white"
+                    >
+                      <option value="">Select City</option>
+
+                      {cityData.map((city) => (
+                        <option key={city.name} value={city.name}>
+                          {city.name}
+                        </option>
+                      ))}
+                    </select>
+
                     {errors.city && touched.city && (
                       <p className="text-red-400">{errors.city}</p>
                     )}
@@ -619,7 +632,7 @@ export default function BusinessApplications() {
                       onChange={handleChange}
                     >
                       <option value={"select value"} selected>
-                        select value
+                        select state
                       </option>
                       <option value={"Mobile"}>Mobile</option>
                       <option value={"Web"}>Web</option>
