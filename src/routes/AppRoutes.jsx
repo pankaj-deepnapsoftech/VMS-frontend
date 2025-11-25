@@ -31,7 +31,6 @@ const AppRoutes = () => {
   // Check if user is authenticated and verify their login and email
   const isAuthenticated = token && (authenticate?.email_verification || data?.email_verification);
 
-  console.log("this is just testing ==========>>>>",!isAuthenticated)
 
   const getRoleBasedRoutes = () => {
     if (isAuthenticated && !authenticate?.role) {

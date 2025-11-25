@@ -18,8 +18,10 @@ export const LogoutUser = async () => {
 
 export const LoginUser = async (data) => {
     const res = await AxiosHandler.post("/auth/login", data);
-    const token = NewDecryptionToken(res.data.token)
+    const token = NewDecryptionToken(res.data.token);
+    Cookies.set("AT", token, { expires: 1, secure: true });
     AxiosHandler.defaults.headers.authorization = `Bearer ${token}`;
+    return {...res.data,token};
     
 }
 

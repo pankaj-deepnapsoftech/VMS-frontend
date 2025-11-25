@@ -6,11 +6,42 @@ import ReCAPTCHA from "react-google-recaptcha";
 import "./../Css/SignInAnimation.css";
 import { SignInValidation } from "@/Validation/AuthValidation";
 import { config } from "@/config/env.config";
+import { useMutation } from "@tanstack/react-query";
+import { LoginUser } from "@/services/Auth.service";
+import { useAuthStore } from "@/store/AuthStore";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const SignIn = () => {
-  const { Signin, Verifyrecaptcha } = useAuthContext();
+  const {Verifyrecaptcha } = useAuthContext();
+  const {setToken} = useAuthStore(state => state);
   const [togglePassword, setTogglePassword] = useState(false);
   const [disable, setDisable] = useState(true);
+  const navigate = useNavigate();
+
+ const { mutate: Signin } = useMutation({
+  mutationFn: (data) => {
+    // RETURN this so React Query can handle it
+    return LoginUser(data); 
+  },
+  onSuccess: (result) => {
+    console.log("Login result =", result);
+
+    setToken(result.token);
+
+    if (!result.user.email_verification) {
+      navigate("/verify-otp");
+    } else {
+      navigate("/");
+    }
+
+    toast.success(result.message);
+  },
+  onError: (error) => {
+    toast.error(error?.message || "Login failed");
+  }
+});
+
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
