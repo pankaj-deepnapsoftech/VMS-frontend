@@ -1,5 +1,4 @@
 import { AllowedPaths } from "@/constants/static.data";
-import { useAuthContext } from "@/context";
 import RoleModel from "@/modals/RoleModel";
 import { useState } from "react";
 import { BiPlus } from "react-icons/bi";
@@ -17,10 +16,11 @@ import Access from "@/components/role/Access";
 import { getRoles, deleteRoles } from "../services/ManageRoles.service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
+import { useAuthStore } from "@/store/AuthStore";
 
 const Roles = () => {
   // all context api hooks
-  const { token, authenticate } = useAuthContext();
+  const { token, authenticate } = useAuthStore();
 
   // location hook
   const location = useLocation();

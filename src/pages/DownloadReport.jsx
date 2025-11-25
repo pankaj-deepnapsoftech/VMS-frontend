@@ -9,9 +9,11 @@ import Select from "react-select";
 import "react-datepicker/dist/react-datepicker.css";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { DownloadReportService } from "@/services/Reports.service";
+import { useAuthStore } from "@/store/AuthStore";
 
 export default function DownloadReports() {
-  const { token, UserViaTenant, GetTenantData, tenant } = useAuthContext();
+  const {UserViaTenant, GetTenantData} = useAuthContext();
+  const {token, tenant} = useAuthStore()
   const {
     createMailReport,
     getMailReport,

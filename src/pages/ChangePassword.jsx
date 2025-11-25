@@ -1,11 +1,11 @@
 import  { useState } from "react";
 import { EyeIcon, EyeOffIcon, LockIcon } from "lucide-react";
 import { useAuthContext } from "@/context";
+import { useAuthStore } from "@/store/AuthStore";
 
 export default function PasswordChange() {
-  const { ChangePassword, GetSecuirityQuestion, authenticate } =
-    useAuthContext();
-
+  const { ChangePassword, GetSecuirityQuestion} = useAuthContext();
+  const {authenticate} = useAuthStore()
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);

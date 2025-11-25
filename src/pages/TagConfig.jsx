@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { useAuthContext } from "@/context";
 import { useFormik } from "formik";
 import { tagValidation } from "@/Validation/TagValidation";
 import { RiEdit2Line } from "react-icons/ri";
@@ -19,12 +18,13 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 import {getTags,deleteTags, createTags,updateTags} from "@/services/ManageTags.service";
+import { useAuthStore } from "@/store/AuthStore";
 
 
 
 export default function TagsPage() {
   
-  const { token, authenticate } = useAuthContext();
+  const { token, authenticate } = useAuthStore();
   const location = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editTag, setEditTag] = useState(null);

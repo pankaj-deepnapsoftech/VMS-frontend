@@ -1,12 +1,10 @@
 import InputField from "@/components/InputField";
 import ReportModal from "@/components/modal/ReportModal";
 import NoDataFound from "@/components/NoDataFound";
-import {
-  useAuthContext,
-} from "@/context";
 import { getAllInProgressAssessment } from "@/services/Assessment.service";
 import { DeleteReportService, GetAllReportsService, UpdateReportService, UploadReportService } from "@/services/Reports.service";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
+import { useAuthStore } from "@/store/AuthStore";
 import {
   DeleteImage,
   Imageuploader,
@@ -27,7 +25,7 @@ const Reports = () => {
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const { token, tenant } = useAuthContext();
+  const { token, tenant } = useAuthStore();
   const [file, setFile] = useState("");
   const [isEdit, setIsEdit] = useState(false);
   const [editData, setEditData] = useState(null);

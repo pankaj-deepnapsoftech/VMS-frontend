@@ -1,14 +1,14 @@
 /* eslint-disable react/prop-types */
 import { createContext, useState } from "react";
-import { useAuthContext } from "..";
 import { AxiosHandler } from "@/config/AxiosConfig";
+import { useAuthStore } from "@/store/AuthStore";
 
 export const RemeditionContext = createContext();
 
 const RemeditionContextProvider = ({ children }) => {
 
   const [datafetchCount, setdatafetchCount] = useState(0);
-  const { authenticate } = useAuthContext();
+  const { authenticate } = useAuthStore();
 
   const [targetStatusData, setTargetStatusData] = useState([]);
   const [dataViaStatus, setDataViaStatus] = useState([]);

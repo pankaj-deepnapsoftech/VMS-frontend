@@ -4,16 +4,17 @@ import {
   Download,
   Settings,
 } from "lucide-react";
-import { useAIVAContext, useAuthContext } from "@/context";
+import { useAIVAContext} from "@/context";
 import AssessmentModal from "@/components/modal/AssessmentModal";
 import "react-circular-progressbar/dist/styles.css";
 import Pagination from "./Pagination";
 import NoDataFound from "@/components/NoDataFound";
 import { keepPreviousData, useQueries, useQuery } from "@tanstack/react-query";
 import { getAllApplicationData } from "@/services/BusinessApplication.service";
+import { useAuthStore } from "@/store/AuthStore";
 
 export default function AssessmentCenter() {
-  const { tenant, token } = useAuthContext();
+  const { tenant, token } = useAuthStore();
 
   // ============= tenstack query start here =====================
 

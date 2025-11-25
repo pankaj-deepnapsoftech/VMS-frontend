@@ -1,6 +1,5 @@
 import {useState } from "react";
 import {
-  useAuthContext,
   useVulnerabililtyDataContext,
 } from "@/context";
 import { IoSearch } from "react-icons/io5";
@@ -14,10 +13,11 @@ import { handlerSeverity } from "@/utils/vulnerableOperations";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { DeleteVulnerableData, getAllVulnerableData } from "@/services/Vulnerable.service";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
+import { useAuthStore } from "@/store/AuthStore";
 
 export default function VulnerabilityData() {
   const { loading } = useVulnerabililtyDataContext();
-  const { token, tenant } = useAuthContext();
+  const { token, tenant } = useAuthStore();
   const [currentPage, setCurrentPage] = useState(1);
 const queryClient = useQueryClient();
 

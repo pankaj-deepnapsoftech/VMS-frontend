@@ -1,15 +1,15 @@
 /* eslint-disable react/prop-types */
 import { AxiosHandler } from "@/config/AxiosConfig";
+import { useAuthStore } from "@/store/AuthStore";
 import { createContext, useEffect, useState, } from "react";
 import toast from "react-hot-toast";
-import { useAuthContext } from "..";
 
 export const MailContext = createContext();
 
 
 const MailContextProvider = ({ children }) => {
   const [scheduleMailData, setscheduleMailData] = useState()
-  const {tenant} = useAuthContext()
+  const {tenant} = useAuthStore()
   const createMailReport = async (data) => {
     const toastId = toast.loading("Loading...");
     try {

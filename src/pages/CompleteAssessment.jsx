@@ -11,7 +11,6 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { RiEdit2Line } from "react-icons/ri";
 import { IoSearch } from "react-icons/io5";
 import NoDataFound from "@/components/NoDataFound";
-import { useAuthContext } from "@/context";
 import SchedulingAssessmentPage from "./SchedulingAssessment";
 import Access from "@/components/role/Access";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -20,12 +19,13 @@ import {
   getInCompletedAssessment,
 } from "@/services/Assessment.service";
 import AssessmentSkeleton from "@/Skeletons/Assessment/AssessmentSkeleton";
+import { useAuthStore } from "@/store/AuthStore";
 
 const PendingAssessment = () => {
   const queryClient = useQueryClient();
 
   // all context api hooks
-  const { token, authenticate, tenant } = useAuthContext();
+  const { token, authenticate, tenant } = useAuthStore();
   const [page, setPage] = useState(1);
 
   const { mutate: DeleteAssesment, isPending: isDeleteAssesmentLoading } =

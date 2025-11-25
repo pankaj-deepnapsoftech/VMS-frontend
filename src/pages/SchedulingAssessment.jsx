@@ -3,12 +3,12 @@ import { useState } from "react";
 import { SchedulingAssessmentValidation } from "@/Validation/SchedulingAssessmentValidation";
 import { useFormik } from "formik";
 import { MdClose } from "react-icons/md";
-import { useAuthContext } from "@/context";
 import { IoClose } from "react-icons/io5";
 import { handleFileChange } from "@/utils/CheckFileType";
 import { ImageUploader } from "@/utils/ImagesUploader";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CreateScheduleAssessment } from "@/services/Assessment.service";
+import { useAuthStore } from "@/store/AuthStore";
 
 function SchedulingAssessmentPage({ editable, setEditable }) {
 
@@ -35,7 +35,7 @@ function SchedulingAssessmentPage({ editable, setEditable }) {
   // all context api hooks
 
 
-  const { token, tenant } = useAuthContext();
+  const { token, tenant } = useAuthStore();
 
   const [isOpen, setIsOpen] = useState(false);
   const [file, setFile] = useState("");

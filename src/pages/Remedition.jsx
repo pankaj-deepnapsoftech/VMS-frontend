@@ -1,6 +1,7 @@
 import  { useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis,  Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import { useAuthContext, useRemeditionContext } from '@/context';
+import {useRemeditionContext } from '@/context';
+import { useAuthStore } from '@/store/AuthStore';
 
 
 
@@ -18,7 +19,7 @@ function Remedition() {
 
   } = useRemeditionContext()
 
-  const { token } = useAuthContext()
+  const { token } = useAuthStore()
 
 
   useEffect(() => {
