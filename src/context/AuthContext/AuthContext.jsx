@@ -47,49 +47,6 @@ const AuthContextProvider = ({ children }) => {
 
 
 
-  const Signup = async (data, navigation) => {
-    const toastId = toast.loading("Loading...");
-
-    console.log("this is context data", data);
-
-    let newData;
-
-    if (data.role !== "ClientSME") {
-      newData = {
-        Organization: data.Organization,
-        email: data.email,
-        full_name: data.full_name,
-        password: data.password,
-        phone: data.phone,
-        role: data.role,
-        security_questions: data.security_questions,
-        employee_approve: data.employee_approve,
-        email_verification: data.email_verification,
-      };
-    } else {
-      newData = data;
-    }
-
-    setLoading(true);
-    try {
-      const res = await AxiosHandler.post("/auth/create", newData);
-
-      if (!navigation) {
-        AxiosHandler.defaults.headers.authorization = `Bearer ${res.data.token}`;
-        Cookies.set("token", res.data.token, { expires: 1 });
-        setToken(res.data.token);
-        navigate("/");
-      }
-
-      toast.dismiss(toastId);
-      toast.success(res.data.message);
-    } catch (error) {
-      toast.dismiss(toastId);
-      toast.error(error?.response?.data?.message);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const Forgotpassword = async (data) => {
     const toastId = toast.loading("Loading...");
@@ -161,26 +118,6 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const Logout = async () => {
-    const toastId = toast.loading("Loading...");
-
-    setLoading(true);
-    try {
-      const res = await AxiosHandler.get("/auth/logout");
-      Cookies.remove("AT", res.data.token);
-      toast.dismiss(toastId);
-      toast.success(res.data.message);
-      setAuthenticate(null);
-      setGetDataFromSession(null);
-      sessionStorage.removeItem("VROC");
-      navigate("/");
-    } catch (error) {
-      toast.dismiss(toastId);
-      toast.error(error?.response?.data?.message);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const ChangePassword = async (data) => {
     try {
@@ -290,8 +227,6 @@ const AuthContextProvider = ({ children }) => {
         ResendOtp,
         Forgotpassword,
         Resetpassword,
-        Signup,
-        Logout,
         token,
         authenticate,
         ChangePassword,
