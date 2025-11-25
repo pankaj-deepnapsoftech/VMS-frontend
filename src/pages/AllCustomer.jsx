@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { FaRegTrashAlt } from "react-icons/fa";
 import Pagination from "./Pagination";
-import Loader from "@/components/Loader/Loader";
 import Addtanent from "./Addtanent";
 import AccessPartner from "@/modals/AccessPartner";
 import useAccessPartner from "@/hooks/AccessPartner";
@@ -140,7 +139,7 @@ export default function AllCustomer() {
                             "Industry",
                             "Risk Appetite",
                             isHaveAction() && "Actions",
-                          ].map((header) => (
+                          ]?.map((header) => (
                             <th
                               key={header}
                               className="px-4 py-3 border-b border-gray-600 font-medium"
