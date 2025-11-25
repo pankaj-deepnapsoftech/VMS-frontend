@@ -263,7 +263,7 @@ export default function TenantDashboard() {
                           "Data Sensitivity",
                           "Service Role",
                           isHaveAction() && "Actions",
-                        ].map((header) => (
+                        ]?.map((header) => (
                           <th
                             key={header}
                             className="px-4 py-3 border-b border-gray-600 font-medium"
@@ -274,7 +274,7 @@ export default function TenantDashboard() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-700">
-                      {infraAssetdata.map((tenant, index) => (
+                      {infraAssetdata?.map((tenant, index) => (
                         <tr
                           key={tenant._id}
                           className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
@@ -587,7 +587,7 @@ export default function TenantDashboard() {
                     {AllTags.length > 0 &&
                       AllTags.filter(
                         (item) => item.related === "Data Sensitivity"
-                      ).map((item) => (
+                      )?.map((item) => (
                         <option key={item._id} value={item._id}>
                           {item.tag_name}
                         </option>
