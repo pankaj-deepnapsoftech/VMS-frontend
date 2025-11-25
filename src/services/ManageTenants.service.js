@@ -2,9 +2,8 @@ import { AxiosHandler } from "@/config/AxiosConfig";
 import toast from "react-hot-toast";
 
 
-export const getTenants = async ({ page, tenant }) => {
-  const res = await AxiosHandler.get(`/tenant/get?page=${page}&
-  tenant=${tenant ? tenant : ""}`);
+export const getTenants = async ({ page }) => {
+  const res = await AxiosHandler.get(`/tenant/get?page=${page}`);
   return res.data.data || [];
 };
 
