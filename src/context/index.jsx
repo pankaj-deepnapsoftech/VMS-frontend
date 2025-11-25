@@ -52,7 +52,7 @@ export const useAuthContext = () => useContext(authContext);
 // working on it
 export const useDataContext = () => useContext(DataContext);
 export const useVulnerabililtyDataContext = () =>  useContext(VulnerabililtyDataContext);
-export const useAllEmployeeContext = () => useContext(AllEmployeeContext);
+// export const useAllEmployeeContext = () => useContext(AllEmployeeContext);
 export const useJiraContext = () => useContext(JiraContext);
 export const useApplicationVulnerabilityContext = () =>  useContext(ApplicationVulnerabilityContext);
 export const useRemeditionContext = () => useContext(RemeditionContext);
