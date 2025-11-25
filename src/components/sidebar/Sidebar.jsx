@@ -1,13 +1,26 @@
 import { useAuthContext } from "@/context";
+import { LogoutUser } from "@/services/Auth.service";
+import { useAuthStore } from "@/store/AuthStore";
+import { useMutation } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 import { IoClose } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
-  const { setOpenSideBar, setGetDataFromSession, Logout, OpenSideBar } =
+  const { setOpenSideBar, setGetDataFromSession, OpenSideBar } =
     useAuthContext();
+    const {setToken,setAuthenticate,setTenant} = useAuthStore();
   const navigate = useNavigate();
   const sidebarRef = useRef(null);
+
+    const {mutate:Logout} = useMutation({
+    mutationFn:()=>{
+      setToken(null);
+      setAuthenticate(null);
+      setTenant(null);
+      return LogoutUser()
+    }
+  })
 
   // Detect outside click
   useEffect(() => {
