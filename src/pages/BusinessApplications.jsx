@@ -288,7 +288,7 @@ export default function BusinessApplications() {
                           "Modify Criticality",
                           "Infrastructure Asset",
                           isHaveAction() && "Actions",
-                        ].map((header) => (
+                        ]?.map((header) => (
                           <th
                             key={header}
                             className="px-4 py-3 border-b border-gray-600 font-medium"
@@ -299,7 +299,7 @@ export default function BusinessApplications() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-700">
-                      {businessApplication.map((tenant) => (
+                      {businessApplication?.map((tenant) => (
                         <tr
                           key={tenant._id}
                           className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
@@ -544,7 +544,7 @@ export default function BusinessApplications() {
                       <option value={"select Country"} selected>
                         select Country
                       </option>
-                      {countryData.map((item, index) => (
+                      {countryData?.map((item, index) => (
                         <option key={index} value={item.name}>
                           {item.name}
                         </option>
@@ -574,7 +574,7 @@ export default function BusinessApplications() {
                       {values.country &&
                         countryData
                           .filter((item) => item.name === values.country)[0]
-                          ?.states.map((item, index) => (
+                          ?.states?.map((item, index) => (
                             <option key={index} value={item.name}>
                               {item.name}
                             </option>

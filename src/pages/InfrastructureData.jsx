@@ -173,7 +173,7 @@ export default function InfrastructureData() {
                       "ACS",
                       "Status",
                       isHaveAction() && "Actions",
-                    ].map((header) => (
+                    ]?.map((header) => (
                       <th
                         title={showTitle(header)}
                         key={header}
@@ -185,7 +185,7 @@ export default function InfrastructureData() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-700 relative">
-                  {filteredData.map((item, index) => (
+                  {filteredData?.map((item, index) => (
                     <tr
                       key={index}
                       className="border-b border-slate-700 hover:bg-[#1E293B] transition relative"
