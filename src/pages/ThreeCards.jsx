@@ -9,10 +9,10 @@ import {
   Legend,
   ArcElement,
 } from "chart.js";
-import { useAuthContext } from "@/context";
 import { getEighteenthChartData, getElaventhChartData, getFifteenthChartData, getFourteenthChartData, getNineteenthChartData, getSixteenChartData, getTharteenthChartData } from "@/services/TVMDashboard.service";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { AssackExposureSkeletonLoading } from "@/Skeletons/ExecutiveDashbord/thirdSection";
+import { useAuthStore } from "@/store/AuthStore";
 
 ChartJS.register(
   CategoryScale,
@@ -25,7 +25,7 @@ ChartJS.register(
 );
 
 const Dashboard = () => {
-  const { token, tenant, selectedYear } = useAuthContext();
+  const { token, tenant, selectedYears: selectedYear } = useAuthStore();
 
   const { data: topFiveinfraAssetCount, isLoading: isTopFiveinfraAssetCountLoading } = useQuery({
     queryKey: ["TVMDashboard-eleventh-chart", [selectedYear, tenant]],

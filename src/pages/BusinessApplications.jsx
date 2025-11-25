@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Trash2, Edit, X, Boxes } from "lucide-react";
 import { BiPlus } from "react-icons/bi";
 import { useFormik } from "formik";
-import { useAuthContext } from "@/context";
 import { BusinessApplicationValidation } from "@/Validation/BusinessApp.validation";
 import axios from "axios";
 import * as XLSX from "xlsx";
@@ -34,10 +33,11 @@ import {
 } from "@/services/BusinessApplication.service";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 import { getAllInfrastructureAsset } from "@/services/InfraStructureAsset.service";
+import { useAuthStore } from "@/store/AuthStore";
 
 export default function BusinessApplications() {
   // context api hooks
-  const { token, authenticate, tenant } = useAuthContext();
+  const { token, authenticate, tenant } = useAuthStore();
   const queryClient = useQueryClient();
 
   // use States

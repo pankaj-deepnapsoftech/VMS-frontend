@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useAuthContext } from "@/context";
+import { useAuthStore } from "@/store/AuthStore";
 import { useState } from "react";
 
 const securityQuestions = [
@@ -17,7 +18,8 @@ const securityQuestions = [
 
 export default function SecurityQuestions() {
   const [questions, setQuestions] = useState([{ question: "", answer: "" }]);
-  const { UpdateProfile,authenticate } = useAuthContext();
+  const { UpdateProfile} = useAuthContext();
+  const {authenticate} = useAuthStore()
 
 
   const handleQuestionChange = (index, field, value) => {

@@ -12,7 +12,6 @@ import { IoSearch } from "react-icons/io5";
 import { RiEdit2Line } from "react-icons/ri";
 import Pagination from "./Pagination";
 import { useFormik } from "formik";
-import { useAuthContext } from "@/context";
 import Access from "@/components/role/Access";
 import { useLocation } from "react-router-dom";
 import {
@@ -23,10 +22,11 @@ import {
 } from "@/services/ManageSla.service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
+import { useAuthStore } from "@/store/AuthStore";
 
 const Severity = () => {
   // all context apis here
-  const { token, authenticate } = useAuthContext();
+  const { token, authenticate } = useAuthStore();
 
   // location hook to get the current URL
   const location = useLocation();

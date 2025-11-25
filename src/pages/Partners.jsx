@@ -1,5 +1,4 @@
 import InputField from "@/components/InputField";
-import { useAuthContext } from "@/context";
 import { PartnersSchema } from "@/Validation/PartnerrValidations";
 import { useFormik } from "formik";
 import { useState } from "react";
@@ -34,9 +33,10 @@ import {
 } from "../services/ManagePartners.service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
+import { useAuthStore } from "@/store/AuthStore";
 
 const Partners = () => {
-  const { token, authenticate } = useAuthContext();
+  const { token, authenticate } = useAuthStore();
   const location = useLocation();
   const [showModal, setModal] = useState(false);
   const [editTable, setEdittable] = useState(false);

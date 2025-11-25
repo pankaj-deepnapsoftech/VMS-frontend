@@ -4,6 +4,7 @@ import { FiDatabase, FiSettings } from "react-icons/fi";
 import { products } from "@/constants/static.data";
 import "./animation.css";
 import { GrShieldSecurity } from "react-icons/gr";
+import { useAuthStore } from "@/store/AuthStore";
 
 // Card component with gradient border
 // eslint-disable-next-line react/prop-types
@@ -25,7 +26,8 @@ const Card = ({ children, HandleClick, borderColor, bg, animate }) => {
 };
 
 const Dashboard = () => {
-  const { authenticate, Logout, setGetDataFromSession } = useAuthContext();
+  const {Logout, setGetDataFromSession } = useAuthContext();
+  const {authenticate} = useAuthStore()
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
   const [showModal, setShowModal] = useState(false);

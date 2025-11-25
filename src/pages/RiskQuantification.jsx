@@ -2,7 +2,6 @@ import { useState } from "react";
 import Pagination from "./Pagination";
 import NoDataFound from "@/components/NoDataFound";
 import { IoSearch } from "react-icons/io5";
-import { useAuthContext } from "@/context";
 import {
   calculateACS,
   calculateALE,
@@ -12,9 +11,10 @@ import {
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 import { getRiskQuantificationData } from "@/services/RiskDetails.service";
+import { useAuthStore } from "@/store/AuthStore";
 
 const RiskOperation = () => {
-  const { token, tenant } = useAuthContext();
+  const { token, tenant } = useAuthStore();
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
 

@@ -1,6 +1,6 @@
 import { AxiosHandler } from "@/config/AxiosConfig";
 import { createContext, useState } from "react";
-import { useAuthContext } from "..";
+import {useAuthStore} from "@/store/AuthStore";
 import toast from "react-hot-toast";
 
 export const AIVAContext = createContext({
@@ -12,7 +12,7 @@ export const AIVAContext = createContext({
 
 // eslint-disable-next-line react/prop-types
 const AIVAContextProvider = ({ children }) => {
-  const { tenant } = useAuthContext();
+  const { tenant } = useAuthStore();
 
   const [AIVAData, setAIVAData] = useState([]);
 

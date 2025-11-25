@@ -10,8 +10,9 @@ import {  BiEditAlt,  } from "react-icons/bi";
 import { RiDeleteBinFill } from "react-icons/ri"
 import * as XLSX from "xlsx";
 import toast from "react-hot-toast";
-import { useAuthContext, useJiraContext } from "@/context";
+import {useJiraContext } from "@/context";
 import Loader from "@/components/Loader/Loader";
+import { useAuthStore } from "@/store/AuthStore";
 
 export const JiraDataTable = () => {
   const {
@@ -30,7 +31,7 @@ export const JiraDataTable = () => {
     DeleteData,
   } = useJiraContext();
 
-  const { token } = useAuthContext();
+  const { token } = useAuthStore();
   const [selectedRows, setSelectedRows] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);

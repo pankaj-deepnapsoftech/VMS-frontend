@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useAuthContext} from "@/context";
 import { CreateExceptionData } from "@/services/Exception.service";
+import { useAuthStore } from "@/store/AuthStore";
 import { Imageuploader } from "@/utils/firebaseImageUploader";
 import { ExpectionValidation } from "@/Validation/Expection.Validation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -9,7 +10,7 @@ import { useState } from "react";
 
 const ExpectionModal = ({ setIsModalOpen, creator, editTable }) => {
 
-  const { tenant } = useAuthContext();
+  const { tenant } = useAuthStore();
   const { UserViaTenant } = useAuthContext();
   const queryClient = useQueryClient();
 

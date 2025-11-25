@@ -2,7 +2,6 @@
 import { createContext, useState } from "react";
 import { AxiosHandler } from "@/config/AxiosConfig";
 import toast from "react-hot-toast";
-import { useAuthContext } from "..";
 
 export const ExceptionContext = createContext();
 

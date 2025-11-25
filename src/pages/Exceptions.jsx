@@ -13,11 +13,11 @@ import {
   Cell,
 } from "recharts";
 import {
-  useAuthContext,
   useExceptionContext,
   useVulnerabililtyDataContext,
 } from "@/context";
 import Loader from "@/components/Loader/Loader";
+import { useAuthStore } from "@/store/AuthStore";
 
 function Exceptions() {
   const { UpdateData, DeleteData } = useVulnerabililtyDataContext();
@@ -33,7 +33,7 @@ function Exceptions() {
     ClientRiskRating,
   } = useExceptionContext();
 
-  const { authenticate, token } = useAuthContext();
+  const { authenticate, token } = useAuthStore();
 
   useEffect(() => {
     if (token) {

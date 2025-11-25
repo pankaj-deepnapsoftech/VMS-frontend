@@ -1,11 +1,13 @@
 
 import { useAuthContext } from "@/context";
+import { useAuthStore } from "@/store/AuthStore";
 import { EditProfileValidation } from "@/Validation/AuthValidation";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 
 export default function UpdateProfileModal() {
-    const {authenticate,ResendOtp,UpdateProfile,setUpdateProfileModal} = useAuthContext();
+    const {ResendOtp,UpdateProfile,setUpdateProfileModal} = useAuthContext();
+    const {authenticate} = useAuthStore()
     const [checkOtp,setCheckOtp] = useState(false);
 
     const { values, errors, touched, handleBlur, handleChange, handleSubmit,setFieldValue } = useFormik({

@@ -1,14 +1,14 @@
 /* eslint-disable react/prop-types */
 import { AxiosHandler } from "@/config/AxiosConfig";
-import { useAuthContext } from "..";
 import { createContext, useState, useEffect } from "react";
 import toast from "react-hot-toast";
+import { useAuthStore } from "@/store/AuthStore";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const DataContext = createContext();
 
 const DataContextProvider = ({ children }) => {
-  const { token } = useAuthContext();
+  const { token } = useAuthStore();
 
   // useState
   const [loading, setLoading] = useState(false);
