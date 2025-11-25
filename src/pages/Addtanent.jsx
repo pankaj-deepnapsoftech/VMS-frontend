@@ -5,12 +5,16 @@ import { useFormik } from "formik";
 import { tenantValidator } from "@/Validation/TenantsValidations";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useMutation,  useQueryClient } from "@tanstack/react-query";
-import { createTenantsService, updateTenantServices } from "@/services/ManageTenants.service";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  createTenantsService,
+  updateTenantServices,
+} from "@/services/ManageTenants.service";
+import { Country, State, City } from "country-state-city";
 
 // eslint-disable-next-line react/prop-types
 const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const [riskScore, setRiskScore] = useState(600);
   const [countryData, setCountryData] = useState([]);
 
@@ -22,21 +26,21 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
 
   // ---------------- all tanstack mutation start here -----------------------
 
-  const { mutate: CreateTenant, isPending: isCreatetenantLoading } = useMutation({
-    mutationFn: (data) => createTenantsService(data),
-    onSuccess:async()=>{
-      await queryClient.invalidateQueries({queryKey:["tenants"]});
-    }
-  })
+  const { mutate: CreateTenant, isPending: isCreatetenantLoading } =
+    useMutation({
+      mutationFn: (data) => createTenantsService(data),
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({ queryKey: ["tenants"] });
+      },
+    });
 
-
-    const { mutate: UpdateTenant, isPending: isUpdateTenantLoading } = useMutation({
-    mutationFn: ({id,data}) => updateTenantServices({id,data}),
-    onSuccess:async()=>{
-      await queryClient.invalidateQueries({queryKey:["tenants"]});
-    }
-  })
-
+  const { mutate: UpdateTenant, isPending: isUpdateTenantLoading } =
+    useMutation({
+      mutationFn: ({ id, data }) => updateTenantServices({ id, data }),
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({ queryKey: ["tenants"] });
+      },
+    });
 
   const formik = useFormik({
     initialValues: editTable || {
@@ -54,7 +58,7 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
     onSubmit: async (values) => {
       try {
         if (editTable) {
-          UpdateTenant({id:values._id,data:values})
+          UpdateTenant({ id: values._id, data: values });
         } else {
           CreateTenant(values);
         }
@@ -68,30 +72,29 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
     },
   });
 
+  const states = State.getStatesOfCountry(formik.values.Country);
+
+  const cities = City.getCitiesOfState(
+    formik.values.Country,
+    formik.values.State
+  );
+
   useEffect(() => {
     setRiskScore(Number(formik.values.Risk_Apetite));
   }, [formik.values.Risk_Apetite]);
 
-  const getCountryData = async () => {
-    try {
-      const res = await axios.get(
-        "https://countriesnow.space/api/v0.1/countries/states"
-      );
-      setCountryData(res.data.data);
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  
 
   useEffect(() => {
-    getCountryData();
+    const countries = Country.getAllCountries();
+    setCountryData(countries);
   }, []);
 
   return (
     <div
-      className={`absolute top-0 left-0 z-50 min-h-screen bg-gradient-custom w-full text-white ${isModalOpen ? "opacity-100 visible" : "opacity-0 invisible"
-        }  transition-opacity duration-500 ease-in-out`}
+      className={`absolute top-0 left-0 z-50 min-h-screen bg-gradient-custom w-full text-white ${
+        isModalOpen ? "opacity-100 visible" : "opacity-0 invisible"
+      }  transition-opacity duration-500 ease-in-out`}
     >
       <div className="w-full flex justify-between items-center py-6 px-10">
         <div className="text-2xl text-center w-full">Company Profile</div>
@@ -235,21 +238,21 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                   </label>
                   <select
                     name="Country"
-                    type="text"
                     value={formik.values.Country}
                     onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    className="w-full bg-zinc-700 text-gray-200 placeholder-gray-500 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                    className="w-full bg-zinc-700 text-gray-200 rounded-md px-4 py-2"
                   >
-                    <option value="" selected disabled>
+                    <option value="" disabled selected>
                       Select Country
                     </option>
+
                     {countryData.map((item, index) => (
-                      <option key={index} value={item.name}>
+                      <option key={index} value={item.isoCode}>
                         {item.name}
                       </option>
                     ))}
                   </select>
+
                   {formik.touched.Country && formik.errors.Country && (
                     <p className="text-red-500 text-xs mt-1">
                       {formik.errors.Country}
@@ -265,25 +268,20 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                     State <span className="text-red-500">*</span>
                   </label>
                   <select
-                    id="State"
                     name="State"
-                    type="text"
                     value={formik.values.State}
                     onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
                     className="w-full bg-zinc-700 text-gray-200 placeholder-gray-500 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
                   >
                     <option value="" selected disabled>
                       Select State
                     </option>
                     {formik.values.Country &&
-                      countryData
-                        .find((item) => item.name === formik.values.Country)
-                        ?.states?.map((state, index) => (
-                          <option key={index} value={state.name}>
-                            {state.name}
-                          </option>
-                        ))}
+                      states.map((state, index) => (
+                        <option key={index} value={state.isoCode}>
+                          {state.name}
+                        </option>
+                      ))}
                   </select>
                   {formik.touched.State && formik.errors.State && (
                     <p className="text-red-500 text-xs mt-1">
@@ -299,15 +297,24 @@ const AddTenant = ({ isModalOpen, setIsModalOpen, editTable, getTenants }) => {
                   >
                     City <span className="text-red-500">*</span>
                   </label>
-                  <input
-                    id="City"
+                  <select
                     name="City"
-                    type="text"
                     value={formik.values.City}
                     onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    className="w-full bg-zinc-700 text-gray-200 placeholder-gray-500 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-                  />
+                    className="w-full bg-zinc-700 text-gray-200 rounded-md px-4 py-2"
+                  >
+                    <option value="" disabled selected>
+                      Select City
+                    </option>
+
+                    {formik.values.State &&
+                      cities.map((city, index) => (
+                        <option key={index} value={city.name}>
+                          {city.name}
+                        </option>
+                      ))}
+                  </select>
+
                   {formik.touched.City && formik.errors.City && (
                     <p className="text-red-500 text-xs mt-1">
                       {formik.errors.City}
