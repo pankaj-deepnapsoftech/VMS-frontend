@@ -28,13 +28,13 @@ import { customStyles, darkTheme } from "@/constants/constants.data";
 import ChangePasswordModal from "@/modals/ChangePasswordModal";
 import SecurityQuestions from "@/pages/Auth/Secuirity";
 import { ReasonModal } from "@/components/modal/Reason";
-import { useAuthStore } from "@/store/AuthStore";
+import { useAuthStore } from "@/store/AuthSore";
 
 const MainLayout = () => {
   const { notificationData, NotificationsViewed } =
     useVulnerabililtyDataContext();
 
-    const {authenticate,setSelectedYear:selectedYears,setTenant,tenant} = useAuthStore((state) => state);
+    const {authenticate,selectedYears,setSelectedYear,setTenant,tenant} = useAuthStore((state) => state);
 
   const {
     updateProfileModal,
