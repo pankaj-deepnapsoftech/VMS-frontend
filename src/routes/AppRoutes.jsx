@@ -18,7 +18,7 @@ const ForgotPassword = lazy(() => import("@/pages/Auth/ForgotPassword"));
 const SignIn = lazy(() => import("@/pages/Auth/SignIn"));
 
 const AppRoutes = () => {
-  const { authenticate, token, setAuthenticate } = useAuthStore();
+  const { authenticate, token, setAuthenticate, setTenant } = useAuthStore();
 
   const { data, isLoading } = useQuery({
     queryKey: ["login-user", { token }],
@@ -40,16 +40,21 @@ const AppRoutes = () => {
       authenticate.role &&
       authenticate.allowed_path
     ) {
-      return PrivateRoutes.filter((item) =>
-        authenticate.allowed_path.some((ite) => ite.value === item.path)
+      const data = [...authenticate.allowed_path,{value: '/user-details',},{value: '/change-password',}];
+     return PrivateRoutes.filter((item) =>
+        data.some((ite) => ite.value === item.path)
       );
+
     }
     return []; // Always return an array
   };
 
   useEffect(() => {
     if (data) {
-      setAuthenticate(data)
+      console.log("this is just testing", data)
+      setAuthenticate(data);
+      setTenant(data?.tenant)
+      sessionStorage.setItem("tenant", JSON.stringify({ label: "", value: data?.tenant }))
     }
   }, [data])
 

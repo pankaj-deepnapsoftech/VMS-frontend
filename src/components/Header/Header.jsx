@@ -121,7 +121,7 @@ function Header({ setShowMenu, showSidebar }) {
       <hr className="border-gray-100 mx-10" />
 
       <nav className="flex-1 mx-2 py-5 space-y-1 hide-scrollbar overflow-scroll pb-72">
-        {navLinks.map((item, index) => (
+        {navLinks.map((item, index) => item.title !== "common-routes" && (
           <div
             key={index}
             className={`py-1 ${

@@ -481,6 +481,26 @@ export const products = [
   //   ],
   // },
 
+   {
+    title: "common-routes",
+    desc: "AI Virtual Analyst",
+    borderColor: "#ee9ca7",
+    icon: AirVent,
+    ShownTitle: "Exposure Management",
+    allowedPath: [
+      {
+        title: "User-details",
+        route: "/user-details",
+        icon: RiHome3Fill,
+      },
+      {
+        title: "Attack Surface Management",
+        route: "/attack-surface",
+        icon: GiTwirlCenter,
+      },
+    ],
+  },
+
   {
     title: "Reports",
     desc: "Generate reports & dashboards",

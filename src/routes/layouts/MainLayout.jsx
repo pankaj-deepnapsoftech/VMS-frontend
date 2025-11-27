@@ -34,7 +34,7 @@ const MainLayout = () => {
   const { notificationData, NotificationsViewed } =
     useVulnerabililtyDataContext();
 
-    const {authenticate,selectedYears,setSelectedYear,setTenant,tenant} = useAuthStore((state) => state);
+  const { authenticate, selectedYears, setSelectedYear, setTenant, tenant } = useAuthStore((state) => state);
 
   const {
     updateProfileModal,
@@ -57,7 +57,7 @@ const MainLayout = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [showSidebar, setShowSideBar] = useState(false);
   const [rejectionReasion, setRejectionReasion] = useState(false);
-  const [selectedTenant,setSelectedTenant] = useState(sessionStorage.getItem("tenant") ? JSON.parse(sessionStorage.getItem("tenant")) : "")
+  const [selectedTenant, setSelectedTenant] = useState(sessionStorage.getItem("tenant") ? JSON.parse(sessionStorage.getItem("tenant")) : "")
 
   const navigate = useNavigate();
 
@@ -89,9 +89,9 @@ const MainLayout = () => {
 
   const handleSelect = ({ value, label }) => {
     setTenantId(value);
-    setSelectedTenant({value,label})
+    setSelectedTenant({ value, label })
     setTenant(value);
-    sessionStorage.setItem("tenant",JSON.stringify({value,label}))
+    sessionStorage.setItem("tenant", JSON.stringify({ value, label }))
   };
 
   useEffect(() => {
@@ -184,7 +184,7 @@ const MainLayout = () => {
     if (!authenticate?.mustChangePassword) {
       openModal();
     }
-  }, [authenticate.mustChangePassword]);
+  }, [authenticate?.mustChangePassword]);
 
   const sidebarRef = useRef(null);
 
@@ -203,7 +203,7 @@ const MainLayout = () => {
     };
   }, []);
 
- 
+
 
   if (authenticate?.security_questions <= 0) {
     return <SecurityQuestions />;
@@ -292,7 +292,7 @@ const MainLayout = () => {
                   }}
                   className="bg-blue-400 text-white rounded-full w-10 h-10 flex items-center justify-center border-2 "
                 >
-                  {authenticate.fname[0].toUpperCase()}
+                  {authenticate?.fname[0]?.toUpperCase()}
                 </button>
               </div>
             </div>
@@ -337,11 +337,10 @@ const MainLayout = () => {
           onMouseLeave={() => setShowSideBar(false)}
           ref={sidebarRef}
           className={`fixed top:24 md:top-14 z-10 flex flex-col justify-between h-full bg-gradient-to-t from-[#151515] to-[#212224] transition-all duration-500 ease-in-out 
-    ${
-      showSidebar
-        ? "lg:w-[25%] xl:w-[20%] 2xl:w-[15%]"
-        : "lg:w-[5%] xl:w-[4%] 2xl:w-[3%]"
-    } 
+    ${showSidebar
+              ? "lg:w-[25%] xl:w-[20%] 2xl:w-[15%]"
+              : "lg:w-[5%] xl:w-[4%] 2xl:w-[3%]"
+            } 
     ${showMenu ? `left-0 ` : "-left-full lg:left-0"}
     whitespace-nowrap
   `}
@@ -357,13 +356,12 @@ const MainLayout = () => {
       <div
         className={`ml-auto transition-all min-h-screen duration-500 ease-in-out 
      bg-gradient-custom bg-black 
-    ${
-      AllowedPath(location.pathname.split("/")[1])
-        ? "w-full"
-        : showSidebar
-        ? "w-full lg:w-[75%] xl:w-[80%] 2xl:w-[85%]"
-        : "w-full lg:w-[95%] xl:w-[96%] 2xl:w-[97%]"
-    }`}
+    ${AllowedPath(location.pathname.split("/")[1])
+            ? "w-full"
+            : showSidebar
+              ? "w-full lg:w-[75%] xl:w-[80%] 2xl:w-[85%]"
+              : "w-full lg:w-[95%] xl:w-[96%] 2xl:w-[97%]"
+          }`}
       >
         <Outlet />
       </div>
