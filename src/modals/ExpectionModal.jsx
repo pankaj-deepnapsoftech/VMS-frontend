@@ -1,17 +1,16 @@
 /* eslint-disable react/prop-types */
-import { useAuthContext} from "@/context";
 import { CreateExceptionData } from "@/services/Exception.service";
 import { useAuthStore } from "@/store/AuthStore";
 import { Imageuploader } from "@/utils/firebaseImageUploader";
 import { ExpectionValidation } from "@/Validation/Expection.Validation";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ErrorMessage, Field, Formik } from "formik";
 import { useState } from "react";
+import {GetTenantDataServices} from "@/services/Auth.service"
 
 const ExpectionModal = ({ setIsModalOpen, creator, editTable }) => {
 
-  const { tenant } = useAuthStore();
-  const { UserViaTenant } = useAuthContext();
+  const { tenant, token } = useAuthStore();
   const queryClient = useQueryClient();
 
   const {mutate:ExceptionCreate,isPending:isExceptionCreateLoading} = useMutation({
@@ -20,6 +19,12 @@ const ExpectionModal = ({ setIsModalOpen, creator, editTable }) => {
       await queryClient.invalidateQueries({queryKey:"Exception"})
     }
   });
+
+       const {data:GetTenantData} = useQuery({
+        queryKey: ["tenant-users", tenant],
+        queryFn: () => GetTenantDataServices(tenant),
+        enabled: !!tenant && !!token,
+      });
 
   const [handleImageLoading, setImageLoading] = useState(false)
 
@@ -166,7 +171,7 @@ const ExpectionModal = ({ setIsModalOpen, creator, editTable }) => {
                     className="w-full bg-input rounded px-3 py-2 text-white border border-gray-300"
                   >
                     <option value="">Select User</option>
-                    {UserViaTenant.map((user) => (
+                    {GetTenantData.map((user) => (
                       <option key={user._id} value={user._id}>
                         {user.email}
                       </option>

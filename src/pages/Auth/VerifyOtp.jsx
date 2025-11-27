@@ -1,15 +1,49 @@
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
-import { useAuthContext } from "@/context";
 import { VerifyOtpValidation } from "@/Validation/AuthValidation";
 import { useEffect, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { verifyOtpService, ResendOtpServices } from "@/services/Auth.service";
+import { toast } from "react-hot-toast";
 
 function VerifyOtp() {
-  const { verifyotp, ResendOtp, loading } = useAuthContext();
-
   const [timer, setTimer] = useState(60);
   const [isResendDisabled, setIsResendDisabled] = useState(true);
 
+  // =======================
+  //  RESEND OTP MUTATION
+  // =======================
+  const { mutate: resendOtp, isPending: resendLoading } = useMutation({
+    mutationFn: (email) => ResendOtpServices(email),
+
+    onSuccess: (res) => {
+      toast.success(res?.message || "OTP Resent Successfully");
+    },
+
+    onError: (err) => {
+      toast.error(err?.response?.data?.message || "Failed to resend OTP");
+    },
+  });
+
+  // =======================
+  //  VERIFY OTP MUTATION
+  // =======================
+  const { mutate: verifyOtp, isPending: verifyLoading } = useMutation({
+    mutationFn: (data) => verifyOtpService(data),
+
+    onSuccess: (res) => {
+      toast.success(res?.message || "OTP Verified");
+      window.location.href = "/"; // navigate("/") alternative
+    },
+
+    onError: (err) => {
+      toast.error(err?.response?.data?.message || "OTP Verification Failed");
+    },
+  });
+
+  // =======================
+  // TIMER LOGIC
+  // =======================
   useEffect(() => {
     let interval = null;
     if (timer > 0) {
@@ -24,20 +58,17 @@ function VerifyOtp() {
     return () => clearInterval(interval);
   }, [timer]);
 
-  const {
-    values,
-    errors,
-    touched,
-    handleBlur,
-    handleChange,
-    handleSubmit,
-  } = useFormik({
-    initialValues: { otp: "" },
-    validationSchema: VerifyOtpValidation,
-    onSubmit: (value) => {
-      verifyotp(value);
-    },
-  });
+  // =======================
+  // FORM LOGIC — FORMIK
+  // =======================
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: { otp: "" },
+      validationSchema: VerifyOtpValidation,
+      onSubmit: (value) => {
+        verifyOtp(value);
+      },
+    });
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 px-4">
@@ -64,11 +95,12 @@ function VerifyOtp() {
             )}
           </div>
 
+          {/* RESEND OTP BUTTON */}
           <button
             type="button"
-            disabled={isResendDisabled}
+            disabled={isResendDisabled || resendLoading}
             onClick={() => {
-              ResendOtp();
+              resendOtp(); // calling mutation
               setTimer(60);
             }}
             className={`w-full py-3 rounded-lg text-white font-medium transition-all duration-300 ${
@@ -80,16 +112,17 @@ function VerifyOtp() {
             {isResendDisabled ? `Resend OTP in ${timer}s` : "Resend OTP"}
           </button>
 
+          {/* SUBMIT OTP BUTTON */}
           <button
             type="submit"
-            disabled={loading}
+            disabled={verifyLoading}
             className={`w-full py-3 rounded-lg text-white font-medium transition-all duration-300 ${
-              loading
+              verifyLoading
                 ? "bg-gray-600 cursor-not-allowed"
                 : "bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600"
             }`}
           >
-            {loading ? "Verifying..." : "Submit"}
+            {verifyLoading ? "Verifying..." : "Submit"}
           </button>
 
           <p className="text-center text-sm text-gray-400 mt-4">

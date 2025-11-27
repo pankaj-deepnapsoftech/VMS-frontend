@@ -1,7 +1,11 @@
 /* eslint-disable react/prop-types */
-import { useAuthContext } from "@/context";
 import { useAuthStore } from "@/store/AuthStore";
 import { useState } from "react";
+import { updateProfileService } from "@/services/Auth.service";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+
 
 const securityQuestions = [
   "What was the name of your first pet?",
@@ -18,9 +22,23 @@ const securityQuestions = [
 
 export default function SecurityQuestions() {
   const [questions, setQuestions] = useState([{ question: "", answer: "" }]);
-  const { UpdateProfile} = useAuthContext();
-  const {authenticate} = useAuthStore()
+  const { authenticate } = useAuthStore();
+  const navigate = useNavigate();
 
+
+  //============Tanstack query here===========
+
+  const updateProfileMutation = useMutation({
+    mutationFn: ({ id, data }) => updateProfileService({ id, data }),
+    onSuccess: (res) => {
+      toast.success(res?.message || "Profile Updated");
+      navigate("/");
+      window.location.reload();
+    },
+    onError: (err) => {
+      toast.error(err?.response?.data?.message || "Update failed");
+    },
+  });
 
   const handleQuestionChange = (index, field, value) => {
     const updated = [...questions];
@@ -36,7 +54,15 @@ export default function SecurityQuestions() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    UpdateProfile({security_questions: questions },authenticate._id);
+
+    const payload = {
+      security_questions: questions,
+    };
+
+    updateProfileMutation.mutate({
+      id: authenticate._id,
+      data: payload,
+    });
   };
 
   return (
@@ -48,7 +74,6 @@ export default function SecurityQuestions() {
       <div className="fixed inset-0 flex items-center justify-center z-50 px-4">
         <div className="w-full max-w-lg bg-gray-800 rounded-2xl shadow-2xl p-6 relative animate-fadeIn">
           {/* Close Button */}
-        
 
           <h2 className="text-2xl font-bold text-blue-400 text-center mb-4">
             Security Questions
@@ -104,9 +129,12 @@ export default function SecurityQuestions() {
 
             <button
               type="submit"
+              disabled={updateProfileMutation.isPending}
               className="w-full py-3 px-4 rounded-lg text-white font-medium transition-all duration-300 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600"
             >
-              Save Security Questions
+              {updateProfileMutation.isPending
+                ? "Saving..."
+                : "Save Security Questions"}
             </button>
           </form>
         </div>

@@ -1,14 +1,11 @@
 /* eslint-disable react/prop-types */
-
 import { useState } from "react"
 import { EyeIcon, EyeOffIcon, LockIcon } from "lucide-react"
-import { useAuthContext } from "@/context"
-import { IoClose } from "react-icons/io5";
-
+import { useMutation } from "@tanstack/react-query";
+import {ChangePasswordServices} from "@/services/Auth.service";
+import { useNavigate } from "react-router-dom";
 
 const ChangePasswordModal = ({ isOpen }) => {
-
-    const { ChangePassword } = useAuthContext();
 
     const [showCurrentPassword, setShowCurrentPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
@@ -20,6 +17,19 @@ const ChangePasswordModal = ({ isOpen }) => {
         newPassword: "",
         confirmPassword: "",
     });
+    const navigate = useNavigate();
+
+    const changePasswordMutation = useMutation({
+    mutationFn: (data) => ChangePasswordServices(data),
+    onSuccess: (res) => {
+        navigate("/");
+        window.location.reload();
+    },
+    onError: (err) => {
+        alert(err?.response?.data?.message || "Something went wrong");
+    }
+});
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target
@@ -45,17 +55,19 @@ const ChangePasswordModal = ({ isOpen }) => {
     }
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        const data = {
-            newPassword: formData.newPassword,
-            oldPassword: formData.currentPassword
-        };
-        if(passwordStrength < 4){
-            alert("password is week");
-        }else {
-            ChangePassword(data);
-        }
+    e.preventDefault();
+    const data = {
+        newPassword: formData.newPassword,
+        oldPassword: formData.currentPassword
+    };
+
+    if (passwordStrength < 4) {
+        alert("password is weak");
+    } else {
+        changePasswordMutation.mutate(data);
     }
+};
+
 
 
     if (!isOpen) return null;

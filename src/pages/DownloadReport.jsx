@@ -1,5 +1,4 @@
 import {
-  useAuthContext,
   useMailContext,
 } from "@/context";
 import { Download, Mails, X } from "lucide-react";
@@ -10,9 +9,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { DownloadReportService } from "@/services/Reports.service";
 import { useAuthStore } from "@/store/AuthStore";
+import {GetTenantDataServices} from "@/services/Auth.service"
 
 export default function DownloadReports() {
-  const {UserViaTenant, GetTenantData} = useAuthContext();
   const {token, tenant} = useAuthStore()
   const {
     createMailReport,
@@ -20,6 +19,14 @@ export default function DownloadReports() {
     scheduleMailData,
     updateMailReport,
   } = useMailContext();
+
+  //tanstack query here
+
+   const {data:GetTenantData} = useQuery({
+    queryKey: ["tenant-users", tenant],
+    queryFn: () => GetTenantDataServices(tenant),
+    enabled: !!tenant && !!token,
+  });
 
   const {data:downloadData,isLoading:isDownloadReportLoading} = useQuery({
     queryKey:["report-download",{tenant}],
@@ -94,11 +101,6 @@ export default function DownloadReports() {
     },
   ];
 
-  useEffect(() => {
-    if (token && tenant) {
-      GetTenantData(tenant);
-    }
-  }, [token, tenant]);
 
   const handleOpenModal = (report) => {
     if (!tenant) {
@@ -110,7 +112,7 @@ export default function DownloadReports() {
       (item) => item.tenant === tenant && item.report_type === report.name
     )[0];
     setSelectedUsers(
-      UserViaTenant.filter((item) => filterData.users.includes(item._id)).map(
+      GetTenantData?.filter((item) => filterData.users.includes(item._id)).map(
         (item) => ({
           value: item._id,
           label: item.email,
@@ -313,7 +315,7 @@ export default function DownloadReports() {
               onChange={setSelectedUsers}
               options={
                 tenant
-                  ? UserViaTenant.map((u) => ({
+                  ? GetTenantData?.map((u) => ({
                       value: u._id,
                       label: u.email,
                     }))

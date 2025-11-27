@@ -1,4 +1,4 @@
-import { useAuthContext } from "@/context";
+//import { useAuthContext } from "@/context";
 import { useFormik } from "formik";
 import { Eye, EyeOff } from "lucide-react";
 import { useState, useEffect } from "react";
@@ -11,13 +11,26 @@ import { LoginUser } from "@/services/Auth.service";
 import { useAuthStore } from "@/store/AuthStore";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import {VerifyCaptureServices} from "@/services/Auth.service";
 
 const SignIn = () => {
-  const {Verifyrecaptcha } = useAuthContext();
   const {setToken} = useAuthStore(state => state);
   const [togglePassword, setTogglePassword] = useState(false);
   const [disable, setDisable] = useState(true);
   const navigate = useNavigate();
+
+
+const { mutate: Verifyrecaptcha } = useMutation({
+  mutationFn: (token) => VerifyCaptureServices(token),
+  onSuccess: (data) => {
+    setDisable(config.REACT_ENV === "development" ? data.success : !data.success);
+  },
+  onError: () => {
+    toast.error("CAPTCHA failed");
+    setDisable(true);
+  }
+});
+
 
  const { mutate: Signin } = useMutation({
   mutationFn: (data) => {
@@ -52,10 +65,9 @@ const SignIn = () => {
       },
     });
 
-  const handleCaptcha = async (token) => {
-    const data = await Verifyrecaptcha(token);
-    setDisable(config.REACT_ENV === "development" ? data : !data);
-  };
+const handleCaptcha = (token) => {
+  Verifyrecaptcha(token);
+};
 
   const cards = [
     {

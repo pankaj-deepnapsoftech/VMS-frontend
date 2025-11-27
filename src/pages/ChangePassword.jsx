@@ -1,11 +1,17 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { EyeIcon, EyeOffIcon, LockIcon } from "lucide-react";
-import { useAuthContext } from "@/context";
+import {
+  ChangePasswordServices,
+  GetSecuirityQuestionServices,
+} from "@/services/Auth.service";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuthStore } from "@/store/AuthStore";
+import { useNavigate } from "react-router-dom";
 
 export default function PasswordChange() {
-  const { ChangePassword, GetSecuirityQuestion} = useAuthContext();
-  const {authenticate} = useAuthStore()
+  const { authenticate, token } = useAuthStore();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -15,6 +21,47 @@ export default function PasswordChange() {
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
+  });
+
+  // ================= Security Question Fetch Tanstack =================
+  const email = authenticate?.email;
+
+  useQuery({
+    queryKey: ["SQs", email],
+    queryFn: () => GetSecuirityQuestionServices(email),
+    enabled: !!email,
+  });
+
+  // ================= Mutation =================
+  const { mutate: ChangePassword, isPending: isUpdatePasswordLoading } =
+    useMutation({
+      mutationFn: (data) => ChangePasswordServices(data),
+
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({ queryKey: ["password"] });
+        navigate("/");
+      },
+
+      onError: (error) => {
+        const msg =
+          error?.response?.data?.message ||
+          error?.message ||
+          "Failed to update password";
+
+        if (msg.toLowerCase().includes("incorrect")) {
+          alert("Incorrect current password");
+        } else {
+          alert(msg);
+        }
+      },
+    });
+
+  // ================= Mutation for Change password via questions =================
+  const { mutate: fetchSQ } = useMutation({
+    mutationFn: (email) => GetSecuirityQuestionServices(email),
+    onSuccess: (url) => {
+      if (url) window.location.href = url;
+    },
   });
 
   const handleInputChange = (e) => {
@@ -30,26 +77,32 @@ export default function PasswordChange() {
       setPasswordStrength(strength);
     }
 
-    if (name === "confirmPassword" || name === "newPassword") {
-      if (name === "confirmPassword") {
-        setPasswordMatch(value === formData.newPassword);
-      } else {
-        setPasswordMatch(value === formData.confirmPassword);
-      }
+    if (name === "newPassword" || name === "confirmPassword") {
+      const newPass = name === "newPassword" ? value : formData.newPassword;
+      const confirmPass =
+        name === "confirmPassword" ? value : formData.confirmPassword;
+
+      setPasswordMatch(newPass === confirmPass);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = {
-      newPassword: formData.newPassword,
-      oldPassword: formData.currentPassword,
-    };
-    if (passwordStrength <= 4) {
-      alert("Password is weak");
-    } else {
-      ChangePassword(data);
+
+    if (!passwordMatch) {
+      alert("Passwords do not match");
+      return;
     }
+
+    if (passwordStrength < 3) {
+      alert("Password is weak");
+      return;
+    }
+
+    ChangePassword({
+      oldPassword: formData.currentPassword,
+      newPassword: formData.newPassword,
+    });
   };
 
   return (
@@ -208,6 +261,7 @@ export default function PasswordChange() {
           {/* Submit Button */}
           <button
             type="submit"
+            disabled={isUpdatePasswordLoading}
             className="w-full bg-button shadow-lg text-white py-3 rounded-md font-medium hover:shadow-lg transition-all"
           >
             Change Password
@@ -216,7 +270,7 @@ export default function PasswordChange() {
             <button
               type="button"
               onClick={() => {
-                GetSecuirityQuestion(authenticate.email);
+                fetchSQ(authenticate.email);
               }}
               className="text-blue-300"
             >

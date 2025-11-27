@@ -1,21 +1,39 @@
-import { useAuthContext } from "@/context";
 import { dateFormater } from "@/utils/dateFormate";
 import { useState } from "react";
+import { updateProfileService } from "@/services/Auth.service";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { useAuthStore } from "@/store/AuthStore";
 
 export default function UserDetailsForm() {
-  const { authenticate, UpdateProfile } = useAuthContext();
+  const {authenticate} = useAuthStore()
 
-  console.log(authenticate?.profile)
+  console.log(authenticate?.profile);
   const [isEditing, setIsEditing] = useState(false);
   const [preview, setPreview] = useState("");
+  const queryClient = useQueryClient();
 
+  //=========Tanstack query here========
+
+  const { mutate: updateProfile, isPending: isUpdating } = useMutation({
+    mutationFn: updateProfileService,
+    onSuccess: (res) => {
+      toast.success(res.message);
+      queryClient.invalidateQueries({ queryKey: ["auth-user"] });
+
+      setIsEditing(false);
+    },
+    onError: (err) => {
+      toast.error(err?.response?.data?.message || "Profile update failed");
+    },
+  });
 
   // Form state
   const [form, setForm] = useState({
     fname: authenticate?.fname,
     lname: authenticate?.lname,
     email: authenticate?.email,
-    profile: authenticate?.profile
+    profile: authenticate?.profile,
   });
 
   const handleChange = (e) => {
@@ -24,23 +42,24 @@ export default function UserDetailsForm() {
   };
 
   const handleSave = () => {
-    const formData = new FormData;
+    const formData = new FormData();
     formData.append("fname", form.fname);
     formData.append("lname", form.lname);
     formData.append("email", form.email);
     formData.append("profile", form.profile);
-    UpdateProfile(formData, authenticate._id);
-    setIsEditing(false)
+    updateProfile({
+      id: authenticate._id,
+      data: formData,
+    });
+
+    setIsEditing(false);
   };
 
-
   const imagePreview = (file) => {
-    setForm({ ...form, profile: file })
+    setForm({ ...form, profile: file });
     const preview = URL.createObjectURL(file);
-    setPreview(preview)
-  }
-
-
+    setPreview(preview);
+  };
 
   return (
     <div className="min-h-screen bg-slate-900 p-6">
@@ -48,9 +67,14 @@ export default function UserDetailsForm() {
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-2xl font-semibold text-white">User Details</h1>
-          {!isEditing && <button onClick={() => setIsEditing(!isEditing)} className="bg-blue-800 hover:bg-blue-600 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200">
-            Edit
-          </button>}
+          {!isEditing && (
+            <button
+              onClick={() => setIsEditing(!isEditing)}
+              className="bg-blue-800 hover:bg-blue-600 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200"
+            >
+              Edit
+            </button>
+          )}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
@@ -59,19 +83,33 @@ export default function UserDetailsForm() {
             <div className="bg-slate-800 rounded-xl p-6 border border-slate-700">
               <div className="flex flex-col items-center space-y-4">
                 <div className="relative">
-                  <label id="profile" className="w-20 h-20 flex items-center justify-center rounded-full overflow-hidden object-cover  border-2 border-slate-600" >
+                  <label
+                    id="profile"
+                    className="w-20 h-20 flex items-center justify-center rounded-full overflow-hidden object-cover  border-2 border-slate-600"
+                  >
                     {form.profile ? (
                       <img src={preview || authenticate?.profile} />
-                    ) : <span className="text-2xl text-white"  >{authenticate.fname[0].toUpperCase()}</span>}
-                    <input type="file" hidden id="profile" name="profile"
+                    ) : (
+                      <span className="text-2xl text-white">
+                        {authenticate.fname[0].toUpperCase()}
+                      </span>
+                    )}
+                    <input
+                      type="file"
+                      hidden
+                      id="profile"
+                      name="profile"
                       onChange={(e) => imagePreview(e.target.files[0])}
-                      disabled={!isEditing} />
+                      disabled={!isEditing}
+                    />
                   </label>
 
                   <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-400 rounded-full border-2 border-slate-800"></div>
                 </div>
                 <div className="text-center">
-                  <p className="text-white font-medium text-sm mb-1">{form.profile ? form.profile.name : "Profile Image"}</p>
+                  <p className="text-white font-medium text-sm mb-1">
+                    {form.profile ? form.profile.name : "Profile Image"}
+                  </p>
                   <p className="text-slate-400 text-xs mb-1">jpeg, jpg, png</p>
                   <p className="text-slate-500 text-xs">Size less than 2MB</p>
                 </div>
@@ -115,7 +153,9 @@ export default function UserDetailsForm() {
 
                 {/* Email */}
                 <div className="space-y-2">
-                  <label className="block text-white text-sm font-medium">Email</label>
+                  <label className="block text-white text-sm font-medium">
+                    Email
+                  </label>
                   <input
                     type="email"
                     name="email"
@@ -128,7 +168,9 @@ export default function UserDetailsForm() {
 
                 {/* Tenant */}
                 <div className="space-y-2">
-                  <label className="block text-white text-sm font-medium">Tenant</label>
+                  <label className="block text-white text-sm font-medium">
+                    Tenant
+                  </label>
                   <input
                     type="text"
                     value={authenticate.tenant}
@@ -139,7 +181,9 @@ export default function UserDetailsForm() {
 
                 {/* Idle Timeout */}
                 <div className="space-y-2 md:col-span-2">
-                  <label className="block text-white text-sm font-medium">Role</label>
+                  <label className="block text-white text-sm font-medium">
+                    Role
+                  </label>
                   <input
                     type="text"
                     value={authenticate?.role || "admin"}
@@ -150,33 +194,56 @@ export default function UserDetailsForm() {
               </div>
 
               {/* Action Buttons */}
-              {isEditing && <div className="flex justify-end space-x-4 mt-8 pt-6 border-t border-slate-700">
-                <button onClick={() => setIsEditing(!isEditing)} className="px-6 py-2 text-slate-300 hover:text-white border border-slate-600 hover:border-slate-500 rounded-lg transition-colors duration-200">
-                  Cancel
-                </button>
-                <button type="button" onClick={handleSave} className="px-6 py-2 bg-blue-800 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors duration-200">
-                  Save Changes
-                </button>
-              </div>}
+              {isEditing && (
+                <div className="flex justify-end space-x-4 mt-8 pt-6 border-t border-slate-700">
+                  <button
+                    onClick={() => setIsEditing(!isEditing)}
+                    className="px-6 py-2 text-slate-300 hover:text-white border border-slate-600 hover:border-slate-500 rounded-lg transition-colors duration-200"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleSave}
+                    className="px-6 py-2 bg-blue-800 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors duration-200"
+                  >
+                    Save Changes
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
 
         {/* Additional Info Section */}
         <div className="mt-8 bg-slate-800 rounded-xl p-6 border border-slate-700">
-          <h3 className="text-lg font-medium text-white mb-4">Account Information</h3>
+          <h3 className="text-lg font-medium text-white mb-4">
+            Account Information
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-1">
               <p className="text-slate-400 text-sm">Account Status</p>
               <div className="flex items-center space-x-2">
-                <div className={`w-2 h-2 ${authenticate.email_verification ? "bg-green-400" : "bg-red-400"} rounded-full`}></div>
-                <span className="text-white text-sm">{authenticate.email_verification ? "Verified" : "Not verified"}</span>
+                <div
+                  className={`w-2 h-2 ${
+                    authenticate.email_verification
+                      ? "bg-green-400"
+                      : "bg-red-400"
+                  } rounded-full`}
+                ></div>
+                <span className="text-white text-sm">
+                  {authenticate.email_verification
+                    ? "Verified"
+                    : "Not verified"}
+                </span>
               </div>
             </div>
 
             <div className="space-y-1">
               <p className="text-slate-400 text-sm">Member Since</p>
-              <p className="text-white text-sm">{dateFormater(authenticate.createdAt)}</p>
+              <p className="text-white text-sm">
+                {dateFormater(authenticate.createdAt)}
+              </p>
             </div>
           </div>
         </div>

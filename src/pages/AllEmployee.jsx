@@ -1,6 +1,5 @@
 import InputField from "@/components/InputField";
 import NoDataFound from "@/components/NoDataFound";
-import { useAuthContext } from "@/context";
 import { BaseValidationSchema, EditUser } from "@/Validation/AuthValidation";
 import { useFormik } from "formik";
 import { useState } from "react";
@@ -36,9 +35,10 @@ import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 import { getAllPartnerService } from "@/services/ManagePartners.service";
 import { getAllTenantServices } from "@/services/ManageTenants.service";
 import { useAuthStore } from "@/store/AuthStore";
+import {ChangeStatusService} from "@/services/Auth.service";
+import toast from "react-hot-toast";
 
 const AllEmployee = () => {
-  const {ChangeStatus} = useAuthContext();
   const {token,authenticate, tenant} = useAuthStore()
   // use location hook
   const location = useLocation();
@@ -109,6 +109,23 @@ const AllEmployee = () => {
     enabled: !!token,
   });
 
+
+  //Tanstack for ChangeStatus
+  const { mutate: ChangeStatusMutate} = useMutation({
+  mutationFn: ({ data, id }) => ChangeStatusService(data, id),
+
+  onSuccess: async () => {
+    toast.success("Status updated");
+    await queryClient.invalidateQueries({ queryKey: ["users"] });
+  },
+
+  onError: (error) => {
+    toast.error(error?.response?.data?.message || "Failed to update status");
+  },
+});
+
+
+
   const {
     values,
     errors,
@@ -176,12 +193,13 @@ const AllEmployee = () => {
     );
   });
 
-  const handleChangeStatus = async (type, id) => {
-    if (window.confirm("Are you sure you want to change this user's status?")) {
-      const deactivate = type === "activate";
-      await ChangeStatus({ deactivate }, id);
-    }
-  };
+  const handleChangeStatus = (type, id) => {
+  if (window.confirm("Are you sure you want to change this user's status?")) {
+    const deactivate = type === "activate"; 
+    ChangeStatusMutate({ data: { deactivate }, id });
+  }
+};
+
 
   const isPartOfSecurend = (e) => {
     if (e.target.value === "no") {

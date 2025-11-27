@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-//import { useAuthContext} from "@/context";
 import {useAuthStore} from "@/store/AuthStore"
 import { GetExceptionData, updateExceptionData } from "@/services/Exception.service";
 import { Checkhariqui } from "@/utils/checkHarirqui";

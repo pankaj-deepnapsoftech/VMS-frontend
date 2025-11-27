@@ -1,13 +1,14 @@
 /* eslint-disable react/prop-types */
 import { useAuthContext } from '@/context'
 import { updateVulnerablityData } from '@/services/Vulnerable.service'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { X } from 'lucide-react'
 import { useState } from 'react'
+import {GetTenantDataServices} from "@/services/Auth.service"
 
-const AssignUserModal = ({ setAssignUserOpenModal, tenantId, selectedDataId }) => {
+const AssignUserModal = ({ setAssignUserOpenModal, selectedDataId }) => {
     const queryClient = useQueryClient();
-    const { UserViaTenant } = useAuthContext()
+    const { tenant, token } = useAuthContext()
 
     const { mutate: UpdateData, isPending: isUpdateDataLoading } = useMutation({
         mutationFn: ({ id, data }) => updateVulnerablityData({ id, data }),
@@ -18,6 +19,12 @@ const AssignUserModal = ({ setAssignUserOpenModal, tenantId, selectedDataId }) =
                 await queryClient.invalidateQueries({ queryKey: ["All-Infrastructure-vulnerabilities"] }),
             ])
         }
+    });
+
+     const {data:GetTenantData} = useQuery({
+      queryKey: ["tenant-users", tenant],
+      queryFn: () => GetTenantDataServices(tenant),
+      enabled: !!tenant && !!token,
     });
 
     const [selectedUserId, setSelectedUserId] = useState('')
@@ -59,7 +66,7 @@ const AssignUserModal = ({ setAssignUserOpenModal, tenantId, selectedDataId }) =
                         className="w-full px-4 py-2 rounded-lg bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                         <option value="">-- Select a user --</option>
-                        {UserViaTenant.map((user) => (
+                        {GetTenantData.map((user) => (
                             <option key={user._id} value={user._id}>
                                 {user.fname}
                             </option>

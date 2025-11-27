@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
-import { useAuthContext } from "@/context";
 import { useState } from "react";
+import {ResetWithQuestionServices} from "@/services/Auth.service";
+import toast from "react-hot-toast";
+import { useMutation } from "@tanstack/react-query";
 
 const securityQuestions = [
   "What was the name of your first pet?",
@@ -17,14 +19,27 @@ const securityQuestions = [
 
 export default function ResetSecurity({values}) {
   const [questions, setQuestions] = useState({ question: "", answer: "" });
-  const {ResetWithQuestion} = useAuthContext()
+
+  //tanstack query here 
+  const { mutate: ResetWithQuestion } = useMutation({
+  mutationFn: (data) => ResetWithQuestionServices(data),
+  onSuccess: (res) => {
+    window.location.href = res.resetLink;
+  },
+  onError: (error) => {
+    toast.error(error?.response?.data?.message || "Something went wrong");
+  },
+});
+
+
 
 
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    ResetWithQuestion({...values,...questions});
-  };
+  e.preventDefault();
+  ResetWithQuestion({ ...values, ...questions });
+};
+
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 px-4">

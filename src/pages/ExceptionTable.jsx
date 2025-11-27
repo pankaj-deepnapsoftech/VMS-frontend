@@ -9,11 +9,11 @@ import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tansta
 import { useEffect, useState, useRef } from "react";
 import { FaUserCheck } from "react-icons/fa";
 import { GrEdit } from "react-icons/gr";
+import {GetTenantDataServices} from "@/services/Auth.service";
 
 const ExceptionTable = () => {
 
   const queryClient = useQueryClient();
-  const {GetTenantData, UserViaTenant} = useAuthContext();
   const {token, tenant} = useAuthStore()
   const [page,setPage] = useState(1);
 
@@ -32,6 +32,16 @@ const ExceptionTable = () => {
       await queryClient.invalidateQueries({queryKey:['Exception']})
     }
   })
+
+
+
+ const {data:GetTenantData} = useQuery({
+  queryKey: ["tenant-users", tenant],
+  queryFn: () => GetTenantDataServices(tenant),
+  enabled: !!tenant && !!token,
+});
+
+
 
 
 
@@ -187,11 +197,6 @@ const ExceptionTable = () => {
 
 
 
-  useEffect(() => {
-    if (tenant) {
-      GetTenantData(tenant);
-    }
-  }, [tenant]);
 
   return (
     <div className="min-h-screen bg-[#0F172A] p-8 text-gray-400">
@@ -217,7 +222,7 @@ const ExceptionTable = () => {
                   className="w-full bg-input rounded px-3 py-2"
                 >
                   <option value="">Select User</option>
-                  {UserViaTenant.map((user) => (
+                  {GetTenantData?.map((user) => (
                     <option key={user._id} value={user._id}>
                       {user.email}
                     </option>

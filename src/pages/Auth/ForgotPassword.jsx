@@ -1,27 +1,45 @@
-import { useAuthContext } from "@/context";
 import { ForgotPasswordValidation } from "@/Validation/AuthValidation";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import ResetSecurity from "./ResetSecuirity";
+import { useMutation } from "@tanstack/react-query";
+import { forgotPasswordService } from "@/services/Auth.service";
+import toast from "react-hot-toast";
+import { useAuthStore } from "@/store/AuthStore";
 
 function ForgotPassword() {
-  const { Forgotpassword, loading } = useAuthContext();
-  const [stateChange,setStateChange] = useState(false)
+  const [stateChange, setStateChange] = useState(false);
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit, } =
+  const navigate = useNavigate();
+  const { setToken } = useAuthStore();
+
+
+//==========Tanstack Query here==================
+
+  const { mutate: forgotPassword, isPending: loading } = useMutation({
+    mutationFn: forgotPasswordService,
+    onSuccess: (res) => {
+      toast.success(res.message);
+      setToken(res.token);
+      navigate("/");
+    },
+    onError: (err) => {
+      toast.error(err?.response?.data?.message || "Something went wrong");
+    },
+  });
+
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
-      initialValues: { email: ""},
+      initialValues: { email: "" },
       validationSchema: ForgotPasswordValidation,
       onSubmit: (value) => {
-        Forgotpassword(value);
+        forgotPassword(value);
       },
     });
 
-  
-
-  return !stateChange  ? (
+  return !stateChange ? (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 px-4">
       <h1 className="text-4xl font-extrabold text-white mb-2">
         Forgot Password
@@ -68,12 +86,13 @@ function ForgotPassword() {
           <button
             type="button"
             // eslint-disable-next-line no-undef
-            onClick={() => {if(values.email.trim() ){
-              setStateChange(true)
-            } else{
-              alert("email is required")
-            }
-           }}
+            onClick={() => {
+              if (values.email.trim()) {
+                setStateChange(true);
+              } else {
+                alert("email is required");
+              }
+            }}
             className="w-full py-3 px-4 rounded-lg text-white font-medium transition-all duration-300 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600"
           >
             Reset Password with Questions
@@ -89,7 +108,9 @@ function ForgotPassword() {
         </form>
       </div>
     </div>
-  ) : <ResetSecurity values={values} />;
+  ) : (
+    <ResetSecurity values={values} />
+  );
 }
 
 export default ForgotPassword;
