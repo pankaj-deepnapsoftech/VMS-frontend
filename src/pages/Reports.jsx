@@ -154,7 +154,7 @@ const Reports = () => {
                     "Type Of Assessment",
                     "Report File",
                     "Actions",
-                  ].map((head, idx) => (
+                  ]?.map((head, idx) => (
                     <th
                       key={idx}
                       className="px-4 py-3 border-b border-gray-600 font-medium text-center"
@@ -167,7 +167,7 @@ const Reports = () => {
 
               {/* Table Body */}
               <tbody className="divide-y divide-gray-700">
-                {reportsData.map((report, index) => (
+                {reportsData?.map((report, index) => (
                   <tr
                     key={report?._id || index}
                     className="hover:bg-[#1E293B] transition-colors duration-200"
@@ -309,7 +309,7 @@ const Reports = () => {
                       <option value="" disabled>
                         -- Select Type of Assessment --
                       </option>
-                      {allOption.map((type) => (
+                      {allOption?.map((type) => (
                         <option key={type._id} value={type._id}>
                           {type?.Type_Of_Assesment}
                         </option>
