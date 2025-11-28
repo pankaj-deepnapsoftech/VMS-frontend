@@ -1,10 +1,12 @@
-import { useAuthContext } from "@/context";
 import { useState, useEffect, useRef } from "react";
 import { FiDatabase, FiSettings } from "react-icons/fi";
 import { products } from "@/constants/static.data";
 import "./animation.css";
 import { GrShieldSecurity } from "react-icons/gr";
 import { useAuthStore } from "@/store/AuthStore";
+import { LogoutUser } from "@/services/Auth.service";
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 
 // Card component with gradient border
 // eslint-disable-next-line react/prop-types
@@ -26,12 +28,31 @@ const Card = ({ children, HandleClick, borderColor, bg, animate }) => {
 };
 
 const Dashboard = () => {
-  const {Logout, setGetDataFromSession } = useAuthContext();
-  const {authenticate} = useAuthStore()
+  const {authenticate, setGetDataFromSession} = useAuthStore()
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const navigate = useNavigate();
+  const { setToken, setAuthenticate, setTenant } = useAuthStore();
+  
+
+  const { mutate: Logout } = useMutation({
+    mutationFn: () => {
+      // Return the API call
+      return LogoutUser();
+    },
+    onSuccess: () => {
+      // Clear state after successful logout
+      navigate("/");
+      setToken(null);
+      setAuthenticate(null);
+      setTenant(null);
+    },
+    onError: (error) => {
+      console.error("Logout failed:", error);
+    }
+  });
 
   const HandleClick = (item) => {
     if (

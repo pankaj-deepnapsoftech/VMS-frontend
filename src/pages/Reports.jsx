@@ -146,7 +146,7 @@ const Reports = () => {
           <div className="overflow-x-auto w-full custom-scrollbar mt-8 rounded-xl border border-[#1e2746] bg-[#1a1f2e] shadow-lg shadow-black/20">
             {isReportsDataLoading ? <TableSkeletonLoading /> : <table className="table-fixed min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
               {/* Table Header */}
-              <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider sticky top-0 z-10 shadow-md">
+              <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
                 <tr>
                   {[
                     "S.No",

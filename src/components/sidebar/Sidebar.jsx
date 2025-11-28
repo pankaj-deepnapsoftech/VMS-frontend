@@ -1,4 +1,3 @@
-import { useAuthContext } from "@/context";
 import { LogoutUser } from "@/services/Auth.service";
 import { useAuthStore } from "@/store/AuthStore";
 import { useMutation } from "@tanstack/react-query";
@@ -7,8 +6,7 @@ import { IoClose } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
-  const { setOpenSideBar, setGetDataFromSession, OpenSideBar } =
-    useAuthContext();
+  const {OpenSideBar, setOpenSideBar} = useAuthStore()
   const { setToken, setAuthenticate, setTenant } = useAuthStore();
   const navigate = useNavigate();
   const sidebarRef = useRef(null);

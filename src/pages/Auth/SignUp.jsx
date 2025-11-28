@@ -1,13 +1,11 @@
 import { useFormik } from "formik";
 import { Eye, EyeOff } from "lucide-react";
-import { useAuthContext } from "@/context";
 import { Link } from "react-router-dom";
 import { SignUpValidation } from "@/Validation/AuthValidation";
 import {  useState } from "react";
 import SecurityQuestions from "./Secuirity";
 
 function SignUp() {
-  const { loading } = useAuthContext();
 
 
   const [showPassword, setShowPassword] = useState(false);
@@ -240,13 +238,10 @@ function SignUp() {
           {/* Submit Button */}
           <button
             type="submit"
-            disabled={loading}
-            className={`w-full py-3 px-4 rounded-lg text-white font-medium transition-all duration-300 ${loading
-              ? "bg-gray-600 cursor-not-allowed"
-              : "bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600"
-              }`}
+           // disabled={loading}
+            className={`w-full py-3 px-4 rounded-lg text-white font-medium transition-all duration-300`}
           >
-            {loading ? "Creating account..." : "Sign Up"}
+            Sign 
           </button>
 
           {/* Login Link */}

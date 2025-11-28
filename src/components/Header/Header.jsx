@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { IoIosArrowDown, IoIosLogOut } from "react-icons/io";
 import { products } from "@/constants/static.data";
-import { useAuthContext } from "@/context";
 import { useMutation } from "@tanstack/react-query";
 import { LogoutUser } from "@/services/Auth.service";
 import { useAuthStore } from "@/store/AuthStore";

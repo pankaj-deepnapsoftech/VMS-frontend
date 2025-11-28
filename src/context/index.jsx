@@ -1,6 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
 import { useContext } from "react";
-import { authContext } from "./AuthContext/AuthContext";
 
 // working on it
 import { DataContext } from "./DataContext/DataContext";
@@ -20,12 +19,6 @@ import { AIVAContext } from "./AI-VAContext/AI-VAContext";
 
 
 
-
-
-
-
-export { default as AuthContextProvider } from "./AuthContext/AuthContext";
-
 // working on it
 export { default as DataContextProvider } from "./DataContext/DataContext";
 export { default as VulnerabililtyDataContextProvider } from "./VulnerabilityDataContext/VulnerabilityDataContext";
@@ -44,11 +37,6 @@ export { default as MailContextProvider } from "./MailContext/MailContext";
 
 
 
-
-
-
-
-export const useAuthContext = () => useContext(authContext);
 // working on it
 export const useDataContext = () => useContext(DataContext);
 export const useVulnerabililtyDataContext = () =>  useContext(VulnerabililtyDataContext);

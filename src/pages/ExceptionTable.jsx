@@ -1,4 +1,3 @@
-import { useAuthContext, useExceptionContext } from "@/context";
 import ExpectionModal from "@/modals/ExpectionModal";
 import { GetExceptionData, updateExceptionData } from "@/services/Exception.service";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";

@@ -1,14 +1,14 @@
 /* eslint-disable react/prop-types */
-import { useAuthContext } from '@/context'
 import { updateVulnerablityData } from '@/services/Vulnerable.service'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { X } from 'lucide-react'
 import { useState } from 'react'
 import {GetTenantDataServices} from "@/services/Auth.service"
+import { useAuthStore } from '@/store/AuthStore'
 
 const AssignUserModal = ({ setAssignUserOpenModal, selectedDataId }) => {
     const queryClient = useQueryClient();
-    const { tenant, token } = useAuthContext()
+    const { tenant, token } = useAuthStore()
 
     const { mutate: UpdateData, isPending: isUpdateDataLoading } = useMutation({
         mutationFn: ({ id, data }) => updateVulnerablityData({ id, data }),

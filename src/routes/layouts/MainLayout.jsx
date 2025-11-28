@@ -11,7 +11,6 @@ import {
 import { NotificationSidebar } from "@components/modal/NotificationSideBar";
 
 import {
-  useAuthContext,
   useDataContext,
   useVulnerabililtyDataContext,
   useExceptionContext,
@@ -36,13 +35,12 @@ const MainLayout = () => {
 
   const { authenticate, selectedYears, setSelectedYear, setTenant, tenant } = useAuthStore((state) => state);
 
-  const {
-    updateProfileModal,
-    getDataFromSession,
-    setOpenSideBar,
-    showUserMenu,
-    setShowUserMenu,
-  } = useAuthContext();
+
+  const {setOpenSideBar, updateProfileModal, getDataFromSession} = useAuthStore();
+
+  const {showUserMenu,setShowUserMenu} = useAuthStore();
+
+
   const { TenantAllData } = useDataContext();
 
   const { openModal, isOpen, closeModal } = useChangePassword();

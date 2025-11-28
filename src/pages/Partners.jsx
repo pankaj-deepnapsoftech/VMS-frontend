@@ -116,7 +116,7 @@ const Partners = () => {
     },
   });
 
-  const filteredPartners = partnersData?.filter((item) => {
+ const filteredPartners = partnersData?.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).filter((item) => {
     const q = searchQuery.toLowerCase();
     return (
       item.company_name?.toLowerCase().includes(q) ||
@@ -124,6 +124,7 @@ const Partners = () => {
       item.state?.toLowerCase().includes(q)
     );
   });
+
 
   if (isViewAccess(authenticate, location)) {
     return <Access />;

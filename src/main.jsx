@@ -4,7 +4,6 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import {
   ApplicationVulnerabilityContextProvider,
-  AuthContextProvider,
   DataContextProvider,
   ExceptionContextProvider,
   InfrastructureVulnerabilityContextProvider,
@@ -22,7 +21,6 @@ const queryClient = new QueryClient();
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <QueryClientProvider client={queryClient}>
-      <AuthContextProvider>
         <DataContextProvider>
           <VulnerabililtyDataContextProvider>
               <JiraContextProvider>
@@ -44,7 +42,6 @@ createRoot(document.getElementById("root")).render(
               </JiraContextProvider>
           </VulnerabililtyDataContextProvider>
         </DataContextProvider>
-      </AuthContextProvider>
     </QueryClientProvider>
   </BrowserRouter>
 );

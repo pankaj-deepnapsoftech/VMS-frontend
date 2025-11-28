@@ -8,6 +8,29 @@ export const useAuthStore = create((set) => ({
     selectedYears:new Date().getFullYear(),
     tenant:sessionStorage.getItem('tenant') ? JSON.parse(sessionStorage.getItem('tenant'))?.value : null,
 
+    //========== UserProfile in MainLayout ========================
+    showUserMenu: false,
+    setShowUserMenu: (value) => set(() => ({ showUserMenu: value })),
+
+
+    //==============updateProfileModal in MainLayout ======================
+    updateProfileModal: false,
+    setUpdateProfileModal: (value) => set(()=>({updateProfileModal: value})),
+
+
+    //============ SideBar ====================================
+    OpenSideBar: false,
+    setOpenSideBar: (value) => set(()=>({OpenSideBar: value})),
+
+
+    //======== VROC MODULE SELECTION =======================
+    getDataFromSession: sessionStorage.getItem("VROC") || "",
+    setGetDataFromSession: (value) => {
+    sessionStorage.setItem("VROC", value);
+    set({ getDataFromSession: value });
+    },
+
+
     // ===================== all functions =====================
     setToken:(token) => set(()=>({token})),
     setSelectedYear:(selectedYears) => set(() => ({selectedYears})),
@@ -15,5 +38,3 @@ export const useAuthStore = create((set) => ({
     setTenant:(tenant) => set(()=>({tenant}))
 
 }));
-
-
