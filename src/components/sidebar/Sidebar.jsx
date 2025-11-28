@@ -6,28 +6,27 @@ import { IoClose } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
-  const {OpenSideBar, setOpenSideBar} = useAuthStore()
+  const { OpenSideBar, setOpenSideBar } = useAuthStore();
   const { setToken, setAuthenticate, setTenant } = useAuthStore();
   const navigate = useNavigate();
   const sidebarRef = useRef(null);
 
-const { mutate: Logout } = useMutation({
-  mutationFn: () => {
-    // Return the API call
-    return LogoutUser();
-  },
-  onSuccess: () => {
-    // Clear state after successful logout
-    navigate("/");
-    setToken(null);
-    setAuthenticate(null);
-    setTenant(null);
-  },
-  onError: (error) => {
-    console.error("Logout failed:", error);
-  }
-});
-
+  const { mutate: Logout } = useMutation({
+    mutationFn: () => {
+      // Return the API call
+      return LogoutUser();
+    },
+    onSuccess: () => {
+      // Clear state after successful logout
+      navigate("/");
+      setToken(null);
+      setAuthenticate(null);
+      setTenant(null);
+    },
+    onError: (error) => {
+      console.error("Logout failed:", error);
+    },
+  });
 
   // Detect outside click
   useEffect(() => {
@@ -46,13 +45,13 @@ const { mutate: Logout } = useMutation({
   return (
     <div
       ref={sidebarRef}
-      className={`fixed top-0 ${OpenSideBar ? "right-0" : "-right-[300px]"
-        } h-full w-64 z-50 transition-all duration-500 bg-gradient-custom text-white shadow-lg flex flex-col items-start p-6 space-y-4`}
-      onClick={() => setOpenSideBar(false)}
+      className={`fixed top-0 ${
+        OpenSideBar ? "right-0" : "-right-[300px]"
+      } h-full w-64 z-[9999] transition-all duration-500 bg-gradient-custom text-white shadow-lg flex flex-col items-start p-6 space-y-4`}
     >
       <h2 className="text-lg font-semibold flex w-full items-center justify-between">
         Menu{" "}
-        <button>
+        <button onClick={() => setOpenSideBar(false)}>
           <IoClose />
         </button>
       </h2>
