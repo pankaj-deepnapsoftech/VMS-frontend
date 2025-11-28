@@ -33,13 +33,13 @@ const MainLayout = () => {
   const { notificationData, NotificationsViewed } =
     useVulnerabililtyDataContext();
 
-  const { authenticate, selectedYears, setSelectedYear, setTenant, tenant } = useAuthStore((state) => state);
+  const { authenticate, selectedYears, setSelectedYear, setTenant, tenant } =
+    useAuthStore((state) => state);
 
+  const { setOpenSideBar, updateProfileModal, getDataFromSession } =
+    useAuthStore();
 
-  const {setOpenSideBar, updateProfileModal, getDataFromSession} = useAuthStore();
-
-  const {showUserMenu,setShowUserMenu} = useAuthStore();
-
+  const { showUserMenu, setShowUserMenu } = useAuthStore();
 
   const { TenantAllData } = useDataContext();
 
@@ -55,7 +55,11 @@ const MainLayout = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [showSidebar, setShowSideBar] = useState(false);
   const [rejectionReasion, setRejectionReasion] = useState(false);
-  const [selectedTenant, setSelectedTenant] = useState(sessionStorage.getItem("tenant") ? JSON.parse(sessionStorage.getItem("tenant")) : "")
+  const [selectedTenant, setSelectedTenant] = useState(
+    sessionStorage.getItem("tenant")
+      ? JSON.parse(sessionStorage.getItem("tenant"))
+      : ""
+  );
 
   const navigate = useNavigate();
 
@@ -87,9 +91,9 @@ const MainLayout = () => {
 
   const handleSelect = ({ value, label }) => {
     setTenantId(value);
-    setSelectedTenant({ value, label })
+    setSelectedTenant({ value, label });
     setTenant(value);
-    sessionStorage.setItem("tenant", JSON.stringify({ value, label }))
+    sessionStorage.setItem("tenant", JSON.stringify({ value, label }));
   };
 
   useEffect(() => {
@@ -201,8 +205,6 @@ const MainLayout = () => {
     };
   }, []);
 
-
-
   if (authenticate?.security_questions <= 0) {
     return <SecurityQuestions />;
   }
@@ -223,17 +225,18 @@ const MainLayout = () => {
             </button>
 
             <div className="flex gap-0 w-full">
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
+                <div className="flex items-center gap-2 sm:gap-3">
                   <Link className="flex items-center">
                     <img
                       src="/Logo5.png"
                       alt="logo"
-                      className="h-9 w-auto object-contain filter brightness-[1.5]"
+                      className="h-7 sm:h-9 w-auto object-contain filter brightness-[1.5]"
+                      onClick={() => navigate("/")}
                     />
                   </Link>
 
-                  <p className="text-white text-2xl font-bold leading-none">
+                  <p className="text-white text-lg sm:text-2xl font-bold leading-none whitespace-nowrap">
                     SecureEnd.ai
                   </p>
                 </div>
@@ -256,44 +259,41 @@ const MainLayout = () => {
               </div>
             </div>
 
-            <div className=" flex items-end justify-end">
-              {viewOnlyAllowed(window.location.pathname) && (
-                <select
-                  className="bg-[#0E1430] text-gray-300 text-sm px-2 sm:px-3 py-1 rounded-lg border border-gray-700 focus:outline-none"
-                  value={selectedYears}
-                  onChange={(e) => setSelectedYear(Number(e.target.value))}
-                >
-                  <option value={currentYear}>{currentYear} </option>
-                  <option value={currentYear - 1}>{currentYear - 1}</option>
-                  <option value={currentYear - 2}>{currentYear - 2}</option>
-                </select>
-              )}
+           <div className="flex items-center justify-end gap-2 sm:gap-3">
 
-              <button
-                onClick={() => setSidebarOpen(true)}
-                className="relative flex items-center gap-2  text-white px-4 py-2 rounded-lg hover:bg-blue-600"
-              >
-                <MdOutlineNotificationsActive className="size-7" />
-                {notificationcount > 0 ? (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                    {notificationcount}
-                  </span>
-                ) : (
-                  ""
-                )}
-              </button>
+  {viewOnlyAllowed(window.location.pathname) && (
+    <select
+      className="bg-[#0E1430] text-gray-300 text-xs sm:text-sm px-2 py-1 rounded-lg border border-gray-700 focus:outline-none"
+      value={selectedYears}
+      onChange={(e) => setSelectedYear(Number(e.target.value))}
+    >
+      <option value={currentYear}>{currentYear}</option>
+      <option value={currentYear - 1}>{currentYear - 1}</option>
+      <option value={currentYear - 2}>{currentYear - 2}</option>
+    </select>
+  )}
 
-              <div className="relative ml-4 flex text-white items-center gap-1 md:gap-3">
-                <button
-                  onClick={() => {
-                    setOpenSideBar(true);
-                  }}
-                  className="bg-blue-400 text-white rounded-full w-10 h-10 flex items-center justify-center border-2 "
-                >
-                  {authenticate?.fname[0]?.toUpperCase()}
-                </button>
-              </div>
-            </div>
+  <button
+    onClick={() => setSidebarOpen(true)}
+    className="relative flex items-center gap-1 sm:gap-2 text-white px-2 sm:px-3 py-1 rounded-lg hover:bg-blue-600"
+  >
+    <MdOutlineNotificationsActive className="size-5 sm:size-7" />
+    {notificationcount > 0 && (
+      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] sm:text-xs font-bold px-1.5 py-0.5 rounded-full">
+        {notificationcount}
+      </span>
+    )}
+  </button>
+
+  <button
+    onClick={() => setOpenSideBar(true)}
+    className="bg-blue-400 text-white rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center border-2"
+  >
+    {authenticate?.fname[0]?.toUpperCase()}
+  </button>
+
+</div>
+
 
             <NotificationSidebar
               notificationsViewed={NotificationsViewed}
@@ -335,10 +335,11 @@ const MainLayout = () => {
           onMouseLeave={() => setShowSideBar(false)}
           ref={sidebarRef}
           className={`fixed top:24 md:top-14 z-10 flex flex-col justify-between h-full bg-gradient-to-t from-[#151515] to-[#212224] transition-all duration-500 ease-in-out 
-    ${showSidebar
-              ? "lg:w-[25%] xl:w-[20%] 2xl:w-[15%]"
-              : "lg:w-[5%] xl:w-[4%] 2xl:w-[3%]"
-            } 
+    ${
+      showSidebar
+        ? "lg:w-[25%] xl:w-[20%] 2xl:w-[15%]"
+        : "lg:w-[5%] xl:w-[4%] 2xl:w-[3%]"
+    } 
     ${showMenu ? `left-0 ` : "-left-full lg:left-0"}
     whitespace-nowrap
   `}
@@ -354,12 +355,13 @@ const MainLayout = () => {
       <div
         className={`ml-auto transition-all min-h-screen duration-500 ease-in-out 
      bg-gradient-custom bg-black 
-    ${AllowedPath(location.pathname.split("/")[1])
-            ? "w-full"
-            : showSidebar
-              ? "w-full lg:w-[75%] xl:w-[80%] 2xl:w-[85%]"
-              : "w-full lg:w-[95%] xl:w-[96%] 2xl:w-[97%]"
-          }`}
+    ${
+      AllowedPath(location.pathname.split("/")[1])
+        ? "w-full"
+        : showSidebar
+        ? "w-full lg:w-[75%] xl:w-[80%] 2xl:w-[85%]"
+        : "w-full lg:w-[95%] xl:w-[96%] 2xl:w-[97%]"
+    }`}
       >
         <Outlet />
       </div>
