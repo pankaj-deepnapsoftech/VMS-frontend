@@ -75,7 +75,7 @@ export default function AssessmentCenter() {
               setIsModalOpen(true);
               setEditable(null);
             } else {
-              alert("Please selcet tenant first !");
+              alert("Please select tenant first !");
             }
           }}
         >
