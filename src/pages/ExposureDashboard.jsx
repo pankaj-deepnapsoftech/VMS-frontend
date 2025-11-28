@@ -89,7 +89,7 @@ const tlsColors = ["#F44336", "#E91E63", "#FF4081", "#FF80AB", "#9C27B0"];
 // --- MAIN DASHBOARD PAGE ---
 export default function ExposureDashboard() {
   return (
-    <div className="min-h-screen bg-[#0a0e25] text-gray-100 p-6 font-sans">
+    <div className="min-h-screen bg-[#0a0e25] text-gray-100 p-6 font-sans pb-[70px]">
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

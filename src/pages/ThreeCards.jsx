@@ -75,7 +75,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6  pb-[70px] md:pb-0">
         {/* Top 5 Vulnerable Assets */}
         {isTopFiveinfraAssetCountLoading ? <AssackExposureSkeletonLoading /> : <div className="bg-[#161e3e] border hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out border-gray-800 text-white p-6 rounded-xl h-auto w-full lg:flex-1">
           <div className="flex justify-between items-start mb-2">

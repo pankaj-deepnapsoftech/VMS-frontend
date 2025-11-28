@@ -619,12 +619,12 @@ const {selectedYears:selectedYear,tenant,token} = useAuthStore((state) => state)
             </div>
 
             {!itemsByAge || itemsByAge.length === 0 ? (
-              <div className="h-[200px] flex items-center justify-center text-gray-400">
+              <div className="h-[250px] flex items-center justify-center text-gray-400">
                 No data available
               </div>
             ) : (
-              <div className="h-[200px]">
-                <ResponsiveContainer width="100%" height="100%">
+              <div className="h-[250px]">
+                <ResponsiveContainer width="100%" height="90%">
                   <BarChart
                     data={itemsByAge}
                     barCategoryGap="30%" // spacing between groups
