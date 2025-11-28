@@ -12,10 +12,7 @@ import {
   ComposedChart,
   Cell,
 } from "recharts";
-import {
-  useExceptionContext,
-  useVulnerabililtyDataContext,
-} from "@/context";
+import { useExceptionContext, useVulnerabililtyDataContext } from "@/context";
 import Loader from "@/components/Loader/Loader";
 import { useAuthStore } from "@/store/AuthStore";
 
@@ -37,21 +34,11 @@ function Exceptions() {
 
   useEffect(() => {
     if (token) {
-    
       ClientExcectionDataFiftyDays();
       ClientRiskRating();
       ClientDeferredVulnerableItems();
     }
   }, [token, authenticate, UpdateData, DeleteData, page]);
-
-
- 
-
-
-
-
-
-
 
   const colorMapping = { "15 days": "#FF0000", "30 days": "#FFBF00" }; // Red & Amber
   const defaultColors = ["#28A745", "#007BFF"]; // Green & Blue
@@ -60,7 +47,7 @@ function Exceptions() {
     ([key, value], index) => ({
       name:
         { "15 days": "14 Days", "30 days": "30 Days", "45 days": "45 Days" }[
-        key
+          key
         ] || key,
       requests: value,
       color: colorMapping[key] || defaultColors[index % 2], // Alternates Green & Blue
@@ -81,7 +68,6 @@ function Exceptions() {
       awaitingMaintenance: values.AwaitingApproval || 0,
     })
   );
-
 
   return (
     <>

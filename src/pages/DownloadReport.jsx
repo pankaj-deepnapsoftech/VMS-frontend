@@ -1,6 +1,4 @@
-import {
-  useMailContext,
-} from "@/context";
+import { useMailContext } from "@/context";
 import { Download, Mails, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
@@ -9,10 +7,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { DownloadReportService } from "@/services/Reports.service";
 import { useAuthStore } from "@/store/AuthStore";
-import {GetTenantDataServices} from "@/services/Auth.service"
+import { GetTenantDataServices } from "@/services/Auth.service";
 
 export default function DownloadReports() {
-  const {token, tenant} = useAuthStore()
+  const { token, tenant } = useAuthStore();
   const {
     createMailReport,
     getMailReport,
@@ -22,18 +20,18 @@ export default function DownloadReports() {
 
   //tanstack query here
 
-   const {data:GetTenantData} = useQuery({
+  const { data: GetTenantData } = useQuery({
     queryKey: ["tenant-users", tenant],
     queryFn: () => GetTenantDataServices(tenant),
     enabled: !!tenant && !!token,
   });
 
-  const {data:downloadData,isLoading:isDownloadReportLoading} = useQuery({
-    queryKey:["report-download",{tenant}],
-    queryFn:()=>DownloadReportService(tenant),
-    enabled:!!token && !!tenant,
-    placeholderData:keepPreviousData
-  })
+  const { data: downloadData, isLoading: isDownloadReportLoading } = useQuery({
+    queryKey: ["report-download", { tenant }],
+    queryFn: () => DownloadReportService(tenant),
+    enabled: !!token && !!tenant,
+    placeholderData: keepPreviousData,
+  });
 
   const [scheduleTime, setScheduleTime] = useState(null);
 
@@ -100,7 +98,6 @@ export default function DownloadReports() {
       func: () => {},
     },
   ];
-
 
   const handleOpenModal = (report) => {
     if (!tenant) {
