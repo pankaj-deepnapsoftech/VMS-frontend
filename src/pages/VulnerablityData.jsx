@@ -61,7 +61,7 @@ const queryClient = useQueryClient();
     <>
       {/* Heading */}
       <div className="w-full pt-6 px-6">
-        <h2 className="text-2xl font-semibold text-white">
+        <h2 className="text-2xl md:text-3xl font-semibold text-white">
           All Vulnerability Data
         </h2>
         <span className="text-subtext text-sm">
@@ -72,7 +72,7 @@ const queryClient = useQueryClient();
       <div className="w-full min-h-screen p-6">
         <div className="bg-[#1a1f2e] mb-12 rounded-lg shadow-xl overflow-hidden">
           {/* SEARCH */}
-          <div className="px-6 py-4 border-b border-gray-700 relative">
+          <div className="px-6 py-4 border-b border-gray-700 w-[700px] relative">
             <div className="relative">
               <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
               <input
@@ -150,7 +150,7 @@ const queryClient = useQueryClient();
                       </td>
 
                       {hasAction && (
-                        <td className="px-4 py-3 flex items-center gap-3">
+                        <td className="px-4 py-3 flex items-center gap-3 mt-5 md:mt-0 text-lg md:text-sm">
                           <button
                             title="View"
                             className="text-green-500 hover:text-green-600 transition"
@@ -159,7 +159,7 @@ const queryClient = useQueryClient();
                               setExploitDetails(item);
                             }}
                           >
-                            <FaEye />
+                            <FaEye/>
                           </button>
                           <button
                             title="Edit"

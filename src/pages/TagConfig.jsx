@@ -119,7 +119,7 @@ export default function TagsPage() {
           {/* Top Bar */}
           <div className="w-full border-[#6B728033] flex flex-col md:flex-row md:items-center md:justify-between gap-4 backdrop-blur-md rounded-lg bg-[#1a1f2e]/40 p-4">
             <div>
-              <h2 className="text-2xl font-semibold text-white">All Tags</h2>
+              <h2 className="text-2xl md:text-3xl font-semibold text-white">All Tags</h2>
               <span className="text-subtext text-sm">Manage your tags</span>
             </div>
 
@@ -130,7 +130,7 @@ export default function TagsPage() {
                   setEditTag(null);
                   resetForm();
                 }}
-                className="flex items-center justify-center gap-2 w-full md:w-auto px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium"
+                className="flex items-center justify-center gap-2  md:w-auto px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium"
               >
                 <BiPlus className="h-6 w-6" />
                 Add Tag
@@ -142,7 +142,7 @@ export default function TagsPage() {
           <div className="w-full mt-6 mb-12 bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
             {/* Search Bar */}
             <div className="px-4 md:px-6 py-4 border-b border-gray-700">
-              <div className="relative w-full md:w-1/3">
+              <div className="relative w-[200px] md:w-1/3">
                 <IoSearch className="text-subtext absolute top-1/2 -translate-y-1/2 left-2 z-10" />
                 <input
                   type="search"

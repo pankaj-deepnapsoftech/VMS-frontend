@@ -80,7 +80,7 @@ export default function AllCustomer() {
         <div className="min-h-screen py-4">
           <div className="max-w-screen px-6 h-fit border-[#6B728033] flex items-center gap-4 backdrop-blur-md rounded-lg mx-5">
             <div className="w-full">
-              <h2 className="text-2xl font-semibold text-white">All Tenants</h2>
+              <h2 className="text-2xl md:text-3xl font-semibold text-white">All Tenants</h2>
               <span className="text-subtext text-sm">Manage all tenants</span>
             </div>
             <div className="flex w-full justify-end py-4">
@@ -102,7 +102,7 @@ export default function AllCustomer() {
           <div className="w-full min-h-screen p-6">
             <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
               {/* Header */}
-              <div className="px-6 py-4 border-b border-gray-700 relative">
+              <div className="px-6 py-4 border-b border-gray-700 w-[700px] relative">
                 <div className="relative">
                   <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
                   <input

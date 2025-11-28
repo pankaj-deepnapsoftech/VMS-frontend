@@ -84,19 +84,19 @@ const Roles = () => {
   return (
     <>
       <section className="min-h-screen w-full px-4 sm:px-6 py-6 sm:py-8">
-        <h1 className="text-3xl font-semibold text-white">Role Management</h1>
+        <h1 className="text-2xl md:text-3xl font-semibold text-white">Role Management</h1>
         <p className="text-gray-400">
           Manage user roles and permissions across the platform
         </p>
 
         {/* Top Bar */}
-        <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-4 border-[#6B728033] rounded-md border-b backdrop-blur-md bg-[#6B728033] my-6 sm:my-10 px-4 py-4">
+        <div className="flex flex-row sm:flex-row sm:justify-between items-start sm:items-center gap-4 border-[#6B728033] rounded-md border-b backdrop-blur-md bg-[#6B728033] my-6 sm:my-10 px-4 py-4">
           <input
             type="search"
             value={search}
             onChange={(e) => handleSearch(e.target.value)}
             placeholder="Search roles..."
-            className="bg-[#23252750] backdrop-blur-md py-2 px-4 w-full sm:w-1/3 rounded-md text-white"
+            className="bg-[#23252750] backdrop-blur-md py-2 px-4 w-[200px] sm:w-1/3 rounded-md text-white"
           />
 
           {isCreateAccess() && (
@@ -105,7 +105,7 @@ const Roles = () => {
                 setModal(true);
                 setEditable(null);
               }}
-              className="px-4 py-2 bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center gap-2 w-full sm:w-auto"
+              className="px-4 py-2  bg-button hover:bg-hoverbutton rounded-md text-white font-medium flex items-center gap-2 w-[200] sm:w-auto"
             >
               <BiPlus className="h-5 w-5" />
               Add Role

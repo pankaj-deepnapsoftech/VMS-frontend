@@ -139,7 +139,7 @@ export default function ApplicationData() {
     <div className="bg-gradient-custom min-h-screen p-4 rounded-lg text-white">
       {/* HEADER */}
       <div className="w-full mt-4 px-6">
-        <h2 className="text-2xl font-semibold text-white">
+        <h2 className="text-2xl md:text-3xl font-semibold text-white">
           All Application Data
         </h2>
         <span className="text-subtext text-sm">
@@ -151,7 +151,7 @@ export default function ApplicationData() {
       <div className="w-full min-h-screen p-6">
         <div className="bg-[#1a1f2e] mb-12 rounded-lg shadow-xl overflow-hidden">
           {/* SEARCH */}
-          <div className="px-6 py-4 border-b border-gray-700 relative">
+          <div className="px-6 py-4 border-b border-gray-700 relative w-[700px]">
             <div className="relative">
               <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
               <input

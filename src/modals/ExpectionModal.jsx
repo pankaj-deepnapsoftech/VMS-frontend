@@ -160,7 +160,7 @@ const ExpectionModal = ({ setIsModalOpen, creator, editTable }) => {
                 )}
               </div>
 
-              {["aprove_1", "aprove_2", "aprove_3"].map((key, index) => (
+              {["aprove_1", "aprove_2", "aprove_3"]?.map((key, index) => (
                 <div key={key}>
                   <label className="block font-medium mb-1">
                     {`${index + 1}st Approver`}
@@ -171,7 +171,7 @@ const ExpectionModal = ({ setIsModalOpen, creator, editTable }) => {
                     className="w-full bg-input rounded px-3 py-2 text-white border border-gray-300"
                   >
                     <option value="">Select User</option>
-                    {GetTenantData.map((user) => (
+                    {GetTenantData?.map((user) => (
                       <option key={user._id} value={user._id}>
                         {user.email}
                       </option>

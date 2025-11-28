@@ -136,7 +136,7 @@ const Partners = () => {
       <div className="min-h-screen">
         <div className="max-w-screen px-6 h-fit border-[#6B728033] flex items-center gap-4 backdrop-blur-md rounded-lg mx-5">
           <div className="w-full">
-            <h2 className="text-2xl font-semibold text-white">All Partners</h2>
+            <h2 className="text-2xl md:text-3xl font-semibold text-white">All Partners</h2>
             <span className="text-subtext text-sm">Manage all partners</span>
           </div>
           {isCreateAccess() && (
@@ -295,7 +295,7 @@ const Partners = () => {
           <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
             {/* Search Header */}
             <div className="px-4 sm:px-6 py-4 border-b border-gray-700 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-              <div className="relative w-full sm:w-1/2 md:w-1/3">
+              <div className="relative w-[700] sm:w-1/2 md:w-1/3">
                 <IoSearch className="text-subtext absolute top-1/2 -translate-y-1/2 left-2 z-10" />
                 <input
                   type="search"

@@ -229,7 +229,7 @@ export default function BusinessApplications() {
           {/* Header */}
 
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-white">
+            <h1 className="text-2xl md:text-3xl font-bold text-white">
               All Business Applications
             </h1>
             <span className="text-subtext text-sm">
@@ -266,10 +266,10 @@ export default function BusinessApplications() {
           )}
         </div>
 
-        <div className="w-full min-h-screen">
+        <div className="w-full min-h-screen pt-[30px] md:pt-0">
           <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
             {/* Header */}
-            <div className="px-4 py-4 border-b border-gray-700 relative">
+            <div className="px-4 py-4 border-b border-gray-700 relative w-[700px]">
               <div className="relative">
                 <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
                 <input

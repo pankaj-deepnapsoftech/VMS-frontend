@@ -86,16 +86,16 @@ const PendingAssessment = () => {
   return (
     <div className="w-full  pb-20 p-6">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">
+        <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
           In-progress Assessment
         </h1>
-        <p className="text-slate-300">
+        <span className="text-subtext text-sm">
           Configure and schedule your in-progress assessment parameters
-        </p>
+        </span>
       </div>
       <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-gray-700 relative">
+        <div className="px-6 py-4 border-b border-gray-700 w-[700px] relative">
           <div className="relative">
             <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
             <input

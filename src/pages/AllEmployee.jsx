@@ -219,7 +219,7 @@ const AllEmployee = () => {
         <div className="flex items-center justify-between px-6 py-4">
           {/* Optional Left Side Heading */}
           <div className="w-full">
-            <h2 className="text-2xl font-semibold text-white">All Users</h2>
+            <h2 className="text-2xl md:text-3xl font-semibold text-white">All Users</h2>
             <span className="text-subtext text-sm">
               Manage your organization employees
             </span>
@@ -243,7 +243,7 @@ const AllEmployee = () => {
         <div className="w-full  min-h-screen p-6">
           <div className="bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
             {/* Header */}
-            <div className="px-6 py-4 border-b border-gray-700 relative">
+            <div className="px-6 py-4 border-b border-gray-700 w-[700px] relative">
               <div className="relative">
                 <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
                 <input
