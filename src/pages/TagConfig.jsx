@@ -117,7 +117,7 @@ export default function TagsPage() {
       { (
         <div className="min-h-screen py-4 md:px-6">
           {/* Top Bar */}
-          <div className="w-full border-[#6B728033] flex flex-col md:flex-row md:items-center md:justify-between gap-4 backdrop-blur-md rounded-lg bg-[#1a1f2e]/40 p-4">
+          <div className="w-full border-[#6B728033] flex flex-row md:flex-row md:items-center justify-between gap-4 backdrop-blur-md rounded-lg bg-[#1a1f2e]/40 p-4">
             <div>
               <h2 className="text-2xl md:text-3xl font-semibold text-white">All Tags</h2>
               <span className="text-subtext text-sm">Manage your tags</span>
