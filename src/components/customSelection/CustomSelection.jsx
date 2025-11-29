@@ -1,23 +1,47 @@
 //import { useTagsContext } from '@/context';
-import { getTags } from '@/services/ManageTags.service';
-import { useQuery } from '@tanstack/react-query';
-import { useEffect, useRef, useState } from 'react';
-import { IoMdCloseCircleOutline } from 'react-icons/io';
+import { getTags } from "@/services/ManageTags.service";
+import { useAuthStore } from "@/store/AuthStore";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect, useRef, useState } from "react";
+import { IoMdCloseCircleOutline } from "react-icons/io";
 
 // eslint-disable-next-line react/prop-types
-const CustomSelection = ({ setFieldvalue, isError, error, handleBlur, alreadySelected }) => {
-
-    //=====================TANSTACK QUERY================
+const CustomSelection = ({setFieldvalue,isError,error,handleBlur,alreadySelected}) => {
   
-    const { data: AllTags} = useQuery({
-        queryKey: ["tags"],
-        queryFn: () => getTags(),
-      });
+  const { tenant } = useAuthStore();
+
+  //=====================TANSTACK QUERY================
+
+  const fetchAllTags = async () => {
+  let page = 1;
+  let all = [];
+  let hasMore = true;
+
+  while (hasMore) {
+    const res = await getTags({ page, tenant });
+
+    if (res.length === 0) {
+      hasMore = false;
+    } else {
+      all = [...all, ...res];
+      page++;
+    }
+  }
+
+  return all;
+};
+
+const { data: AllTags } = useQuery({
+  queryKey: ["tags", tenant],
+  queryFn: fetchAllTags,
+  enabled: !!tenant,
+});
+
 
   const [selected, setSelected] = useState([]);
   const [alltages, setAllTages] = useState([]);
   const [showOptions, setShowOptions] = useState(false);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const dropdownRef = useRef(null);
 
   const addTag = (tag) => {
@@ -25,7 +49,7 @@ const CustomSelection = ({ setFieldvalue, isError, error, handleBlur, alreadySel
       const newSelected = [...selected, tag];
       setSelected(newSelected);
       const data = newSelected.map((item) => item._id);
-      setFieldvalue('service_role', data);
+      setFieldvalue("service_role", data);
     }
   };
 
@@ -33,7 +57,7 @@ const CustomSelection = ({ setFieldvalue, isError, error, handleBlur, alreadySel
     const newSelected = selected.filter((t) => t._id !== tag._id);
     setSelected(newSelected);
     const data = newSelected.map((item) => item._id);
-    setFieldvalue('service_role', data);
+    setFieldvalue("service_role", data);
   };
 
   const filteredTags = alltages?.filter((tag) =>
@@ -41,14 +65,12 @@ const CustomSelection = ({ setFieldvalue, isError, error, handleBlur, alreadySel
   );
 
   useEffect(() => {
-    if (AllTags && selected?.length > 0) {
-      const data = AllTags?.filter((item) => item.related === "Service Role")
-      setAllTages(data.filter((item) => !selected.some((sel) => sel._id === item._id )));
-    }
-    else {
-      console.log("get all tags " ,AllTags?.filter((item) => item.related === "Service Role"))
-      setAllTages(AllTags?.filter((item) => item.related === "Service Role"));
-    }
+    if (!AllTags) return;
+    const filtered = AllTags.filter((item) => item.related === "Service Role");
+    const withoutSelected = filtered.filter(
+      (item) => !selected.some((sel) => sel._id === item._id)
+    );
+    setAllTages(withoutSelected);
   }, [AllTags, selected]);
 
   useEffect(() => {
@@ -61,29 +83,37 @@ const CustomSelection = ({ setFieldvalue, isError, error, handleBlur, alreadySel
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setShowOptions(false);
-        setSearch('');
+        setSearch("");
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
   return (
-    <div ref={dropdownRef} onBlur={handleBlur} className="relative w-full text-white">
-      <label htmlFor="multiselect" className="block mb-1">
+    <div
+      ref={dropdownRef}
+      onBlur={handleBlur}
+      className="relative w-full text-white"
+    >
+      <label
+        htmlFor="multiselect"
+        className="block mb-1 font-medium text-gray-200"
+      >
         Service Role
       </label>
 
+      {/* Selected Box */}
       <div
         onClick={() => setShowOptions(!showOptions)}
-        className="border border-gray-500 rounded px-3 py-2 bg-input cursor-pointer"
+        className="border border-gray-600 rounded-lg px-3 py-2 bg-input cursor-pointer flex items-center justify-between hover:border-gray-400 transition"
       >
-        {selected.length > 0 ? (
-          <div className="flex flex-wrap gap-1">
-            {selected.map((tag) => (
+        <div className="flex flex-wrap gap-2">
+          {selected.length > 0 ? (
+            selected.map((tag) => (
               <span
                 key={tag._id}
                 onClick={(e) => {
@@ -91,42 +121,58 @@ const CustomSelection = ({ setFieldvalue, isError, error, handleBlur, alreadySel
                   removeTag(tag);
                 }}
                 style={{ backgroundColor: tag.tag_color }}
-                className="px-4 py-2 text-sm cursor-pointer rounded-full gap-1 flex items-center justify-between"
+                className="px-3 py-1 text-sm rounded-full flex items-center gap-1 shadow-md hover:opacity-80 transition"
               >
-                {tag.tag_name} <IoMdCloseCircleOutline className="h-4 w-4 font-bold" />
+                {tag.tag_name}
+                <IoMdCloseCircleOutline className="h-4 w-4" />
               </span>
-            ))}
-          </div>
-        ) : (
-          <span className="text-gray-300">--Select Tags--</span>
-        )}
-      </div>
-
-      {isError && <p className="text-red-400">{error}</p>}
-
-      {showOptions && (
-        <div className="absolute z-10 w-full bg-input border border-gray-500 rounded mt-1 max-h-60 overflow-y-auto p-2">
-          <input
-            type="text"
-            placeholder="Search tags..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full mb-2 px-2 py-1 rounded text-black"
-          />
-
-          {filteredTags?.length > 0 ? (
-            filteredTags?.map((item) => (
-              <div
-                key={item._id}
-                onClick={() => addTag(item)}
-                className="px-3 py-1 hover:bg-gray-700 cursor-pointer rounded"
-              >
-                {item.tag_name}
-              </div>
             ))
           ) : (
-            <div className="px-3 py-1 text-gray-300">No tags found</div>
+            <span className="text-gray-400">-- Select Tags --</span>
           )}
+        </div>
+
+        <span className="text-gray-300 text-sm">{showOptions ? "▲" : "▼"}</span>
+      </div>
+
+      {isError && <p className="text-red-400 mt-1">{error}</p>}
+
+      {/* Dropdown */}
+      {showOptions && (
+        <div className="z-20 w-full bg-input border border-gray-600 rounded-xl mt-2 shadow-xl max-h-64 overflow-y-auto animate-fadeIn">
+          {/* Search */}
+          <div className="p-2 sticky top-0 bg-input border-b border-gray-700">
+            <input
+              type="text"
+              placeholder="Search roles..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full px-3 py-2 rounded-md bg-gray-200 text-black text-sm outline-none"
+            />
+          </div>
+
+          {/* List Items */}
+          <div className="py-2">
+            {filteredTags?.length > 0 ? (
+              filteredTags.map((item) => (
+                <div
+                  key={item._id}
+                  onClick={() => addTag(item)}
+                  className="px-4 py-2 cursor-pointer text-sm hover:bg-gray-700 transition flex items-center justify-between"
+                >
+                  <span>{item.tag_name}</span>
+                  <span
+                    className="h-3 w-3 rounded-full"
+                    style={{ backgroundColor: item.tag_color }}
+                  ></span>
+                </div>
+              ))
+            ) : (
+              <div className="px-4 py-2 text-gray-400 text-sm">
+                No roles found
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>

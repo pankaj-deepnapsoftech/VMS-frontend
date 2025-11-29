@@ -269,10 +269,10 @@ export default function ApplicationData() {
               <li
                 className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
                 onClick={() => {
-                  if (window.confirm("Are you sure to delete?")) {
+                  
                     DeleteData(filteredData[activeMenu]._id);
                     closeMenu();
-                  }
+              
                 }}
               >
                 <MdDelete /> Delete
