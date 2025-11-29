@@ -122,7 +122,7 @@ const handleCaptcha = (token) => {
             isActive
               ? "max-w-md p-6 bg-white/30 backdrop-blur-md"
               : "bg-transparent max-w-md px-6"
-          } 
+          }
         `}
               >
                 {isActive && (
