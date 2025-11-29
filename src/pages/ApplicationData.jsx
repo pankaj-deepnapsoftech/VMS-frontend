@@ -194,7 +194,7 @@ export default function ApplicationData() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-700">
-                  {filteredData?.map((item, index) => (
+                  {filteredData?.slice().reverse().map((item, index) => (
                     <tr
                       key={index}
                       className="border-b border-slate-700 hover:bg-[#1E293B] transition"
