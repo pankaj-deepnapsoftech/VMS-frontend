@@ -259,41 +259,38 @@ const MainLayout = () => {
               </div>
             </div>
 
-           <div className="flex items-center justify-end gap-2 sm:gap-3">
+            <div className="flex items-center justify-end gap-2 sm:gap-3">
+              {viewOnlyAllowed(window.location.pathname) && (
+                <select
+                  className="bg-[#0E1430] text-gray-300 text-xs sm:text-sm px-2 py-1 rounded-lg border border-gray-700 focus:outline-none"
+                  value={selectedYears}
+                  onChange={(e) => setSelectedYear(Number(e.target.value))}
+                >
+                  <option value={currentYear}>{currentYear}</option>
+                  <option value={currentYear - 1}>{currentYear - 1}</option>
+                  <option value={currentYear - 2}>{currentYear - 2}</option>
+                </select>
+              )}
 
-  {viewOnlyAllowed(window.location.pathname) && (
-    <select
-      className="bg-[#0E1430] text-gray-300 text-xs sm:text-sm px-2 py-1 rounded-lg border border-gray-700 focus:outline-none"
-      value={selectedYears}
-      onChange={(e) => setSelectedYear(Number(e.target.value))}
-    >
-      <option value={currentYear}>{currentYear}</option>
-      <option value={currentYear - 1}>{currentYear - 1}</option>
-      <option value={currentYear - 2}>{currentYear - 2}</option>
-    </select>
-  )}
+              <button
+                onClick={() => setSidebarOpen(true)}
+                className="relative flex items-center gap-1 sm:gap-2 text-white px-2 sm:px-3 py-1 rounded-lg hover:bg-blue-600"
+              >
+                <MdOutlineNotificationsActive className="size-5 sm:size-7" />
+                {notificationcount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] sm:text-xs font-bold px-1.5 py-0.5 rounded-full">
+                    {notificationcount}
+                  </span>
+                )}
+              </button>
 
-  <button
-    onClick={() => setSidebarOpen(true)}
-    className="relative flex items-center gap-1 sm:gap-2 text-white px-2 sm:px-3 py-1 rounded-lg hover:bg-blue-600"
-  >
-    <MdOutlineNotificationsActive className="size-5 sm:size-7" />
-    {notificationcount > 0 && (
-      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] sm:text-xs font-bold px-1.5 py-0.5 rounded-full">
-        {notificationcount}
-      </span>
-    )}
-  </button>
-
-  <button
-    onClick={() => setOpenSideBar(true)}
-    className="bg-blue-400 text-white rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center border-2"
-  >
-    {authenticate?.fname[0]?.toUpperCase()}
-  </button>
-
-</div>
-
+              <button
+                onClick={() => setOpenSideBar(true)}
+                className="bg-blue-400 text-white rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center border-2"
+              >
+                {authenticate?.fname[0]?.toUpperCase()}
+              </button>
+            </div>
 
             <NotificationSidebar
               notificationsViewed={NotificationsViewed}
