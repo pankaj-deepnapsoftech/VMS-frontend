@@ -494,8 +494,8 @@ export const products = [
         icon: RiHome3Fill,
       },
       {
-        title: "Attack Surface Management",
-        route: "/attack-surface",
+        title: "Change Password",
+        route: "/change-password",
         icon: GiTwirlCenter,
       },
     ],

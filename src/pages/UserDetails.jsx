@@ -8,7 +8,7 @@ import { useAuthStore } from "@/store/AuthStore";
 export default function UserDetailsForm() {
   const {authenticate} = useAuthStore()
 
-  console.log(authenticate?.profile);
+  console.log(authenticate);
   const [isEditing, setIsEditing] = useState(false);
   const [preview, setPreview] = useState("");
   const queryClient = useQueryClient();

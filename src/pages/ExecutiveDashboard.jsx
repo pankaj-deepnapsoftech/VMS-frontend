@@ -42,7 +42,6 @@ ChartJS.register(
 export default function ExecutiveSummaryPage() {
   const { token, tenant, selectedYears: selectedYear} = useAuthStore();
 
-  console.log("this is my tenant",tenant)
 
 // ==================== here is tenStack query code here ==========================
  const { data: dasboardData,isLoading:isDashboardCardLoading } = useQuery({
