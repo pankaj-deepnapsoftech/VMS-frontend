@@ -40,8 +40,8 @@ const AppRoutes = () => {
       authenticate.role &&
       authenticate.allowed_path
     ) {
-      const data = [...authenticate.allowed_path,{value: '/user-details',},{value: '/change-password',}];
-     return PrivateRoutes.filter((item) =>
+      const data = [...authenticate.allowed_path, { value: '/user-details', }, { value: '/change-password', }];
+      return PrivateRoutes.filter((item) =>
         data.some((ite) => ite.value === item.path)
       );
 
@@ -51,19 +51,20 @@ const AppRoutes = () => {
 
   useEffect(() => {
     if (data) {
-      console.log("this is just testing", data)
       setAuthenticate(data);
       setTenant(data?.tenant)
-      sessionStorage.setItem("tenant", JSON.stringify({ label: "", value: data?.tenant }))
+      if (data?.role || data?.tenant) {
+        sessionStorage.setItem("tenant", JSON.stringify({ label: "", value: data?.tenant }))
+      }
     }
   }, [data])
 
   if (isLoading) {
-    return<></>
+    return <MainLayoutSkeleton />
   }
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<MainLayoutSkeleton />}>
       <Routes>
         {/* Public routes */}
         {!isAuthenticated && (
@@ -74,7 +75,6 @@ const AppRoutes = () => {
             <Route path="/verify-otp" element={<VerifyOtp />} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/solutions" element={<Solutions />} />
-            <Route path="/test" element={<MainLayoutSkeleton />} />
           </>
         )}
 

@@ -182,11 +182,12 @@ const MainLayout = () => {
     return paths.find((item) => item === link);
   };
 
+
   useEffect(() => {
-    if (!authenticate?.mustChangePassword) {
+    if (!authenticate?.mustChangePassword && authenticate) {
       openModal();
     }
-  }, [authenticate?.mustChangePassword]);
+  }, [authenticate]);
 
   const sidebarRef = useRef(null);
 
