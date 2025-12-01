@@ -283,12 +283,14 @@ export default function BusinessApplications() {
             </div>
 
             {/* Table */}
-            {businessApplication?.length < 1 ? (
-              <NoDataFound />
-            ) : (
+            
               <div className="overflow-x-auto custom-scrollbar w-full">
                 {isBusinessApplicationLoading ? (
                   <TableSkeletonLoading />
+                ) : !businessApplication || businessApplication.length === 0 ? (
+                  <p className="text-center text-gray-400 text-sm py-10">
+                    <NoDataFound/>
+                  </p>
                 ) : (
                   <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
                     <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
@@ -381,7 +383,6 @@ export default function BusinessApplications() {
                   </table>
                 )}
               </div>
-            )}
 
             {/* Footer */}
             <Pagination

@@ -42,7 +42,7 @@ const Severity = () => {
   //====================TANSTACK QUERY====================
 
   const { data: GetSeverity, isLoading: isSlaLoading } = useQuery({
-    queryKey: ["sla", {page, tenant}],
+    queryKey: ["sla", { page, tenant }],
     queryFn: () => getSlaServices({ page, tenant }),
     enabled: !!token,
   });
@@ -176,25 +176,27 @@ const Severity = () => {
               <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
                 <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
                   <tr>
-                    {[
-                      "S No.",
-                      "Severity Name",
-                      "Description",
-                      "Days",
-                      isHaveAction() && "Actions",
-                    ]?.map(
-                      (header) =>
-                        header && (
-                          <th
-                            key={header}
-                            className="px-4 py-3 border-b border-gray-600 font-medium"
-                          >
-                            {header}
-                          </th>
-                        )
+                    <th className="px-4 py-3 border-b border-gray-600 font-medium">
+                      S No.
+                    </th>
+                    <th className="px-4 py-3 border-b border-gray-600 font-medium">
+                      Severity Name
+                    </th>
+                    <th className="px-4 py-3 border-b border-gray-600 font-medium">
+                      Description
+                    </th>
+                    <th className="px-4 py-3 border-b border-gray-600 font-medium">
+                      Days
+                    </th>
+
+                    {isHaveAction() && (
+                      <th className="px-4 py-3 border-b border-gray-600 font-medium">
+                        Actions
+                      </th>
                     )}
                   </tr>
                 </thead>
+
                 <tbody className="divide-y divide-gray-700">
                   {filteredTags?.map((tag, index) => (
                     <tr
@@ -204,6 +206,7 @@ const Severity = () => {
                       <td className="px-4 py-3">
                         {(page - 1) * 10 + 1 + index}
                       </td>
+
                       <td className="px-4 py-3 capitalize">
                         {tag.name || "-"}
                       </td>
@@ -212,29 +215,32 @@ const Severity = () => {
                       </td>
                       <td className="px-4 py-3">{tag.days || "0"}</td>
 
-                      <td className="px-4 py-3 flex gap-2">
-                        {isDeleteAccess() && (
-                          <button
-                            onClick={() => DeleteSeverity(tag._id)}
-                            title="Delete"
-                            className="text-subtext hover:text-subTextHover"
-                          >
-                            <FaRegTrashAlt className="w-5 h-5" />
-                          </button>
-                        )}
-                        {isModifyAccess() && (
-                          <button
-                            title="Edit"
-                            onClick={() => {
-                              setEditableData(tag);
-                              setIsModalOpen(true);
-                            }}
-                            className="text-subtext hover:text-blue-700"
-                          >
-                            <RiEdit2Line className="w-5 h-5" />
-                          </button>
-                        )}
-                      </td>
+                      {isHaveAction() && (
+                        <td className="px-4 py-3 flex gap-2">
+                          {isDeleteAccess() && (
+                            <button
+                              onClick={() => DeleteSeverity(tag._id)}
+                              title="Delete"
+                              className="text-subtext hover:text-subTextHover"
+                            >
+                              <FaRegTrashAlt className="w-5 h-5" />
+                            </button>
+                          )}
+
+                          {isModifyAccess() && (
+                            <button
+                              title="Edit"
+                              onClick={() => {
+                                setEditableData(tag);
+                                setIsModalOpen(true);
+                              }}
+                              className="text-subtext hover:text-blue-500"
+                            >
+                              <RiEdit2Line className="w-5 h-5" />
+                            </button>
+                          )}
+                        </td>
+                      )}
                     </tr>
                   ))}
                 </tbody>

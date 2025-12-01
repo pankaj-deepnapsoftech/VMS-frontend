@@ -124,7 +124,7 @@ const Roles = () => {
             <p className="text-center text-gray-400 text-sm py-10">
               No roles found.
             </p>
-          ) : (
+           ) : (
             <div className="bg-[#0c1120] rounded-md shadow-xl">
               {isRolesLoading ? (
                 <TableSkeletonLoading />
