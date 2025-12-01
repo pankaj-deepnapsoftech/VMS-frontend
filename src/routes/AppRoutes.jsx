@@ -59,7 +59,7 @@ const AppRoutes = () => {
   }, [data])
 
   if (isLoading) {
-    return "loading..."
+    return<></>
   }
 
   return (
