@@ -3,7 +3,6 @@ import { Trash2, Edit, X, Boxes } from "lucide-react";
 import { BiPlus } from "react-icons/bi";
 import { useFormik } from "formik";
 import { BusinessApplicationValidation } from "@/Validation/BusinessApp.validation";
-import axios from "axios";
 import * as XLSX from "xlsx";
 import Pagination from "./Pagination";
 import NoDataFound from "@/components/NoDataFound";

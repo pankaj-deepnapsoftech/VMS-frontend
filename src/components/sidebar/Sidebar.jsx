@@ -59,6 +59,7 @@ const Sidebar = () => {
       <button
         className="w-full text-left px-4 py-2 rounded hover:bg-gray-800 transition"
         onClick={() => {
+          setOpenSideBar(false);
           navigate("/user-details");
         }}
       >
@@ -76,13 +77,17 @@ const Sidebar = () => {
       <button
         className="w-full text-left px-4 py-2 rounded hover:bg-gray-800 transition"
         onClick={() => {
+          setOpenSideBar(false);
           navigate("/change-password");
         }}
       >
         Change Password
       </button>
       <button
-        onClick={Logout}
+        onClick={() => {
+          setOpenSideBar(false);
+          Logout();
+        }}
         className="w-full text-left px-4 py-2 rounded hover:bg-gray-800 transition"
       >
         Logout
