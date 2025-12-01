@@ -1,38 +1,42 @@
 import Cookies from "js-cookie";
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-export const useAuthStore = create((set) => ({
-  token: Cookies.get("AT") || "",
-  authenticate: sessionStorage.getItem("auth")
-    ? JSON.parse(sessionStorage.getItem("auth"))
-    : null,
-  selectedYears: new Date().getFullYear(),
-  tenant: sessionStorage.getItem("tenant")
-    ? JSON.parse(sessionStorage.getItem("tenant"))?.value
-    : null,
+export const useAuthStore = create(
+  persist(
+    (set) => ({
+      // ===== Auth =====
+      token: Cookies.get("AT") || "",
+      authenticate: null,
+      tenant: null,
+      selectedYears: new Date().getFullYear(),
 
-  //========== UserProfile in MainLayout ========================
-  showUserMenu: false,
-  setShowUserMenu: (value) => set(() => ({ showUserMenu: value })),
+      // ===== UI States =====
+      showUserMenu: false,
+      updateProfileModal: false,
+      OpenSideBar: false,
 
-  //==============updateProfileModal in MainLayout ======================
-  updateProfileModal: false,
-  setUpdateProfileModal: (value) => set(() => ({ updateProfileModal: value })),
+      // ===== VROC Module Selection =====
+      getDataFromSession: "",
 
-  //============ SideBar ====================================
-  OpenSideBar: false,
-  setOpenSideBar: (value) => set(() => ({ OpenSideBar: value })),
+      // ========== Actions ==========
+      setToken: (token) => set({ token }),
+      setAuthenticate: (authenticate) => set({ authenticate }),
+      setTenant: (tenant) => set({ tenant }),
+      setSelectedYear: (selectedYears) => set({ selectedYears }),
 
-  //======== VROC MODULE SELECTION =======================
-  getDataFromSession: sessionStorage.getItem("VROC") || "",
-  setGetDataFromSession: (value) => {
-    sessionStorage.setItem("VROC", value);
-    set({ getDataFromSession: value });
-  },
+      setShowUserMenu: (value) => set({ showUserMenu: value }),
+      setUpdateProfileModal: (value) =>
+        set({ updateProfileModal: value }),
+      setOpenSideBar: (value) => set({ OpenSideBar: value }),
 
-  // ===================== all functions =====================
-  setToken: (token) => set(() => ({ token })),
-  setSelectedYear: (selectedYears) => set(() => ({ selectedYears })),
-  setAuthenticate: (authenticate) => set(() => ({ authenticate })),
-  setTenant: (tenant) => set(() => ({ tenant })),
-}));
+      setGetDataFromSession: (value) =>
+        set({ getDataFromSession: value }),
+    }),
+
+    {
+      name: "AUTH_STORE",              // storage key
+      getStorage: () => sessionStorage // use sessionStorage
+    }
+  )
+);

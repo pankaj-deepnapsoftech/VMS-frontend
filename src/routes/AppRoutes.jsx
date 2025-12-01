@@ -5,7 +5,7 @@ import {
   ResetPassword,
   VerifyOtp,
 } from "@/constants/Components-lazy-loading/components.Lazy";
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import MainLayoutSkeleton from "@/Skeletons/MainLayout/MainLayoutSkeleton";
 import { useAuthStore } from "@/store/AuthStore";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
@@ -19,6 +19,7 @@ const SignIn = lazy(() => import("@/pages/Auth/SignIn"));
 
 const AppRoutes = () => {
   const { authenticate, token, setAuthenticate, setTenant } = useAuthStore();
+
 
   const { data, isLoading } = useQuery({
     queryKey: ["login-user", { token }],
@@ -49,15 +50,19 @@ const AppRoutes = () => {
     return []; // Always return an array
   };
 
+
   useEffect(() => {
     if (data) {
       setAuthenticate(data);
-      setTenant(data?.tenant)
+      if(data?.tenant){
+        setTenant(data?.tenant)
+      }
       if (data?.role || data?.tenant) {
         sessionStorage.setItem("tenant", JSON.stringify({ label: "", value: data?.tenant }))
       }
     }
   }, [data])
+
 
   if (isLoading) {
     return <MainLayoutSkeleton />

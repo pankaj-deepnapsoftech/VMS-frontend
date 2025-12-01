@@ -33,11 +33,10 @@ const MainLayout = () => {
   const { notificationData, NotificationsViewed } =
     useVulnerabililtyDataContext();
 
-  const { authenticate, selectedYears, setSelectedYear, setTenant, tenant } =
+  const { authenticate, selectedYears, setSelectedYear, setTenant, tenant,setOpenSideBar, updateProfileModal, getDataFromSession } =
     useAuthStore((state) => state);
 
-  const { setOpenSideBar, updateProfileModal, getDataFromSession } =
-    useAuthStore();
+
 
   const { showUserMenu, setShowUserMenu } = useAuthStore();
 
@@ -49,7 +48,6 @@ const MainLayout = () => {
   const currentYear = new Date().getFullYear();
 
   const [width, setWidth] = useState(window.innerWidth);
-  const [temp, setTemp] = useState("");
   const location = useLocation();
   const [showMenu, setShowMenu] = useState(false);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -64,7 +62,6 @@ const MainLayout = () => {
   const navigate = useNavigate();
 
   const [tenantId, setTenantId] = useState("");
-  const [searchParams] = useSearchParams();
 
   const [editableNotification, setNotificationData] = useState(null);
 
@@ -110,19 +107,7 @@ const MainLayout = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [width]);
 
-  useEffect(() => {
-    const name = location.pathname.split("/");
-    setTemp(name[1] ?? "Dashboard");
-    const params = new URLSearchParams(searchParams);
-    params.set("tenant", tenantId);
-    navigate(
-      {
-        pathname: location.pathname,
-        search: params.toString(),
-      },
-      { replace: true }
-    );
-  }, [location.pathname, tenantId]);
+  
 
   useEffect(() => {
     if (getDataFromSession) {
@@ -181,6 +166,12 @@ const MainLayout = () => {
     const paths = [];
     return paths.find((item) => item === link);
   };
+
+  useEffect(()=>{
+    if(selectedTenant){
+      setTenant(selectedTenant?.value)
+    }
+  },[selectedTenant])
 
 
   useEffect(() => {

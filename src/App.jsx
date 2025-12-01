@@ -1,7 +1,7 @@
 import AppRoutes from "./routes/AppRoutes";
 import { Toaster } from "react-hot-toast";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import {  QueryClient, QueryClientProvider, } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider, } from "@tanstack/react-query";
 
 // Create the QueryClient
 const queryClient = new QueryClient({
