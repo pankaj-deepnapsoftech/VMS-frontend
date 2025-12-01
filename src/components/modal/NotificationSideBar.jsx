@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import {useAuthStore} from "@/store/AuthStore"
-import { GetExceptionData, updateExceptionData } from "@/services/Exception.service";
+import { GetExceptionData, updateExceptionData } from "@/services/exception.service";
 import { Checkhariqui } from "@/utils/checkHarirqui";
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect, useRef, useState } from "react";
@@ -142,7 +142,7 @@ export function NotificationSidebar({
       {/* Notifications List */}
       <div className="p-4 space-y-3 overflow-y-auto max-h-[80vh] scrollbar-thin scrollbar-thumb-white/30 scrollbar-track-transparent">
         {notifications?.length > 0 ? (
-          notifications.map((notification, index) => {
+          notifications?.map((notification, index) => {
             const isViewed = notification?.view;
             return (
               <div
@@ -169,7 +169,7 @@ export function NotificationSidebar({
                 </div>
 
 
-                {notification?.options && Checkhariqui(expectionData.filter((item)=>item._id === notification.expection_id)[0] || null,authenticate) && (
+                {notification?.options && Checkhariqui(expectionData?.filter((item)=>item._id === notification.expection_id)[0] || null,authenticate) && (
                   <div className="flex justify-end gap-2 mt-3">
                     <button
                     disabled={isUpdateExpectionDataLoading}
