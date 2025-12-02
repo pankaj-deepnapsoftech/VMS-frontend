@@ -98,7 +98,7 @@ const Partners = () => {
       state: "",
       city: "",
     },
-    validationSchema: PartnersSchema(partnersData, editTable),
+    validationSchema: PartnersSchema,
     enableReinitialize: true,
     onSubmit: async (values) => {
       try {
@@ -107,7 +107,6 @@ const Partners = () => {
         } else {
           CreatePartners(values);
         }
-        queryClient.invalidateQueries(["partners"]);
         resetForm();
         setModal(false);
       } catch (error) {

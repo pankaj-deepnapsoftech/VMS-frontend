@@ -41,7 +41,7 @@ const AppRoutes = () => {
       authenticate.role &&
       authenticate.allowed_path
     ) {
-      const data = [...authenticate.allowed_path, { value: '/user-details', }, { value: '/change-password', }];
+      const data = [...authenticate.allowed_path, { value: '/user-details', }, { value: '/change-password', },{value:"/edit-vulnerability-data"}];
       return PrivateRoutes.filter((item) =>
         data.some((ite) => ite.value === item.path)
       );
