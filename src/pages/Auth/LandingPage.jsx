@@ -1,9 +1,7 @@
 import { Suspense, useEffect, useState } from "react";
-import { FaFacebookF, FaTwitter, FaYoutube, FaPlay } from "react-icons/fa";
+import { FaFacebookF, FaTwitter, FaYoutube } from "react-icons/fa";
 import "/public/Font/LexendDeca.ttf";
 import {
-  FaBullseye,
-  FaClone,
   FaEye,
   FaProjectDiagram,
   FaSearch,

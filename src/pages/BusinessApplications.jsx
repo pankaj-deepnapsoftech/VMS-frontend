@@ -31,7 +31,7 @@ import {
   updateApplicationData,
 } from "@/services/BusinessApplication.service";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
-import { getAllInfrastructureAsset } from "@/services/InfraStructureAsset.service";
+import { getAllInfrastructureAsset } from "@/services/infraStructureAsset.service";
 import { useAuthStore } from "@/store/AuthStore";
 import { Country, State, City } from "country-state-city";
 

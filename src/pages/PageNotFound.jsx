@@ -1,4 +1,3 @@
-import React from 'react';
 import { IoHomeOutline } from 'react-icons/io5';
 import { BiErrorAlt } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';

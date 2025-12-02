@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { FiDatabase, FiSettings } from "react-icons/fi";
 import { products } from "@/constants/static.data";
 import "./animation.css";
 import { GrShieldSecurity } from "react-icons/gr";

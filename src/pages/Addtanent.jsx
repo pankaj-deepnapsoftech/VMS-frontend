@@ -3,7 +3,6 @@ import { IoClose } from "react-icons/io5";
 import { useFormik } from "formik";
 
 import { tenantValidator } from "@/Validation/TenantsValidations";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {

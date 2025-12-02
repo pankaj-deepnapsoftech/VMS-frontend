@@ -34,7 +34,7 @@ import {
   deleteInfrastructureAsset,
   getInfrastructureAsset,
   updateInfrastructureAsset,
-} from "@/services/InfraStructureAsset.service";
+} from "@/services/infraStructureAsset.service";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 import { useAuthStore } from "@/store/AuthStore";
 

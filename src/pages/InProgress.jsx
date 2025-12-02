@@ -22,11 +22,10 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import {
-  CreateScheduleAssessment,
   deleteAssesment,
   getInProgressAssessment,
   UpdateScheduleAssessment,
-} from "@/services/Assessment.service";
+} from "@/services/assessment.service";
 import AssessmentSkeleton from "@/Skeletons/Assessment/AssessmentSkeleton";
 import { useAuthStore } from "@/store/AuthStore";
 

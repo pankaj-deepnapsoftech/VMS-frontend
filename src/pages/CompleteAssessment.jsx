@@ -17,7 +17,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   deleteAssesment,
   getInCompletedAssessment,
-} from "@/services/Assessment.service";
+} from "@/services/assessment.service";
 import AssessmentSkeleton from "@/Skeletons/Assessment/AssessmentSkeleton";
 import { useAuthStore } from "@/store/AuthStore";
 

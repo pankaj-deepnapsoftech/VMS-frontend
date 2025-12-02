@@ -1,7 +1,7 @@
 import InputField from "@/components/InputField";
 import ReportModal from "@/components/modal/ReportModal";
 import NoDataFound from "@/components/NoDataFound";
-import { getAllInProgressAssessment } from "@/services/Assessment.service";
+import { getAllInProgressAssessment } from "@/services/assessment.service";
 import { DeleteReportService, GetAllReportsService, UpdateReportService, UploadReportService } from "@/services/Reports.service";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 import { useAuthStore } from "@/store/AuthStore";

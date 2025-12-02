@@ -19,15 +19,12 @@ export const JiraDataTable = () => {
     loading,
     jiraData,
     page,
-    setPage,
     JiraData,
     JiraConfigData,
     datafetchCount,
     setdatafetchCount,
-    UploadJiraData,
     JiraManualData,
     ConfigData,
-    DeleteMultipleData,
     DeleteData,
   } = useJiraContext();
 
@@ -35,11 +32,9 @@ export const JiraDataTable = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [isJDModalOpen, setIsJDModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const rowsPerPage = 10;
-  const fileInputRef = useRef(null);
 
   useEffect(() => {
     if (token && datafetchCount === 0) {

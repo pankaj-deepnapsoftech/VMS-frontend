@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import { MdClose } from "react-icons/md";
-import "react-pdf/dist/esm/Page/AnnotationLayer.css"; // Optional: for annotation support
-import "react-pdf/dist/esm/Page/TextLayer.css"; // Optional: for text layer support
 
 // Set up the PDF worker
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;

@@ -6,7 +6,7 @@ import { IoShield, IoShieldHalf } from "react-icons/io5";
 import { FaPerson } from "react-icons/fa6";
 import { MdInventory2, MdOutlineMiscellaneousServices } from "react-icons/md";
 import { SiWikimediafoundation } from "react-icons/si";
-import { TbReport } from "react-icons/tb";
+import { TbReport,TbLockPassword } from "react-icons/tb";
 import {
   Bug,
   CalendarClock,
@@ -15,7 +15,6 @@ import {
   UserCircle,
   Users,
 } from "lucide-react";
-import { TbLockPassword } from "react-icons/tb";
 
 export const list = [
   { title: "Dashboard", route: "", icon: BiSolidDashboard },

@@ -8,8 +8,6 @@ import {
   Component,
   FileUp,
   LucideShield,
-  Settings,
-  User,
   UserCircle,
   Users,
 } from "lucide-react";
@@ -29,8 +27,6 @@ import { TbReport } from "react-icons/tb";
 import { GiCyberEye, GiProgression, GiTwirlCenter } from "react-icons/gi";
 import { PiHardHatFill } from "react-icons/pi";
 import { RiHome3Fill } from "react-icons/ri";
-import { SiWikimediafoundation } from "react-icons/si";
-import { GrVulnerability } from "react-icons/gr";
 
 export const AllowedPaths = [
   // --------------------Roc Pages-----------------------

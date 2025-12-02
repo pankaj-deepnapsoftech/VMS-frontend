@@ -2,7 +2,7 @@ import ExpectionModal from "@/modals/ExpectionModal";
 import {
   GetExceptionData,
   updateExceptionData,
-} from "@/services/Exception.service";
+} from "@/services/exception.service";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 import { useAuthStore } from "@/store/AuthStore";
 import { dateFormaterWithDate } from "@/utils/dateFormate";
