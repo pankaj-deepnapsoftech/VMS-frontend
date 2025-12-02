@@ -17,7 +17,7 @@ const RoleModel = ({ editable, handleClose }) => {
   const { mutate: CreateRole, isPending: isCreateRoleLoading } = useMutation({
     mutationFn: (data) => createRoles(data),
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["roles"] });
+      await queryClient.invalidateQueries({ queryKey: ["roles"]});
     },
   });
 

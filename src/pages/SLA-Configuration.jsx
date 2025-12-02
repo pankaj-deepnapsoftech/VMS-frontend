@@ -28,6 +28,7 @@ const Severity = () => {
   // all context apis here
   const { token, authenticate, tenant } = useAuthStore();
 
+
   // location hook to get the current URL
   const location = useLocation();
 
@@ -94,14 +95,16 @@ const Severity = () => {
     },
     enableReinitialize: true,
     onSubmit: (value) => {
-      if (!value.tenant) {
-        alert("Please select tenant");
-        return;
-      }
+
+
       if (editableData) {
         UpdateSeverity({ id: editableData?._id, data: value });
         setEditableData(null);
       } else {
+        if (!tenant) {
+          alert("Please select tenant");
+          return;
+        }
         CreateSeverity(value);
         setEditableData(null);
       }
