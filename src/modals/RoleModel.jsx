@@ -44,7 +44,7 @@ const RoleModel = ({ editable, handleClose }) => {
     },
     enableReinitialize: true,
     validationSchema: RoleSchema,
-    onSubmit: (value) => {
+    onSubmit: async(value) => {
       if (step) {
         setStep(2);
       }
@@ -55,7 +55,7 @@ const RoleModel = ({ editable, handleClose }) => {
         } else {
           CreateRole(value);
         }
-        queryClient.invalidateQueries({ queryKey: ["roles"] });
+        await queryClient.invalidateQueries({ queryKey: ["roles"] });
         handleClose();
       }
     },

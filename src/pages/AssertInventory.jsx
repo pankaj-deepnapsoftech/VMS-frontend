@@ -53,7 +53,7 @@ export default function TenantDashboard() {
   // ================================ here is all tenstack querys code =========================
 
   const { data: AllTags } = useQuery({
-    queryKey: "All-tags",
+    queryKey: ["All-tags"],
     queryFn: GetAlltags,
     enabled: !!token,
     placeholderData: keepPreviousData,
@@ -110,6 +110,14 @@ export default function TenantDashboard() {
         });
       },
     });
+
+  const normalizeEditable = (item) => {
+    return {
+      ...item,
+      data_sensitivity: item?.data_sensitivity?._id || "",
+      service_role: item?.service_role?.map((x) => x._id) || [],
+    };
+  };
 
   const {
     values,
@@ -337,7 +345,7 @@ export default function TenantDashboard() {
                             {isModifyAccess() && (
                               <button
                                 onClick={() => {
-                                  setEditable(tenant);
+                                  setEditable(normalizeEditable(tenant));
                                   setmodel(!model);
                                 }}
                                 title="Edit"
