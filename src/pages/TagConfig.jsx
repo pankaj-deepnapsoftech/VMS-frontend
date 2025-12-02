@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { useFormik } from "formik";
@@ -77,13 +77,14 @@ export default function TagsPage() {
     handleChange,
     handleSubmit,
     resetForm,
+    setFieldValue
   } = useFormik({
     initialValues: editTag || {
       tag_name: "",
       tag_description: "",
       tag_score: "",
       tag_color: "",
-      amount: "",
+      amount:"",
       related: "",
     },
     validationSchema: tagValidation,
@@ -98,6 +99,13 @@ export default function TagsPage() {
       resetForm();
     },
   });
+
+
+  useEffect(() => {
+  if (values.related !== "Data Sensitivity") {
+    setFieldValue("amount", 0);
+  } 
+}, [values.related]);
 
 
   const filteredTags = Tages?.filter((tag) => {
@@ -351,7 +359,7 @@ export default function TagsPage() {
                   <input
                     type="number"
                     name="amount"
-                    value={values.amount}
+                    value={values.amount }
                     onChange={handleChange}
                     onBlur={handleBlur}
                     placeholder="Enter amount"
