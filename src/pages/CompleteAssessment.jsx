@@ -71,7 +71,7 @@ const PendingAssessment = () => {
         {/* Header */}
         <div className="px-6 py-4 border-b border-gray-700 w-[700px] relative">
           <div className="relative">
-            <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 z-10" />
+            <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 pr-2 z-[1]" />
             <input
               type="search"
               placeholder="Search users..."

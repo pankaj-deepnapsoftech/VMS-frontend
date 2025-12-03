@@ -25,7 +25,8 @@ import {
   LuFileUp,
   MdOutlineShield,
   FaUserCircle,
-  FaUsers
+  FaUsers,
+  BrickWallFire 
 } from "@/constants/Icons";
 
 export const AllowedPaths = [
@@ -391,7 +392,7 @@ export const products = [
       {
         title: "All Vulnerability",
         route: "/vulnerability-data",
-        icon: FaBug,
+        icon: BrickWallFire ,
       },
       {
         title: "Application Vulnerabilities",

@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { BiPlus, FaRegTrashAlt,IoSearch, RiEdit2Line } from "@/constants/Icons";
+import {
+  BiPlus,
+  FaRegTrashAlt,
+  IoSearch,
+  RiEdit2Line,
+} from "@/constants/Icons";
 import { useFormik } from "formik";
 import { tagValidation } from "@/Validation/TagValidation";
 import Pagination from "./Pagination";
@@ -14,13 +19,16 @@ import {
 } from "@/utils/pageAccess";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
-import {getTags,deleteTags, createTags,updateTags} from "@/services/ManageTags.service";
+import {
+  getTags,
+  deleteTags,
+  createTags,
+  updateTags,
+} from "@/services/ManageTags.service";
 import { useAuthStore } from "@/store/AuthStore";
-
-
+import NoDataFound from "@/components/NoDataFound";
 
 export default function TagsPage() {
-  
   const { token, authenticate } = useAuthStore();
   const location = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,18 +36,17 @@ export default function TagsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(1);
 
-
   const queryClient = useQueryClient();
 
   //=====================TANSTACK QUERY================
 
   const { data: Tages, isLoading: isTagsLoading } = useQuery({
-      queryKey: ["tags", page],
-      queryFn: () => getTags({ page }),
-      enabled: !!token,
-    });
+    queryKey: ["tags", page],
+    queryFn: () => getTags({ page }),
+    enabled: !!token,
+  });
 
-    const { mutate: CreateTags, isPending: isCreateTagLoading } = useMutation({
+  const { mutate: CreateTags, isPending: isCreateTagLoading } = useMutation({
     mutationFn: (data) => createTags(data),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["tags"] });
@@ -74,21 +81,21 @@ export default function TagsPage() {
     handleChange,
     handleSubmit,
     resetForm,
-    setFieldValue
+    setFieldValue,
   } = useFormik({
     initialValues: editTag || {
       tag_name: "",
       tag_description: "",
       tag_score: "",
       tag_color: "",
-      amount:"",
+      amount: "",
       related: "",
     },
     validationSchema: tagValidation,
     enableReinitialize: true,
     onSubmit: (value) => {
       if (editTag) {
-        UpdateTags({id:values._id, data:values});
+        UpdateTags({ id: values._id, data: values });
       } else {
         CreateTags(value);
       }
@@ -97,13 +104,11 @@ export default function TagsPage() {
     },
   });
 
-
   useEffect(() => {
-  if (values.related !== "Data Sensitivity") {
-    setFieldValue("amount", 0);
-  } 
-}, [values.related]);
-
+    if (values.related !== "Data Sensitivity") {
+      setFieldValue("amount", 0);
+    }
+  }, [values.related]);
 
   const filteredTags = Tages?.filter((tag) => {
     const query = searchQuery.toLowerCase();
@@ -119,12 +124,14 @@ export default function TagsPage() {
 
   return (
     <>
-      { (
+      {
         <div className="min-h-screen py-4 md:px-6">
           {/* Top Bar */}
           <div className="w-full border-[#6B728033] flex flex-row md:flex-row md:items-center justify-between gap-4 backdrop-blur-md rounded-lg bg-[#1a1f2e]/40 p-4">
             <div>
-              <h2 className="text-2xl md:text-3xl font-semibold text-white">All Tags</h2>
+              <h2 className="text-2xl md:text-3xl font-semibold text-white">
+                All Tags
+              </h2>
               <span className="text-subtext text-sm">Manage your tags</span>
             </div>
 
@@ -146,102 +153,120 @@ export default function TagsPage() {
           {/* Table Section */}
           <div className="w-full mt-6 mb-12 bg-[#1a1f2e] rounded-lg shadow-xl overflow-hidden">
             {/* Search Bar */}
-            <div className="px-4 md:px-6 py-4 border-b border-gray-700">
-              <div className="relative w-[200px] md:w-1/3">
-                <IoSearch className="text-subtext absolute top-1/2 -translate-y-1/2 left-2 z-10" />
+            <div className="px-6 py-4 border-b border-gray-700 w-[700px] relative">
+              <div className="relative">
+                <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 pr-2 z-[1]" />
                 <input
                   type="search"
                   placeholder="Search tags..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="bg-input backdrop-blur-md py-2 ps-8 pe-3 rounded-md w-full text-white"
+                  className="bg-input backdrop-blur-md py-2 w-1/3 text-white ps-7 pe-3 rounded-md "
                 />
               </div>
             </div>
 
-            {/* Table */}
-            <div className="overflow-x-auto custom-scrollbar">
-              {isTagsLoading ? <TableSkeletonLoading/> : <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
-                <thead className="bg-[#0c1120] text-white uppercase tracking-wider">
-                  <tr>
-                    {[
-                      "S No.",
-                      "Tag Name",
-                      "Description",
-                      "Tag Score",
-                      "Tag Color",
-                      "Related",
-                      "Amount",
-                      isHaveAction() && "Actions",
-                    ].map(
-                      (header) =>
-                        header && (
-                          <th
-                            key={header}
-                            className="px-3 md:px-4 py-3 border-b border-gray-600 font-medium text-xs md:text-sm"
-                          >
-                            {header}
-                          </th>
-                        )
-                    )}
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-700">
-                  {filteredTags?.length > 0 ? (
-                    filteredTags.map((tag, index) => (
-                      <tr
-                        key={tag._id}
-                        className="hover:bg-[#2d2f32] transition-colors duration-150"
-                      >
-                        <td className="px-3 md:px-4 py-3">{(page - 1) * 10 + 1 + index}</td>
-                        <td className="px-3 md:px-4 py-3 capitalize break-words">{tag.tag_name || "-"}</td>
-                        <td className="px-3 md:px-4 py-3 break-words max-w-[200px]">{tag.tag_description || "-"}</td>
-                        <td className="px-3 md:px-4 py-3">{tag.tag_score || "0"}</td>
-                        <td className="px-3 md:px-4 py-3">{tag.tag_color || "-"}</td>
-                        <td className="px-3 md:px-4 py-3">{tag.related || "-"}</td>
-                        <td className="px-3 md:px-4 py-3">{tag.amount || "-"}</td>
-
-                        {isHaveAction() && (
-                          <td className="px-3 md:px-4 py-3 flex gap-3">
-                            {isDeleteAccess() && (
-                              <button
-                                onClick={() => 
-                                    DeleteTagsData(tag._id)}
-                                title="Delete"
-                                className="text-subtext hover:text-red-500"
-                              >
-                                <FaRegTrashAlt className="w-5 h-5" />
-                              </button>
-                            )}
-                            {isModifyAccess() && (
-                              <button
-                                onClick={() => {
-                                  setEditTag(tag);
-                                  setIsModalOpen(true);
-                                }}
-                                title="Edit"
-                                className="text-subtext hover:text-blue-500"
-                              >
-                                <RiEdit2Line className="w-5 h-5" />
-                              </button>
-                            )}
-                          </td>
-                        )}
+            {/* TABLE */}
+            {filteredTags?.length < 1 ? (
+              <NoDataFound />
+            ) : (
+              <div className="overflow-x-auto custom-scrollbar w-full">
+                {isTagsLoading ? (
+                  <TableSkeletonLoading />
+                ) : (
+                  <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+                    <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
+                      <tr>
+                        {[
+                          "S No.",
+                          "Tag Name",
+                          "Description",
+                          "Tag Score",
+                          "Tag Color",
+                          "Related",
+                          "Amount",
+                          isHaveAction() && "Actions",
+                        ]
+                          ?.filter(Boolean)
+                          .map((header) => (
+                            <th
+                              key={header}
+                              className="px-4 py-3 border-b border-gray-600 font-medium"
+                            >
+                              {header}
+                            </th>
+                          ))}
                       </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td
-                        colSpan={8}
-                        className="text-center py-6 text-gray-400"
-                      >
-                        No tags found.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>}
-            </div>
+                    </thead>
+
+                    <tbody className="divide-y divide-gray-700">
+                      {filteredTags?.map((tag, index) => (
+                        <tr
+                          key={tag._id}
+                          className="hover:bg-[#2d2f32] transition-colors duration-150 whitespace-nowrap"
+                        >
+                          <td className="px-4 py-3">
+                            {(page - 1) * 10 + 1 + index}
+                          </td>
+
+                          <td className="px-4 py-3 capitalize">
+                            {tag.tag_name || "-"}
+                          </td>
+
+                          <td className="px-4 py-3 max-w-[220px] truncate">
+                            {tag.tag_description || "-"}
+                          </td>
+
+                          <td className="px-4 py-3">{tag.tag_score || "0"}</td>
+
+                          <td className="px-4 py-3">
+                            <span
+                              className="px-3 py-1 rounded-full text-black font-medium"
+                              style={{ backgroundColor: tag.tag_color }}
+                            >
+                              {tag.tag_color}
+                            </span>
+                          </td>
+
+                          <td className="px-4 py-3">{tag.related || "-"}</td>
+
+                          <td className="px-4 py-3">{tag.amount || "-"}</td>
+
+                          {isHaveAction() && (
+                            <td className="px-4 py-3 flex gap-3">
+                              {/* DELETE */}
+                              {isDeleteAccess() && (
+                                <button
+                                  onClick={() => DeleteTagsData(tag._id)}
+                                  title="Delete"
+                                  className="text-subtext hover:text-red-500"
+                                >
+                                  <FaRegTrashAlt className="h-5 w-5" />
+                                </button>
+                              )}
+
+                              {/* EDIT */}
+                              {isModifyAccess() && (
+                                <button
+                                  onClick={() => {
+                                    setEditTag(tag);
+                                    setIsModalOpen(true);
+                                  }}
+                                  title="Edit"
+                                  className="text-subtext hover:text-blue-500"
+                                >
+                                  <RiEdit2Line className="h-5 w-5" />
+                                </button>
+                              )}
+                            </td>
+                          )}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            )}
 
             <Pagination
               page={page}
@@ -251,7 +276,7 @@ export default function TagsPage() {
             />
           </div>
         </div>
-      )}
+      }
 
       {/* Modal */}
       {isModalOpen && (
@@ -356,7 +381,7 @@ export default function TagsPage() {
                   <input
                     type="number"
                     name="amount"
-                    value={values.amount }
+                    value={values.amount}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     placeholder="Enter amount"
@@ -416,7 +441,7 @@ export default function TagsPage() {
                 Cancel
               </button>
               <button
-              disabled={isCreateTagLoading || isUpdateTagsLoading}
+                disabled={isCreateTagLoading || isUpdateTagsLoading}
                 type="submit"
                 className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md w-full sm:w-auto"
               >

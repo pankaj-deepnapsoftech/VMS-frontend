@@ -155,4 +155,4 @@ export {
 
 export { Menu as AiOutlineMenu } from "lucide-react";
 
-export {Building, Compass, Globe , MapPinned, Trash  } from "lucide-react";
+export {Building, Compass, Globe , MapPinned, Trash, BrickWallFire  } from "lucide-react";

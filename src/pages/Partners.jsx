@@ -284,7 +284,7 @@ const Partners = () => {
             {/* Search Header */}
             <div className="px-4 sm:px-6 py-4 border-b border-gray-700 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
               <div className="relative w-[700] sm:w-1/2 md:w-1/3">
-                <IoSearch className="text-subtext absolute top-1/2 -translate-y-1/2 left-2 z-10" />
+                <IoSearch className="text-subtext absolute top-[47%] -translate-y-[50%] left-2 pr-2 z-[1]" />
                 <input
                   type="search"
                   placeholder="Search partners..."
