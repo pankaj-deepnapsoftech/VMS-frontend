@@ -1,12 +1,8 @@
-// Replaced with lucide-react icons while keeping SAME export names
-// NOTE: Lucide does not have 1:1 icons for everything, closest alternatives used
-
 export {
   CircleX as IoMdCloseCircleOutline,
   ChevronDown as IoIosArrowDown,
   LogOut as IoIosLogOut,
   Info as IoIosInformationCircleOutline,
-  X as IoIosClose,
 } from "lucide-react";
 
 export { X as RxCross2 } from "lucide-react";
@@ -158,3 +154,5 @@ export {
 } from "lucide-react";
 
 export { Menu as AiOutlineMenu } from "lucide-react";
+
+export {Building, Compass, Globe , MapPinned, Trash  } from "lucide-react";

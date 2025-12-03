@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useRef } from "react";
-import { MdClose, IoCloudUploadOutline } from "@/constants/Icons";
+import { RxCross2, IoCloudUploadOutline } from "@/constants/Icons";
 
 export const Modal = ({ isOpen, onClose, title, method }) => {
   const fileInputRef = useRef(null);
@@ -24,7 +24,7 @@ export const Modal = ({ isOpen, onClose, title, method }) => {
         <div className="flex justify-between items-center bg-gradient-custom text-white rounded-t-2xl p-4">
           <h2 className="text-lg font-semibold">{title}</h2>
           <button onClick={onClose} className="hover:opacity-80 transition">
-            <MdClose className="h-6 w-6" />
+            <RxCross2 className="h-6 w-6" />
           </button>
         </div>
         {/* Content */}

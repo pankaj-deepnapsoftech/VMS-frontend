@@ -2,20 +2,9 @@ import InputField from "@/components/InputField";
 import { PartnersSchema } from "@/Validation/PartnerrValidations";
 import { useFormik } from "formik";
 import { useState } from "react";
-import { BiPlus } from "@/constants/Icons";
-import {
-  FaBuilding,
-  FaCity,
-  FaCompass,
-  FaGlobe,
-  FaMapMarkedAlt,
-  FaRegTrashAlt,
-} from "react-icons/fa";
-import { MdClose } from "react-icons/md";
+import {BiPlus, Building, Compass, Globe ,MapPinned, Trash, MdClose, RiEdit2Line, IoSearch } from "@/constants/Icons"
 import Pagination from "./Pagination";
-import { RiEdit2Line } from "react-icons/ri";
 import NoDataFound from "@/components/NoDataFound";
-import { IoSearch } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
 import Access from "@/components/role/Access";
 import {
@@ -185,7 +174,7 @@ const Partners = () => {
                     onBlur={handleBlur}
                     label="Company Name"
                     type="text"
-                    icon={FaBuilding}
+                    icon={Building}
                     name="company_name"
                     value={values.company_name}
                     placeholder="Enter company name"
@@ -203,7 +192,7 @@ const Partners = () => {
                     onBlur={handleBlur}
                     label="Website URL"
                     type="text"
-                    icon={FaGlobe}
+                    icon={Globe}
                     name="website_url"
                     value={values.website_url}
                     placeholder="Enter website URL"
@@ -221,7 +210,7 @@ const Partners = () => {
                     onBlur={handleBlur}
                     label="Country"
                     type="text"
-                    icon={FaCompass}
+                    icon={Compass}
                     name="country"
                     value={values.country}
                     placeholder="Enter country"
@@ -239,7 +228,7 @@ const Partners = () => {
                     onBlur={handleBlur}
                     label="State"
                     type="text"
-                    icon={FaMapMarkedAlt}
+                    icon={MapPinned }
                     name="state"
                     value={values.state}
                     placeholder="Enter state"
@@ -255,7 +244,7 @@ const Partners = () => {
                     onBlur={handleBlur}
                     label="City"
                     type="text"
-                    icon={FaCity}
+                    icon={Building}
                     name="city"
                     value={values.city}
                     placeholder="Enter city"
@@ -360,7 +349,7 @@ const Partners = () => {
                                   title="Delete"
                                   className="text-subtext hover:text-red-500 transition"
                                 >
-                                  <FaRegTrashAlt className="w-5 h-5" />
+                                  <Trash  className="w-5 h-5" />
                                 </button>
                               )}
                               {isModifyAccess() && (

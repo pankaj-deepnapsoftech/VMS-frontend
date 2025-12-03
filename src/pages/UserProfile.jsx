@@ -1,4 +1,4 @@
-import { IoIosClose } from "@/constants/Icons";
+import { RxCross2 } from "@/constants/Icons";
 import { useAuthStore } from "@/store/AuthStore";
 
 // eslint-disable-next-line react/prop-types
@@ -19,7 +19,7 @@ const UserProfile = ({ showUserMenu, setShowMenu }) => {
             onClick={() => setShowMenu(false)}
             className="text-white hover:text-gray-300"
           >
-            <IoIosClose size={28} />
+            <RxCross2 size={28} />
           </button>
         </div>
 

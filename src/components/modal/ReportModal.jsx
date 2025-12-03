@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
-import { MdClose } from "@/constants/Icons";
+import { RxCross2 } from "@/constants/Icons";
 
 // Set up the PDF worker
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
@@ -44,7 +44,7 @@ const ReportModal = ({ file, close }) => {
             onClick={() => close(false)}
             className="text-white hover:text-gray-200 transition"
           >
-            <MdClose className="h-6 w-6" />
+            <RxCross2 className="h-6 w-6" />
           </button>
         </div>
 
