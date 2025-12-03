@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Eye,
-  Download,
-  Settings,
-} from "lucide-react";
+import {FaEye, IoSettingsOutline, FaDownload} from "@/constants/Icons"
 import { useAIVAContext} from "@/context";
 import AssessmentModal from "@/components/modal/AssessmentModal";
 import "react-circular-progressbar/dist/styles.css";
@@ -234,13 +230,13 @@ export default function AssessmentCenter() {
                         <td className="py-4 px-4">
                           <div className="flex items-center gap-4 text-blue-400">
                             <button title="View">
-                              <Eye size={18} />
+                              <FaEye size={18} />
                             </button>
                             <button title="Download">
-                              <Download size={18} />
+                              <FaDownload size={18} />
                             </button>
                             <button title="Settings">
-                              <Settings size={18} />
+                              <IoSettingsOutline size={18} />
                             </button>
                           </div>
                         </td>

@@ -1,13 +1,10 @@
 import { useState } from "react";
-import { BiPlus } from "react-icons/bi";
-import { FaRegTrashAlt } from "react-icons/fa";
 import Pagination from "./Pagination";
 import Addtanent from "./Addtanent";
 import AccessPartner from "@/modals/AccessPartner";
 import useAccessPartner from "@/hooks/AccessPartner";
-import { IoSearch } from "react-icons/io5";
+import { IoSearch, FaRegTrashAlt, RiEdit2Line, BiPlus } from "@/constants/Icons";
 import NoDataFound from "@/components/NoDataFound";
-import { RiEdit2Line } from "react-icons/ri";
 import { useLocation } from "react-router-dom";
 import Access from "@/components/role/Access";
 import {

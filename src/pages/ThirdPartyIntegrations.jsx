@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { FaCheckCircle, FaClock, FaPlug } from "react-icons/fa";
-import { MdError } from "react-icons/md";
+import { FaCheckCircle, FaClock, FaPlug, MdError } from "@/constants/Icons";
 import { useNavigate } from "react-router-dom";
 
 const ThirdPartyIntegrations = () => {

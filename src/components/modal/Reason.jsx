@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { motion, AnimatePresence } from "framer-motion";
-import { FaTimes } from "react-icons/fa";
+import { FaTimes } from "@/constants/Icons";
 
 export function ReasonModal({ isOpen, onClose, onSubmit }) {
   if (!isOpen) return null;

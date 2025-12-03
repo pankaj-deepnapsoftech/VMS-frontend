@@ -2,7 +2,7 @@ import InputField from "@/components/InputField";
 import { PartnersSchema } from "@/Validation/PartnerrValidations";
 import { useFormik } from "formik";
 import { useState } from "react";
-import { BiPlus } from "react-icons/bi";
+import { BiPlus } from "@/constants/Icons";
 import {
   FaBuilding,
   FaCity,

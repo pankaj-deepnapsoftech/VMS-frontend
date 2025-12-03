@@ -1,5 +1,5 @@
 import  { useEffect, useState, useRef } from "react";
-import { FaUserCircle } from "react-icons/fa";
+import { FaUserCircle } from "@/constants/Icons";
 import { useLocation, useParams } from "react-router-dom";
 import { useVulnerabililtyDataContext } from "@/context";
 

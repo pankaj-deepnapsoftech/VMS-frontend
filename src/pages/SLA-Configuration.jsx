@@ -6,10 +6,7 @@ import {
   isViewAccess,
 } from "@/utils/pageAccess";
 import { useEffect, useState } from "react";
-import { BiPlus } from "react-icons/bi";
-import { FaRegTrashAlt } from "react-icons/fa";
-import { IoSearch } from "react-icons/io5";
-import { RiEdit2Line } from "react-icons/ri";
+import { BiPlus, FaRegTrashAlt, IoSearch, RiEdit2Line } from "@/constants/Icons";
 import Pagination from "./Pagination";
 import { useFormik } from "formik";
 import Access from "@/components/role/Access";

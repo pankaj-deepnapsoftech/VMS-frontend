@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronRight } from 'lucide-react';
+import {FaChevronRight } from "@/constants/Icons";
 
 const AccordionItem = ({ title, isSelected, onClick }) => {
   return (
@@ -12,7 +12,7 @@ const AccordionItem = ({ title, isSelected, onClick }) => {
       <span className={`text-lg font-medium ${isSelected ? 'text-indigo-900' : 'text-gray-900'}`}>
         {title}
       </span>
-      <ChevronRight
+      <FaChevronRight
         className={`w-5 h-5 ${isSelected ? 'text-indigo-600' : 'text-gray-500'}`}
       />
     </button>

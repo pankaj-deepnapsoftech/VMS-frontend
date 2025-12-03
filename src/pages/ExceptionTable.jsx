@@ -14,8 +14,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { useEffect, useState, useRef } from "react";
-import { FaUserCheck } from "react-icons/fa";
-import { GrEdit } from "react-icons/gr";
+import { FaUserCheck, GrEdit } from "@/constants/Icons";
 import { GetTenantDataServices } from "@/services/Auth.service";
 
 const ExceptionTable = () => {

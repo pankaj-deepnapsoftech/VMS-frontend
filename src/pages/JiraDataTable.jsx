@@ -6,8 +6,7 @@ import {
   useCallback,
   useRef,
 } from "react";
-import {  BiEditAlt,  } from "react-icons/bi";
-import { RiDeleteBinFill } from "react-icons/ri"
+import {  BiEditAlt, RiDeleteBinFill } from "@/constants/Icons";
 import * as XLSX from "xlsx";
 import toast from "react-hot-toast";
 import {useJiraContext } from "@/context";

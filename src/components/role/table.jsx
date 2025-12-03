@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/prop-types */
 import { AllowedPaths } from '@/constants/static.data';
-import { LucideShield } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 
 const RoleTable = ({ setFieldValue, defaultValue }) => {
@@ -53,7 +52,7 @@ const RoleTable = ({ setFieldValue, defaultValue }) => {
       <thead className="text-xs uppercase text-gray-400 border-b border-[#293550] h-16">
         <tr>
           <th className="px-4 py-3 flex w-full h-16 gap-1 items-center justify-start">
-            <LucideShield className="h-4" /> Module
+             Module
           </th>
           {['View', 'Create', 'Modify', 'Delete'].map((perm) => (
             <th key={perm} className="px-4 py-3">{perm}</th>

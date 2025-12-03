@@ -1,5 +1,5 @@
 import { useEffect} from "react";
-import { FaChartBar } from "react-icons/fa";
+import { FaChartBar } from "@/constants/Icons";
 import {
   BarChart,
   Bar,

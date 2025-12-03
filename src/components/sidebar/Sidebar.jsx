@@ -2,7 +2,7 @@ import { LogoutUser } from "@/services/Auth.service";
 import { useAuthStore } from "@/store/AuthStore";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
-import { IoClose } from "react-icons/io5";
+import { IoClose } from "@/constants/Icons";
 import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {

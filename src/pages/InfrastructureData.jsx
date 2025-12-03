@@ -5,14 +5,19 @@ import ExploitDetail from "@/modals/ExploitDetail";
 import useAccessPartner from "@/hooks/AccessPartner";
 import Pagination from "./Pagination";
 import NoDataFound from "@/components/NoDataFound";
-import { IoSearch, IoWarningOutline } from "react-icons/io5";
+import {
+  IoSearch,
+  IoWarningOutline,
+  BsThreeDotsVertical,
+  MdDelete,
+  MdModeEditOutline,
+  BiDetail,
+  GrStatusGood,
+  FaUserCircle
+} from "@/constants/Icons";
 import { calculateACS } from "@/utils/vulnerableOperations";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import { PopupMenu } from "@/modals/PopupManue";
-import { MdDelete, MdModeEditOutline } from "react-icons/md";
-import { BiDetail } from "react-icons/bi";
 import { StatusModal } from "@/modals/StatusModal";
-import { GrStatusGood } from "react-icons/gr";
 import {
   isDeleteAccess,
   isHaveAction,
@@ -20,10 +25,17 @@ import {
   isViewAccess,
 } from "@/utils/pageAccess";
 import Access from "@/components/role/Access";
-import { CircleUser } from "lucide-react";
 import AssignUserModal from "@/components/modal/AssignUserModal";
-import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { DeleteVulnerableData, getInfrastructureData } from "@/services/Vulnerable.service";
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
+import {
+  DeleteVulnerableData,
+  getInfrastructureData,
+} from "@/services/Vulnerable.service";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 import { useAuthStore } from "@/store/AuthStore";
 
@@ -34,23 +46,27 @@ export default function InfrastructureData() {
   const [currentPage, setCurrentPage] = useState(1);
   const queryClient = useQueryClient();
 
-
-
-  const { data: allInfrastructureData, isLoading: isAllInfrastructureDataLoading } = useQuery({
-    queryKey: ["All-Infrastructure-vulnerabilities", { page: currentPage, tenant }],
+  const {
+    data: allInfrastructureData,
+    isLoading: isAllInfrastructureDataLoading,
+  } = useQuery({
+    queryKey: [
+      "All-Infrastructure-vulnerabilities",
+      { page: currentPage, tenant },
+    ],
     queryFn: () => getInfrastructureData({ page: currentPage, tenant }),
     enabled: !!token,
     placeholderData: keepPreviousData,
-  })
-
+  });
 
   const { mutate: DeleteData } = useMutation({
     mutationFn: (id) => DeleteVulnerableData(id),
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["All-Infrastructure-vulnerabilities"] })
-    }
-  })
-
+      await queryClient.invalidateQueries({
+        queryKey: ["All-Infrastructure-vulnerabilities"],
+      });
+    },
+  });
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -67,12 +83,12 @@ export default function InfrastructureData() {
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
   const [status, setStatus] = useState(null);
   const { closeModal, isOpen, openModal } = useAccessPartner();
-  const [AssignUserOpenModal, setAssignUserOpenModal] = useState(false)
+  const [AssignUserOpenModal, setAssignUserOpenModal] = useState(false);
   // Popup state
   const [activeMenu, setActiveMenu] = useState(null);
   const [menuPosition, setMenuPosition] = useState(null);
-  const [tenantId, setTenantId] = useState(null)
-  const [selectedDataId, setselectedData] = useState(null)
+  const [tenantId, setTenantId] = useState(null);
+  const [selectedDataId, setselectedData] = useState(null);
   const filteredData = allInfrastructureData?.filter((item) => {
     const valuesToSearch = [
       item.scan_type,
@@ -120,10 +136,6 @@ export default function InfrastructureData() {
     setCurrentPage(1);
   }, [searchTerm]);
 
-
-
-
-
   if (isViewAccess(authenticate, location)) {
     return <Access />;
   }
@@ -160,68 +172,79 @@ export default function InfrastructureData() {
             <NoDataFound />
           ) : (
             <div className="overflow-x-auto custom-scrollbar w-full relative">
-              {isAllInfrastructureDataLoading ? <TableSkeletonLoading /> : <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
-                <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
-                  <tr>
-                    {[
-                      "S No.",
-                      "Title",
-                      "Scan Type",
-                      "Threat Type",
-                      "Severity",
-                      "Asset",
-                      "ACS",
-                      "Status",
-                      isHaveAction() && "Actions",
-                    ]?.map((header) => (
-                      <th
-                        title={showTitle(header)}
-                        key={header}
-                        className="px-4 py-3 border-b border-gray-600 font-medium"
-                      >
-                        {header}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-700 relative">
-                  {filteredData?.slice()?.reverse()?.map((item, index) => (
-                    <tr
-                      key={index}
-                      className="border-b border-slate-700 hover:bg-[#1E293B] transition relative"
-                    >
-                      <td className="px-4 py-3">
-                        {(currentPage - 1) * 10 + 1 + index}
-                      </td>
-                      <td className="px-4 py-3">{item.Title || "-"}</td>
-                      <td className="px-4 py-3">{item.scan_type || "-"}</td>
-                      <td className="px-4 py-3">
-                        {item.threat_type || "-"}
-                      </td>
-                      <td className="px-4 py-3">
-                        {item?.Severity?.name || "-"}
-                      </td>
-                      <td className="px-4 py-3">
-                        {item.InfraStructureAsset?.asset_hostname || "-"}
-                      </td>
-                      <td className="px-4 py-3">
-                        {calculateACS(item.InfraStructureAsset) || "-"}
-                      </td>
-                      <td className="px-4 py-3">{item?.status || "-"}</td>
-                      {isHaveAction() && (
-                        <td className="px-4 py-3 ">
-                          <button
-                            className="hover:bg-gray-700 px-3 py-2 rounded-lg"
-                            onClick={(e) => { toggleMenu(index, e); setTenantId(item?.Severity?.tenant); setselectedData(item) }}
-                          >
-                            <BsThreeDotsVertical />
-                          </button>
-                        </td>
-                      )}
+              {isAllInfrastructureDataLoading ? (
+                <TableSkeletonLoading />
+              ) : (
+                <table className="min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+                  <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
+                    <tr>
+                      {[
+                        "S No.",
+                        "Title",
+                        "Scan Type",
+                        "Threat Type",
+                        "Severity",
+                        "Asset",
+                        "ACS",
+                        "Status",
+                        isHaveAction() && "Actions",
+                      ]?.map((header) => (
+                        <th
+                          title={showTitle(header)}
+                          key={header}
+                          className="px-4 py-3 border-b border-gray-600 font-medium"
+                        >
+                          {header}
+                        </th>
+                      ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>}
+                  </thead>
+                  <tbody className="divide-y divide-gray-700 relative">
+                    {filteredData
+                      ?.slice()
+                      ?.reverse()
+                      ?.map((item, index) => (
+                        <tr
+                          key={index}
+                          className="border-b border-slate-700 hover:bg-[#1E293B] transition relative"
+                        >
+                          <td className="px-4 py-3">
+                            {(currentPage - 1) * 10 + 1 + index}
+                          </td>
+                          <td className="px-4 py-3">{item.Title || "-"}</td>
+                          <td className="px-4 py-3">{item.scan_type || "-"}</td>
+                          <td className="px-4 py-3">
+                            {item.threat_type || "-"}
+                          </td>
+                          <td className="px-4 py-3">
+                            {item?.Severity?.name || "-"}
+                          </td>
+                          <td className="px-4 py-3">
+                            {item.InfraStructureAsset?.asset_hostname || "-"}
+                          </td>
+                          <td className="px-4 py-3">
+                            {calculateACS(item.InfraStructureAsset) || "-"}
+                          </td>
+                          <td className="px-4 py-3">{item?.status || "-"}</td>
+                          {isHaveAction() && (
+                            <td className="px-4 py-3 ">
+                              <button
+                                className="hover:bg-gray-700 px-3 py-2 rounded-lg"
+                                onClick={(e) => {
+                                  toggleMenu(index, e);
+                                  setTenantId(item?.Severity?.tenant);
+                                  setselectedData(item);
+                                }}
+                              >
+                                <BsThreeDotsVertical />
+                              </button>
+                            </td>
+                          )}
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              )}
             </div>
           )}
 
@@ -287,11 +310,10 @@ export default function InfrastructureData() {
             <li
               className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
               onClick={() => {
-
-                setAssignUserOpenModal(true)
+                setAssignUserOpenModal(true);
               }}
             >
-              <CircleUser />
+              <FaUserCircle />
               Assign User
             </li>
             {isModifyAccess() && (
@@ -313,10 +335,7 @@ export default function InfrastructureData() {
       </PopupMenu>
 
       {isModalOpen && (
-        <ExpectionModal
-          setIsModalOpen={setIsModalOpen}
-          creator={selectedId}
-        />
+        <ExpectionModal setIsModalOpen={setIsModalOpen} creator={selectedId} />
       )}
 
       <ExploitDetail
@@ -332,11 +351,13 @@ export default function InfrastructureData() {
         />
       )}
 
-
       {AssignUserOpenModal && (
-        <AssignUserModal setAssignUserOpenModal={setAssignUserOpenModal} tenantId={tenantId} selectedDataId={selectedDataId} />
-      )
-      }
+        <AssignUserModal
+          setAssignUserOpenModal={setAssignUserOpenModal}
+          tenantId={tenantId}
+          selectedDataId={selectedDataId}
+        />
+      )}
     </div>
   );
 }

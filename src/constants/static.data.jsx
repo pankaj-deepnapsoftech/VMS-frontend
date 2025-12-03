@@ -1,32 +1,32 @@
 import {
-  AirVent,
-  Boxes,
-  Bug,
-  CalendarClock,
-  CassetteTape,
-  ChartNoAxesCombined,
-  Component,
-  FileUp,
-  LucideShield,
-  UserCircle,
-  Users,
-} from "lucide-react";
-import { FaBug, FaCheckCircle } from "react-icons/fa";
-import { AiOutlineException } from "react-icons/ai";
-import { BiSolidDashboard } from "react-icons/bi";
-import { IoIosInformationCircleOutline } from "react-icons/io";
-import {
+  FaBug,
+  FaCheckCircle,
+  AiOutlineException,
+  BiSolidDashboard,
+  IoIosInformationCircleOutline,
   MdInventory2,
   MdOutlineMiscellaneousServices,
   MdOutlinePendingActions,
-  MdScheduleSend,
   MdSettingsApplications,
   MdWifiTetheringErrorRounded,
-} from "react-icons/md";
-import { TbReport } from "react-icons/tb";
-import { GiCyberEye, GiProgression, GiTwirlCenter } from "react-icons/gi";
-import { PiHardHatFill } from "react-icons/pi";
-import { RiHome3Fill } from "react-icons/ri";
+  MdScheduleSend,
+  GiCyberEye,
+  GiProgression,
+  GiTwirlCenter,
+  TbReport,
+  PiHardHatFill,
+  RiHome3Fill,
+  LuAirVent,
+  BsBoxes,
+  SlCalender,
+  LuCassetteTape,
+  LuChartNoAxesCombined,
+  LuComponent,
+  LuFileUp,
+  MdOutlineShield,
+  FaUserCircle,
+  FaUsers
+} from "@/constants/Icons";
 
 export const AllowedPaths = [
   // --------------------Roc Pages-----------------------
@@ -146,7 +146,7 @@ export const AllowedPaths = [
 
   { heading: "Remediation Factory Pages" },
   {
-    name: "Remediation", 
+    name: "Remediation",
     value: "/remediation",
     bgColor: "bg-[#232958]",
     border: "1px solid #282e63",
@@ -282,17 +282,17 @@ export const products = [
       {
         title: "Executive Dashboard",
         route: "/",
-        icon: Component,
+        icon: LuComponent,
       },
       {
         title: "TVM Dashboard",
         route: "/tvm-dashboard",
-        icon: Boxes,
+        icon: BsBoxes,
       },
       {
         title: "Exposure Dashboard",
         route: "/exposure-dashboard",
-        icon: ChartNoAxesCombined,
+        icon: LuChartNoAxesCombined,
       },
 
       // {
@@ -331,7 +331,7 @@ export const products = [
       {
         title: "Infrastructure Asset",
         route: "/infraStructure-asset",
-        icon: CassetteTape,
+        icon: LuCassetteTape,
       },
       {
         title: "Business Applications",
@@ -349,7 +349,7 @@ export const products = [
     allowedPath: [
       {
         title: "Manage Assessments",
-        icon: CalendarClock,
+        icon: SlCalender,
         childRoutes: [
           {
             title: "Schedule Assessment",
@@ -391,7 +391,7 @@ export const products = [
       {
         title: "All Vulnerability",
         route: "/vulnerability-data",
-        icon: Bug,
+        icon: FaBug,
       },
       {
         title: "Application Vulnerabilities",
@@ -431,7 +431,7 @@ export const products = [
     title: "Exposure Management",
     desc: "AI Virtual Analyst",
     borderColor: "#ee9ca7",
-    icon: AirVent,
+    icon: LuAirVent,
     ShownTitle: "Exposure Management",
     allowedPath: [
       {
@@ -477,11 +477,11 @@ export const products = [
   //   ],
   // },
 
-   {
+  {
     title: "common-routes",
     desc: "AI Virtual Analyst",
     borderColor: "#ee9ca7",
-    icon: AirVent,
+    icon: LuAirVent,
     ShownTitle: "Exposure Management",
     allowedPath: [
       {
@@ -505,7 +505,7 @@ export const products = [
     ShownTitle: "Reports",
     allowedPath: [
       { title: "Upload Reports", route: "/reports", icon: TbReport },
-      { title: "Download Reports", route: "/download-report", icon: FileUp },
+      { title: "Download Reports", route: "/download-report", icon: LuFileUp },
     ],
   },
 
@@ -513,13 +513,13 @@ export const products = [
     title: "Administration",
     desc: "Admin control panel",
     borderColor: "#f8b500",
-    icon: LucideShield,
+    icon: MdOutlineShield,
     ShownTitle: "Administration",
     allowedPath: [
-      { title: "Manage Tenants", route: "/all-tenant", icon: UserCircle },
-      { title: "Manage Partners", route: "/partners", icon: Users },
-      { title: "Manage Users", route: "/all-users", icon: Users },
-      { title: "Manage Roles", route: "/roles", icon: LucideShield },
+      { title: "Manage Tenants", route: "/all-tenant", icon: FaUserCircle },
+      { title: "Manage Partners", route: "/partners", icon: FaUsers },
+      { title: "Manage Users", route: "/all-users", icon: FaUsers },
+      { title: "Manage Roles", route: "/roles", icon: MdOutlineShield },
       { title: "Manage Tags", route: "/tags", icon: MdInventory2 },
       {
         title: "Manage SLA",

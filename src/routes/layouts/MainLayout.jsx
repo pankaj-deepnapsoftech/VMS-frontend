@@ -1,7 +1,7 @@
 import Footer from "@/components/Footer/Footer";
 import { Header } from "@/constants/Components-lazy-loading/components.Lazy";
 import { useEffect, useRef, useState } from "react";
-import { AiOutlineMenu } from "react-icons/ai";
+import { AiOutlineMenu, MdOutlineNotificationsActive } from "@/constants/Icons";
 import {
   Outlet,
   useLocation,
@@ -21,7 +21,6 @@ import Sidebar from "@/components/sidebar/Sidebar";
 import { products } from "@/constants/static.data";
 import UpdateProfileModal from "@/modals/UpdateProfile";
 import { Link } from "react-router-dom";
-import { MdOutlineNotificationsActive } from "react-icons/md";
 import Select from "react-select";
 import { customStyles, darkTheme } from "@/constants/constants.data";
 import ChangePasswordModal from "@/modals/ChangePasswordModal";

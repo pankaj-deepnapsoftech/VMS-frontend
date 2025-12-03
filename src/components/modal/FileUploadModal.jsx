@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useRef } from "react";
-import { MdClose } from "react-icons/md";
-import { IoCloudUploadOutline } from "react-icons/io5";
+import { MdClose, IoCloudUploadOutline } from "@/constants/Icons";
 
 export const Modal = ({ isOpen, onClose, title, method }) => {
   const fileInputRef = useRef(null);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { IoIosArrowDown, IoIosLogOut } from "react-icons/io";
+import { IoIosArrowDown, IoIosLogOut } from "@/constants/Icons";
 import { products } from "@/constants/static.data";
 import { useMutation } from "@tanstack/react-query";
 import { LogoutUser } from "@/services/Auth.service";

@@ -4,7 +4,7 @@ import { GetExceptionData, updateExceptionData } from "@/services/exception.serv
 import { Checkhariqui } from "@/utils/checkHarirqui";
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect, useRef, useState } from "react";
-import { FaTimesCircle, FaBell } from "react-icons/fa";
+import { FaTimesCircle, FaBell } from "@/constants/Icons";
 
 export function NotificationSidebar({
   notifications,

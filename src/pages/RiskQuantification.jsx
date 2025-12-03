@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Pagination from "./Pagination";
 import NoDataFound from "@/components/NoDataFound";
-import { IoSearch } from "react-icons/io5";
+import { IoSearch } from "@/constants/Icons";
 import {
   calculateACS,
   calculateALE,

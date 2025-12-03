@@ -1,6 +1,6 @@
 import { useMailContext } from "@/context";
-import { Download, Mails, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import {FaDownload, IoMailSharp, RxCross2 } from "@/constants/Icons"
 import * as XLSX from "xlsx";
 import Select from "react-select";
 import "react-datepicker/dist/react-datepicker.css";
@@ -262,14 +262,14 @@ export default function DownloadReports() {
                       onClick={report.func}
                       disabled={isDownloadReportLoading}
                     >
-                      <Download size={18} />
+                      <FaDownload size={18} />
                     </button>
                     <button
                       className="text-blue-500 hover:text-blue-600 transition"
                       title="Send Report"
                       onClick={() => handleOpenModal(report)}
                     >
-                      <Mails size={18} />
+                      <IoMailSharp size={18} />
                     </button>
                   </div>
                 </td>
@@ -291,7 +291,7 @@ export default function DownloadReports() {
               onClick={handleCloseModal}
               className="absolute top-3 right-3 text-gray-400 hover:text-white transition"
             >
-              <X size={20} />
+              <RxCross2 size={20} />
             </button>
 
             <h2 className="text-xl font-semibold text-white mb-4">

@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
-import { Trash2, Edit, X, Boxes } from "lucide-react";
-import { BiPlus } from "react-icons/bi";
+import {FiTrash2, FaEdit, RxCross2, BsBoxes, BiPlus, IoSearch } from "@/constants/Icons";
 import { useFormik } from "formik";
 import { BusinessApplicationValidation } from "@/Validation/BusinessApp.validation";
 import * as XLSX from "xlsx";
 import Pagination from "./Pagination";
 import NoDataFound from "@/components/NoDataFound";
-import { IoSearch } from "react-icons/io5";
 import {
   isCreateAccess,
   isDeleteAccess,
@@ -359,7 +357,7 @@ export default function BusinessApplications() {
                                   }}
                                   className="text-subtext hover:text-subTextHover"
                                 >
-                                  <Trash2 className="w-5 h-5" />
+                                  <FiTrash2 className="w-5 h-5" />
                                 </button>
                               )}
 
@@ -371,7 +369,7 @@ export default function BusinessApplications() {
                                   }}
                                   className="text-subtext hover:text-blue-700"
                                 >
-                                  <Edit className="w-5 h-5" />
+                                  <FaEdit className="w-5 h-5" />
                                 </button>
                               )}
                             </div>
@@ -406,7 +404,7 @@ export default function BusinessApplications() {
                 onClick={() => setIsModalOpen(false)}
                 className="text-slate-400 hover:text-white transition"
               >
-                <X className="w-6 h-6" />
+                <RxCross2 className="w-6 h-6" />
               </button>
             </div>
 
@@ -469,7 +467,7 @@ export default function BusinessApplications() {
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-slate-700 rounded-lg flex items-center justify-center">
-                    <Boxes className="w-4 h-4 text-white" />
+                    <BsBoxes className="w-4 h-4 text-white" />
                   </div>
                 </div>
                 <span className="text-2xl font-medium text-white">
@@ -479,7 +477,7 @@ export default function BusinessApplications() {
                   onClick={() => setmodel(!model)}
                   className="text-slate-400 hover:text-white transition-colors p-1"
                 >
-                  <X className="w-5 h-5" />
+                  <RxCross2 className="w-5 h-5" />
                 </button>
               </div>
 

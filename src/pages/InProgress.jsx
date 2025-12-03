@@ -7,12 +7,9 @@ import {
   isModifyAccess,
   isViewAccess,
 } from "@/utils/pageAccess";
-import { FaRegTrashAlt } from "react-icons/fa";
-import { RiEdit2Line } from "react-icons/ri";
-import { IoSearch } from "react-icons/io5";
+import { FaRegTrashAlt, RiEdit2Line, IoSearch, TbStatusChange } from "@/constants/Icons";
 import NoDataFound from "@/components/NoDataFound";
 import SchedulingAssessmentPage from "./SchedulingAssessment";
-import { TbStatusChange } from "react-icons/tb";
 import { useLocation } from "react-router-dom";
 import Access from "@/components/role/Access";
 import {

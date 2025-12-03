@@ -15,9 +15,7 @@ import { Reportvalidation } from "@/Validation/VulnerabililtyDataValidation";
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import {  useState } from "react";
-import { BiEditAlt, BiUpload } from "react-icons/bi";
-import { MdClose } from "react-icons/md";
-import { RiDeleteBinFill } from "react-icons/ri";
+import { BiEditAlt, BiUpload, MdClose, RiDeleteBinFill } from "@/constants/Icons";
 
 const Reports = () => {
   const queryClient = useQueryClient();

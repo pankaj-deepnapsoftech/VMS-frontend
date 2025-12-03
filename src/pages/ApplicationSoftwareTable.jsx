@@ -1,8 +1,7 @@
 import { useState, useContext } from "react";
 import ApplicationSoftwareInventory from "./ApplicationSoftwareInventory";
 import { ApplicationSoftwareInventoryContext } from "@/context/ApplicationSoftwareInventoryContext/ApplicationSoftwareInventoryContext";
-import { FaEdit } from "react-icons/fa";
-import { MdDeleteForever } from "react-icons/md";
+import { FaEdit, MdDeleteForever } from "@/constants/Icons";
 
 const ApplicationSoftwareInventoryTable = () => {
   const [showModal, setShowModal] = useState(false);

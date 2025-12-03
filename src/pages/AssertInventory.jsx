@@ -1,16 +1,12 @@
 /* eslint-disable no-constant-binary-expression */
 import { useState } from "react";
-import { X, Boxes } from "lucide-react";
-import { BiPlus } from "react-icons/bi";
+import { BiPlus, IoCloseSharp, BsBoxes, FaRegTrashAlt, RiEdit2Line, IoSearch  } from "@/constants/Icons";
 import { useFormik } from "formik";
 import { InfraAssetvalidation } from "@/Validation/InfrastructureAssetvalidation";
 import * as XLSX from "xlsx";
 import { useLocation } from "react-router-dom";
 import CustomSelection from "@/components/customSelection/CustomSelection";
 import Pagination from "./Pagination";
-import { FaRegTrashAlt } from "react-icons/fa";
-import { RiEdit2Line } from "react-icons/ri";
-import { IoSearch } from "react-icons/io5";
 import NoDataFound from "@/components/NoDataFound";
 import Access from "@/components/role/Access";
 import {
@@ -386,7 +382,7 @@ export default function TenantDashboard() {
                 onClick={() => setIsModalOpen(false)}
                 className="text-slate-400 hover:text-white transition"
               >
-                <X className="w-6 h-6" />
+                <IoCloseSharp className="w-6 h-6" />
               </button>
             </div>
 
@@ -450,7 +446,7 @@ export default function TenantDashboard() {
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-slate-700 rounded-lg flex items-center justify-center">
-                    <Boxes className="w-4 h-4 text-white" />
+                    <BsBoxes className="w-4 h-4 text-white" />
                   </div>
                 </div>
                 <span className="text-2xl font-medium text-white">
@@ -460,7 +456,7 @@ export default function TenantDashboard() {
                   onClick={() => setmodel(!model)}
                   className="text-slate-400 hover:text-white transition-colors p-1"
                 >
-                  <X className="w-5 h-5" />
+                  <IoCloseSharp className="w-5 h-5" />
                 </button>
               </div>
 

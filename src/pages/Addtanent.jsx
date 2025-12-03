@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { IoClose } from "react-icons/io5";
+import { IoClose } from "@/constants/Icons";
 import { useFormik } from "formik";
 
 import { tenantValidator } from "@/Validation/TenantsValidations";

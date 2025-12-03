@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { Eye, EyeOff } from "lucide-react";
+import {FaEye,FaEyeSlash} from "@/constants/Icons"
 import { Link } from "react-router-dom";
 import { SignUpValidation } from "@/Validation/AuthValidation";
 import {  useState } from "react";
@@ -128,7 +128,7 @@ function SignUp() {
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white"
               >
-                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
               </button>
             </div>
             {errors.password && touched.password && (
@@ -154,7 +154,7 @@ function SignUp() {
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white"
               >
-                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
               </button>
             </div>
             {errors.confirm_password && touched.confirm_password && (

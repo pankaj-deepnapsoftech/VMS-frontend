@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { FiMenu, IoCloseSharp } from "@/constants/Icons";
 
 // eslint-disable-next-line react/prop-types
 const Header = ({ openModal }) => {
@@ -246,7 +246,7 @@ const Header = ({ openModal }) => {
     <>
 
       <div className={` ${mobileMenu ? "" : "hidden"} md:hidden absolute z-50 bg-[#1e1f22] text-white w-full min-h-52 top-0 left-0 pb-10 `}>
-        <p className="text-end p-5 " onClick={() => setmobileMenu(!mobileMenu)} > <X className=" z-10" size={24} /></p>
+        <p className="text-end p-5 " onClick={() => setmobileMenu(!mobileMenu)} > <IoCloseSharp className=" z-10" size={24} /></p>
         <div className=" flex flex-col gap-3 w-full items-center">
           <Link
             to="/"
@@ -351,9 +351,9 @@ const Header = ({ openModal }) => {
             onClick={() => setmobileMenu(!mobileMenu)}
           >
             {isMenuOpen ? (
-              <X className=" z-10" size={24} />
+              <IoCloseSharp className=" z-10" size={24} />
             ) : (
-              <Menu size={24} />
+              <FiMenu size={24} />
             )}
           </button>
         </div>

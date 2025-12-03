@@ -3,7 +3,7 @@ import { ApplicationSoftwareInventoryContext } from "@/context/ApplicationSoftwa
 import { ApplicationSoftwareSchema } from "@/Validation/ApplicationSoftwareInventoryValidation";
 import { useFormik } from "formik";
 import { useContext } from "react";
-import { IoClose } from "react-icons/io5";
+import { IoClose } from "@/constants/Icons";
 
 // eslint-disable-next-line react/prop-types
 const ApplicationSoftwareInventory = ({ showModal, setShowModal, editTableData }) => {

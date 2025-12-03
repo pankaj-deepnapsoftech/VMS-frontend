@@ -1,5 +1,4 @@
-import { IoHomeOutline } from 'react-icons/io5';
-import { BiErrorAlt } from 'react-icons/bi';
+import { IoHomeOutline, BiErrorAlt } from '@/constants/Icons';
 import { useNavigate } from 'react-router-dom';
 
 function PageNotFound() {

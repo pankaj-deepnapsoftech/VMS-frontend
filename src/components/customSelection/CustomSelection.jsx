@@ -3,7 +3,8 @@ import { getTags } from "@/services/ManageTags.service";
 import { useAuthStore } from "@/store/AuthStore";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
-import { IoMdCloseCircleOutline } from "react-icons/io";
+import {IoMdCloseCircleOutline} from "@/constants/Icons"
+
 
 // eslint-disable-next-line react/prop-types
 const CustomSelection = ({setFieldvalue,isError,error,handleBlur,alreadySelected}) => {

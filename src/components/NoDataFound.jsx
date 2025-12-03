@@ -1,4 +1,4 @@
-import { BiErrorAlt } from 'react-icons/bi';
+import { BiErrorAlt } from '@/constants/Icons';
 
 
 const NoDataFound = () => {

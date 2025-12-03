@@ -2,8 +2,7 @@
 import { useState } from "react";
 import { SchedulingAssessmentValidation } from "@/Validation/SchedulingAssessmentValidation";
 import { useFormik } from "formik";
-import { MdClose } from "react-icons/md";
-import { IoClose } from "react-icons/io5";
+import { MdClose, IoClose } from "@/constants/Icons";
 import { handleFileChange } from "@/utils/CheckFileType";
 import { ImageUploader } from "@/utils/ImagesUploader";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

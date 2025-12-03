@@ -1,18 +1,21 @@
 import { Suspense, useEffect, useState } from "react";
-import { FaFacebookF, FaTwitter, FaYoutube } from "react-icons/fa";
-import "/public/Font/LexendDeca.ttf";
 import {
+  FaFacebookF,
+  FaTwitter,
+  FaYoutube,
   FaEye,
   FaProjectDiagram,
   FaSearch,
   FaTools,
-} from "react-icons/fa";
-
+  FaArrowPointer,
+  FaMessage,
+  GiPerspectiveDiceSixFacesFour
+} from "@/constants/Icons";
+import "/public/Font/LexendDeca.ttf";
 import "swiper/css";
 import "swiper/css/pagination";
-import { FaArrowPointer, FaMessage } from "react-icons/fa6";
 
-import { GiPerspectiveDiceSixFacesFour } from "react-icons/gi";
+
 import Header from "./component/Header";
 import Footer from "./component/Footer";
 // import BookDemo from "../BookDemo";
@@ -256,7 +259,7 @@ const LandingPage = () => {
                 <div className="flex justify-end max-[800px]:justify-start gap-4">
                   <h2 className="text-[#D7E1E0] text-xl font-bold">
                     Threat Intelligence
-                  </h2> 
+                  </h2>
                   <div className="shadow-2xl relative -top-5 h-[60px] w-[60px] flex justify-center items-center rounded-[50%] bg-gradient-to-r from-black to-gray-400">
                     <FaArrowPointer className="text-3xl text-[#a1a4ab]" />
                   </div>

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import  { useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "@/constants/Icons";
 
 function InputField({
   label,
@@ -13,8 +13,7 @@ function InputField({
   placeholder = "",
   name = "",
   isError,
-  error,
-  ...prop
+  error
 }) {
   const [toggle, setToggle] = useState(false);
 

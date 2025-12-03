@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { CreateExceptionData } from "@/services/Exception.service";
+import { CreateExceptionData } from "@/services/exception.service";
 import { useAuthStore } from "@/store/AuthStore";
 import { Imageuploader } from "@/utils/firebaseImageUploader";
 import { ExpectionValidation } from "@/Validation/Expection.Validation";

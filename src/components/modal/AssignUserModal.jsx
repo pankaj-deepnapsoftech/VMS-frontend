@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { updateVulnerablityData } from '@/services/Vulnerable.service'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { X } from 'lucide-react'
+import { RxCross2 } from '@/constants/Icons'
 import { useState } from 'react'
 import {GetTenantDataServices} from "@/services/Auth.service"
 import { useAuthStore } from '@/store/AuthStore'
@@ -50,7 +50,7 @@ const AssignUserModal = ({ setAssignUserOpenModal, selectedDataId }) => {
                         onClick={() => setAssignUserOpenModal(false)}
                         className="text-gray-400 hover:text-white"
                     >
-                        <X size={20} />
+                        <RxCross2 size={20} />
                     </button>
                 </div>
 

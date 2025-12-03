@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { products } from "@/constants/static.data";
 import "./animation.css";
-import { GrShieldSecurity } from "react-icons/gr";
+import { GrShieldSecurity } from "@/constants/Icons";
 import { useAuthStore } from "@/store/AuthStore";
 import { LogoutUser } from "@/services/Auth.service";
 import { useNavigate } from "react-router-dom";

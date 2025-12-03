@@ -1,34 +1,38 @@
-import { AiOutlineException } from "react-icons/ai";
-import { BiSolidDashboard } from "react-icons/bi";
-import { FaRegBookmark } from "react-icons/fa";
-import { GrVulnerability } from "react-icons/gr";
-import { IoShield, IoShieldHalf } from "react-icons/io5";
-import { FaPerson } from "react-icons/fa6";
-import { MdInventory2, MdOutlineMiscellaneousServices } from "react-icons/md";
-import { SiWikimediafoundation } from "react-icons/si";
-import { TbReport,TbLockPassword } from "react-icons/tb";
 import {
-  Bug,
-  CalendarClock,
-  Settings,
-  Table,
-  UserCircle,
-  Users,
-} from "lucide-react";
+  AiOutlineException,
+  BiSolidDashboard,
+  FaRegBookmark,
+  GrVulnerability,
+  IoShield,
+  IoShieldHalf,
+  FaPerson,
+  MdInventory2,
+  MdOutlineMiscellaneousServices,
+  SiWikimediafoundation,
+  TbReport,
+  TbLockPassword,
+  FaBug,
+  SlCalender,
+  IoSettingsOutline,
+  CiViewTable,
+  FaRegUserCircle,
+  FaUsers,
+} from "@/constants/Icons";
+
 
 export const list = [
   { title: "Dashboard", route: "", icon: BiSolidDashboard },
   {
     title: "Scheduling Assesment",
     route: "/scheduling-assesment",
-    icon: CalendarClock,
+    icon: SlCalender,
   },
   { title: "Asset Inventory", route: "/asset-inventory", icon: MdInventory2 },
-  { title: "Users", route: "/all-user", icon: Users },
-  { title: "All Tenents", route: "/all-tenent", icon: UserCircle },
-  { title: "Vulnerability Data", route: "/vulnerability-data", icon: Bug },
-  { title: "Third Party Data", route: "/jira-data", icon: Table },
-  { title: "Third Party Config", route: "/third-party-config", icon: Settings },
+  { title: "Users", route: "/all-user", icon: FaUsers  },
+  { title: "All Tenents", route: "/all-tenent", icon: FaRegUserCircle  },
+  { title: "Vulnerability Data", route: "/vulnerability-data", icon: FaBug },
+  { title: "Third Party Data", route: "/jira-data", icon: CiViewTable },
+  { title: "Third Party Config", route: "/third-party-config", icon: IoSettingsOutline },
   {
     title: "Application Vulnerability",
     route: "/application-vulnerability",

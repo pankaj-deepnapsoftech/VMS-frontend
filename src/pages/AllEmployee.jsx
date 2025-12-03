@@ -3,17 +3,19 @@ import NoDataFound from "@/components/NoDataFound";
 import { BaseValidationSchema, EditUser } from "@/Validation/AuthValidation";
 import { useFormik } from "formik";
 import { useState } from "react";
-import { BiPlus } from "react-icons/bi";
 import {
+  BiPlus,
   FaEnvelope,
   FaLock,
   FaPhone,
   FaRegTrashAlt,
   FaUser,
-} from "react-icons/fa";
-import { RiEdit2Line } from "react-icons/ri";
+  RiEdit2Line,
+  IoClose,
+  IoSearch,
+} from "@/constants/Icons";
+
 import Pagination from "./Pagination";
-import { IoClose, IoSearch } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
 import {
   isCreateAccess,
@@ -35,11 +37,11 @@ import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
 import { getAllPartnerService } from "@/services/ManagePartners.service";
 import { getAllTenantServices } from "@/services/ManageTenants.service";
 import { useAuthStore } from "@/store/AuthStore";
-import {ChangeStatusService} from "@/services/Auth.service";
+import { ChangeStatusService } from "@/services/Auth.service";
 import toast from "react-hot-toast";
 
 const AllEmployee = () => {
-  const {token,authenticate, tenant} = useAuthStore()
+  const { token, authenticate, tenant } = useAuthStore();
   // use location hook
   const location = useLocation();
 
@@ -109,22 +111,19 @@ const AllEmployee = () => {
     enabled: !!token,
   });
 
-
   //Tanstack for ChangeStatus
-  const { mutate: ChangeStatusMutate} = useMutation({
-  mutationFn: ({ data, id }) => ChangeStatusService(data, id),
+  const { mutate: ChangeStatusMutate } = useMutation({
+    mutationFn: ({ data, id }) => ChangeStatusService(data, id),
 
-  onSuccess: async () => {
-    toast.success("Status updated");
-    await queryClient.invalidateQueries({ queryKey: ["users"] });
-  },
+    onSuccess: async () => {
+      toast.success("Status updated");
+      await queryClient.invalidateQueries({ queryKey: ["users"] });
+    },
 
-  onError: (error) => {
-    toast.error(error?.response?.data?.message || "Failed to update status");
-  },
-});
-
-
+    onError: (error) => {
+      toast.error(error?.response?.data?.message || "Failed to update status");
+    },
+  });
 
   const {
     values,
@@ -194,12 +193,11 @@ const AllEmployee = () => {
   });
 
   const handleChangeStatus = (type, id) => {
-  if (window.confirm("Are you sure you want to change this user's status?")) {
-    const deactivate = type === "activate"; 
-    ChangeStatusMutate({ data: { deactivate }, id });
-  }
-};
-
+    if (window.confirm("Are you sure you want to change this user's status?")) {
+      const deactivate = type === "activate";
+      ChangeStatusMutate({ data: { deactivate }, id });
+    }
+  };
 
   const isPartOfSecurend = (e) => {
     if (e.target.value === "no") {
@@ -219,7 +217,9 @@ const AllEmployee = () => {
         <div className="flex items-center justify-between px-6 py-4">
           {/* Optional Left Side Heading */}
           <div className="w-full">
-            <h2 className="text-2xl md:text-3xl font-semibold text-white">All Users</h2>
+            <h2 className="text-2xl md:text-3xl font-semibold text-white">
+              All Users
+            </h2>
             <span className="text-subtext text-sm">
               Manage your organization employees
             </span>

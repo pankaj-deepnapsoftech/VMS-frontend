@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
-import { BiPlus } from "react-icons/bi";
-import { FaRegTrashAlt } from "react-icons/fa";
+import { BiPlus, FaRegTrashAlt,IoSearch, RiEdit2Line } from "@/constants/Icons";
 import { useFormik } from "formik";
 import { tagValidation } from "@/Validation/TagValidation";
-import { RiEdit2Line } from "react-icons/ri";
-import { IoSearch } from "react-icons/io5";
 import Pagination from "./Pagination";
 import { useLocation } from "react-router-dom";
 import Access from "@/components/role/Access";

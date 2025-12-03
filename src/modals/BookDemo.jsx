@@ -1,6 +1,6 @@
 import { bookDemoSchema } from "@/Validation/BookDemoValidation";
 import { useFormik } from "formik";
-import { IoClose } from "react-icons/io5";
+import { IoClose } from "@/constants/Icons";
 import { AxiosHandler } from "@/config/AxiosConfig";
 import toast from "react-hot-toast";
 

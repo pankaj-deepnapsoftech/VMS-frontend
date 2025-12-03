@@ -4,15 +4,20 @@ import ExpectionModal from "@/modals/ExpectionModal";
 import ExploitDetail from "@/modals/ExploitDetail";
 import useAccessPartner from "@/hooks/AccessPartner";
 import Pagination from "./Pagination";
-import { IoSearch, IoWarningOutline } from "react-icons/io5";
+import {
+  IoSearch,
+  IoWarningOutline,
+  FaUserCircle,
+  BsThreeDotsVertical,
+  GrStatusGood,
+  BiDetail,
+  MdDelete,
+  MdModeEditOutline,
+} from "@/constants/Icons";
 import NoDataFound from "@/components/NoDataFound";
 import { calculateVRS } from "@/utils/vulnerableOperations";
 import { StatusModal } from "@/modals/StatusModal";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { BiDetail } from "react-icons/bi";
-import { MdDelete, MdModeEditOutline } from "react-icons/md";
 import { PopupMenu } from "@/modals/PopupManue";
-import { GrStatusGood } from "react-icons/gr";
 import {
   isDeleteAccess,
   isHaveAction,
@@ -20,17 +25,24 @@ import {
   isViewAccess,
 } from "@/utils/pageAccess";
 import Access from "@/components/role/Access";
-import { CircleUser } from "lucide-react";
 import AssignUserModal from "@/components/modal/AssignUserModal";
-import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { TableSkeletonLoading } from "@/Skeletons/Components/TablesSkeleton";
-import { DeleteVulnerableData, getApplicationData } from "@/services/Vulnerable.service";
+import {
+  DeleteVulnerableData,
+  getApplicationData,
+} from "@/services/Vulnerable.service";
 import { useAuthStore } from "@/store/AuthStore";
 
 export default function ApplicationData() {
   const queryClient = useQueryClient();
   const [currentPage, setCurrentPage] = useState(1);
-  const { token, authenticate,tenant } = useAuthStore();
+  const { token, authenticate, tenant } = useAuthStore();
   const navigate = useNavigate();
   const location = useLocation();
   const { closeModal, isOpen, openModal } = useAccessPartner();
@@ -40,31 +52,34 @@ export default function ApplicationData() {
     }
   };
 
-  const {data:allApplicationData,isLoading:isAllApplicationDataLoading} = useQuery({
-    queryKey:["All-application-vurnablity",{currentPage,tenant}],
-    queryFn:()=>getApplicationData({page:currentPage,tenant}),
-    enabled: !!token,
-    placeholderData:keepPreviousData
-  })
+  const { data: allApplicationData, isLoading: isAllApplicationDataLoading } =
+    useQuery({
+      queryKey: ["All-application-vurnablity", { currentPage, tenant }],
+      queryFn: () => getApplicationData({ page: currentPage, tenant }),
+      enabled: !!token,
+      placeholderData: keepPreviousData,
+    });
 
-    const {mutate:DeleteData} = useMutation({
-    mutationFn:(id)=>DeleteVulnerableData(id),
-    onSuccess:async () => {
-      await queryClient.invalidateQueries({queryKey:["All-application-vurnablity"]})
-    }
-  })
+  const { mutate: DeleteData } = useMutation({
+    mutationFn: (id) => DeleteVulnerableData(id),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["All-application-vurnablity"],
+      });
+    },
+  });
 
   // States
   const [searchTerm, setSearchTerm] = useState("");
   const [exploitDetails, setExploitDetails] = useState([]);
   const [status, setStatus] = useState(null);
-  const [AssignUserOpenModal, setAssignUserOpenModal] = useState(false)
+  const [AssignUserOpenModal, setAssignUserOpenModal] = useState(false);
   // Popup Menu States
   const [activeMenu, setActiveMenu] = useState(null);
   const [menuPosition, setMenuPosition] = useState(null);
-  const [tenantId, setTenantId] = useState(null)
+  const [tenantId, setTenantId] = useState(null);
   // Modals
-  const [selectedDataId, setselectedData] = useState(null)
+  const [selectedDataId, setselectedData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
@@ -128,9 +143,6 @@ export default function ApplicationData() {
     }
   };
 
-
-
-
   if (isViewAccess(authenticate, location)) {
     return <Access />;
   }
@@ -157,7 +169,7 @@ export default function ApplicationData() {
               <input
                 type="search"
                 placeholder="Search data..."
-                value={searchTerm}  
+                value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="bg-input backdrop-blur-md py-2 w-1/3 text-white ps-7 pe-3 rounded-md "
               />
@@ -169,73 +181,84 @@ export default function ApplicationData() {
             <NoDataFound />
           ) : (
             <div className="overflow-x-auto w-full custom-scrollbar">
-             {isAllApplicationDataLoading ?  <TableSkeletonLoading/>  : <table className="table-fixed min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
-                <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
-                  <tr>
-                    {[
-                      "S No.",
-                      "Title",
-                      "Scan Type",
-                      "Threat Type",
-                      "Severity",
-                      "Asset",
-                      "VRS",
-                      "Status",
-                      isHaveAction() && "Actions",
-                    ]?.map((header) => (
-                      <th
-                        title={showTitle(header)}
-                        key={header}
-                        className="px-4 py-3 border-b border-gray-600 font-medium"
-                      >
-                        {header}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-700">
-                  {filteredData?.slice().reverse().map((item, index) => (
-                    <tr
-                      key={index}
-                      className="border-b border-slate-700 hover:bg-[#1E293B] transition"
-                    >
-                      <td className="px-4 py-3">
-                        {(currentPage - 1) * 10 + 1 + index}
-                      </td>
-                      <td className="px-4 py-3">{item.Title || "-"}</td>
-                      <td className="px-4 py-3">{item.scan_type || "-"}</td>
-                      <td className="px-4 py-3">
-                        {item.asset_type || "-"}
-                      </td>
-                      <td className="px-4 py-3">
-                        {item?.Severity?.name || "-"}
-                      </td>
-                      <td className="px-4 py-3">
-                        {item.BusinessApplication?.name || "-"}
-                      </td>
-                      <td className="px-4 py-3">
-                        {calculateVRS(
-                          item.EPSS,
-                          item.exploit_complexity,
-                          item.Exploit_Availale,
-                          item.threat_type
-                        ) || "-"}
-                      </td>
-                      <td className="px-4 py-3">{item?.status || "-"}</td>
-                      {isHaveAction() && (
-                        <td className="px-4 py-3">
-                          <button
-                            className="hover:bg-gray-700 px-3 py-2 rounded-lg"
-                            onClick={(e) => { toggleMenu(index, e); setTenantId(item?.Severity?.tenant); setselectedData(item) }}
-                          >
-                            <BsThreeDotsVertical />
-                          </button>
-                        </td>
-                      )}
+              {isAllApplicationDataLoading ? (
+                <TableSkeletonLoading />
+              ) : (
+                <table className="table-fixed min-w-full text-sm text-left text-gray-300 divide-y divide-gray-700">
+                  <thead className="bg-[#0c1120] text-white uppercase whitespace-nowrap tracking-wider">
+                    <tr>
+                      {[
+                        "S No.",
+                        "Title",
+                        "Scan Type",
+                        "Threat Type",
+                        "Severity",
+                        "Asset",
+                        "VRS",
+                        "Status",
+                        isHaveAction() && "Actions",
+                      ]?.map((header) => (
+                        <th
+                          title={showTitle(header)}
+                          key={header}
+                          className="px-4 py-3 border-b border-gray-600 font-medium"
+                        >
+                          {header}
+                        </th>
+                      ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>}
+                  </thead>
+                  <tbody className="divide-y divide-gray-700">
+                    {filteredData
+                      ?.slice()
+                      .reverse()
+                      .map((item, index) => (
+                        <tr
+                          key={index}
+                          className="border-b border-slate-700 hover:bg-[#1E293B] transition"
+                        >
+                          <td className="px-4 py-3">
+                            {(currentPage - 1) * 10 + 1 + index}
+                          </td>
+                          <td className="px-4 py-3">{item.Title || "-"}</td>
+                          <td className="px-4 py-3">{item.scan_type || "-"}</td>
+                          <td className="px-4 py-3">
+                            {item.asset_type || "-"}
+                          </td>
+                          <td className="px-4 py-3">
+                            {item?.Severity?.name || "-"}
+                          </td>
+                          <td className="px-4 py-3">
+                            {item.BusinessApplication?.name || "-"}
+                          </td>
+                          <td className="px-4 py-3">
+                            {calculateVRS(
+                              item.EPSS,
+                              item.exploit_complexity,
+                              item.Exploit_Availale,
+                              item.threat_type
+                            ) || "-"}
+                          </td>
+                          <td className="px-4 py-3">{item?.status || "-"}</td>
+                          {isHaveAction() && (
+                            <td className="px-4 py-3">
+                              <button
+                                className="hover:bg-gray-700 px-3 py-2 rounded-lg"
+                                onClick={(e) => {
+                                  toggleMenu(index, e);
+                                  setTenantId(item?.Severity?.tenant);
+                                  setselectedData(item);
+                                }}
+                              >
+                                <BsThreeDotsVertical />
+                              </button>
+                            </td>
+                          )}
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              )}
             </div>
           )}
 
@@ -269,10 +292,8 @@ export default function ApplicationData() {
               <li
                 className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
                 onClick={() => {
-                  
-                    DeleteData(filteredData[activeMenu]._id);
-                    closeMenu();
-              
+                  DeleteData(filteredData[activeMenu]._id);
+                  closeMenu();
                 }}
               >
                 <MdDelete /> Delete
@@ -302,11 +323,10 @@ export default function ApplicationData() {
             <li
               className="px-4 py-2 hover:bg-gray-600 cursor-pointer flex gap-2 items-center"
               onClick={() => {
-
-                setAssignUserOpenModal(true)
+                setAssignUserOpenModal(true);
               }}
             >
-              <CircleUser />
+              <FaUserCircle />
               Assign User
             </li>
 
@@ -330,10 +350,7 @@ export default function ApplicationData() {
 
       {/* EXCEPTION MODAL */}
       {isModalOpen && (
-        <ExpectionModal
-          setIsModalOpen={setIsModalOpen}
-          creator={selectedId}
-        />
+        <ExpectionModal setIsModalOpen={setIsModalOpen} creator={selectedId} />
       )}
 
       {/* EXPLOIT DETAIL MODAL */}
@@ -353,9 +370,12 @@ export default function ApplicationData() {
       )}
 
       {AssignUserOpenModal && (
-        <AssignUserModal setAssignUserOpenModal={setAssignUserOpenModal} tenantId={tenantId} selectedDataId={selectedDataId} />
-      )
-      }
+        <AssignUserModal
+          setAssignUserOpenModal={setAssignUserOpenModal}
+          tenantId={tenantId}
+          selectedDataId={selectedDataId}
+        />
+      )}
     </div>
   );
 }

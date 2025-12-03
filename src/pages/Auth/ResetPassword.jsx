@@ -1,7 +1,7 @@
 import InputField from "@/components/InputField";
 import { ResetPasswordValidation } from "@/Validation/AuthValidation";
 import { useFormik } from "formik";
-import { FaLock } from "react-icons/fa";
+import { FaLock } from "@/constants/Icons";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ResetpasswordServices } from "@/services/Auth.service";

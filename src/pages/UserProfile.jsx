@@ -1,4 +1,4 @@
-import { IoIosClose } from "react-icons/io";
+import { IoIosClose } from "@/constants/Icons";
 import { useAuthStore } from "@/store/AuthStore";
 
 // eslint-disable-next-line react/prop-types

@@ -1,8 +1,7 @@
 import { AllowedPaths } from "@/constants/static.data";
 import RoleModel from "@/modals/RoleModel";
 import { useState } from "react";
-import { BiPlus } from "react-icons/bi";
-import { FiEdit2, FiTrash2 } from "react-icons/fi";
+import { BiPlus,FiEdit2, FiTrash2 } from "@/constants/Icons";
 import Pagination from "./Pagination";
 import { useLocation } from "react-router-dom";
 import {

@@ -2,11 +2,10 @@ import {useState } from "react";
 import {
   useVulnerabililtyDataContext,
 } from "@/context";
-import { IoSearch } from "react-icons/io5";
+import { IoSearch, FaEdit, FaEye, FaTrash } from "@/constants/Icons";
 import Loader from "@/components/Loader/Loader";
 import Pagination from "./Pagination";
 import { isHaveAction } from "@/utils/pageAccess";
-import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import EnhancedDetailsModal from "@/modals/ExploitDetail";
 import useAccessPartner from "@/hooks/AccessPartner";
 import { handlerSeverity } from "@/utils/vulnerableOperations";

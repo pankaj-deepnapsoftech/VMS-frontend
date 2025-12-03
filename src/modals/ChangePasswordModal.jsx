@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { EyeIcon, EyeOffIcon, LockIcon } from "lucide-react";
+import {FaEye, FaEyeSlash, FaLock} from "@/constants/Icons"
+
 import { useMutation } from "@tanstack/react-query";
 import { ChangePasswordServices } from "@/services/Auth.service";
 import { useNavigate } from "react-router-dom";
@@ -20,7 +21,7 @@ const ChangePasswordModal = ({ isOpen }) => {
 
   const changePasswordMutation = useMutation({
     mutationFn: (data) => ChangePasswordServices(data),
-    onSuccess: (res) => {
+    onSuccess: () => {
       navigate("/");
       window.location.reload();
     },
@@ -92,7 +93,7 @@ const ChangePasswordModal = ({ isOpen }) => {
                 htmlFor="currentPassword"
                 className={`text-sm font-medium  flex items-center gap-1.5`}
               >
-                <LockIcon className={`w-4 h-4 `} />
+                <FaLock className={`w-4 h-4 `} />
                 Current Password
               </label>
               <div className="relative">
@@ -112,9 +113,9 @@ const ChangePasswordModal = ({ isOpen }) => {
                   className={`absolute right-3 top-1/2 -translate-y-1/2 `}
                 >
                   {showCurrentPassword ? (
-                    <EyeOffIcon className="w-5 h-5" />
+                    <FaEyeSlash className="w-5 h-5" />
                   ) : (
-                    <EyeIcon className="w-5 h-5" />
+                    <FaEye className="w-5 h-5" />
                   )}
                 </button>
               </div>
@@ -125,7 +126,7 @@ const ChangePasswordModal = ({ isOpen }) => {
                 htmlFor="newPassword"
                 className={`text-sm font-medium  flex items-center gap-1.5`}
               >
-                <LockIcon className={`w-4 h-4 `} />
+                <FaLock className={`w-4 h-4 `} />
                 New Password
               </label>
               <div className="relative">
@@ -145,9 +146,9 @@ const ChangePasswordModal = ({ isOpen }) => {
                   className={`absolute right-3 top-1/2 -translate-y-1/2  `}
                 >
                   {showNewPassword ? (
-                    <EyeOffIcon className="w-5 h-5" />
+                    <FaEyeSlash className="w-5 h-5" />
                   ) : (
-                    <EyeIcon className="w-5 h-5" />
+                    <FaEye className="w-5 h-5" />
                   )}
                 </button>
               </div>
@@ -184,7 +185,7 @@ const ChangePasswordModal = ({ isOpen }) => {
                 htmlFor="confirmPassword"
                 className={`text-sm font-medium  flex items-center gap-1.5`}
               >
-                <LockIcon className={`w-4 h-4 `} />
+                <FaLock className={`w-4 h-4 `} />
                 Confirm New Password
               </label>
               <div className="relative">
@@ -210,9 +211,9 @@ const ChangePasswordModal = ({ isOpen }) => {
                   className={`absolute right-3 top-1/2 -translate-y-1/2  `}
                 >
                   {showConfirmPassword ? (
-                    <EyeOffIcon className="w-5 h-5" />
+                    <FaEyeSlash className="w-5 h-5" />
                   ) : (
-                    <EyeIcon className="w-5 h-5" />
+                    <FaEye className="w-5 h-5" />
                   )}
                 </button>
               </div>

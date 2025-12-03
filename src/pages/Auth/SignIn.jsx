@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { Eye, EyeOff } from "lucide-react";
+import {FaEye,FaEyeSlash} from "@/constants/Icons"
 import { useState, useEffect } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import "./../Css/SignInAnimation.css";
@@ -265,7 +265,7 @@ const handleCaptcha = (token) => {
                 className="absolute top-1/2 right-5 -translate-y-1/2 cursor-pointer text-gray-400"
                 onClick={() => setTogglePassword(!togglePassword)}
               >
-                {togglePassword ? <Eye /> : <EyeOff />}
+                {togglePassword ? <FaEye /> : <FaEyeSlash />}
               </div>
             </div>
 
